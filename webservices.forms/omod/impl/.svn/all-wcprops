@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/21639/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl
+END
+BaseSearchResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/!svn/ver/20378/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/BaseSearchResult.java
+END
+DelegatingResourceDescription.java
+K 25
+svn:wc:ra_dav:version-url
+V 162
+/!svn/ver/20286/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/DelegatingResourceDescription.java
+END
+AlreadyPaged.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/!svn/ver/20378/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/AlreadyPaged.java
+END
+DataDelegatingCrudResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/!svn/ver/21601/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/DataDelegatingCrudResource.java
+END
+EmptySearchResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/!svn/ver/20378/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/EmptySearchResult.java
+END
+NeedsPaging.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/!svn/ver/20378/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/NeedsPaging.java
+END
+DelegatingSubResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/!svn/ver/21601/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/DelegatingSubResource.java
+END
+BaseDelegatingResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/!svn/ver/21570/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/BaseDelegatingResource.java
+END
+UserConverter.java
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/!svn/ver/21591/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/UserConverter.java
+END
+DelegatingCrudResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/!svn/ver/21639/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/DelegatingCrudResource.java
+END
+MetadataDelegatingCrudResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/!svn/ver/21601/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/MetadataDelegatingCrudResource.java
+END
+ServiceSearcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/!svn/ver/20378/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/impl/ServiceSearcher.java
+END

@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/!svn/ver/21399/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api
+END
+Listable.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Listable.java
+END
+Deletable.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Deletable.java
+END
+SubResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/!svn/ver/20206/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/SubResource.java
+END
+Updatable.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Updatable.java
+END
+Creatable.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Creatable.java
+END
+Retrievable.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/!svn/ver/21399/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Retrievable.java
+END
+SearchResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/!svn/ver/20378/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/SearchResult.java
+END
+CrudResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/CrudResource.java
+END
+Purgeable.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Purgeable.java
+END
+RepresentationDescription.java
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/RepresentationDescription.java
+END
+Converter.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Converter.java
+END
+Resource.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/!svn/ver/20145/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Resource.java
+END
+Searchable.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/!svn/ver/20378/openmrs-modules/webservices.rest/trunk/omod/src/main/java/org/openmrs/module/webservices/rest/web/resource/api/Searchable.java
+END
