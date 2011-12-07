@@ -24,7 +24,7 @@ import org.openmrs.module.webservices.rest.web.v1_0.controller.BaseSubResourceCo
  * itself.
  */
 @Controller
-@RequestMapping(value = "/rest/wsforms/field/{parentUuid}/fieldAnswers")
+@RequestMapping(value = "/rest/wsforms/field/{parentUuid}/fieldanswers")
 public class FieldAnswerController
 		extends
 			BaseSubResourceController<FieldAnswerResource> {

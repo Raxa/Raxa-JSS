@@ -23,6 +23,6 @@ import org.openmrs.module.webservices.rest.web.v1_0.controller.BaseCrudControlle
  * Controller for REST web service access to the FieldType. Supports CRUD on the resource itself.
  */
 @Controller
-@RequestMapping(value = "/rest/wsforms/fieldType")
+@RequestMapping(value = "/rest/wsforms/fieldtype")
 public class FieldTypeController extends BaseCrudController<FieldTypeResource> {
 }

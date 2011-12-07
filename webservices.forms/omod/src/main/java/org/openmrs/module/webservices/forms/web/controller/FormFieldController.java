@@ -24,7 +24,7 @@ import org.openmrs.module.webservices.rest.web.v1_0.controller.BaseSubResourceCo
  * itself.
  */
 @Controller
-@RequestMapping(value = "/rest/wsforms/form/{parentUuid}/formFields")
+@RequestMapping(value = "/rest/wsforms/form/{parentUuid}/formfields")
 public class FormFieldController
 		extends
 			BaseSubResourceController<FormFieldResource> {
