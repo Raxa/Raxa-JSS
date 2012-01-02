@@ -2,60 +2,49 @@
 <html>
 	<head>
 		<title>Registration</title>
-		<script type="text/javascript" src="dropDownStorage.js"></script>
-		<script type="text/javascript" src="jquery-1.7.min.js"></script>
-		<script type="text/javascript" src="jQuery/development-bundle/ui/jquery.ui.widget.js"></script>
-		<script type="text/javascript" src="jQuery/development-bundle/ui/jquery.ui.dialog.js"></script>
-		<script type="text/javascript" src="jQuery/development-bundle/ui/jquery.ui.core.js"></script>
-		<script type="text/javascript" src="jQuery/development-bundle/ui/jquery.ui.datepicker.js"></script>
-		<script type="text/javascript" src="formToWizard.js"></script>
+		<script type="text/javascript" src="js/dropDownStorage.js"></script>
+		<script type="text/javascript" src="js/jquery-1.7.min.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.datepicker.js"></script>
+		<script type="text/javascript" src="js/formToWizard.js"></script>
 		<script type="text/javascript">
 			var dropdownData;
 
 		</script>
-		<script type="text/javascript" src="Registration.js"></script>
-		<link rel="stylesheet" type="text/css" href="Registration.css"/>
-		<link rel="stylesheet" type="text/css" href="jQuery/css/smoothness/jquery-ui-1.8.16.custom.css"/>
+		<script type="text/javascript" src="js/Registration.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/Registration.css"/>
+		<link rel="stylesheet" type="text/css" href="jquery-ui-1.8.16.custom/css/smoothness/jquery-ui-1.8.16.custom.css"/>
 	</head>
 	<body>
-		<img src="JSS_logo.png" class="titlePicture" align=center/>
-		<span class="titleText">Jan Swasthya Sahyog</span>
-		<hr width="100%" color="#666"/>
 		<form id="RegisterForm" action="">
 			<fieldset>
 				<legend>
-					Patient Profile Information
+					PATIENT DETAILS
 				</legend>
 				<div class="fields">
-					<span class="annotation"><span class="requiredTitle">Required</span></span>
+					<span class="annotation"><span class="required">*</span> Required</span>
 					<br />
-					<div class="requiredTitle">
-						First name:
-						<br />
-						<input type="text" size="30" name="First name"/>
-						<br />
-					</div>
-					<div class="requiredTitle">
-						Last name / Surname:
-						<br />
-						<input type="text" size="30" name="Last name"/>
-						<br />
-					</div>
-					Father/Husband's
+					<span class="required">* </span>First name:
 					<br />
-					<div class="requiredTitle">
-						First name:
-						<br />
-						<input type="text" size="30" name="Father/husband's first name"/>
-						<br />
-					</div>
-					<div class="requiredTitle">
-						Last name / Surname:
-						<br />
-						<input type="text" size="30" name="Father/husband's last name"/>
-						<br />
-					</div>
-					Sex
+					<input type="text" size="30" name="first_name"/>
+					<br />
+					<span class="required">* </span>Last name:
+					<br />
+					<input type="text" size="30" name="last_name"/>
+					<br />
+					Cast name:
+					<br />
+					<input type="text" size="30" />
+					<br />
+					<span class="required">* </span>Father/Husband name:
+					<br />
+					<input type="text" size="30" name="father_husband_name"/>
+					<br />
+					Age/Date of Birth
+					<br />
+					<input type="text" size="30" name="age_date_of_birth" id="datepicker"/>
+					<br />
+					Sex:
 					<br />
 					<input type="radio" name="Sex" value="Male">
 					Male
@@ -64,92 +53,33 @@
 					<input type="radio" name="Sex" value="Others">
 					Others
 					<br />
-					Age/Date of Birth
-					<br />
-					<input type="text" size="30" name="age_date_of_birth" id="datepicker"/>
-					<br />
 					Caste
 					<br />
-					<select id="caste" name="caste"></select>
+					<select id="caste"></select>
 					<br />
 					Education Level
 					<br />
-					<select id="educationLevel" name="educationLevel"></select>
+					<select id="educationLevel"></select>
 					<br />
 					Occupation
 					<br />
-					<select id="occupation" name="occupation"></select>
+					<select id="occupation"></select>
 					<br />
 				</div>
 			</fieldset>
 			<fieldset>
 				<legend>
-					Communication Information
+					CONTACT INFORMATION
 				</legend>
 				<div class="fields">
-					<span class="annotation"><span class="requiredTitle">Required</span></span>
-					<span class="section">Address</span>
+					<span class="annotation"><span class="required">*</span> Required</span>
+					Phone number
 					<br />
-					<span class="requiredTitle"></span>Block/House/Door Number&nbsp;&nbsp; <span class="requiredTitle"></span>Street Area/Locality/Mohalla/Road
+					<input type="text" size="30" />
 					<br />
-					<span class="requiredTitle" title="noStrong">
-						<input type="text" style="width: 100px" name="Block/House/Door Number"/>
-					</span>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="requiredTitle" title="noStrong">
-						<input type="text" style="width: 200px" name="Street Area/Locality/Mohalla/Road"/>
-					</span>
+					Who's number is this?
 					<br />
-					Town/Village/City
-					<br />
-					<input type="text" style="width: 150px"/>
-					<br />
-					Post Office&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="requiredTitle"></span>Pin Code
-					<br />
-					<input type="text" style="width: 150px"/>
-					&nbsp;&nbsp;&nbsp;&nbsp; <span class="requiredTitle" title="noStrong">
-						<input type="text" style="width: 100px" name="Pin Code"/>
-					</span>
-					<br />
-					Tehsil/Taluka/Mandal/Thana&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;District
-					<br />
-					<input type="text" style="width: 150px"/>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="text" name="District" style="width: 100px"/>
-					<br />
-					<hr width="100%" color="#666"/>
-					<br />
-					<span class="section">Phone Contact Information </span>
-					<br />
-					Contact me via phone
-					<input type="radio" name="phone" value="yes" class="phone" checked/>
-					Yes
-					<input type="radio" name="phone" value="no" class="phone" />
-					No, I don't have a phone or access to a phone
-					<div id="phoneYes" class="box">
-						<div id="yesPhoneChoice">
-							<br />
-							<div class="requiredTitle">
-								Phone number
-								<br />
-								<input type="text" size="30" name="Phone number"/>
-							</div>
-							<input type="radio" name="phoneType" value="landline" checked/>
-							Landline
-							<input type="radio" name="phoneType" value="mobile"/>
-							Mobile
-							<br />
-							Who's number is this?
-							<br />
-							<input type="text" size="30" />
-						</div>
-					</div>
-					<div id="phoneNo" class="box">
-						<div id="noPhoneNote">
-							<span class="section">Note</span>
-							<br />
-							Inform patient that he/she will be sent a postcard at the above address with information about scheduled check-ups and appointments.
-						</div>
-					</div>
+					<input type="text" size="30" />
 				</div>
 			</fieldset>
 			<fieldset>
@@ -157,7 +87,7 @@
 					PATIENT VITALS
 				</legend>
 				<div class="fields">
-					<span class="annotation"><span class="requiredTitle">Required</span></span>
+					<span class="annotation"><span class="required">*</span> Required</span>
 					<br />
 					<span class="section">BMI VALUE</span>
 					<br />
@@ -166,31 +96,14 @@
 					<br />
 					Weight
 					<br />
-					<input type="text" size="15" id="weight" class="shortInput"/>
+					<input type="text" size="30" id="weight" class="shortInput"/>
 					<span class="unit">Kg</span>
-					<br />
-					<span id="calculateBMI" class="buttonText" onclick="calcBMI();"> Calculate BMI </span>
-					<br />
-					<img src="scale.png" />
+					<button id="calculateBMI" onClick="calcBMI();">
+						Calculate BMI
+					</button>
 					<textarea rows="1" cols="6" id="bmiResult" readonly="true" class="alignedResult"></textarea>
 				</div>
 			</fieldset>
 		</form>
-		<div id="feeForm" title="Registration fee">
-			<div class="feeSelection">
-				<br />
-				Collect registration fee
-				<br />
-				<div class="dialogRadioGroup">
-					<input type="radio" name="payment" value="5">
-					Rs. 5
-					<input type="radio" name="payment" value="10">
-					Rs. 10
-					<input type="radio" name="payment" value="0" checked>
-					No Payment Mode
-				</div>
-				<br />
-			</div>
-		</div>
 	</body>
 </html>
