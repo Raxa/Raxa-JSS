@@ -1,0 +1,26 @@
+.titlePicture {
+	height: 40px;
+}
+.titleText {
+	font: bold 50px Georgia;
+}
+.title {
+	font: bold 60px Georgia;
+}
+.footerPicture {
+	height: 20px;
+	padding-right: 100px;
+}
+.message {
+	min-height: 300px;
+}
+.content {
+	font-size: 20px;
+}
+.nextButton {
+	margin: 30px;
+	margin-right: 800px;
+	float: right;
+	/*	height: 40px;*/
+	width: 100px;
+}

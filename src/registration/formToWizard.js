@@ -30,6 +30,7 @@
 			} else if(i == count - 1) {
 				$("#step" + i).hide();
 				createPrevButton(i);
+				createSubmitButton(i);
 			} else {
 				$("#step" + i).hide();
 				createPrevButton(i);
@@ -50,11 +51,17 @@
 
 		function createNextButton(i) {
 			var stepName = "step" + i;
-			$("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Next' class='next'>Save & Continue</a>");
+			$("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Next' class='next'>Continue</a>");
 
 			$("#" + stepName + "Next").bind("click", function(e) {
+				if(!verify(i)) {
+					return;
+				}
 				$("#" + stepName).hide();
 				$("#step" + (i + 1)).show();
+				if($(this).find('phone')) {
+					phoneAction();
+				}
 				if(i + 2 == count)
 					$(submmitButtonName).show();
 				selectStep(i + 1);
@@ -67,6 +74,13 @@
 			$("#stepDesc" + (i + 1)).removeClass("past");
 			$("#stepDesc" + (i)).removeClass("past");
 			$("#stepDesc" + i).addClass("current");
+		}
+
+		function createSubmitButton(i) {
+			var stepName = "step" + i;
+			$("#" + stepName + "commands").append("<a href='#' id='submit' class='next'>Submit</a>");
+
+			$("#submit").bind("click", selectFee);
 		}
 
 	}
