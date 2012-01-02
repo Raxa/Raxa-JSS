@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Registration</title>
+		<script type="text/javascript" src="jquery-1.7.min.js"></script>
+		<script type="text/javascript" src="formToWizard.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#RegisterForm").formToWizard({
+					submitButton : 'SaveAccount'
+				})
+			});
+
+		</script>
+		<link rel="stylesheet" type="text/css" href="Registration.css"/>
+	</head>
+	<body>
+		<form id="RegisterForm" action="">
+			<fieldset>
+				<legend>
+					PATIENT DETAILS
+				</legend>
+				<div class="fields">
+					<span class="annotation"><span class="required">*</span> Required</span>
+					<br>
+					<span class="required">* </span>First name:</br>
+					<input type="text" size="30" name="first_name"/>
+					</br>
+					Middle name:</br>
+					<input type="text" size="30" name="middle_name"/>
+					</br> <span class="required">* </span>Last name:</br>
+					<input type="text" size="30" name="last_name"/>
+					</br>
+					Cast name:</br>
+					<input type="text" size="30" />
+					</br> <span class="required">* </span>Father/Husband name:</br>
+					<input type="text" size="30" name="father_husband_name"/>
+					</br>
+					Age/Date of Birth</br>
+					<input type="text" size="30" name="age_date_of_birth"/>
+					</br>
+					Sex:</br>
+					<input type="radio" name="Sex" value="Male">
+					Male
+					<input type="radio" name="Sex" value="Female">
+					Female
+					<input type="radio" name="Sex" value="Others">
+					Others
+					</br>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>
+					ADDRESS DETAILS
+				</legend>
+				<div class="fields">
+					Phone number</br>
+					<input type="text" size="30" />
+					</br>
+					Education</br>
+					<input type="text" size="30" />
+					</br>
+					Family Card Number</br>
+					<input type="text" size="30" />
+					</br>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>
+					ENTER REFERRALS
+				</legend>
+				<div class="fields">
+					Neighborhood</br>
+					<input type="text" size="30" />
+					</br>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>
+					VISIT DETAILS
+				</legend>
+				<div class="fields">
+					Accompanying persons details</br>
+					<input type="text" size="30" />
+					</br>
+					Relationship</br>
+					<input type="text" size="30" />
+					</br>
+					Contact number</br>
+					<input type="text" size="30" />
+					</br>
+				</div>
+			</fieldset>
+		</form>
+	</body>
+</html>
