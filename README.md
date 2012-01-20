@@ -1,7 +1,7 @@
 Raxa-JSS
 ========
 
-An OpenMRS based HIS implementation for the Jan Swasthya Sahyog (http://jssbilaspur.org).
+An OpenMRS based HIS implementation for the Jan Swasthya Sahyog (<http://jssbilaspur.org>).
 
 For more information, please see our wiki:
 
