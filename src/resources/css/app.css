@@ -1,0 +1,9 @@
+#halo {
+    background-color: #cccccc;
+    background-position: center; 
+    background-repeat: no-repeat; 
+    text-align: center;
+
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-radial-gradient(circle, #ffffff, #cccccc); 
+}

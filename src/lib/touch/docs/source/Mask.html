@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-Mask'>/**
+</span> * A simple class used to mask any {@link Ext.Container}.
+ * This should rarely be used directly, instead look at the {@link Ext.Container#cfg-mask} configuration.
+ */
+Ext.define('Ext.Mask', {
+    extend: 'Ext.Component',
+    xtype: 'mask',
+
+    config: {
+        // @inherit
+        baseCls: Ext.baseCSSPrefix + 'mask',
+
+<span id='Ext-Mask-cfg-transparent'>        /**
+</span>         * @cfg {Boolean} transparent True to make this mask transparent.
+         */
+        transparent: false,
+
+<span id='Ext-Mask-property-zIndex'>        /**
+</span>         * @hide
+         */
+        zIndex: 1000,
+//
+//        /**
+//         * @hide
+//         */
+//        hidden: true,
+
+<span id='Ext-Mask-property-top'>        /**
+</span>         * @hide
+         */
+        top: 0,
+
+<span id='Ext-Mask-property-left'>        /**
+</span>         * @hide
+         */
+        left: 0,
+
+<span id='Ext-Mask-property-right'>        /**
+</span>         * @hide
+         */
+        right: 0,
+
+<span id='Ext-Mask-property-bottom'>        /**
+</span>         * @hide
+         */
+        bottom: 0
+    },
+
+<span id='Ext-Mask-event-tap'>    /**
+</span>     * @event tap
+     * A tap event fired when a user taps on this mask
+     * @param {Ext.Mask} this The mask instance
+     * @param {Ext.EventObject} e The event object
+     */
+    initialize: function() {
+        var element = this.element;
+
+        this.callParent();
+
+        element.on('tap', 'onTap', this);
+        element.on('*', 'onEvent', this);
+    },
+
+    onEvent: function(e) {
+        e.stopEvent();
+
+        return false;
+    },
+
+    onTap: function(e) {
+        this.fireEvent('tap', this, e);
+    },
+
+    updateTransparent: function(newTransparent) {
+        this[newTransparent ? 'addCls' : 'removeCls'](this.getBaseCls() + '-transparent');
+    }
+});
+</pre>
+</body>
+</html>

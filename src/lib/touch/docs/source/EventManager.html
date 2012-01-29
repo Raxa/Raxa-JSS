@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-EventManager'>/**
+</span> * @class Ext.EventManager
+ *
+ * This object is deprecated.
+ *
+ * @deprecated
+ * @singleton
+ */
+
+//&lt;deprecated product=touch since=2.0&gt;
+Ext.ns('Ext.core');
+Ext.core.EventManager =
+Ext.EventManager = {
+    addListener: function(element, eventName, fn, scope, options) {
+        //&lt;debug warn&gt;
+        Ext.Logger.deprecate(&quot;Ext.EventManager.addListener is deprecated, use addListener() directly from an instance of Ext.Element instead&quot;, 2);
+        //&lt;/debug&gt;
+        element.on(eventName, fn, scope, options);
+    },
+
+    removeListener: function(element, eventName, fn, scope) {
+        //&lt;debug warn&gt;
+        Ext.Logger.deprecate(&quot;Ext.EventManager.removeListener is deprecated, use removeListener() directly from an instance of Ext.Element instead&quot;, 2);
+        //&lt;/debug&gt;
+        element.un(eventName, fn, scope);
+    },
+
+    removeAll: function(element){
+        //&lt;debug warn&gt;
+        Ext.Logger.deprecate(&quot;Ext.EventManager.removeAll is deprecated, use clearListeners() directly from an instance of Ext.Element instead&quot;, 3);
+        //&lt;/debug&gt;
+        Ext.get(element).clearListeners();
+    },
+
+    onWindowResize: function(fn, scope, options) {
+        //&lt;debug warn&gt;
+        Ext.Logger.deprecate(&quot;Ext.EventManager.onWindowResize is deprecated, attach listener to Ext.Viewport instead, i.e: Ext.Viewport.on('resize', ...)&quot;, 2);
+        //&lt;/debug&gt;
+        Ext.Viewport.on('resize', fn, scope, options);
+    },
+
+    onOrientationChange: function(fn, scope, options) {
+        //&lt;debug warn&gt;
+        Ext.Logger.deprecate(&quot;Ext.EventManager.onOrientationChange is deprecated, attach listener to Ext.Viewport instead, i.e: Ext.Viewport.on('orientationchange', ...)&quot;, 2);
+        //&lt;/debug&gt;
+        Ext.Viewport.on('orientationchange', fn, scope, options);
+    },
+
+    unOrientationChange: function(fn, scope, options) {
+        //&lt;debug warn&gt;
+        Ext.Logger.deprecate(&quot;Ext.EventManager.unOrientationChange is deprecated, remove listener from Ext.Viewport instead, i.e: Ext.Viewport.un('orientationchange', ...)&quot;, 2);
+        //&lt;/debug&gt;
+        Ext.Viewport.un('orientationchange', fn, scope, options);
+    }
+};
+
+Ext.EventManager.on = Ext.EventManager.addListener;
+Ext.EventManager.un = Ext.EventManager.removeListener;
+//&lt;/deprecated&gt;
+</pre>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-util-JSONP'>/**
+</span> * @class Ext.util.JSONP
+ *
+ * Provides functionality to make cross-domain requests with JSONP (JSON with Padding).
+ * http://en.wikipedia.org/wiki/JSON#JSONP
+ * &lt;p&gt;
+ * &lt;b&gt;Note that if you are retrieving data from a page that is in a domain that is NOT the same as the originating domain
+ * of the running page, you must use this class, because of the same origin policy.&lt;/b&gt;&lt;br&gt;
+ * &lt;p&gt;
+ * The content passed back from a server resource requested by a JSONP request&lt;b&gt;must&lt;/b&gt; be executable JavaScript
+ * source code because it is used as the source inside a &amp;lt;script&gt; tag.&lt;br&gt;
+ * &lt;p&gt;
+ * In order for the browser to process the returned data, the server must wrap the data object
+ * with a call to a callback function, the name of which is passed as a parameter callbackKey
+ * Below is a Java example for a servlet which returns data for either a ScriptTagProxy, or an HttpProxy
+ * depending on whether the callback name was passed:
+ * &lt;p&gt;
+ * &lt;pre&gt;&lt;code&gt;
+boolean scriptTag = false;
+String cb = request.getParameter(&quot;callback&quot;);
+if (cb != null) {
+    scriptTag = true;
+    response.setContentType(&quot;text/javascript&quot;);
+} else {
+    response.setContentType(&quot;application/x-json&quot;);
+}
+Writer out = response.getWriter();
+if (scriptTag) {
+    out.write(cb + &quot;(&quot;);
+}
+out.print(dataBlock.toJsonString());
+if (scriptTag) {
+    out.write(&quot;);&quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+ * &lt;p&gt;Below is a PHP example to do the same thing:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;
+$callback = $_REQUEST['callback'];
+
+// Create the output object.
+$output = array('a' =&gt; 'Apple', 'b' =&gt; 'Banana');
+
+//start output
+if ($callback) {
+    header('Content-Type: text/javascript');
+    echo $callback . '(' . json_encode($output) . ');';
+} else {
+    header('Content-Type: application/x-json');
+    echo json_encode($output);
+}
+&lt;/code&gt;&lt;/pre&gt;
+ * &lt;p&gt;Below is the ASP.Net code to do the same thing:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;
+String jsonString = &quot;{success: true}&quot;;
+String cb = Request.Params.Get(&quot;callback&quot;);
+String responseString = &quot;&quot;;
+if (!String.IsNullOrEmpty(cb)) {
+    responseString = cb + &quot;(&quot; + jsonString + &quot;)&quot;;
+} else {
+    responseString = jsonString;
+}
+Response.Write(responseString);
+&lt;/code&gt;&lt;/pre&gt;
+ * @singleton
+ */
+Ext.define('Ext.util.JSONP', {
+    singleton: true,
+
+<span id='Ext-util-JSONP-property-queue'>    /**
+</span>     * Read-only queue
+     * @type Array
+     */
+    queue: [],
+
+<span id='Ext-util-JSONP-property-current'>    /**
+</span>     * Read-only current executing request
+     * @type Object
+     */
+    current: null,
+
+<span id='Ext-util-JSONP-method-request'>    /**
+</span>     * Make a cross-domain request using JSONP.
+     * @param {Object} config
+     * Valid configurations are:
+     * &lt;ul&gt;
+     *  &lt;li&gt;url - {String} - Url to request data from. (required) &lt;/li&gt;
+     *  &lt;li&gt;params - {Object} - A set of key/value pairs to be url encoded and passed as GET parameters in the request.&lt;/li&gt;
+     *  &lt;li&gt;callbackKey - {String} - Key specified by the server-side provider.&lt;/li&gt;
+     *  &lt;li&gt;callback - {Function} - Will be passed a single argument of the result of the request.&lt;/li&gt;
+     *  &lt;li&gt;scope - {Scope} - Scope to execute your callback in.&lt;/li&gt;
+     * &lt;/ul&gt;
+     */
+    request: function(o) {
+        o = o || {};
+        if (!o.url) {
+            return;
+        }
+
+        var me = this;
+        o.params = o.params || {};
+        if (o.callbackKey) {
+            o.params[o.callbackKey] = 'Ext.util.JSONP.callback';
+        }
+        var params = Ext.urlEncode(o.params);
+
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+
+        this.queue.push({
+            url: o.url,
+            script: script,
+            callback: o.callback || function(){},
+            scope: o.scope || window,
+            params: params || null
+        });
+
+        if (!this.current) {
+            this.next();
+        }
+    },
+
+    // private
+    next: function() {
+        this.current = null;
+        if (this.queue.length) {
+            this.current = this.queue.shift();
+            this.current.script.src = this.current.url + (this.current.params ? ('?' + this.current.params) : '');
+            document.getElementsByTagName('head')[0].appendChild(this.current.script);
+        }
+    },
+
+    // @private
+    callback: function(json) {
+        this.current.callback.call(this.current.scope, json);
+        document.getElementsByTagName('head')[0].removeChild(this.current.script);
+        this.next();
+    }
+});
+</pre>
+</body>
+</html>

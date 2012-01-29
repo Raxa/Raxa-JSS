@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-dom-AbstractElement'>/**
+</span> * @class Ext.dom.AbstractElement
+ * @private
+ */
+(function() {
+
+var document = window.document;
+
+if (!Ext.cache){
+    Ext.cache = {};
+}
+
+Ext.define('Ext.dom.AbstractElement', {
+
+    inheritableStatics: {
+
+<span id='Ext-dom-AbstractElement-static-method-get'>        /**
+</span>         * Retrieves Ext.dom.Element objects. {@link Ext#get} is alias for {@link Ext.dom.Element#get}.
+         *
+         * **This method does not retrieve {@link Ext.Component Component}s.** This method retrieves Ext.dom.Element
+         * objects which encapsulate DOM elements. To retrieve a Component by its ID, use {@link Ext.ComponentManager#get}.
+         *
+         * Uses simple caching to consistently return the same object. Automatically fixes if an object was recreated with
+         * the same id via AJAX or DOM.
+         *
+         * @param {String/HTMLElement/Ext.Element} el The id of the node, a DOM Node or an existing Element.
+         * @return {Ext.dom.Element} The Element object (or null if no matching element was found)
+         * @static
+         * @inheritable
+         */
+        get: function(el) {
+            var me = this,
+                El = Ext.dom.Element,
+                extEl,
+                dom,
+                id;
+
+            if (!el) {
+                return null;
+            }
+
+            if (typeof el == &quot;string&quot;) { // element id
+                if (!(dom = document.getElementById(el))) {
+                    return null;
+                }
+
+                if (Ext.cache[el] &amp;&amp; Ext.cache[el].el) {
+                    extEl = Ext.cache[el].el;
+                    extEl.dom = dom;
+                } else {
+                    extEl = me.addToCache(new El(dom));
+                }
+                return extEl;
+            } else if (el.tagName) { // dom element
+                if (!(id = el.id)) {
+                    id = Ext.id(el);
+                }
+                if (Ext.cache[id] &amp;&amp; Ext.cache[id].el) {
+                    extEl = Ext.cache[id].el;
+                    extEl.dom = el;
+                } else {
+                    extEl = me.addToCache(new El(el));
+                }
+                return extEl;
+            } else if (el instanceof me) {
+                if (el != me.docEl) {
+                    // refresh dom element in case no longer valid,
+                    // catch case where it hasn't been appended
+                    el.dom = document.getElementById(el.id) || el.dom;
+                }
+                return el;
+            } else if (el.isComposite) {
+                return el;
+            } else if (Ext.isArray(el)) {
+                return me.select(el);
+            } else if (el == document) {
+                // create a bogus element object representing the document object
+                if (!me.docEl) {
+                    me.docEl = Ext.Object.chain(El.prototype);
+                    me.docEl.dom = document;
+                    document.documentElement.id = me.docEl.id = Ext.id(document);
+                }
+
+                return me.docEl;
+            }
+
+            return null;
+        },
+
+        addToCache: function(el, id) {
+            if (el) {
+                id = id || el.id;
+                Ext.cache[id] = {
+                    el: el,
+                    data: {},
+                    events: {}
+                };
+            }
+            return el;
+        },
+
+        // private method for getting and setting element data
+        data: function(el, key, value) {
+            el = this.get(el);
+            if (!el) {
+                return null;
+            }
+            var c = Ext.cache[el.id].data;
+            if (!c) {
+                c = Ext.cache[el.id].data = {};
+            }
+            if (arguments.length == 2) {
+                return c[key];
+            } else {
+                return (c[key] = value);
+            }
+        },
+
+        addMethods: function() {
+            this.override.apply(this, arguments);
+        },
+
+<span id='Ext-dom-AbstractElement-static-property-VISIBILITY'>        /**
+</span>         * @property
+         * Visibility mode constant for use with {@link #setVisibilityMode}. Use visibility to hide element
+         * @static
+         */
+        VISIBILITY: 1,
+
+<span id='Ext-dom-AbstractElement-static-property-DISPLAY'>        /**
+</span>         * @property
+         * Visibility mode constant for use with {@link #setVisibilityMode}. Use display to hide element
+         * @static
+         */
+        DISPLAY: 2,
+
+<span id='Ext-dom-AbstractElement-static-property-OFFSETS'>        /**
+</span>         * @property
+         * Visibility mode constant for use with {@link #setVisibilityMode}. Use offsets to hide element
+         * @static
+         */
+        OFFSETS: 3
+    },
+
+    constructor: function(element, forceNew) {
+        var dom = typeof element == 'string'
+                ? document.getElementById(element)
+                : element,
+            id;
+
+        if (!dom) {
+            return null;
+        }
+
+        id = dom.id;
+        if (!forceNew &amp;&amp; id &amp;&amp; Ext.cache[id]) {
+            // element object already exists
+            return Ext.cache[id].el;
+        }
+
+<span id='Ext-dom-AbstractElement-property-dom'>        /**
+</span>         * @property {HTMLElement} dom
+         * The DOM element
+         */
+        this.dom = dom;
+
+<span id='Ext-dom-AbstractElement-property-id'>        /**
+</span>         * @property {String} id
+         * The DOM element ID
+         */
+        this.id = id || Ext.id(dom);
+    },
+
+    attach: function (dom) {
+        this.dom = dom;
+        this.id = dom.id;
+        return this;
+    },
+
+<span id='Ext-dom-AbstractElement-method-set'>    /**
+</span>     * Sets the passed attributes as attributes of this element (a style attribute can be a string, object or function)
+     * @param {Object} o The object with the attributes
+     * @param {Boolean} [useSet=true] false to override the default setAttribute to use expandos.
+     * @return {Ext.dom.Element} this
+     */
+    set: function(o, useSet) {
+         var el = this.dom,
+             attr,
+             value;
+
+         for (attr in o) {
+             if (o.hasOwnProperty(attr)) {
+                 value = o[attr];
+                 if (attr == 'style') {
+                     this.applyStyles(value);
+                 }
+                 else if (attr == 'cls') {
+                     el.className = value;
+                 }
+                 else if (useSet !== false) {
+                     if (value === undefined) {
+                         el.removeAttribute(attr);
+                     } else {
+                        el.setAttribute(attr, value);
+                     }
+                 }
+                 else {
+                     el[attr] = value;
+                 }
+             }
+         }
+         return this;
+     },
+
+<span id='Ext-dom-AbstractElement-property-defaultUnit'>    /**
+</span>     * @property {String} defaultUnit
+     * The default unit to append to CSS values where a unit isn't provided.
+     */
+    defaultUnit: &quot;px&quot;,
+
+<span id='Ext-dom-AbstractElement-method-is'>    /**
+</span>     * Returns true if this element matches the passed simple selector (e.g. div.some-class or span:first-child)
+     * @param {String} selector The simple selector to test
+     * @return {Boolean} True if this element matches the selector, else false
+     */
+    is: function(simpleSelector) {
+        return Ext.DomQuery.is(this.dom, simpleSelector);
+    },
+
+<span id='Ext-dom-AbstractElement-method-getValue'>    /**
+</span>     * Returns the value of the &quot;value&quot; attribute
+     * @param {Boolean} asNumber true to parse the value as a number
+     * @return {String/Number}
+     */
+    getValue: function(asNumber) {
+        var val = this.dom.value;
+        return asNumber ? parseInt(val, 10) : val;
+    },
+
+<span id='Ext-dom-AbstractElement-method-remove'>    /**
+</span>     * Removes this element's dom reference. Note that event and cache removal is handled at {@link Ext#removeNode
+     * Ext.removeNode}
+     */
+    remove: function() {
+        var me = this,
+        dom = me.dom;
+
+        if (dom) {
+            delete me.dom;
+            Ext.removeNode(dom);
+        }
+    },
+
+<span id='Ext-dom-AbstractElement-method-contains'>    /**
+</span>     * Returns true if this element is an ancestor of the passed element
+     * @param {HTMLElement/String} el The element to check
+     * @return {Boolean} True if this element is an ancestor of el, else false
+     */
+    contains: function(el) {
+        if (!el) {
+            return false;
+        }
+
+        var me = this,
+            dom = el.dom || el;
+
+        // we need el-contains-itself logic here because isAncestor does not do that:
+        return (dom === me.dom) || Ext.dom.AbstractElement.isAncestor(me.dom, dom);
+    },
+
+<span id='Ext-dom-AbstractElement-method-getAttribute'>    /**
+</span>     * Returns the value of an attribute from the element's underlying DOM node.
+     * @param {String} name The attribute name
+     * @param {String} [namespace] The namespace in which to look for the attribute
+     * @return {String} The attribute value
+     */
+    getAttribute: function(name, ns) {
+        var dom = this.dom;
+        return dom.getAttributeNS(ns, name) || dom.getAttribute(ns + &quot;:&quot; + name) || dom.getAttribute(name) || dom[name];
+    },
+
+<span id='Ext-dom-AbstractElement-method-update'>    /**
+</span>     * Update the innerHTML of this element
+     * @param {String} html The new HTML
+     * @return {Ext.dom.Element} this
+     */
+    update: function(html) {
+        if (this.dom) {
+            this.dom.innerHTML = html;
+        }
+        return this;
+    },
+
+
+<span id='Ext-dom-AbstractElement-method-setHTML'>    /**
+</span>    * Set the innerHTML of this element
+    * @param {String} html The new HTML
+    * @return {Ext.Element} this
+     */
+    setHTML: function(html) {
+        if(this.dom) {
+            this.dom.innerHTML = html;
+        }
+        return this;
+    },
+
+<span id='Ext-dom-AbstractElement-method-getHTML'>    /**
+</span>     * Returns the innerHTML of an Element or an empty string if the element's
+     * dom no longer exists.
+     */
+    getHTML: function() {
+        return this.dom ? this.dom.innerHTML : '';
+    },
+
+<span id='Ext-dom-AbstractElement-method-hide'>    /**
+</span>     * Hide this element - Uses display mode to determine whether to use &quot;display&quot; or &quot;visibility&quot;. See {@link #setVisible}.
+     * @param {Boolean/Object} animate (optional) true for the default animation or a standard Element animation config object
+     * @return {Ext.Element} this
+     */
+    hide: function() {
+        this.setVisible(false);
+        return this;
+    },
+
+<span id='Ext-dom-AbstractElement-method-show'>    /**
+</span>    * Show this element - Uses display mode to determine whether to use &quot;display&quot; or &quot;visibility&quot;. See {@link #setVisible}.
+    * @param {Boolean/Object} animate (optional) true for the default animation or a standard Element animation config object
+     * @return {Ext.Element} this
+     */
+    show: function() {
+        this.setVisible(true);
+        return this;
+    },
+
+<span id='Ext-dom-AbstractElement-method-setVisible'>    /**
+</span>     * Sets the visibility of the element (see details). If the visibilityMode is set to Element.DISPLAY, it will use
+     * the display property to hide the element, otherwise it uses visibility. The default is to hide and show using the visibility property.
+     * @param {Boolean} visible Whether the element is visible
+     * @param {Boolean/Object} animate (optional) True for the default animation, or a standard Element animation config object
+     * @return {Ext.Element} this
+     */
+     setVisible: function(visible, animate) {
+        var me = this,
+            statics = me.self,
+            mode = me.getVisibilityMode();
+
+        switch (mode) {
+            case statics.VISIBILITY:
+                me.removeCls(['x-hidden-display', 'x-hidden-offsets']);
+                me[visible ? 'removeCls' : 'addCls']('x-hidden-visibility');
+            break;
+
+            case statics.DISPLAY:
+                me.removeCls(['x-hidden-visibility', 'x-hidden-offsets']);
+                me[visible ? 'removeCls' : 'addCls']('x-hidden-display');
+            break;
+
+            case statics.OFFSETS:
+                me.removeCls(['x-hidden-visibility', 'x-hidden-display']);
+                me[visible ? 'removeCls' : 'addCls']('x-hidden-offsets');
+            break;
+        }
+
+        return me;
+    },
+
+    getVisibilityMode: function() {
+        var statics = this.self,
+            dom = this.dom,
+            mode = statics.data(dom, 'visibilityMode');
+
+        if (mode === undefined) {
+            statics.data(dom, 'visibilityMode', mode = statics.DISPLAY);
+        }
+
+        return mode;
+    },
+
+<span id='Ext-dom-AbstractElement-method-setVisibilityMode'>    /**
+</span>     * Use this to change the visisbiliy mode between {@link #VISIBILITY}, {@link #DISPLAY} or {@link #OFFSETS}.
+     */
+    setVisibilityMode: function(mode) {
+        this.self.data(this.dom, 'visibilityMode', mode);
+        return this;
+    }
+}, function() {
+    var AbstractElement = this;
+
+<span id='Ext-method-get'>    /**
+</span>     * @member Ext
+     * @method get
+     * @alias Ext.dom.AbstractElement#get
+     */
+    Ext.get = function() {
+        var El = Ext.dom.Element;
+        return El.get.apply(El, arguments);
+    };
+
+    this.addStatics({
+        Fly: new Ext.Class({
+            extend: AbstractElement,
+
+            constructor: function(dom) {
+                this.dom = dom;
+            }
+        }),
+
+        _flyweights: {},
+
+<span id='Ext-dom-AbstractElement-static-method-fly'>        /**
+</span>         * Gets the globally shared flyweight Element, with the passed node as the active element. Do not store a reference
+         * to this element - the dom node can be overwritten by other code. {@link Ext#fly} is alias for
+         * {@link Ext.dom.AbstractElement#fly}.
+         *
+         * Use this to make one-time references to DOM elements which are not going to be accessed again either by
+         * application code, or by Ext's classes. If accessing an element which will be processed regularly, then {@link
+         * Ext#get Ext.get} will be more appropriate to take advantage of the caching provided by the Ext.dom.Element
+         * class.
+         *
+         * @param {String/HTMLElement} el The dom node or id
+         * @param {String} [named] Allows for creation of named reusable flyweights to prevent conflicts (e.g.
+         * internally Ext uses &quot;_global&quot;)
+         * @return {Ext.dom.Element} The shared Element object (or null if no matching element was found)
+         * @static
+         */
+        fly: function(el, named) {
+            var ret = null,
+                _flyweights = AbstractElement._flyweights;
+
+            named = named || '_global';
+
+            el = Ext.getDom(el);
+
+            if (el) {
+                ret = _flyweights[named] || (_flyweights[named] = new AbstractElement.Fly());
+                ret.dom = el;
+            }
+
+            return ret;
+        }
+    });
+
+<span id='Ext-method-fly'>    /**
+</span>     * @member Ext
+     * @method fly
+     * @alias Ext.dom.AbstractElement#fly
+     */
+    Ext.fly = function() {
+        return AbstractElement.fly.apply(AbstractElement, arguments);
+    };
+
+    (function (proto) {
+<span id='Ext-dom-AbstractElement-method-destroy'>        /**
+</span>         * @method destroy
+         * @member Ext.dom.AbstractElement
+         * @alias Ext.dom.AbstractElement#remove
+         */
+        proto.destroy = proto.remove;
+
+<span id='Ext-dom-AbstractElement-method-getById'>        /**
+</span>         * @method getById
+         * @member Ext.dom.AbstractElement
+         * @alias Ext.dom.AbstractElement#get
+         */
+        proto.getById = Ext.get;
+    })(this.prototype);
+});
+
+})();
+</pre>
+</body>
+</html>

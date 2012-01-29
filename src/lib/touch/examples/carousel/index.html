@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Carousel</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        .my-carousel-item {
+            background: url(images/loading.png) no-repeat center center;
+        }
+
+        @media screen and (orientation:portrait) {
+            .my-carousel-item-img {
+                background-size: 100% auto;
+            }
+        }
+
+        @media screen and (orientation:landscape) {
+            .my-carousel-item-img {
+                background-size: auto 100%;
+            }
+        }
+
+        .x-portrait .my-carousel-item-img {
+            background-size: 100% auto;
+        }
+
+        .x-landscape .my-carousel-item-img {
+            background-size: auto 100%;
+        }
+
+        .my-carousel-item-img {
+            background-position: center center;
+        }
+
+        .x-carousel-indicator > * {
+            background-color: orange !important;
+            opacity: 0.4;
+        }
+
+        .x-carousel-indicator > .x-carousel-indicator-active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body></body>
+</html>

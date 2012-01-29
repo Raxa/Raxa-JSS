@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-fx-layout-card-Style'>/**
+</span> * @private
+ */
+Ext.define('Ext.fx.layout.card.Style', {
+
+    extend: 'Ext.fx.layout.card.Abstract',
+
+    requires: [
+        'Ext.fx.Animation'
+    ],
+
+    config: {
+        inAnimation: {
+            before: {
+                visibility: ''
+            },
+            preserveEndState: false
+        },
+
+        outAnimation: {
+            preserveEndState: false
+        }
+    },
+
+    constructor: function(config) {
+        var animationConfig = {},
+            name, inAnimation, outAnimation;
+
+        this.initConfig(config);
+
+        inAnimation = this.getInAnimation();
+        outAnimation = this.getOutAnimation();
+
+        for (name in config) {
+            if (config.hasOwnProperty(name)) {
+                if (!this.hasConfig(name)) {
+                    animationConfig[name] = config[name];
+                }
+            }
+        }
+
+        inAnimation.setConfig(animationConfig);
+        outAnimation.setConfig(animationConfig);
+    },
+
+    applyInAnimation: function(animation, inAnimation) {
+        return Ext.factory(animation, Ext.fx.Animation, inAnimation);
+    },
+
+    applyOutAnimation: function(animation, outAnimation) {
+        return Ext.factory(animation, Ext.fx.Animation, outAnimation);
+    },
+
+    updateInAnimation: function(animation) {
+        animation.setScope(this);
+    },
+
+    updateOutAnimation: function(animation) {
+        animation.setScope(this);
+    },
+
+    onActiveItemChange: function(cardLayout, newItem, oldItem, options, controller) {
+        var inAnimation = this.getInAnimation(),
+            outAnimation = this.getOutAnimation(),
+            inElement, outElement,
+            previousInElement, previousOutElement;
+
+        if (newItem &amp;&amp; oldItem) {
+            inElement = newItem.renderElement;
+            outElement = oldItem.renderElement;
+
+            previousInElement = inAnimation.getElement();
+            inAnimation.setElement(inElement);
+
+            previousOutElement = outAnimation.getElement();
+            outAnimation.setElement(outElement);
+//            outAnimation.setOnBeforeEnd(function(element, isInterrupted) {
+//                if (isInterrupted) {
+//                    controller.firingArguments[2] = null;
+//                }
+//            });
+            outAnimation.setOnEnd(function() {
+                controller.resume();
+            });
+
+            inElement.dom.style.setProperty('visibility', 'hidden', '!important');
+            newItem.show();
+
+            Ext.Animator.run([outAnimation, inAnimation]);
+            controller.pause();
+        }
+    }
+});
+</pre>
+</body>
+</html>

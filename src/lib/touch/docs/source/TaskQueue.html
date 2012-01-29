@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define('Ext.TaskQueue', {
+    singleton: true,
+
+    tasks: [],
+
+    delay: 1,
+
+    lastTickTime: 0,
+
+    constructor: function() {
+        var me = this;
+
+        this.tickFn = function() {
+            me.tick.call(me);
+            me.lastTickTime = Ext.Date.now();
+            setTimeout(me.tickFn, me.delay);
+        };
+    },
+
+    queue: function(fn, scope, args) {
+        var item = {
+            fn: fn,
+            scope: scope,
+            args: args,
+            disabled: false
+        };
+
+        this.tasks.push(item);
+
+        return item;
+    },
+
+    run: function() {
+        this.tickFn();
+    },
+
+    tick: function() {
+        var tasks = this.tasks,
+            task;
+
+        if (tasks.length &gt; 0) {
+            task = tasks.shift();
+
+            if (task.disabled !== true) {
+                task.fn.apply(task.scope, task.args);
+            }
+        }
+    }
+});
+</pre>
+</body>
+</html>
