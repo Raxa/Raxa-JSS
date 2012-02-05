@@ -86,7 +86,7 @@ Ext.define('Ext.data.NodeInterface', {
 
                 newFields = this.applyFields(modelClass, [
                     {name: 'parentId',   type: 'string',  defaultValue: null},
-                    {name: 'index',      type: 'int',     defaultValue: null},
+                    {name: 'index',      type: 'int',     defaultValue: 0},
                     {name: 'depth',      type: 'int',     defaultValue: 0},
                     {name: 'expanded',   type: 'bool',    defaultValue: false, persist: false},
                     {name: 'expandable', type: 'bool',    defaultValue: true, persist: false},
@@ -133,10 +133,6 @@ Ext.define('Ext.data.NodeInterface', {
                     nextSibling: null,
                     childNodes: []
                 });
-
-                // Commit any fields so the record doesn't show as dirty initially
-                // @TODO: why would they be flagged dirty to begin with?
-                //record.commit(true);
 
                 record.enableBubble([
                     /**
@@ -925,11 +921,11 @@ Ext.define('Ext.data.NodeInterface', {
 
                 /**
                  * Sorts this nodes children using the supplied sort function.
-                 * @param {Function} fn A function which, when passed two Nodes, returns -1, 0 or 1 depending upon required sort order.
+                 * @param {Function} sortFn A function which, when passed two Nodes, returns -1, 0 or 1 depending upon required sort order.
                  * @param {Boolean} recursive Whether or not to apply this sort recursively
                  * @param {Boolean} suppressEvent Set to true to not fire a sort event.
                  */
-                sort : function(sortFn, recursive, suppressEvent) {
+                sort: function(sortFn, recursive, suppressEvent) {
                     var cs  = this.childNodes,
                         ln = cs.length,
                         i, n;
@@ -943,12 +939,13 @@ Ext.define('Ext.data.NodeInterface', {
 
                             if (i === 0) {
                                 this.setFirstChild(n);
-                                n.updateInfo();
                             }
                             if (i == ln - 1) {
                                 this.setLastChild(n);
-                                n.updateInfo();
                             }
+
+                            n.updateInfo(suppressEvent);
+
                             if (recursive && !n.isLeaf()) {
                                 n.sort(sortFn, true, true);
                             }

@@ -37,7 +37,7 @@
  *         }
  *         return result;
  *     };
- *      
+ *
  *     var invalidFields = myFormPanel.query('field:invalid');
  *     if (invalidFields.length) {
  *         invalidFields[0].getEl().scrollIntoView(myFormPanel.body);
@@ -106,7 +106,7 @@ Ext.define('Ext.ComponentQuery', {
                 length = items.length,
                 candidate,
                 deep = mode !== '>';
-                
+
             for (; i < length; i++) {
                 candidate = items[i];
                 if (candidate.getRefItems) {
@@ -334,7 +334,7 @@ Ext.define('Ext.ComponentQuery', {
                     results = [],
                     index = -1,
                     component;
-                
+
                 for(; i < length; ++i) {
                     component = components[i];
                     if (!CQ.is(component, selector)) {
@@ -356,10 +356,10 @@ Ext.define('Ext.ComponentQuery', {
          * @param {String} selector The selector string to filter returned Components
          * @param {Ext.Container} root The Container within which to perform the query.
          * If omitted, all Components within the document are included in the search.
-         * 
+         *
          * This parameter may also be an array of Components to filter according to the selector.</p>
          * @returns {Ext.Component[]} The matched Components.
-         * 
+         *
          * @member Ext.ComponentQuery
          */
         query: function(selector, root) {
@@ -367,16 +367,17 @@ Ext.define('Ext.ComponentQuery', {
                 length = selectors.length,
                 i = 0,
                 results = [],
-                noDupResults = [], 
-                dupMatcher = {}, 
+                noDupResults = [],
+                dupMatcher = {},
                 query, resultsLn, cmp;
 
             for (; i < length; i++) {
                 selector = Ext.String.trim(selectors[i]);
-                query = this.cache[selector];
-                if (!query) {
-                    this.cache[selector] = query = this.parse(selector);
-                }
+                query = this.parse(selector);
+//                query = this.cache[selector];
+//                if (!query) {
+//                    this.cache[selector] = query = this.parse(selector);
+//                }
                 results = results.concat(query.execute(root));
             }
 

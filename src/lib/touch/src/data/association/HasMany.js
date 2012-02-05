@@ -65,22 +65,26 @@ products.sync();
 <pre><code>
 Ext.define('Search', {
     extend: 'Ext.data.Model',
-    fields: [
-        'id', 'query'
-    ],
+    config: {
+        fields: [
+            'id', 'query'
+        ],
 
-    hasMany: {
-        model: 'Tweet',
-        name : 'tweets',
-        filterProperty: 'query'
+        hasMany: {
+            model: 'Tweet',
+            name : 'tweets',
+            filterProperty: 'query'
+        }
     }
 });
 
 Ext.define('Tweet', {
     extend: 'Ext.data.Model',
-    fields: [
-        'id', 'text', 'from_user'
-    ]
+    config: {
+        fields: [
+            'id', 'text', 'from_user'
+        ]
+    }
 });
 
 //returns a Store filtered by the filterProperty

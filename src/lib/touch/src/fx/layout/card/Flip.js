@@ -12,12 +12,24 @@ Ext.define('Ext.fx.layout.card.Flip', {
         inAnimation: {
             type: 'flip',
             half: true,
-            easing: 'ease-out'
+            easing: 'ease-out',
+            before: {
+                'backface-visibility': 'hidden'
+            },
+            after: {
+                'backface-visibility': null
+            }
         },
         outAnimation: {
             type: 'flip',
             half: true,
             easing: 'ease-in',
+            before: {
+                'backface-visibility': 'hidden'
+            },
+            after: {
+                'backface-visibility': null
+            },
             out: true
         }
     },

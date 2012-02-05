@@ -26,37 +26,37 @@ Ext.define('Ext.util.Collection', {
         var me = this;
 
         /**
-         * @property {Array} all
+         * @property {Array} [all=[]]
          * An array containing all the items (unsorted, unfiltered)
          */
         me.all = [];
 
         /**
-         * @property {Array} items
+         * @property {Array} [items=[]]
          * An array containing the filtered items (sorted)
          */
         me.items = [];
 
         /**
-         * @property {Array} keys
+         * @property {Array} [keys=[]]
          * An array containing all the filtered keys (sorted)
          */
         me.keys = [];
 
         /**
-         * @property {Object} indices
+         * @property {Object} [indices={}]
          * An object used as map to get a sorted and filtered index of an item
          */
         me.indices = {};
 
         /**
-         * @property {Object} map
+         * @property {Object} [map={}]
          * An object used as map to get an object based on its key
          */
         me.map = {};
 
         /**
-         * @property {Number} length
+         * @property {Number} [length=0]
          * The count of items in the collection filtered and sorted
          */
         me.length = 0;
@@ -204,7 +204,7 @@ Ext.define('Ext.util.Collection', {
         }
 
         // Now we sort our items array
-        this.mixins.sortable.sort.call(this, items);
+        this.handleSort(items);
 
         // And finally we update our keys and indices
         for (i = 0; i < ln; i++) {
@@ -220,13 +220,19 @@ Ext.define('Ext.util.Collection', {
         this.dirtyIndices = true;
     },
 
+    handleSort: function(items) {
+        this.mixins.sortable.sort.call(this, items);
+    },
+
     /**
      * Adds an item to the collection. Fires the {@link #add} event when complete.
-     * @param {String} key <p>The key to associate with the item, or the new item.</p>
-     * <p>If a {@link #getKey} implementation was specified for this MixedCollection,
-     * or if the key of the stored items is in a property called <tt><b>id</b></tt>,
-     * the MixedCollection will be able to <i>derive</i> the key for the new item.
-     * In this case just pass the new item in this parameter.</p>
+     * @param {String} key
+     *
+     * The key to associate with the item, or the new item.
+     *
+     * If a {@link #getKey} implementation was specified for this MixedCollection, or if the key of the stored items is
+     * in a property called **id**, the MixedCollection will be able to _derive_ the key for the new item. In this case
+     * just pass the new item in this parameter.
      * @param {Object} item The item to add.
      * @return {Object} The item added.
      */
@@ -238,7 +244,6 @@ Ext.define('Ext.util.Collection', {
             items = this.items,
             keys = this.keys,
             indices = this.indices,
-            sortable = this.mixins.sortable,
             filterable = this.mixins.filterable,
             currentLength = items.length,
             index = currentLength;
@@ -264,7 +269,7 @@ Ext.define('Ext.util.Collection', {
         me.length++;
 
         if (sorted && this.getAutoSort()) {
-            index = sortable.findInsertionIndex.call(this, items, item);
+            index = this.findInsertionIndex(items, item);
         }
 
         if (index !== currentLength) {
@@ -283,30 +288,30 @@ Ext.define('Ext.util.Collection', {
     },
 
     /**
-      * MixedCollection has a generic way to fetch keys if you implement getKey.  The default implementation
-      * simply returns <b><code>item.id</code></b> but you can provide your own implementation
-      * to return a different value as in the following examples:<pre><code>
-// normal way
-var mc = new Ext.util.MixedCollection();
-mc.add(someEl.dom.id, someEl);
-mc.add(otherEl.dom.id, otherEl);
-//and so on
-
-// using getKey
-var mc = new Ext.util.MixedCollection();
-mc.getKey = function(el){
-   return el.dom.id;
-};
-mc.add(someEl);
-mc.add(otherEl);
-
-// or via the constructor
-var mc = new Ext.util.MixedCollection(false, function(el){
-   return el.dom.id;
-});
-mc.add(someEl);
-mc.add(otherEl);
-     * </code></pre>
+     * MixedCollection has a generic way to fetch keys if you implement getKey. The default implementation simply
+     * returns **`item.id`** but you can provide your own implementation to return a different value as in the following
+     * examples:
+     *
+     *     // normal way
+     *     var mc = new Ext.util.MixedCollection();
+     *     mc.add(someEl.dom.id, someEl);
+     *     mc.add(otherEl.dom.id, otherEl);
+     *     //and so on
+     *
+     *     // using getKey
+     *     var mc = new Ext.util.MixedCollection();
+     *     mc.getKey = function(el){
+     *        return el.dom.id;
+     *     };
+     *     mc.add(someEl);
+     *     mc.add(otherEl);
+     *
+     *     // or via the constructor
+     *     var mc = new Ext.util.MixedCollection(false, function(el){
+     *        return el.dom.id;
+     *     });
+     *     mc.add(someEl);
+     *     mc.add(otherEl);
      * @param {Object} item The item for which to find the key.
      * @return {Object} The key for the passed item.
      */
@@ -316,50 +321,58 @@ mc.add(otherEl);
 
     /**
      * Replaces an item in the collection. Fires the {@link #replace} event when complete.
-     * @param {String} key <p>The key associated with the item to replace, or the replacement item.</p>
-     * <p>If you supplied a {@link #getKey} implementation for this MixedCollection, or if the key
-     * of your stored items is in a property called <tt><b>id</b></tt>, then the MixedCollection
-     * will be able to <i>derive</i> the key of the replacement item. If you want to replace an item
-     * with one having the same key value, then just pass the replacement item in this parameter.</p>
-     * @param item {Object} item (optional) If the first parameter passed was a key, the item to associate
-     * with that key.
-     * @return {Object}  The new item.
+     * @param {String} oldKey
+     *
+     * The key associated with the item to replace, or the replacement item.
+     *
+     * If you supplied a {@link #getKey} implementation for this MixedCollection, or if the key of your stored items is
+     * in a property called **id**, then the MixedCollection will be able to _derive_ the key of the replacement item.
+     * If you want to replace an item with one having the same key value, then just pass the replacement item in this
+     * parameter.
+     * @param {Object} item {Object} item (optional) If the first parameter passed was a key, the item to associate with
+     * that key.
+     * @return {Object} The new item.
      */
-    replace: function(key, item) {
+    replace: function(oldKey, item) {
         var me = this,
-            sorted = this.sorted,
-            filtered = this.filtered,
-            sortable = this.mixins.sortable,
-            filterable = this.mixins.filterable,
-            items = this.items,
-            keys = this.keys,
-            all = this.all,
+            sorted = me.sorted,
+            filtered = me.filtered,
+            filterable = me.mixins.filterable,
+            items = me.items,
+            keys = me.keys,
+            all = me.all,
+            map = me.map,
             returnItem = null,
             oldItemsLn = items.length,
-            oldItem, index;
+            oldItem, index, newKey;
 
         if (arguments.length == 1) {
-            item = key;
-            key = me.getKey(item);
+            item = oldKey;
+            oldKey = newKey = me.getKey(item);
+        } else {
+            newKey = me.getKey(item);
         }
 
-        oldItem = me.map[key];
-        if (typeof key == 'undefined' || key === null || typeof oldItem == 'undefined') {
-             return me.add(key, item);
+        oldItem = map[oldKey];
+        if (typeof oldKey == 'undefined' || oldKey === null || typeof oldItem == 'undefined') {
+             return me.add(newKey, item);
         }
 
-        me.map[key] = item;
+        me.map[newKey] = item;
+        if (newKey !== oldKey) {
+            delete me.map[oldKey];
+        }
 
-        if (sorted && this.getAutoSort()) {
+        if (sorted && me.getAutoSort()) {
             Ext.Array.remove(items, oldItem);
-            Ext.Array.remove(keys, key);
+            Ext.Array.remove(keys, oldKey);
             Ext.Array.remove(all, oldItem);
 
             all.push(item);
 
             me.dirtyIndices = true;
 
-            if (filtered && this.getAutoFilter()) {
+            if (filtered && me.getAutoFilter()) {
                 // If the item is now filtered we check if it was not filtered
                 // before. If that is the case then we subtract from the length
                 if (filterable.isFiltered.call(me, item)) {
@@ -376,16 +389,16 @@ mc.add(otherEl);
                 }
             }
 
-            index = sortable.findInsertionIndex.call(me, items, item);
+            index = this.findInsertionIndex(items, item);
 
-            Ext.Array.splice(keys, index, 0, key);
+            Ext.Array.splice(keys, index, 0, newKey);
             Ext.Array.splice(items, index, 0, item);
         } else {
             if (filtered) {
-                if (this.getAutoFilter() && filterable.isFiltered.call(me, item)) {
+                if (me.getAutoFilter() && filterable.isFiltered.call(me, item)) {
                     if (items.indexOf(oldItem) !== -1) {
                         Ext.Array.remove(items, oldItem);
-                        Ext.Array.remove(keys, key);
+                        Ext.Array.remove(keys, oldKey);
                         me.length--;
                         me.dirtyIndices = true;
                     }
@@ -393,16 +406,16 @@ mc.add(otherEl);
                 }
                 else if (items.indexOf(oldItem) === -1) {
                     items.push(item);
-                    keys.push(key);
-                    this.indices[key] = me.length;
+                    keys.push(newKey);
+                    me.indices[newKey] = me.length;
                     me.length++;
                     return item;
                 }
             }
 
-            index = me.indexOfKey(key);
+            index = me.indexOfKey(oldKey);
 
-            keys[index] = key;
+            keys[index] = newKey;
             items[index] = item;
             this.dirtyIndices = true;
         }
@@ -412,24 +425,23 @@ mc.add(otherEl);
 
     /**
      * Adds all elements of an Array or an Object to the collection.
-     * @param {Object/Array} objs An Object containing properties which will be added
-     * to the collection, or an Array of values, each of which are added to the collection.
-     * Functions references will be added to the collection if <code>{@link #allowFunctions}</code>
-     * has been set to <tt>true</tt>.
+     * @param {Object/Array} objs An Object containing properties which will be added to the collection, or an Array of
+     * values, each of which are added to the collection. Functions references will be added to the collection if {@link
+     * Ext.util.MixedCollection#allowFunctions allowFunctions} has been set to true.
      */
     addAll: function(addItems) {
         var me = this,
-            filtered = this.filtered,
-            sorted = this.sorted,
-            all = this.all,
-            items = this.items,
-            keys = this.keys,
-            map = this.map,
-            autoFilter = this.getAutoFilter(),
-            autoSort = this.getAutoSort(),
+            filtered = me.filtered,
+            sorted = me.sorted,
+            all = me.all,
+            items = me.items,
+            keys = me.keys,
+            map = me.map,
+            autoFilter = me.getAutoFilter(),
+            autoSort = me.getAutoSort(),
             newKeys = [],
             newItems = [],
-            filterable = this.mixins.filterable,
+            filterable = me.mixins.filterable,
             addedItems = [],
             ln, key, i, item;
 
@@ -475,10 +487,10 @@ mc.add(otherEl);
         }
 
         if (addedItems.length) {
-            this.dirtyIndices = true;
+            me.dirtyIndices = true;
 
             if (sorted && autoSort) {
-                this.sort();
+                me.sort();
             }
 
             return addedItems;
@@ -489,14 +501,23 @@ mc.add(otherEl);
 
     /**
      * Executes the specified function once for every item in the collection, passing the following arguments:
-     * <div class="mdetail-params"><ul>
-     * <li><b>item</b> : Mixed<p class="sub-desc">The collection item</p></li>
-     * <li><b>index</b> : Number<p class="sub-desc">The item's index</p></li>
-     * <li><b>length</b> : Number<p class="sub-desc">The total number of items in the collection</p></li>
-     * </ul></div>
+     *
+     *   - **item** : Mixed
+     *
+     * The collection item
+     *
+     *   - **index** : Number
+     *
+     * The item's index
+     *
+     *   - **length** : Number
+     *
+     * The total number of items in the collection
+     *
      * The function should return a boolean value. Returning false from the function will stop the iteration.
      * @param {Function} fn The function to execute for each item.
-     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to the current item in the iteration.
+     * @param {Object} scope The scope (`this` reference) in which the function is executed. Defaults to the current
+     * item in the iteration.
      */
     each: function(fn, scope) {
         var items = this.items.slice(), // each safe for removal
@@ -513,10 +534,11 @@ mc.add(otherEl);
     },
 
     /**
-     * Executes the specified function once for every key in the collection, passing each
-     * key, and its associated item as the first two parameters.
+     * Executes the specified function once for every key in the collection, passing each key, and its associated item
+     * as the first two parameters.
      * @param {Function} fn The function to execute for each item.
-     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to the browser window.
+     * @param {Object} scope The scope (`this` reference) in which the function is executed. Defaults to the browser
+     * window.
      */
     eachKey: function(fn, scope) {
         var keys = this.keys,
@@ -529,10 +551,10 @@ mc.add(otherEl);
     },
 
     /**
-     * Returns the first item in the collection which elicits a true return value from the
-     * passed selection function.
+     * Returns the first item in the collection which elicits a true return value from the passed selection function.
      * @param {Function} fn The selection function to execute for each item.
-     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to the browser window.
+     * @param {Object} scope The scope (`this` reference) in which the function is executed. Defaults to the browser
+     * window.
      * @return {Object} The first item in the collection which returned true from the selection function.
      */
     findBy: function(fn, scope) {
@@ -550,11 +572,11 @@ mc.add(otherEl);
     },
 
     /**
-     * Filter by a function. Returns a <i>new</i> collection that has been filtered.
-     * The passed function will be called with each object in the collection.
-     * If the function returns true, the value is included otherwise it is filtered.
+     * Filter by a function. Returns a _new_ collection that has been filtered. The passed function will be called with
+     * each object in the collection. If the function returns true, the value is included otherwise it is filtered.
      * @param {Function} fn The function to be called, it will receive the args o (the object), k (the key)
-     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to this MixedCollection.
+     * @param {Object} scope The scope (`this` reference) in which the function is executed. Defaults to this
+     * MixedCollection.
      * @return {Ext.util.MixedCollection} The new filtered collection
      */
     filterBy: function(fn, scope) {
@@ -580,7 +602,7 @@ mc.add(otherEl);
      * Inserts an item at the specified index in the collection. Fires the {@link #add} event when complete.
      * @param {Number} index The index to insert the item at.
      * @param {String} key The key to associate with the new item, or the item itself.
-     * @param {Object} item (optional) If the second parameter was a key, the new item.
+     * @param {Object} item If the second parameter was a key, the new item.
      * @return {Object} The item inserted.
      */
     insert: function(index, key, item) {
@@ -637,11 +659,10 @@ mc.add(otherEl);
             autoSort = this.getAutoSort(),
             newKeys = [],
             newItems = [],
+            addedItems = [],
             filterable = this.mixins.filterable,
             insertedUnfilteredItem = false,
             ln, key, i, item;
-
-        // @TODO: return only the actual added items
 
         if (sorted && this.getAutoSort()) {
             // <debug>
@@ -690,6 +711,7 @@ mc.add(otherEl);
             Ext.Array.splice(keys, index + i, 0, key);
 
             insertedUnfilteredItem = true;
+            addedItems.push(item);
         }
 
         if (insertedUnfilteredItem) {
@@ -698,9 +720,11 @@ mc.add(otherEl);
             if (sorted && autoSort) {
                 this.sort();
             }
+
+            return addedItems;
         }
 
-        return newItems;
+        return null;
     },
 
     /**
@@ -829,12 +853,11 @@ mc.add(otherEl);
     },
 
     /**
-     * Returns the item associated with the passed key OR index.
-     * Key has priority over index.  This is the equivalent
-     * of calling {@link #getByKey} first, then if nothing matched calling {@link #getAt}.
+     * Returns the item associated with the passed key OR index. Key has priority over index. This is the equivalent of
+     * calling {@link #getByKey} first, then if nothing matched calling {@link #getAt}.
      * @param {String/Number} key The key or index of the item.
-     * @return {Object} If the item is found, returns the item.  If the item was not found, returns <tt>undefined</tt>.
-     * If an item was found, but is a Class, returns <tt>null</tt>.
+     * @return {Object} If the item is found, returns the item. If the item was not found, returns undefined. If an item
+     * was found, but is a Class, returns null.
      */
     get: function(key) {
         var me = this,
@@ -877,7 +900,6 @@ mc.add(otherEl);
     contains: function(item) {
         var key = this.getKey(item);
         if (key) {
-            // @TODO check if item is filtered?
             return this.containsKey(key);
         } else {
             return Ext.Array.contains(this.items, item);
@@ -894,7 +916,7 @@ mc.add(otherEl);
     },
 
     /**
-     * Removes all items from the collection.  Fires the {@link #clear} event when complete.
+     * Removes all items from the collection. Fires the {@link #clear} event when complete.
      */
     clear: function(){
         var me = this;
@@ -924,8 +946,8 @@ mc.add(otherEl);
 
     /**
      * Returns a range of items in this collection
-     * @param {Number} startIndex (optional) The starting index. Defaults to 0.
-     * @param {Number} endIndex (optional) The ending index. Defaults to the last item.
+     * @param {Number} startIndex The starting index. Defaults to 0.
+     * @param {Number} endIndex The ending index. Defaults to the last item.
      * @return {Array} An array of items
      */
     getRange: function(start, end) {
@@ -954,11 +976,12 @@ mc.add(otherEl);
     },
 
     /**
-     * Find the index of the first matching object in this collection by a function.
-     * If the function returns <i>true</i> it is considered a match.
+     * Find the index of the first matching object in this collection by a function. If the function returns _true_ it
+     * is considered a match.
      * @param {Function} fn The function to be called, it will receive the args o (the object), k (the key).
-     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to this MixedCollection.
-     * @param {Number} start (optional) The index to start searching at (defaults to 0).
+     * @param {Object} scope The scope (`this` reference) in which the function is executed. Defaults to this
+     * MixedCollection.
+     * @param {Number} start The index to start searching at (defaults to 0).
      * @return {Number} The matched index or -1
      */
     findIndexBy: function(fn, scope, start) {

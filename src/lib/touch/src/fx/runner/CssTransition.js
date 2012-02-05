@@ -8,10 +8,6 @@ Ext.define('Ext.fx.runner.CssTransition', {
     listenersAttached: false,
 
     constructor: function() {
-        this.requestAnimationFrame = Ext.feature.getSupportedPropertyName(window, 'requestAnimationFrame');
-
-        this.runningData = {};
-
         this.runningAnimationsData = {};
 
         return this.callParent(arguments);
@@ -23,84 +19,161 @@ Ext.define('Ext.fx.runner.CssTransition', {
     },
 
     onTransitionEnd: function(e) {
-        this.refreshRunningAnimationsData(Ext.get(e.target), [e.browserEvent.propertyName]);
+        var target = e.target,
+            id = target.id;
+
+        if (id && this.runningAnimationsData.hasOwnProperty(id)) {
+            this.refreshRunningAnimationsData(Ext.get(target), [e.browserEvent.propertyName]);
+        }
     },
 
-    onAnimationEnd: function(element, animation, isInterrupted) {
+    onAnimationEnd: function(element, data, animation, isInterrupted, isReplaced) {
         var id = element.getId(),
+            runningData = this.runningAnimationsData[id],
+            runningNameMap = runningData.nameMap,
             endRules = {},
-            endData = {
-                'transition-property': null,
-                'transition-duration': null,
-                'transition-timing-function': null,
-                'transition-delay': null
-            },
+            endData = {},
             toPropertyNames, i, ln, name;
 
         endRules[id] = endData;
 
-        if (animation.onBeforeEnd) {
-            animation.onBeforeEnd.call(animation.scope || this, element, isInterrupted);
+        if (data.onBeforeEnd) {
+            data.onBeforeEnd.call(data.scope || this, element, isInterrupted);
         }
 
-        if (!isInterrupted && !animation.preserveEndState) {
-            toPropertyNames = animation.toPropertyNames;
+        animation.fireEvent('animationbeforeend', animation, element, isInterrupted);
+
+        if (isReplaced || (!isInterrupted && !data.preserveEndState)) {
+            toPropertyNames = data.toPropertyNames;
 
             for (i = 0,ln = toPropertyNames.length; i < ln; i++) {
                 name = toPropertyNames[i];
-                endData[name] = null;
+
+                if (!runningNameMap.hasOwnProperty(name)) {
+                    endData[name] = null;
+                }
             }
         }
 
-        if (animation.after) {
-            Ext.merge(endData, animation.after);
+        if (data.after) {
+            Ext.merge(endData, data.after);
         }
 
         this.applyStyles(endRules);
 
-        if (animation.onEnd) {
-            animation.onEnd.call(animation.scope || this, element, isInterrupted);
+        if (data.onEnd) {
+            data.onEnd.call(data.scope || this, element, isInterrupted);
         }
+
+        animation.fireEvent('animationend', animation, element, isInterrupted);
     },
 
-    refreshRunningAnimationsData: function(element, propertyNames, interrupt) {
+    onAllAnimationsEnd: function(element) {
+        var id = element.getId(),
+            endRules = {};
+
+        delete this.runningAnimationsData[id];
+
+        endRules[id] = {
+            'transition-property': null,
+            'transition-duration': null,
+            'transition-timing-function': null,
+            'transition-delay': null
+        };
+
+        this.applyStyles(endRules);
+    },
+
+    hasRunningAnimations: function(element) {
+        var id = element.getId(),
+            runningAnimationsData = this.runningAnimationsData;
+
+        return runningAnimationsData.hasOwnProperty(id) && runningAnimationsData[id].sessions.length > 0;
+    },
+
+    refreshRunningAnimationsData: function(element, propertyNames, interrupt, replace) {
         var id = element.getId(),
             runningAnimationsData = this.runningAnimationsData,
-            animations = runningAnimationsData[id],
+            runningData = runningAnimationsData[id],
+            nameMap = runningData.nameMap,
+            nameList = runningData.nameList,
+            sessions = runningData.sessions,
             ln, j, subLn, name,
-            i, animation, properties;
+            i, session, map, list,
+            hasCompletedSession = false;
 
-        if (!animations) {
+        interrupt = Boolean(interrupt);
+        replace = Boolean(replace);
+
+        if (!sessions) {
             return this;
         }
 
-        ln = animations.length;
+        ln = sessions.length;
 
         if (ln === 0) {
             return this;
         }
 
-        for (i = 0; i < ln; i++) {
-            animation = animations[i];
-            properties = animation.properties;
+        if (replace) {
+            runningData.nameMap = {};
+            nameList.length = 0;
 
-            for (j = 0,subLn = propertyNames.length; j < subLn; j++) {
-                name = propertyNames[j];
+            for (i = 0; i < ln; i++) {
+                session = sessions[i];
+                this.onAnimationEnd(element, session.data, session.animation, interrupt, replace);
+            }
 
-                if (properties[name]) {
-                    delete properties[name];
-                    animation.length--;
+            sessions.length = 0;
+        }
+        else {
+            for (i = 0; i < ln; i++) {
+                session = sessions[i];
+                map = session.map;
+                list = session.list;
+
+                for (j = 0,subLn = propertyNames.length; j < subLn; j++) {
+                    name = propertyNames[j];
+
+                    if (map[name]) {
+                        delete map[name];
+                        Ext.Array.remove(list, name);
+                        session.length--;
+                        if (--nameMap[name] == 0) {
+                            delete nameMap[name];
+                            Ext.Array.remove(nameList, name);
+                        }
+                    }
+                }
+
+                if (session.length == 0) {
+                    sessions.splice(i, 1);
+                    i--;
+                    ln--;
+
+                    hasCompletedSession = true;
+                    this.onAnimationEnd(element, session.data, session.animation, interrupt);
                 }
             }
-
-            if (animation.length == 0) {
-                animations.splice(i, 1);
-                i--;
-                ln--;
-
-                this.onAnimationEnd(element, animation.data, interrupt);
-            }
         }
+
+        if (!replace && !interrupt && sessions.length == 0 && hasCompletedSession) {
+            this.onAllAnimationsEnd(element);
+        }
+    },
+
+    getRunningData: function(id) {
+        var runningAnimationsData = this.runningAnimationsData;
+
+        if (!runningAnimationsData.hasOwnProperty(id)) {
+            runningAnimationsData[id] = {
+                nameMap: {},
+                nameList: [],
+                sessions: []
+            };
+        }
+
+        return runningAnimationsData[id];
     },
 
     getTestElement: function() {
@@ -110,15 +183,16 @@ Ext.define('Ext.fx.runner.CssTransition', {
         if (!testElement) {
             iframe = document.createElement('iframe');
             iframeStyle = iframe.style;
-            iframeStyle.setProperty('visibility', 'hidden', '!important');
-            iframeStyle.setProperty('width', '0px', '!important');
-            iframeStyle.setProperty('height', '0px', '!important');
-            iframeStyle.setProperty('position', 'absolute', '!important');
-            iframeStyle.setProperty('zIndex', '-1000', '!important');
+            iframeStyle.setProperty('visibility', 'hidden', 'important');
+            iframeStyle.setProperty('width', '0px', 'important');
+            iframeStyle.setProperty('height', '0px', 'important');
+            iframeStyle.setProperty('position', 'absolute', 'important');
+            iframeStyle.setProperty('border', '0px', 'important');
+            iframeStyle.setProperty('zIndex', '-1000', 'important');
 
             document.body.appendChild(iframe);
             iframeDocument = iframe.contentDocument;
-            
+
             iframeDocument.open();
             iframeDocument.writeln('</body>');
             iframeDocument.close();
@@ -147,19 +221,17 @@ Ext.define('Ext.fx.runner.CssTransition', {
     run: function(animations) {
         var me = this,
             isLengthPropertyMap = this.lengthProperties,
-            requestAnimationFrame = this.requestAnimationFrame,
-            runningData = this.runningData,
             fromData = {},
             toData = {},
             data = {},
-            runningAnimationsData = this.runningAnimationsData,
-            previous, element, elementId, from, to, before,
-            fromPropertyNames, toPropertyNames, propertyNames,
+            element, elementId, from, to, before,
+            fromPropertyNames, toPropertyNames,
             doApplyTo, message,
-            runningAnimations,
-            i, j, ln, animation, propertiesLength, propertiesMap,
+            runningData,
+            i, j, ln, animation, propertiesLength, sessionNameMap,
             computedStyle, formattedName, name, toFormattedValue,
-            computedValue, fromFormattedValue, isLengthProperty;
+            computedValue, fromFormattedValue, isLengthProperty,
+            runningNameMap, runningNameList, runningSessions;
 
         if (!this.listenersAttached) {
             this.attachListeners();
@@ -176,18 +248,21 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
             elementId = element.getId();
 
-            previous = runningData[elementId];
+            data = Ext.merge({}, animation.getData());
 
-            animation = Ext.merge({}, animation.getData());
+            if (animation.onBeforeStart) {
+                animation.onBeforeStart.call(animation.scope || this, element);
+                animation.fireEvent('animationstart', animation);
+            }
 
-            data[elementId] = animation;
+            data[elementId] = data;
 
-            before = animation.before;
-            from = animation.from;
-            to = animation.to;
+            before = data.before;
+            from = data.from;
+            to = data.to;
 
-            animation.fromPropertyNames = fromPropertyNames = [];
-            animation.toPropertyNames = toPropertyNames = [];
+            data.fromPropertyNames = fromPropertyNames = [];
+            data.toPropertyNames = toPropertyNames = [];
 
             for (name in to) {
                 if (to.hasOwnProperty(name)) {
@@ -221,75 +296,76 @@ Ext.define('Ext.fx.runner.CssTransition', {
                 }
             }
 
-            propertyNames = Ext.Array.merge(fromPropertyNames, toPropertyNames);
-
-            propertiesMap = {};
             propertiesLength = toPropertyNames.length;
 
-            for (j = 0; j < propertiesLength; j++) {
-                propertiesMap[toPropertyNames[j]] = true;
-            }
-
-            if (!(runningAnimations = runningAnimationsData[elementId])) {
-                runningAnimationsData[elementId] = runningAnimations = [];
-            }
-
-            this.refreshRunningAnimationsData(element, propertyNames, true);
-
             if (propertiesLength === 0) {
-                this.onAnimationEnd(element, animation);
+                this.onAnimationEnd(element, data, animation);
                 continue;
             }
-            else {
-                runningAnimations.push({
-                    element: element,
-                    properties: propertiesMap,
-                    length: propertiesLength,
-                    data: animation
-                });
+
+            runningData = this.getRunningData(elementId);
+            runningSessions = runningData.sessions;
+
+            if (runningSessions.length > 0) {
+                this.refreshRunningAnimationsData(
+                    element, Ext.Array.merge(fromPropertyNames, toPropertyNames), true, data.replacePrevious
+                );
             }
+
+            runningNameMap = runningData.nameMap;
+            runningNameList = runningData.nameList;
+
+            sessionNameMap = {};
+            for (j = 0; j < propertiesLength; j++) {
+                name = toPropertyNames[j];
+                sessionNameMap[name] = true;
+
+                if (!runningNameMap.hasOwnProperty(name)) {
+                    runningNameMap[name] = 1;
+                    runningNameList.push(name);
+                }
+                else {
+                    runningNameMap[name]++;
+                }
+            }
+
+            runningSessions.push({
+                element: element,
+                map: sessionNameMap,
+                list: toPropertyNames.slice(),
+                length: propertiesLength,
+                data: data,
+                animation: animation
+            });
 
             fromData[elementId] = from = Ext.apply(Ext.Object.chain(before), from);
 
-            if (previous) {
-                fromPropertyNames = Ext.Array.difference(previous.toPropertyNames, fromPropertyNames);
+            if (runningNameList.length > 0) {
+                fromPropertyNames = Ext.Array.difference(runningNameList, fromPropertyNames);
                 toPropertyNames = Ext.Array.merge(fromPropertyNames, toPropertyNames);
-
                 from['transition-property'] = fromPropertyNames;
             }
 
             toData[elementId] = to = Ext.Object.chain(to);
 
             to['transition-property'] = toPropertyNames;
-            to['transition-duration'] = animation.duration;
-            to['transition-timing-function'] = animation.easing;
-            to['transition-delay'] = animation.delay;
+            to['transition-duration'] = data.duration;
+            to['transition-timing-function'] = data.easing;
+            to['transition-delay'] = data.delay;
         }
 
-        Ext.merge(runningData, data);
+        message = this.$className;
 
-        if (requestAnimationFrame) {
-            window[requestAnimationFrame](function() {
-                me.applyStyles(fromData);
-                window[requestAnimationFrame](function() {
-                    me.applyStyles(toData);
-                });
-            });
-        }
-        else {
-            message = this.$className;
+        this.applyStyles(fromData);
 
-            this.applyStyles(fromData);
+        doApplyTo = function(e) {
+            if (e.data === message && e.source === window) {
+                window.removeEventListener('message', doApplyTo, false);
+                me.applyStyles(toData);
+            }
+        };
 
-            doApplyTo = function(e) {
-                if (e.data === message && e.source === window) {
-                    window.removeEventListener('message', doApplyTo, false);
-                    me.applyStyles(toData);
-                }
-            };
-
-            window.addEventListener('message', doApplyTo, false);
-            window.postMessage(message, '*');
-        }
+        window.addEventListener('message', doApplyTo, false);
+        window.postMessage(message, '*');
     }
 });

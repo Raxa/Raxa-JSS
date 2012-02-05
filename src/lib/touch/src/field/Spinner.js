@@ -47,7 +47,7 @@ Ext.define('Ext.field.Spinner', {
          * @accessor
          */
         minValue: Number.NEGATIVE_INFINITY,
-        
+
         /**
          * @cfg {Number} [maxValue=infinity] The maximum allowed value.
          * @accessor
@@ -90,7 +90,12 @@ Ext.define('Ext.field.Spinner', {
          * @cfg {Number} tabIndex
          * @hide
          */
-        tabIndex: -1
+        tabIndex: -1,
+
+        // @inherit
+        component: {
+            disabled: true
+        }
     },
 
     constructor: function() {
@@ -107,20 +112,23 @@ Ext.define('Ext.field.Spinner', {
     updateComponent: function(newComponent) {
         this.callParent(arguments);
 
-        var cls = this.getCls();
+        var innerElement = this.innerElement,
+            cls = this.getCls();
 
         if (newComponent) {
-            this.spinDownButton = newComponent.element.createChild({
+            this.spinDownButton = Ext.Element.create({
                 cls : cls + '-button ' + cls + '-button-down',
                 html: '-'
             });
 
-            newComponent.element.insertFirst(this.spinDownButton);
+            innerElement.insertFirst(this.spinDownButton);
 
-            this.spinUpButton = newComponent.element.createChild({
+            this.spinUpButton = Ext.Element.create({
                 cls : cls + '-button ' + cls + '-button-up',
                 html: '+'
             });
+
+            innerElement.appendChild(this.spinUpButton);
 
             this.downRepeater = this.createRepeater(this.spinDownButton, this.onSpinDown);
             this.upRepeater = this.createRepeater(this.spinUpButton,     this.onSpinUp);
@@ -219,6 +227,20 @@ Ext.define('Ext.field.Spinner', {
         me.fireEvent('spin' + direction, me, value);
     },
 
+    /**
+     * @private
+     */
+    doSetDisabled: function(disabled) {
+        Ext.Component.prototype.doSetDisabled.apply(this, arguments);
+    },
+
+    /**
+     * @private
+     */
+    setDisabled: function() {
+        Ext.Component.prototype.setDisabled.apply(this, arguments);
+    },
+
     reset: function() {
         this.setValue(this.getDefaultValue());
     },
@@ -226,7 +248,7 @@ Ext.define('Ext.field.Spinner', {
     // @private
     destroy: function() {
         var me = this;
-        Ext.destroy(me.downRepeater, me.upRepeater);
+        Ext.destroy(me.downRepeater, me.upRepeater, me.spinDownButton, me.spinUpButton);
         me.callParent(arguments);
     }
 }, function() {

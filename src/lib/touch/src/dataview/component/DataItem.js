@@ -46,6 +46,13 @@ Ext.define('Ext.dataview.component.DataItem', {
         record: null,
 
         /**
+         * @cfg {String} itemCls
+         * An additional CSS class to apply to items within the DataView.
+         * @accessor
+         */
+        itemCls: null,
+
+        /**
          * @cfg dataMap
          * The dataMap allows you to map {@link #record} fields to specific configurations in this component.
          *
@@ -69,6 +76,15 @@ Ext.define('Ext.dataview.component.DataItem', {
         }]
     },
 
+    updateItemCls: function(newCls, oldCls) {
+        if (oldCls) {
+            this.removeCls(oldCls);
+        }
+        if (newCls) {
+            this.addCls(newCls);
+        }
+    },
+
     /**
      * Updates this container's child items, passing through the dataMap.
      * @param newRecord
@@ -76,7 +92,7 @@ Ext.define('Ext.dataview.component.DataItem', {
      */
     updateRecord: function(newRecord) {
         var me = this,
-            dataview = me.dataview,
+            dataview = me.config.dataview,
             data = dataview.prepareData(newRecord.getData(true), dataview.getStore().indexOf(newRecord), newRecord),
             items = me.getItems(),
             item = items.first(),

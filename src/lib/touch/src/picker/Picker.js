@@ -253,7 +253,6 @@ Ext.define('Ext.picker.Picker', {
 
         me.on({
             scope: this,
-
             show: 'onShow'
         });
     },
@@ -294,7 +293,7 @@ Ext.define('Ext.picker.Picker', {
             if (Ext.isBoolean(config)) {
                 config = {};
             }
-            
+
             if (typeof config == "string") {
                 config = {
                     text: config
@@ -463,9 +462,7 @@ Ext.define('Ext.picker.Picker', {
      */
     setValue: function(values, animated) {
         var slot,
-            me = this,
-            items = me.items.items,
-            ln = items.length;
+            me = this;
 
         // Value is an object with keys mapping to slot names
         if (!values) {
@@ -524,6 +521,11 @@ Ext.define('Ext.picker.Picker', {
      */
     getValues: function() {
         return this.getValue();
+    },
+
+    destroy: function() {
+        this.callParent();
+        Ext.destroy(this.mask, this.bar);
     }
 }, function() {
     Ext.define('x-textvalue', {

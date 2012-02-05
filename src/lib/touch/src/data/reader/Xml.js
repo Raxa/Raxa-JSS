@@ -168,15 +168,18 @@ Ext.define('Ext.data.reader.Xml', {
     alternateClassName: 'Ext.data.XmlReader',
     alias : 'reader.xml',
 
-    /**
-     * @cfg {String} record The DomQuery path to the repeated element which contains record information.
-     */
+    config: {
+        /**
+         * @cfg {String} record The DomQuery path to the repeated element which contains record information.
+         */
+        record: null
+    },
 
     /**
      * @private
      * Creates a function to return some particular key of data from a response. The totalProperty and
      * successProperty are treated as special cases for type casting, everything else is just a simple selector.
-     * @param {String} key
+     * @param {String} expr
      * @return {Function}
      */
     createAccessor: function(expr) {
@@ -208,10 +211,15 @@ Ext.define('Ext.data.reader.Xml', {
 
         //<debug>
         if (!xml) {
-            Ext.Error.raise({
-                response: response,
-                msg: 'XML data not found in the response'
-            });
+            /**
+             * @event exception Fires whenever the reader is unable to parse a response.
+             * @param {Ext.data.reader.Xml} reader A reference to this reader
+             * @param {XMLHttpRequest} response The XMLHttpRequest response object.
+             * @param {String} error The error message.
+             */
+            this.fireEvent('exception', this, response, 'XML data not found in the response');
+
+            Ext.Logger.warn('XML data not found in the response');
         }
         //</debug>
 
@@ -235,7 +243,7 @@ Ext.define('Ext.data.reader.Xml', {
      */
     getRoot: function(data) {
         var nodeName = data.nodeName,
-            root     = this.root;
+            root     = this.getRootProperty();
 
         if (!root || (nodeName && nodeName == root)) {
             return data;
@@ -254,11 +262,11 @@ Ext.define('Ext.data.reader.Xml', {
      * @return {Ext.data.Model[]} The records
      */
     extractData: function(root) {
-        var recordName = this.record;
+        var recordName = this.getRecord();
 
         //<debug>
         if (!recordName) {
-            Ext.Error.raise('Record is a required parameter');
+            Ext.Logger.error('Record is a required parameter');
         }
         //</debug>
 
@@ -291,13 +299,6 @@ Ext.define('Ext.data.reader.Xml', {
         if (Ext.isArray(doc)) {
             doc = doc[0];
         }
-
-        /**
-         * DEPRECATED - will be removed in Ext JS 5.0. This is just a copy of this.rawData - use that instead
-         * @property xmlData
-         * @type Object
-         */
-        this.xmlData = doc;
         return this.callParent([doc]);
     }
 });

@@ -1,4 +1,4 @@
-/**
+/*
  * @class Ext.util.translatable.Abstract
  * @private
  *

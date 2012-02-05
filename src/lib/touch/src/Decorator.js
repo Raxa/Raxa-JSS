@@ -151,5 +151,10 @@ Ext.define('Ext.Decorator', {
     setDisabled: function(disabled) {
         this.callParent(arguments);
         this.getComponent().setDisabled(disabled);
+    },
+
+    destroy: function() {
+        Ext.destroy(this.getComponent());
+        this.callParent();
     }
 });

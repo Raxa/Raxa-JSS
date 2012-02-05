@@ -131,42 +131,11 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
   }
 
-  // Ext.form.FieldSet
-  .x-form-fieldset {
-    margin: 0 0 1.5em;
-
-    .x-form-fieldset-inner {
-      border: 1px solid $form-light;
-      background: #fff;
-      padding: 0;
-      @if $include-border-radius { @include border-radius($form-fieldset-radius); }
-      overflow: hidden;
-    }
-  }
-
-  .x-form-fieldset-title {
-    @include label;
-    margin: 1em ( $form-spacing + .1em ) .3em;
-    color: $form-dark;
-    font-weight: bold;
-    white-space: nowrap;
-  }
-
-  .x-form-fieldset-instructions {
-    @include label;
-    color: lighten($form-dark, 30%);
-    margin: 1em ( $form-spacing + .1em ) .3em;
-    font-size: .8em;
-    text-align: center;
-  }
-
   // Label
   .x-form-label {
     @include label;
     @include bevel-text('light');
-    background-color: $form-label-background-color;
     padding: $form-spacing;
-    border-top: 1px solid lighten($form-light, 20%);
     display: none;
     @include ellipsis;
 
@@ -179,7 +148,6 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
   //  Ext.field.Field
   .x-field {
     min-height: $form-field-height;
-    border-bottom: 1px solid $form-light;
 
     .x-component-outer {
       -webkit-box-flex: 1;
@@ -294,6 +262,13 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
   }
 
+  .x-item-disabled {
+    label:after,
+    .x-form-label:after {
+      color: #666 !important;
+    }
+  }
+
   // Ext.field.TextArea
   .x-field-textarea {
     textarea {
@@ -333,13 +308,19 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
 
   // Ext.field.Spinner
   .x-spinner {
-    .x-field-input {
+    .x-component-outer {
       @include display-box;
 
+      > * {
+        -webkit-box-flex: 1;
+        width: auto;
+      }
+    }
+
+    .x-field-input {
       .x-input-el {
         padding: 0;
-        width: 50%;
-        -webkit-box-flex: 1;
+        width: 25px;
         text-align: center;
       }
 
@@ -349,22 +330,29 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
         -webkit-appearance: none;
         margin: 0;
       }
+    }
 
+    &.x-item-disabled {
       .x-spinner-button {
-        padding: .65em 1.5em;
-        font-weight: bold;
-        @include toolbar-button($form-light);
-        text-align: center;
-      }
-      .x-spinner-button-down {
-        border: 0 !important;
-        border-right: 1px solid $form-light !important;
-      }
-      .x-spinner-button-up {
-        border: 0 !important;
-        border-left: 1px solid $form-light !important;
+        @include toolbar-button(lighten($form-light, 10), matte);
+        color: #aaa !important;
       }
     }
+
+  .x-spinner-button {
+    padding: .65em 0;
+    font-weight: bold;
+    @include toolbar-button($form-light);
+    text-align: center;
+  }
+  .x-spinner-button-down {
+    border: 0 !important;
+    border-right: 1px solid $form-light !important;
+  }
+  .x-spinner-button-up {
+    border: 0 !important;
+    border-left: 1px solid $form-light !important;
+  }
   }
 
   .x-phone .x-select-overlay {
@@ -434,22 +422,17 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
 
     .x-clear-icon {
       display: none;
-      margin: .5em;
+      background: theme_image($theme-name, "clear_icon.png") no-repeat;
+      background-position: center center;
+      background-size: 95% 95%;
       width: $form-clear-size;
       height: $form-clear-size;
-      @if $include-border-radius { @include border-radius($form-clear-size/2); }
-      background-color: rgba(#000, .15);
-      color: #fff;
-      font-weight: bold;
-      line-height: .9em;
-      text-align: center;
-      padding: 0 .27em;
-    }
-  }
+      margin: .5em;
 
-  .x-android .x-clear-icon {
-    line-height: 1.2em;
-    padding: 0 .3em;
+      & .x-desktop {
+        background-size: 100% 100%;
+      }
+    }
   }
 
   .x-field-clearable {
@@ -480,9 +463,27 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     pointer-events: none;
   }
 
-  // Rounded corners
+  // Ext.form.FieldSet
   .x-form-fieldset {
+    margin: 0 0 1.5em;
+
+    .x-form-label {
+      background-color: $form-label-background-color;
+      border-top: 1px solid lighten($form-light, 20%);
+    }
+
+    .x-form-fieldset-inner {
+      border: 1px solid $form-light;
+      background: #fff;
+      padding: 0;
+      @if $include-border-radius { @include border-radius($form-fieldset-radius); }
+      overflow: hidden;
+    }
+
+    //Ext.field.Field
     .x-field {
+      border-bottom: 1px solid $form-light;
+
       &.x-form-fieldset-item-first {
         @if $include-border-radius {
           @include border-top-radius($form-fieldset-radius);
@@ -499,38 +500,57 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
   }
 
+  .x-form-fieldset-title {
+    @include label;
+    margin: 1em ( $form-spacing + .1em ) .3em;
+    color: $form-dark;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .x-form-fieldset-instructions {
+    @include label;
+    color: lighten($form-dark, 30%);
+    margin: 1em ( $form-spacing + .1em ) .3em;
+    font-size: .8em;
+    text-align: center;
+  }
+
   // Create the dropdown arrow
   // for select fields
   .x-field-select {
     position: relative;
 
-    &:before, &:after {
-      pointer-events: none;
-      position: absolute;
-      display: block;
-      right: 0;
-    }
-
-    // Tip
-    &:after {
-      @include insertion(0,0,0,auto);
-      margin: 1em;
-      border: .4em solid transparent;
-      border-top-color: $form-light;
-      z-index: 2;
-    }
-
-    &.x-label-align-top:after {
+    &.x-label-align-top .x-component-outer:after {
       top: auto;
       bottom: 0;
     }
 
-    &:before {
-      @include insertion(4em,auto,0,auto);
-      bottom: 0;
-      @if $include-border-radius { @include border-right-radius(inherit); }
-      @if $include-highlights { background: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba($form-field-bg-color, 0)), color-stop(.5, rgba($form-field-bg-color, 1))); }
-      z-index: 1;
+    .x-component-outer {
+      &:before,
+      &:after {
+        pointer-events: none;
+        position: absolute;
+        display: block;
+        right: 0;
+      }
+
+      // Tip
+      &:after {
+        @include insertion(0,0,0,auto);
+        margin: 1em;
+        border: .4em solid transparent;
+        border-top-color: $form-light;
+        z-index: 2;
+      }
+
+      &:before {
+        @include insertion(4em,auto,0,auto);
+        bottom: 0;
+        @if $include-border-radius { @include border-right-radius($form-fieldset-radius); }
+        @if $include-highlights { background: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba($form-field-bg-color, 0)), color-stop(.5, rgba($form-field-bg-color, 1))); }
+        z-index: 1;
+      }
     }
 
     .x-form-field {

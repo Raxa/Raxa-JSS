@@ -99,14 +99,6 @@ Ext.define('Ext.Sortable', {
     vertical: false,
 
     /**
-     * Read-only value representing whether the Draggable can be moved horizontally.
-     * This is automatically calculated by Draggable by the direction configuration.
-     * @type Boolean
-     * @private
-     */
-    vertical: false,
-
-    /**
      * Creates new Sortable.
      * @param {Mixed} el
      * @param {Object} config

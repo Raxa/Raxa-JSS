@@ -1,6 +1,4 @@
 /**
- * # **Does not work. Coming in a future release.**
- *
  * Provides a cross browser class for retrieving location information.
  *
  * Based on the [Geolocation API Specification](http://dev.w3.org/geo/api/spec-source.html)
@@ -371,7 +369,6 @@ Ext.define('Ext.util.GeoLocation', {
             };
 
         //Google doesn't like Infinity
-        // @TODO: Then what does it like?
         if (timeout !== Infinity) {
             ret.timeout = timeout;
         }

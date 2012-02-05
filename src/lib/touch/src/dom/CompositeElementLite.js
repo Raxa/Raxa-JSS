@@ -29,20 +29,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
          * Copies all of the functions from Ext.dom.Element's prototype onto CompositeElementLite's prototype.
          */
         importElementMethods: function() {
-            var name,
-                elementPrototype = Ext.dom.Element.prototype,
-                prototype = this.prototype;
 
-            for (name in elementPrototype) {
-                if (typeof elementPrototype[name] == 'function'){
-                    (function(key) {
-                        prototype[key] = prototype[key] || function() {
-                            return this.invoke(key, arguments);
-                        };
-                    }).call(prototype, name);
-
-                }
-            }
         }
     },
 
@@ -60,7 +47,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
          *     Ext.override(Ext.dom.CompositeElementLite, {
          *         nextAll: function() {
          *             var elements = this.elements, i, l = elements.length, n, r = [], ri = -1;
-         *              
+         *
          *             // Loop through all elements in this Composite, accumulating
          *             // an Array of all siblings.
          *             for (i = 0; i < l; i++) {
@@ -68,7 +55,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
          *                     r[++ri] = n;
          *                 }
          *             }
-         *              
+         *
          *             // Add all found siblings to this Composite
          *             return this.add(r);
          *         }
@@ -77,7 +64,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
          */
         this.elements = [];
         this.add(elements, root);
-        this.el = new Ext.dom.AbstractElement.Fly();
+        this.el = new Ext.dom.Element.Fly();
     },
 
     isComposite: true,
@@ -360,12 +347,25 @@ Ext.define('Ext.dom.CompositeElementLite', {
     }
 
 }, function() {
-    this.importElementMethods();
+    var Element = Ext.dom.Element,
+        elementPrototype = Element.prototype,
+        prototype = this.prototype,
+        name;
 
-    this.prototype.on = this.prototype.addListener;
+    for (name in elementPrototype) {
+        if (typeof elementPrototype[name] == 'function'){
+            (function(key) {
+                prototype[key] = prototype[key] || function() {
+                    return this.invoke(key, arguments);
+                };
+            }).call(prototype, name);
+        }
+    }
+
+    prototype.on = prototype.addListener;
 
     if (Ext.DomQuery){
-        Ext.dom.Element.selectorFunction = Ext.DomQuery.select;
+        Element.selectorFunction = Ext.DomQuery.select;
     }
 
     /**
@@ -378,11 +378,11 @@ Ext.define('Ext.dom.CompositeElementLite', {
      * @member Ext.dom.Element
      * @method select
      */
-   Ext.dom.Element.select = function(selector, root) {
+   Element.select = function(selector, root) {
         var elements;
 
         if (typeof selector == "string") {
-            elements = Ext.dom.Element.selectorFunction(selector, root);
+            elements = Element.selectorFunction(selector, root);
         }
         else if (selector.length !== undefined) {
             elements = selector;
@@ -402,6 +402,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
      * @alias Ext.dom.Element#select
      */
     Ext.select = function() {
-        return Ext.dom.Element.select.apply(Ext.dom.Element, arguments);
+        return Element.select.apply(Element, arguments);
     };
 });

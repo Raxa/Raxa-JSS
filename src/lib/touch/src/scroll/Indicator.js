@@ -1,6 +1,3 @@
-/**
- * @private
- */
 Ext.define('Ext.scroll.Indicator', {
     requires: [
         'Ext.scroll.indicator.ScrollPosition',

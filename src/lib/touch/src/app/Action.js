@@ -16,6 +16,11 @@ Ext.define('Ext.app.Action', {
         scope: null,
         
         /**
+         * @cfg {Ext.app.Application} application The Application that this Action is bound to
+         */
+        application: null,
+        
+        /**
          * @cfg {Ext.app.Controller} controller The {@link Ext.app.Controller controller} whose {@link #action} should
          * be called
          */
@@ -36,7 +41,21 @@ Ext.define('Ext.app.Action', {
          */
         url: undefined,
         data: {},
-        title: null
+        title: null,
+        
+        /**
+         * @cfg {Array} beforeFilters The (optional) set of functions to call before the {@link #action} is called. 
+         * This is usually handled directly by the Controller or Application when an Ext.app.Action instance is 
+         * created, but is alterable before {@link #resume} is called.
+         * @accessor
+         */
+        beforeFilters: [],
+        
+        /**
+         * @private
+         * Keeps track of which before filter is currently being executed by {@link #resume}
+         */
+        currentFilterIndex: -1
     },
     
     constructor: function(config) {
@@ -45,10 +64,37 @@ Ext.define('Ext.app.Action', {
         this.getUrl();
     },
     
-    run: function() {
-        this.getController()[this.getActionName()].apply(this.getScope(), this.getArgs);
+    /**
+     * Starts execution of this Action by calling each of the {@link #beforeFilters} in turn (if any are specified), 
+     * before calling the Controller {@link #action}. Same as calling {@link #resume}.
+     */
+    execute: function() {
+        this.resume();
     },
     
+    /**
+     * Resumes the execution of this Action (or starts it if it had not been started already). This iterates over all
+     * of the configured {@link #beforeFilters} and calls them. Each before filter is called with this Action as the
+     * sole argument, and is expected to call action.resume() in order to allow the next filter to be called, or if 
+     * this is the final filter, the original {@link Ext.app.Controller Controller} function.
+     */
+    resume: function() {
+        var index   = this.getCurrentFilterIndex() + 1,
+            filters = this.getBeforeFilters(),
+            controller = this.getController(),
+            nextFilter = filters[index];
+        
+        if (nextFilter) {
+            this.setCurrentFilterIndex(index);
+            nextFilter.call(controller, this);
+        } else {
+            controller[this.getAction()].apply(controller, this.getArgs());
+        }
+    },
+    
+    /**
+     * @private
+     */
     applyUrl: function(url) {
         if (url === null || url === undefined) {
             url = this.urlEncode();
@@ -57,6 +103,25 @@ Ext.define('Ext.app.Action', {
         return url;
     },
     
+    /**
+     * @private
+     * If the controller config is a string, swap it for a reference to the actuall controller instance
+     * @param {String} controller The controller name
+     */
+    applyController: function(controller) {
+        var app = this.getApplication(),
+            profile = app.getCurrentProfile();
+        
+        if (Ext.isString(controller)) {
+            controller = app.getController(controller, profile ? profile.getName() : null);
+        }
+        
+        return controller;
+    },
+    
+    /**
+     * @private
+     */
     urlEncode: function() {
         var controller = this.getController(),
             splits;

@@ -1,83 +1,83 @@
 /**
  * @author Ed Spencer
- * 
+ *
  * Ext.app.Application defines the set of {@link Ext.data.Model Models}, {@link Ext.app.Controller Controllers},
  * {@link Ext.app.Profile Profiles}, {@link Ext.data.Store Stores} and {@link Ext.Component Views} that an application
  * consists of. It automatically loads all of those dependencies and can optionally specify a {@link #launch} function
  * that will be called when everthing is ready.
- * 
+ *
  * Sample usage:
- * 
+ *
  *     Ext.application({
  *         name: 'MyApp',
- *         
+ *
  *         models: ['User', 'Group'],
  *         stores: ['Users'],
  *         controllers: ['Users'],
  *         views: ['Main', 'ShowUser'],
- * 
+ *
  *         launch: function() {
  *             Ext.create('MyApp.view.Main');
  *         }
  *     });
- * 
- * Creating an Application instance is the only time in Sencha Touch 2 that we don't use Ext.create to create the new 
- * instance. Instead, the {@link Ext#application} function instantiates an Ext.app.Application internally, 
+ *
+ * Creating an Application instance is the only time in Sencha Touch 2 that we don't use Ext.create to create the new
+ * instance. Instead, the {@link Ext#application} function instantiates an Ext.app.Application internally,
  * automatically loading the Ext.app.Application class if it is not present on the page already and hooking in to
  * {@link Ext#onReady} before creating the instance itself. An alternative is to use Ext.create inside an Ext.onReady
  * callback, but Ext.application is preferred.
- * 
+ *
  * ## Dependencies
- * 
- * In our example above we defined Model, View, Controller and Store dependencies. Application follows a simple 
+ *
+ * In our example above we defined Model, View, Controller and Store dependencies. Application follows a simple
  * convention when it comes to naming those classes - in each case we take the app {@link #name} ('MyApp' in this case)
  * and the name of the dependency (e.g. 'User' for the first defined Model dependency) and combine them to create
  * MyApp.model.User, MyApp.model.Group etc. In each case we use the singular form of the dependency type to create this
  * name - *model* instead of *models*, *controller* instead of *controllers*, etc.
- * 
- * Based on these class names, the Application uses the class system's dynamic loading capabilities to automatically 
+ *
+ * Based on these class names, the Application uses the class system's dynamic loading capabilities to automatically
  * load the classes specified. These map to files in your application that follow the same format - MyApp.model.User
  * would be found in app/model/User.js, MyApp.view.EditUser in app/view/EditUser.js and so on.
- * 
+ *
  * The example above will load 6 files:
- * 
+ *
  * * app/model/User.js
  * * app/model/Group.js
  * * app/store/Users.js
  * * app/controller/Users.js
  * * app/view/Main.js
  * * app/view/ShowUser.js
- * 
+ *
  * ## Launching
- * 
- * The final item in the example above is a launch function. This is called as soon as all of the dependencies have 
- * been loaded and the Controllers instantiated. Usually this function is used to create the initial UI of your 
+ *
+ * The final item in the example above is a launch function. This is called as soon as all of the dependencies have
+ * been loaded and the Controllers instantiated. Usually this function is used to create the initial UI of your
  * application, check authentication or initialize any other application-launching behavior.
- * 
+ *
  * ## Adding to Home Screen
- * 
- * iOS devices allow your users to add your app to their home screen for easy access. iOS allows you to customize 
+ *
+ * iOS devices allow your users to add your app to their home screen for easy access. iOS allows you to customize
  * several aspects of this, including the icon that will appear on the home screen and the startup image. These can be
  * specified in the Ext.application setup block:
- * 
+ *
  *     Ext.application({
  *         name: 'MyApp',
- *         
+ *
  *         {@link #icon}: 'resources/img/icon.png',
  *         {@link #glossOnIcon}: false,
  *         {@link #phoneStartupScreen}: 'resources/img/phone_startup.png',
  *         {@link #tabletStartupScreen}: 'resources/img/tablet_startup.png'
  *     });
- * 
- * When the user adds your app to the home screen, your resources/img/icon.png file will be used as the application 
+ *
+ * When the user adds your app to the home screen, your resources/img/icon.png file will be used as the application
  * icon. We also used the {@link #glossOnIcon} configuration to turn off the gloss effect that is automatically added
  * to icons in iOS. Finally we used the {@link #phoneStartupScreen} and {@link #tabletStartupScreen} configurations to
- * provide the images that will be displayed while your application is starting up. See also {@link #phoneIcon}, 
+ * provide the images that will be displayed while your application is starting up. See also {@link #phoneIcon},
  * {@link #tabletIcon} and {@link #statusBarStyle}.
- * 
+ *
  * ## Find out more
- * 
- * If you are not already familiar with writing applications with Sencha Touch 2 we recommend reading the 
+ *
+ * If you are not already familiar with writing applications with Sencha Touch 2 we recommend reading the
  * <a href="#!/guide/apps_intro">intro to applications</a> guide, which lays out the core principles of writing apps
  * with Sencha Touch 2.
  */
@@ -90,7 +90,7 @@ Ext.define('Ext.app.Application', {
         'Ext.app.Router',
         'Ext.app.Action'
     ],
-    
+
     config: {
         /**
          * @cfg {String/Object} icon Path to the .png image file to use when your app is added to the home screen on an
@@ -98,46 +98,46 @@ Ext.define('Ext.app.Application', {
          * different icons for tablets and phones see the {@link #tabletIcon} and {@link #phoneIcon} configs.
          * @accessor
          */
-        
+
         /**
          * @cfg {String} tabletIcon Path to the .png image file to use when your app is added to the home screen on an
          * iOS **tablet** device (iPad).
          * @accessor
          */
-        
+
         /**
          * @cfg {String} phoneIcon Path to the .png image file to use when your app is added to the home screen on an
          * iOS **phone** device (iPhone or iPod).
          * @accessor
          */
-        
+
         /**
-         * @cfg {Boolean} glossOnIcon If set to false, the 'gloss' effect added to home screen {@link #icon icons} on 
+         * @cfg {Boolean} glossOnIcon If set to false, the 'gloss' effect added to home screen {@link #icon icons} on
          * iOS devices will be removed.
          * @accessor
          */
-        
+
         /**
          * @cfg {String} statusBarStyle Allows you to set the style of the status bar when your app is added to the
          * home screen on iOS devices. Defaults to 'black'. Alternative is to set to 'black-translucent', which turns
          * the status bar semi-transparent and overlaps the app content. This is usually not a good option for web apps
          * @accessor
          */
-        
+
         /**
-         * @cfg {String} phoneStartupScreen Path to the .png image file that will be displayed while the app is 
-         * starting up once it has been added to the home screen of an iOS phone device (iPhone or iPod). This .png 
+         * @cfg {String} phoneStartupScreen Path to the .png image file that will be displayed while the app is
+         * starting up once it has been added to the home screen of an iOS phone device (iPhone or iPod). This .png
          * file should be 320px wide and 460px high.
          * @accessor
          */
-        
+
         /**
-         * @cfg {String} tabletStartupScreen Path to the .png image file that will be displayed while the app is 
+         * @cfg {String} tabletStartupScreen Path to the .png image file that will be displayed while the app is
          * starting up once it has been added to the home screen of an iOS tablet device (iPad). This .png file should
          * be 768px wide and 1004px high.
          * @accessor
          */
-        
+
         /**
          * @cfg {Array} profiles The set of profiles to load for this Application. Each profile is expected to
          * exist inside the *app/profile* directory and define a class following the convention
@@ -148,7 +148,8 @@ Ext.define('Ext.app.Application', {
          *
          *     profiles: [
          *         'Phone',
-         *         'AppName.profile.Tablet'
+         *         'AppName.profile.Tablet',
+         *         'SomeCustomNamespace.profile.Desktop'
          *     ]
          * @accessor
          */
@@ -163,7 +164,8 @@ Ext.define('Ext.app.Application', {
          *
          *     stores: [
          *         'Users',
-         *         'AppName.store.Groups'
+         *         'AppName.store.Groups',
+         *         'SomeCustomNamespace.store.Orders'
          *     ]
          * @accessor
          */
@@ -180,7 +182,8 @@ Ext.define('Ext.app.Application', {
          *     controllers: [
          *         'Users',
          *         'Groups',
-         *         'AppName.controller.Products'
+         *         'AppName.controller.Products',
+         *         'SomeCustomNamespace.controller.Orders'
          *     ]
          * @accessor
          */
@@ -196,7 +199,8 @@ Ext.define('Ext.app.Application', {
          *     models: [
          *         'User',
          *         'Group',
-         *         'AppName.model.Product'
+         *         'AppName.model.Product',
+         *         'SomeCustomNamespace.model.Order'
          *     ]
          * @accessor
          */
@@ -212,7 +216,8 @@ Ext.define('Ext.app.Application', {
          *     views: [
          *         'Users',
          *         'Groups',
-         *         'AppName.view.Products'
+         *         'AppName.view.Products',
+         *         'SomeCustomNamespace.view.Orders'
          *     ]
          * @accessor
          */
@@ -244,32 +249,49 @@ Ext.define('Ext.app.Application', {
 
         /**
          * @cfg {Ext.app.Router} router The global {@link Ext.app.Router Router} instance attached to this Application.
-         * Read only
+         * Read only.
+         * @accessor
          */
         router: {},
 
         /**
+         * @cfg
          * @private
+         * Used internally as the collection of instantiated controllers. Use {@link #getController} instead
+         * @accessor
          */
         controllerInstances: [],
 
         /**
+         * @cfg
          * @private
+         * Used internally as the collection of instantiated profiles
+         * @accessor
          */
         profileInstances: [],
 
         /**
          * @cfg {Ext.app.Profile} currentProfile The {@link Ext.app.Profile Profile} that is currently active for the
          * Application. This is set once, automatically by the Application before launch. Read only.
+         * @accessor
          */
         currentProfile: null,
 
         /**
-         * @cfg {Function} launch An optional function that will be called when the Application is ready to be 
+         * @cfg {Function} launch An optional function that will be called when the Application is ready to be
          * launched. This is normally used to render any initial UI required by your application
          * @accessor
          */
-        launch: Ext.emptyFn
+        launch: Ext.emptyFn,
+
+        /**
+         * @private
+         * @cfg {Boolean} enableLoader Private config to disable loading of Profiles at application construct time.
+         * This is used by Sencha's unit test suite to test Application.js in isolation and is likely to be removed
+         * in favor of a more pleasing solution by the time you use it.
+         * @accessor
+         */
+        enableLoader: true
     },
 
     /**
@@ -277,46 +299,62 @@ Ext.define('Ext.app.Application', {
      */
     constructor: function(config) {
         this.initConfig(config);
-        
+
         //it's common to pass in functions to an application but because they are not predictable config names they
         //aren't ordinarily placed onto this so we need to do it manually
         for (var key in config) {
-            if (typeof config[key] == "function") {
-                this[key] = config[key];
-            }
+            this[key] = config[key];
         }
 
-        this.loadProfiles();
+        // <deprecated product=touch since=2.0>
+        if (config.autoCreateViewport) {
+            console.log(
+                '[Ext.app.Application] autoCreateViewport has been deprecated in Sencha Touch 2. Please implement a ' +
+                'launch function on your Application instead and use Ext.create("MyApp.view.Main") to create your initial UI.'
+            );
+        }
+        // </deprecated>
+
+        if (this.getEnableLoader() !== false) {
+            Ext.require(this.getProfiles(), this.onProfilesLoaded, this);
+        }
     },
 
     /**
-     * Dispatches a given {@link Ext.app.Action} to the relevant Controller instance. This is not usually called 
+     * Dispatches a given {@link Ext.app.Action} to the relevant Controller instance. This is not usually called
      * directly by the developer, instead Sencha Touch's History support picks up on changes to the browser's url
      * and calls dispatch automatically.
      * @param {Ext.app.Action} action The action to dispatch
      * @param {Boolean} addToHistory True by default, sets the browser's url to the action's url
      */
     dispatch: function(action, addToHistory) {
+        action = action || {};
+        Ext.applyIf(action, {
+            application: this
+        });
+
         action = Ext.factory(action, Ext.app.Action);
 
-        var profile    = this.getCurrentProfile(),
-            profileNS  = profile ? profile.getNamespace() : undefined,
-            controller = this.getController(action.getController(), profileNS);
+        if (action) {
+            var profile    = this.getCurrentProfile(),
+                profileNS  = profile ? profile.getNamespace() : undefined,
+                controller = this.getController(action.getController(), profileNS);
 
-        if (controller) {
-            if (addToHistory !== false) {
-                this.getHistory().add(action, true);
+            if (controller) {
+                if (addToHistory !== false) {
+                    this.getHistory().add(action, true);
+                }
+
+                controller.execute(action);
             }
-
-            controller.execute(action);
         }
     },
 
     /**
      * Redirects the browser to the given url. This only affects the url after the #. You can pass in either a String
      * or a Model instance - if a Model instance is defined its {@link Ext.data.Model#toUrl toUrl} function is called,
-     * which returns a string representing the url for that model. Internally, this uses your application's 
-     * {@link Ext.app.Router Router} to decode the url into a matching controller action and then calls 
+     * which returns a string representing the url for that model. Internally, this uses your application's
+     * {@link Ext.app.Router Router} to decode the url into a matching controller action and then calls
      * {@link #dispatch}.
      * @param {String/Ext.data.Model} url The String url to redirect to
      */
@@ -377,36 +415,27 @@ Ext.define('Ext.app.Application', {
      * @private
      * Returns the Controller instance for the given controller name
      * @param {String} name The name of the Controller
-     * @param {String} profileName Optional profile name. If passed, this is the same as calling 
+     * @param {String} profileName Optional profile name. If passed, this is the same as calling
      * getController('profileName.controllerName')
      */
     getController: function(name, profileName) {
+        var instances = this.getControllerInstances(),
+            appName   = this.getName(),
+            format    = Ext.String.format,
+            topLevelName;
+
         if (name instanceof Ext.app.Controller) {
             return name;
-        } else {
-            if (profileName) {
-                name = profileName + "." + name;
-            }
-
-            return this.getControllerInstances()[name];
         }
-    },
 
-    /**
-     * @private
-     * Uses the Loader to load all of the configured Profiles
-     */
-    loadProfiles: function() {
-        var profiles = this.getProfiles(),
-            name     = this.getName(),
-            format   = Ext.String.format,
-            classes  = [];
+        if (instances[name]) {
+            return instances[name];
+        } else {
+            topLevelName = format("{0}.controller.{1}", appName, name);
+            profileName  = format("{0}.controller.{1}.{2}", appName, profileName, name);
 
-        Ext.each(profiles, function(profileName) {
-            classes.push(format('{0}.profile.{1}', name, profileName));
-        }, this);
-
-        Ext.require(classes, this.onProfilesLoaded, this);
+            return instances[profileName] || instances[topLevelName];
+        }
     },
 
     /**
@@ -417,32 +446,36 @@ Ext.define('Ext.app.Application', {
     onProfilesLoaded: function() {
         var profiles  = this.getProfiles(),
             length    = profiles.length,
-            name      = this.getName(),
             instances = [],
             requires  = this.gatherDependencies(),
             current, i, profileDeps;
 
         for (i = 0; i < length; i++) {
-            instances[i] = Ext.create(name + '.profile.' + profiles[i], {
+            instances[i] = Ext.create(profiles[i], {
                 application: this
             });
 
-            if (instances[i].isActive() && !current) {
-                current = instances[i];
-            }
-        }
-
-        if (current) {
-            this.setCurrentProfile(current);
-
-            profileDeps = current.getDependencies();
-
+            /*
+             * Note that we actually require all of the dependencies for all Profiles - this is so that we can produce
+             * a single build file that will work on all defined Profiles. Although the other classes will be loaded,
+             * the correct Profile will still be identified and the other classes ignored. While this feels somewhat
+             * inefficient, the majority of the bulk of an application is likely to be the framework itself. The bigger
+             * the app though, the bigger the effect of this inefficiency so ideally we will create a way to create and
+             * load Profile-specific builds in a future release.
+             */
+            profileDeps = instances[i].getDependencies();
             requires = requires.concat(profileDeps.all);
 
-            this.setControllers(this.getControllers().concat(profileDeps.controller));
-            this.setModels(this.getModels().concat(profileDeps.model));
-            this.setViews(this.getViews().concat(profileDeps.view));
-            this.setStores(this.getStores().concat(profileDeps.store));
+            if (instances[i].isActive() && !current) {
+                current = instances[i];
+
+                this.setCurrentProfile(current);
+
+                this.setControllers(this.getControllers().concat(profileDeps.controller));
+                this.setModels(this.getModels().concat(profileDeps.model));
+                this.setViews(this.getViews().concat(profileDeps.view));
+                this.setStores(this.getStores().concat(profileDeps.store));
+            }
         }
 
         this.setProfileInstances(instances);
@@ -464,7 +497,7 @@ Ext.define('Ext.app.Application', {
             controller, proto, i;
 
         for (i = 0; i < length; i++) {
-            controller = Ext.ClassManager.classes[format('{0}.controller.{1}', name, controllers[i])];
+            controller = Ext.ClassManager.classes[controllers[i]];
             proto = controller.prototype;
 
             Ext.each(proto.models, function(modelName) {
@@ -492,16 +525,18 @@ Ext.define('Ext.app.Application', {
     onDependenciesLoaded: function() {
         var me = this,
             profile = this.getCurrentProfile(),
-            launcher = this.getLaunch();
-        
+            launcher = this.getLaunch(),
+            controllers, name;
+
         //<deprecated product=touch since=2.0>
         if (Ext.Router) {
             Ext.Router.setAppInstance(this);
         }
         //</deprecated>
-        
+
         me.instantiateStores();
         me.instantiateControllers();
+        controllers = this.getControllerInstances();
 
         if (profile) {
             profile.launch();
@@ -509,38 +544,23 @@ Ext.define('Ext.app.Application', {
 
         launcher.call(me);
 
+        for (name in controllers) {
+            controllers[name].launch(this);
+        }
+
         me.redirectTo(window.location.hash.substr(1));
     },
 
     /**
      * @private
-     * Computes all of the class names for this Application's dependencies
+     * Gathers up all of the previously computed MVCS dependencies into a single array that we can pass to Ext.require
      */
     gatherDependencies: function() {
-        var name = this.getName(),
-            models = this.getModels(),
-            views = this.getViews(),
-            controllers = this.getControllers(),
-            stores = this.getStores(),
+        var classes = this.getModels().concat(this.getViews()).concat(this.getControllers());
 
-            classes = [],
-            format  = Ext.String.format;
-
-        Ext.each(models, function(modelName) {
-            classes.push(format('{0}.model.{1}', name, modelName));
-        }, this);
-
-        Ext.each(views, function(viewName) {
-            classes.push(format('{0}.view.{1}', name, viewName));
-        }, this);
-
-        Ext.each(controllers, function(controllerName) {
-            classes.push(format('{0}.controller.{1}', name, controllerName));
-        }, this);
-
-        Ext.each(stores, function(storeName) {
+        Ext.each(this.getStores(), function(storeName) {
             if (Ext.isString(storeName)) {
-                classes.push(format('{0}.store.{1}', name, storeName));
+                classes.push(storeName);
             }
         }, this);
 
@@ -557,17 +577,26 @@ Ext.define('Ext.app.Application', {
     instantiateStores: function() {
         var stores  = this.getStores(),
             length  = stores.length,
-            appName = this.getName(),
-            store, i;
+            store, storeClass, storeName, splits, i;
 
         for (i = 0; i < length; i++) {
             store = stores[i];
+
             if (Ext.data && Ext.data.Store && !(store instanceof Ext.data.Store)) {
                 if (Ext.isString(store)) {
+                    storeName = store;
+                    storeClass = Ext.ClassManager.classes[store];
+
                     store = {
-                        xclass: appName + '.store.' + store,
-                        id: store
+                        xclass: store
                     };
+
+                    //we don't want to wipe out a configured storeId in the app's Store subclass so need
+                    //to check for this first
+                    if (storeClass.prototype.defaultConfig.storeId === undefined) {
+                        splits = storeName.split('.');
+                        store.id = splits[splits.length - 1];
+                    }
                 }
 
                 stores[i] = Ext.factory(store, Ext.data.Store);
@@ -579,25 +608,130 @@ Ext.define('Ext.app.Application', {
 
     /**
      * @private
+     * Called once all of our controllers have been loaded
      */
     instantiateControllers: function() {
         var controllerNames = this.getControllers(),
-            instances = [],
+            instances = {},
             length = controllerNames.length,
-            appName = this.getName(),
             name, i;
 
         for (i = 0; i < length; i++) {
             name = controllerNames[i];
 
-            instances[name] = Ext.create(appName + '.controller.' + name, {
+            instances[name] = Ext.create(name, {
                 application: this
             });
 
             instances[name].init();
         }
 
-        this.setControllerInstances(instances);
+        return this.setControllerInstances(instances);
+    },
+
+    /**
+     * @private
+     * As a convenience developers can locally qualify controller names (e.g. 'MyController' vs
+     * 'MyApp.controller.MyController'). This just makes sure everything ends up fully qualified
+     */
+    applyControllers: function(controllers) {
+        var length  = controllers.length,
+            appName = this.getName(),
+            name, i;
+
+        for (i = 0; i < length; i++) {
+            name = controllers[i];
+
+            if (!name.match('\\.')) {
+                controllers[i] = appName + '.controller.' + name;
+            }
+        }
+
+        return controllers;
+    },
+
+    /**
+     * @private
+     * As a convenience developers can locally qualify store names (e.g. 'MyStore' vs
+     * 'MyApp.store.MyStore'). This just makes sure everything ends up fully qualified
+     */
+    applyStores: function(stores) {
+        var length  = stores.length,
+            appName = this.getName(),
+            name, i;
+
+        for (i = 0; i < length; i++) {
+            name = stores[i];
+
+            if (Ext.isString(name) && !name.match('\\.')) {
+                stores[i] = appName + '.store.' + name;
+            }
+        }
+
+        return stores;
+    },
+
+    /**
+     * @private
+     * As a convenience developers can locally qualify model names (e.g. 'MyModel' vs
+     * 'MyApp.model.MyModel'). This just makes sure everything ends up fully qualified
+     */
+    applyModels: function(models) {
+        var length  = models.length,
+            appName = this.getName(),
+            name, i;
+
+        for (i = 0; i < length; i++) {
+            name = models[i];
+
+            if (Ext.isString(name) && !name.match('\\.')) {
+                models[i] = appName + '.model.' + name;
+            }
+        }
+
+        return models;
+    },
+
+    /**
+     * @private
+     * As a convenience developers can locally qualify view names (e.g. 'MyView' vs
+     * 'MyApp.view.MyView'). This just makes sure everything ends up fully qualified
+     */
+    applyViews: function(views) {
+        var length  = views.length,
+            appName = this.getName(),
+            name, i;
+
+        for (i = 0; i < length; i++) {
+            name = views[i];
+
+            if (Ext.isString(name) && !name.match('\\.')) {
+                views[i] = appName + '.view.' + name;
+            }
+        }
+
+        return views;
+    },
+
+    /**
+     * @private
+     * As a convenience developers can locally qualify profile names (e.g. 'MyProfile' vs
+     * 'MyApp.profile.MyProfile'). This just makes sure everything ends up fully qualified
+     */
+    applyProfiles: function(profiles) {
+        var length  = profiles.length,
+            appName = this.getName(),
+            name, i;
+
+        for (i = 0; i < length; i++) {
+            name = profiles[i];
+
+            if (Ext.isString(name) && !name.match('\\.')) {
+                profiles[i] = appName + '.profile.' + name;
+            }
+        }
+
+        return profiles;
     },
 
     /**
@@ -605,7 +739,6 @@ Ext.define('Ext.app.Application', {
      * Checks that the name configuration has any whitespace, and trims them if found.
      */
     applyName: function(name) {
-        // var matacher = /\s+/g;
         var oldName;
         if (name && name.match(/ /g)) {
             oldName = name;
@@ -652,4 +785,46 @@ Ext.define('Ext.app.Application', {
     onHistoryChange: function(url) {
         this.dispatch(this.getRouter().recognize(url), false);
     }
+}, function() {
+    // <deprecated product=touch since=2.0>
+    Ext.regApplication = function(config) {
+        console.warn(
+            '[Ext.app.Application] Ext.regApplication() is deprecated, please replace it with Ext.application()'
+        );
+
+        var appName = config.name,
+            format  = Ext.String.format;
+
+        Ext.ns(
+            appName,
+            format("{0}.controllers", appName),
+            format("{0}.models", appName),
+            format("{0}.views", appName)
+        );
+
+        Ext.application(config);
+    };
+
+    Ext.define('Ext.data.ProxyMgr', {
+        singleton: true,
+
+        registerType: function(name, cls) {
+            console.warn(
+                'Ext.data.ProxyMgr no longer exists - instead of calling Ext.data.ProxyMgr.registerType just update ' +
+                'your custom Proxy class to set alias: "proxy.' + name + '"'
+            );
+
+            Ext.ClassManager.setAlias(cls, "proxy." + name);
+        }
+    });
+
+    Ext.reg = function(alias, cls) {
+        console.warn(
+            'Ext.reg is deprecated, please set xtype: "' + alias + '" directly in your subclass instead'
+        );
+
+        Ext.ClassManager.setAlias(cls, alias);
+    };
+
+    // </deprecated>
 });

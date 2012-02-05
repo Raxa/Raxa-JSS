@@ -6,8 +6,6 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
 
     handledEvents: ['painted', 'erased'],
 
-    idSelectorRegex: /^#([\w\-]+)$/i,
-
     eventNames: {
         painted: 'painted',
         erased: 'erased'
@@ -16,9 +14,8 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
     constructor: function() {
         this.callParent(arguments);
 
-        this.dispatchingQueue = [];
-
-        this.subscribers = {};
+        this.hiddenQueue = [];
+        this.renderedQueue = [];
     },
 
     getSubscribers: function(eventName, createIfNotExist) {
@@ -50,29 +47,48 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
 
     subscribe: function(target, eventName) {
         var match = target.match(this.idSelectorRegex),
-            subscribers;
+            subscribers,
+            id;
 
         if (!match) {
             return false;
         }
 
+        id = match[1];
+
         subscribers = this.getSubscribers(eventName, true);
-        subscribers[match[1]] = true;
+
+        if (subscribers.hasOwnProperty(id)) {
+            subscribers[id]++;
+            return true;
+        }
+
+        subscribers[id] = 1;
         subscribers.$length++;
 
         return true;
     },
 
-    unsubscribe: function(target, eventName) {
+    unsubscribe: function(target, eventName, all) {
         var match = target.match(this.idSelectorRegex),
-            subscribers;
+            subscribers,
+            id;
 
         if (!match || !(subscribers = this.getSubscribers(eventName))) {
             return false;
         }
 
-        delete subscribers[match[1]];
-        subscribers.$length--;
+        id = match[1];
+
+        if (!subscribers.hasOwnProperty(id) || (!all && --subscribers[id] > 0)) {
+            return true;
+        }
+
+        delete subscribers[id];
+
+        if (--subscribers.$length === 0) {
+            delete this.subscribers[eventName];
+        }
 
         return true;
     },
@@ -80,44 +96,46 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
     onBeforeComponentRenderedChange: function(container, component, rendered) {
         var eventNames = this.eventNames,
             eventName = rendered ? eventNames.painted : eventNames.erased,
-            subscribers = this.getSubscribers(eventName);
+            subscribers = this.getSubscribers(eventName),
+            queue = this.renderedQueue;
 
         if (subscribers && subscribers.$length > 0) {
-            this.publish(subscribers, component, eventName);
+            this.publish(subscribers, component, eventName, queue);
         }
     },
 
     onBeforeComponentHiddenChange: function(component, hidden) {
         var eventNames = this.eventNames,
             eventName = hidden ? eventNames.erased : eventNames.painted,
-            subscribers = this.getSubscribers(eventName);
+            subscribers = this.getSubscribers(eventName),
+            queue = this.hiddenQueue;
 
         if (subscribers && subscribers.$length > 0) {
-            this.publish(subscribers, component, eventName);
+            this.publish(subscribers, component, eventName, queue);
         }
     },
 
     onComponentRenderedChange: function() {
-        if (this.dispatchingQueue.length > 0) {
-            this.dispatchQueue();
+        if (this.renderedQueue.length > 0) {
+            this.dispatchQueue(this.renderedQueue);
         }
     },
 
     onComponentHiddenChange: function() {
-        if (this.dispatchingQueue.length > 0) {
-            this.dispatchQueue();
+        if (this.hiddenQueue.length > 0) {
+            this.dispatchQueue(this.hiddenQueue);
         }
     },
 
-    dispatchQueue: function() {
+    dispatchQueue: function(dispatchingQueue) {
         var dispatcher = this.dispatcher,
             targetType = this.targetType,
             eventNames = this.eventNames,
-            queue = this.dispatchingQueue.slice(),
+            queue = dispatchingQueue.slice(),
             ln = queue.length,
             i, item, component, eventName, isPainted;
 
-        this.dispatchingQueue.length = 0;
+        dispatchingQueue.length = 0;
 
         if (ln > 0) {
             for (i = 0; i < ln; i++) {
@@ -135,10 +153,9 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
 
     },
 
-    publish: function(subscribers, component, eventName) {
+    publish: function(subscribers, component, eventName, dispatchingQueue) {
         var id = component.getId(),
             needsDispatching = false,
-            dispatchingQueue = this.dispatchingQueue,
             eventNames, items, i, ln, isPainted;
 
         if (subscribers[id]) {
@@ -158,11 +175,11 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
             items = component.getItems().items;
 
             for (i = 0,ln = items.length; i < ln; i++) {
-                this.publish(subscribers, items[i], eventName);
+                this.publish(subscribers, items[i], eventName, dispatchingQueue);
             }
         }
         else if (component.isDecorator) {
-            this.publish(subscribers, component.getComponent(), eventName);
+            this.publish(subscribers, component.getComponent(), eventName, dispatchingQueue);
         }
 
         if (needsDispatching) {

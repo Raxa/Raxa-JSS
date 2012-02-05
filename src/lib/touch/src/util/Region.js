@@ -124,7 +124,7 @@ Ext.define('Ext.util.Region', {
      * Get the offset amount of a point outside the region
      * @param {String} axis optional
      * @param {Ext.util.Point} p the point
-     * @return {Ext.util.Offset}
+     * @return {Ext.util.Region}
      */
     getOutOfBoundOffset: function(axis, p) {
         if (!Ext.isObject(axis)) {
@@ -306,7 +306,7 @@ Ext.define('Ext.util.Region', {
 
     /**
      * Dump this to an eye-friendly string, great for debugging
-     * @return {String}
+     * @return {String} For example `Region[0,1,3,2]`
      */
     toString: function() {
         return "Region[" + this.top + "," + this.right + "," + this.bottom + "," + this.left + "]";
@@ -315,7 +315,7 @@ Ext.define('Ext.util.Region', {
 
     /**
      * Translate this region by the given offset amount
-     * @param {Ext.util.Offset/Object} offset
+     * @param {Object} offset
      * @return {Ext.util.Region} this This Region
      */
     translateBy: function(offset) {

@@ -103,8 +103,6 @@ Ext.define('Ext.SegmentedButton', {
 
             hiddenchange: 'onButtonHiddenChange'
         });
-
-        me.callParent();
     },
 
     updateAllowMultiple: function() {

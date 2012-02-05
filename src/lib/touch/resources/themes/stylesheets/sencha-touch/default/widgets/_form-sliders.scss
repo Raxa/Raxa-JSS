@@ -27,6 +27,10 @@
     }
   }
 
+  .x-slider.x-item-disabled {
+    opacity: .6;
+  }
+
   @if $basic-slider {
     .x-thumb {
       position: absolute;

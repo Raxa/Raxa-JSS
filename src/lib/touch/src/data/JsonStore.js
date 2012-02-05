@@ -50,9 +50,8 @@ Ext.define('Ext.data.JsonStore',  {
     config: {
         proxy: {
             type: 'ajax',
-            reader: 'json'
-            // @TODO: put back the json writer in json store
-            //writer: 'json'
+            reader: 'json',
+            writer: 'json'
         }
     }
 });

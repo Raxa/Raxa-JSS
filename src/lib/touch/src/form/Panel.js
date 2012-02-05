@@ -92,7 +92,7 @@
  * There are a few ways to submit form data. In our example above we have a Model instance that we have updated, giving
  * us the option to use the Model's {@link Ext.data.Model#save save} method to persist the changes back to our server,
  * without using a traditional form submission. Alternatively, we can send a normal browser form submit using the
- * {@link #method-submit} method:
+ * {@link #method} method:
  *
  *     form.submit({
  *         url: 'url/to/submit/to',
@@ -103,7 +103,7 @@
  *     });
  *
  * In this case we provided the url to submit the form to inside the submit call - alternatively you can just set the
- * {@link #url} configuration when you create the form. We can specify other parameters (see {@link #method-submit} for a
+ * {@link #url} configuration when you create the form. We can specify other parameters (see {@link #method} for a
  * full list), including callback functions for success and failure, which are called depending on whether or not the
  * form submission was successful. These functions are usually used to take some action in your app after your data
  * has been saved to the server side.
@@ -170,15 +170,6 @@ Ext.define('Ext.form.Panel', {
         baseParams : null,
 
         /**
-         * @cfg {Ext.XTemplate/String/String[]} waitTpl
-         * The defined waitMsg template.  Used for precise control over the masking agent used
-         * to mask the FormPanel (or other Element) during form Ajax/submission actions. For more options, see
-         * {@link #showMask} method.
-         * @accessor
-         */
-        waitTpl: '<div class="{cls}">{message}&hellip;</div>',
-
-        /**
          * @cfg {Object} submitOnAction
          * When this is set to true, the form will automatically submit itself whenever the 'action'
          * event fires on a field in this form. The action event usually fires whenever you press
@@ -186,11 +177,6 @@ Ext.define('Ext.form.Panel', {
          * @accessor
          */
         submitOnAction : true,
-
-        /**
-         * @cfg {Ext.dom.Element} maskTarget The target where the form mask will be shown.
-         */
-        maskTarget: null,
 
         /**
          * @cfg {Ext.data.Model} record The model instance of this form. Can by dynamically set at any time
@@ -204,9 +190,15 @@ Ext.define('Ext.form.Panel', {
             align: 'stretch'
         },
 
+        /**
+         * @cfg {String} method
+         * The method which this form will be submitted. `post` or `get`.
+         */
+        method: 'post',
+
         // @inherit
         scrollable: {
-            // scrollMethod: 'scrollposition'
+            scrollMethod: 'scrollposition'
         }
     },
 
@@ -231,20 +223,6 @@ Ext.define('Ext.form.Panel', {
             submit: 'onSubmit',
             scope : me
         });
-    },
-
-    /**
-     * Initializes the renderTpl.
-     * @return {Ext.XTemplate} The renderTpl XTemplate instance.
-     * @private
-     */
-    applyWaitTpl: function(waitTpl) {
-        if (waitTpl) {
-            if (Ext.isArray(waitTpl) || typeof waitTpl === "string") {
-                waitTpl = Ext.create('Ext.XTemplate', waitTpl);
-            }
-        }
-        return waitTpl;
     },
 
     updateRecord: function(newRecord) {
@@ -306,77 +284,61 @@ Ext.define('Ext.form.Panel', {
     /**
      * Performs a Ajax-based submission of form values (if standardSubmit is false) or otherwise
      * executes a standard HTML Form submit action.
-     * @param {Object} options Unless otherwise noted, options may include the following:
-     * <ul>
-     * <li><b>url</b> : String
-     * <div class="sub-desc">
-     * The url for the action (defaults to the form's {@link #url url}.)
-     * </div></li>
      *
-     * <li><b>method</b> : String
-     * <div class="sub-desc">
-     * The form method to use (defaults to the form's method, or POST if not defined)
-     * </div></li>
+     * @param {Object} options
+     * The configuration when submiting this form.
      *
-     * <li><b>params</b> : String/Object
-     * <div class="sub-desc">
-     * The params to pass
-     * (defaults to the FormPanel's baseParams, or none if not defined)
+     * @param {String} options.url
+     * The url for the action (defaults to the form's {@link #url}).
+     *
+     * @param {String} options.method
+     * The form method to use (defaults to the form's {@link #method}, or POST if not defined).
+     *
+     * @param {String/Object} params
+     * The params to pass when submitting this form (defaults to this forms {@link #baseParams}).
      * Parameters are encoded as standard HTTP parameters using {@link Ext#urlEncode}.
-     * </div></li>
      *
-     * <li><b>headers</b> : Object
-     * <div class="sub-desc">
+     * @param {Object} headers
      * Request headers to set for the action
-     * (defaults to the form's default headers)
-     * </div></li>
      *
-     * <li><b>autoAbort</b> : Boolean
-     * <div class="sub-desc">
-     * <tt>true</tt> to abort any pending Ajax request prior to submission (defaults to false)
-     * Note: Has no effect when standardSubmit is enabled.
-     * </div></li>
+     * @param {Boolean} autoAbort
+     * `true` to abort any pending Ajax request prior to submission (defaults to false)
+     * **Note:** Has no effect when {@link #standardSubmit} is enabled.
      *
-     * <li><b>submitDisabled</b> : Boolean
-     * <div class="sub-desc">
-     * <tt>true</tt> to submit all fields regardless of disabled state (defaults to false)
-     * Note: Has no effect when standardSubmit is enabled.
-     * </div></li>
+     * @param {Boolean} options.submitDisabled
+     * `true` to submit all fields regardless of disabled state (defaults to false).
+     * Note: Has no effect when {@link #standardSubmit} is enabled.
      *
-     * <li><b>waitMsg</b> : String/Config
-     * <div class="sub-desc">
-     * If specified, the value is applied to the {@link #waitTpl} if defined, and rendered to the
-     * {@link #maskTarget} prior to a Form submit action.
-     * </div></li>
+     * @param {String/Object} waitMsg
+     * If specified, the value which is passed to the loading {@link #masked mask}. See {@link #masked} for
+     * more information.
      *
-     * <li><b>success</b>: function
-     * <div class="sub-desc">
+     * @param {Function} options.success
      * The callback that will be invoked after a successful response. A response is successful if
      * a response is received from the server and is a JSON object where the success property is set
      * to true, {"success": true}
      *
-     *  The function is passed the following parameters:
-     * <ul>
-     * <li>form : Ext.form.Panel The form that requested the action</li>
-     * <li>result : The result object returned by the server as a result of the submit request.</li>
-     * </ul>
-     * </div></li>
+     * The function is passed the following parameters:
      *
-     * <li><b>failure</b>: function
-     * <div class="sub-desc">
-     * The callback that will be invoked after a
-     * failed transaction attempt. The function is passed the following parameters:
-     * <ul>
-     * <li>form : The Ext.form.Panel that requested the submit.</li>
-     * <li>result : The failed response or result object returned by the server which performed the operation.</li>
-     * </ul>
-     * </div></li>
+     * @param {Ext.form.Panel} options.success.form
+     * The form that requested the action
      *
-     * <li><b>scope</b> : Object
-     * <div class="sub-desc">
-     * The scope in which to call the callback functions (The this reference for the callback functions).
-     * </div></li>
-     * </ul>
+     * @param {Ext.form.Panel} options.success.result
+     * The result object returned by the server as a result of the submit request.
+     *
+     * @param {Function} options.failure
+     * The callback that will be invoked after a failed transaction attempt.
+     *
+     * The function is passed the following parameters:
+     *
+     * @param {Ext.form.Panel} options.failure.form
+     * The {@link Ext.form.Panel} that requested the submit.
+     *
+     * @param {Ext.form.Panel} options.failure.result
+     * The failed response or result object returned by the server which performed the operation.
+     *
+     * @param {Object} options.scope
+     * The scope in which to call the callback functions (The this reference for the callback functions).=
      *
      * @return {Ext.data.Connection} The request object
      */
@@ -388,7 +350,7 @@ Ext.define('Ext.form.Panel', {
         options = Ext.apply({
             url : me.getUrl() || form.action,
             submit: false,
-            method : form.method || 'post',
+            method : me.getMethod() || form.method || 'post',
             autoAbort : false,
             params : null,
             waitMsg : null,
@@ -415,7 +377,7 @@ Ext.define('Ext.form.Panel', {
         }
         else {
             if (options.waitMsg) {
-                me.showMask(options.waitMsg);
+                me.setMasked(options.waitMsg);
             }
 
             return Ext.Ajax.request({
@@ -437,7 +399,7 @@ Ext.define('Ext.form.Panel', {
                         responseText = response.responseText,
                         failureFn;
 
-                    me.hideMask();
+                    me.setMasked(false);
 
                     failureFn = function() {
                         if (Ext.isFunction(options.failure)) {
@@ -715,56 +677,50 @@ Ext.define('Ext.form.Panel', {
     getFieldsFromItem: Ext.emptyFn,
 
     /**
+     * @deprecated 2.0.0 showMask is now deprecated. Please use {@link #setMasked} instead.
      * Shows a generic/custom mask over a designated Element.
      * @param {String/Object} cfg Either a string message or a configuration object supporting
      * the following options:
      *
      *     {
      *         message : 'Please Wait',
-     *         transparent : false,
-     *         target  : Ext.getBody(),  //optional target Element
-     *         cls : 'form-mask',
-     *         customImageUrl : 'trident.jpg'
+     *         cls : 'form-mask'
      *     }
      *
-     * This object is passed to the {@link #waitTpl} for use with a custom masking implementation.
-     * @param {String/HTMLElement/Ext.Element} target The target Element instance or Element id to use
-     * as the masking agent for the operation (defaults the container Element of the component)
      * @return {Ext.form.Panel} This form
      */
     showMask: function(cfg, target) {
-        cfg = Ext.isString(cfg) ? {message : cfg} : cfg;
-        var me = this,
-            waitTpl = me.getWaitTpl();
+        //<debug>
+        Ext.Logger.warn('showMask is now deprecated. Please use Ext.form.Panel#setMasked instead');
+        //</debug>
 
-        if (cfg && waitTpl) {
-            target = Ext.get(target || cfg.target) || me.getEl();
-            me.setMaskTarget(target);
-            if (target) {
-                target.mask(waitTpl.apply(cfg));
-            }
+        cfg = Ext.isObject(cfg) ? cfg.message : cfg;
+
+        if (cfg) {
+            this.setMasked({
+                xtype: 'loadmask',
+                message: cfg
+            });
+        } else {
+            this.setMasked(true);
         }
-        return me;
+
+        return this;
     },
 
     /**
+     * @deprecated 2.0.0 hideMask is now deprecated. Please use {@link #unmask} or {@link #setMasked} instead.
      * Hides a previously shown wait mask (See {@link #showMask})
      * @return {Ext.form.Panel} this
      */
     hideMask: function() {
-        var me = this,
-            maskTarget = me.getMaskTarget();
-
-        if (maskTarget) {
-            maskTarget.unmask();
-            me.setMaskTarget(null);
-        }
-        return me;
+        this.setMasked(false);
+        return this;
     },
 
     /**
      * Returns the currently focused field
-     * @return {Null/Ext.field.Field} The currently focused field, if one is focused.
+     * @return {Ext.field.Field} The currently focused field, if one is focused or `null`.
      * @private
      */
     getFocusedField: function() {
@@ -858,28 +814,26 @@ Ext.define('Ext.form.Panel', {
     }
 }, function() {
     //<deprecated product=touch since=2.0>
+    Ext.deprecateClassMethod(this, 'loadRecord', 'setRecord');
+    Ext.deprecateClassMethod(this, 'loadModel', 'setRecord');
+    Ext.deprecateClassMethod(this, 'load', 'setRecord');
+
     this.override({
-        /**
-         * @deprecated Please use {@link #setRecord} instead
-         */
-        loadRecord: function(instance) {
-            return this.setRecord.apply(this, arguments);
-        },
-
-        /**
-         * @deprecated Please use {@link #setRecord} instead
-         */
-        loadModel: function() {
-            return this.setRecord.apply(this, arguments);
-        },
-
         constructor: function(config) {
             /**
+             * @cfg {Ext.XTemplate/String/String[]} waitTpl
+             * The defined waitMsg template.  Used for precise control over the masking agent used
+             * to mask the FormPanel (or other Element) during form Ajax/submission actions. For more options, see
+             * {@link #showMask} method.
+             * @deprecated 2.0.0 waitTpl is now deprecated. Please use a custom {@link Ext.LoadMask} class and the {@link #masked} configuration
+             * when {@link #method submitting} your form.
+             */
+
+            /**
              * @cfg {Ext.dom.Element} waitMsgTarget The target of any mask shown on this form.
-             * @deprecated 2.0.0 Please use {@link #maskTarget} instead
+             * @deprecated 2.0.0 There is no need to set a mask target anymore. Please see the {@link #masked} configuration instead.
              */
             if (config && config.hasOwnProperty('waitMsgTarget')) {
-                config.maskTarget = config.waitMsgTarget;
                 delete config.waitMsgTarget;
             }
 
@@ -887,11 +841,4 @@ Ext.define('Ext.form.Panel', {
         }
     });
     //</deprecated>
-
-    /**
-     * (Shortcut to {@link #loadRecord} method) Loads matching fields from a model instance into this form
-     * @param {Ext.data.Model} instance The model instance
-     * @return {Ext.form.Panel} this
-     */
-    Ext.form.Panel.prototype.load = Ext.form.Panel.prototype.loadModel;
 });

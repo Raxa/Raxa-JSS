@@ -18,7 +18,8 @@ Ext.define('Ext.field.Select', {
         'Ext.Panel',
         'Ext.picker.Picker',
         'Ext.data.Store',
-        'Ext.data.StoreManager'
+        'Ext.data.StoreManager',
+        'Ext.List'
     ],
 
     /**
@@ -94,7 +95,15 @@ Ext.define('Ext.field.Select', {
          * @hide
          * @accessor
          */
-        clearIcon: false
+        clearIcon: false,
+
+        /**
+         * @cfg {String/Boolean} usePicker
+         * `true` if you want this component to always use a {@link Ext.picker.Picker}.
+         * `false` if you want it to use a popup overlay {@link Ext.List}.
+         * `auto` if you want to show a {@link Ext.picker.Picker} only on phones.
+         */
+        usePicker: 'auto'
     },
 
     /**
@@ -120,15 +129,35 @@ Ext.define('Ext.field.Select', {
 
     // @private
     initialize: function() {
-        var me = this;
+        var me = this,
+            component = me.getComponent();
 
         me.callParent();
-        me.getComponent().on({
+
+        component.on({
             scope: me,
             masktap: 'onMaskTap'
         });
+
+        component.input.dom.disabled = true;
     },
 
+    /**
+     * @private
+     * Checks if the value is `auto`. If it is, it only uses the picker if the current device type
+     * is a phone.
+     */
+    applyUsePicker: function(usePicker) {
+        if (usePicker == "auto") {
+            usePicker = (Ext.os.deviceType == 'Phone');
+        }
+
+        return Boolean(usePicker);
+    },
+
+    /**
+     * @private
+     */
     applyValue: function(value) {
         var record = value,
             index;
@@ -141,7 +170,7 @@ Ext.define('Ext.field.Select', {
             index = this.getStore().find(this.getValueField(), value, null, null, null, true);
 
             if (index == -1) {
-                index = this.getStore().find(this.getDisplayField(), value);
+                index = this.getStore().find(this.getDisplayField(), value, null, null, null, true);
             }
 
             record = this.getStore().getAt(index);
@@ -152,12 +181,9 @@ Ext.define('Ext.field.Select', {
 
     updateValue: function(newValue, oldValue) {
         this.previousRecord = oldValue;
+        this.record = newValue;
 
-        if (newValue) {
-            this.record = newValue;
-
-            this.callParent([newValue.get(this.getDisplayField())]);
-        }
+        this.callParent([newValue ? newValue.get(this.getDisplayField()) : '']);
 
         this.fireEvent('change', this, newValue, oldValue);
     },
@@ -172,7 +198,7 @@ Ext.define('Ext.field.Select', {
     },
 
     // @private
-    getPicker: function() {
+    getPhonePicker: function() {
         if (!this.picker) {
             this.picker = Ext.create('Ext.picker.Picker', {
                 slots: [{
@@ -194,7 +220,7 @@ Ext.define('Ext.field.Select', {
     },
 
     // @private
-    getListPanel: function() {
+    getTabletPicker: function() {
         if (!this.listPanel) {
             this.listPanel = Ext.create('Ext.Panel', {
                 top     : 0,
@@ -225,13 +251,16 @@ Ext.define('Ext.field.Select', {
             return false;
         }
 
-        this.showComponent();
+        this.showPicker();
 
         return false;
     },
 
-    // @private
-    showComponent: function() {
+    /**
+     * Shows the picker for the select field, whether that is a {@link Ext.picker.Picker} or a simple
+     * {@link Ext.List list}.
+     */
+    showPicker: function() {
         //check if the store is empty, if it is, return
         if (this.getStore().getCount() === 0) {
             return;
@@ -244,24 +273,32 @@ Ext.define('Ext.field.Select', {
         this.isFocused = true;
 
         //hide the keyboard
-        Ext.Viewport.hideKeyboard();
+        //the causes https://sencha.jira.com/browse/TOUCH-1679
+        // Ext.Viewport.hideKeyboard();
 
-        if (Ext.os.deviceType == 'Phone') {
-            var picker = this.getPicker(),
+        if (this.getUsePicker()) {
+            var picker = this.getPhonePicker(),
                 name   = this.getName(),
                 value  = {};
 
             value[name] = this.record.get(this.getValueField());
             picker.setValue(value);
+            if (!picker.getParent()) {
+                Ext.Viewport.add(picker);
+            }
             picker.show();
         } else {
-            var listPanel = this.getListPanel(),
+            var listPanel = this.getTabletPicker(),
                 list = listPanel.down('list'),
                 store = list.getStore(),
-                index = store.find(this.getValueField(), this.getValue()),
+                index = store.find(this.getValueField(), this.getValue(), null, null, null, true),
                 record = store.getAt((index == -1) ? 0 : index);
 
-            listPanel.showBy(this);
+            if (!listPanel.getParent()) {
+                Ext.Viewport.add(listPanel);
+            }
+
+            listPanel.showBy(this.getComponent());
             list.select(record, null, true);
         }
     },
@@ -287,7 +324,7 @@ Ext.define('Ext.field.Select', {
         var me = this,
             newValue = value[me.getName()],
             store = me.getStore(),
-            index = store.find(me.getValueField(), newValue),
+            index = store.find(me.getValueField(), newValue, null, null, null, true),
             record = store.getAt(index);
 
         me.setValue(record);
@@ -331,6 +368,9 @@ selectBox.setOptions(
 
             store.on({
                 scope: this,
+                addrecords: this.onStoreDataChanged,
+                removerecords: this.onStoreDataChanged,
+                updaterecord: this.onStoreDataChanged,
                 refresh: this.onStoreDataChanged
             });
         }
@@ -351,13 +391,35 @@ selectBox.setOptions(
         var initialConfig = this.getInitialConfig(),
             value = this.getValue();
 
-        if (value) {
+        if (Ext.isDefined(value)) {
             this.updateValue(this.applyValue(value));
-        } else if (initialConfig.hasOwnProperty('value')) {
-            this.setValue(initialConfig.value);
-        } else if (store.getCount() > 0) {
-            this.setValue(store.getAt(0));
         }
+
+        if (this.getValue() === null) {
+            if (initialConfig.hasOwnProperty('value')) {
+                this.setValue(initialConfig.value);
+            }
+
+            if (this.getValue() === null) {
+                if (store.getCount() > 0) {
+                    this.setValue(store.getAt(0));
+                }
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    doSetDisabled: function(disabled) {
+        Ext.Component.prototype.doSetDisabled.apply(this, arguments);
+    },
+
+    /**
+     * @private
+     */
+    setDisabled: function() {
+        Ext.Component.prototype.setDisabled.apply(this, arguments);
     },
 
     /**
@@ -381,7 +443,7 @@ selectBox.setOptions(
         this.isFocused = true;
 
         Ext.Viewport.hideKeyboard();
-        this.showComponent();
+        this.showPicker();
     },
 
     destroy: function() {

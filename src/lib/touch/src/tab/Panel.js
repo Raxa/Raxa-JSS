@@ -56,7 +56,7 @@
  */
 Ext.define('Ext.tab.Panel', {
     extend: 'Ext.Container',
-    xtype : ['tabpanel'],
+    xtype : 'tabpanel',
     alternateClassName: 'Ext.TabPanel',
 
     requires: ['Ext.tab.Bar'],
@@ -100,6 +100,17 @@ Ext.define('Ext.tab.Panel', {
 
         // @inherit
         cls: Ext.baseCSSPrefix + 'tabpanel'
+
+        /**
+         * @cfg {Boolean/String/Object} scrollable
+         * @accessor
+         * @hide
+         */
+
+        /**
+         * @cfg {Boolean/String/Object} scroll
+         * @hide
+         */
     },
 
     initialize: function() {
@@ -110,6 +121,15 @@ Ext.define('Ext.tab.Panel', {
             delegate: '> tabbar',
             scope   : this
         });
+    },
+
+    /**
+     * Tab panels should not be scrollable. Instead, you should add scrollable to any item that
+     * you want to scroll.
+     * @private
+     */
+    applyScrollable: function() {
+        return false;
     },
 
     /**
@@ -181,7 +201,7 @@ Ext.define('Ext.tab.Panel', {
     },
 
     /**
-     * Creates a new {@link Ext.tab.Bar} instance using {@link Ext.Factory}.
+     * Creates a new {@link Ext.tab.Bar} instance using {@link Ext#factory}.
      * @private
      */
     applyTabBar: function(config) {
@@ -279,8 +299,8 @@ Ext.define('Ext.tab.Panel', {
     },
 
     // @private
-    onItemRemove: function(item, autoDestroy) {
-        this.getTabBar().remove(item.tab, autoDestroy);
+    onItemRemove: function(item, index) {
+        this.getTabBar().remove(item.tab, this.getAutoDestroy());
 
         this.callParent(arguments);
     }

@@ -1,6 +1,6 @@
 /**
  * A simple class used to mask any {@link Ext.Container}.
- * This should rarely be used directly, instead look at the {@link Ext.Container#cfg-mask} configuration.
+ * This should rarely be used directly, instead look at the {@link Ext.Container#masked} configuration.
  */
 Ext.define('Ext.Mask', {
     extend: 'Ext.Component',
@@ -53,22 +53,35 @@ Ext.define('Ext.Mask', {
      * @param {Ext.EventObject} e The event object
      */
     initialize: function() {
-        var element = this.element;
-
         this.callParent();
 
-        element.on('tap', 'onTap', this);
-        element.on('*', 'onEvent', this);
+        this.on({
+            painted: 'onPainted',
+            erased: 'onErased'
+        })
+    },
+
+    onPainted: function() {
+        this.element.on('*', 'onEvent', this);
+    },
+
+    onErased: function() {
+        this.element.un('*', 'onEvent', this);
     },
 
     onEvent: function(e) {
-        e.stopEvent();
+        var controller = arguments[arguments.length - 1];
+
+        if (controller.info.eventName === 'tap') {
+            this.fireEvent('tap', this, e);
+            return false;
+        }
+
+        if (e && e.stopEvent) {
+            e.stopEvent();
+        }
 
         return false;
-    },
-
-    onTap: function(e) {
-        this.fireEvent('tap', this, e);
     },
 
     updateTransparent: function(newTransparent) {

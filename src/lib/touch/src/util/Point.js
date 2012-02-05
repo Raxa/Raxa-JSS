@@ -1,15 +1,11 @@
 /**
  * Represents a 2D point with x and y properties, useful for comparison and instantiation
  * from an event:
- * 
+ *
  *     var point = Ext.util.Point.fromEvent(e);
  *
  */
 Ext.define('Ext.util.Point', {
-
-    //<debug error>
-    requires: ['Ext.Validator'],
-    //</debug>
 
     radianToDegreeConstant: 180 / Math.PI,
 
@@ -37,18 +33,29 @@ Ext.define('Ext.util.Point', {
             return new this(touch.pageX, touch.pageY);
         },
 
-        validate: function(point) {
-            if (!point || !('x' in point) || !('y' in point)) {
-                throw new Error("[" + Ext.getDisplayName(this.validate.caller) + "] Invalid point, must be either an instance of Ext.util.Point or an object with 'x' and 'y' properties");
+        /**
+         * Returns a new point from an object that has 'x' and 'y' properties, if that object is not an instance
+         * of Ext.util.Point. Otherwise, returns the given point itself.
+         * @param object
+         */
+        from: function(object) {
+            if (!object) {
+                return new this(0, 0);
             }
 
-            //<debug error>
-            Ext.Validator.number(point.x);
-            Ext.Validator.number(point.y);
-            //</debug>
+            if (!(object instanceof this)) {
+                return new this(object.x, object.y);
+            }
+
+            return object;
         }
     },
 
+    /**
+     * Creates point on 2D plane.
+     * @param {Number} [x=0] X coordinate.
+     * @param {Number} [y=0] Y coordinate.
+     */
     constructor: function(x, y) {
         if (typeof x == 'undefined') {
             x = 0;
@@ -57,11 +64,6 @@ Ext.define('Ext.util.Point', {
         if (typeof y == 'undefined') {
             y = 0;
         }
-
-        //<debug error>
-        Ext.Validator.number(x);
-        Ext.Validator.number(y);
-        //</debug>
 
         this.x = x;
         this.y = y;
@@ -91,10 +93,6 @@ Ext.define('Ext.util.Point', {
      * @return {Ext.util.Point} this This point
      */
     copyFrom: function(point) {
-        //<debug error>
-        this.statics().validate(point);
-        //</debug>
-
         this.x = point.x;
         this.y = point.y;
 
@@ -103,8 +101,8 @@ Ext.define('Ext.util.Point', {
 
     /**
      * Returns a human-eye-friendly string that represents this point,
-     * useful for debugging
-     * @return {String}
+     * useful for debugging.
+     * @return {String} For example `Point[12,8]`
      */
     toString: function() {
         return "Point[" + this.x + "," + this.y + "]";
@@ -117,10 +115,6 @@ Ext.define('Ext.util.Point', {
      * @return {Boolean} Returns whether they are equivalent
      */
     equals: function(point) {
-        //<debug error>
-        this.statics().validate(point);
-        //</debug>
-
         return (this.x === point.x && this.y === point.y);
     },
 
@@ -132,10 +126,6 @@ Ext.define('Ext.util.Point', {
      * @return {Boolean}
      */
     isCloseTo: function(point, threshold) {
-        //<debug error>
-        this.statics().validate(point);
-        //</debug>
-
         if (typeof threshold == 'number') {
             threshold = {x: threshold};
             threshold.y = threshold.x;
@@ -165,11 +155,6 @@ Ext.define('Ext.util.Point', {
      * @return {Boolean}
      */
     translate: function(x, y) {
-        //<debug error>
-        Ext.Validator.number(x);
-        Ext.Validator.number(y);
-        //</debug>
-
         this.x += x;
         this.y += y;
 
@@ -184,19 +169,11 @@ Ext.define('Ext.util.Point', {
      * @return {Boolean}
      */
     roundedEquals: function(point) {
-        //<debug error>
-        this.statics().validate(point);
-        //</debug>
-
         return (Math.round(this.x) === Math.round(point.x) &&
                 Math.round(this.y) === Math.round(point.y));
     },
 
     getDistanceTo: function(point) {
-        //<debug error>
-        this.statics().validate(point);
-        //</debug>
-
         var deltaX = this.x - point.x,
             deltaY = this.y - point.y;
 
@@ -204,10 +181,6 @@ Ext.define('Ext.util.Point', {
     },
 
     getAngleTo: function(point) {
-        //<debug error>
-        this.statics().validate(point);
-        //</debug>
-
         var deltaX = this.x - point.x,
             deltaY = this.y - point.y;
 

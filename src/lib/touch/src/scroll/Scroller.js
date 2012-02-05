@@ -1,5 +1,40 @@
 /**
- * The scroller factory
+ * In Sencha Touch there are several scroller implementations so we can have the best performance on
+ * all mobile devices and browsers. This class acts as a `factory` to those scrollers, and when instanciated,
+ * will automatically create the correct scroller instance for the currect device type.
+ *
+ * Scroller settings can be changed using the {@link Ext.Container#scrollable scrollable} configuration in
+ * {@link Ext.Container}. Anything you pass to that method will be passed to the scroller when it is
+ * instanciated in your container.
+ *
+ * Please note that the {@link Ext.Container#getScrollable} method returns an instance of {@link Ext.scroll.View}.
+ * So if you need to get access to the scroller after your container has been instansiated, you must used the
+ * {@link Ext.scroll.View#getScroller} method.
+ *
+ *     //lets assume container is a container you have
+ *     //created which is scrollable
+ *     container.getScrollable.getScroller().setFps(10);
+ *
+ * ## Example
+ *
+ * Here is a simple example of how to adjust the scroller settings when using a {@link Ext.Container} (or anything
+ * that extends it).
+ *
+ *     @example
+ *     var container = Ext.create('Ext.Container', {
+ *         fullscreen: true,
+ *         html: 'This container is scrollable!',
+ *         scrollable: {
+ *             direction: 'vertical'
+ *         }
+ *     });
+ *
+ * As you can see, we are passing the {@link #direction} configuration into the scroller instance in our container.
+ *
+ * You can pass any of the configs below in that {@link Ext.Container#scrollable scrollable} configuration and it will
+ * just work.
+ *
+ * Go ahead and try it in the live code editor above!
  */
 Ext.define('Ext.scroll.Scroller', {
     alternateClassName: 'Ext.util.Scroller',
@@ -15,19 +50,6 @@ Ext.define('Ext.scroll.Scroller', {
 
         scrollMethod: 'auto'
     },
-    
-    /**
-     * @cfg {Number} acceleration A higher acceleration gives the scroller more initial velocity. Defaults to 30
-     * Deprecated, please use momentumEasing.momentum.acceleration instead
-     * @deprecated 2.0.0
-     */
-
-    /**
-     * @cfg {Number} friction The friction of the scroller. By raising this value the length that momentum scrolls 
-     * becomes shorter. This value is best kept between 0 and 1. The default value is 0.5. Deprecated, please use
-     * momentumEasing.momentum.friction instead
-     * @deprecated 2.0.0
-     */
     
     constructor: function(config) {
         var namespace = Ext.scroll.scroller,

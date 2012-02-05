@@ -6,6 +6,7 @@ Ext.define('Ext.dataview.element.List', {
 
     updateBaseCls: function(newBaseCls, oldBaseCls) {
         var me = this;
+
         me.callParent(arguments);
         me.itemClsShortCache = newBaseCls + '-item';
 
@@ -32,14 +33,21 @@ Ext.define('Ext.dataview.element.List', {
     getItemElementConfig: function(index, data) {
         var me = this,
             dataview = me.dataview,
-            config = {
-                cls: me.itemClsShortCache,
-                children: [{
-                    cls: me.labelClsShortCache,
-                    html: dataview.getItemTpl().apply(data)
-                }]
-            },
-            iconSrc;
+            itemCls = dataview.getItemCls(),
+            cls = me.itemClsShortCache,
+            config, iconSrc;
+
+        if (itemCls) {
+            cls += ' ' + itemCls;
+        }
+
+        config = {
+            cls: cls,
+            children: [{
+                cls: me.labelClsShortCache,
+                html: dataview.getItemTpl().apply(data)
+            }]
+        };
 
         if (dataview.getIcon()) {
             iconSrc = data.iconSrc;
@@ -113,5 +121,10 @@ Ext.define('Ext.dataview.element.List', {
             html: html
         }));
         item.addCls(this.headerItemClsShortCache);
+    },
+
+    destroy: function() {
+        this.doRemoveHeaders();
+        this.callParent();
     }
 });

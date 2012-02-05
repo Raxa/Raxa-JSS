@@ -209,6 +209,8 @@ Ext.define('Ext.field.DatePicker', {
         // Ext.Date.format expects a Date
         if (newValue !== null) {
             this.getComponent().setValue(Ext.Date.format(newValue, this.getDateFormat() || Ext.util.Format.defaultDateFormat));
+        } else {
+            this.getComponent().setValue('');
         }
     },
 
@@ -237,9 +239,10 @@ Ext.define('Ext.field.DatePicker', {
     },
 
     /**
-     * Returns the value of the field formatted using the specified format. If it is not specified, it will default {@link #dateFormat}
-     * and then {@link Ext.util.Format#defaultDateFormat}.
+     * Returns the value of the field formatted using the specified format. If it is not specified, it will default to
+     * {@link #dateFormat} and then {@link Ext.util.Format#defaultDateFormat}.
      * @param {String} format The format to be returned
+     * @return {String} The formatted date
      */
     getFormattedValue: function(format) {
         var value = this.getValue();
@@ -267,6 +270,7 @@ Ext.define('Ext.field.DatePicker', {
             });
             picker.hide();
             picker.setValue(this.getValue());
+            Ext.Viewport.add(picker);
             this._picker = picker;
         }
 
@@ -275,7 +279,7 @@ Ext.define('Ext.field.DatePicker', {
 
     /**
      * @private
-     * Listener to the tap event of the mask element. Shows the internal {@link #datePicker} component when the button has been tapped.
+     * Listener to the tap event of the mask element. Shows the internal DatePicker component when the button has been tapped.
      */
     onMaskTap: function() {
         if (this.getDisabled()) {
@@ -285,6 +289,9 @@ Ext.define('Ext.field.DatePicker', {
         if (this.getReadOnly()) {
             return false;
         }
+
+        //hide the keyboard on devices
+        Ext.Viewport.hideKeyboard();
 
         this.getPicker().show();
 
@@ -323,8 +330,9 @@ Ext.define('Ext.field.DatePicker', {
     },
 
     // @private
-    onDestroy: function() {
+    destroy: function() {
         var picker = this.getPicker();
+
         if (picker) {
             picker.destroy();
         }

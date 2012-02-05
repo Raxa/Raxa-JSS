@@ -1,9 +1,8 @@
 /**
  * @author Ed Spencer
  *
- * WebStorageProxy is simply a superclass for the {@link Ext.data.proxy.LocalStorage LocalStorage} and {@link
- * Ext.data.proxy.SessionStorage SessionStorage} proxies. It uses the new HTML5 key/value client-side storage objects to
- * save {@link Ext.data.Model model instances} for offline use.
+ * WebStorageProxy is simply a superclass for the {@link Ext.data.proxy.LocalStorage LocalStorage} proxy. It uses the
+ * new HTML5 key/value client-side storage objects to save {@link Ext.data.Model model instances} for offline use.
  * @private
  */
 Ext.define('Ext.data.proxy.WebStorage', {
@@ -37,7 +36,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
         //<debug>
         if (this.getStorageObject() === undefined) {
-            Ext.Error.raise("Local Storage is not supported in this browser, please use another type of data proxy");
+            Ext.Logger.error("Local Storage is not supported in this browser, please use another type of data proxy");
         }
         //</debug>
     },
@@ -83,17 +82,15 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
     //inherit docs
     read: function(operation, callback, scope) {
-        // @TODO: respect sorters, filters, start and limit options on the Operation
-
         var records = [],
             ids     = this.getIds(),
+            params  = operation.getParams() || {},
             length  = ids.length,
             i, record;
 
         //read a single record
-        // @TODO: operation has no id yet?
-        if (operation.id) {
-            record = this.getRecord(operation.id);
+        if (params.id !== undefined) {
+            record = this.getRecord(params.id);
 
             if (record) {
                 records.push(record);
@@ -132,8 +129,6 @@ Ext.define('Ext.data.proxy.WebStorage', {
         for (i = 0; i < length; i++) {
             record = records[i];
             this.setRecord(record);
-
-            // @TODO: This is not entirely the case. Every record now has an id. Figure out if this causes a bug.
 
             //we need to update the set of ids here because it's possible that a non-phantom record was added
             //to this proxy - in which case the record's id would never have been added via the normal 'create' call
@@ -208,10 +203,6 @@ Ext.define('Ext.data.proxy.WebStorage', {
             }
 
             record = new Model(data, id);
-            // @TODO: make sure we don't have to set phantom to false. we give it an id, so it shouldnt
-            // be phantom after we created it right?
-            //record.phantom = false;
-
             this.cache[id] = record;
         }
 
@@ -246,7 +237,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
             if (typeof field.getEncode() == 'function') {
                 data[name] = field.getEncode()(rawData[name], record);
             } else {
-                if (field.getType().type == 'date') {
+                if (field.getType().type == 'date' && Ext.isDate(rawData[name])) {
                     data[name] = rawData[name].getTime();
                 } else {
                     data[name] = rawData[name];
@@ -413,7 +404,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      */
     getStorageObject: function() {
         //<debug>
-        Ext.Error.raise("The getStorageObject function has not been defined in your Ext.data.proxy.WebStorage subclass");
+        Ext.Logger.error("The getStorageObject function has not been defined in your Ext.data.proxy.WebStorage subclass");
         //</debug>
     }
 });

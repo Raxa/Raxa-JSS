@@ -5,52 +5,72 @@
  * This singleton contains a set of validation functions that can be used to validate any type of data. They are most
  * often used in {@link Ext.data.Model Models}, where they are automatically set up and executed.
  */
-Ext.define('Ext.data.validations', {
+Ext.define('Ext.data.Validations', {
+    alternateClassName: 'Ext.data.validations',
+
     singleton: true,
-    
+
+    config: {
+        /**
+         * @property {String} presenceMessage
+         * The default error message used when a presence validation fails.
+         */
+        presenceMessage: 'must be present',
+
+        /**
+         * @property {String} lengthMessage
+         * The default error message used when a length validation fails.
+         */
+        lengthMessage: 'is the wrong length',
+
+        /**
+         * @property {Boolean} formatMessage
+         * The default error message used when a format validation fails.
+         */
+        formatMessage: 'is the wrong format',
+
+        /**
+         * @property {String} inclusionMessage
+         * The default error message used when an inclusion validation fails.
+         */
+        inclusionMessage: 'is not included in the list of acceptable values',
+
+        /**
+         * @property {String} exclusionMessage
+         * The default error message used when an exclusion validation fails.
+         */
+        exclusionMessage: 'is not an acceptable value',
+
+        /**
+         * @property {String} emailMessage
+         * The default error message used when an email validation fails
+         */
+        emailMessage: 'is not a valid email address'
+    },
+
+    constructor: function(config) {
+        this.initConfig(config);
+    },
+
     /**
-     * @property {String} presenceMessage
-     * The default error message used when a presence validation fails.
+     * Returns the configured error message for any of the validation types.
+     * @param {String} type The type of validation you want to get the error message for.
      */
-    presenceMessage: 'must be present',
-    
-    /**
-     * @property {String} lengthMessage
-     * The default error message used when a length validation fails.
-     */
-    lengthMessage: 'is the wrong length',
-    
-    /**
-     * @property {Boolean} formatMessage
-     * The default error message used when a format validation fails.
-     */
-    formatMessage: 'is the wrong format',
-    
-    /**
-     * @property {String} inclusionMessage
-     * The default error message used when an inclusion validation fails.
-     */
-    inclusionMessage: 'is not included in the list of acceptable values',
-    
-    /**
-     * @property {String} exclusionMessage
-     * The default error message used when an exclusion validation fails.
-     */
-    exclusionMessage: 'is not an acceptable value',
-    
-    /**
-     * @property {String} emailMessage
-     * The default error message used when an email validation fails
-     */
-    emailMessage: 'is not a valid email address',
-    
+    getMessage: function(type) {
+        var getterFn = this['get' + type[0].toUpperCase() + type.slice(1) + 'Message'];
+        if (getterFn) {
+            return getterFn.call(this);
+        }
+        return '';
+    },
+
     /**
      * The regular expression used to validate email addresses
      * @property emailRe
      * @type RegExp
      */
     emailRe: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
-    
+
     /**
      * Validates that the given value is present.
      * For example:
@@ -65,11 +85,11 @@ Ext.define('Ext.data.validations', {
         if (value === undefined) {
             value = config;
         }
-        
+
         //we need an additional check for zero here because zero is an acceptable form of present data
         return !!value || value === 0;
     },
-    
+
     /**
      * Returns true if the given value is between the configured min and max values.
      * For example:
@@ -84,18 +104,18 @@ Ext.define('Ext.data.validations', {
         if (value === undefined || value === null) {
             return false;
         }
-        
+
         var length = value.length,
             min    = config.min,
             max    = config.max;
-        
+
         if ((min && length < min) || (max && length > max)) {
             return false;
         } else {
             return true;
         }
     },
-    
+
     /**
      * Validates that an email string is in the correct format
      * @param {Object} config Config object
@@ -105,7 +125,7 @@ Ext.define('Ext.data.validations', {
     email: function(config, email) {
         return Ext.data.validations.emailRe.test(email);
     },
-    
+
     /**
      * Returns true if the given value passes validation against the configured `matcher` regex.
      * For example:
@@ -119,7 +139,7 @@ Ext.define('Ext.data.validations', {
     format: function(config, value) {
         return !!(config.matcher && config.matcher.test(value));
     },
-    
+
     /**
      * Validates that the given value is present in the configured `list`.
      * For example:
@@ -133,7 +153,7 @@ Ext.define('Ext.data.validations', {
     inclusion: function(config, value) {
         return config.list && Ext.Array.indexOf(config.list,value) != -1;
     },
-    
+
     /**
      * Validates that the given value is present in the configured `list`.
      * For example:

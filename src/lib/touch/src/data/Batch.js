@@ -168,7 +168,7 @@ Ext.define('Ext.data.Batch', {
                     me.fireEvent('operationcomplete', me, operation);
                 }
 
-                if (hasException && me.pauseOnException) {
+                if (hasException && me.getPauseOnException()) {
                     me.pause();
                 } else {
                     operation.setCompleted();

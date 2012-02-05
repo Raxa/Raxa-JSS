@@ -77,7 +77,7 @@ $base-gradient: 'matte' !default;
  * The font-family to be used throughout the theme.
  * @see background-gradient
  */
-$font-family: "Helvetica Neue", HelveticaNeue, "Helvetica-Neue", Helvetica, "BBAlpha Sans", sans-serif;
+$font-family: "Helvetica Neue", HelveticaNeue, "Helvetica-Neue", Helvetica, "BBAlpha Sans", sans-serif !default;
 
 /**
  * @var {color} $alert-color

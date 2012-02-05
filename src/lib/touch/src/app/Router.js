@@ -88,4 +88,49 @@ Ext.Router.draw(function(map) {
     clear: function() {
         this.setRoutes([]);
     }
+}, function() {
+    //<deprecated product=touch since=2.0>
+    /**
+     * Restores compatibility for the old Ext.Router.draw syntax. This needs to be here because apps often include
+     * routes.js just after app.js, so this is our only opportunity to hook this in. There is a small piece of code
+     * inside Application's onDependenciesLoaded that sets up the other end of this.
+     * @singleton
+     * @private
+     */
+    Ext.Router = {};
+
+    var drawStack = [];
+
+    /**
+     * Application's onDependenciesLoaded has a deprecated-wrapped line that calls this. Basic idea is that once an
+     * app has been instantiated we set that at Ext.Router's appInstance and then redirect any calls to
+     * Ext.Router.draw to that app's Router. We keep a drawStack above so that we can call Ext.Router.draw one or
+     * more times before the application is even instantiated and it will simply link it up once everything is
+     * present.
+     */
+    Ext.Router.setAppInstance = function(app) {
+        Ext.Router.appInstance = app;
+
+        if (drawStack.length > 0) {
+            Ext.each(drawStack, Ext.Router.draw);
+        }
+    };
+
+    Ext.Router.draw = function(mapperFn) {
+        Ext.Logger.deprecate(
+            'Ext.Router.map is deprecated, please define your routes inline inside each Controller. ' +
+            'Please see the 1.x -> 2.x migration guide for more details.'
+        );
+
+        var app = Ext.Router.appInstance,
+            router;
+
+        if (app) {
+            router = app.getRouter();
+            mapperFn(router);
+        } else {
+            drawStack.push(mapperFn);
+        }
+    };
+    //</deprecated>
 });

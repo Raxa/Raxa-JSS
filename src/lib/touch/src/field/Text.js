@@ -280,6 +280,17 @@ Ext.define('Ext.field.Text', {
         }
     },
 
+    /**
+     * Updates the {@link #inputCls} configuration on this fields {@link #component}
+     * @private
+     */
+    updateInputCls: function(newInputCls, oldInputCls) {
+        var component = this.getComponent();
+        if (component) {
+            component.replaceCls(oldInputCls, newInputCls);
+        }
+    },
+
     // @inherit
     doSetDisabled: function(disabled) {
         var me = this;
@@ -321,7 +332,7 @@ Ext.define('Ext.field.Text', {
     },
 
     /**
-     * Called when a key has been pressed in the {@link #input}
+     * Called when a key has been pressed in the `<input>`
      * @private
      */
     doKeyUp: function(me, e) {

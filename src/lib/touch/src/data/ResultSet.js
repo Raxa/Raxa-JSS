@@ -44,14 +44,6 @@ Ext.define('Ext.data.ResultSet', {
      */
     constructor: function(config) {
         this.initConfig(config);
-
-        // @TODO: put back this totalRecords bullshit?
-        // /**
-        //  * @property {Number} totalRecords
-        //  * Copy of this.total.
-        //  * @deprecated 2.0.0 Use {@link #total} instead.
-        //  */
-        //this.totalRecords = this.getTotal();
     },
 
     applyCount: function(count) {
@@ -59,5 +51,13 @@ Ext.define('Ext.data.ResultSet', {
             return this.getRecords().length;
         }
         return count;
+    },
+    
+    /**
+     * @private
+     * Make sure we set the right count when new records have been sent in
+     */
+    updateRecords: function(records) {
+        this.setCount(records.length);
     }
 });

@@ -61,7 +61,7 @@ Ext.define('Ext.data.proxy.Memory', {
          * @cfg {Object} data
          * Optional data to pass to configured Reader.
          */
-        data: null
+        data: []
     },
 
     /**
@@ -72,16 +72,18 @@ Ext.define('Ext.data.proxy.Memory', {
      * processing required for the proxy to register a result from the action.
      */
     finishOperation: function(operation, callback, scope) {
-        var i = 0,
-            recs = operation.getRecords(),
-            len = recs.length;
+        if (operation) {
+            var i = 0,
+                recs = operation.getRecords(),
+                len = recs.length;
 
-        for (i; i < len; i++) {
-            recs[i].commit();
+            for (i; i < len; i++) {
+                recs[i].commit();
+            }
+            operation.setSuccessful();
+
+            Ext.callback(callback, scope || this, [operation]);
         }
-        operation.setSuccessful();
-
-        Ext.callback(callback, scope || this, [operation]);
     },
 
     /**
@@ -142,7 +144,7 @@ Ext.define('Ext.data.proxy.Memory', {
         if (operation.process('read', reader.process(me.getData())) === false) {
             this.fireEvent('exception', this, null, operation);
         }
-        
+
         Ext.callback(callback, scope || me, [operation]);
     },
 

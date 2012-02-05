@@ -1,12 +1,17 @@
 /**
- *
+ * @ignore
  */
 Ext.define('Ext.util.Offset', {
+
+    /* Begin Definitions */
+
     statics: {
         fromObject: function(obj) {
             return new this(obj.x, obj.y);
         }
     },
+
+    /* End Definitions */
 
     constructor: function(x, y) {
         this.x = (x != null && !isNaN(x)) ? x : 0;
@@ -29,8 +34,11 @@ Ext.define('Ext.util.Offset', {
     },
 
     equals: function(offset) {
-        if(!(offset instanceof Ext.util.Offset))
-            throw new Error('offset must be an instance of Ext.util.Offset');
+        //<debug>
+        if(!(offset instanceof this.statics())) {
+            Ext.Error.raise('Offset must be an instance of Ext.util.Offset');
+        }
+        //</debug>
 
         return (this.x == offset.x && this.y == offset.y);
     },

@@ -311,9 +311,7 @@ Ext.define('Ext.data.association.BelongsTo', {
                 args = [instance];
                 scope = scope || model;
 
-                //TODO: We're duplicating the callback invokation code that the instance.load() call above
-                //makes here - ought to be able to normalize this - perhaps by caching at the Model.load layer
-                //instead of the association layer.
+                //See https://sencha.jira.com/browse/TOUCH-1483
                 Ext.callback(options, scope, args);
                 Ext.callback(options.success, scope, args);
                 Ext.callback(options.failure, scope, args);

@@ -10,15 +10,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
 
     optimizedSelectorRegex: /^#([\w\-]+)((?:[\s]*)>(?:[\s]*)|(?:\s*))([\w\-]+)$/i,
 
-    idSelectorRegex: /^#([\w\-]+)$/i,
-
     handledEvents: ['*'],
-
-    constructor: function() {
-        this.subscribers = {};
-
-        return this.callParent(arguments);
-    },
 
     getSubscribers: function(eventName, createIfNotExist) {
         var subscribers = this.subscribers,
@@ -57,7 +49,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
             map = typeSubscribers[type];
 
             if (!map) {
-                map = typeSubscribers[type] = {
+                typeSubscribers[type] = map = {
                     descendents: {
                         $length: 0
                     },
@@ -70,21 +62,23 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
 
             subMap = isDescendant ? map.descendents : map.children;
 
-            if (subMap[id]) {
+            if (subMap.hasOwnProperty(id)) {
+                subMap[id]++;
                 return true;
             }
 
-            subMap[id] = true;
+            subMap[id] = 1;
             subMap.$length++;
             map.$length++;
             typeSubscribers.$length++;
         }
         else {
-            if (selectorSubscribers[target]) {
+            if (selectorSubscribers.hasOwnProperty(target)) {
+                selectorSubscribers[target]++;
                 return true;
             }
 
-            selectorSubscribers[target] = true;
+            selectorSubscribers[target] = 1;
             selectorSubscribers.push(target);
         }
 
@@ -93,7 +87,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
         return true;
     },
 
-    unsubscribe: function(target, eventName) {
+    unsubscribe: function(target, eventName, all) {
         var subscribers = this.getSubscribers(eventName);
 
         if (!subscribers) {
@@ -104,6 +98,8 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
             typeSubscribers = subscribers.type,
             selectorSubscribers = subscribers.selector,
             id, isDescendant, type, map, subMap;
+
+        all = Boolean(all);
 
         if (match !== null) {
             id = match[1];
@@ -118,15 +114,17 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
 
             subMap = isDescendant ? map.descendents : map.children;
 
-            if (subMap[id]) {
-                delete subMap[id];
-                subMap.$length--;
-                map.$length--;
-                typeSubscribers.$length--;
+            if (!subMap.hasOwnProperty(id) || (!all && --subMap[id] > 0)) {
+                return true;
             }
+
+            delete subMap[id];
+            subMap.$length--;
+            map.$length--;
+            typeSubscribers.$length--;
         }
         else {
-            if (!selectorSubscribers[target]) {
+            if (!selectorSubscribers.hasOwnProperty(target) || (!all && --selectorSubscribers[target] > 0)) {
                 return true;
             }
 
@@ -134,7 +132,9 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
             Ext.Array.remove(selectorSubscribers, target);
         }
 
-        subscribers.$length--;
+        if (--subscribers.$length === 0) {
+            delete this.subscribers[eventName];
+        }
 
         return true;
     },
@@ -166,8 +166,13 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
     },
 
     publish: function(eventName, component) {
+        var subscribers = this.getSubscribers(eventName);
+        
+        if (!subscribers) {
+            return;
+        }
+
         var eventController = arguments[arguments.length - 1],
-            subscribers = this.getSubscribers(eventName),
             typeSubscribers = subscribers.type,
             selectorSubscribers = subscribers.selector,
             args = Array.prototype.slice.call(arguments, 2, -2),
@@ -177,7 +182,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
             selector,
             i, ln, type, j, subLn;
 
-        for (i = 0,ln = types.length; i < ln; i++) {
+        for (i = 0, ln = types.length; i < ln; i++) {
             type = types[i];
 
             subscribers = typeSubscribers[type];
@@ -190,10 +195,10 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
                         ancestorIds = component.getAncestorIds();
                     }
 
-                    for (j = 0,subLn = ancestorIds.length; j < subLn; j++) {
+                    for (j = 0, subLn = ancestorIds.length; j < subLn; j++) {
                         ancestorId = ancestorIds[j];
 
-                        if (descendentsSubscribers[ancestorId] === true) {
+                        if (descendentsSubscribers.hasOwnProperty(ancestorId)) {
                             this.dispatch('#' + ancestorId + ' ' + type, eventName, args, eventController);
                         }
 
@@ -208,7 +213,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
                             parentId = ancestorIds[0];
                         }
                         else {
-                            // @todo JACKY you need to look at this. it is probably slow. ask ^robert
+                            // See https://sencha.jira.com/browse/TOUCH-1546
                             parentComponent = component.getParent();
                             if (parentComponent) {
                                 parentId = parentComponent.getId();
@@ -217,7 +222,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
                     }
 
                     if (parentId) {
-                        if (childrenSubscribers[parentId] === true) {
+                        if (childrenSubscribers.hasOwnProperty(parentId)) {
                             this.dispatch('#' + parentId + ' > ' + type, eventName, args, eventController);
                         }
                     }

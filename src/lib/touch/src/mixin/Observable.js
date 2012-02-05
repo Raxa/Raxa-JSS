@@ -1,10 +1,41 @@
 /**
- * @class Ext.mixin.Observable
- * @alternateClassName Ext.util.Observable
- * @extend Ext.mixin.Mixin
- * @mixins Ext.mixin.Identifiable
+ * Mixin that provides a common interface for publishing events. Classes using this mixin can use the {@link #fireEvent}
+ * and {@link #fireAction} methods to notify listeners of events on the class.
  *
- * Mixin that provides a common interface for publishing events.
+ * Classes can also define a {@link #listeners} config to add an event hanler to the current object. See
+ * {@link #addListener} for more details.
+ *
+ * # Example
+ *
+ *     Ext.define('Employee', {
+ *         mixins: ['Ext.mixin.Observable'],
+ *
+ *         config: {
+ *             fullName: ''
+ *         },
+ *
+ *         constructor: function(config) {
+ *             this.initConfig(config);  // We need to initialize the config options when the class is instantiated
+ *         },
+ *
+ *         quitJob: function() {
+ *              this.fireEvent('quit');
+ *         }
+ *     });
+ *
+ *     var newEmployee = Ext.create('Employee', {
+ *
+ *         fullName: 'Ed Spencer',
+ *
+ *         listeners: {
+ *             quit: function() { // This function will be called when the 'quit' event is fired
+ *                 // By default, "this" will be the object that fired the event.
+ *                 console.log(this.getFullName() + " has quit!");
+ *             }
+ *         }
+ *     });
+ *
+ *     newEmployee.quitJob(); // Will log 'Ed Spencer has quit!'
  */
 Ext.define('Ext.mixin.Observable', {
 
@@ -23,20 +54,6 @@ Ext.define('Ext.mixin.Observable', {
 
     alternateClassName: 'Ext.util.Observable',
 
-    statics: {
-        releaseCapture: function(o) {
-            console.log('TODO: static releaseCapture');
-        },
-
-        capture: function(o, fn, scope) {
-            console.log('TODO: static capture');
-        },
-
-        observe: function(cls, listeners) {
-            console.log('TODO: static observe');
-        }
-    },
-
     // @private
     isObservable: true,
 
@@ -52,8 +69,8 @@ Ext.define('Ext.mixin.Observable', {
         /**
          * @cfg {Object} listeners
          * A config object containing one or more event handlers to be added to this object during initialization. This
-         * should be a valid listeners config object as specified in the {@link #addListener} example for attaching multiple
-         * handlers at once.
+         * should be a valid listeners config object as specified in the {@link #addListener} example for attaching
+         * multiple handlers at once.
          * @accessor
          */
         listeners: null,
@@ -219,7 +236,6 @@ Ext.define('Ext.mixin.Observable', {
      */
     doAddListener: function(name, fn, scope, options, order) {
         var isManaged = (scope && scope !== this && scope.isIdentifiable),
-            dispatcher = this.getEventDispatcher(),
             usedSelectors = this.getUsedSelectors(),
             usedSelectorsMap = usedSelectors.$map,
             selector = this.getObservableId(),
@@ -235,7 +251,7 @@ Ext.define('Ext.mixin.Observable', {
 
         if (options.delegate) {
             delegate = options.delegate;
-            // TODO: Compress the selector here
+            // See https://sencha.jira.com/browse/TOUCH-1579
             selector += ' ' + delegate;
         }
 
@@ -244,7 +260,7 @@ Ext.define('Ext.mixin.Observable', {
             usedSelectors.push(selector);
         }
 
-        isAdded = dispatcher.addListener(this.observableType, selector, name, fn, scope, options, order);
+        isAdded = this.addDispatcherListener(selector, name, fn, scope, options, order);
 
         if (isAdded && isManaged) {
             managedListeners = this.getManagedListeners(scope, name);
@@ -259,6 +275,10 @@ Ext.define('Ext.mixin.Observable', {
         return isAdded;
     },
 
+    addDispatcherListener: function(selector, name, fn, scope, options, order) {
+        return this.getEventDispatcher().addListener(this.observableType, selector, name, fn, scope, options, order);
+    },
+
     doRemoveListener: function(name, fn, scope, options, order) {
         var isManaged = (scope && scope !== this && scope.isIdentifiable),
             selector = this.getObservableId(),
@@ -267,7 +287,7 @@ Ext.define('Ext.mixin.Observable', {
 
         if (options && options.delegate) {
             delegate = options.delegate;
-            // TODO: Compress the selector here
+            // See https://sencha.jira.com/browse/TOUCH-1579
             selector += ' ' + delegate;
         }
 
@@ -275,7 +295,7 @@ Ext.define('Ext.mixin.Observable', {
             scope = this;
         }
 
-        isRemoved = this.getEventDispatcher().removeListener(this.observableType, selector, name, fn, scope, order);
+        isRemoved = this.removeDispatcherListener(selector, name, fn, scope, order);
 
         if (isRemoved && isManaged) {
             managedListeners = this.getManagedListeners(scope, name);
@@ -291,6 +311,10 @@ Ext.define('Ext.mixin.Observable', {
         }
 
         return isRemoved;
+    },
+
+    removeDispatcherListener: function(selector, name, fn, scope, order) {
+        return this.getEventDispatcher().removeListener(this.observableType, selector, name, fn, scope, order);
     },
 
     clearManagedListeners: function(object) {
@@ -712,7 +736,7 @@ Ext.define('Ext.mixin.Observable', {
 
     destroy: function() {
         if (this.observableId) {
-            this.fireEvent('destroy');
+            this.fireEvent('destroy', this);
             this.clearListeners();
             this.clearManagedListeners();
         }

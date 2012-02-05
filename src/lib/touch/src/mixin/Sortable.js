@@ -1,11 +1,11 @@
 /**
- *
+ * @private
  */
 Ext.define('Ext.mixin.Sortable', {
     extend: 'Ext.mixin.Mixin',
 
     requires: [
-        'Ext.util.NewSorter'
+        'Ext.util.Sorter'
     ],
 
     mixinConfig: {
@@ -58,7 +58,7 @@ Ext.define('Ext.mixin.Sortable', {
         if (!collection) {
             collection = this.createSortersCollection();
         }
-        
+
         collection.clear();
         this.sorted = false;
 
@@ -139,7 +139,7 @@ Ext.define('Ext.mixin.Sortable', {
             // This will guarantee that we get the collection
             currentSorters = this.createSortersCollection();
         }
-        
+
         // We first have to convert every sorter into a proper Sorter instance
         for (i = 0; i < ln; i++) {
             sorter = sorters[i];
@@ -195,7 +195,7 @@ Ext.define('Ext.mixin.Sortable', {
             // </debug>
 
             // If a sorter config was created, make it an instance
-            sorter = Ext.create('Ext.util.NewSorter', sorterConfig);
+            sorter = Ext.create('Ext.util.Sorter', sorterConfig);
             newSorters.push(sorter);
         }
 
@@ -221,7 +221,7 @@ Ext.define('Ext.mixin.Sortable', {
     removeSorter: function(sorter) {
         return this.removeSorters([sorter]);
     },
-    
+
     /**
      * This method removes all the sorters in a passed array.
      * @param {Array} sorters Each value in the array can be a string (property name),
@@ -292,16 +292,6 @@ Ext.define('Ext.mixin.Sortable', {
     },
 
     /**
-     * This method will sort an array based on the currently configured {@link #sorters}.
-     * @param {Array} data The array you want to have sorted
-     * @return {Array} data The array you passed after it is sorted
-     */
-    sort: function(data) {
-        Ext.Array.sort(data, this.getSortFn());
-        return data;
-    },
-
-    /**
      * Returns an up to date sort function.
      * @return {Function} sortFn The sort function.
      */
@@ -313,16 +303,26 @@ Ext.define('Ext.mixin.Sortable', {
     },
 
     /**
+     * This method will sort an array based on the currently configured {@link #sorters}.
+     * @param {Array} data The array you want to have sorted
+     * @return {Array} data The array you passed after it is sorted
+     */
+    sort: function(data) {
+        Ext.Array.sort(data, this.getSortFn());
+        return data;
+    },
+
+    /**
      * This method returns the index that a given item would be inserted into a given array based
      * on the current sorters.
      * @param {Array} items The array that you want to insert the item into.
      * @param {Mixed} item The item that you want to insert into the items array.
      * @returns {Number} index The index for the given item in the given array based on the current sorters.
      */
-    findInsertionIndex: function(items, item) {
+    findInsertionIndex: function(items, item, sortFn) {
         var start = 0,
             end   = items.length - 1,
-            sorterFn = this.getSortFn(),
+            sorterFn = sortFn || this.getSortFn(),
             middle,
             comparison;
 

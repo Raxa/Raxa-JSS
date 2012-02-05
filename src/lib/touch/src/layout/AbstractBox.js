@@ -166,10 +166,15 @@ Ext.define('Ext.layout.AbstractBox', {
         }
     },
 
+    /**
+     * Sets the flex of an item in this box layout.
+     * @param {Ext.Component} item The item of this layout which you want to update the flex of.
+     * @param {Number} flex The flex to set on this method
+     */
     setItemFlex: function(item, flex) {
         var element = item.element,
             flexItemCls = this.flexItemCls;
-
+        
         if (flex) {
             element.addCls(flexItemCls);
         }

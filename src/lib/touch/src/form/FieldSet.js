@@ -123,7 +123,7 @@ Ext.define('Ext.form.FieldSet', {
             }
         }
 
-        for (i = (ln - 1); i > 0; i--) {
+        for (i = ln - 1; i >= 0; i--) {
             item = items[i];
             if (!item.isHidden()) {
                 item.addCls(this.getBaseCls() + '-item-last');

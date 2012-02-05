@@ -1,4 +1,28 @@
-/**
+/*
+ * This is the default viewport instance used when you use {@link Ext#setup} or {@link Ext#application}.
+ * You can override any configurations in this call by setting the `viewport` property when calling
+ * {@link Ext#setup}:
+ *
+ *     Ext.setup({
+ *         viewport: {
+ *             preventZooming: true,
+ *             autoMaximize: false
+ *         },
+ *         onReady: function() {
+ *             //...
+ *         }
+ *     });
+ *
+ * or when using {@link Ext#application}:
+ *
+ *     Ext.application({
+ *         viewport: {
+ *             preventZooming: true
+ *         },
+ *         launch: function() {
+ *             //...
+ *         }
+ *     });
  *
  */
 Ext.define('Ext.viewport.Default', {
@@ -10,22 +34,29 @@ Ext.define('Ext.viewport.Default', {
 
     LANDSCAPE: 'landscape',
 
+    requires: [
+        'Ext.LoadMask'
+    ],
+
+// Move all the following members to another class
+/** @class Ext.Viewport */
+
     /**
      * @event ready
      * Fires when the Viewport is in the DOM and ready
-     * @param {Ext.viewport.Viewport} this
+     * @param {Ext.Viewport} this
      */
 
     /**
      * @event maximize
      * Fires when the Viewport is maximized
-     * @param {Ext.viewport.Viewport} this
+     * @param {Ext.Viewport} this
      */
 
     /**
      * @event orientationchange
      * Fires when the Viewport orientation has changed
-     * @param {Ext.viewport.Viewport} this
+     * @param {Ext.Viewport} this
      * @param {String} newOrientation The new orientation
      * @param {Number} width The width of the Viewport
      * @param {Number} height The height of the Viewport
@@ -34,7 +65,7 @@ Ext.define('Ext.viewport.Default', {
     /**
      * @event resize
      * Fires when the Viewport is resized
-     * @param {Ext.viewport.Viewport} this
+     * @param {Ext.Viewport} this
      * @param {Number} width The width of the Viewport
      * @param {Number} height The height of the Viewport
      */
@@ -42,11 +73,17 @@ Ext.define('Ext.viewport.Default', {
     config: {
         /**
          * @cfg {Boolean} autoMaximize
-         * Whether or not to always automatically maximize the viewport on
-         * first load and all subsequent orientation changes
+         * Whether or not to always automatically maximize the viewport on first load and all subsequent orientation changes.
+         *
+         * This is set to `false` by default for a number of reasons:
+         *
+         * - Orientation change performance is drastically reduced when this is enabled, on all devices.
+         * - On some devices (mostly Android) this can sometimes cause issues when the default browser zoom setting is changed.
+         * - When wrapping your phone in a native shell, you may get a blank screen.
+         *
          * @accessor
          */
-        autoMaximize: Ext.browser.is.WebView ? false : true,
+        autoMaximize: false,
 
         /**
          * @cfg {Boolean} preventPanning
@@ -59,20 +96,65 @@ Ext.define('Ext.viewport.Default', {
         /**
          * @cfg {Boolean} preventZooming
          * Whether or not to always prevent default zooming feature of the
-         * browser's viewport via finger gestures such as pinching and / or double-tapping
+         * browser's viewport via finger gestures such as pinching and / or double-tapping.
+         *
+         * If this is set to `true`, `<a>` links will not work on any mobile devices. It also causes issues with the
+         * {@link Ext.Map} component. So please be aware when setting this to true.
          * @accessor
          */
         preventZooming: false,
 
+        /**
+         * @hide
+         */
         autoRender: true,
 
+        /**
+         * @cfg {Object/String} layout Configuration for this Container's layout. Example:
+         *
+         *    Ext.create('Ext.Container', {
+         *        layout: {
+         *            type: 'hbox',
+         *            align: 'middle'
+         *        },
+         *        items: [
+         *            {
+         *                xtype: 'panel',
+         *                flex: 1,
+         *                style: 'background-color: red;'
+         *            },
+         *            {
+         *                xtype: 'panel',
+         *                flex: 2,
+         *                style: 'background-color: green'
+         *            }
+         *        ]
+         *    });
+         *
+         * See the layouts guide for more information
+         *
+         * Defaults to {@link Ext.layout.Card card}
+         * @accessor
+         */
         layout: 'card',
 
+        /**
+         * @cfg
+         * @private
+         */
         width: '100%',
 
+        /**
+         * @cfg
+         * @private
+         */
         height: '100%'
     },
 
+    /**
+     * @property {Boolean} isReady
+     * True if the DOM is ready
+     */
     isReady: false,
 
     isViewport: true,
@@ -92,6 +174,9 @@ Ext.define('Ext.viewport.Default', {
 
     constructor: function(config) {
         var bind = Ext.Function.bind;
+
+        this.activeShowByItems = {};
+        this.activeShowByItemsCount = 0;
 
         this.doPreventPanning = bind(this.doPreventPanning, this);
         this.doPreventZooming = bind(this.doPreventZooming, this);
@@ -159,7 +244,7 @@ Ext.define('Ext.viewport.Default', {
 
             this.renderTo(body);
 
-            //TODO Clean me up, this is not good
+            // See https://sencha.jira.com/browse/TOUCH-1600
             classList.push(clsPrefix + osEnv.deviceType.toLowerCase());
 
             if (osEnv.is.iPad) {
@@ -292,6 +377,26 @@ Ext.define('Ext.viewport.Default', {
         this.mixins.observable.doAddListener.apply(this, arguments);
     },
 
+    addDispatcherListener: function(selector, name, fn, scope, options, order) {
+        var dispatcher = this.getEventDispatcher();
+
+        if (name === 'resize' && selector === this.getObservableId()) {
+            return dispatcher.doAddListener(this.observableType, selector, name, fn, scope, options, order);
+        }
+
+        return this.callParent(arguments);
+    },
+
+    removeDispatcherListener: function(selector, name, fn, scope, order) {
+        var dispatcher = this.getEventDispatcher();
+
+        if (name === 'resize' && selector === this.getObservableId()) {
+            return dispatcher.doRemoveListener(this.observableType, selector, name, fn, scope, order);
+        }
+
+        return this.callParent(arguments);
+    },
+
     supportsOrientation: function() {
         return Ext.feature.has.Orientation;
     },
@@ -403,10 +508,18 @@ Ext.define('Ext.viewport.Default', {
         window.scrollTo(0, -1);
     },
 
+    /**
+     * Retrieves the document width.
+     * @return {Number} width in pixels.
+     */
     getWindowWidth: function() {
         return window.innerWidth;
     },
 
+    /**
+     * Retrieves the document height.
+     * @return {Number} height in pixels.
+     */
     getWindowHeight: function() {
         return window.innerHeight;
     },
@@ -419,6 +532,10 @@ Ext.define('Ext.viewport.Default', {
         return window.orientation;
     },
 
+    /**
+     * Returns the current orientation.
+     * @return {String} `portrait` or `landscape`
+     */
     getOrientation: function() {
         return this.orientation;
     },
@@ -457,15 +574,19 @@ Ext.define('Ext.viewport.Default', {
 
     keyboardHideField: null,
 
+    /**
+     * Convience method to hide the keyboard on devices, if it is visible.
+     */
     hideKeyboard: function() {
         var me = this;
 
         if (Ext.os.is.iOS) {
             document.activeElement.blur();
-
-            setTimeout(function() {
-                Ext.Viewport.scrollToTop();
-            }, 50);
+            if (this.getAutoMaximize() && !this.isFullscreen()) {
+                setTimeout(function() {
+                    Ext.Viewport.scrollToTop();
+                }, 50);
+            }
         } else {
             if (!me.keyboardHideField) {
                 me.keyboardHideField = document.createElement('input');

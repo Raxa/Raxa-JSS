@@ -1,7 +1,4 @@
 /**
- * @class Ext.carousel.Carousel
- * @extends Ext.Panel
- *
  * Carousels, like [tabs](#!/guide/tabs), are a great way to allow the user to swipe through multiple full-screen pages.
  * A Carousel shows only one of its pages at a time but allows you to swipe through with your finger.
  *
@@ -77,12 +74,19 @@ Ext.define('Ext.carousel.Carousel', {
 
     requires: [
         'Ext.fx.Easing',
-        'Ext.util.SizeMonitor',
+        'Ext.fx.easing.EaseOut',
         'Ext.carousel.Item',
         'Ext.carousel.Indicator'
     ],
 
     config: {
+        /**
+         * @cfg layout
+         * Hide layout config in Carousel. It only causes confusion.
+         * @accessor
+         * @private
+         */
+
         baseCls: 'x-carousel',
 
         /**
@@ -141,12 +145,7 @@ Ext.define('Ext.carousel.Carousel', {
         return this.innerItems.length;
     },
 
-    initialize: function() {
-        this.hiddenTranslation = {
-            x: 0,
-            y: 0
-        };
-
+    beforeInitialize: function() {
         this.animationListeners = {
             animationframe: 'onActiveItemAnimationFrame',
             animationend: 'onActiveItemAnimationEnd',
@@ -162,20 +161,12 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.on({
             painted: 'onPainted',
-            erased: 'onErased'
-        });
-
-        this.sizeMonitor = new Ext.util.SizeMonitor({
-            element: this.element,
-            callback: this.onSizeChange,
-            scope: this
+            resize: 'onSizeChange'
         });
 
         this.carouselItems = [];
 
         this.orderedCarouselItems = [];
-
-        this.callParent();
     },
 
     updateBufferSize: function(size) {
@@ -239,18 +230,8 @@ Ext.define('Ext.carousel.Carousel', {
     },
 
     onPainted: function() {
-        if (!this.painted) {
-            this.painted = true;
-            this.sizeMonitor.refresh();
-            this.refresh();
-            this.refreshCarouselItems();
-        }
-    },
-
-    onErased: function() {
-        if (this.painted) {
-            this.painted = false;
-        }
+        this.refresh();
+        this.refreshCarouselItems();
     },
 
     onSizeChange: function() {
@@ -471,7 +452,6 @@ Ext.define('Ext.carousel.Carousel', {
         var indicator = this.getIndicator();
 
         this.currentAxis = (direction === 'horizontal') ? 'x' : 'y';
-        this.otherAxis = (direction === 'horizontal') ? 'y' : 'x';
 
         if (indicator) {
             indicator.setDirection(direction);
@@ -633,6 +613,10 @@ Ext.define('Ext.carousel.Carousel', {
         this.doSetActiveItem(this.getActiveItem());
     },
 
+    /**
+     * Returns the index of the currently active card.
+     * @return {Number} The index of the currently active card.
+     */
     getActiveIndex: function() {
         return this.activeIndex;
     },
@@ -666,6 +650,10 @@ Ext.define('Ext.carousel.Carousel', {
             visibleIndexes = {},
             visibleItems = {},
             visibleItem, component, id, i, index, ln, carouselItem;
+
+        if (carouselItems.length === 0) {
+            return;
+        }
 
         this.callParent(arguments);
 
@@ -799,8 +787,19 @@ Ext.define('Ext.carousel.Carousel', {
     },
 
     destroy: function() {
-        this.callParent(arguments);
-        this.sizeMonitor.destroy();
+        var carouselItems = this.carouselItems.slice(),
+            indicator = this.getIndicator();
+
+        this.carouselItems.length = 0;
+
+        Ext.destroy(carouselItems);
+
+        if (indicator) {
+            indicator.destroy();
+        }
+
+        this.callParent();
+        delete this.carouselItems;
     }
 
 }, function() {

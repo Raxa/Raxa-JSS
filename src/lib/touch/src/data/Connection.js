@@ -39,42 +39,67 @@ Ext.define('Ext.data.Connection', {
     },
 
     config: {
+        /**
+         * @cfg {String} url
+         * The default URL to be used for requests to the server.
+         * @accessor
+         */
         url: null,
+
         async: true,
+
+        /**
+         * @cfg {String} [method=undefined]
+         * The default HTTP method to be used for requests. Note that this is case-sensitive and
+         * should be all caps.
+         *
+         * Defaults to undefined; if not set but params are present will use "POST", otherwise "GET".
+         */
         method: null,
+
         username: '',
         password: '',
 
         /**
          * @cfg {Boolean} disableCaching
-         * True to add a unique cache-buster param to GET requests. (defaults to true)
+         * True to add a unique cache-buster param to GET requests.
+         * @accessor
          */
         disableCaching: true,
 
         /**
          * @cfg {String} disableCachingParam
-         * Change the parameter which is sent went disabling caching through a cache buster. Defaults to '_dc'
+         * Change the parameter which is sent went disabling caching through a cache buster.
+         * @accessor
          */
         disableCachingParam: '_dc',
 
         /**
          * @cfg {Number} timeout
-         * The timeout in milliseconds to be used for requests. (defaults to 30000)
+         * The timeout in milliseconds to be used for requests.
+         * @accessor
          */
         timeout : 30000,
 
         /**
          * @cfg {Object} extraParams
          * Any parameters to be appended to the request.
+         * @accessor
          */
+        extraParams: null,
 
+        /**
+         * @cfg {Object} defaultHeaders
+         * An object containing request headers which are added to each request made by this object.
+         * @accessor
+         */
         defaultHeaders: null,
+
         useDefaultHeader : true,
         defaultPostHeader : 'application/x-www-form-urlencoded; charset=UTF-8',
         useDefaultXhrHeader : true,
         defaultXhrHeader : 'XMLHttpRequest',
 
-        extraParams: null,
         autoAbort: false
     },
 
@@ -452,10 +477,7 @@ Ext.define('Ext.data.Connection', {
 
         //<debug>
         if (!url) {
-            Ext.Error.raise({
-                options: options,
-                msg: 'No URL specified'
-            });
+            Ext.Logger.error('No URL specified');
         }
         //</debug>
 
@@ -603,6 +625,9 @@ Ext.define('Ext.data.Connection', {
         } catch(e) {
             me.fireEvent('exception', key, header);
         }
+
+        xhr.withCredentials = options.withCredentials;
+
         return headers;
     },
 

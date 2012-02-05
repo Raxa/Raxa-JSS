@@ -135,7 +135,7 @@
  *
  * Filtering and sorting after the Store has been instantiated is also easy. Calling {@link #filter} adds another filter to the Store
  * and automatically filters the dataset (calling {@link #filter} with no arguments simply re-applies all existing filters). Note that by
- * default {@link #sortOnFilter} is set to true, which means that your sorters are automatically reapplied if using local sorting.
+ * default your sorters are automatically reapplied if using local sorting.
  *
      store.filter('eyeColor', 'Brown');
  *
@@ -200,7 +200,7 @@ Ext.define('Ext.data.Store', {
         'Ext.data.proxy.Memory',
         'Ext.data.Model',
         'Ext.data.StoreManager',
-        'Ext.util.NewGrouper'
+        'Ext.util.Grouper'
     ],
 
     /**
@@ -383,7 +383,7 @@ Ext.define('Ext.data.Store', {
          */
         remoteGroup: false,
 
-        // @TODO: put back warnings for sortOnLoad, filterOnLoad, sortOnFilter options
+        // See https://sencha.jira.com/browse/TOUCH-1585
 
         /**
          * @cfg {Object[]} filters
@@ -419,10 +419,11 @@ Ext.define('Ext.data.Store', {
 
         /**
          * @cfg {String} groupDir
-         * The direction in which sorting should be applied when grouping. Defaults to "ASC" - the other supported value is "DESC"
+         * The direction in which sorting should be applied when grouping. If you specify a grouper by using the {@link #groupField}
+         * configuration, this will automatically default to "ASC" - the other supported value is "DESC"
          * @accessor
          */
-        groupDir: "ASC",
+        groupDir: null,
 
         /**
          * @cfg {Function} getGroupString This function will be passed to the {@link #grouper} configuration as it's groupFn.
@@ -441,6 +442,13 @@ Ext.define('Ext.data.Store', {
         pageSize: 25,
 
         /**
+         * @cfg {Number} totalCount The total number of records in the full dataset, as indicated by a server. If the
+         * server-side dataset contains 5000 records but only returns pages of 50 at a time, totalCount will be set to
+         * 5000 and {@link #getCount} will return 50
+         */
+        totalCount: null,
+
+        /**
          * @cfg {Boolean} clearOnPageLoad True to empty the store when loading another page via {@link #loadPage},
          * {@link #nextPage} or {@link #previousPage} (defaults to true). Setting to false keeps existing records, allowing
          * large data sets to be loaded one page at a time but rendered all together.
@@ -448,7 +456,14 @@ Ext.define('Ext.data.Store', {
          */
         clearOnPageLoad: true,
 
-        modelDefaults: {}
+        modelDefaults: {},
+
+        /**
+         * @cfg {Boolean} autoDestroy This is a private configuration used in the framework whether this Store
+         * can be destroyed.
+         * @private
+         */
+        autoDestroy: false
     },
 
     /**
@@ -518,6 +533,8 @@ Ext.define('Ext.data.Store', {
                     proxy: this.getProxy()
                 }
             });
+
+            this.implicitModel = true;
         }
 
         if (!model && this.getProxy()) {
@@ -561,6 +578,12 @@ Ext.define('Ext.data.Store', {
         return proxy;
     },
 
+    updateProxy: function(proxy) {
+        if (proxy && !proxy.getModel()) {
+            proxy.setModel(this.getModel());
+        }
+    },
+
     /**
      * We are using applyData so that we can return nothing and prevent the this.data
      * property to be overridden.
@@ -585,6 +608,9 @@ Ext.define('Ext.data.Store', {
                 this.suspendEvents();
                 this.add(data);
                 this.resumeEvents();
+
+                // We set this to true so isAutoLoading to try
+                this.dataLoaded = true;
             }
         } else {
             this.removeAll(true);
@@ -609,9 +635,19 @@ Ext.define('Ext.data.Store', {
     },
 
     updateAutoLoad: function(autoLoad) {
-        if (autoLoad && !this.getProxy().isMemoryProxy) {
+        var proxy = this.getProxy();
+        if (autoLoad && (proxy && !proxy.isMemoryProxy)) {
             this.load(Ext.isObject(autoLoad) ? autoLoad : null);
         }
+    },
+
+    /**
+     * Returns true if the Store is set to autoLoad or is a type which loads upon instantiation.
+     * @return {Boolean}
+     */
+    isAutoLoading: function() {
+        var proxy = this.getProxy();
+        return (this.getAutoLoad() || (proxy && proxy.isMemoryProxy) || this.dataLoaded);
     },
 
     updateGroupField: function(groupField) {
@@ -620,7 +656,7 @@ Ext.define('Ext.data.Store', {
             if (!grouper) {
                 this.setGrouper({
                     property: groupField,
-                    direction: this.getGroupDir()
+                    direction: this.getGroupDir() || 'ASC'
                 });
             } else {
                 grouper.setProperty(groupField);
@@ -668,7 +704,7 @@ Ext.define('Ext.data.Store', {
             };
         }
 
-        grouper = Ext.factory(grouper, Ext.util.NewGrouper, this.getGrouper());
+        grouper = Ext.factory(grouper, Ext.util.Grouper, this.getGrouper());
         return grouper;
     },
 
@@ -773,10 +809,10 @@ Ext.define('Ext.data.Store', {
      */
     insert: function(index, records) {
         if (!Ext.isArray(records)) {
-            records = Array.prototype.slice.apply(arguments, 1);
+            records = Array.prototype.slice.call(arguments, 1);
         }
 
-        // @TODO: there is nothing here that checks if the record already exists
+        // See https://sencha.jira.com/browse/TOUCH-1586
 
         var me = this,
             sync = false,
@@ -794,7 +830,7 @@ Ext.define('Ext.data.Store', {
             }
             // If we are adding a record that is already an instance which was still in the
             // removed array, then we remove it from the removed array
-            else if (this.removed.indexOf(record)) {
+            else if (this.removed.indexOf(record) != -1) {
                 Ext.Array.remove(this.removed, record);
             }
 
@@ -863,7 +899,7 @@ Ext.define('Ext.data.Store', {
                     indices.push(index);
                 }
 
-                // @TODO: make a configuration option that makes this adding to removed collection optional
+                // See https://sencha.jira.com/browse/TOUCH-1589
                 if (!isPhantom) {
                      // don't push phantom records onto removed
                      me.removed.push(record);
@@ -937,26 +973,11 @@ Ext.define('Ext.data.Store', {
 
     /**
      * Gets the number of cached records.
-     * If using paging, this may not be the total size of the dataset. If the data object
-     * used by the Reader contains the dataset size, then the {@link #getTotalCount} function returns
-     * the dataset size.
+     * If using paging, this may not be the total size of the dataset.
      * @return {Number} The number of Records in the Store's cache.
      */
     getCount: function() {
         return this.data.length || 0;
-    },
-
-    /**
-     * Returns the total number of {@link Ext.data.Model Model} instances that the {@link Ext.data.proxy.Proxy Proxy}
-     * indicates exist. This will usually differ from {@link #getCount} when using paging - getCount returns the
-     * number of records loaded into the Store at the moment, getTotalCount returns the number of records that
-     * could be loaded into the Store if the Store contained all data
-     * @return {Number} The total number of Model instances available via the Proxy
-     */
-    getTotalCount: function() {
-        // @TODO: make this a config option
-        //return this.totalCount;
-        return 0;
     },
 
     /**
@@ -1013,11 +1034,11 @@ Ext.define('Ext.data.Store', {
      * @param {Ext.data.Model} record The model instance that was edited
      * @param {String[]} modifiedFieldNames Array of field names changed during edit.
      */
-    afterEdit : function(record, modifiedFieldNames, modified) {
+    afterEdit: function(record, modifiedFieldNames, modified) {
         var me = this,
             data = me.data,
             currentId = modified[record.getIdProperty()] || record.getId(),
-            currentIndex = data.indexOfKey(currentId),
+            currentIndex = data.keys.indexOf(currentId),
             newIndex;
 
         if (currentIndex === -1 && data.map[currentId] === undefined) {
@@ -1051,13 +1072,13 @@ Ext.define('Ext.data.Store', {
      * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to..
      * @param {Ext.data.Model} record The model instance that was edited
      */
-    afterReject : function(record) {
+    afterReject: function(record) {
         // Must pass the 5th param (modifiedFieldNames) as null, otherwise the
         // event firing machinery appends the listeners "options" object to the arg list
         // which may get used as the modified fields array by a handler.
         // This array is used for selective grid cell updating by Grid View.
         // Null will be treated as though all cells need updating.
-        // @TODO: put the update event back for backwards compatibility
+        // See https://sencha.jira.com/browse/TOUCH-1591
         //this.fireEvent('update', this, record, Ext.data.Model.REJECT, null);
         var index = this.data.indexOf(record);
         this.fireEvent('updaterecord', this, record, index, index);
@@ -1068,11 +1089,11 @@ Ext.define('Ext.data.Store', {
      * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to.
      * @param {Ext.data.Model} record The model instance that was edited
      */
-    afterCommit : function(record, modified) {
+    afterCommit: function(record, modified) {
         var me = this,
             data = me.data,
             currentId = modified[record.getIdProperty()] || record.getId(),
-            currentIndex = data.indexOfKey(currentId),
+            currentIndex = data.keys.indexOf(currentId),
             newIndex;
 
         if (currentIndex === -1 && data.map[currentId] === undefined) {
@@ -1094,6 +1115,22 @@ Ext.define('Ext.data.Store', {
         }
         else if (newIndex !== -1) {
             me.fireEvent('updaterecord', me, record, newIndex, currentIndex);
+        }
+    },
+
+    /**
+     * This gets called by a record after is gets erased from the server.
+     * @param record
+     * @private
+     */
+    afterErase: function(record) {
+        var me = this,
+            data = me.data,
+            index = data.indexOf(record);
+
+        if (index !== -1) {
+            data.remove(record);
+            me.fireEvent('removerecords', me, [record], [index]);
         }
     },
 
@@ -1140,17 +1177,32 @@ Ext.define('Ext.data.Store', {
      *
      * @param {String/Ext.util.Sorter[]} sorters Either a string name of one of the fields in this Store's configured
      * {@link Ext.data.Model Model}, or an array of sorter configurations.
-     * @param {String} direction The overall direction to sort the data by. Defaults to "ASC".
+     * @param {String} defaultDirection The default overall direction to sort the data by. Defaults to "ASC".
+     * @param {String} where (Optional) This can be either 'prepend' or 'append'. If you leave this undefined
+     * it will clear the current sorters.
      */
-    sort: function(sorters, direction) {
+    sort: function(sorters, defaultDirection, where) {
         var data = this.data,
+            grouper = this.getGrouper(),
             autoSort = data.getAutoSort();
 
         if (sorters) {
             // While we are adding sorters we dont want to sort right away
             // since we need to update sortTypes on the sorters.
             data.setAutoSort(false);
-            data.addSorters(sorters, direction);
+            if (typeof where === 'string') {
+                if (where == 'prepend') {
+                    data.insertSorters(grouper ? 1 : 0, sorters, defaultDirection);
+                } else {
+                    data.addSorters(sorters, defaultDirection);
+                }
+            } else {
+                data.setSorters(null);
+                if (grouper) {
+                    data.addSorters(grouper);
+                }
+                data.addSorters(sorters, defaultDirection);
+            }
             this.updateSortTypes();
             // Setting back autoSort to true (if it was like that before) will
             // instantly sort the data again.
@@ -1224,17 +1276,61 @@ Ext.define('Ext.data.Store', {
             this.load();
         } else {
             data.filter(property, value);
-            this.fireEvent('filter', this, this.data, this.data.getFilters());
+            this.fireEvent('filter', this, data, data.getFilters());
 
             if (data.length !== ln) {
-                this.fireEvent('refresh', this, this.data);
+                this.fireEvent('refresh', this, data);
             }
         }
     },
 
     /**
+     * Filter by a function. The specified function will be called for each
+     * Record in this Store. If the function returns <tt>true</tt> the Record is included,
+     * otherwise it is filtered out.
+     * @param {Function} fn The function to be called. It will be passed the following parameters:<ul>
+     * <li><b>record</b> : Ext.data.Model<p class="sub-desc">The {@link Ext.data.Model record}
+     * to test for filtering. Access field values using {@link Ext.data.Model#get}.</p></li>
+     * <li><b>id</b> : Object<p class="sub-desc">The ID of the Record passed.</p></li>
+     * </ul>
+     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to this Store.
+     */
+    filterBy: function(fn, scope) {
+        var me = this,
+            data = me.data,
+            ln = data.length;
+
+        data.filter({
+            filterFn: fn,
+            scope: scope
+        });
+
+        this.fireEvent('filter', this, data, data.getFilters());
+
+        if (data.length !== ln) {
+            this.fireEvent('refresh', this, data);
+        }
+    },
+
+    /**
+     * Query the cached records in this Store using a filtering function. The specified function
+     * will be called with each record in this Store. If the function returns <tt>true</tt> the record is
+     * included in the results.
+     * @param {Function} fn The function to be called. It will be passed the following parameters:<ul>
+     * <li><b>record</b> : Ext.data.Model<p class="sub-desc">The {@link Ext.data.Model record}
+     * to test for filtering. Access field values using {@link Ext.data.Model#get}.</p></li>
+     * <li><b>id</b> : Object<p class="sub-desc">The ID of the Record passed.</p></li>
+     * </ul>
+     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to this Store.
+     * @return {Ext.util.MixedCollection} Returns an Ext.util.MixedCollection of the matched records
+     **/
+    queryBy: function(fn, scope) {
+        return this.data.filterBy(fn, scope || this);
+    },
+
+    /**
      * Reverts to a view of the Record cache with no filtering applied.
-     * @param {Boolean} [suppressEvent=false] True to clear silently without firing the {@link #datachanged} event.
+     * @param {Boolean} [suppressEvent=false] True to clear silently without firing the `datachanged` event.
      */
     clearFilter: function(suppressEvent) {
         var ln = this.data.length;
@@ -1247,6 +1343,14 @@ Ext.define('Ext.data.Store', {
         } else if (ln !== this.data.length) {
             this.fireEvent('refresh', this, this.data);
         }
+    },
+
+    /**
+     * Returns true if this store is currently filtered
+     * @return {Boolean}
+     */
+    isFiltered: function() {
+        return this.data.filtered;
     },
 
     getSorters: function() {
@@ -1345,7 +1449,7 @@ Ext.define('Ext.data.Store', {
      * @return {Number} The matched index or -1
      */
     find: function(fieldName, value, startIndex, anyMatch, caseSensitive, exactMatch) {
-        var filter = Ext.create('Ext.util.NewFilter', {
+        var filter = Ext.create('Ext.util.Filter', {
             property: fieldName,
             value: value,
             anyMatch: anyMatch,
@@ -1354,6 +1458,52 @@ Ext.define('Ext.data.Store', {
             root: 'data'
         });
         return this.data.findIndexBy(filter.getFilterFn(), null, startIndex);
+    },
+
+    /**
+     * Finds the first matching Record in this store by a specific field value.
+     * @param {String} fieldName The name of the Record field to test.
+     * @param {String/RegExp} value Either a string that the field value
+     * should begin with, or a RegExp to test against the field.
+     * @param {Number} startIndex (optional) The index to start searching at
+     * @param {Boolean} anyMatch (optional) True to match any part of the string, not just the beginning
+     * @param {Boolean} caseSensitive (optional) True for case sensitive comparison
+     * @param {Boolean} exactMatch (optional) True to force exact match (^ and $ characters added to the regex). Defaults to false.
+     * @return {Ext.data.Model} The matched record or null
+     */
+    findRecord: function() {
+        var me = this,
+            index = me.find.apply(me, arguments);
+        return index !== -1 ? me.getAt(index) : null;
+    },
+
+    /**
+     * Finds the index of the first matching Record in this store by a specific field value.
+     * @param {String} fieldName The name of the Record field to test.
+     * @param {Object} value The value to match the field against.
+     * @param {Number} startIndex (optional) The index to start searching at
+     * @return {Number} The matched index or -1
+     */
+    findExact: function(fieldName, value, startIndex) {
+        return this.data.findIndexBy(function(record) {
+            return record.get(fieldName) === value;
+        }, this, startIndex);
+    },
+
+    /**
+     * Find the index of the first matching Record in this Store by a function.
+     * If the function returns <tt>true</tt> it is considered a match.
+     * @param {Function} fn The function to be called. It will be passed the following parameters:<ul>
+     * <li><b>record</b> : Ext.data.Model<p class="sub-desc">The {@link Ext.data.Model record}
+     * to test for filtering. Access field values using {@link Ext.data.Model#get}.</p></li>
+     * <li><b>id</b> : Object<p class="sub-desc">The ID of the Record passed.</p></li>
+     * </ul>
+     * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the function is executed. Defaults to this Store.
+     * @param {Number} startIndex (optional) The index to start searching at
+     * @return {Number} The matched index or -1
+     */
+    findBy: function(fn, scope, startIndex) {
+        return this.data.findIndexBy(fn, scope, startIndex);
     },
 
     /**
@@ -1425,6 +1575,14 @@ Ext.define('Ext.data.Store', {
     },
 
     /**
+     * Returns true if the Store is currently performing a load operation
+     * @return {Boolean} True if the Store is currently loading
+     */
+    isLoading: function() {
+        return this.loading;
+    },
+
+    /**
      * Synchronizes the Store with its Proxy. This asks the Proxy to batch together any new, updated
      * and deleted records in the store, updating the Store's internal representation of the records
      * as each operation completes.
@@ -1467,6 +1625,22 @@ Ext.define('Ext.data.Store', {
     },
 
     /**
+     * Returns the first Model instance in this Store
+     * @return {Ext.data.Model} The first Model instance
+     */
+    first: function() {
+        return this.getAt(0);
+    },
+
+    /**
+     * Returns the last Model instance in this Store
+     * @return {Ext.data.Model} The last Model instance
+     */
+    last: function() {
+        return this.getAt(this.getCount() - 1);
+    },
+
+    /**
      * @private
      * Returns an object which is passed in as the listeners argument to proxy.batch inside this.sync.
      * This is broken out into a separate function to allow for customisation of the listeners
@@ -1495,7 +1669,7 @@ Ext.define('Ext.data.Store', {
             me.onProxyWrite(operations[i]);
         }
 
-        // @TODO: fire datachanged backwards compat event
+        // See https://sencha.jira.com/browse/TOUCH-1593
         //me.fireEvent('datachanged', me);
     },
 
@@ -1514,12 +1688,12 @@ Ext.define('Ext.data.Store', {
     onProxyLoad: function(operation) {
         var me = this,
             records = operation.getRecords(),
+            resultSet = operation.getResultSet(),
             successful = operation.wasSuccessful();
 
-        // @TODO: put totalCount stuff back
-        // if (resultSet) {
-        //     me.totalCount = resultSet.total;
-        // }
+        if (resultSet) {
+            me.setTotalCount(resultSet.getTotal());
+        }
 
         if (successful) {
             if (operation.getAddRecords() !== true) {
@@ -1571,7 +1745,7 @@ Ext.define('Ext.data.Store', {
         if (success) {
             me.fireEvent('write', me, operation);
 
-            // @TODO: Fire backwards compat datachanged event
+            // See https://sencha.jira.com/browse/TOUCH-1593
             // me.fireEvent('datachanged', me);
         }
         //this is a callback that would have been passed to the 'create', 'update' or 'destroy' function and is optional
@@ -1595,8 +1769,7 @@ Ext.define('Ext.data.Store', {
     getNewRecords: function() {
         return this.data.filterBy(function(item) {
             // only want phantom records that are valid
-            return item.phantom === true;
-            // @TODO: put this back as soon as validation is implemented && item.isValid();
+            return item.phantom === true && item.isValid();
         }).items;
     },
 
@@ -1607,8 +1780,7 @@ Ext.define('Ext.data.Store', {
     getUpdatedRecords: function() {
         return this.data.filterBy(function(item) {
             // only want dirty records, not phantoms that are valid
-            return item.dirty === true && item.phantom !== true;
-            // @TODO: put this back as soon as validation is implemented && item.isValid();
+            return item.dirty === true && item.phantom !== true && item.isValid();
         }).items;
     },
 
@@ -1673,7 +1845,7 @@ Ext.define('Ext.data.Store', {
                 config[key] = data[key];
                 delete data[key];
                 // <debug warn>
-                // @TODO: update this to Ext.Logger for IE.
+                // See https://sencha.jira.com/browse/TOUCH-1499
                 console.warn(key + ' is deprecated as a property directly on the ' + this.$className + ' prototype. Please put it inside the config object.');
                 // </debug>
             }
@@ -1698,5 +1870,10 @@ Ext.define('Ext.data.Store', {
             }
         }
     });
+
+    // @TODO: put back backwards compat version of the collect method, or just leave it out
+
+    // @TODO: put back some of the other aggregation methods even though they seem to be useless
+
     // </deprecated>
 });

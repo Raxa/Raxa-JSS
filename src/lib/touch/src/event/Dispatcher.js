@@ -248,22 +248,56 @@ Ext.define('Ext.event.Dispatcher', {
 
     clearListeners: function(targetType, target, eventName) {
         var listenerStacks = this.listenerStacks,
-            ln = arguments.length;
+            ln = arguments.length,
+            stacks, publishers, i, publisherGroup;
 
         if (ln === 3) {
             if (listenerStacks[targetType] && listenerStacks[targetType][target]) {
+                this.removeListener(targetType, target, eventName);
                 delete listenerStacks[targetType][target][eventName];
             }
         }
         else if (ln === 2) {
             if (listenerStacks[targetType]) {
-                delete listenerStacks[targetType][target];
+                stacks = listenerStacks[targetType][target];
+
+                if (stacks) {
+                    for (eventName in stacks) {
+                        if (stacks.hasOwnProperty(eventName)) {
+                            publishers = this.getActivePublishers(targetType, eventName);
+
+                            for (i = 0,ln = publishers.length; i < ln; i++) {
+                                publishers[i].unsubscribe(target, eventName, true);
+                            }
+                        }
+                    }
+
+                    delete listenerStacks[targetType][target];
+                }
             }
         }
         else if (ln === 1) {
+            publishers = this.activePublishers[targetType];
+
+            for (i = 0,ln = publishers.length; i < ln; i++) {
+                publishers[i].unsubscribeAll();
+            }
+
             delete listenerStacks[targetType];
         }
         else {
+            publishers = this.activePublishers;
+
+            for (targetType in publishers) {
+                if (publishers.hasOwnProperty(targetType)) {
+                    publisherGroup = publishers[targetType];
+
+                    for (i = 0,ln = publisherGroup.length; i < ln; i++) {
+                        publisherGroup[i].unsubscribeAll();
+                    }
+                }
+            }
+
             delete this.listenerStacks;
             this.listenerStacks = {};
         }
@@ -296,7 +330,7 @@ Ext.define('Ext.event.Dispatcher', {
             }
         }
         else {
-            wildcardStacks.unshift(listenerStack);
+            wildcardStacks.push(listenerStack);
         }
 
         controller = this.getController(targetType, target, eventName, connectedController);

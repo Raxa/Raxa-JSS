@@ -62,7 +62,7 @@ Ext.define('Ext.field.Field', {
         labelAlign: 'left',
 
         /**
-         * @cfg {Number} labelWidth The width to make this field's label (defaults to 30%).
+         * @cfg {Number/String} labelWidth The width to make this field's label.
          * @accessor
          */
         labelWidth: '30%',
@@ -140,7 +140,12 @@ Ext.define('Ext.field.Field', {
          * @cfg {String} requiredCls The className to be applied to this Field when the {@link #required} configuration is set to true
          * @accessor
          */
-        requiredCls: Ext.baseCSSPrefix + 'field-required'
+        requiredCls: Ext.baseCSSPrefix + 'field-required',
+
+        /**
+         * @cfg {String} inputCls CSS class to add to the input element of this fields {@link #component}
+         */
+        inputCls: null
     },
 
     /**
@@ -160,6 +165,7 @@ Ext.define('Ext.field.Field', {
                     reference: 'label',
                     cls: prefix + 'form-label',
                     children: [{
+                        reference: 'labelspan',
                         tag: 'span'
                     }]
                 },
@@ -177,7 +183,7 @@ Ext.define('Ext.field.Field', {
             prefix = Ext.baseCSSPrefix;
 
         if (newLabel) {
-            this.label.down('span').update(newLabel);
+            this.label.down('span').setHtml(newLabel);
             renderElement.addCls(prefix + 'field-labeled');
         } else {
             renderElement.removeCls(prefix + 'field-labeled');
@@ -191,6 +197,12 @@ Ext.define('Ext.field.Field', {
 
         if (newLabelAlign) {
             renderElement.addCls(prefix + 'label-align-' + newLabelAlign);
+
+            if (newLabelAlign == "top") {
+                this.label.setWidth('100%');
+            } else {
+                this.updateLabelWidth(this.getLabelWidth());
+            }
         }
 
         if (oldLabelAlign) {
@@ -212,7 +224,11 @@ Ext.define('Ext.field.Field', {
     // @private
     updateLabelWidth: function(newLabelWidth) {
         if (newLabelWidth) {
-            this.label.setStyle('width', newLabelWidth);
+            if (this.getLabelAlign() == "top") {
+                this.label.setWidth('100%');
+            } else {
+                this.label.setWidth(newLabelWidth);
+            }
         }
     },
 
@@ -299,21 +315,14 @@ Ext.define('Ext.field.Field', {
                 }
             };
 
-            /**
-             * @member Ext.field.Field
-             * @cfg {String} inputCls CSS class to add to the input element
-             * @todo this probably should not be deprecated
-             * @deprecated 2.0.0 Deprecated, please use {@link #component}.inputCls
-             */
-            deprecateProperty('inputCls', 'input', 'cls');
+			// See https://sencha.jira.com/browse/TOUCH-1184
 
             /**
              * @member Ext.field.Field
              * @cfg {String} fieldCls CSS class to add to the field
-             * @todo this probably should not be deprecated, plus it is not input cls
-             * @deprecated 2.0.0 Deprecated, please use {@link #component}.inputCls
+             * @deprecated 2.0.0 Deprecated, please use {@link #inputCls}
              */
-            deprecateProperty('fieldCls', 'input', 'cls');
+            deprecateProperty('fieldCls', null, 'inputCls');
 
             /**
              * @member Ext.field.Field

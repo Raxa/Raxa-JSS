@@ -1,6 +1,3 @@
-/**
- * @private
- */
 Ext.define('Ext.scroll.scroller.CssTransform', {
     extend: 'Ext.scroll.scroller.Abstract',
 

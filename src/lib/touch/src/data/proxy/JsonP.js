@@ -193,7 +193,6 @@ Ext.define('Ext.data.proxy.JsonP', {
 
         operation.setStarted();
 
-        // @TODO: it seems like the proxy can handle only one request at a time this way?
         me.lastRequest = request;
 
         return request;
@@ -225,7 +224,7 @@ Ext.define('Ext.data.proxy.JsonP', {
 
     // inherit docs
     setException: function(operation, response) {
-        operation.setException(operation.request.getJsonP().errorType);
+        operation.setException(operation.getRequest().getJsonP().errorType);
     },
 
 

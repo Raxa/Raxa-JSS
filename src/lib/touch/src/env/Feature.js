@@ -238,7 +238,7 @@ Ext.define('Ext.env.Feature', {
          * True if the current device supports CSS 3D Transform animations.
          */
         Css3dTransforms: function() {
-            //TODO Implement a better test for the buggy 3D Transform implementation in Android 2.x
+            // See https://sencha.jira.com/browse/TOUCH-1544
             return this.has('CssTransforms') && this.isStyleSupported('perspective') && !Ext.os.is.Android2;
         },
 
@@ -276,6 +276,15 @@ Ext.define('Ext.env.Feature', {
          */
         Video: function() {
             return !!this.getTestElement('video').canPlayType;
+        },
+
+        /**
+         * @member Ext.feature.has
+         * @property {Boolean} ClassList
+         * True if document environment supports the HTML5 classList API.
+         */
+        ClassList: function() {
+            return "classList" in this.getTestElement();
         }
     });
 
@@ -325,6 +334,14 @@ Ext.define('Ext.env.Feature', {
      */
     Ext.deprecatePropertyValue(has, 'GeoLocation', has.Geolocation,
                           "Ext.supports.GeoLocation is deprecated, please use Ext.feature.has.Geolocation instead");
+
+    /**
+     * @member Ext.supports
+     * @property ClassList
+     * @deprecated 2.0.0 Please use {@link Ext.feature.has#ClassList} instead
+     */
+    Ext.deprecatePropertyValue(has, 'ClassList', has.ClassList,
+                          "Ext.supports.ClassList is deprecated, please use Ext.feature.has.ClassList instead");
 
     var name;
 

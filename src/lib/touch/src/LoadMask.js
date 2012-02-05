@@ -1,6 +1,6 @@
 /**
  * A simple class used to mask any {@link Ext.Container}.
- * This should rarely be used directly, instead look at the {@link Ext.Container#cfg-mask} configuration.
+ * This should rarely be used directly, instead look at the {@link Ext.Container#masked} configuration.
  */
 Ext.define('Ext.LoadMask', {
     extend: 'Ext.Mask',
@@ -26,7 +26,13 @@ Ext.define('Ext.LoadMask', {
          * True to show the loading indicator on this {@link Ext.LoadMask}.
          * @accessor
          */
-        indicator: true
+        indicator: true,
+
+        // @inherit
+        listeners: {
+            painted: 'onPainted',
+            erased: 'onErased'
+        }
     },
 
     getTemplate: function() {
@@ -68,7 +74,7 @@ Ext.define('Ext.LoadMask', {
      * @private
      */
     updateMessage: function(newMessage) {
-        this.messageElement.update(newMessage);
+        this.messageElement.setHtml(newMessage);
     },
 
     /**
@@ -85,6 +91,37 @@ Ext.define('Ext.LoadMask', {
      */
     updateIndicator: function(newIndicator) {
         this[newIndicator ? 'removeCls' : 'addCls'](Ext.baseCSSPrefix + 'indicator-hidden');
+    },
+
+    onPainted: function() {
+        this.getParent().on({
+            scope: this,
+            resize: this.refreshPosition
+        });
+
+        this.refreshPosition();
+    },
+
+    onErased: function() {
+        this.getParent().un({
+            scope: this,
+            resize: this.refreshPosition
+        });
+    },
+
+    /**
+     * @private
+     * Updates the location of the indicator
+     */
+    refreshPosition: function() {
+        var parent = this.getParent(),
+            parentSize = parent.element.getSize(),
+            innerSize = this.element.getSize();
+
+        this.innerElement.setStyle({
+            marginTop: (parentSize.height - innerSize.height) + 'px',
+            marginLeft: (parentSize.width - innerSize.width) + 'px'
+        });
     }
 }, function() {
     //<deprecated product=touch since=2.0>
@@ -93,8 +130,8 @@ Ext.define('Ext.LoadMask', {
             if (typeof other !== "undefined") {
                 config = other;
 
-                Ext.Logger.deprecate("You no longer need to pass an element to create a Ext.LoadMask. It is a component and can be shown " +
-                "using the Ext.Container.masked configuration.", this);
+                Ext.Logger.deprecate("You no longer need to pass an element to create a Ext.LoadMask. " +
+                    "It is a component and can be shown using the Ext.Container.masked configuration.", this);
             }
 
             if (config) {

@@ -37,7 +37,7 @@
  */
 Ext.define('Ext.Img', {
     extend: 'Ext.Component',
-    xtype : 'image',
+    xtype: ['image', 'img'],
 
     /**
      * @event tap

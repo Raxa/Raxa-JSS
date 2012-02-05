@@ -164,11 +164,7 @@
 
                 //<debug>
                 if (!superclass) {
-                    Ext.Error.raise({
-                        sourceClass: 'Ext',
-                        sourceMethod: 'extend',
-                        msg: 'Attempting to extend from a class which has not been loaded on the page.'
-                    });
+                    Ext.Logger.error('Attempting to extend from a class which has not been loaded on the page.');
                 }
                 //</debug>
 
@@ -322,11 +318,7 @@
             }
 
             //<debug error>
-            Ext.Error.raise({
-                sourceClass: 'Ext',
-                sourceMethod: 'typeOf',
-                msg: 'Failed to determine the type of the specified value "' + value + '". This is most likely a bug.'
-            });
+            Ext.Logger.error('Failed to determine the type of the specified value "' + value + '". This is most likely a bug.');
             //</debug>
         },
 
@@ -494,8 +486,6 @@
             }
 
             // DOM nodes
-            // TODO proxy this to Ext.Element.clone to handle automatic id attribute changing
-            // recursively
             if (item.nodeType && item.cloneNode) {
                 return item.cloneNode(true);
             }

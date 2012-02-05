@@ -20,7 +20,7 @@ Ext.define('Ext.util.Bindable', {
             oldStore = me.store;
             
         if (!initial && me.store) {
-            if (store !== oldStore && oldStore.autoDestroy) {
+            if (store !== oldStore && oldStore.getAutoDestroy()) {
                 oldStore.destroyStore();
             } else {
                 me.unbindStoreListeners(oldStore);

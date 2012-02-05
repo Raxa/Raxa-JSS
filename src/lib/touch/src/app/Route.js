@@ -9,6 +9,7 @@
  * 
  * For information on how to use routes we suggest reading the following guides:
  * 
+ * * <a href="#!/guide/history_support">Using History Support</a>
  * * <a href="#!/guide/apps_intro">Intro to Applications</a>
  * * <a href="#!/guide/controllers">Using Controllers</a>
  * 
@@ -16,6 +17,17 @@
 Ext.define('Ext.app.Route', {
     
     config: {
+        /**
+         * @cfg {Object} conditions Optional set of conditions for each token in the url string. Each key should be one
+         * of the tokens, each value should be a regex that the token should accept. For example, if you have a Route 
+         * with a url like "files/:fileName" and you want it to match urls like "files/someImage.jpg" then you can set
+         * these conditions to allow the :fileName token to accept strings containing a period ("."):
+         * 
+         *     conditions: {
+         *         ':fileName': "[0-9a-zA-Z\.]+"
+         *     }
+         * 
+         */
         conditions: {},
         
         /**

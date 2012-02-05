@@ -205,12 +205,12 @@ Ext.define('Ext.data.Field', {
         dateFormat: null,
 
         /**
-         * @cfg {Boolean} useNull
+         * @cfg {Boolean} allowNull
          *
-         * Use when converting received data into a Number type (either int or float). If the value cannot be
-         * parsed, null will be used if useNull is true, otherwise the value will be 0. Defaults to false.
+         * Use when converting received data into a boolean, string or number type (either int or float). If the value cannot be
+         * parsed, null will be used if allowNull is true, otherwise the value will be 0. Defaults to true.
          */
-        useNull: false,
+        allowNull: true,
 
         /**
          * @cfg {Object} defaultValue
@@ -311,14 +311,15 @@ Ext.define('Ext.data.Field', {
             config = {name: config};
         }
 
-        this.initConfig(config);
-    },
-
-    applyDefaultValue: function(defaultValue) {
-        if (defaultValue === undefined) {
-            return '';
+        if (config.useNull !== undefined) {
+            config.allowNull = config.useNull;
+            delete config.useNull;
+            // <debug>
+            Ext.Logger.warn('useNull has been deprecated on a Field definition. Please use allowNull instead.');
+            // </debug>
         }
-        return defaultValue;
+
+        this.initConfig(config);
     },
 
     applyType: function(type) {
@@ -335,6 +336,13 @@ Ext.define('Ext.data.Field', {
         }
 
         return autoType;
+    },
+
+    updateType: function(newType, oldType) {
+        var convert = this.getConvert();
+        if (oldType && convert === oldType.convert) {
+            this.setConvert(newType.convert);
+        }
     },
 
     applySortType: function(sortType) {

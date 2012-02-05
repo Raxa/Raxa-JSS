@@ -15,105 +15,13 @@ If you are unsure which license is appropriate for your use, please contact the 
 this.ExtBootstrapData = {
     "nameToAliasesMap":{
         "Ext.AbstractManager":[],
-        "Ext.AbstractPlugin":[],
         "Ext.Ajax":[],
         "Ext.ComponentManager":[],
         "Ext.ComponentQuery":[],
-        "Ext.ModelManager":[],
-        "Ext.PluginManager":[],
         "Ext.Template":[],
         "Ext.XTemplate":[],
         "Ext.XTemplateCompiler":[],
         "Ext.XTemplateParser":[],
-        "Ext.data.AbstractStore":[],
-        "Ext.data.ArrayStore":["store.array"
-        ],
-        "Ext.data.Batch":[],
-        "Ext.data.BufferStore":["store.buffer"
-        ],
-        "Ext.data.Connection":[],
-        "Ext.data.Errors":[],
-        "Ext.data.Field":["data.field"
-        ],
-        "Ext.data.IdGenerator":[],
-        "Ext.data.JsonP":[],
-        "Ext.data.JsonPStore":["store.jsonp"
-        ],
-        "Ext.data.JsonStore":["store.json"
-        ],
-        "Ext.data.Model":[],
-        "Ext.data.NodeInterface":[],
-        "Ext.data.NodeStore":["store.node"
-        ],
-        "Ext.data.Operation":[],
-        "Ext.data.Request":[],
-        "Ext.data.ResultSet":[],
-        "Ext.data.SequentialIdGenerator":["idgen.sequential"
-        ],
-        "Ext.data.SortTypes":[],
-        "Ext.data.Store":["store.store"
-        ],
-        "Ext.data.StoreManager":[],
-        "Ext.data.Tree":["data.tree"
-        ],
-        "Ext.data.TreeStore":["store.tree"
-        ],
-        "Ext.data.Types":[],
-        "Ext.data.UuidGenerator":[],
-        "Ext.data.validations":[],
-        "Ext.data.XmlStore":["store.xml"
-        ],
-        "Ext.data.association.Association":[],
-        "Ext.data.association.BelongsTo":["association.belongsto"
-        ],
-        "Ext.data.association.HasMany":["association.hasmany"
-        ],
-        "Ext.data.association.HasOne":["association.hasone"
-        ],
-        "Ext.data.proxy.Ajax":["proxy.ajax"
-        ],
-        "Ext.data.proxy.Client":[],
-        "Ext.data.proxy.JsonP":["proxy.jsonp",
-            "proxy.scripttag"
-        ],
-        "Ext.data.proxy.LocalStorage":["proxy.localstorage"
-        ],
-        "Ext.data.proxy.Memory":["proxy.memory"
-        ],
-        "Ext.data.proxy.Proxy":["proxy.proxy"
-        ],
-        "Ext.data.proxy.Rest":["proxy.rest"
-        ],
-        "Ext.data.proxy.Server":["proxy.server"
-        ],
-        "Ext.data.proxy.SessionStorage":["proxy.sessionstorage"
-        ],
-        "Ext.data.proxy.WebStorage":[],
-        "Ext.data.reader.Array":["reader.array"
-        ],
-        "Ext.data.reader.Json":["reader.json"
-        ],
-        "Ext.data.reader.Reader":[],
-        "Ext.data.reader.Xml":["reader.xml"
-        ],
-        "Ext.data.writer.Json":["writer.json"
-        ],
-        "Ext.data.writer.Writer":["writer.base"
-        ],
-        "Ext.data.writer.Xml":["writer.xml"
-        ],
-        "Ext.util.AbstractMixedCollection":[],
-        "Ext.util.Bindable":[],
-        "Ext.util.Filter":[],
-        "Ext.util.Grouper":[],
-        "Ext.util.HashMap":[],
-        "Ext.util.Inflector":[],
-        "Ext.util.MixedCollection":[],
-        "Ext.util.Offset":[],
-        "Ext.util.Point":[],
-        "Ext.util.Region":[],
-        "Ext.util.Sortable":[],
-        "Ext.util.Sorter":[],
         "Ext.ActionSheet":["widget.actionsheet"
         ],
         "Ext.Anim":[],
@@ -127,7 +35,8 @@ this.ExtBootstrapData = {
         ],
         "Ext.Decorator":[],
         "Ext.Evented":[],
-        "Ext.Img":["widget.image"
+        "Ext.Img":["widget.image",
+            "widget.img"
         ],
         "Ext.ItemCollection":[],
         "Ext.Label":["widget.label"
@@ -147,17 +56,14 @@ this.ExtBootstrapData = {
         ],
         "Ext.Sheet":["widget.sheet"
         ],
-        "Ext.Sortable":[],
         "Ext.Spacer":["widget.spacer"
         ],
-        "Ext.TaskQueue":[],
         "Ext.Title":["widget.title"
         ],
         "Ext.TitleBar":["widget.titlebar"
         ],
         "Ext.Toolbar":["widget.toolbar"
         ],
-        "Ext.Validator":[],
         "Ext.Video":["widget.video"
         ],
         "Ext.app.Action":[],
@@ -176,8 +82,75 @@ this.ExtBootstrapData = {
         "Ext.carousel.Indicator":["widget.carouselindicator"
         ],
         "Ext.carousel.Item":[],
+        "Ext.data.ArrayStore":["store.array"
+        ],
+        "Ext.data.Batch":[],
+        "Ext.data.Connection":[],
+        "Ext.data.Error":[],
+        "Ext.data.Errors":[],
+        "Ext.data.Field":["data.field"
+        ],
+        "Ext.data.JsonP":[],
+        "Ext.data.JsonStore":["store.json"
+        ],
+        "Ext.data.Model":[],
         "Ext.data.ModelManager":[],
+        "Ext.data.NodeInterface":[],
+        "Ext.data.NodeStore":["store.node"
+        ],
+        "Ext.data.Operation":[],
+        "Ext.data.Request":[],
+        "Ext.data.ResultSet":[],
+        "Ext.data.SortTypes":[],
+        "Ext.data.Store":["store.store"
+        ],
+        "Ext.data.StoreManager":[],
+        "Ext.data.Tree":["data.tree"
+        ],
+        "Ext.data.TreeStore":["store.tree"
+        ],
+        "Ext.data.Types":[],
+        "Ext.data.Validations":[],
+        "Ext.data.association.Association":[],
+        "Ext.data.association.BelongsTo":["association.belongsto"
+        ],
+        "Ext.data.association.HasMany":["association.hasmany"
+        ],
+        "Ext.data.association.HasOne":["association.hasone"
+        ],
+        "Ext.data.identifier.Sequential":["data.identifier.sequential"
+        ],
         "Ext.data.identifier.Simple":["data.identifier.simple"
+        ],
+        "Ext.data.identifier.Uuid":["data.identifier.uuid"
+        ],
+        "Ext.data.proxy.Ajax":["proxy.ajax"
+        ],
+        "Ext.data.proxy.Client":[],
+        "Ext.data.proxy.JsonP":["proxy.jsonp",
+            "proxy.scripttag"
+        ],
+        "Ext.data.proxy.LocalStorage":["proxy.localstorage"
+        ],
+        "Ext.data.proxy.Memory":["proxy.memory"
+        ],
+        "Ext.data.proxy.Proxy":["proxy.proxy"
+        ],
+        "Ext.data.proxy.Rest":["proxy.rest"
+        ],
+        "Ext.data.proxy.Server":["proxy.server"
+        ],
+        "Ext.data.proxy.WebStorage":[],
+        "Ext.data.reader.Array":["reader.array"
+        ],
+        "Ext.data.reader.Json":["reader.json"
+        ],
+        "Ext.data.reader.Reader":[],
+        "Ext.data.reader.Xml":["reader.xml"
+        ],
+        "Ext.data.writer.Json":["writer.json"
+        ],
+        "Ext.data.writer.Writer":["writer.base"
         ],
         "Ext.dataview.DataView":["widget.dataview"
         ],
@@ -193,6 +166,7 @@ this.ExtBootstrapData = {
         ],
         "Ext.dataview.element.Container":[],
         "Ext.dataview.element.List":[],
+        "Ext.dom.CompositeElement":[],
         "Ext.dom.CompositeElementLite":[],
         "Ext.dom.Element":["widget.element"
         ],
@@ -209,6 +183,7 @@ this.ExtBootstrapData = {
         "Ext.event.Touch":[],
         "Ext.event.publisher.ComponentDelegation":[],
         "Ext.event.publisher.ComponentPaint":[],
+        "Ext.event.publisher.ComponentSize":[],
         "Ext.event.publisher.Dom":[],
         "Ext.event.publisher.Publisher":[],
         "Ext.event.publisher.TouchGesture":[],
@@ -221,10 +196,8 @@ this.ExtBootstrapData = {
         "Ext.event.recognizer.Recognizer":[],
         "Ext.event.recognizer.Rotate":[],
         "Ext.event.recognizer.SingleTouch":[],
-        "Ext.event.recognizer.Swipe":[],
         "Ext.event.recognizer.Tap":[],
         "Ext.event.recognizer.Touch":[],
-        "Ext.event.recognizer.VerticalSwipe":[],
         "Ext.field.Checkbox":["widget.checkboxfield"
         ],
         "Ext.field.DatePicker":["widget.datepickerfield"
@@ -272,19 +245,23 @@ this.ExtBootstrapData = {
         "Ext.fx.animation.Abstract":[],
         "Ext.fx.animation.Cube":["animation.cube"
         ],
-        "Ext.fx.animation.Fade":["animation.fade"
+        "Ext.fx.animation.Fade":["animation.fade",
+            "animation.fadeIn"
         ],
-        "Ext.fx.animation.FadeOut":[],
+        "Ext.fx.animation.FadeOut":["animation.fadeOut"
+        ],
         "Ext.fx.animation.Flip":["animation.flip"
         ],
-        "Ext.fx.animation.Pop":["animation.pop"
+        "Ext.fx.animation.Pop":["animation.pop",
+            "animation.popIn"
         ],
-        "Ext.fx.animation.PopOut":[],
-        "Ext.fx.animation.Slide":["animation.slide"
+        "Ext.fx.animation.PopOut":["animation.popOut"
         ],
-        "Ext.fx.animation.SlideOut":[],
-        "Ext.fx.animation.Wipe":[],
-        "Ext.fx.animation.WipeOut":[],
+        "Ext.fx.animation.Slide":["animation.slide",
+            "animation.slideIn"
+        ],
+        "Ext.fx.animation.SlideOut":["animation.slideOut"
+        ],
         "Ext.fx.easing.Abstract":[],
         "Ext.fx.easing.Bounce":[],
         "Ext.fx.easing.BoundMomentum":[],
@@ -297,6 +274,8 @@ this.ExtBootstrapData = {
         "Ext.fx.easing.Momentum":[],
         "Ext.fx.layout.Card":[],
         "Ext.fx.layout.card.Abstract":[],
+        "Ext.fx.layout.card.Cover":["fx.layout.card.cover"
+        ],
         "Ext.fx.layout.card.Cube":["fx.layout.card.cube"
         ],
         "Ext.fx.layout.card.Fade":["fx.layout.card.fade"
@@ -305,13 +284,14 @@ this.ExtBootstrapData = {
         ],
         "Ext.fx.layout.card.Pop":["fx.layout.card.pop"
         ],
+        "Ext.fx.layout.card.Reveal":["fx.layout.card.reveal"
+        ],
         "Ext.fx.layout.card.Scroll":["fx.layout.card.scroll"
         ],
         "Ext.fx.layout.card.Slide":["fx.layout.card.slide"
         ],
         "Ext.fx.layout.card.Style":[],
         "Ext.fx.runner.Css":[],
-        "Ext.fx.runner.CssAnimation":[],
         "Ext.fx.runner.CssTransition":[],
         "Ext.layout.AbstractBox":[],
         "Ext.layout.Card":["layout.card"
@@ -360,19 +340,11 @@ this.ExtBootstrapData = {
         "Ext.scroll.Indicator":[],
         "Ext.scroll.Scroller":[],
         "Ext.scroll.View":[],
-        "Ext.scroll.easing.Bounce":[],
-        "Ext.scroll.easing.BoundMomentum":[],
-        "Ext.scroll.easing.EaseOut":[],
-        "Ext.scroll.easing.Easing":[],
-        "Ext.scroll.easing.Linear":[],
-        "Ext.scroll.easing.Momentum":[],
         "Ext.scroll.indicator.Abstract":[],
         "Ext.scroll.indicator.CssTransform":[],
         "Ext.scroll.indicator.ScrollPosition":[],
         "Ext.scroll.scroller.Abstract":[],
-        "Ext.scroll.scroller.CssPosition":[],
         "Ext.scroll.scroller.CssTransform":[],
-        "Ext.scroll.scroller.Infinite":[],
         "Ext.scroll.scroller.ScrollPosition":[],
         "Ext.slider.Slider":["widget.slider"
         ],
@@ -385,25 +357,28 @@ this.ExtBootstrapData = {
         ],
         "Ext.tab.Tab":["widget.tab"
         ],
+        "Ext.util.AbstractMixedCollection":[],
         "Ext.util.Collection":[],
+        "Ext.util.DelayedTask":[],
         "Ext.util.Draggable":[],
-        "Ext.util.Droppable":[],
+        "Ext.util.Filter":[],
         "Ext.util.Format":[],
         "Ext.util.GeoLocation":[],
+        "Ext.util.Grouper":[],
+        "Ext.util.HashMap":[],
         "Ext.util.JSONP":[],
-        "Ext.util.NewFilter":[],
-        "Ext.util.NewGrouper":[],
-        "Ext.util.NewSorter":[],
-        "Ext.util.OffsetConstraint":[],
+        "Ext.util.LineSegment":[],
+        "Ext.util.MixedCollection":[],
+        "Ext.util.Point":[],
+        "Ext.util.Region":[],
         "Ext.util.SizeMonitor":[],
+        "Ext.util.Sortable":[],
+        "Ext.util.Sorter":[],
         "Ext.util.TapRepeater":[],
-        "Ext.util.Timeline":[],
         "Ext.util.Translatable":[],
         "Ext.util.translatable.Abstract":[],
         "Ext.util.translatable.CssTransform":[],
         "Ext.util.translatable.ScrollPosition":[],
-        "Ext.ux.Faker":[],
-        "Ext.ux.auth.Session":[],
         "Ext.viewport.Android":[],
         "Ext.viewport.Default":["widget.viewport"
         ],
@@ -412,13 +387,20 @@ this.ExtBootstrapData = {
     },
     "alternateToNameMap":{
         "Ext.ComponentMgr":"Ext.ComponentManager",
-        "Ext.ModelMgr":"Ext.data.ModelManager",
-        "Ext.PluginMgr":"Ext.PluginManager",
+        "Ext.lib.Component":"Ext.Component",
+        "Ext.lib.Container":"Ext.Container",
+        "Ext.EventedBase":"Ext.Evented",
+        "Ext.lib.Panel":"Ext.Panel",
+        "Ext.Carousel":"Ext.carousel.Carousel",
+        "Ext.Carousel.Indicator":"Ext.carousel.Indicator",
         "Ext.data.Record":"Ext.data.Model",
+        "Ext.ModelMgr":"Ext.data.ModelManager",
+        "Ext.ModelManager":"Ext.data.ModelManager",
         "Ext.data.Node":"Ext.data.NodeInterface",
         "Ext.StoreMgr":"Ext.data.StoreManager",
         "Ext.data.StoreMgr":"Ext.data.StoreManager",
         "Ext.StoreManager":"Ext.data.StoreManager",
+        "Ext.data.validations":"Ext.data.Validations",
         "Ext.data.Association":"Ext.data.association.Association",
         "Ext.data.BelongsToAssociation":"Ext.data.association.BelongsTo",
         "Ext.data.HasManyAssociation":"Ext.data.association.HasMany",
@@ -432,7 +414,6 @@ this.ExtBootstrapData = {
         "Ext.data.Proxy":"Ext.data.proxy.Proxy",
         "Ext.data.RestProxy":"Ext.data.proxy.Rest",
         "Ext.data.ServerProxy":"Ext.data.proxy.Server",
-        "Ext.data.SessionStorageProxy":"Ext.data.proxy.SessionStorage",
         "Ext.data.WebStorageProxy":"Ext.data.proxy.WebStorage",
         "Ext.data.ArrayReader":"Ext.data.reader.Array",
         "Ext.data.JsonReader":"Ext.data.reader.Json",
@@ -442,23 +423,13 @@ this.ExtBootstrapData = {
         "Ext.data.JsonWriter":"Ext.data.writer.Json",
         "Ext.data.DataWriter":"Ext.data.writer.Writer",
         "Ext.data.Writer":"Ext.data.writer.Writer",
-        "Ext.data.XmlWriter":"Ext.data.writer.Xml",
-        "Ext.lib.Component":"Ext.Component",
-        "Ext.lib.Container":"Ext.Container",
-        "Ext.EventedBase":"Ext.Evented",
-        "Ext.lib.Panel":"Ext.Panel",
-        "Ext.Carousel":"Ext.carousel.Carousel",
-        "Ext.Carousel.Indicator":"Ext.carousel.Indicator",
-        "Ext.ModelManager":"Ext.data.ModelManager",
         "Ext.DataView":"Ext.dataview.DataView",
         "Ext.IndexBar":"Ext.dataview.IndexBar",
         "Ext.List":"Ext.dataview.List",
         "Ext.NestedList":"Ext.dataview.NestedList",
-        "Ext.CompositeElementLite":"Ext.dom.CompositeElementLite",
         "Ext.CompositeElement":"Ext.dom.CompositeElementLite",
+        "Ext.CompositeElementLite":"Ext.dom.CompositeElementLite",
         "Ext.Element":"Ext.dom.Element",
-        "Ext.DomHelper":"Ext.dom.Helper",
-        "Ext.DomQuery":"Ext.dom.Query",
         "Ext.EventObject":"Ext.event.Event",
         "Ext.form.Checkbox":"Ext.field.Checkbox",
         "Ext.form.DatePicker":"Ext.field.DatePicker",
@@ -480,7 +451,6 @@ this.ExtBootstrapData = {
         "Ext.fx.animation.FadeIn":"Ext.fx.animation.Fade",
         "Ext.fx.animation.PopIn":"Ext.fx.animation.Pop",
         "Ext.fx.animation.SlideIn":"Ext.fx.animation.Slide",
-        "Ext.fx.animation.WipeIn":"Ext.fx.animation.Wipe",
         "Ext.layout.CardLayout":"Ext.layout.Card",
         "Ext.layout.AutoContainerLayout":"Ext.layout.Default",
         "Ext.layout.ContainerLayout":"Ext.layout.Default",

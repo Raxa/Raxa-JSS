@@ -1,24 +1,24 @@
 /**
  * {@link Ext.Toolbar}s are most commonly used as docked items as within a {@link Ext.Container}. They can be docked either `top` or `bottom` using the {@link #docked} configuration.
- * 
+ *
  * The {@link #defaultType} of {@link Ext.Toolbar} is {@link Ext.Button}.
- * 
+ *
  * ## Notes
- * 
+ *
  * You must use a HTML5 doctype for {@link #docked} `bottom` to work. To do this, simply add the following code to the HTML file:
- * 
+ *
  *     <!doctype html>
- * 
+ *
  * So your index.html file should look a little like this:
- * 
+ *
  *     <!doctype html>
  *     <html>
  *         <head>
  *             <title>MY application title</title>
  *             ...
- * 
+ *
  * ## Examples
- * 
+ *
  *     @example miniphone preview
  *     Ext.create('Ext.Container', {
  *         fullscreen: true,
@@ -48,7 +48,7 @@
  *                         handler: function() {
  *                             var toolbar = Ext.ComponentQuery.query('toolbar')[0],
  *                                 newDocked = (toolbar.getDocked() == 'top') ? 'bottom' : 'top';
- * 
+ *
  *                             toolbar.setDocked(newDocked);
  *                         }
  *                     },
@@ -57,7 +57,7 @@
  *                         handler: function() {
  *                             var toolbar = Ext.ComponentQuery.query('toolbar')[0],
  *                                 newUi = (toolbar.getUi() == 'light') ? 'dark' : 'light';
- * 
+ *
  *                             toolbar.setUi(newUi);
  *                         }
  *                     },
@@ -70,7 +70,7 @@
                                    //so you must get the title configuration of that component
  *                                 title = toolbar.getTitle().getTitle(),
  *                                 newTitle = titles[titles.indexOf(title) + 1] || titles[0];
- * 
+ *
  *                             toolbar.setTitle(newTitle);
  *                         }
  *                     }
@@ -119,15 +119,58 @@ Ext.define('Ext.Toolbar', {
 
         /**
          * @cfg {String} docked
-         * The docked position for this {@link Ext.Toolbar}. Must be either `top` or `bottom`.
+         * The docked position for this {@link Ext.Toolbar}.
+         * If you specify `left` or `right`, the {@link #layout} configuration will automatically change to a `vbox`. It's also
+         * recommended to adjust the {@link #width} of the toolbar if you do this.
          * @accessor
          */
 
-        // @private
+        /**
+         * @cfg {Object/String} layout Configuration for this Container's layout. Example:
+         *
+         *    Ext.create('Ext.Container', {
+         *        layout: {
+         *            type: 'hbox',
+         *            align: 'middle'
+         *        },
+         *        items: [
+         *            {
+         *                xtype: 'panel',
+         *                flex: 1,
+         *                style: 'background-color: red;'
+         *            },
+         *            {
+         *                xtype: 'panel',
+         *                flex: 2,
+         *                style: 'background-color: green'
+         *            }
+         *        ]
+         *    });
+         *
+         * See the layouts guide for more information
+         *
+         * Please note, if you set the {@link #docked} configuration to `left` or `right`, the default layout will change from the
+         * `hbox` to a `vbox`.
+         *
+         * @accessor
+         */
         layout: {
             type: 'hbox',
             align: 'center'
         }
+    },
+
+    constructor: function(config) {
+        config = config || {};
+
+        if (config.docked == "left" || config.docked == "right") {
+            config.layout = {
+                type: 'vbox',
+                align: 'stretch'
+            };
+        }
+
+        this.callParent([config]);
     },
 
     // @private
@@ -182,7 +225,7 @@ Ext.define('Ext.Toolbar', {
      * @method getTitle
      * @return {Ext.Title}
      */
-    
+
     /**
      * Use this to update the {@link #title} configuration.
      * @member Ext.Toolbar

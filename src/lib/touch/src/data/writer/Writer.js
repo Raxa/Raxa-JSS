@@ -1,19 +1,16 @@
 /**
  * @author Ed Spencer
- * @class Ext.data.writer.Writer
- * @extends Object
  *
- * <p>Base Writer class used by most subclasses of {@link Ext.data.proxy.Server}. This class is
+ * Base Writer class used by most subclasses of {@link Ext.data.proxy.Server}. This class is
  * responsible for taking a set of {@link Ext.data.Operation} objects and a {@link Ext.data.Request}
- * object and modifying that request based on the Operations.</p>
+ * object and modifying that request based on the Operations.
  *
- * <p>For example a Ext.data.writer.Json would format the Operations and their {@link Ext.data.Model}
- * instances based on the config options passed to the JsonWriter's constructor.</p>
+ * For example a Ext.data.writer.Json would format the Operations and their {@link Ext.data.Model}
+ * instances based on the config options passed to the JsonWriter's constructor.
  *
- * <p>Writers are not needed for any kind of local storage - whether via a
- * {@link Ext.data.proxy.WebStorage Web Storage proxy} (see {@link Ext.data.proxy.LocalStorage localStorage}
- * and {@link Ext.data.proxy.SessionStorage sessionStorage}) or just in memory via a
- * {@link Ext.data.proxy.Memory MemoryProxy}.</p>
+ * Writers are not needed for any kind of local storage - whether via a
+ * {@link Ext.data.proxy.WebStorage Web Storage proxy} (see {@link Ext.data.proxy.LocalStorage localStorage})
+ * or just in memory via a {@link Ext.data.proxy.Memory MemoryProxy}.
  */
 Ext.define('Ext.data.writer.Writer', {
     alias: 'writer.base',
@@ -76,13 +73,10 @@ Ext.define('Ext.data.writer.Writer', {
      */
     write: function(request) {
         var operation = request.getOperation(),
-            params    = request.getParams(),
             records   = operation.getRecords() || [],
             len       = records.length,
             i         = 0,
             data      = [];
-
-        params.action = request.getAction();
 
         for (; i < len; i++) {
             data.push(this.getRecordData(records[i]));
@@ -115,35 +109,35 @@ Ext.define('Ext.data.writer.Writer', {
             nameProperty = this.getNameProperty(),
             fields = record.getFields(),
             data = {},
-            changes, name, field, key, value;
+            changes, name, field, key, value, fieldConfig;
 
         if (writeAll) {
             fields.each(function(field) {
-                // @TODO: remove this as soon as Jacky's patch is in for getters
-                field = field.config;
-                if (field.persist) {
-                    name = field[nameProperty] || field.name;
-                    value = record.get(field.name);
-                    if (field.type.type == 'date') {
-                        value = this.writeDate(field, value);
+                fieldConfig = field.config;
+                if (fieldConfig.persist) {
+                    name = fieldConfig[nameProperty] || fieldConfig.name;
+                    value = record.get(fieldConfig.name);
+                    if (fieldConfig.type.type == 'date') {
+                        value = this.writeDate(fieldConfig, value);
                     }
                     data[name] = value;
                 }
             }, this);
         } else {
-            // @TODO: implement this
-//            debugger;
             // Only write the changes
             changes = record.getChanges();
             for (key in changes) {
                 if (changes.hasOwnProperty(key)) {
                     field = fields.get(key);
-                    name = field[nameProperty] || field.name;
-                    value = changes[key];
-                    if (field.type.type == 'date') {
-                        value = this.writeDate(field, value);
+                    fieldConfig = field.config;
+                    if (fieldConfig.persist) {
+                        name = fieldConfig[nameProperty] || field.name;
+                        value = changes[key];
+                        if (fieldConfig.type.type == 'date') {
+                            value = this.writeDate(fieldConfig, value);
+                        }
+                        data[name] = value;
                     }
-                    data[name] = value;
                 }
             }
             if (!isPhantom) {

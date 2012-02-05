@@ -1,10 +1,9 @@
-/**
+/*
  * @class Ext.util.translatable.ScrollPosition
  * @private
  *
  * Scroll position implementation
  */
-
 Ext.define('Ext.util.translatable.ScrollPosition', {
     extend: 'Ext.util.translatable.Abstract',
 

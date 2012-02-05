@@ -20,28 +20,28 @@ Ext.define('Ext.data.proxy.Server', {
 
         /**
          * @cfg {String} pageParam
-         * The name of the 'page' parameter to send in a request. Defaults to 'page'. Set this to undefined if you don't
+         * The name of the 'page' parameter to send in a request. Defaults to 'page'. Set this to false if you don't
          * want to send a page parameter.
          */
         pageParam: 'page',
 
         /**
          * @cfg {String} startParam
-         * The name of the 'start' parameter to send in a request. Defaults to 'start'. Set this to undefined if you don't
+         * The name of the 'start' parameter to send in a request. Defaults to 'start'. Set this to false if you don't
          * want to send a start parameter.
          */
         startParam: 'start',
 
         /**
          * @cfg {String} limitParam
-         * The name of the 'limit' parameter to send in a request. Defaults to 'limit'. Set this to undefined if you don't
+         * The name of the 'limit' parameter to send in a request. Defaults to 'limit'. Set this to false if you don't
          * want to send a limit parameter.
          */
         limitParam: 'limit',
 
         /**
          * @cfg {String} groupParam
-         * The name of the 'group' parameter to send in a request. Defaults to 'group'. Set this to undefined if you don't
+         * The name of the 'group' parameter to send in a request. Defaults to 'group'. Set this to false if you don't
          * want to send a group parameter.
          */
         groupParam: 'group',
@@ -66,6 +66,12 @@ Ext.define('Ext.data.proxy.Server', {
          * true.** Defaults to 'dir'.
          */
         directionParam: 'dir',
+
+        /**
+         * @cfg {Boolean} enablePagingParams This can be set to false if you want to prevent the paging params to be
+         * sent along with the requests made by this proxy.
+         */
+        enablePagingParams: true,
 
         /**
          * @cfg {Boolean} simpleSortMode
@@ -135,7 +141,16 @@ Ext.define('Ext.data.proxy.Server', {
         extraParams: {}
     },
 
-    // @TODO: put back nocache config option for backwards compatibility
+    constructor: function(config) {
+        config = config || {};
+        if (config.nocache !== undefined) {
+            config.noCache = config.nocache;
+            // <debug>
+            Ext.Logger.warn('nocache configuration on Ext.data.proxy.Server has been deprecated. Please use noCache.');
+            // </debug>
+        }
+        this.callParent([config]);
+    },
 
     //in a ServerProxy all four CRUD operations are executed in the same manner, so we delegate to doRequest in each case
     create: function() {
@@ -172,16 +187,10 @@ Ext.define('Ext.data.proxy.Server', {
     buildRequest: function(operation) {
         var me = this,
             params = Ext.applyIf(operation.getParams() || {}, me.getExtraParams() || {}),
-            //id = operation.getId(),
             request;
 
         //copy any sorters, filters etc into the params so they can be sent over the wire
         params = Ext.applyIf(params, me.getParams(operation));
-
-        // @TODO: figure out who ever sets an id on an operation
-        // if (id && !params.id) {
-        //     params.id = id;
-        // }
 
         request = Ext.create('Ext.data.Request', {
             params   : params,
@@ -216,7 +225,19 @@ Ext.define('Ext.data.proxy.Server', {
 
         if (success === true) {
             reader = me.getReader();
-            resultSet = reader.process(me.extractResponseData(response));
+
+            try {
+                resultSet = reader.process(response);
+            } catch(e) {
+                operation.setException(operation, {
+                    status: null,
+                    statusText: e.getMessage()
+                });
+
+                me.fireEvent('exception', this, response, operation);
+                return;
+            }
+
 
             if (operation.process(action, resultSet, request, response) === false) {
                 this.fireEvent('exception', this, response, operation);
@@ -252,17 +273,6 @@ Ext.define('Ext.data.proxy.Server', {
             status: response.status,
             statusText: response.statusText
         });
-    },
-
-    /**
-     * Template method to allow subclasses to specify how to get the response for the reader.
-     * @template
-     * @protected
-     * @param {Object} response The server response
-     * @return {Object} The response data to be used by the reader
-     */
-    extractResponseData: function(response) {
-        return response;
     },
 
     /**
@@ -340,16 +350,18 @@ Ext.define('Ext.data.proxy.Server', {
             filterParam = me.getFilterParam(),
             directionParam = me.getDirectionParam();
 
-        if (pageParam && page !== null) {
-            params[pageParam] = page;
-        }
+        if (me.getEnablePagingParams()) {
+            if (pageParam && page !== null) {
+                params[pageParam] = page;
+            }
 
-        if (startParam && start !== null) {
-            params[startParam] = start;
-        }
+            if (startParam && start !== null) {
+                params[startParam] = start;
+            }
 
-        if (limitParam && limit !== null) {
-            params[limitParam] = limit;
+            if (limitParam && limit !== null) {
+                params[limitParam] = limit;
+            }
         }
 
         if (groupParam && groupers && groupers.length > 0) {
@@ -385,7 +397,7 @@ Ext.define('Ext.data.proxy.Server', {
 
         //<debug>
         if (!url) {
-            Ext.Error.raise("You are using a ServerProxy but have not supplied it with a url.");
+            Ext.Logger.error("You are using a ServerProxy but have not supplied it with a url.");
         }
         //</debug>
 
@@ -421,7 +433,7 @@ Ext.define('Ext.data.proxy.Server', {
      */
     doRequest: function(operation, callback, scope) {
         //<debug>
-        Ext.Error.raise("The doRequest function has not been implemented on your Ext.data.proxy.Server subclass. See src/data/ServerProxy.js for details");
+        Ext.Logger.error("The doRequest function has not been implemented on your Ext.data.proxy.Server subclass. See src/data/ServerProxy.js for details");
         //</debug>
     },
 

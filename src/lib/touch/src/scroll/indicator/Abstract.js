@@ -1,16 +1,9 @@
-/**
- * @private
- */
 Ext.define('Ext.scroll.indicator.Abstract', {
     extend: 'Ext.Component',
 
     config: {
         baseCls: 'x-scroll-indicator',
 
-        /**
-         * @cfg {String} axis The current indicator axis
-         * @accessor
-         */
         axis: 'x',
 
         value: 0,

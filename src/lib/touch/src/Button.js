@@ -289,12 +289,17 @@ Ext.define('Ext.Button', {
 
         /**
          * @cfg {String} iconAlign
-         * The position within the Button to render the icon Options are: `top`, `right`, `botom`, `left` and `center` (when you have 
+         * The position within the Button to render the icon Options are: `top`, `right`, `botom`, `left` and `center` (when you have
          * no {@link #text} set).
          * @accessor
          */
         iconAlign: 'left',
 
+        /**
+         * @cfg {Number/Boolean} pressedDelay
+         * The amount of delay between the tapstart and the moment we add the pressedCls (in milliseconds).
+         * Settings this to true defaults to 100ms.
+         */
         pressedDelay: 0,
 
         /**
@@ -336,7 +341,7 @@ Ext.define('Ext.Button', {
 
         /**
          * @cfg {String} html The html to put in this button.
-         * 
+         *
          * If you want to just add text, please use the {@link #text} configuration
          */
 
@@ -350,7 +355,6 @@ Ext.define('Ext.Button', {
             reference: 'badgeElement',
             hidden: true
         },
-
         {
             tag: 'span',
             className: Ext.baseCSSPrefix + 'button-icon',
@@ -402,7 +406,7 @@ Ext.define('Ext.Button', {
 
         if (text) {
             textElement.show();
-            textElement.update(text);
+            textElement.setHtml(text);
         }
         else {
             textElement.hide();
@@ -417,7 +421,7 @@ Ext.define('Ext.Button', {
 
         if (html) {
             textElement.show();
-            textElement.update(html);
+            textElement.setHtml(html);
         }
         else {
             textElement.hide();
@@ -625,7 +629,10 @@ Ext.define('Ext.Button', {
     },
 
     applyPressedDelay: function(delay) {
-        return isNaN(delay) ? 0 : delay;
+        if (Ext.isNumber(delay)) {
+            return delay;
+        }
+        return (delay) ? 100 : 0;
     },
 
     // @private
@@ -703,6 +710,10 @@ Ext.define('Ext.Button', {
         if (typeof handler == 'string') {
             handler = scope[handler];
         }
+
+        //this is done so if you hide the button in the handler, the tap event will not fire on the new element
+        //where the button was.
+        e.preventDefault();
 
         handler.apply(scope, arguments);
     }

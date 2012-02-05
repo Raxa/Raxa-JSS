@@ -4,7 +4,8 @@ Ext.define('Ext.log.writer.Console', {
     extend: 'Ext.log.writer.Writer',
 
     config: {
-        throwOnErrors: true
+        throwOnErrors: true,
+        throwOnWarnings: false
     },
 
     doWrite: function(event) {
@@ -21,6 +22,10 @@ Ext.define('Ext.log.writer.Console', {
 
             if (consoleMethod === 'deprecate') {
                 consoleMethod = 'warn';
+            }
+
+            if (consoleMethod === 'warn' && this.getThrowOnWarnings()) {
+                throw new Error(message);
             }
 
             if (!(consoleMethod in console)) {

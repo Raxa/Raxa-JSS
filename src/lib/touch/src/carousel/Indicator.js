@@ -62,7 +62,7 @@ Ext.define('Ext.carousel.Indicator', {
         var indicators = this.indicators;
 
         if (indicators.length > 0) {
-            indicators.pop().remove();
+            indicators.pop().destroy();
         }
     },
 
@@ -100,5 +100,19 @@ Ext.define('Ext.carousel.Indicator', {
         else {
             this.fireEvent('previous', this);
         }
+    },
+
+    destroy: function() {
+        var indicators = this.indicators,
+            i, ln, indicator;
+
+        for (i = 0,ln = indicators.length; i < ln; i++) {
+            indicator = indicators[i];
+            indicator.destroy();
+        }
+
+        indicators.length = 0;
+
+        this.callParent();
     }
 });

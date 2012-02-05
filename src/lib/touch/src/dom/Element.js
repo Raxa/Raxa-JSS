@@ -20,7 +20,6 @@
  * For working with collections of Elements, see Ext.CompositeElement
  */
 Ext.define('Ext.dom.Element', {
-    extend: 'Ext.dom.AbstractElement',
     alternateClassName: 'Ext.Element',
 
     requires: [
@@ -28,29 +27,9 @@ Ext.define('Ext.dom.Element', {
         'Ext.dom.Helper'
     ],
 
-    mixins: [
-        'Ext.mixin.Observable'
-    ],
-
     observableType: 'element',
 
     xtype: 'element',
-
-    WIDTH: 'width',
-
-    HEIGHT: 'height',
-
-    TOP: 'top',
-
-    RIGHT: 'right',
-
-    BOTTOM: 'bottom',
-
-    LEFT: 'left',
-
-    SEPARATOR: '-',
-
-    spacesRegex: /\s+/,
 
     statics: {
         CREATE_ATTRIBUTES: {
@@ -149,7 +128,7 @@ Ext.define('Ext.dom.Element', {
                 return element;
             }
             else {
-                return Ext.get(element);
+                return this.get(element);
             }
         },
 
@@ -157,6 +136,20 @@ Ext.define('Ext.dom.Element', {
 
         cache: {},
 
+        /**
+         * Retrieves Ext.dom.Element objects. {@link Ext#get} is alias for {@link Ext.dom.Element#get}.
+         *
+         * **This method does not retrieve {@link Ext.Component Component}s.** This method retrieves Ext.dom.Element
+         * objects which encapsulate DOM elements. To retrieve a Component by its ID, use {@link Ext.ComponentManager#get}.
+         *
+         * Uses simple caching to consistently return the same object. Automatically fixes if an object was recreated with
+         * the same id via AJAX or DOM.
+         *
+         * @param {String/HTMLElement/Ext.Element} el The id of the node, a DOM Node or an existing Element.
+         * @return {Ext.dom.Element} The Element object (or null if no matching element was found)
+         * @static
+         * @inheritable
+         */
         get: function(element) {
             var cache = this.cache,
                 instance, dom, id;
@@ -215,14 +208,36 @@ Ext.define('Ext.dom.Element', {
             }
 
             return null;
+        },
+
+        data: function(element, key, value) {
+            var cache = Ext.cache,
+                id, data;
+
+            element = this.get(element);
+
+            if (!element) {
+                return null;
+            }
+
+            id = element.id;
+
+            data = cache[id].data;
+
+            if (!data) {
+                cache[id].data = data = {};
+            }
+
+            if (arguments.length == 2) {
+                return data[key];
+            }
+            else {
+                return (data[key] = value);
+            }
         }
     },
 
     isElement: true,
-
-    classNameSplitRegex: /[\s]+/,
-
-    isSynchronized: false,
 
     constructor: function(dom) {
         if (typeof dom == 'string') {
@@ -252,7 +267,7 @@ Ext.define('Ext.dom.Element', {
                 dom.id = id = this.mixins.identifiable.getUniqueId.call(this);
             }
 
-            Ext.Element.cache[id] = this;
+            this.self.cache[id] = this;
         }
 
         return id;
@@ -260,7 +275,7 @@ Ext.define('Ext.dom.Element', {
 
     setId: function(id) {
         var currentId = this.id,
-            cache = Ext.Element.cache;
+            cache = this.self.cache;
 
         if (currentId) {
             delete cache[currentId];
@@ -274,312 +289,16 @@ Ext.define('Ext.dom.Element', {
         return this;
     },
 
-    /**
-     * @private
-     */
-    synchronize: function() {
-        var dom = this.dom,
-            hasClassMap = {},
-            className = dom.className,
-            classList, i, ln, name;
-
-        if (className.length > 0) {
-            classList = dom.className.split(this.classNameSplitRegex);
-
-            for (i = 0,ln = classList.length; i < ln; i++) {
-                name = classList[i];
-                hasClassMap[name] = true;
-            }
-        }
-        else {
-            classList = [];
-        }
-
-        this.classList = classList;
-
-        this.hasClassMap = hasClassMap;
-
-        this.isSynchronized = true;
-
-        return this;
-    },
-
-    /**
-     * Adds the given CSS class(es) to this Element
-     * @param {String} names The CSS class(es) to add to this element
-     * @param {String} prefix Optional prefix to prepend to each class
-     * @param {String} suffix Optional suffix to append to each class
-     */
-    addCls: function(names, prefix, suffix) {
-        if (!names) {
-            return this;
-        }
-
-        if (!this.isSynchronized) {
-            this.synchronize();
-        }
-
-        var dom = this.dom,
-            map = this.hasClassMap,
-            classList = this.classList,
-            SEPARATOR = this.SEPARATOR,
-            i, ln, name;
-
-        prefix = prefix ? prefix + SEPARATOR : '';
-        suffix = suffix ? SEPARATOR + suffix : '';
-
-        if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
-        }
-
-        for (i = 0,ln = names.length; i < ln; i++) {
-            name = prefix + names[i] + suffix;
-
-            if (!map[name]) {
-                map[name] = true;
-                classList.push(name);
-            }
-        }
-
-        dom.className = classList.join(' ');
-
-        return this;
-    },
-
-    /**
-     * Removes the given CSS class(es) from this Element
-     * @param {String} names The CSS class(es) to remove from this element
-     * @param {String} prefix Optional prefix to prepend to each class to be removed
-     * @param {String} suffix Optional suffix to append to each class to be removed
-     */
-    removeCls: function(names, prefix, suffix) {
-        if (!names) {
-            return this;
-        }
-
-        if (!this.isSynchronized) {
-            this.synchronize();
-        }
-
-
-        if (!suffix) {
-            suffix = '';
-        }
-
-        var dom = this.dom,
-            map = this.hasClassMap,
-            classList = this.classList,
-            SEPARATOR = this.SEPARATOR,
-            i, ln, name;
-
-        prefix = prefix ? prefix + SEPARATOR : '';
-        suffix = suffix ? SEPARATOR + suffix : '';
-
-        if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
-        }
-
-        for (i = 0,ln = names.length; i < ln; i++) {
-            name = prefix + names[i] + suffix;
-
-            if (map[name]) {
-                delete map[name];
-                Ext.Array.remove(classList, name);
-            }
-        }
-
-        dom.className = classList.join(' ');
-
-        return this;
-    },
-
-    replaceCls: function(oldName, newName, prefix, suffix) {
-        return this.removeCls(oldName, prefix, suffix).addCls(newName, prefix, suffix);
-    },
-
-    hasCls: function(name) {
-        if (!this.isSynchronized) {
-            this.synchronize();
-        }
-
-        return this.hasClassMap.hasOwnProperty(name);
-    },
-
-    show: function() {
-        this.dom.style.display = '';
-    },
-
-    hide: function() {
-        this.dom.style.setProperty('display', 'none', 'important');
-    },
-
     setHtml: function(html) {
         this.dom.innerHTML = html;
     },
 
-    setHTML: function() {
-        this.setHtml.apply(this, arguments);
+    getHtml: function() {
+        return this.dom.innerHTML;
     },
 
     setText: function(text) {
         this.dom.textContent = text;
-    },
-
-    setWidth: function(width) {
-        return this.setLengthValue(this.WIDTH, width);
-    },
-
-    setHeight: function(height) {
-        return this.setLengthValue(this.HEIGHT, height);
-    },
-
-    setTop: function(top) {
-        return this.setLengthValue(this.TOP, top);
-    },
-
-    setRight: function(right) {
-        return this.setLengthValue(this.RIGHT, right);
-    },
-
-    setBottom: function(bottom) {
-        return this.setLengthValue(this.BOTTOM, bottom);
-    },
-
-    setLeft: function(left) {
-        return this.setLengthValue(this.LEFT, left);
-    },
-
-    setMargin: function(margin) {
-        if (margin || margin === 0) {
-            margin = this.self.unitizeBox((margin === true) ? 5 : margin);
-        }
-        else {
-            margin = null;
-        }
-        this.dom.style.margin = margin;
-    },
-
-    setPadding: function(padding) {
-        if (padding || padding === 0) {
-            padding = this.self.unitizeBox((padding === true) ? 5 : padding);
-        }
-        else {
-            padding = null;
-        }
-        this.dom.style.padding = padding;
-    },
-
-    setBorder: function(border) {
-        if (border || border === 0) {
-            border = this.self.unitizeBox((border === true) ? 1 : border);
-        }
-        else {
-            border = null;
-        }
-        this.dom.style.borderWidth = border;
-    },
-
-    setLengthValue: function(name, value) {
-        if (typeof value == 'number') {
-            value = value + 'px';
-        } else if (value === null) {
-            value = 'auto';
-        }
-
-        this.dom.style.setProperty(name, value, 'important');
-
-        return this;
-    },
-
-    getParent: function() {
-        return Ext.get(this.dom.parentNode);
-    },
-
-    getFirstChild: function() {
-        return Ext.get(this.dom.firstElementChild);
-    },
-
-    append: function(element) {
-        this.dom.appendChild(Ext.getDom(element));
-
-        return this;
-    },
-
-    insertFirst: function(element) {
-        var elementDom = Ext.getDom(element),
-            dom = this.dom,
-            firstChild = dom.firstChild;
-
-        if (!firstChild) {
-            dom.appendChild(elementDom);
-        }
-        else {
-            dom.insertBefore(elementDom, firstChild);
-        }
-
-        return this;
-    },
-
-    wrap: function(config, domNode) {
-        var dom = this.dom,
-            wrapper = this.self.create(config, domNode),
-            wrapperDom = (domNode) ? wrapper : wrapper.dom,
-            parentNode = dom.parentNode;
-
-        if (parentNode) {
-            parentNode.insertBefore(wrapperDom, dom);
-        }
-
-        wrapperDom.appendChild(dom);
-
-        return wrapper;
-    },
-
-    wrapAllChildren: function(config) {
-        var dom = this.dom,
-            children = dom.childNodes,
-            wrapper = this.self.create(config),
-            wrapperDom = wrapper.dom;
-
-        while (children.length > 0) {
-            wrapperDom.appendChild(dom.firstChild);
-        }
-
-        dom.appendChild(wrapperDom);
-
-        return wrapper;
-    },
-
-    unwrapAllChildren: function() {
-        var dom = this.dom,
-            children = dom.childNodes,
-            parentNode = dom.parentNode;
-
-        if (parentNode) {
-            while (children.length > 0) {
-                parentNode.insertBefore(dom, dom.firstChild);
-            }
-
-            this.destroy();
-        }
-    },
-
-    unwrap: function() {
-        var dom = this.dom,
-            parentNode = dom.parentNode,
-            grandparentNode;
-
-        if (parentNode) {
-            grandparentNode = parentNode.parentNode;
-            grandparentNode.insertBefore(dom, parentNode);
-            grandparentNode.removeChild(parentNode);
-        }
-        else {
-            grandparentNode = document.createDocumentFragment();
-            grandparentNode.appendChild(dom);
-        }
-
-        return this;
     },
 
     redraw: function() {
@@ -595,10 +314,80 @@ Ext.define('Ext.dom.Element', {
         return Boolean(this.dom.offsetParent);
     },
 
+    /**
+     * Sets the passed attributes as attributes of this element (a style attribute can be a string, object or function)
+     * @param {Object} attributes The object with the attributes
+     * @param {Boolean} [useSet=true] false to override the default setAttribute to use expandos.
+     * @return {Ext.dom.Element} this
+     */
+    set: function(attributes, useSet) {
+        var dom = this.dom,
+            attribute, value;
+
+        for (attribute in attributes) {
+            if (attributes.hasOwnProperty(attribute)) {
+                value = attributes[attribute];
+
+                if (attribute == 'style') {
+                    this.applyStyles(value);
+                }
+                else if (attribute == 'cls') {
+                    dom.className = value;
+                }
+                else if (useSet !== false) {
+                    if (value === undefined) {
+                        dom.removeAttribute(attribute);
+                    } else {
+                        dom.setAttribute(attribute, value);
+                    }
+                }
+                else {
+                    dom[attribute] = value;
+                }
+            }
+        }
+
+        return this;
+    },
+
+    /**
+     * Returns true if this element matches the passed simple selector (e.g. div.some-class or span:first-child)
+     * @param {String} selector The simple selector to test
+     * @return {Boolean} True if this element matches the selector, else false
+     */
+    is: function(selector) {
+        return Ext.DomQuery.is(this.dom, selector);
+    },
+
+    /**
+     * Returns the value of the "value" attribute
+     * @param {Boolean} asNumber true to parse the value as a number
+     * @return {String/Number}
+     */
+    getValue: function(asNumber) {
+        var value = this.dom.value;
+
+        return asNumber ? parseInt(value, 10) : value;
+    },
+
+    /**
+     * Returns the value of an attribute from the element's underlying DOM node.
+     * @param {String} name The attribute name
+     * @param {String} [namespace] The namespace in which to look for the attribute
+     * @return {String} The attribute value
+     */
+    getAttribute: function(name, namespace) {
+        var dom = this.dom;
+
+        return dom.getAttributeNS(namespace, name) || dom.getAttribute(namespace + ":" + name)
+               || dom.getAttribute(name) || dom[name];
+    },
+
     destroy: function() {
         this.destroy = Ext.emptyFn;
+        this.isDestroyed = true;
 
-        var cache = this.self.cache,
+        var cache = Ext.Element.cache,
             dom = this.dom;
 
         if (dom && dom.parentNode && dom.tagName != 'BODY') {
@@ -612,7 +401,77 @@ Ext.define('Ext.dom.Element', {
 }, function(Element) {
     Ext.elements = Ext.cache = Element.cache;
 
+    this.addStatics({
+        Fly: new Ext.Class({
+            extend: Element,
+
+            constructor: function(dom) {
+                this.dom = dom;
+            }
+        }),
+
+        _flyweights: {},
+
+        /**
+         * Gets the globally shared flyweight Element, with the passed node as the active element. Do not store a reference
+         * to this element - the dom node can be overwritten by other code. {@link Ext#fly} is alias for
+         * {@link Ext.dom.Element#fly}.
+         *
+         * Use this to make one-time references to DOM elements which are not going to be accessed again either by
+         * application code, or by Ext's classes. If accessing an element which will be processed regularly, then {@link
+         * Ext#get Ext.get} will be more appropriate to take advantage of the caching provided by the Ext.dom.Element
+         * class.
+         *
+         * @param {String/HTMLElement} element The dom node or id
+         * @param {String} [named] Allows for creation of named reusable flyweights to prevent conflicts (e.g.
+         * internally Ext uses "_global")
+         * @return {Ext.dom.Element} The shared Element object (or null if no matching element was found)
+         * @static
+         */
+        fly: function(element, named) {
+            var fly = null,
+                flyweights = Element._flyweights;
+
+            named = named || '_global';
+
+            element = Ext.getDom(element);
+
+            if (element) {
+                fly = flyweights[named] || (flyweights[named] = new Element.Fly());
+                fly.dom = element;
+                fly.isSynchronized = false;
+            }
+
+            return fly;
+        }
+    });
+
+    /**
+     * @member Ext
+     * @method get
+     * @alias Ext.dom.Element#get
+     */
     Ext.get = function(element) {
         return Element.get.call(Element, element);
-    }
+    };
+
+    /**
+     * @member Ext
+     * @method fly
+     * @alias Ext.dom.Element#fly
+     */
+    Ext.fly = function() {
+        return Element.fly.apply(Element, arguments);
+    };
+
+    Ext.ClassManager.onCreated(function() {
+        Element.mixin('observable', Ext.mixin.Observable);
+    }, null, 'Ext.mixin.Observable');
+
+    //<deprecated product=touch since=2.0>
+    Ext.deprecateClassMethod(this, 'remove', 'destroy');
+    Ext.deprecateClassMethod(this, 'setHTML', 'setHtml');
+    Ext.deprecateClassMethod(this, 'update', 'setHtml');
+    Ext.deprecateClassMethod(this, 'getHTML', 'getHtml');
+    //</deprecated>
 });

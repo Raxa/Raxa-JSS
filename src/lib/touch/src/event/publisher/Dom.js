@@ -38,8 +38,6 @@ Ext.define('Ext.event.publisher.Dom', {
 
         this.onEvent = Ext.Function.bind(this.onEvent, this);
 
-        this.subscribers = {};
-
         for (i = 0,ln = eventNames.length; i < ln; i++) {
             eventName = eventNames[i];
             vendorEventName = this.getVendorEventName(eventName);
@@ -153,7 +151,7 @@ Ext.define('Ext.event.publisher.Dom', {
         return true;
     },
 
-    unsubscribe: function(target, eventName) {
+    unsubscribe: function(target, eventName, all) {
         if (!this.handles(eventName)) {
             return false;
         }
@@ -165,12 +163,14 @@ Ext.define('Ext.event.publisher.Dom', {
             selectorSubscribers = subscribers.selector,
             type, value;
 
+        all = Boolean(all);
+
         if (idOrClassSelectorMatch !== null) {
             type = idOrClassSelectorMatch[1];
             value = idOrClassSelectorMatch[2];
 
             if (type === '#') {
-                if (!idSubscribers.hasOwnProperty(value) || --idSubscribers[value] > 0) {
+                if (!idSubscribers.hasOwnProperty(value) || (!all && --idSubscribers[value] > 0)) {
                     return true;
                 }
 
@@ -178,7 +178,7 @@ Ext.define('Ext.event.publisher.Dom', {
                 idSubscribers.$length--;
             }
             else {
-                if (!classNameSubscribers.hasOwnProperty(value) || --classNameSubscribers[value] > 0) {
+                if (!classNameSubscribers.hasOwnProperty(value) || (!all && --classNameSubscribers[value] > 0)) {
                     return true;
                 }
 
@@ -187,7 +187,7 @@ Ext.define('Ext.event.publisher.Dom', {
             }
         }
         else {
-            if (!selectorSubscribers.hasOwnProperty(target) || --selectorSubscribers[target] > 0) {
+            if (!selectorSubscribers.hasOwnProperty(target) || (!all && --selectorSubscribers[target] > 0)) {
                 return true;
             }
 
@@ -229,7 +229,7 @@ Ext.define('Ext.event.publisher.Dom', {
     },
 
     dispatch: function(target, eventName, args) {
-        //TODO: Deprecate this
+        // See https://sencha.jira.com/browse/TOUCH-1519
         args.push(args[0].target);
 
         this.callParent(arguments);

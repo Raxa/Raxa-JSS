@@ -5,16 +5,14 @@
  *
  * To use this component you must include an additional JavaScript file from Google:
  *
- *     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true">&lt/script>
+ *     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
  *
- * {@img ../guildes/map/screenshot.png}
+ * ## Example
  *
- *     var panel = new Ext.Panel({
- *         fullscreen: true,
- *         items: [{
- *             xtype: 'map',
- *             useCurrentLocation: true
- *         }]
+ *     @example
+ *     Ext.Viewport.add({
+ *         xtype: 'map',
+ *         useCurrentLocation: true
  *     });
  *
  */
@@ -82,20 +80,6 @@ Ext.define('Ext.Map', {
         geo: null,
 
         /**
-         * @cfg {Boolean} maskMap
-         * Masks the map (Defaults to false)
-         * @accessor
-         */
-        maskMap: false,
-
-        /**
-         * @cfg {String} maskMapCls
-         * CSS class to add to the map when maskMap is set to true.
-         * @accessor
-         */
-        maskMapCls: Ext.baseCSSPrefix + 'mask-map',
-
-        /**
          * @cfg {Object} mapOptions
          * MapOptions as specified by the Google Documentation:
          * http://code.google.com/apis/maps/documentation/v3/reference.html
@@ -120,15 +104,6 @@ Ext.define('Ext.Map', {
         }
     },
 
-    updateMaskMap: function(maskMap) {
-        if (maskMap) {
-            this.element.mask(null, this.getMaskMapCls());
-        }
-        else {
-            this.element.unmask();
-        }
-    },
-
     applyGeo: function(config) {
         return Ext.factory(config, Ext.util.GeoLocation, this.getGeo());
     },
@@ -150,6 +125,20 @@ Ext.define('Ext.Map', {
         }
     },
 
+    show: function() {
+        this.callParent(arguments);
+        this.doResize();
+    },
+
+    doResize: function() {
+        var gm = (window.google || {}).maps,
+            map = this.getMap();
+
+        if (gm && map) {
+            gm.event.trigger(map, "resize");
+        }
+    },
+
     // @private
     renderMap: function() {
         var me = this,
@@ -161,15 +150,14 @@ Ext.define('Ext.Map', {
 
         if (!me.isPainted()) {
             me.on({
-                painted: 'renderMap',
+                painted: 'doResize',
                 scope: me,
                 single: true
             });
-            return;
         }
 
         if (gm) {
-            if (Ext.is.iPad) {
+            if (Ext.os.is.iPad) {
                 Ext.merge({
                     navigationControlOptions: {
                         style: gm.NavigationControlStyle.ZOOM_PAN
@@ -304,13 +292,9 @@ Ext.define('Ext.Map', {
     },
 
     // @private
-    onDestroy: function() {
+    destroy: function() {
         Ext.destroy(this.getGeo());
         var map = this.getMap();
-
-        if (this.getMaskMap() && this.mask) {
-            this.element.unmask();
-        }
 
         if (map && (window.google || {}).maps) {
             google.maps.event.clearInstanceListeners(map);
@@ -319,6 +303,20 @@ Ext.define('Ext.Map', {
         this.callParent();
     }
 }, function() {
+    //<deprecated product=touch since=2.0>
+
+    /**
+     * @cfg {Boolean} maskMap
+     * @deprecated 2.0.0 Please mask this components container instead.
+     * Masks the map
+     */
+
+    /**
+     * @cfg {String} maskMapCls
+     * @deprecated 2.0.0 Please mask this components container instead.
+     * CSS class to add to the map when maskMap is set to true.
+     */
+
     /**
      * @method getState
      * Returns the state of the Map.
@@ -335,9 +333,11 @@ Ext.define('Ext.Map', {
      *
      * or a google.maps.LatLng object representing to the target location.
      *
-     * @deprecated 2.0.0
+     * @deprecated 2.0.0 Please use the {@link #setMapCenter}
      * @param {Object/google.maps.LatLng} coordinates Object representing the desired Latitude and
      * longitude upon which to center the map.
      */
-//    Ext.deprecateClassMethod(this, 'update', 'setMapCenter');
+    Ext.deprecateClassMethod(this, 'update', 'setMapCenter');
+
+    //</deprecated>
 });

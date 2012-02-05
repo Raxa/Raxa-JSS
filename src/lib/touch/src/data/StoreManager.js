@@ -2,7 +2,7 @@
  * @docauthor Evan Trimboli <evan@sencha.com>
  *
  * Contains a collection of all stores that are created that have an identifier. An identifier can be assigned by
- * setting the {@link Ext.data.AbstractStore#storeId storeId} property. When a store is in the StoreManager, it can be
+ * setting the {@link Ext.data.Store#storeId storeId} property. When a store is in the StoreManager, it can be
  * referred to via it's identifier:
  *
  *     Ext.create('Ext.data.Store', {
@@ -26,8 +26,6 @@
  *         store: 'myStore',
  *         // other configuration here
  *     });
- *
- * TODO: Make this an AbstractMgr
  */
 Ext.define('Ext.data.StoreManager', {
     extend: 'Ext.util.Collection',
@@ -87,7 +85,7 @@ Ext.define('Ext.data.StoreManager', {
             return Ext.create('Ext.data.ArrayStore', {
                 data  : data,
                 fields: fields,
-                // @TODO: implement autoDestroy/autoCreated
+                // See https://sencha.jira.com/browse/TOUCH-1541
                 autoDestroy: true,
                 autoCreated: true,
                 expanded: expand

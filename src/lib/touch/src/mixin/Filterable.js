@@ -1,11 +1,11 @@
 /**
- *
+ * @private
  */
 Ext.define('Ext.mixin.Filterable', {
     extend: 'Ext.mixin.Mixin',
 
     requires: [
-        'Ext.util.NewFilter'
+        'Ext.util.Filter'
     ],
 
     mixinConfig: {
@@ -53,14 +53,14 @@ Ext.define('Ext.mixin.Filterable', {
         }
 
         collection.clear();
-        
+
         this.filtered = false;
         this.dirtyFilterFn = true;
 
         if (filters) {
             this.addFilters(filters);
         }
-        
+
         return collection;
     },
 
@@ -121,7 +121,7 @@ Ext.define('Ext.mixin.Filterable', {
         if (!currentFilters) {
             currentFilters = this.createFiltersCollection();
         }
-        
+
         // We first have to convert every sorter into a proper Sorter instance
         for (i = 0; i < ln; i++) {
             filter = filters[i];
@@ -159,7 +159,7 @@ Ext.define('Ext.mixin.Filterable', {
             // </debug>
 
             // If a sorter config was created, make it an instance
-            filter = Ext.create('Ext.util.NewFilter', filterConfig);
+            filter = Ext.create('Ext.util.Filter', filterConfig);
             newFilters.push(filter);
         }
 
@@ -258,9 +258,9 @@ Ext.define('Ext.mixin.Filterable', {
     },
 
     /**
-     * This method will sort an array based on the currently configured {@link #sorters}.
+     * This method will sort an array based on the currently configured {@link Ext.data.Store#sorters sorters}.
      * @param {Array} data The array you want to have sorted
-     * @return {Array} data The array you passed after it is sorted
+     * @return {Array} The array you passed after it is sorted
      */
     filter: function(data) {
         return this.getFilters().length ? Ext.Array.filter(data, this.getFilterFn()) : data;

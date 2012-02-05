@@ -205,7 +205,7 @@ Ext.define('Ext.data.AbstractStore', {
 
         /**
          * @event beforesync
-         * Fired before a call to {@link #sync} is executed. Return false from any listener to cancel the synv
+         * Fired before a call to {@link #sync} is executed. Return false from any listener to cancel the sync.
          * @param {Object} options Hash of all records to be synchronized, broken down into create, update and destroy
          */
         /**
@@ -240,9 +240,9 @@ Ext.define('Ext.data.AbstractStore', {
         /**
          * @property {Object} modelDefaults
          * @private
-         * A set of default values to be applied to every model instance added via {@link #insert} or created via {@link #create}.
-         * This is used internally by associations to set foreign keys and other fields. See the Association classes source code
-         * for examples. This should not need to be used by application developers.
+         * A set of default values to be applied to every model instance added via {@link Ext.data.Store#insert} or created via
+         * {@link #create}. This is used internally by associations to set foreign keys and other fields. See the Association
+         * classes source code for examples. This should not need to be used by application developers.
          */
         Ext.applyIf(me, {
             modelDefaults: {}

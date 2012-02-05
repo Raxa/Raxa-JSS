@@ -1,4 +1,15 @@
 //<feature logger>
+/**
+ * @class Ext.Logger
+ * Logs messages to help with debugging. Can log messages to the console, document title, or remote server. Defaults
+ * to the console.
+ *
+ * ## Example
+ *
+ *     Ext.logger.error('This method is no longer supported.')
+ *
+ * @singleton
+ */
 (function() {
 var Logger = Ext.define('Ext.log.Logger', {
 
@@ -8,10 +19,30 @@ var Logger = Ext.define('Ext.log.Logger', {
         defaultPriority: 'info',
 
         priorities: {
+            /**
+             * @method verbose
+             * Convenience method for {@link #log} with priority 'verbose'
+             */
             verbose:    0,
+            /**
+             * @method info
+             * Convenience method for {@link #log} with priority 'info'
+             */
             info:       1,
+            /**
+             * @method deprecate
+             * Convenience method for {@link #log} with priority 'deprecate'
+             */
             deprecate:  2,
+            /**
+             * @method warn
+             * Convenience method for {@link #log} with priority 'warn'
+             */
             warn:       3,
+            /**
+             * @method error
+             * Convenience method for {@link #log} with priority 'error'
+             */
             error:      4
         }
     },
@@ -22,6 +53,11 @@ var Logger = Ext.define('Ext.log.Logger', {
         writers: {}
     },
 
+    /**
+     * Logs a message to help with debugging
+     * @param  {String} message  Message to log
+     * @param  {Number} priority Priority of the log message
+     */
     log: function(message, priority, callerId) {
         if (!this.getEnabled()) {
             return this;

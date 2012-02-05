@@ -37,7 +37,7 @@
  *        ]
  *     });
  *
- *     var list = Ext.create('Ext.List', {
+ *     Ext.create('Ext.List', {
  *        fullscreen: true,
  *        itemTpl: '<div class="contact">{firstName} <strong>{lastName}</strong></div>',
  *        store: store
@@ -178,7 +178,7 @@ Ext.define('Ext.dataview.List', {
 
     updateIndexBar: function(indexBar) {
         if (indexBar && this.getScrollable()) {
-            this.getScrollableBehavior().getScrollView().getElement().appendChild(indexBar.renderElement);
+            this.indexBarElement = this.getScrollableBehavior().getScrollView().getElement().appendChild(indexBar.renderElement);
 
             indexBar.on({
                 index: 'onIndex',
@@ -195,7 +195,7 @@ Ext.define('Ext.dataview.List', {
             this.updatePinHeaders(this.getPinHeaders());
         }
         else {
-            this.doRemoveHeaders();
+            this.container.doRemoveHeaders();
             this.updatePinHeaders(null);
         }
     },
@@ -224,7 +224,7 @@ Ext.define('Ext.dataview.List', {
             }
         } else {
             scroller.un({
-                refresh: 'onScrollerRefresh',
+                refresh: 'doRefreshHeaders',
                 scroll: 'onScroll',
                 scope: this
             });
@@ -426,8 +426,11 @@ Ext.define('Ext.dataview.List', {
         if (header) {
             if (group) {
                 if (!me.activeGroup || me.activeGroup.header != group.header) {
-                    header.setHtml(group.header.innerHTML);
                     header.show();
+
+                    if (header.element) {
+                        header.setHtml(group.header.innerHTML);
+                    }
                 }
             } else if (header && header.dom) {
                 header.hide();
@@ -524,7 +527,7 @@ Ext.define('Ext.dataview.List', {
             items = container.getViewItems(),
             newHeaderItems = [],
             footerClsShortCache = container.footerClsShortCache,
-            i, firstGroupedRecord, index, item, bottomItem;
+            i, firstGroupedRecord, index, item, lastGroup;
 
         container.doRemoveHeaders();
         container.doRemoveFooterCls();
@@ -541,15 +544,20 @@ Ext.define('Ext.dataview.List', {
                 }
                 newHeaderItems.push(index);
             }
-            bottomItem = Math.max(items.length - 2, 0);
-            Ext.fly(items[bottomItem]).addCls(footerClsShortCache);
-
+            // Add footer before the last item
+            lastGroup = groups[--i].children;
+            Ext.fly(items[store.indexOf(lastGroup[lastGroup.length - 1])]).addCls(footerClsShortCache);
         }
 
         return newHeaderItems;
+    },
+
+    destroy: function() {
+        Ext.destroy(this.getIndexBar(), this.indexBarElement, this.header);
+        this.callParent();
     }
 }, function() {
-    //TODO This is hacky, find a better way @Jacky
+    // See https://sencha.jira.com/browse/TOUCH-1543
     var prototype = this.prototype;
 
     prototype.cachedConfigList = prototype.cachedConfigList.slice();

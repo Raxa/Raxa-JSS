@@ -142,16 +142,15 @@ Ext.define('Ext.data.proxy.Rest', {
             record    = records[0],
             format    = me.getFormat(),
             url       = me.getUrl(request),
-            // @TODO: put back the operation id
-            //id        = record ? record.getId() : operation.id,
-            id        = record.getId();
+            params    = request.getParams() || {},
+            id        = (record && !record.phantom) ? record.getId() : params.id;
 
         if (me.getAppendId() && id) {
             if (!url.match(/\/$/)) {
                 url += '/';
             }
-
             url += id;
+            delete params.id;
         }
 
         if (format) {

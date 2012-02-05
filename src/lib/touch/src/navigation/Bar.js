@@ -51,7 +51,7 @@ Ext.define('Ext.navigation.Bar', {
         },
 
         /**
-         * @cfg {Array/Object} items The child items to add to this NavigationBar. The {@link #defaultType} of
+         * @cfg {Array/Object} items The child items to add to this NavigationBar. The {@link #cfg-defaultType} of
          * a NavigationBar is {@link Ext.Button}, so you do not need to specify an `xtype` if you are adding
          * buttons.
          *
@@ -60,11 +60,6 @@ Ext.define('Ext.navigation.Bar', {
          * @accessor
          * @hide
          */
-        items: [{
-            align: 'left',
-            ui: 'back',
-            hidden: true
-        }],
 
         /**
          * @cfg {String} defaultBackButtonText
@@ -76,10 +71,12 @@ Ext.define('Ext.navigation.Bar', {
         defaultBackButtonText: 'Back',
 
         /**
-         * @cfg {Number} animationDuration
+         * @cfg {Object} animations
          * @hide
          */
-        animationDuration: 300,
+        animation: {
+            duration: 300
+        },
 
         /**
          * @cfg {Boolean} useTitleForBackButtonText
@@ -96,19 +93,25 @@ Ext.define('Ext.navigation.Bar', {
      */
     minBackButtonWidth: 80,
 
-    /**
-     * @cfg {Array} backButtonStack
-     * @private
-     */
+    constructor: function(config) {
+        config = config || {};
+
+        if (!config.items) {
+            config.items = [];
+        }
+
+        this.callParent([config]);
+    },
+
+    beforeInitialize: function() {
+        this.backButtonStack = [];
+        this.animating = false;
+
+        this.onSizeMonitorChange = Ext.Function.createThrottled(this.onSizeMonitorChange, 50, this);
+    },
+
     initialize: function() {
         var me = this;
-
-        me.backButtonStack = [];
-        me.animating = false;
-
-        me.onSizeMonitorChange = Ext.Function.createThrottled(me.onSizeMonitorChange, 50, this);
-
-        me.callParent();
 
         me.on({
             painted: 'onPainted',
@@ -116,10 +119,22 @@ Ext.define('Ext.navigation.Bar', {
         });
 
         if (!me.backButton) {
-            me.backButton = me.down('button[ui=back]');
+            me.backButton = me.add({
+                align: 'left',
+                ui: 'back',
+                hidden: true,
+                listeners: {
+                    scope: this,
+                    tap: this.onBackButtonTap
+                }
+            });
         }
 
         me.onSizeMonitorChange();
+    },
+
+    onBackButtonTap: function() {
+        this.fireEvent('back', this);
     },
 
     updateUseTitleForBackButtonText: function(newUseTitleForBackButtonText) {
@@ -225,10 +240,14 @@ Ext.define('Ext.navigation.Bar', {
      * @private
      */
     onSizeMonitorChange: function() {
+        if (!this.rendered) {
+            return;
+        }
+
         var backButton = this.backButton,
             titleComponent = this.titleComponent;
 
-        if (backButton) {
+        if (backButton && backButton.rendered) {
             backButton.renderElement.setWidth(null);
         }
 
@@ -236,7 +255,7 @@ Ext.define('Ext.navigation.Bar', {
 
         var properties = this.getNavigationBarProxyProperties();
 
-        if (backButton) {
+        if (backButton && backButton.rendered) {
             backButton.renderElement.setWidth(properties.backButton.width);
         }
 
@@ -254,14 +273,14 @@ Ext.define('Ext.navigation.Bar', {
             element = me.renderElement,
             backButtonElement = me.backButton.renderElement,
             titleElement = me.titleComponent.renderElement,
-            minButtonOffset = element.getWidth() / 3,
+            minButtonOffset = Math.min(element.getWidth() / 3, 200),
             proxyProperties = this.getNavigationBarProxyProperties(),
             buttonOffset, buttonGhostOffset;
 
         buttonOffset = titleElement.getX() - element.getX();
         buttonGhostOffset = element.getX() - backButtonElement.getX() - backButtonElement.getWidth();
 
-        buttonOffset = Math.max(buttonOffset, minButtonOffset);
+        buttonOffset = Math.min(buttonOffset, minButtonOffset);
 
         return {
             element: {
@@ -296,14 +315,14 @@ Ext.define('Ext.navigation.Bar', {
             element = me.renderElement,
             backButtonElement = me.backButton.renderElement,
             titleElement = me.titleComponent.renderElement,
-            minButtonGhostOffset = element.getWidth() / 3,
+            minButtonGhostOffset = Math.min(element.getWidth() / 3, 200),
             proxyProperties = this.getNavigationBarProxyProperties(),
             buttonOffset, buttonGhostOffset;
 
         buttonOffset = element.getX() - backButtonElement.getX() - backButtonElement.getWidth();
         buttonGhostOffset = titleElement.getX() - backButtonElement.getWidth();
 
-        buttonGhostOffset = Math.max(buttonGhostOffset, minButtonGhostOffset);
+        buttonGhostOffset = Math.min(buttonGhostOffset, minButtonGhostOffset);
 
         return {
             element: {
@@ -341,7 +360,11 @@ Ext.define('Ext.navigation.Bar', {
             titleOffset, titleGhostOffset;
 
         titleOffset = element.getWidth() - titleElement.getX();
-        titleGhostOffset = -(titleElement.getX() + titleElement.getWidth());
+        titleGhostOffset = element.getX() - titleElement.getX() + proxyProperties.backButton.width;
+
+        if ((proxyProperties.backButton.left + titleElement.getWidth()) > titleElement.getX()) {
+            titleGhostOffset = element.getX() - titleElement.getX() - titleElement.getWidth();
+        }
 
         return {
             element: {
@@ -381,8 +404,12 @@ Ext.define('Ext.navigation.Bar', {
         ghostLeft = titleElement.getLeft();
         titleElement.setLeft(0);
 
-        titleOffset = element.getX() - titleElement.getX() - titleElement.getWidth();
+        titleOffset = element.getX() - titleElement.getX() + proxyProperties.backButton.width;
         titleGhostOffset = element.getX() + element.getWidth();
+
+        if ((proxyProperties.backButton.left + titleElement.getWidth()) > titleElement.getX()) {
+            titleOffset = element.getX() - titleElement.getX() - titleElement.getWidth();
+        }
 
         return {
             element: {
@@ -422,7 +449,7 @@ Ext.define('Ext.navigation.Bar', {
         var config = {
             element: element,
             easing: 'ease-in-out',
-            duration: this.getAnimationDuration()
+            duration: this.getAnimation().duration
         };
 
         if (onEnd) {
@@ -499,11 +526,15 @@ Ext.define('Ext.navigation.Bar', {
      * It just calls the appropriate methods to updates the navigation bar proxy, then animate the back btuton and title changes
      * @private
      */
-    pushAnimated: function(title) {
+    pushAnimated: function(title, config) {
         var me = this;
 
         if (me.animating) {
             return;
+        }
+
+        if (Ext.isObject(config)) {
+            me.setAnimation(config);
         }
 
         me.animating = true;
@@ -531,13 +562,13 @@ Ext.define('Ext.navigation.Bar', {
             return;
         }
 
-        var backButtonText = me.titleComponent.getTitle() || me.getDefaultBackButtonText();
+        var backButtonText = this.titleComponent.getTitle() || me.getDefaultBackButtonText();
 
         me.backButtonStack.push(backButtonText);
 
         me.updateNavigationBarProxy(title, (backButtonText) ? me.getBackButtonText() : null);
 
-        me.pushBackButton(backButtonText);
+        me.pushBackButton((backButtonText) ? me.getBackButtonText() : null);
         me.pushTitle(title);
     },
 
@@ -546,18 +577,22 @@ Ext.define('Ext.navigation.Bar', {
      * It just updates the back button and title, updates the proxy and then animates.
      * @private
      */
-    popAnimated: function(title) {
+    popAnimated: function(title, config) {
         var me = this;
 
         if (me.animating) {
             return;
         }
 
+        if (Ext.isObject(config)) {
+            me.setAnimation(config);
+        }
+
         me.animating = true;
 
         me.backButtonStack.pop();
 
-        var backButtonText = me.backButtonStack[me.backButtonStack.length - 1];
+        var backButtonText = (me.backButtonStack.length == 1) ? null : me.backButtonStack[me.backButtonStack.length - 1];
 
         me.updateNavigationBarProxy(title, (backButtonText) ? me.getBackButtonText() : null);
 
@@ -579,7 +614,7 @@ Ext.define('Ext.navigation.Bar', {
 
         me.backButtonStack.pop();
 
-        var backButtonText = me.backButtonStack[me.backButtonStack.length - 1];
+        var backButtonText = (me.backButtonStack.length == 1) ? null : me.backButtonStack[me.backButtonStack.length - 1];
 
         me.updateNavigationBarProxy(title, (backButtonText) ? me.getBackButtonText() : null);
 
@@ -637,7 +672,7 @@ Ext.define('Ext.navigation.Bar', {
         //if there is a buttonGhost, we must animate it too.
         if (buttonGhost) {
             me.animate(buttonGhost, properties.ghost.from, properties.ghost.to, function() {
-                buttonGhost.remove();
+                buttonGhost.destroy();
             });
         }
     },
@@ -706,7 +741,7 @@ Ext.define('Ext.navigation.Bar', {
         //if there is a buttonGhost, we must animate it too.
         if (buttonGhost) {
             me.animate(buttonGhost, properties.ghost.from, properties.ghost.to, function() {
-                buttonGhost.remove();
+                buttonGhost.destroy();
 
                 if (!title) {
                     backButton.setText(null);
@@ -763,7 +798,7 @@ Ext.define('Ext.navigation.Bar', {
         //if there is a titleGhost, we must animate it too.
         if (titleGhost) {
             me.animate(titleGhost, properties.ghost.from, properties.ghost.to, function() {
-                titleGhost.remove();
+                titleGhost.destroy();
             });
         }
     },
@@ -820,7 +855,7 @@ Ext.define('Ext.navigation.Bar', {
         //if there is a titleGhost, we must animate it too.
         if (titleGhost) {
             me.animate(titleGhost, properties.ghost.from, properties.ghost.to, function() {
-                titleGhost.remove();
+                titleGhost.destroy();
             });
         }
     },
@@ -935,13 +970,14 @@ Ext.define('Ext.navigation.Bar', {
     },
 
     /**
-     * This resets all contents in this bar. This happens when you have lots of pushged views, and you want to go back to the original,
-     * first, view. So it puts in on fake back button into the stack, to trick the bar into thinking there is only 2 views in the
-     * current stack.
+     * Handles removing back button stacks from this bar
      * @private
      */
-    reset: function() {
-        this.backButtonStack = ['...'];
+    onBeforePop: function(count) {
+        count--;
+        for (var i = 0; i < count; i++) {
+            this.backButtonStack.pop();
+        }
     },
 
     /**

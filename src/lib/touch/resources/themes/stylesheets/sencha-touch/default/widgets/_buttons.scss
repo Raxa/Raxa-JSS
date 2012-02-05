@@ -63,6 +63,7 @@ $include-button-highlights: $include-highlights !default;
     padding: .3em .6em;
     position: relative;
     overflow: hidden;
+    -webkit-user-select: none;
 
     // Default icon style
     .x-button-icon {
@@ -87,21 +88,6 @@ $include-button-highlights: $include-highlights !default;
   .x-button-round {
     @if $include-border-radius { @include border-radius($button-height/2); }
     padding: .1em $button-height/2;
-  }
-
-  .x-button-small, .x-toolbar .x-button-small {
-    @if $include-border-radius { @include border-radius(.3em); }
-    padding: .2em .4em;
-    min-height: 0;
-
-    .x-button-label {
-      font-size: .6em;
-    }
-
-    .x-button-icon {
-      width: .75em;
-      height: .75em;
-    }
   }
 
   // Button icon alignment
@@ -150,6 +136,21 @@ $include-button-highlights: $include-highlights !default;
 
     .x-button-label {
       font-size: .7em;
+    }
+  }
+
+  .x-button-small, .x-toolbar .x-button-small {
+    @if $include-border-radius { @include border-radius(.3em); }
+    padding: .2em .4em;
+    min-height: 0;
+
+    .x-button-label {
+      font-size: .6em;
+    }
+
+    .x-button-icon {
+      width: .75em;
+      height: .75em;
     }
   }
 
@@ -247,8 +248,8 @@ $include-button-highlights: $include-highlights !default;
     margin: 0;
 
     @if $include-border-radius {
-      @include border-radius(0); 
-      
+      @include border-radius(0);
+
       &.x-first {
         @include border-left-radius($button-radius);
       }
@@ -274,7 +275,7 @@ $include-button-highlights: $include-highlights !default;
       @if $include-border-radius { @include border-radius($badge-size/2); }
       @include background-clip(padding-box);
       padding: .15em .25em;
-      z-index: 30;
+      z-index: 2;
       @if $include-button-highlights {
         @include bevel-by-background($badge-bg-color);
         -webkit-box-shadow: #000 0 .1em .2em;

@@ -1,5 +1,222 @@
 /**
+ * @author Ed Spencer
  *
+ * A Model represents some object that your application manages. For example, one might define a Model for Users,
+ * Products, Cars, or any other real-world object that we want to model in the system. Models are registered via the
+ * {@link Ext.data.ModelManager model manager}, and are used by {@link Ext.data.Store stores}, which are in turn used by many
+ * of the data-bound components in Ext.
+ *
+ * Models are defined as a set of fields and any arbitrary methods and properties relevant to the model. For example:
+ *
+ *     Ext.define('User', {
+ *         extend: 'Ext.data.Model',
+ *
+ *         config: {
+ *             fields: [
+ *                 {name: 'name',  type: 'string'},
+ *                 {name: 'age',   type: 'int'},
+ *                 {name: 'phone', type: 'string'},
+ *                 {name: 'alive', type: 'boolean', defaultValue: true}
+ *             ]
+ *         },
+ *
+ *         changeName: function() {
+ *             var oldName = this.get('name'),
+ *                 newName = oldName + " The Barbarian";
+ *
+ *             this.set('name', newName);
+ *         }
+ *     });
+ *
+ * The fields array is turned into a {@link Ext.util.MixedCollection MixedCollection} automatically by the {@link
+ * Ext.data.ModelManager ModelManager}, and all other functions and properties are copied to the new Model's prototype.
+ *
+ * Now we can create instances of our User model and call any model logic we defined:
+ *
+ *     var user = Ext.create('User', {
+ *         name : 'Conan',
+ *         age  : 24,
+ *         phone: '555-555-5555'
+ *     });
+ *
+ *     user.changeName();
+ *     user.get('name'); //returns "Conan The Barbarian"
+ *
+ * # Validations
+ *
+ * Models have built-in support for validations, which are executed against the validator functions in {@link
+ * Ext.data.validations} ({@link Ext.data.validations see all validation functions}). Validations are easy to add to
+ * models:
+ *
+ *     Ext.define('User', {
+ *         extend: 'Ext.data.Model',
+ *
+ *         config: {
+ *             fields: [
+ *                 {name: 'name',     type: 'string'},
+ *                 {name: 'age',      type: 'int'},
+ *                 {name: 'phone',    type: 'string'},
+ *                 {name: 'gender',   type: 'string'},
+ *                 {name: 'username', type: 'string'},
+ *                 {name: 'alive',    type: 'boolean', defaultValue: true}
+ *             ],
+ *
+ *             validations: [
+ *                 {type: 'presence',  field: 'age'},
+ *                 {type: 'length',    field: 'name',     min: 2},
+ *                 {type: 'inclusion', field: 'gender',   list: ['Male', 'Female']},
+ *                 {type: 'exclusion', field: 'username', list: ['Admin', 'Operator']},
+ *                 {type: 'format',    field: 'username', matcher: /([a-z]+)[0-9]{2,3}/}
+ *             ]
+ *         }
+ *     });
+ *
+ * The validations can be run by simply calling the {@link #validate} function, which returns a {@link Ext.data.Errors}
+ * object:
+ *
+ *     var instance = Ext.create('User', {
+ *         name: 'Ed',
+ *         gender: 'Male',
+ *         username: 'edspencer'
+ *     });
+ *
+ *     var errors = instance.validate();
+ *
+ * # Associations
+ *
+ * Models can have associations with other Models via {@link Ext.data.association.HasOne},
+ * {@link Ext.data.association.BelongsTo belongsTo} and {@link Ext.data.association.HasMany hasMany} associations.
+ * For example, let's say we're writing a blog administration application which deals with Users, Posts and Comments.
+ * We can express the relationships between these models like this:
+ *
+ *     Ext.define('Post', {
+ *         extend: 'Ext.data.Model',
+ *
+ *         config: {
+ *             fields: ['id', 'user_id'],
+ *             belongsTo: 'User',
+ *             hasMany  : {model: 'Comment', name: 'comments'}
+ *         }
+ *     });
+ *
+ *     Ext.define('Comment', {
+ *         extend: 'Ext.data.Model',
+ *
+ *         config: {
+ *             fields: ['id', 'user_id', 'post_id'],
+ *             belongsTo: 'Post'
+ *         }
+ *     });
+ *
+ *     Ext.define('User', {
+ *         extend: 'Ext.data.Model',
+ *
+ *         config: {
+ *             fields: ['id'],
+ *             hasMany: [
+ *                 'Post',
+ *                 {model: 'Comment', name: 'comments'}
+ *             ]
+ *         }
+ *     });
+ *
+ * See the docs for {@link Ext.data.association.HasOne}, {@link Ext.data.association.BelongsTo} and
+ * {@link Ext.data.association.HasMany} for details on the usage and configuration of associations.
+ * Note that associations can also be specified like this:
+ *
+ *     Ext.define('User', {
+ *         extend: 'Ext.data.Model',
+ *
+ *         config: {
+ *             fields: ['id'],
+ *             associations: [
+ *                 {type: 'hasMany', model: 'Post',    name: 'posts'},
+ *                 {type: 'hasMany', model: 'Comment', name: 'comments'}
+ *             ]
+ *         }
+ *     });
+ *
+ * # Using a Proxy
+ *
+ * Models are great for representing types of data and relationships, but sooner or later we're going to want to load or
+ * save that data somewhere. All loading and saving of data is handled via a {@link Ext.data.proxy.Proxy Proxy}, which
+ * can be set directly on the Model:
+ *
+ *     Ext.define('User', {
+ *         extend: 'Ext.data.Model',
+ *
+ *         config: {
+ *             fields: ['id', 'name', 'email'],
+ *             proxy: {
+ *                 type: 'rest',
+ *                 url : '/users'
+ *             }
+ *         }
+ *     });
+ *
+ * Here we've set up a {@link Ext.data.proxy.Rest Rest Proxy}, which knows how to load and save data to and from a
+ * RESTful backend. Let's see how this works:
+ *
+ *     var user = Ext.create('User', {name: 'Ed Spencer', email: 'ed@sencha.com'});
+ *
+ *     user.save(); //POST /users
+ *
+ * Calling {@link #save} on the new Model instance tells the configured RestProxy that we wish to persist this Model's
+ * data onto our server. RestProxy figures out that this Model hasn't been saved before because it doesn't have an id,
+ * and performs the appropriate action - in this case issuing a POST request to the url we configured (/users). We
+ * configure any Proxy on any Model and always follow this API - see {@link Ext.data.proxy.Proxy} for a full list.
+ *
+ * Loading data via the Proxy is equally easy:
+ *
+ *     //get a reference to the User model class
+ *     var User = Ext.ModelManager.getModel('User');
+ *
+ *     //Uses the configured RestProxy to make a GET request to /users/123
+ *     User.load(123, {
+ *         success: function(user) {
+ *             console.log(user.getId()); //logs 123
+ *         }
+ *     });
+ *
+ * Models can also be updated and destroyed easily:
+ *
+ *     //the user Model we loaded in the last snippet:
+ *     user.set('name', 'Edward Spencer');
+ *
+ *     //tells the Proxy to save the Model. In this case it will perform a PUT request to /users/123 as this Model already has an id
+ *     user.save({
+ *         success: function() {
+ *             console.log('The User was updated');
+ *         }
+ *     });
+ *
+ *     //tells the Proxy to destroy the Model. Performs a DELETE request to /users/123
+ *     user.destroy({
+ *         success: function() {
+ *             console.log('The User was destroyed!');
+ *         }
+ *     });
+ *
+ * # Usage in Stores
+ *
+ * It is very common to want to load a set of Model instances to be displayed and manipulated in the UI. We do this by
+ * creating a {@link Ext.data.Store Store}:
+ *
+ *     var store = Ext.create('Ext.data.Store', {
+ *         model: 'User'
+ *     });
+ *
+ *     //uses the Proxy we set up on Model to load the Store data
+ *     store.load();
+ *
+ * A Store is just a collection of Model instances - usually loaded from a server somewhere. Store can also maintain a
+ * set of added, updated and removed Model instances to be synchronized with the server via the Proxy. See the {@link
+ * Ext.data.Store Store docs} for more information on Stores.
+ *
+ * @constructor
+ * Creates new Model instance.
+ * @param {Object} data An object containing keys corresponding to this model's fields, and their associated values
+ * @param {Number} id (optional) Unique ID to assign to this model instance
  */
 Ext.define('Ext.data.Model', {
     alternateClassName: 'Ext.data.Record',
@@ -18,27 +235,70 @@ Ext.define('Ext.data.Model', {
         'Ext.data.proxy.Ajax',
         'Ext.data.association.HasMany',
         'Ext.data.association.BelongsTo',
-        'Ext.data.association.HasOne'
+        'Ext.data.association.HasOne',
+        'Ext.data.Errors'
     ],
 
     config: {
+        /**
+         * @cfg {String} idProperty
+         * The name of the field treated as this Model's unique id. Defaults to 'id'. Note that this field
+         * needs to have a type of 'auto'. Setting the field type to anything else will be undone by the
+         * framework. This is because new records that are created without an id, will have one generated.
+         * This generated id is a string.
+         */
         idProperty: 'id',
+
         data: null,
 
         /**
          * @cfg {Object[]/String[]} fields
-         * The fields for this model. Note that this is only defined inside
-         * the config when you are defining your Model, not when you are
-         * instantiating one.
+         * The field definitions for all instances of this Model. **Note:** this does not set the *values* of each
+         * field on an instance, it sets the collection of fields itself. Sample usage:
+         *
+         *     Ext.define('MyApp.model.User', {
+         *         extend: 'Ext.data.Model',
+         *
+         *         config: {
+         *             fields: [
+         *                 'id',
+         *                 {name: 'age', type: 'int'},
+         *                 {name: 'taxRate', type: 'float'}
+         *             ]
+         *         }
+         *     });
          * @accessor
          */
-        fields: null,
+        fields: undefined,
 
-        // @TODO implement the update methods for these configurations
+        /**
+         * @cfg {Object[]} validations
+         * An array of {@link Ext.data.Validations validations} for this model.
+         */
         validations: null,
+
+        /**
+         * @cfg {Object[]} associations
+         * An array of {@link Ext.data.association.Association associations} for this model.
+         */
         associations: null,
+
+        /**
+         * @cfg {String/Object/String[]/Object[]} hasMany
+         * One or more {@link Ext.data.association.HasMany HasMany associations} for this model.
+         */
         hasMany: null,
+
+        /**
+         * @cfg {String/Object/String[]/Object[]} hasOne
+         * One or more {@link Ext.data.association.HasOne HasOne associations} for this model.
+         */
         hasOne: null,
+
+        /**
+         * @cfg {String/Object/String[]/Object[]} belongsTo
+         * One or more {@link Ext.data.association.BelongsTo BelongsTo associations} for this model.
+         */
         belongsTo: null,
 
         /**
@@ -62,7 +322,12 @@ Ext.define('Ext.data.Model', {
          * Defaults to 'clientId'.
          * @accessor
          */
-        clientIdProperty: 'clientId'
+        clientIdProperty: 'clientId',
+
+        /**
+         * @method getIsErased Returns true if the record has been erased on the server.
+         */
+        isErased: false
     },
 
     staticConfigs: [
@@ -133,7 +398,8 @@ Ext.define('Ext.data.Model', {
                 action: 'read',
                 params: {
                     id: id
-                }
+                },
+                model: this
             });
 
             var operation  = Ext.create('Ext.data.Operation', config),
@@ -193,7 +459,7 @@ Ext.define('Ext.data.Model', {
         /**
          * @property {Object} raw The raw data used to create this model if created via a reader.
          */
-        me.raw = raw || data;
+        me.raw = raw || data || {};
 
         /**
          * @property {Array} stores
@@ -204,21 +470,23 @@ Ext.define('Ext.data.Model', {
         if (id || id === 0) {
             cached = Ext.data.Model.cache.get(Ext.data.Model.generateCacheId(this, id));
             if (cached) {
-                return cached.mergeData(convertedData || data);
+                return cached.mergeData(convertedData || data || {});
             }
         }
 
-        if (convertedData) {
-            me.setConvertedData(convertedData);
-        } else {
-            me.setData(data);
-        }
+        data = data || convertedData || {};
 
         // We begin by checking if an id is passed to the constructor. If this is the case we override
         // any possible id value that was passed in the data.
         if (id || id === 0) {
             // Lets skip using set here since it's so much faster
-            me.data[idProperty] = me.internalId = id;
+            data[idProperty] = me.internalId = id;
+        }
+
+        if (convertedData) {
+            me.setConvertedData(data);
+        } else {
+            me.setData(data);
         }
 
         // If it does not have an id at this point, we generate it using the id strategy. This means
@@ -227,6 +495,10 @@ Ext.define('Ext.data.Model', {
         if (!id && id !== 0) {
             me.data[idProperty] = me.internalId = me.id = me.getIdentifier().generate(me);
             me.phantom = true;
+
+            if (this.associations.length) {
+                this.handleInlineAssociationData(data);
+            }
         } else {
             me.id = me.getIdentifier().generate(me);
         }
@@ -269,6 +541,11 @@ Ext.define('Ext.data.Model', {
 
         return this;
     },
+    
+    /**
+     * @method getData
+     * Returns the current field data for this Model instance.
+     */
 
     /**
      * This method is used to set the data for this Record instance.
@@ -283,7 +560,11 @@ Ext.define('Ext.data.Model', {
             ln = fields.length,
             isArray = Ext.isArray(rawData),
             data = this._data = this.data = {},
-            i, field, name, value, convert;
+            i, field, name, value, convert, id;
+
+        if (!rawData) {
+            return this;
+        }
 
         for (i = 0; i < ln; i++) {
             field = fields[i];
@@ -307,7 +588,8 @@ Ext.define('Ext.data.Model', {
             data[name] = value;
         }
 
-        if (this.associations.length) {
+        id = this.getId();
+        if (this.associations.length && (id || id === 0)) {
             this.handleInlineAssociationData(rawData);
         }
 
@@ -411,7 +693,7 @@ Ext.define('Ext.data.Model', {
          * If we're passed an object, iterate over that object. NOTE: we pull out fields with a convert function and
          * set those last so that all other possible data is set before the convert function is called
          */
-        // @TODO: if we update the foreign key of our belongsTo association we need to update ourself if the other side has a hasMany
+        //See https://sencha.jira.com/browse/TOUCH-1486
         if (arguments.length == 1) {
             for (key in fieldName) {
                 if (fieldName.hasOwnProperty(key)) {
@@ -447,8 +729,6 @@ Ext.define('Ext.data.Model', {
                 me.endEdit(false, modifiedFieldNames);
             }
         } else {
-            // @TODO: there was an if(fields) check around the next 4 lines. how could fields not exist?
-            // If it didnt it would already break in other places
             field = fieldMap[fieldName];
             convert = field && field.getConvert();
             if (convert) {
@@ -663,6 +943,54 @@ Ext.define('Ext.data.Model', {
     },
 
     /**
+     * Destroys the model instance using the configured proxy.
+     * @param {Object} options Options to pass to the proxy. Config object for {@link Ext.data.Operation}.
+     * @return {Ext.data.Model} The Model instance
+     */
+    erase: function(options, scope) {
+        var me     = this,
+            proxy  = this.getProxy(),
+            operation,
+            callback;
+
+        if (!proxy) {
+            Ext.Logger.error('You are trying to erase a model instance that doesn\'t have a Proxy specified');
+        }
+
+        options = options || {};
+        scope = scope || me;
+
+        if (Ext.isFunction(options)) {
+            options = {
+                callback: options,
+                scope: scope
+            };
+        }
+
+        Ext.applyIf(options, {
+            records: [me],
+            action : 'destroy',
+            model: this.self
+        });
+
+        operation = Ext.create('Ext.data.Operation', options);
+
+        callback = function(operation) {
+            if (operation.wasSuccessful()) {
+                Ext.callback(options.success, scope, [me, operation]);
+            } else {
+                Ext.callback(options.failure, scope, [me, operation]);
+            }
+
+            Ext.callback(options.callback, scope, [me, operation]);
+        };
+
+        proxy.destroy(operation, callback, me);
+
+        return me;
+    },
+
+    /**
      * Usually called by the {@link Ext.data.Store} to which this model instance has been {@link #join joined}. Rejects
      * all changes made to the model instance since either creation, or the last commit operation. Modified fields are
      * reverted to their original values.
@@ -771,7 +1099,7 @@ Ext.define('Ext.data.Model', {
      * Creates a copy (clone) of this Model instance.
      *
      * @param {String} id (optional) A new id, defaults to the id of the instance being copied.
-     * See `{@link Ext.data.Model#id id}`. To generate a phantom instance with a new id use:
+     * To generate a phantom instance with a new id use:
      *
      *     var rec = record.copy(); // clone the record
      *     Ext.data.Model.id(rec); // automatically generate a unique sequential id
@@ -783,8 +1111,6 @@ Ext.define('Ext.data.Model', {
 
         return new me.self(null, newId, me.raw, Ext.apply({}, me.data));
     },
-
-    // @TODO: implement destroy
 
     getData: function(includeAssociated) {
         var data = this.data;
@@ -907,8 +1233,6 @@ Ext.define('Ext.data.Model', {
         Ext.Array.remove(this.stores, store);
     },
 
-    // @TODO: implement an erase method that syncs it to serverside
-
     /**
      * Marks this **Record** as `{@link #dirty}`. This method is used interally when adding `{@link #phantom}` records
      * to a {@link Ext.data.proxy.Server#writer writer enabled store}.
@@ -928,6 +1252,45 @@ Ext.define('Ext.data.Model', {
                 me.modified[name] = me.get(name);
             }
         });
+    },
+
+    /**
+     * Validates the current data against all of its configured {@link #cfg-validations}.
+     * @return {Ext.data.Errors} The errors object
+     */
+    validate: function() {
+        var errors      = Ext.create('Ext.data.Errors'),
+            validations = this.getValidations().items,
+            validators  = Ext.data.Validations,
+            length, validation, field, valid, type, i;
+
+        if (validations) {
+            length = validations.length;
+
+            for (i = 0; i < length; i++) {
+                validation = validations[i];
+                field = validation.field || validation.name;
+                type  = validation.type;
+                valid = validators[type](validation, this.get(field));
+
+                if (!valid) {
+                    errors.add(Ext.create('Ext.data.Error', {
+                        field  : field,
+                        message: validation.message || validators.getMessage(type)
+                    }));
+                }
+            }
+        }
+
+        return errors;
+    },
+
+    /**
+     * Checks if the model is valid. See {@link #validate}.
+     * @return {Boolean} True if the model is valid.
+     */
+    isValid: function(){
+        return this.validate().isValid();
     },
 
     /**
@@ -1012,6 +1375,28 @@ Ext.define('Ext.data.Model', {
         }
     },
 
+    applyValidations: function(validations) {
+        if (validations) {
+            if (!Ext.isArray(validations)) {
+                validations = [validations];
+            }
+            this.addValidations(validations);
+        }
+    },
+
+    addValidations: function(validations) {
+        this.self.validations.addAll(validations);
+    },
+
+    /**
+     * @method setFields
+     * Updates the collection of Fields that all instances of this Model use. **Does not** update field values in a Model
+     * instance (use {@link #set} for that), instead this updates which fields are available on the Model class. This
+     * is normally used when creating or updating Model definitions dynamically, for example if you allow your users to
+     * define their own Models and save the fields configuration to a database, this method allows you to change those
+     * fields later.
+     */
+
     applyFields: function(fields) {
         var superFields = this.superclass.fields;
         if (superFields) {
@@ -1025,7 +1410,7 @@ Ext.define('Ext.data.Model', {
             me = this,
             prototype = me.self.prototype,
             idProperty = this.getIdProperty(),
-            fieldsCollection, field, i;
+            idField, fieldsCollection, field, i;
 
         /**
          * @property {Ext.util.MixedCollection} fields
@@ -1041,9 +1426,12 @@ Ext.define('Ext.data.Model', {
             fieldsCollection.add(field);
         }
 
-        // We want every field to have an id property field
-        if (!fieldsCollection.get(idProperty)) {
+        // We want every Model to have an id property field
+        idField = fieldsCollection.get(idProperty);
+        if (!idField) {
             fieldsCollection.add(new Ext.data.Field(idProperty));
+        } else {
+            idField.setType('auto');
         }
 
         fieldsCollection.addSorter(prototype.sortConvertFields);
@@ -1056,12 +1444,6 @@ Ext.define('Ext.data.Model', {
             };
         }
         return Ext.factory(identifier, Ext.data.identifier.Simple, this.getIdentifier(), 'data.identifier');
-    },
-
-    updateIdentifier: function(identifier) {
-        if (identifier) {
-            identifier.setModel(this);
-        }
     },
 
     /**
@@ -1111,12 +1493,18 @@ Ext.define('Ext.data.Model', {
 
         // Convert old properties in data into a config object
         // <deprecated product=touch since=2.0>
+        if (data.idgen || config.idgen) {
+            config.identifier = data.idgen || config.idgen;
+            // <debug warn>
+            console.warn('idgen is deprecated as a property. Please put it inside the config object under the new "identifier" configuration');
+            // </debug>
+        }
+
         for (key in defaultConfig) {
             if (key in data) {
                 config[key] = data[key];
                 delete data[key];
                 // <debug warn>
-                // @TODO: update this to Ext.Logger for IE.
                 console.warn(key + ' is deprecated as a property directly on the Model prototype. Please put it inside the config object.');
                 // </debug>
             }
@@ -1178,13 +1566,35 @@ Ext.define('Ext.data.Model', {
                 }
             }
 
+            if (config.validations) {
+                dependencies.push('Ext.data.Validations');
+            }
+
             Ext.require(dependencies, function() {
                 Ext.Function.interceptBefore(hooks, 'onCreated', function() {
                     Ext.data.ModelManager.registerType(name, cls);
 
-                    cls.prototype.associations = cls.associations = new Ext.util.Collection(function(association) {
-                        return association.getName();
-                    });
+                    var superCls = cls.prototype.superclass;
+
+                    /**
+                     * @property {Ext.util.Collection} associations
+                     * The associations defined on this model.
+                     */
+                    cls.prototype.associations = cls.associations = cls.prototype._associations = (superCls && superCls.associations)
+                        ? superCls.associations.clone()
+                        : new Ext.util.Collection(function(association) {
+                            return association.getName();
+                        });
+
+                    /**
+                     * @property {Ext.util.Collection} validations
+                     * The validations defined on this model.
+                     */
+                    cls.prototype.validations = cls.validations = cls.prototype._validations = (superCls && superCls.validations)
+                        ? superCls.validations.clone()
+                        : new Ext.util.Collection(function(validation) {
+                            return validation.field || validation.name;
+                        });
 
                     cls.prototype = Ext.Object.chain(cls.prototype);
                     cls.prototype.initConfig.call(cls.prototype, config);

@@ -151,9 +151,8 @@
  *     }
  *
  * You can also place any other arbitrary data you need into the `metaData` attribute which will be ignored by the Reader,
- * but will be accessible via the Reader's {@link #metaData} property (which is also passed to listeners via the Proxy's
- * {@link Ext.data.proxy.Proxy#metachange metachange} event (also relayed by the {@link Ext.data.AbstractStore#metachange
- * store}). Application code can then process the passed metadata in any way it chooses.
+ * but will be accessible via the Reader's {@link #metaData} property. Application code can then process the passed
+ * metadata in any way it chooses.
  *
  * A simple example for how this can be used would be customizing the fields for a Model that is bound to a grid. By passing
  * the `fields` property the Model will be automatically updated by the Reader internally, but that change will not be
@@ -214,29 +213,14 @@ Ext.define('Ext.data.reader.Json', {
         useSimpleAccessors: false
     },
 
-    // @TODO: put back metaData support and jsonData backward compat property
-    // /**
-    //  * Reads a JSON object and returns a ResultSet. Uses the internal getTotal and getSuccess extractors to
-    //  * retrieve meta data from the response, and extractData to turn the JSON data into model instances.
-    //  * @param {Object} data The raw JSON data
-    //  * @return {Ext.data.ResultSet} A ResultSet containing model instances and meta data about the results
-    //  */
-    // readRecords: function(data) {
-    //     //this has to be before the call to super because we use the meta data in the superclass readRecords
-    //     if (data.metaData) {
-    //         this.onMetaChange(data.metaData);
-    //     }
-    //
-    //     /**
-    //      * @deprecated will be removed in Ext JS 5.0. This is just a copy of this.rawData - use that instead
-    //      * @property {Object} jsonData
-    //      */
-    //     this.jsonData = data;
-    //     return this.callParent([data]);
-    // },
-
     //inherit docs
     getResponseData: function(response) {
+        // Handle an XMLHttpRequest object
+        if (response && response.responseText) {
+            response = response.responseText;
+        }
+
+        // Handle the case where data has already been decoded
         if (typeof response !== 'string') {
             return response;
         }
@@ -246,16 +230,21 @@ Ext.define('Ext.data.reader.Json', {
             data = Ext.decode(response);
         }
         catch (ex) {
-            // @TODO: make sure this is how we raise errors
-            Ext.Error.raise({
-                response: response,
-                parseError: ex,
-                msg: 'Unable to parse the JSON returned by the server: ' + ex.toString()
-            });
+            /**
+             * @event exception Fires whenever the reader is unable to parse a response.
+             * @param {Ext.data.reader.Xml} reader A reference to this reader
+             * @param {XMLHttpRequest} response The XMLHttpRequest response object.
+             * @param {String} error The error message.
+             */
+            this.fireEvent('exception', this, response, 'Unable to parse the JSON returned by the server: ' + ex.toString());
+
+            Ext.Logger.error('Unable to parse the JSON returned by the server: ' + ex.toString());
         }
         //<debug>
         if (!data) {
-            Ext.Error.raise('JSON object not found');
+            this.fireEvent('exception', this, response, 'JSON object not found');
+
+            Ext.Logger.error('JSON object not found');
         }
         //</debug>
 
@@ -353,11 +342,10 @@ Ext.define('Ext.data.reader.Json', {
             if (Ext.isFunction(expr)) {
                 return expr;
             }
-            if (this._useSimpleAccessors !== true) {
+            if (this.getUseSimpleAccessors() !== true) {
                 var i = String(expr).search(re);
                 if (i >= 0) {
-                    // @TODO: figure this out. What does this i > 0 check do in here?
-                    return Ext.functionFactory('obj', 'return obj' + (i > 0 ? '.' : '') + expr);
+                    return Ext.functionFactory('obj', 'var value; try {value = obj' + (i > 0 ? '.' : '') + expr + '} catch(e) {}; return value;');
                 }
             }
             return function(obj) {

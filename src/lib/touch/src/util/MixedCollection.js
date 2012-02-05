@@ -1,34 +1,28 @@
 /**
- * <p>
- * Represents a collection of a set of key and value pairs. Each key in the MixedCollection
- * must be unique, the same key cannot exist twice. This collection is ordered, items in the
- * collection can be accessed by index  or via the key. Newly added items are added to
- * the end of the collection. This class is similar to {@link Ext.util.HashMap} however it
- * is heavier and provides more functionality. Sample usage:
- * <pre><code>
-var coll = new Ext.util.MixedCollection();
-coll.add('key1', 'val1');
-coll.add('key2', 'val2');
-coll.add('key3', 'val3');
-
-console.log(coll.get('key1')); // prints 'val1'
-console.log(coll.indexOfKey('key3')); // prints 2
- * </code></pre>
+ * Represents a collection of a set of key and value pairs. Each key in the MixedCollection must be unique, the same key
+ * cannot exist twice. This collection is ordered, items in the collection can be accessed by index or via the key.
+ * Newly added items are added to the end of the collection. This class is similar to {@link Ext.util.HashMap} however
+ * it is heavier and provides more functionality. Sample usage:
  *
- * <p>
+ *     var coll = new Ext.util.MixedCollection();
+ *     coll.add('key1', 'val1');
+ *     coll.add('key2', 'val2');
+ *     coll.add('key3', 'val3');
+ *
+ *     console.log(coll.get('key1')); // prints 'val1'
+ *     console.log(coll.indexOfKey('key3')); // prints 2
+ *
  * The MixedCollection also has support for sorting and filtering of the values in the collection.
- * <pre><code>
-var coll = new Ext.util.MixedCollection();
-coll.add('key1', 100);
-coll.add('key2', -100);
-coll.add('key3', 17);
-coll.add('key4', 0);
-var biggerThanZero = coll.filterBy(function(value){
-    return value > 0;
-});
-console.log(biggerThanZero.getCount()); // prints 2
- * </code></pre>
- * </p>
+ *
+ *     var coll = new Ext.util.MixedCollection();
+ *     coll.add('key1', 100);
+ *     coll.add('key2', -100);
+ *     coll.add('key3', 17);
+ *     coll.add('key4', 0);
+ *     var biggerThanZero = coll.filterBy(function(value){
+ *         return value > 0;
+ *     });
+ *     console.log(biggerThanZero.getCount()); // prints 2
  */
 Ext.define('Ext.util.MixedCollection', {
     extend: 'Ext.util.AbstractMixedCollection',
@@ -43,10 +37,9 @@ Ext.define('Ext.util.MixedCollection', {
      */
 
     /**
-     * Creates new MixedCollection.
-     * @param {Boolean} allowFunctions Specify <tt>true</tt> if the {@link #addAll}
-     * function should add function references to the collection. Defaults to
-     * <tt>false</tt>.
+     * @constructor
+     * @param {Boolean} allowFunctions Specify `true` if the {@link #addAll}
+     * function should add function references to the collection. (defaults to `false`)
      * @param {Function} keyFn A function that can accept an item of the type(s) stored in this MixedCollection
      * and return the key value for that item.  This is used when available to look up the key on items that
      * were passed without an explicit key parameter to a MixedCollection method.  Passing this parameter is
@@ -154,8 +147,8 @@ Ext.define('Ext.util.MixedCollection', {
     },
 
     /**
-     * Reorders each of the items based on a mapping from old index to new index. Internally this
-     * just translates into a sort. The 'sort' event is fired whenever reordering has occured.
+     * Reorders each of the items based on a mapping from old index to new index. Internally this just translates into a
+     * sort. The 'sort' event is fired whenever reordering has occured.
      * @param {Object} mapping Mapping from old item index to new item index
      */
     reorder: function(mapping) {
@@ -194,10 +187,10 @@ Ext.define('Ext.util.MixedCollection', {
     },
 
     /**
-     * Sorts this collection by <b>key</b>s.
-     * @param {String} direction (optional) 'ASC' or 'DESC'. Defaults to 'ASC'.
-     * @param {Function} fn (optional) Comparison function that defines the sort order.
-     * Defaults to sorting by case insensitive string.
+     * Sorts this collection by **key**s.
+     * @param {String} direction 'ASC' or 'DESC'. Defaults to 'ASC'.
+     * @param {Function} fn Comparison function that defines the sort order. Defaults to sorting by case insensitive
+     * string.
      */
     sortByKey: function(dir, fn){
         this._sort('key', dir, fn || function(a, b){

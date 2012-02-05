@@ -13,6 +13,176 @@
         <div id="releases">
             <div class="release">
                 <h1>
+                    Release Notes for Sencha Touch 2.0.beta1
+                </h1>
+                <p class="notes">
+                    Release Notes: Release Notes: February 1, 2012<br>
+                    Version Number: 2.0.0.beta1
+                </p>
+<div style="margin:10px">
+<p>
+                        <b>Note:</b> if you have been using the preview Preview Release builds of Sencha Touch, be aware that B1 ships with an updated set of built JavaScript files. There are now five builds in total, all of which are described in the <a href="http://docs.sencha.com/touch/2-0/#!/guide/building" target="_blank">builds and building guide</a>.
+                    </p>
+                    
+                    <p><b>As of beta 1 most people will need to update their PRx app to use sencha-touch-debug.js while developing, then switch to sencha-touch.js in production</b>.</p>
+</div>
+                <ul>
+                    <li>Enhancements/Changes
+                        <ul>
+                            <li>Viewport autoMaximize is now false by default</li>
+                            <li>Implemented 'resize' event. For the best performance, use this only when you absolutely need to monitor a Component's size.. This replaces the need to manually use Ext.util.SizeMonitor</li>
+                            <li>[TOUCH-945] Added an img xtype into Ext.Img</li>
+                            <li>[TOUCH-785] Cleaned up TouchEvents example in Kitchen Sink, added docs for deprecated events</li>
+                            <li>[TOUCH-1218] Added getDockedItems and getDockedComponent methods back into Ext.Container</li>
+                            <li>[TOUCH-1415] Added a usePicker configuration to selectfield which defaults to 'auto' (which is then converted to true if it is a phone). Making the showPicker method public and adding some documentation</li>
+                            <li>[TOUCH-1469] Using a store in a DataView that doesn't exist now throws a warning</li>
+                            <li>[TOUCH-1475] Added docs for phoneStartupScreen and tabletStartupScreen</li>
+                            <li>Updated the documentation for flex in component</li>
+                            <li>Added deprecated getController to Ext.app.Controller</li>
+                            <li>Allow Ext.data.Connection to add credentials to a CORS request</li>
+                            <li>[TOUCH-1516] Deprecated ptype</li>
+                            <li>[TOUCH-1147] Removed cruft from examples directory</li>
+                            <li>Application#getController will now find non-profile specific controllers if a profile controller does not exist</li>
+                            <li>Application no longer overrides a preconfigured Store ID when stores are specified via the Application stores config option</li>
+                            <li>[TOUCH-1450] Added hideKeyboard to datepickerfield when you show the picker</li>
+                            <li>Added 'initialize' event for Component</li>
+                            <li>Added ComponentSize publisher which provide 'resize' events for any Component when there's at least one listener</li>
+                            <li>Put back some the find and filter methods on Store</li>
+                            <li>Made the Model constructor work without passing an empty config object</li>
+                            <li>Added documentation for preventZooming and Ext.Viewport</li>
+                            <li>Added docs that explain that you have to define the model when creating an Operation directly</li>
+                            <li>Added back docs for model.idProperty</li>
+                            <li>Automatically change the field type of the id field to 'auto' if its set to anything else</li>
+                            <li>Added @accessor to Profile namespace config</li>
+                            <li>[TOUCH-1533] Updated the video standalone example</li>
+                            <li>[TOUCH-1577] Added the ability to set the value of a datepickerfield to null</li>
+                            <li>[TOUCH-1524] Added doBoxRemove to titlbebar</li>
+                            <li>[TOUCH-1521] adding some missing methods to scroller and ensuring all documentation for scroller, container#scroller and related classes are sufficient</li>
+                            <li>Changed Data Field's useNull to allowNull and make the default true</li>
+                            <li>[TOUCH-1595] Implememnted iconCls in messagebox</li>
+                            <li>[TOUCH-1523] Added a default search to the Twitter example</li>
+                            <li>Gave MVC a lot more flexibility when specifying models, stores, controllers, views and profiles to load in an app</li>
+                            <li>Added a warning when passing an array to Controller's refs config</li>
+                            <li>[TOUCH-1555] Added pop(count) methods to navigationbar</li>
+                            <li>[TOUCH-1634] Allowed access to the map instance before it is added into the dom proper.  Call doResize instead of renderMap when painted first time</li>
+                            <li>Improvemented backwards compatibility support, chiefly in MVC</li>
+                            <li>Added an enablePagingParams configuration to Proxy</li>
+                            <li>Fixed Cover/Reveal/Pop/Fade/Flip in animations in iOS.  Android will change these to slide</li>
+                            <li>Writer is now allowed to only write the changes and still respect the persist property on fields</li>
+                            <li>[TOUCH-1114] The spinner field 'field' is now disabled so you cannot actually tap and modify it</li>
+                            <li>[TOUCH-1535] The Ext.Msg singleton is now available by default</li>
+                            <li>[TOUCH-1607] Added Ext.Element#fly into element</li>
+                            <li>Data Types now handles unparseable dates by throwing a warning instead of failing silently</li>
+                            <li>Controller launch functions are now called at app launch</li>
+                            <li>Implemented model erase functionality</li>
+                            <li>JSON reader now properly fires exception events</li>
+                            <li>[TOUCH-1657] Changed the form clear icon to be an image</li>
+                            <li>Migrated Twitter to use new MVC</li>
+                            <li>Removed unnecessary kitchen sink overrides</li>
+                            <li>Added an isAutoLoading method</li>
+                            <li>[TOUCH-1141, TOUCH-1548] Added animation to hide and show. Add enterAnimation/exitAnimation support to MessageBox</li>
+                            <li>[TOUCH-1294] Added backwards compat for overlay config</li>
+                            <li>Improved Controller before filters API. Now any number of filters can be called in order</li>
+                            <li>[TOUCH-1404] Added capability to toolbar to allow docked left and right</li>
+                            <li>Application now loads all dependencies for all Profiles, only adds Controllers, Models, Stores and Views for the current Profile to the Application's MVC's config</li>
+                            <li>[TOUCH-1540] Removal of an item from a CardLayout will now work with animation</li>
+                            <li>[TOUCH-1673] Added an animateActiveItem method to allow for a one time cardswitch animation</li>
+                            <li>[TOUCH-1529] Updated the getting_started example</li>
+                            <li>[TOUCH-1551] Added beforeInitialize method</li>
+                            <li>Kitchensink Animation example now uses correct animations on all devices</li>
+                            <li>[TOUCH-1679] Removed the hide keyboard functionality from selectfield as it is causing issues</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Bug Fixes
+                        <ul>
+                            <li>[TOUCH-1231] Fixed passing 'id' from config not to be removed from the original object</li>
+                            <li>[TOUCH-1213] Fixed an issue where x-button-small styling was not more important that toolbar button styling therefore making custom UIs not work</li>
+                            <li>[TOUCH-1426] Fixed an issue with Ext.Map when re-orientation happens while the map is not visible</li>
+                            <li>[TOUCH-1411] Fixed the styling of fields inside a toolbar, and disabled fields</li>
+                            <li>Fixed home screen icons on Android</li>
+                            <li>Fixed memory leak with innerHtmlElement of Components</li>
+                            <li>Fixed memory leak and issues with wrong subscriber length counting</li>
+                            <li>[TOUCH-1099] Fixed masking in form.Panel. Removing a few unnecessary configurations now we have Masking at a container level. Cleaned up the docs</li>
+                            <li>[TOUCH-1418] Fixed slide animation from overwriting opacity and zIndex</li>
+                            <li>[TOUCH-1378] Fixed the masking functionality of Map</li>
+                            <li>Fixed an issue with id given in the default class config</li>
+                            <li>Fixed signature of the destroy event in Observable</li>
+                            <li>Fixed support for XML reading</li>
+                            <li>Fixed documentation for Model</li>
+                            <li>Fixed default of having a Json writer in JsonStore</li>
+                            <li>Fixed the docs to correctly tell the user what to change the pageParam, limitParam, startParam and groupParam to if they want to disable them</li>
+                            <li>Fixed an issue with replacing an item in Collection breaking indices and map object</li>
+                            <li>Fixed a bug in the replace function of Collection</li>
+                            <li>Fixed iffue with searchfield focus when setWidth() is called</li>
+                            <li>[TOUCH-1358] Fixed centering a load mask when used in a scrollable container</li>
+                            <li>[TOUCH-1539] Fixed issue with navigaitonbar where the button width is trying to be set when the button is not rendered</li>
+                            <li>Fixed Model.load to automatically set itself as the model on the operation. Also update the model on proxy in Store when you define a new one</li>
+                            <li>Fixed a bug in Profile namespace config default</li>
+                            <li>[TOUCH-1580] Fixed pressedDelay: true for Buttons</li>
+                            <li>[TOUCH-1536] You can no longer drag a slider field when it is disabled</li>
+                            <li>[TOUCH-1536] Fixed disabled styling of sliders</li>
+                            <li>[TOUCH-1562] Fixed NavigationView.pop event passing the incorrect view</li>
+                            <li>Fixed an issue with replaceCls in component if you passed a null cls</li>
+                            <li>[TOUCH-1184] Fixed the deprecation warnings in field/input/textfield</li>
+                            <li>[TOUCH-1587] Fixed a zIndex issue with badges on buttons</li>
+                            <li>Fixed validation in the data package</li>
+                            <li>[TOUCH-1528] Fixed the forms_toolbar example</li>
+                            <li>Fixed autoDestroy configuration on Store</li>
+                            <li>[TOUCH-1616] Fixed an issue where the labelWidth of a field had to be a string</li>
+                            <li>[TOUCH-1571] Fixed dynamically setting grouped option in List</li>
+                            <li>[TOUCH-1572] Fixed DatePicker and Map destroy methods</li>
+                            <li>Fixed the PullRefresh refreshFn</li>
+                            <li>[TOUCH-1614] Fixed the styling select fields in toolbars</li>
+                            <li>[TOUCH-1522] Fixed the pullrefresh example</li>
+                            <li>[TOUCH-1561] Fixed DelayedTask class</li>
+                            <li>[TOUCH-1539] Fixed issue with NavigationView where it could cause a hard error</li>
+                            <li>[TOUCH-1555] Fixed switching of themes example on android</li>
+                            <li>[TOUCH-1570] Fixed missing DataView itemCls which can be added to DataView/List items.  This can be used dynamically</li>
+                            <li>[TOUCH-1604] Fixed issue with List removing the incorrect listener</li>
+                            <li>Fixed an issue with x-html and it's margin CSS</li>
+                            <li>Fixed issue with transition end callbacks</li>
+                            <li>[TOUCH-819] Added minWidth / minHeight / maxWidth / maxHeight config</li>
+                            <li>[TOUCH-819, TOUCH-1576, TOUCH-1179] Added minWidth / minHeight / maxWidth / maxHeight config</li>
+                            <li>[TOUCH-819, TOUCH-1576, TOUCH-1179] Fixed  showBy with anchoring</li>
+                            <li>Fixed iOS Viewport implementation not to try hiding the address bar if the application is already running in full screen</li>
+                            <li>[TOUCH-1646] Fixed the $font-family variable !default</li>
+                            <li>[TOUCH-1437] Fixed issue with selectfield getting the correct record from the store when the value changes</li>
+                            <li>[TOUCH-1645] Fixed a bug with message box prompt where the default value was not being used</li>
+                            <li>Fixed a bug that would cause the direction on a grouper to always be ASC</li>
+                            <li>[TOUCH-1381] Fixed video on iOS and most android devices</li>
+                            <li>Fixed a bug where we didn't use a getter in JsonP</li>
+                            <li>Fixed Store's isLoading method</li>
+                            <li>Fixed issues with the Rest proxy urls and handle the operation id issues</li>
+                            <li>Fixed a single record read from LocalStorage</li>
+                            <li>Fixed a bug that caused to throw an error when saving a null value as a date to Localstorage</li>
+                            <li>[TOUCH-1608] Fixed styling issue with headers not top of list items</li>
+                            <li>Fixed a field accessor that uses the . notation in its mapping in the case where the server doesn't send back that field</li>
+                            <li>Fixed an issue with afterCommit and afterEdit on Stores where the from current index would be found</li>
+                            <li>[TOUCH-1166] Fixed an issue with number field were clear icon tap was giving it a string value therefor showing 'NaN' in the field</li>
+                            <li>[TOUCH-1654] Fixed a bug with labelWidth and labelAlign top</li>
+                            <li>Fixed exception handling in Reader and Proxies</li>
+                            <li>[TOUCH-1663] Fixed deferEmptyText in DataView</li>
+                            <li>[TOUCH-1666] Fixed a bug when passing navigaitonBar: false in navigation view</li>
+                            <li>[TOUCH-1525] Fixed Sheet Animations</li>
+                            <li>Fixed a bug in Ext.app.Action where it would not look for the correct profile-specific controller</li>
+                            <li>[TOUCH-1453] Tabs are no longer user selectable on Android (copyable)</li>
+                            <li>[TOUCH-1388] Fixed many issues with removing Components and Containers.  Large memory leak improvements</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Known Issues
+                        <ul>
+                            <li>Android 3/4 and Blackberry optimizations are not yet in place</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div class="release">
+                <h1>
                     Release Notes for Sencha Touch 2.0.pr4
                 </h1>
                 <p class="notes">

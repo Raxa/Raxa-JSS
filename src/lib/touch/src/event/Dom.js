@@ -57,10 +57,6 @@ Ext.define('Ext.event.Dom', {
      * @member Ext.event.Event
      */
 
-    /**
-     * Stop the event (preventDefault and stopPropagation)
-     * @member Ext.event.Event
-     */
     stopEvent: function() {
         this.preventDefault();
 

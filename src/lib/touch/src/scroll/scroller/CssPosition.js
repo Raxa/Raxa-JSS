@@ -1,6 +1,3 @@
-/**
- * @private
- */
 Ext.define('Ext.scroll.scroller.CssPosition', {
     extend: 'Ext.scroll.scroller.Abstract',
 

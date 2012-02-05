@@ -180,11 +180,37 @@ Ext.define('Ext.dataview.element.Container', {
     },
 
     getItemElementConfig: function(index, data) {
-        var dataview = this.dataview;
+        var dataview = this.dataview,
+            itemCls = dataview.getItemCls(),
+            cls = dataview.getBaseCls() + '-item';
+
+        if (itemCls) {
+            cls += ' ' + itemCls;
+        }
         return {
-            cls: dataview.getBaseCls() + '-item',
+            cls: cls,
             html: dataview.getItemTpl().apply(data)
         };
+    },
+
+    doRemoveItemCls: function(cls) {
+        var elements = this.getViewItems(),
+            ln = elements.length,
+            i = 0;
+
+        for (; i < ln; i++) {
+            Ext.fly(elements[i]).removeCls(cls);
+        }
+    },
+
+    doAddItemCls: function(cls) {
+        var elements = this.getViewItems(),
+            ln = elements.length,
+            i = 0;
+
+        for (; i < ln; i++) {
+            Ext.fly(elements[i]).addCls(cls);
+        }
     },
 
     // Remove
@@ -216,9 +242,18 @@ Ext.define('Ext.dataview.element.Container', {
             dataview.hideEmptyText();
         }
 
-        for (; i < ln; i++) {
+        for (i = 0; i < ln; i++) {
+            records[i]._tmpIndex = store.indexOf(records[i]);
+        }
+
+        Ext.Array.sort(records, function(record1, record2) {
+            return record1._tmpIndex > record2._tmpIndex ? 1 : -1;
+        });
+
+        for (i = 0; i < ln; i++) {
             record = records[i];
-            me.addListItem(store.indexOf(record), record);
+            me.addListItem(record._tmpIndex, record);
+            delete record._tmpIndex;
         }
     },
 
@@ -229,5 +264,16 @@ Ext.define('Ext.dataview.element.Container', {
 
     doCreateItems: function(records) {
         this.moveItemsFromCache(records);
+    },
+
+    destroy: function() {
+        var elements = this.getViewItems(),
+            ln = elements.length,
+            i = 0;
+
+        for (; i < ln; i++) {
+            Ext.removeNode(elements[i]);
+        }
+        this.callParent();
     }
 });

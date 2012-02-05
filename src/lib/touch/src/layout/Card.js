@@ -46,6 +46,8 @@ Ext.define('Ext.layout.Card', {
     extend: 'Ext.layout.Fit',
     alternateClassName: 'Ext.layout.CardLayout',
 
+    isCard: true,
+
     /**
      * @event activeitemchange
      * @preventable doActiveItemChange
@@ -152,7 +154,7 @@ Ext.define('Ext.layout.Card', {
     },
 
     doItemDockedChange: function(item, docked) {
-        //TODO Fix this properly
+        // See https://sencha.jira.com/browse/TOUCH-1508
         if (docked) {
             item.element.removeCls(this.itemCls);
         }

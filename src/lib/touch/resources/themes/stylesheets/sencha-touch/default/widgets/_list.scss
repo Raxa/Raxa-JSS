@@ -96,7 +96,7 @@ $list-disclosure-size: 1.7em;
     }
 
     .x-list-item {
-      overflow: hidden;
+//      overflow: hidden;
       position: relative;
       color: $list-color;
       border-top: 1px solid darken($list-bg-color, 15%);
@@ -145,6 +145,11 @@ $list-disclosure-size: 1.7em;
     font-size: 0.8em;
     padding: 0.2em 1.02em;
     @include bevel-by-background($list-header-bg-color);
+
+    //to put it above the border on list items
+    position: relative;
+    top: -1px;
+
     @if $include-list-highlights {
       -webkit-box-shadow: 0px .1em .3em rgba(0, 0, 0, 0.3);
     }

@@ -10,7 +10,6 @@
  * The Client proxies save their data locally and include the following subclasses:
  *
  * - {@link Ext.data.proxy.LocalStorage LocalStorageProxy} - saves its data to localStorage if the browser supports it
- * - {@link Ext.data.proxy.SessionStorage SessionStorageProxy} - saves its data to sessionStorage if the browsers supports it
  * - {@link Ext.data.proxy.Memory MemoryProxy} - holds data in memory only, any data is lost when the page is refreshed
  *
  * The Server proxies save their data by sending requests to some remote server. These proxies include:
@@ -129,11 +128,6 @@ Ext.define('Ext.data.proxy.Proxy', {
         } else {
             reader.setModel(model);
         }
-
-        // @TODO: implement onMetaChange stuff
-        // if (reader.onMetaChange) {
-        //     reader.onMetaChange = Ext.Function.createSequence(reader.onMetaChange, this.onMetaChange, this);
-        // }
     },
 
     applyWriter: function(writer, currentWriter) {
@@ -224,9 +218,8 @@ Ext.define('Ext.data.proxy.Proxy', {
      *
      * @param {Function} [options.failure] The function to be called upon unsuccessful completion of the batch. The
      * failure function is called when one or more operations returns an exception during processing (even if some
-     * operations were also successful). In this case you can check the batch's {@link Ext.data.Batch#exceptions
-     * exceptions} array to see exactly which operations had exceptions. The failure function is called with the
-     * following parameters:
+     * operations were also successful). In this case you can check the batch's exceptions array to see exactly which
+     * operations had exceptions. The failure function is called with the following parameters:
      * @param {Ext.data.Batch} options.failure.batch The {@link Ext.data.Batch batch} that was processed,
      * containing all operations in their current state after processing
      * @param {Object} options.failure.options The options argument that was originally passed into batch
@@ -321,22 +314,21 @@ Ext.define('Ext.data.proxy.Proxy', {
              Ext.callback(batchOptions.callback, scope, [batch, batchOptions]);
          }
     }
-    
+
     // <deprecated product=touch since=2.0>
     ,onClassExtended: function(cls, data) {
         var prototype = this.prototype,
             defaultConfig = prototype.config,
             config = data.config || {},
             key;
-        
+
         // Convert deprecated properties in application into a config object
         for (key in defaultConfig) {
             if (key != "control" && key in data) {
                 config[key] = data[key];
                 delete data[key];
                 // <debug warn>
-                // @TODO: update this to Ext.Logger for IE.
-                console.warn(key + ' is deprecated as a property directly on the ' + this.$className + ' prototype. Please put it inside the config object.');
+                Ext.Logger.warn(key + ' is deprecated as a property directly on the ' + this.$className + ' prototype. Please put it inside the config object.');
                 // </debug>
             }
         }

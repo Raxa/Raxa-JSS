@@ -190,5 +190,17 @@ Ext.define('Ext.dataview.IndexBar', {
         if (target) {
             this.fireEvent('index', this, target.dom.innerHTML, target);
         }
+    },
+
+    destroy: function() {
+        var me = this,
+            elements = Array.prototype.slice.call(me.innerElement.dom.childNodes),
+            ln = elements.length,
+            i = 0;
+
+        for (; i < ln; i++) {
+            Ext.removeNode(elements[i]);
+        }
+        this.callParent();
     }
 });

@@ -10,16 +10,18 @@
 <pre><code>
 Ext.define('User', {
     extend: 'Ext.data.Model',
-    fields: ['id', 'name', 'email'],
-
-    hasMany: {model: 'Order', name: 'orders'}
+    config: {
+        fields: ['id', 'name', 'email'],
+        hasMany: {model: 'Order', name: 'orders'}
+    }
 });
 
 Ext.define('Order', {
     extend: 'Ext.data.Model',
-    fields: ['id', 'user_id', 'status', 'price'],
-
-    belongsTo: 'User'
+    config: {
+        fields: ['id', 'user_id', 'status', 'price'],
+        belongsTo: 'User'
+    }
 });
 </code></pre>
  *
@@ -72,29 +74,31 @@ Ext.define('Order', {
 // Client code
 Ext.define('Group', {
     extend: 'Ext.data.Model',
-    fields: ['id', 'parent_id', 'name'],
-    proxy: {
-        type: 'ajax',
-        url: 'data.json',
-        reader: {
-            type: 'json',
-            root: 'groups'
-        }
-    },
-    associations: [{
-        type: 'hasMany',
-        model: 'Group',
-        primaryKey: 'id',
-        foreignKey: 'parent_id',
-        autoLoad: true,
-        associationKey: 'child_groups' // read child data from child_groups
-    }, {
-        type: 'belongsTo',
-        model: 'Group',
-        primaryKey: 'id',
-        foreignKey: 'parent_id',
-        associationKey: 'parent_group' // read parent data from parent_group
-    }]
+    config: {
+        fields: ['id', 'parent_id', 'name'],
+        proxy: {
+            type: 'ajax',
+            url: 'data.json',
+            reader: {
+                type: 'json',
+                root: 'groups'
+            }
+        },
+        associations: [{
+            type: 'hasMany',
+            model: 'Group',
+            primaryKey: 'id',
+            foreignKey: 'parent_id',
+            autoLoad: true,
+            associationKey: 'child_groups' // read child data from child_groups
+        }, {
+            type: 'belongsTo',
+            model: 'Group',
+            primaryKey: 'id',
+            foreignKey: 'parent_id',
+            associationKey: 'parent_group' // read parent data from parent_group
+        }]
+    }
 });
 
 
@@ -185,7 +189,7 @@ Ext.define('Ext.data.association.Association', {
                         return Ext.create('Ext.data.association.HasOne', association);
                     default:
                         //<debug>
-                        Ext.Error.raise('Unknown Association type: "' + association.type + '"');
+                        Ext.Logger.error('Unknown Association type: "' + association.type + '"');
                         //</debug>
                 }
             }

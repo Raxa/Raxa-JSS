@@ -70,14 +70,22 @@ Ext.define('Ext.app.Profile', {
     },
 
     config: {
-        namespace: null,
+        /**
+         * @cfg {String} namespace The namespace that this Profile's classes can be found in. Defaults to the lowercased
+         * Profile {@link #name}, for example a Profile called MyApp.profile.Phone will by default have a 'phone' 
+         * namespace, which means that this Profile's additional models, stores, views and controllers will be loaded
+         * from the MyApp.model.phone.*, MyApp.store.phone.*, MyApp.view.phone.* and MyApp.controller.phone.* namespaces
+         * respectively.
+         * @accessor
+         */
+        namespace: 'auto',
         
         /**
          * @cfg {String} name The name of this Profile. Defaults to the last section of the class name (e.g. a profile
          * called MyApp.profile.Phone will default the name to 'Phone').
          * @accessor
          */
-        name: null,
+        name: 'auto',
 
         /**
          * @cfg {Array} controllers Any additional {@link Ext.app.Application#controllers Controllers} to load for this
@@ -178,23 +186,23 @@ Ext.define('Ext.app.Profile', {
      * @private
      */
     applyNamespace: function(name) {
-        if (!Ext.isString(name)) {
-            name = this.getNamespace();
+        if (name == 'auto') {
+            name = this.getName();
         }
 
-        return name;
+        return name.toLowerCase();
     },
 
     /**
      * @private
      */
-    applyName: function(namespace) {
-        if (!Ext.isString(namespace)) {
+    applyName: function(name) {
+        if (name == 'auto') {
             var pieces = this.$className.split('.');
-            namespace = pieces[pieces.length - 1];
+            name = pieces[pieces.length - 1];
         }
 
-        return namespace;
+        return name;
     },
 
     /**
@@ -213,16 +221,24 @@ Ext.define('Ext.app.Profile', {
                 controller: this.getControllers(),
                 store: this.getStores()
             },
-            classType, classNames, namespacedClassName;
+            classType, classNames, namespacedClassName, fullyQualified;
 
         for (classType in map) {
             classNames = [];
 
             Ext.each(map[classType], function(className) {
                 if (Ext.isString(className)) {
-                    namespacedClassName = format('{0}.{1}', namespace, className);
-                    classNames.push(namespacedClassName);
-                    allClasses.push(format('{0}.{1}.{2}', appName, classType, namespacedClassName));
+                    
+                    //if there is a '.' anywhere in the string we treat it as fully qualified, if not compute the 
+                    //namespaced classname below
+                    if (className.match("\\.")) {
+                        fullyQualified = className;
+                    } else {
+                        fullyQualified = format('{0}.{1}.{2}.{3}', appName, classType, namespace, className);
+                    }
+                    
+                    classNames.push(fullyQualified);
+                    allClasses.push(fullyQualified);
                 }
             });
 

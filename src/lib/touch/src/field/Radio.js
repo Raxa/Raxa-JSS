@@ -49,7 +49,7 @@ Ext.define('Ext.field.Radio', {
         // @inherit
         component: {
             type: 'radio',
-            inputCls: Ext.baseCSSPrefix + 'input-radio'
+            cls: Ext.baseCSSPrefix + 'input-radio'
         }
     },
 

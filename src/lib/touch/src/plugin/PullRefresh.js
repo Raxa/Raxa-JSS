@@ -1,5 +1,27 @@
 /**
  * This plugin adds pull to refresh functionality to the List.
+ *
+ * ## Example
+ *
+ *     Ext.define('TweetList', {
+ *         extend: 'Ext.List',
+ *
+ *         config: {
+ *             store: Ext.create('TweetStore'),
+ *
+ *             plugins: [
+ *                 {
+ *                     xclass: 'Ext.plugin.PullRefresh',
+ *                     pullRefreshText: 'Pull down for more new Tweets!'
+ *                 }
+ *             ],
+ *
+ *             itemTpl: [
+ *                 '<img src="{profile_image_url}" />',
+ *                 '<div class="tweet">{text}</div>'
+ *             ]
+ *         }
+ *     });
  */
 Ext.define('Ext.plugin.PullRefresh', {
     extend: 'Ext.Component',
@@ -37,10 +59,10 @@ Ext.define('Ext.plugin.PullRefresh', {
         snappingAnimationDuration: 150,
 
         /*
-         * @cfg {Function} refreshFn The function that will be called to refresh the list. If this is not defined, the store's load
+         * @cfg {Function} refreshFn The function that will be called to refresh the list.
+         * If this is not defined, the store's load function will be called.
+         * The refresh function gets called with a reference to this plugin instance.
          * @accessor
-         * function will be called. The refresh function gets called with two parameters. The first one is the callback function
-         * that should be called after your refresh is complete. The second one is a reference to this plugin instance.
          */
         refreshFn: null,
 
@@ -140,16 +162,11 @@ Ext.define('Ext.plugin.PullRefresh', {
 
             me.setViewState('release');
 
-            if (me.refreshFn) {
-                me.refreshFn.call(me, me.onLoadComplete, me);
-            }
-            else {
-                scroller.getContainer().onBefore({
-                    dragend: 'onScrollerDragEnd',
-                    single: true,
-                    scope: me
-                });
-            }
+            scroller.getContainer().onBefore({
+                dragend: 'onScrollerDragEnd',
+                single: true,
+                scope: me
+            });
         }
         else if (me.isRefreshing && -y < me.pullHeight + 10) {
             me.isRefreshing = false;
@@ -182,7 +199,11 @@ Ext.define('Ext.plugin.PullRefresh', {
         Ext.defer(function() {
             scroller.on({
                 scrollend: function() {
-                    store.load();
+                    if (me.getRefreshFn()) {
+                        me.getRefreshFn().call(me, me);
+                    } else {
+                        store.load();
+                    }
                     me.resetRefreshState()
                 },
                 delay: 100,
@@ -211,17 +232,17 @@ Ext.define('Ext.plugin.PullRefresh', {
         if (messageEl && loadingElement) {
             switch (state) {
                 case 'pull':
-                    messageEl.setHTML(me.getPullRefreshText());
+                    messageEl.setHtml(me.getPullRefreshText());
                     loadingElement.removeCls([prefix + 'list-pullrefresh-release', prefix + 'list-pullrefresh-loading']);
                 break;
 
                 case 'release':
-                    messageEl.setHTML(me.getReleaseRefreshText());
+                    messageEl.setHtml(me.getReleaseRefreshText());
                     loadingElement.addCls(prefix + 'list-pullrefresh-release');
                 break;
 
                 case 'loading':
-                    messageEl.setHTML(me.getLoadingText());
+                    messageEl.setHtml(me.getLoadingText());
                     loadingElement.addCls(prefix + 'list-pullrefresh-loading');
                     break;
             }
@@ -236,6 +257,6 @@ Ext.define('Ext.plugin.PullRefresh', {
         me.lastUpdated = new Date();
 
         me.setViewState('pull');
-        me.updatedEl.setHTML(Ext.util.Format.date(me.lastUpdated, "m/d/Y h:iA"));
+        me.updatedEl.setHtml(Ext.util.Format.date(me.lastUpdated, "m/d/Y h:iA"));
     }
 });

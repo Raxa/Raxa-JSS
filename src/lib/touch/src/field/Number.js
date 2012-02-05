@@ -104,5 +104,9 @@ Ext.define('Ext.field.Number', {
     getValue: function() {
         var value = this.callParent();
         return parseFloat(value || 0);
+    },
+
+    doClearIconTap: function(me, e) {
+        me.setValue(0);
     }
 });

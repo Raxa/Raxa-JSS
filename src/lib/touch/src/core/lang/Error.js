@@ -1,5 +1,5 @@
 Ext.Error = {
-    raise: function(error) {
-        throw new Error(error.msg);
+    raise: function(object) {
+        throw new Error(object.msg);
     }
 };

@@ -62,9 +62,13 @@ Ext.define('Ext.behavior.Scrollable', {
     },
 
     onScrollViewDestroy: function() {
-        var component = this.component;
+        var component = this.component,
+            scrollerElement = this.scrollerElement;
 
-        this.scrollerElement.unwrap();
+        if (!scrollerElement.isDestroyed) {
+            this.scrollerElement.unwrap();
+        }
+
         this.scrollContainer.destroy();
 
         component.un(this.listeners);

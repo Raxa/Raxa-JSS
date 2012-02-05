@@ -57,7 +57,7 @@ Ext.define('Ext.field.Input', {
      * Fires whenever the input has a mousedown occur
      * @param {Ext.EventObject} e The event object
      */
-    
+
     /**
      * @property {String} tag The el tag
      * @private
@@ -210,7 +210,7 @@ Ext.define('Ext.field.Input', {
         /**
          * <p>The value that the Field had at the time it was last focused. This is the value that is passed
          * to the {@link Ext.field.Text#change} event which is fired if the value has been changed when the Field is blurred.</p>
-         * <p><b>This will be undefined until the Field has been visited.</b> Compare {@link #property-originalValue}.</p>
+         * <p><b>This will be undefined until the Field has been visited.</b> Compare {@link #originalValue}.</p>
          * @cfg {Mixed} startValue
          * @accessor
          */
@@ -231,8 +231,7 @@ Ext.define('Ext.field.Input', {
             },
             {
                 reference: 'clearIcon',
-                cls: 'x-clear-icon',
-                html: 'x'
+                cls: 'x-clear-icon'
             }
         ];
 
@@ -630,7 +629,7 @@ Ext.define('Ext.field.Input', {
     select: function() {
         var me = this,
             el = me.input;
-        
+
         if (el && el.dom.setSelectionRange) {
             el.dom.setSelectionRange(0, 9999);
         }

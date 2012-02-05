@@ -1,8 +1,5 @@
 /**
- * @class Ext.data.NodeStore
- * @extends Ext.data.AbstractStore
- * Node Store
- * @ignore
+ * @private
  */
 Ext.define('Ext.data.NodeStore', {
     extend: 'Ext.data.Store',
@@ -36,16 +33,22 @@ Ext.define('Ext.data.NodeStore', {
         rootVisible: false,
 
         sorters: undefined,
-        filters: undefined
+        filters: undefined,
+
+        /**
+         * @cfg {Boolean} folderSort
+         * Set to true to automatically prepend a leaf sorter. Defaults to `undefined`.
+         */
+        folderSort: false
     },
 
     afterEdit: function(record, modifiedFields) {
         if (modifiedFields) {
             if (modifiedFields.indexOf('loaded') !== -1) {
-                this.add(this.retrieveChildNodes(record));
+                return this.add(this.retrieveChildNodes(record));
             }
             if (modifiedFields.indexOf('expanded') !== -1) {
-                this.filter();
+                return this.filter();
             }
         }
         this.callParent(arguments);
@@ -67,37 +70,77 @@ Ext.define('Ext.data.NodeStore', {
         this.sort();
     },
 
-    applySorters: function(sorters) {
-        return function(node1, node2) {
-            // A shortcut for siblings
-            if (node1.parentNode === node2.parentNode) {
-                return (node1.data.index < node2.data.index) ? -1 : 1;
-            }
+    updateFolderSort: function(folderSort) {
+        if (folderSort) {
+            this.setGrouper(function(node) {
+                if (node.isLeaf()) {
+                    return 1;
+                }
+                return 0;
+            });
+        } else {
+            this.setGrouper(null);
+        }
+    },
 
-            // @NOTE: with the following algorithm we can only go 80 levels deep in the tree
-            // and each node can contain 10000 direct children max
+    createDataCollection: function() {
+        var collection = this.callParent();
+        collection.handleSort = Ext.Function.bind(this.handleTreeSort, this, [collection], true);
+        collection.findInsertionIndex = Ext.Function.bind(this.handleTreeInsertionIndex, this, [collection, collection.findInsertionIndex], true);
+        return collection;
+    },
 
-            var weight1 = 0,
-                weight2 = 0,
-                parent1 = node1,
-                parent2 = node2;
+    handleTreeInsertionIndex: function(items, item, collection, originalFn) {
+        if (item.parentNode) {
+            item.parentNode.sort(collection.getSortFn(), true, true);
+        }
+        return originalFn.call(collection, items, item, this.treeSortFn);
+    },
 
-            while (parent1) {
-                weight1 += (Math.pow(10, (parent1.data.depth+1) * -4) * (parent1.data.index+1));
-                parent1 = parent1.parentNode;
-            }
-            while (parent2) {
-                weight2 += (Math.pow(10, (parent2.data.depth+1) * -4) * (parent2.data.index+1));
-                parent2 = parent2.parentNode;
-            }
+    handleTreeSort: function(data, collection) {
+        this.getNode().sort(collection.getSortFn(), true, true);
+        Ext.Array.sort(data, this.treeSortFn);
+        return data;
+    },
 
-            if (weight1 > weight2) {
-                return 1;
-            } else if (weight1 < weight2) {
-                return -1;
-            }
-            return (node1.data.index > node2.data.index) ? 1 : -1;
-        };
+    /**
+     * This is a custom tree sorting algorithm. It uses the index property on each node to determine
+     * how to sort siblings. It uses the depth property plus the index to create a weight for each node.
+     * This weight algorithm has the limitation of not being able to go more then 80 levels in depth, or
+     * more then 10k nodes per parent. The end result is a flat collection being correctly sorted based
+     * on this one single sort function.
+     * @param node1
+     * @param node2
+     * @private
+     */
+    treeSortFn: function(node1, node2) {
+        // A shortcut for siblings
+        if (node1.parentNode === node2.parentNode) {
+            return (node1.data.index < node2.data.index) ? -1 : 1;
+        }
+
+        // @NOTE: with the following algorithm we can only go 80 levels deep in the tree
+        // and each node can contain 10000 direct children max
+        var weight1 = 0,
+            weight2 = 0,
+            parent1 = node1,
+            parent2 = node2;
+
+        while (parent1) {
+            weight1 += (Math.pow(10, (parent1.data.depth+1) * -4) * (parent1.data.index+1));
+            parent1 = parent1.parentNode;
+        }
+        while (parent2) {
+            weight2 += (Math.pow(10, (parent2.data.depth+1) * -4) * (parent2.data.index+1));
+            parent2 = parent2.parentNode;
+        }
+
+        if (weight1 > weight2) {
+            return 1;
+        } else if (weight1 < weight2) {
+            return -1;
+        }
+        return (node1.data.index > node2.data.index) ? 1 : -1;
     },
 
     applyFilters: function(filters) {
@@ -211,6 +254,14 @@ Ext.define('Ext.data.NodeStore', {
             if (!parent.isExpanded()) {
                 return false;
             }
+
+            //we need to check this because for a nodestore the node is not likely to be the root
+            //so we stop going up the chain when we hit the original node as we don't care about any
+            //ancestors above the configured node
+            if (parent === this.getNode()) {
+                break;
+            }
+
             parent = parent.parentNode;
         }
         return true;

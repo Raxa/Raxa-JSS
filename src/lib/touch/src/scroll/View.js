@@ -1,5 +1,11 @@
 /**
+ * This is a simple container that is used to combile content and a {@link Ext.scroll.View} instance. It also
+ * provides scroll indicators.
  *
+ * 99% of the time all you need to use in this class is {@link #getScroller}. It is also sometimes useful to
+ * flash the scroll indicators using the {@link #flashIndicator} and {@link #flashIndicators} methods.
+ *
+ * This should never should be extended.
  */
 Ext.define('Ext.scroll.View', {
     extend: 'Ext.Evented',
@@ -12,6 +18,13 @@ Ext.define('Ext.scroll.View', {
     ],
 
     config: {
+        /**
+         * @cfg {Number} flashIndicatorTimeout
+         * The amount of time to flash the indicators when {@link #flashIndicator} or {@link #flashIndicators}
+         * is called.
+         */
+        flashIndicatorTimeout: 1000,
+
         element: null,
         scroller: {},
         indicators: {
@@ -22,16 +35,19 @@ Ext.define('Ext.scroll.View', {
                 axis: 'y'
             }
         },
-        cls: Ext.baseCSSPrefix + 'scroll-view',
-
-        /**
-         * @cfg {Number} flashIndicatorTimeout
-         * The amount of time to flash the indicators when {@link #flashIndicator} or {@link #flashIndicators}
-         * is called.
-         */
-        flashIndicatorTimeout: 1000
+        cls: Ext.baseCSSPrefix + 'scroll-view'
     },
 
+    /**
+     * @method getScroller
+     * Returns the scroller instance in this view. Checkout the documentation of {@link Ext.scroll.Scroller} and
+     * {@link Ext.Container#getScrollable} for more information.
+     * @return {Ext.scroll.View} The scroller
+     */
+
+    /**
+     * @private
+     */
     processConfig: function(config) {
         if (!config) {
             return null;
@@ -290,14 +306,15 @@ Ext.define('Ext.scroll.View', {
         var element = this.getElement(),
             indicators = this.getIndicators();
 
-        if (element) {
+        if (element && !element.isDestroyed) {
             element.removeCls(this.getCls());
         }
 
         indicators.x.destroy();
         indicators.y.destroy();
 
-        this.getScroller().destroy();
+        Ext.destroy(this.getScroller(), this.indicatorsGrid);
+        delete this.indicatorsGrid;
 
         this.callParent(arguments);
     }

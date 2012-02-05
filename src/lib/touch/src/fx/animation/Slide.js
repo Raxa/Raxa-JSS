@@ -7,14 +7,14 @@ Ext.define('Ext.fx.animation.Slide', {
 
     alternateClassName: 'Ext.fx.animation.SlideIn',
 
-    alias: 'animation.slide',
+    alias: ['animation.slide', 'animation.slideIn'],
 
     config: {
         /**
          * @cfg {String} direction The direction of which the slide animates
          * @accessor
          */
-        direction: 'right',
+        direction: 'left',
 
         /**
          * @cfg {Boolean} out True if you want to make this animation slide out, instead of slide in.
@@ -35,9 +35,9 @@ Ext.define('Ext.fx.animation.Slide', {
 
         elementBox: 'auto',
 
-        useCssTransform: true,
+        isElementBoxFit: true,
 
-        reverse: null
+        useCssTransform: true
     },
 
     reverseDirectionMap: {
@@ -67,6 +67,10 @@ Ext.define('Ext.fx.animation.Slide', {
 
     getElementBox: function() {
         var box = this._elementBox;
+
+        if (this.getIsElementBoxFit()) {
+            return this.getContainerBox();
+        }
 
         if (box === 'auto') {
             box = this.getElement().getPageBox();

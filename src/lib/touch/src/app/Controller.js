@@ -21,7 +21,7 @@
  *
  * ## Refs and Control
  *
- * The centerpiece of Controllers is the twin configurations {@link #refs} and {@link #control}. These are used to
+ * The centerpiece of Controllers is the twin configurations {@link #refs} and {@link #cfg-control}. These are used to
  * easily gain references to Components inside your app and to take action on them based on events that they fire.
  * Let's look at {@link #refs} first:
  *
@@ -102,7 +102,7 @@
  *
  * ### Control
  *
- * The sister config to {@link #refs} is {@link #control}. {@link #control Control} is the means by which your listen
+ * The sister config to {@link #refs} is {@link #cfg-control}. {@link #cfg-control Control} is the means by which your listen
  * to events fired by Components and have your Controller react in some way. Control accepts both ComponentQuery
  * selectors and refs as its keys, and listener objects as values - for example:
  *
@@ -232,6 +232,8 @@ Ext.define('Ext.app.Controller', {
          *         //it automatically and return the new instance
          *         this.getInfoPanel().show();
          *     }
+         *
+         * @accessor
          */
         refs: {},
 
@@ -247,6 +249,8 @@ Ext.define('Ext.app.Controller', {
          * The first route will match against http://myapp.com/#login and call the Controller's showLogin function. The
          * second route contains a wildcard (':id') and will match all urls like http://myapp.com/#users/123, calling
          * the showUserById function with the matched ID as the first argument.
+         *
+         * @accessor
          */
         routes: {},
 
@@ -268,6 +272,8 @@ Ext.define('Ext.app.Controller', {
          * with action=logout is tapped on. The second calls the Controller's doUpdate function whenever the
          * activeitemchange event is fired by the Component referenced by our 'main' ref. In this case main is a tab
          * panel (see {@link #refs} for how to set that reference up).
+         *
+         * @accessor
          */
         control: {},
 
@@ -296,7 +302,7 @@ Ext.define('Ext.app.Controller', {
          *         authenticate: function(action) {
          *             MyApp.authenticate({
          *                 success: function() {
-         *                     action.execute();
+         *                     action.resume();
          *                 },
          *                 failure: function() {
          *                     Ext.Msg.alert('Not Logged In', "You can't do that, you're not logged in");
@@ -304,12 +310,15 @@ Ext.define('Ext.app.Controller', {
          *             });
          *         }
          *     });
+         *
+         * @accessor
          */
         before: {},
 
         /**
          * @cfg {Ext.app.Application} application The Application instance this Controller is attached to. This is
          * automatically provided when using the MVC architecture so should rarely need to be set directly.
+         * @accessor
          */
         application: {}
     },
@@ -324,10 +333,21 @@ Ext.define('Ext.app.Controller', {
     },
 
     /**
+     * @cfg
      * Called by the Controller's {@link #application} to initialize the Controller. This is always called before the
      * {@link Ext.app.Application Application} launches, giving the Controller a chance to run any pre-launch logic.
+     * See also {@link #launch}, which is called after the {@link Ext.app.Application#launch Application's launch function}
      */
     init: Ext.emptyFn,
+
+    /**
+     * @cfg
+     * Called by the Controller's {@link #application} immediately after the Application's own
+     * {@link Ext.app.Application#launch launch function} has been called. This is usually a good place to run any
+     * logic that has to run after the app UI is initialized. See also {@link #init}, which is called before the
+     * {@link Ext.app.Application#launch Application's launch function}.
+     */
+    launch: Ext.emptyFn,
 
     /**
      * Convenient way to redirect to a new url. See {@link Ext.app.Application#redirectTo} for full usage information
@@ -338,26 +358,32 @@ Ext.define('Ext.app.Controller', {
 
     /**
      * @private
+     * Executes an Ext.app.Action by giving it the correct before filters and kicking off execution
      */
     execute: function(action, skipFilters) {
-        this.fireAction('execute', [this, action, skipFilters], function() {
-            this.fireAction('execute:' + action.getAction(), [this, action, skipFilters], 'doExecute');
-        });
+        action.setBeforeFilters(this.getBefore()[action.getAction()]);
+        action.execute();
     },
 
     /**
      * @private
+     * Massages the before filters into an array of function references for each controller action
      */
-    doExecute: function(me, action, skipFilters) {
-        var actionName   = action.getAction(),
-            actionScope  = action.getScope() || this,
-            beforeFilter = this[this.getBefore()[actionName]];
+    applyBefore: function(before) {
+        var filters, name, length, i;
 
-        if (beforeFilter && skipFilters !== true) {
-            beforeFilter.call(this, action);
-        } else {
-            this[actionName].apply(actionScope, action.getArgs());
+        for (name in before) {
+            filters = Ext.Array.from(before[name]);
+            length  = filters.length;
+
+            for (i = 0; i < length; i++) {
+                filters[i] = this[filters[i]];
+            }
+
+            before[name] = filters;
         }
+
+        return before;
     },
 
     /**
@@ -373,6 +399,12 @@ Ext.define('Ext.app.Controller', {
      * @private
      */
     applyRefs: function(refs) {
+        //<debug>
+        if (Ext.isArray(refs)) {
+            console.warn("In Sencha Touch 2 the refs config accepts an object but you have passed it an array.");
+        }
+        //</debug>
+
         this.ref(refs);
 
         return refs;
@@ -386,13 +418,22 @@ Ext.define('Ext.app.Controller', {
         var app    = this instanceof Ext.app.Application ? this : this.getApplication(),
             router = app.getRouter(),
             parts  = this.$className.split('.'),
-            url;
+            route, url, config;
 
         for (url in routes) {
-            router.connect(url, {
-                controller: parts[parts.length - 1],
-                action: routes[url]
-            });
+            route = routes[url];
+            
+            config = {
+                controller: parts[parts.length - 1]
+            };
+            
+            if (Ext.isString(route)) {
+                config.action = route;
+            } else {
+                Ext.apply(config, route);
+            }
+            
+            router.connect(url, config);
         }
 
         return routes;
@@ -472,49 +513,55 @@ Ext.define('Ext.app.Controller', {
     hasRef: function(ref) {
         return this.references && this.references.indexOf(ref.toLowerCase()) !== -1;
     },
-    
+
     // <deprecated product=touch since=2.0>
-    onClassExtended: function(cls, data) {
+    onClassExtended: function(cls, members) {
         var prototype = this.prototype,
             defaultConfig = prototype.config,
-            config = data.config || {},
-            arrayRefs = data.refs,
+            config = members.config || {},
+            arrayRefs = members.refs,
             objectRefs = {},
-            stores = data.stores,
-            views = data.views,
+            stores = members.stores,
+            views = members.views,
             format = Ext.String.format,
-            refItem, key, length, store, model;
+            refItem, key, length, i, functionName;
 
         // Convert deprecated properties in application into a config object
         for (key in defaultConfig) {
-            if (key in data && key != "control") {
+            if (key in members && key != "control") {
                 if (key == "refs") {
                     //we need to convert refs from the 1.x array-style to 2.x object-style
                     for (i = 0; i < arrayRefs.length; i++) {
                         refItem = arrayRefs[i];
-                        
+
                         objectRefs[refItem.ref] = refItem;
                     }
-                    
+
                     config.refs = objectRefs;
                 } else {
-                    config[key] = data[key];
+                    config[key] = members[key];
                 }
-                
-                delete data[key];
+
+                delete members[key];
                 // <debug warn>
-                // @TODO: update this to Ext.Logger for IE.
+                // See https://sencha.jira.com/browse/TOUCH-1499
                 console.warn(key + ' is deprecated as a property directly on the ' + this.$className + ' prototype. Please put it inside the config object.');
                 // </debug>
             }
         }
-        
+
         if (stores) {
             length = stores.length;
-            
+
+            // <debug warn>
+            // See https://sencha.jira.com/browse/TOUCH-1499
+            console.warn('\'stores\' is deprecated as a property directly on the ' + this.$className + ' prototype. Please move it ' +
+                'to Ext.application({ stores: ... }) instead');
+            // </debug>
+
             for (i = 0; i < length; i++) {
                 functionName = format("get{0}Store", Ext.String.capitalize(stores[i]));
-                
+
                 prototype[functionName] = function(name) {
                     return function() {
                         return Ext.StoreManager.lookup(name);
@@ -522,13 +569,19 @@ Ext.define('Ext.app.Controller', {
                 }(stores[i]);
             }
         }
-        
+
         if (views) {
             length = views.length;
-            
+
+            // <debug warn>
+            // See https://sencha.jira.com/browse/TOUCH-1499
+            console.warn('\'views\' is deprecated as a property directly on the ' + this.$className + ' prototype. Please move it ' +
+                'to Ext.application({ views: ... }) instead');
+            // </debug>
+
             for (i = 0; i < length; i++) {
                 functionName = format("get{0}View", views[i]);
-                
+
                 prototype[functionName] = function(name) {
                     return function() {
                         return Ext.ClassManager.classes[format("{0}.view.{1}", this.getApplication().getName(), name)];
@@ -536,17 +589,41 @@ Ext.define('Ext.app.Controller', {
                 }(views[i]);
             }
         }
-        
-        data.config = config;
+
+        members.config = config;
     },
-    
+
+    /**
+     * @deprecated 2.0.0
+     * Returns a reference to a Model. Deprecated and considered bad practice - please just use the Model name instead
+     * (e.g. MyApp.model.User vs this.getModel('User')).
+     */
     getModel: function(modelName) {
+        //<debug warn>
+        Ext.Logger.deprecate("getModel() is deprecated and considered bad practice - please just use the Model " +
+            "name instead (e.g. MyApp.model.User vs this.getModel('User'))");
+        //</debug>
+
         var appName = this.getApplication().getName(),
             classes = Ext.ClassManager.classes;
-        
+
         return classes[appName + '.model.' + modelName];
     },
-    
+
+    /**
+     * @deprecated 2.0.0
+     * Returns a reference to another Controller. Deprecated and considered bad practice - if you need to do this
+     * please use this.getApplication().getController() instead
+     */
+    getController: function(controllerName, profile) {
+        //<debug warn>
+        Ext.Logger.deprecate("Ext.app.Controller#getController is deprecated and considered bad practice - " +
+            "please use this.getApplication().getController('someController') instead");
+        //</debug>
+
+        return this.getApplication().getController(controllerName, profile);
+    },
+
     // </deprecated>
 
     //TO IMPLEMENT
@@ -556,4 +633,18 @@ Ext.define('Ext.app.Controller', {
     addStores: Ext.emptyFn,
     addProfiles: Ext.emptyFn,
     addModels: Ext.emptyFn
+}, function() {
+    // <deprecated product=touch since=2.0>
+    Ext.regController = function(name, config) {
+        Ext.apply(config, {
+            extend: 'Ext.app.Controller'
+        });
+
+        console.warn(
+            '[Ext.app.Controller] Ext.regController is deprecated, please use Ext.define to define a Controller as ' +
+            'with any other class. For more information see the Touch 1.x -> 2.x migration guide'
+        );
+        Ext.define('controller.' + name, config);
+    };
+    // </deprecated>
 });

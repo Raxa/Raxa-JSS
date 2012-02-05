@@ -8,3 +8,4 @@ For more information, please see our wiki:
 <https://wiki.openmrs.org/display/projects/Raxa+JSS+EMR>
 
 The project uses HTML5, CSS and JavaScript as the front-end technologies and uses REST webservices provided by OpenMRS.
+This uses Sencha Touch 2 as the Framework for MVC and UI. 

@@ -41,7 +41,7 @@ Ext.define('Ext.data.writer.Json', {
          *         "first": "Mark",
          *         "last": "Corrigan"
          *     }
-         *  
+         *
          *     // with allowSingle: false
          *     "root": [{
          *         "first": "Mark",
@@ -64,7 +64,7 @@ Ext.define('Ext.data.writer.Json', {
     writeRecords: function(request, data) {
         var root = this.getRoot(),
             params = request.getParams(),
-            headers = request.getHeaders(),
+            allowSingle = this.getAllowSingle(),
             jsonData;
 
         if (this.getAllowSingle() && data && data.length == 1) {
@@ -74,7 +74,7 @@ Ext.define('Ext.data.writer.Json', {
 
         if (this.getEncodeRequest()) {
             jsonData = request.getJsonData() || {};
-            if (data && data.length) {
+            if (data && (data.length || (allowSingle && Ext.isObject(data)))) {
                 jsonData[root] = data;
             }
             request.setJsonData(Ext.apply(jsonData, params || {}));
@@ -83,7 +83,7 @@ Ext.define('Ext.data.writer.Json', {
             return request;
         }
 
-        if (!data || !data.length) {
+        if (!data || !(data.length || (allowSingle && Ext.isObject(data)))) {
             return request;
         }
 
@@ -93,7 +93,7 @@ Ext.define('Ext.data.writer.Json', {
                 params[root] = Ext.encode(data);
             } else {
                 //<debug>
-                Ext.Error.raise('Must specify a root when using encode');
+                Ext.Logger.error('Must specify a root when using encode');
                 //</debug>
             }
         } else {

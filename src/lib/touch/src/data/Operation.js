@@ -5,6 +5,8 @@
  * used to enable communication between Stores and Proxies. Application developers should rarely need to interact with
  * Operation objects directly.
  *
+ * Note that when you define an Operation directly, you need to specify at least the {@link #model} configuration.
+ *
  * Several Operations can be batched together in a {@link Ext.data.Batch batch}.
  */
 Ext.define('Ext.data.Operation', {
@@ -98,6 +100,11 @@ Ext.define('Ext.data.Operation', {
         url: null,
         page: null,
 
+        /**
+         * @cfg {Ext.data.Model} model
+         * The Model that this Operation will be dealing with. This configuration is required when defining any Operation.
+         * Since Operations take care of creating, updating, destroying and reading records, it needs access to the Model.
+         */
         model: undefined,
 
         node: null,
@@ -306,7 +313,7 @@ Ext.define('Ext.data.Operation', {
 
         for (i = 0; i < ln; i++) {
             updatedRecord = updatedRecords[i];
-            currentRecord = this.findCurrentRecord(updatedRecord);
+            currentRecord = this.findCurrentRecord(updatedRecord.clientId);
 
             if (currentRecord) {
                 this.updateRecord(currentRecord, updatedRecord);
@@ -344,18 +351,35 @@ Ext.define('Ext.data.Operation', {
         return true;
     },
 
-    processDestroy: function() {
+    processDestroy: function(resultSet) {
+        var updatedRecords = resultSet.getRecords(),
+            ln = updatedRecords.length,
+            i, currentRecord, updatedRecord;
 
+        for (i = 0; i < ln; i++) {
+            updatedRecord = updatedRecords[i];
+            currentRecord = this.findCurrentRecord(updatedRecord.id);
+
+            if (currentRecord) {
+                currentRecord.setIsErased(true);
+                currentRecord.notifyStores('afterErase', currentRecord);
+            }
+            // <debug>
+            else {
+                Ext.Logger.warn('Unable to match the destroyed record that came back from the server.');
+            }
+            // </debug>
+        }
     },
 
-    findCurrentRecord: function(updatedRecord) {
+    findCurrentRecord: function(clientId) {
         var currentRecords = this.getRecords(),
             ln = currentRecords.length,
             i, currentRecord;
 
         for (i = 0; i < ln; i++) {
             currentRecord = currentRecords[i];
-            if (currentRecord.getId() === updatedRecord.clientId) {
+            if (currentRecord.getId() === clientId) {
                 return currentRecord;
             }
         }

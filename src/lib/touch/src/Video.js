@@ -1,19 +1,24 @@
 /**
  * Provides a simple Container for HTML5 Video.
  *
- * # Useful Properties
+ * ## Notes
+ *
+ * - There are quite a few issues with the <video> tag on Android devices. On Android 2+, the video will
+ * appear and play on first attempt, but any attempt afterwards will not work.
+ *
+ * ## Useful Properties
  *
  * - {@link #url}
  * - {@link #autoPause}
  * - {@link #autoResume}
  *
- * # Useful Methods
+ * ## Useful Methods
  *
  * - {@link #pause}
  * - {@link #method-play}
  * - {@link #toggle}
  *
- * # Example code:
+ * ## Example
  *
  *     var panel = new Ext.Panel({
  *         fullscreen: true,
@@ -53,18 +58,34 @@ Ext.define('Ext.Video', {
         cls: Ext.baseCSSPrefix + 'video'
     },
 
+    template: [{
+        /**
+         * @property {Ext.dom.Element} ghost
+         * @private
+         */
+        reference: 'ghost',
+        classList: [Ext.baseCSSPrefix + 'video-ghost']
+    }, {
+        tag: 'video',
+        reference: 'media',
+        classList: [Ext.baseCSSPrefix + 'media']
+    }],
+
     initialize: function() {
-        this.callParent();
-        if (Ext.os.is.Android) {
-            var ghost = this.ghost = this.element.append(Ext.Element.create({
-                cls: Ext.baseCSSPrefix + 'video-ghost',
-                style: 'background-image: url(' + this.getPosterUrl() + ');'
-            }));
-            ghost.on({
-                tap: 'onGhostTap',
-                scope: this
-            });
-        }
+        var me = this;
+
+        me.callParent();
+
+        me.media.hide();
+        me.ghost.on({
+            tap: 'onGhostTap',
+            scope: me
+        });
+
+        me.media.on({
+            scope: this,
+            pause: 'onPause'
+        });
     },
 
     /**
@@ -72,23 +93,34 @@ Ext.define('Ext.Video', {
      * Called when the {@link #ghost} element is tapped.
      */
     onGhostTap: function() {
-
-        //on android we need to continue to show the ghost, as the video player popups out
-        //and we need to set a timeout and play the video later, to make it work.
-        //it shows a popup, instead of inline
-
         var me = this;
-        setTimeout(function() {
-            me.play();
-            me.media.hide();
-        }, 200);
+
+        me.media.show();
+
+        this.media.setTop(0);
+
+        if (Ext.os.is.Android) {
+            setTimeout(function() {
+                me.play();
+            }, 200);
+        } else {
+            me.ghost.hide();
+            me.media.dom.play();
+        }
     },
 
-    template: [{
-        tag: 'video',
-        reference: 'media',
-        classList: [Ext.baseCSSPrefix + 'media']
-    }],
+    onPause: function() {
+        this.callParent(arguments);
+
+        this.media.setTop(-2000);
+        this.ghost.show();
+    },
+
+    onPlay: function() {
+        this.callParent(arguments);
+
+        this.media.setTop(0);
+    },
 
     /**
      * Updates the URL to the poster, even if it is rendered.
@@ -97,7 +129,7 @@ Ext.define('Ext.Video', {
     updatePosterUrl: function(newUrl) {
         var ghost = this.ghost;
         if (ghost) {
-            ghost.dom.style.backgroundImage = newUrl ? 'url(' + newUrl + ')' : '';
+            ghost.setStyle('background-image', 'url(' + newUrl + ')');
         }
     }
 });

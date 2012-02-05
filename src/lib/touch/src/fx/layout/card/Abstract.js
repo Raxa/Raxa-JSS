@@ -2,9 +2,12 @@
  * @private
  */
 Ext.define('Ext.fx.layout.card.Abstract', {
+    extend: 'Ext.Evented',
     isAnimation: true,
 
     config: {
+        reverse: null,
+
         layout: null
     },
 
@@ -36,5 +39,6 @@ Ext.define('Ext.fx.layout.card.Abstract', {
         if (layout) {
             layout.unBefore('activeitemchange', 'onActiveItemChange', this);
         }
+        this.setLayout(null);
     }
 });

@@ -8,7 +8,7 @@
  * - Custom member functions
  * - Many special tags and built-in operators that aren't defined as part of the API, but are supported in the templates that can be created
  *
- * XTemplate provides the templating mechanism built into {@link Ext.view.View}.
+ * XTemplate provides the templating mechanism built into {@link Ext.DataView}.
  *
  * The {@link Ext.Template} describes the acceptable parameters to pass to the constructor. The following examples
  * demonstrate all of the supported features.

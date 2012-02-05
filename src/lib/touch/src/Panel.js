@@ -39,10 +39,14 @@
  *
  */
 Ext.define('Ext.Panel', {
-    isPanel: true,
-    extend : 'Ext.Container',
-    xtype  : 'panel',
+    extend: 'Ext.Container',
+    requires: ['Ext.util.LineSegment'],
+
     alternateClassName: 'Ext.lib.Panel',
+
+    xtype: 'panel',
+
+    isPanel: true,
 
     config: {
         baseCls: Ext.baseCSSPrefix + 'panel',
@@ -70,6 +74,18 @@ Ext.define('Ext.Panel', {
          * @deprecated 2.0 bodyBorder is deprecated and will be removed in a future version of Sencha Touch.
          */
         bodyBorder: null
+    },
+
+    getElementConfig: function() {
+        var config = this.callParent();
+
+        config.children.push({
+            reference: 'tipElement',
+            className: 'x-anchor',
+            hidden: true
+        });
+
+        return config;
     },
 
     applyBodyPadding: function(bodyPadding) {
@@ -112,5 +128,83 @@ Ext.define('Ext.Panel', {
 
     updateBodyBorder: function(newBodyBorder) {
         this.element.setStyle('border-width', newBodyBorder);
+    },
+
+    alignTo: function(component) {
+        var tipElement = this.tipElement;
+
+        tipElement.hide();
+
+        if (this.currentTipPosition) {
+            tipElement.removeCls('x-anchor-' + this.currentTipPosition);
+        }
+
+        this.callParent(arguments);
+
+        var LineSegment = Ext.util.LineSegment,
+            alignToElement = component.isComponent ? component.renderElement : component,
+            element = this.renderElement,
+            alignToBox = alignToElement.getPageBox(),
+            box = element.getPageBox(),
+            left = box.left,
+            top = box.top,
+            right = box.right,
+            bottom = box.bottom,
+            centerX = left + (box.width / 2),
+            centerY = top + (box.height / 2),
+            leftTopPoint = { x: left, y: top },
+            rightTopPoint = { x: right, y: top },
+            leftBottomPoint = { x: left, y: bottom },
+            rightBottomPoint = { x: right, y: bottom },
+            boxCenterPoint = { x: centerX, y: centerY },
+            alignToCenterX = alignToBox.left + (alignToBox.width / 2),
+            alignToCenterY = alignToBox.top + (alignToBox.height / 2),
+            alignToBoxCenterPoint = { x: alignToCenterX, y: alignToCenterY },
+            centerLineSegment = new LineSegment(boxCenterPoint, alignToBoxCenterPoint),
+            offsetLeft = 0,
+            offsetTop = 0,
+            tipSize, tipWidth, tipHeight, tipPosition, tipX, tipY;
+
+        tipElement.setVisibility(false);
+        tipElement.show();
+        tipSize = tipElement.getSize();
+        tipWidth = tipSize.width;
+        tipHeight = tipSize.height;
+
+        if (centerLineSegment.intersects(new LineSegment(leftTopPoint, rightTopPoint))) {
+            tipX = Math.min(Math.max(alignToCenterX, left), right - (tipWidth / 2));
+            tipY = top;
+            offsetTop = tipHeight;
+            tipPosition = 'top';
+        }
+        else if (centerLineSegment.intersects(new LineSegment(leftTopPoint, leftBottomPoint))) {
+            tipX = left;
+            tipY = Math.min(Math.max(alignToCenterY + (tipWidth / 2), top), bottom);
+            offsetLeft = tipHeight;
+            tipPosition = 'left';
+        }
+        else if (centerLineSegment.intersects(new LineSegment(leftBottomPoint, rightBottomPoint))) {
+            tipX = Math.min(Math.max(alignToCenterX, left), right - (tipWidth / 2));
+            tipY = bottom;
+            offsetTop = -tipHeight;
+            tipPosition = 'bottom';
+        }
+        else if (centerLineSegment.intersects(new LineSegment(rightTopPoint, rightBottomPoint))) {
+            tipX = right;
+            tipY = Math.min(Math.max(alignToCenterY - (tipWidth / 2), top), bottom);
+            offsetLeft = -tipHeight;
+            tipPosition = 'right';
+        }
+
+        if (tipX || tipY) {
+            this.currentTipPosition = tipPosition;
+            tipElement.addCls('x-anchor-' + tipPosition);
+            tipElement.setLeft(tipX - left);
+            tipElement.setTop(tipY - top);
+            tipElement.setVisibility(true);
+
+            this.setLeft(this.getLeft() + offsetLeft);
+            this.setTop(this.getTop() + offsetTop);
+        }
     }
 });

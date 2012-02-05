@@ -162,6 +162,8 @@ Ext.define('Ext.data.reader.Reader', {
         'Ext.data.ResultSet'
     ],
     alternateClassName: ['Ext.data.Reader', 'Ext.data.DataReader'],
+    
+    mixins: ['Ext.mixin.Observable'],
 
     // private
     isReader: true,
@@ -193,7 +195,7 @@ Ext.define('Ext.data.reader.Reader', {
          * {@link Ext.data.proxy.Server}.{@link Ext.data.proxy.Server#exception exception} for additional information.
          */
         successProperty: 'success',
-        
+
         /**
          * @cfg {String} messageProperty
          * The name of the property which contains a response message. This property is optional.
@@ -249,10 +251,7 @@ Ext.define('Ext.data.reader.Reader', {
      * custom data ignored by the reader.
      *
      * This is a read-only property, and it will get replaced each time a new meta data object is
-     * passed to the reader. Note that typically you would handle proxy's
-     * {@link Ext.data.proxy.Proxy#metachange metachange} event which passes this exact same meta
-     * object to listeners. However this property is available if it's more convenient to access it
-     * via the reader directly in certain cases.
+     * passed to the reader.
      */
 
     fieldCount: 0,
@@ -269,7 +268,7 @@ Ext.define('Ext.data.reader.Reader', {
         if (model && !model.prototype.isModel && Ext.isObject(model)) {
             model = Ext.data.ModelManager.registerType(model.storeId || model.id || Ext.id(), model);
         }
-        
+
         return model;
     },
 
@@ -288,6 +287,8 @@ Ext.define('Ext.data.reader.Reader', {
             this.buildExtractors();
         }
     },
+
+    createAccessor: Ext.emptyFn,
 
     /**
      * @private
@@ -642,7 +643,7 @@ Ext.define('Ext.data.reader.Reader', {
 //        }
 //    }
 }, function() {
-    Ext.apply(this, {
+    Ext.apply(this.prototype, {
         // Private. Empty ResultSet to return when response is falsy (null|undefined|empty string)
         nullResultSet: new Ext.data.ResultSet({
             total  : 0,

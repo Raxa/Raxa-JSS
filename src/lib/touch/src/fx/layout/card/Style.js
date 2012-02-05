@@ -12,13 +12,15 @@ Ext.define('Ext.fx.layout.card.Style', {
     config: {
         inAnimation: {
             before: {
-                visibility: ''
+                visibility: null
             },
-            preserveEndState: false
+            preserveEndState: false,
+            replacePrevious: true
         },
 
         outAnimation: {
-            preserveEndState: false
+            preserveEndState: false,
+            replacePrevious: true
         }
     },
 
@@ -28,8 +30,13 @@ Ext.define('Ext.fx.layout.card.Style', {
 
         this.initConfig(config);
 
+        this.endAnimationCounter = 0;
+
         inAnimation = this.getInAnimation();
         outAnimation = this.getOutAnimation();
+
+        inAnimation.on('animationend', 'incrementEnd', this);
+        outAnimation.on('animationend', 'incrementEnd', this);
 
         for (name in config) {
             if (config.hasOwnProperty(name)) {
@@ -41,6 +48,15 @@ Ext.define('Ext.fx.layout.card.Style', {
 
         inAnimation.setConfig(animationConfig);
         outAnimation.setConfig(animationConfig);
+    },
+
+    incrementEnd: function() {
+        this.endAnimationCounter++;
+
+        if (this.endAnimationCounter > 1) {
+            this.endAnimationCounter = 0;
+            this.fireEvent('animationend', this);
+        }
     },
 
     applyInAnimation: function(animation, inAnimation) {
@@ -74,11 +90,13 @@ Ext.define('Ext.fx.layout.card.Style', {
 
             previousOutElement = outAnimation.getElement();
             outAnimation.setElement(outElement);
-//            outAnimation.setOnBeforeEnd(function(element, isInterrupted) {
-//                if (isInterrupted) {
-//                    controller.firingArguments[2] = null;
-//                }
-//            });
+
+            outAnimation.setOnBeforeEnd(function(element, interrupted) {
+                if (interrupted || Ext.Animator.hasRunningAnimations(element)) {
+                    controller.firingArguments[1] = null;
+                    controller.firingArguments[2] = null;
+                }
+            });
             outAnimation.setOnEnd(function() {
                 controller.resume();
             });

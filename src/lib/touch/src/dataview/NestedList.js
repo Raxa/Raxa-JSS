@@ -686,7 +686,7 @@ Ext.define('Ext.dataview.NestedList', {
     /**
      * @private
      * Method which updates the {@link #backButton} and {@link #toolbar} with the latest information from
-     * the current {@link #node}.
+     * the current node.
      */
     syncToolbar: function(forceDetail) {
         var me = this,
@@ -715,7 +715,7 @@ Ext.define('Ext.dataview.NestedList', {
 
     /**
      * @private
-     * Returns true if the passed node should have a reverse animation from the previous current {@link #node}
+     * Returns true if the passed node should have a reverse animation from the previous current node
      * @param {Ext.data.NodeInterface} node
      */
     goToNodeReverseAnimation: function(node) {

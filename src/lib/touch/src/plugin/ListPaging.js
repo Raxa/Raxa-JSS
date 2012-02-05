@@ -5,6 +5,29 @@
  * By specifying `{@link #autoPaging}: true`, an 'infinite scroll' effect can be achieved,
  * i.e., the next page of content will load automatically when the user scrolls to the
  * bottom of the list.
+ *
+ * ## Example
+ *
+ *     Ext.define('TweetList', {
+ *         extend: 'Ext.List',
+ *
+ *         config: {
+ *             store: Ext.create('TweetStore'),
+ *
+ *             plugins: [
+ *                 {
+ *                     xclass: 'Ext.plugin.ListPaging',
+ *                     autoPaging: true
+ *                 }
+ *             ],
+ *
+ *             itemTpl: [
+ *                 '<img src="{profile_image_url}" />',
+ *                 '<div class="tweet">{text}</div>'
+ *             ]
+ *         }
+ *     });
+ *
  */
 Ext.define('Ext.plugin.ListPaging', {
     extend: 'Ext.Component',
@@ -76,7 +99,7 @@ Ext.define('Ext.plugin.ListPaging', {
         this.addLoadMoreCmp();
 
         if (this.scrollY) {
-            this.scroller.scrollTo({ y: this.scrollY });
+            this.scroller.scrollTo(null, this.scrollY);
         }
         this.maxScroller = this.scroller.getMaxPosition();
         this.loadMoreCmp.removeCls(Ext.baseCSSPrefix + 'loading');

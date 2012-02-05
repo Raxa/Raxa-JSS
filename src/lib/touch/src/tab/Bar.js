@@ -11,7 +11,6 @@ Ext.define('Ext.tab.Bar', {
     alternateClassName: 'Ext.TabBar',
     xtype : 'tabbar',
 
-    // @TODO: Implement sortable tabs again
     requires: ['Ext.tab.Tab'],
 
     config: {
@@ -120,11 +119,10 @@ Ext.define('Ext.tab.Bar', {
      */
     parseActiveTab: function(tab) {
         //we need to call getItems to initialize the items, otherwise they will not exist yet.
-        var items = this.getItems();
-
         if (typeof tab == 'number') {
             return this.getInnerItems()[tab];
-        } else if (typeof tab == 'string') {
+        }
+        else if (typeof tab == 'string') {
             tab = Ext.getCmp(tab);
         }
         return tab;

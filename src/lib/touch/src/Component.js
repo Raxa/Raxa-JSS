@@ -47,7 +47,7 @@
  * ### General components
  * * {@link Ext.Panel}
  * * {@link Ext.tab.Panel}
- * * {@link Ext.viewport.Viewport Ext.Viewport}
+ * * {@link Ext.Viewport Ext.Viewport}
  * * {@link Ext.Img}
  * * {@link Ext.Map}
  * * {@link Ext.Audio}
@@ -294,6 +294,11 @@ Ext.define('Ext.Component', {
     cachedConfig: {
         /**
          * @cfg {Number} flex
+         * The flex of this item *if* this item item is inside a {@link Ext.layout.HBox} or {@link Ext.layout.VBox}
+         * layout.
+         *
+         * You can also update the flex of a component dynamically using the {@link Ext.layout.AbstractBox#setItemFlex}
+         * method.
          */
 
         /**
@@ -355,48 +360,96 @@ Ext.define('Ext.Component', {
 
     eventedConfig: {
         /**
-         * @cfg {Number/Boolean} left
+         * @cfg {Number/String} left
+         * The absolute left position of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * Explicitly setting this value will make this Component become 'floating', which means its layout will no
+         * longer be affected by the Container that it resides in.
          * @accessor
          * @evented
          */
         left: null,
 
         /**
-         * @cfg {Number/Boolean} top
+         * @cfg {Number/String} top
+         * The absolute top position of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * Explicitly setting this value will make this Component become 'floating', which means its layout will no
+         * longer be affected by the Container that it resides in.
          * @accessor
          * @evented
          */
         top: null,
 
         /**
-         * @cfg {Number/Boolean} right
+         * @cfg {Number/String} right
+         * The absolute right position of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * Explicitly setting this value will make this Component become 'floating', which means its layout will no
+         * longer be affected by the Container that it resides in.
          * @accessor
          * @evented
          */
         right: null,
 
         /**
-         * @cfg {Number/Boolean} bottom
+         * @cfg {Number/String} bottom
+         * The absolute bottom position of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * Explicitly setting this value will make this Component become 'floating', which means its layout will no
+         * longer be affected by the Container that it resides in.
          * @accessor
          * @evented
          */
         bottom: null,
 
         /**
-         * @cfg {Number} width
-         * The width of this component in pixels.
+         * @cfg {Number/String} width
+         * The width of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * By default, if this is not explicitly set, this Component's element will simply have its own natual size.
          * @accessor
          * @evented
          */
         width: null,
 
         /**
-         * @cfg {Number} height
-         * The height of this component in pixels.
+         * @cfg {Number/String} height
+         * The height of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * By default, if this is not explicitly set, this Component's element will simply have its own natual size.
          * @accessor
          * @evented
          */
         height: null,
+
+        /**
+         * @cfg {Number/String} minWidth
+         * The minimum width of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * @accessor
+         * @evented
+         */
+        minWidth: null,
+
+        /**
+         * @cfg {Number/String} minHeight
+         * The minimum height of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * @accessor
+         * @evented
+         */
+        minHeight: null,
+
+        /**
+         * @cfg {Number/String} maxWidth
+         * The maximum width of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * Note that this config will not apply if the Component is 'floating' (absolutely positioned or centered)
+         * @accessor
+         * @evented
+         */
+        maxWidth: null,
+
+        /**
+         * @cfg {Number/String} maxHeight
+         * The maximum height of this Component; must be a valid CSS length value, e.g: `300`, `100px`, `30%`, etc.
+         * Note that this config will not apply if the Component is 'floating' (absolutely positioned or centered)
+         * @accessor
+         * @evented
+         */
+        maxHeight: null,
 
         /**
          * @cfg {String} docked
@@ -423,7 +476,7 @@ Ext.define('Ext.Component', {
 
         /**
          * @cfg {Boolean} centered
-         * Whether or not this component is absolutely centered inside its container
+         * Whether or not this Component is absolutely centered inside its Container
          * @accessor
          * @evented
          */
@@ -431,7 +484,7 @@ Ext.define('Ext.Component', {
 
         /**
          * @cfg {Boolean} hidden
-         * Whether or not this component is hidden
+         * Whether or not this Component is hidden (its CSS `display` property is set to `none`)
          * @accessor
          * @evented
          */
@@ -505,6 +558,20 @@ Ext.define('Ext.Component', {
         tpl: null,
 
         /**
+         * @cfg {String/Mixed} enterAnimation
+         * Effect when the message box is being displayed.
+         * @accessor
+         */
+        enterAnimation: null,
+
+        /**
+         * @cfg {String/Mixed} exitAnimation
+         * Effect when the message box is being hidden.
+         * @accessor
+         */
+        exitAnimation: null,
+
+        /**
          * @cfg {Mixed} renderTpl
          * <p>An {@link Ext.XTemplate XTemplate} used to create the internal structure inside this Component's
          * encapsulating Element.</p>
@@ -540,9 +607,9 @@ Ext.define('Ext.Component', {
         disabledCls: clsPrefix + 'item-disabled',
 
         /**
-         * @cfg {Ext.Element/HTMLElement/String} contentEl The configured element will automatically be added as the content of this
-         * component. When you pass a string, we expect it to be an element id. If the content element is hidden, we will automatically
-         * show it.
+         * @cfg {Ext.Element/HTMLElement/String} contentEl The configured element will automatically be
+         * added as the content of this component. When you pass a string, we expect it to be an element id.
+         * If the content element is hidden, we will automatically show it.
          * @accessor
          */
         contentEl: null,
@@ -622,30 +689,43 @@ Ext.define('Ext.Component', {
          *     });
          *
          */
-        plugins: null,
-
-        elementListeners: null
+        plugins: null
     },
 
     /**
      * @event painted
-     * Fires whenever the Component is moved into to the DOM body.
+     * Fires whenever this Component actually becomes visible (painted) on the screen. This is useful when you need to
+     * perform 'read' operations on the DOM element, i.e: calculating natural sizes and positioning. If you just need
+     * perform post-initialization tasks that don't rely on the fact that the element must be rendered and visible on
+     * the screen, listen to {@link #initialize}
      *
-     * This event can not be listened to if you are using {@link Ext.ComponentQuery}. Instead, you should listen to the event
-     * directly on the component itself.
+     * Note: This event is not available to be used with event delegation. Instead 'painted' only fires if you explicily
+     * add at least one listener to it, due to performance reason.
      *
-     * This is because of performance implications when firing the event so many times.
      * @param {Ext.Component} this The component instance
      */
 
     /**
      * @event erased
-     * Fires whenever the Component is moved out of the DOM body
+     * The opposite event of {@link #painted}. This event fires whenever this Component are no longer visible
+     * (erased) on the screen. This might be triggered either when this Component {@link #hidden} config is set to
+     * `true`, or when its Element is taken out of the document's DOM tree. This is normally useful to perform cleaning
+     * up after what you have set up from listening to {@link #painted} event.
      *
-     * This event can not be listened to if you are using {@link Ext.ComponentQuery}. Instead, you should listen to the event
-     * directly on the component itself.
+     * Note: This event is not available to be used with event delegation. Instead 'erased' only fires if you explicily
+     * add at least one listener to it, due to performance reason.
      *
-     * This is because of performance implications when firing the event so many times.
+     * @param {Ext.Component} this The component instance
+     */
+
+    /**
+     * @event resize
+     * Important note: For the best performance on mobile devices, use this only when you absolutely need to monitor
+     * a Component's size.
+     *
+     * Note: This event is not available to be used with event delegation. Instead 'resize' only fires if you explicily
+     * add at least one listener to it, due to performance reason.
+     *
      * @param {Ext.Component} this The component instance
      */
 
@@ -677,19 +757,12 @@ Ext.define('Ext.Component', {
     /**
      * @private
      */
-    alignPositionMap: [
-        'tl-bl',
-        't-b',
-        'tr-br',
-        'l-r',
-        'l-r',
-        'r-l',
-        'bl-tl',
-        'b-t',
-        'br-tr'
-    ],
-
     listenerOptionsRegex: /^(?:delegate|single|delay|buffer|args|prepend|element)$/,
+
+    /**
+     * @private
+     */
+    alignmentRegex: /^([a-z]+)-([a-z]+)(\?)?$/,
 
     /**
      * @private
@@ -727,44 +800,60 @@ Ext.define('Ext.Component', {
      * @param {Object} config The standard configuration object.
      */
     constructor: function(config) {
-        var currentConfig = this.config,
+        var me = this,
+            currentConfig = me.config,
             id;
 
-        this.onInitializedListeners = [];
-        this.initialConfig = config;
+        me.onInitializedListeners = [];
+        me.initialConfig = config;
 
         if (config !== undefined && 'id' in config) {
             id = config.id;
-            delete config.id;
         }
         else if ('id' in currentConfig) {
             id = currentConfig.id;
         }
         else {
-            id = this.getId();
+            id = me.getId();
         }
 
-        this.setId(id);
+        me.id = id;
+        me.setId(id);
 
-        Ext.ComponentManager.register(this);
+        Ext.ComponentManager.register(me);
 
-        this.initElement();
+        me.initElement();
 
-        this.initialize();
-    },
+        me.beforeInitialize();
 
-    initialize: function() {
-        this.initConfig(this.initialConfig);
-        this.triggerInitialized();
+        me.initConfig(me.initialConfig);
+
+        me.initialize();
+
+        me.triggerInitialized();
 
         /**
-         * Force the component to take up 100% width and height available, by adding it to {@link Ext.viewport.Viewport}.
+         * Force the component to take up 100% width and height available, by adding it to {@link Ext.Viewport}.
          * @cfg {Boolean} fullscreen
          */
-        if ('fullscreen' in this.config) {
-            this.fireEvent('fullscreen', this);
+        if ('fullscreen' in me.config) {
+            me.fireEvent('fullscreen', me);
         }
+
+        me.fireEvent('initialize', me);
     },
+
+    /**
+     * @private
+     */
+    beforeInitialize: Ext.emptyFn,
+
+    /**
+     * Allows addition of behavior to the rendering phase.
+     * @protected
+     * @template
+     */
+    initialize: Ext.emptyFn,
 
     getTemplate: function() {
         return this.template;
@@ -859,12 +948,8 @@ Ext.define('Ext.Component', {
         return this;
     },
 
-    applyElementListeners: function(listeners) {
-        this.element.on(listeners);
-    },
-
     applyPlugins: function(config) {
-        var ln, i;
+        var ln, i, configObj;
 
         if (!config) {
             return config;
@@ -873,7 +958,16 @@ Ext.define('Ext.Component', {
         config = [].concat(config);
 
         for (i = 0, ln = config.length; i < ln; i++) {
-            config[i] = Ext.factory(config[i], 'Ext.plugin.Plugin', null, 'plugin');
+            configObj = config[i];
+           //<deprecated product=touch since=2.0>
+                if (Ext.isObject(configObj) && configObj.ptype) {
+                    //<debug warn>
+                        Ext.Logger.deprecate('Using a ptype is now deprecated, please use type instead', 1);
+                    //</debug>
+                    configObj.type = configObj.ptype;
+                }
+           //</deprecated>
+            config[i] = Ext.factory(configObj, 'Ext.plugin.Plugin', null, 'plugin');
         }
 
         return config;
@@ -1040,7 +1134,7 @@ Ext.define('Ext.Component', {
         //remove all oldCls
         if (typeof oldCls == "string") {
             array = Ext.Array.remove(array, prefix + oldCls + suffix);
-        } else {
+        } else if (oldCls) {
             ln = oldCls.length;
             for (i = 0; i < ln; i++) {
                 array = Ext.Array.remove(array, prefix + oldCls[i] + suffix);
@@ -1050,7 +1144,7 @@ Ext.define('Ext.Component', {
         //add all newCls
         if (typeof newCls == "string") {
             array.push(prefix + newCls + suffix);
-        } else {
+        } else if (newCls) {
             ln = newCls.length;
 
             //check if there is currently nothing in the array and we dont need to add a prefix or a suffix.
@@ -1147,8 +1241,9 @@ Ext.define('Ext.Component', {
             oldContentEl.hide();
             Ext.getBody().append(oldContentEl);
         }
+
         if (newContentEl) {
-            this.setHtml(newContentEl);
+            this.setHtml(newContentEl.dom);
             newContentEl.show();
         }
     },
@@ -1233,7 +1328,23 @@ Ext.define('Ext.Component', {
         this.element.setHeight(height);
     },
 
-    //TODO Implement animations here
+    doSetMinWidth: function(width) {
+        this.element.setMinWidth(width);
+    },
+
+    doSetMinHeight: function(height) {
+        this.element.setMinHeight(height);
+    },
+
+    doSetMaxWidth: function(width) {
+        this.element.setMaxWidth(width);
+    },
+
+    doSetMaxHeight: function(height) {
+        this.element.setMaxHeight(height);
+    },
+
+    // See https://sencha.jira.com/browse/TOUCH-1501
 //    animatePosition: function(property, value, animation) {
 //        var me = this,
 //            config = {};
@@ -1380,7 +1491,14 @@ Ext.define('Ext.Component', {
     },
 
     updateZIndex: function(zIndex) {
-        this.element.dom.style.setProperty('z-index', zIndex, 'important');
+        var domStyle = this.element.dom.style;
+
+        if (zIndex !== null) {
+            domStyle.setProperty('z-index', zIndex, 'important');
+        }
+        else {
+            domStyle.removeProperty('z-index');
+        }
     },
 
     getInnerHtmlElement: function() {
@@ -1400,14 +1518,14 @@ Ext.define('Ext.Component', {
     },
 
     updateHtml: function(html) {
-        var innerHtmlElement = this.getInnerHtmlElement(),
-            type = typeof html;
+        var innerHtmlElement = this.getInnerHtmlElement();
 
-        if (type == 'string' || type == 'number') {
-            innerHtmlElement.setHtml(html);
-        } else {
+        if (Ext.isElement(html)){
             innerHtmlElement.setHtml('');
             innerHtmlElement.append(html);
+        }
+        else {
+            innerHtmlElement.setHtml(html);
         }
     },
 
@@ -1439,15 +1557,70 @@ Ext.define('Ext.Component', {
     /**
      * Hides this Component
      */
-    hide: function() {
-        this.setHidden(true);
+    hide: function(animation) {
+        if (!this.getHidden()) {
+            if (animation === undefined) {
+                animation = this.getExitAnimation();
+            }
+            if (animation && !animation.isComponent) {
+                if (animation === true) {
+                    animation = 'fadeOut';
+                }
+                this.onBefore({
+                    hiddenchange: 'animateFn',
+                    scope: this,
+                    single: true,
+                    args: [animation]
+                });
+            }
+            this.setHidden(true);
+        }
+        return this;
     },
 
     /**
      * Shows this component
      */
-    show: function() {
-        this.setHidden(false);
+    show: function(animation) {
+        if (this.getHidden()) {
+            if (animation === undefined) {
+                animation = this.getEnterAnimation();
+            }
+            if (animation && !animation.isComponent) {
+                if (animation === true) {
+                    animation = 'fadeIn';
+                }
+                this.onBefore({
+                    hiddenchange: 'animateFn',
+                    scope: this,
+                    single: true,
+                    args: [animation]
+                });
+            }
+            this.setHidden(false);
+        }
+        return this;
+    },
+
+    animateFn: function(animation, component, newState, oldState, options, controller) {
+        if (animation) {
+            var anim = new Ext.fx.Animation(animation);
+            anim.setElement(component.element);
+            if (newState) {
+                anim.setOnEnd(function() {
+                    controller.resume();
+                });
+                controller.pause();
+            }
+            Ext.Animator.run(anim);
+        }
+    },
+
+    /**
+     * @private
+     */
+    setVisibility: function(isVisible) {
+        this.renderElement.setVisibility(isVisible);
     },
 
     /**
@@ -1498,7 +1671,6 @@ Ext.define('Ext.Component', {
         return itemId || this.getId();
     },
 
-    //TODO Deprecate this method name, should have been 'isXtype' (lowercased 't')
     /**
      * <p>Tests whether or not this Component is of a specific xtype. This can test whether this Component is descended
      * from the xtype (default) or whether it is directly of the xtype specified (shallow = true).</p>
@@ -1525,8 +1697,6 @@ var isBoxInstance = t.isXType('field', true); // false, not a direct Ext.field.F
         return Boolean(this.xtypesMap[xtype]);
     },
 
-    //TODO Correct this method's signature should return the array of xtypes instead of a string. Also
-    // its name should be getXtypes (lowercased 't')
     /**
      * <p>Returns this Component's xtype hierarchy as a slash-delimited string. For a list of all
      * available xtypes, see the {@link Ext.Component} header.</p>
@@ -1590,6 +1760,10 @@ alert(t.getXTypes());  // alerts 'component/field/textfield'
         translatable.translate.apply(translatable, arguments);
     },
 
+    /**
+     * @private
+     * @param rendered
+     */
     setRendered: function(rendered) {
         var wasRendered = this.rendered;
 
@@ -1650,85 +1824,162 @@ alert(t.getXTypes());  // alerts 'component/field/textfield'
         return this.callParent(arguments);
     },
 
-    //TODO Need serious rewrites from here on or move them to the proper places
     /**
-     * Shows this Component next to another Component or Element
-     * @param {Ext.Component/Ext.Element} alignTo The Element or Component to align to
+     * Shows this component along side a specified component.
+     *
+     * If you specify no alignment, it will automatically position the specified component relative to this component.
+     *
+     * The following are all of the supported alignment positions:
+     *
+     *     Value  Description
+     *     -----  -----------------------------
+     *     tl     The top left corner
+     *     t      The center of the top edge
+     *     tr     The top right corner
+     *     l      The center of the left edge
+     *     c      In the center of the element
+     *     r      The center of the right edge
+     *     bl     The bottom left corner
+     *     b      The center of the bottom edge
+     *     br     The bottom right corner
+     *
+     * ## Example
+     *
+     *     // show `comp` by `otherComp` using the default positioning ("tc-bc", non-constrained)
+     *     comp.showBy(otherComp);
+     *
+     *     // align the top left corner of `comp` with the top right corner of `otherComp` (constrained to viewport)
+     *     comp.showBy(otherComp, "tr?");
+     *
+     *     // align the bottom right corner of `comp` with the center left edge of `otherComp`
+     *     comp.showBy(otherComp, "br-l?");
+     *
+     * @param {Ext.Component} component The target component to show this component by
+     * @param {String} alignment (Optional) The specific alignment.
      */
-    showBy: function(alignTo, animation, anchor) {
-        // @todo animation + allowOnSide not implemented
-        //<debug warn>
-        if (animation) {
-            Ext.Logger.warn('showBy: animation argument not implemented.');
+    showBy: function(component, alignment) {
+        var args = Ext.Array.from(arguments);
+
+        if (!this.currentShowByArgs) {
+            var viewport = Ext.Viewport,
+                parent = this.getParent();
+
+            this.setVisibility(false);
+
+            if (parent !== viewport) {
+                viewport.add(this);
+            }
+
+            this.show();
+
+            this.on('erased', 'onShowByErased', this, { single: true });
+            viewport.on('resize', 'refreshShowBy', this);
+        }
+
+        this.currentShowByArgs = args;
+
+        this.alignTo.apply(this, arguments);
+        this.setVisibility(true);
+    },
+
+    refreshShowBy: function() {
+        this.alignTo.apply(this, this.currentShowByArgs);
+    },
+
+    /**
+     * @private
+     * @param component
+     */
+    onShowByErased: function() {
+        delete this.currentShowByArgs;
+        Ext.Viewport.un('resize', 'refreshShowBy', this);
+    },
+
+    /**
+     * @private
+     */
+    alignTo: function(component, alignment) {
+        var alignToElement = component.isComponent ? component.renderElement : component,
+            element = this.renderElement,
+            alignToBox = alignToElement.getPageBox(),
+            constrainBox = this.getParent().element.getPageBox(),
+            box = element.getPageBox(),
+            alignToHeight = alignToBox.height,
+            alignToWidth = alignToBox.width,
+            height = box.height,
+            width = box.width;
+
+        if (!alignment || alignment === 'auto') {
+            if (constrainBox.bottom - alignToBox.bottom < height) {
+                if (alignToBox.top - constrainBox.top < height) {
+                    if (alignToBox.left - constrainBox.left < width) {
+                        alignment = 'cl-cr?';
+                    }
+                    else {
+                        alignment = 'cr-cl?';
+                    }
+                }
+                else {
+                    alignment = 'bc-tc?';
+                }
+            }
+            else {
+                alignment = 'tc-bc?';
+            }
+        }
+
+        var matches = alignment.match(this.alignmentRegex);
+        //<debug error>
+        if (!matches) {
+            Ext.Logger.error("Invalid alignment value of '" + alignment + "'");
         }
         //</debug>
 
-        var parent = this.getParent();
-        if (parent) {
-            parent.remove(this, false);
-        }
-
-        Ext.Viewport.add(this);
-
-        this.setTop(-10000);
-        this.setLeft(-10000);
-        this.show();
-
-        this.alignTo(alignTo, anchor || 'auto');
-
-        // If we don't do a repaint here, on iOS5 iPhone/iPod, the element will not be positioned correctly
-        // on the screen
-        this.element.repaint();
-    },
-
-    anchorRe: /^([a-z]+)-([a-z]+)(\?)?$/,
-
-    doAnchorXY: function(anchor, box, toBox, constrainBox) {
-        var matches = anchor.match(this.anchorRe),
-            fromAnchor = matches[1].split(''),
-            toAnchor = matches[2].split(''),
-            offsetBox = {top: toBox.top, left: toBox.left},
-            constrain = (matches[3] === '?'),
-
-            fromVertical = fromAnchor[0],
-            fromHorizontal = fromAnchor[1] || fromVertical,
-
-            toVertical = toAnchor[0],
-            toHorizontal = toAnchor[1] || toVertical,
-
+        var from = matches[1].split(''),
+            to = matches[2].split(''),
+            constrained = (matches[3] === '?'),
+            fromVertical = from[0],
+            fromHorizontal = from[1] || fromVertical,
+            toVertical = to[0],
+            toHorizontal = to[1] || toVertical,
+            top = alignToBox.top,
+            left = alignToBox.left,
             maxLeft, maxTop;
 
         switch (fromVertical) {
             case 't':
                 switch (toVertical) {
                     case 'c':
-                        offsetBox.top += toBox.height / 2;
+                        top += alignToHeight / 2;
                         break;
                     case 'b':
-                        offsetBox.top += toBox.height;
+                        top += alignToHeight;
                 }
                 break;
 
             case 'b':
                 switch (toVertical) {
                     case 'c':
-                        offsetBox.top -= (box.height - (toBox.height / 2));
+                        top -= (height - (alignToHeight / 2));
                         break;
                     case 't':
-                        offsetBox.top -= box.height;
+                        top -= height;
+                        break;
+                    case 'b':
+                        top -= height - alignToHeight;
                 }
                 break;
 
             case 'c':
-                 switch (toVertical) {
+                switch (toVertical) {
                     case 't':
-                        offsetBox.top -= (box.height / 2);
+                        top -= (height / 2);
                         break;
                     case 'c':
-                        offsetBox.top -= ((box.height / 2) - (toBox.height / 2));
+                        top -= ((height / 2) - (alignToHeight / 2));
                         break;
                     case 'b':
-                        offsetBox.top -= ((box.height / 2) - toBox.height);
+                        top -= ((height / 2) - alignToHeight);
                 }
                 break;
         }
@@ -1737,92 +1988,50 @@ alert(t.getXTypes());  // alerts 'component/field/textfield'
             case 'l':
                 switch (toHorizontal) {
                     case 'c':
-                        offsetBox.left += toBox.width / 2;
+                        left += alignToWidth / 2;
                         break;
                     case 'r':
-                        offsetBox.left += toBox.width;
+                        left += alignToWidth;
                 }
                 break;
 
             case 'r':
                 switch (toHorizontal) {
                     case 'r':
-                        offsetBox.left -= (box.width - toBox.width);
+                        left -= (width - alignToWidth);
                         break;
                     case 'c':
-                        offsetBox.left -= (box.width - (toBox.width / 2));
+                        left -= (width - (alignToWidth / 2));
                         break;
                     case 'l':
-                        offsetBox.left -= box.width;
+                        left -= width;
                 }
                 break;
 
             case 'c':
-                 switch (toHorizontal) {
+                switch (toHorizontal) {
                     case 'l':
-                        offsetBox.left -= (box.width / 2);
+                        left -= (width / 2);
                         break;
                     case 'c':
-                        offsetBox.left -= ((box.width / 2) - (toBox.width / 2));
+                        left -= ((width / 2) - (alignToWidth / 2));
                         break;
                     case 'r':
-                        offsetBox.left -= ((box.width / 2) - toBox.width);
+                        left -= ((width / 2) - alignToWidth);
                 }
                 break;
         }
 
-        if (constrain) {
-            maxLeft = (constrainBox.left + constrainBox.width) - box.width;
-            maxTop = (constrainBox.top + constrainBox.height) - box.height;
+        if (constrained) {
+            maxLeft = (constrainBox.left + constrainBox.width) - width;
+            maxTop = (constrainBox.top + constrainBox.height) - height;
 
-            offsetBox.left = Math.max(constrainBox.left, Math.min(maxLeft, offsetBox.left));
-            offsetBox.top = Math.max(constrainBox.top, Math.min(maxTop, offsetBox.top));
+            left = Math.max(constrainBox.left, Math.min(maxLeft, left));
+            top = Math.max(constrainBox.top, Math.min(maxTop, top));
         }
 
-        return offsetBox;
-    },
-
-    alignTo : function(alignTo, anchor, offset) {
-        offset = offset || 0;
-
-        var alignElement = alignTo.element,
-            alignXY = webkitConvertPointFromNodeToPage(alignElement.dom, new WebKitPoint()),
-            alignSize = alignElement.getSize(),
-            size = this.element.getSize(),
-            parent = this.getParent(),
-            constrainBox = (parent) ? parent.element.getBox() : Ext.getBody().getBox(),
-            box = {
-                left: 0,
-                top: 0,
-                width: size.width,
-                height: size.height
-            },
-            relativeToBox = {
-                left: alignXY.x,
-                top: alignXY.y,
-                width: alignSize.width,
-                height: alignSize.height
-            }, anchorBox, tmpBox;
-
-        if (anchor == 'auto') {
-            anchor = 'tc-bc';
-        }
-
-        anchorBox = this.doAnchorXY(anchor, box, relativeToBox, constrainBox);
-        if (anchorBox.top + box.height > constrainBox.top + constrainBox.height) {
-            tmpBox = this.doAnchorXY('bc-tc?', box, relativeToBox, constrainBox);
-            anchorBox.top = tmpBox.top;
-        }
-        if (anchorBox.left + box.width > constrainBox.left + constrainBox.width) {
-            tmpBox = this.doAnchorXY('br-tr?', box, relativeToBox, constrainBox);
-            anchorBox.left = tmpBox.left;
-        } else if (anchorBox.left < constrainBox.left) {
-            tmpBox = this.doAnchorXY('bl-tl?', box, relativeToBox, constrainBox);
-            anchorBox.left = tmpBox.left;
-        }
-
-        this.setTop(anchorBox.top);
-        this.setLeft(anchorBox.left);
+        this.setLeft(left);
+        this.setTop(top);
     },
 
     /**
@@ -1857,7 +2066,7 @@ var owningTabPanel = grid.up('tabpanel');
      * All Ext.Element references are also deleted and the Component is de-registered from Ext.ComponentManager
      */
     destroy: function() {
-        this.callParent();
+        this.destroy = Ext.emptyFn;
 
         var parent = this.getParent(),
             referenceList = this.referenceList,
@@ -1869,14 +2078,41 @@ var owningTabPanel = grid.up('tabpanel');
         }
 
         // Destroy all element references
-        for (i = 0,ln = referenceList.length; i < ln; i++) {
+        for (i = 0, ln = referenceList.length; i < ln; i++) {
             reference = referenceList[i];
             this[reference].destroy();
             delete this[reference];
         }
 
+        Ext.destroy(this.innerHtmlElement, this.getTranslatable());
         Ext.ComponentManager.unregister(this);
+
+        this.callParent();
+    },
+
+    // Convert old properties in data into a config object
+    // <deprecated product=touch since=2.0>
+    onClassExtended: function(cls, data, hooks) {
+        var onBeforeClassCreated = hooks.onBeforeCreated,
+            Component = this,
+            defaultConfig = Component.prototype.config,
+            config = data.config || {},
+            key;
+
+
+        for (key in defaultConfig) {
+            if (key in data) {
+                config[key] = data[key];
+                delete data[key];
+                // <debug warn>
+                console.warn(key + ' is deprecated as a property directly on the Component prototype. Please put it inside the config object.');
+                // </debug>
+            }
+        }
+
+        data.config = config;
     }
+    // </deprecated>
 
 }, function() {
    //<deprecated product=touch since=2.0>
@@ -1920,6 +2156,20 @@ var owningTabPanel = grid.up('tabpanel');
                     Ext.Logger.deprecate("'componentCls' config is deprecated, please use 'cls' config instead", this);
                     //</debug>
                     config.cls = config.componentCls;
+                }
+
+                /**
+                 * @member Ext.Component
+                 * @cfg {String} floating Deprecated, please use {@link #left}, {@link #top}, {@link #right} or
+                 * {@link #bottom} instead
+                 * @deprecated 2.0.0
+                 */
+                if (config.floating) {
+                    //<debug warn>
+                    Ext.Logger.deprecate("'floating' config is deprecated, please set 'left', 'right', " +
+                        "'top' or 'bottom' config instead", this);
+                    //</debug>
+                    config.left = config.left || 0;
                 }
 
                 for (name in config) {
@@ -1974,8 +2224,8 @@ var owningTabPanel = grid.up('tabpanel');
 
                 if (containerDom && containerDom.nodeType == 11) {
                     //<debug warn>
-                    Ext.Logger.deprecate("Showing a component that currently doesn't have any container, " +
-                        "please use Ext.Viewport.add() to add this component to the viewport", this);
+                    Ext.Logger.deprecate("Call show() on a component that doesn't currently belong to any container. " +
+                        "Please add it to the the Viewport first, i.e: Ext.Viewport.add(component);", this);
                     //</debug>
                     Ext.Viewport.add(this);
                 }
@@ -1986,7 +2236,8 @@ var owningTabPanel = grid.up('tabpanel');
 
         addListener: function(options) {
             if (arguments.length === 1 && Ext.isObject(options) && (('el' in options) || ('body' in options))) {
-                Ext.Logger.error("Adding component element listeners using the old format is no longer supported. Please refer to: http://bit.ly/wYgr2q for more details.", this);
+                Ext.Logger.error("Adding component element listeners using the old format is no longer supported. " +
+                    "Please refer to: http://bit.ly/xHCyfa for more details.", this);
             }
 
             return this.callParent(arguments);

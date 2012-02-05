@@ -12,7 +12,9 @@ Ext.define('Ext.util.SizeMonitor', {
 
         callback: Ext.emptyFn,
 
-        scope: null
+        scope: null,
+
+        args: []
     },
 
     constructor: function(config) {
@@ -108,10 +110,7 @@ Ext.define('Ext.util.SizeMonitor', {
     },
 
     doFireSizeChangeEvent: function() {
-        var callback = this.getCallback(),
-            scope = this.getScope();
-
-        callback.call(scope);
+        this.getCallback().apply(this.getScope(), this.getArgs());
     },
 
     destroyDetector: function(name) {

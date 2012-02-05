@@ -104,12 +104,9 @@ Ext.define('Ext.fx.runner.Css', {
 
         this.vendorPrefix = Ext.browser.getStyleDashPrefix();
 
-        this.supports3dTransforms = supports3dTransform;
-
         this.ruleStylesCache = {};
 
         return this;
-
     },
 
     getStyleSheet: function() {
@@ -161,7 +158,13 @@ Ext.define('Ext.fx.runner.Css', {
                 if (ruleStyleCache[name] !== value) {
                     ruleStyleCache[name] = value;
 //                    console.log(name + " " + value);
-                    ruleStyle.setProperty(name, value, 'important');
+
+                    if (value === null) {
+                        ruleStyle.removeProperty(name);
+                    }
+                    else {
+                        ruleStyle.setProperty(name, value, 'important');
+                    }
                 }
             }
         }
@@ -173,7 +176,13 @@ Ext.define('Ext.fx.runner.Css', {
         var id, element, elementStyle, properties, name, value;
 
         for (id in styles) {
+//            console.log("-> ["+id+"]", "APPLY======================");
             element = document.getElementById(id);
+
+            if (!element) {
+                return this;
+            }
+
             elementStyle = element.style;
 
             properties = styles[id];
@@ -182,8 +191,14 @@ Ext.define('Ext.fx.runner.Css', {
                 value = this.formatValue(properties[name], name);
                 name = this.formatName(name);
 
-//                console.log(id, name, value);
-                elementStyle.setProperty(name, value, 'important');
+//                console.log("->-> ["+id+"]", name, value);
+
+                if (value === null) {
+                    elementStyle.removeProperty(name);
+                }
+                else {
+                    elementStyle.setProperty(name, value, 'important');
+                }
             }
         }
 
@@ -223,7 +238,7 @@ Ext.define('Ext.fx.runner.Css', {
                     //<debug error>
                     if (unit !== lengthUnit) {
                         Ext.Logger.error("Length unit: '" + unit + "' in value: '" + value + "' of property: '" + name + "' is not " +
-                                "valid for animation. Only 'px' is allowed");
+                            "valid for animation. Only 'px' is allowed");
                     }
                     //</debug>
                 }

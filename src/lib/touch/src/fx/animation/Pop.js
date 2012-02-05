@@ -4,7 +4,7 @@
 Ext.define('Ext.fx.animation.Pop', {
     extend: 'Ext.fx.animation.Abstract',
 
-    alias: 'animation.pop',
+    alias: ['animation.pop', 'animation.popIn'],
 
     alternateClassName: 'Ext.fx.animation.PopIn',
 
@@ -13,7 +13,15 @@ Ext.define('Ext.fx.animation.Pop', {
          * @cfg {Boolean} out True if you want to make this animation pop out, instead of pop in.
          * @accessor
          */
-        out: false
+        out: false,
+
+        before: {
+            display: null,
+            opacity: 0
+        },
+        after: {
+            opacity: null
+        }
     },
 
     getData: function() {

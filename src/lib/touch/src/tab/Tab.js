@@ -54,7 +54,6 @@ Ext.define('Ext.tab.Tab', {
             reference: 'badgeElement',
             hidden: true
         },
-
         {
             tag: 'span',
             className: Ext.baseCSSPrefix + 'button-icon',

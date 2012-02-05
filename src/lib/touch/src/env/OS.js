@@ -1,16 +1,16 @@
 /**
- * Provide useful information about the current operating system environment. Access the global instance stored in Ext.os. Example:
- * <pre><code>
- * if (Ext.os.is.Windows) {
- *      // Windows specific code here
- * }
+ * Provide useful information about the current operating system environment. Access the global instance stored in
+ * Ext.os. Example:
  *
- * if (Ext.os.is.iOS) {
- *      // iPad, iPod, iPhone, etc.
- * }
+ *     if (Ext.os.is.Windows) {
+ *          // Windows specific code here
+ *     }
  *
- * console.log("Version " + Ext.os.version);
- * </code></pre>
+ *     if (Ext.os.is.iOS) {
+ *          // iPad, iPod, iPhone, etc.
+ *     }
+ *
+ *     console.log("Version " + Ext.os.version);
  *
  * For a full list of supported values, refer to: {@link Ext.env.OS#is}
  */
@@ -43,42 +43,37 @@ Ext.define('Ext.env.OS', {
 
     /**
      * A "hybrid" property, can be either accessed as a method call, i.e:
-     * <pre><code>
-     * if (Ext.os.is('Android')) { ... }
-     * </code></pre>
+     *
+     *     if (Ext.os.is('Android')) { ... }
      *
      * or as an object with boolean properties, i.e:
-     * <pre><code>
-     * if (Ext.os.is.Android) { ... }
-     * </code></pre>
+     *
+     *     if (Ext.os.is.Android) { ... }
      *
      * Versions can be conveniently checked as well. For example:
-     * <pre><code>
-     * if (Ext.os.is.Android2) { ... } // Equivalent to (Ext.os.is.Android && Ext.os.version.equals(2))
      *
-     * if (Ext.os.is.iOS32) { ... } // Equivalent to (Ext.os.is.iOS && Ext.os.version.equals(3.2))
-     * </code></pre>
+     *     if (Ext.os.is.Android2) { ... } // Equivalent to (Ext.os.is.Android && Ext.os.version.equals(2))
      *
-     * Note that only {@link Ext.Version#getMajor major component}  and {@link Ext.Version#getShortVersion simplified}
-     * value of the version are available via direct property checking.
+     *     if (Ext.os.is.iOS32) { ... } // Equivalent to (Ext.os.is.iOS && Ext.os.version.equals(3.2))
      *
-     * Supported values are: iOS, iPad, iPhone, iPod, Android, WebOS, BlackBerry, Bada, MacOSX, Windows, Linux and Other
-     *
+     * Note that only {@link Ext.Version#getMajor major component} and {@link Ext.Version#getShortVersion simplified}
+     * value of the version are available via direct property checking. Supported values are: iOS, iPad, iPhone, iPod,
+     * Android, WebOS, BlackBerry, Bada, MacOSX, Windows, Linux and Other
      * @param {String} value The OS name to check
      * @return {Boolean}
      */
     is: Ext.emptyFn,
 
     /**
-     * Read-only - the full name of the current operating system
-     * Possible values are: iOS, Android, WebOS, BlackBerry, MacOSX, Windows, Linux and Other
-     * @type String
+     * @property {String} [name=null]
+     * Read-only - the full name of the current operating system Possible values are: iOS, Android, WebOS, BlackBerry,
+     * MacOSX, Windows, Linux and Other
      */
     name: null,
 
     /**
+     * @property {Ext.Version} [version=null]
      * Read-only, refer to {@link Ext.Version}
-     * @type Ext.Version
      */
     version: null,
 
@@ -154,15 +149,16 @@ Ext.define('Ext.env.OS', {
     }
 
 }, function() {
+
     /**
      * @class Ext.is
-     * @deprecated
      * Used to detect if the current browser supports a certain feature, and the type of the current browser.
      *
+     * @deprecated
      * Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
      */
     var navigator = Ext.global.navigator,
-        osEnv, osName, osVersion, deviceType;
+        osEnv, osName, deviceType;
 
     //<deprecated product=touch since=2.0>
     this.override('constructor', function() {
@@ -186,30 +182,15 @@ Ext.define('Ext.env.OS', {
     Ext.os = osEnv = new this(navigator.userAgent, navigator.platform);
 
     osName = osEnv.name;
-    osVersion = osEnv.version;
 
-    //<deprecated product=touch since=2.0>
-    var flags = Ext.os.is,
-        search = window.location.search.match(/deviceType=(Tablet|Phone)/),
-        name;
-
-    if (!Ext.is) {
-        Ext.is = {};
-    }
-
-    for (name in flags) {
-        if (flags.hasOwnProperty(name)) {
-            Ext.deprecatePropertyValue(Ext.is, name, flags[name], "Ext.is." + name + " is deprecated, please use Ext.os.is." + name + " instead");
-        }
-    }
-    //</deprecated>
+    var search = window.location.search.match(/deviceType=(Tablet|Phone)/);
 
     // Override deviceType by adding a get variable of deviceType. NEEDED FOR DOCS APP.
     // E.g: example/kitchen-sink.html?deviceType=Phone
     if (search && search[1]) {
         deviceType = search[1];
     } else {
-        //TODO Clean me up, this is not nice
+        // See https://sencha.jira.com/browse/TOUCH-1517
         if (/Windows|Linux|MacOS/.test(osName)) {
             deviceType = 'Desktop';
         }
@@ -223,5 +204,20 @@ Ext.define('Ext.env.OS', {
 
     osEnv.setFlag(deviceType, true);
     osEnv.deviceType = deviceType;
+
+    //<deprecated product=touch since=2.0>
+    var flags = Ext.os.is,
+        name;
+
+    if (!Ext.is) {
+        Ext.is = {};
+    }
+
+    for (name in flags) {
+        if (flags.hasOwnProperty(name)) {
+            Ext.deprecatePropertyValue(Ext.is, name, flags[name], "Ext.is." + name + " is deprecated, please use Ext.os.is." + name + " instead");
+        }
+    }
+    //</deprecated>
 
 });

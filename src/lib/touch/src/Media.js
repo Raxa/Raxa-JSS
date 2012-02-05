@@ -315,5 +315,20 @@ Ext.define('Ext.Media', {
      */
     getDuration: function() {
         return this.media.dom.duration;
+    },
+
+    destroy: function() {
+        var me = this;
+        Ext.Object.each(event, function(e, fn) {
+            if (typeof fn !== 'function') {
+                fn = me[fn];
+            }
+
+            if (typeof fn == 'function') {
+                fn = bind(fn, me);
+
+                dom.removeEventListener(e, fn);
+            }
+        });
     }
 });

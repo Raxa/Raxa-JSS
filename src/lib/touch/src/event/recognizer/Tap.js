@@ -1,6 +1,6 @@
 /**
  * A simple event recogniser which knows when you tap.
- * 
+ *
  * @private
  */
 Ext.define('Ext.event.recognizer.Tap', {
@@ -16,6 +16,23 @@ Ext.define('Ext.event.recognizer.Tap', {
      * @param {Object} options The options object passed to Ext.util.Observable.addListener.
      */
 
+    /**
+     * @member Ext.dom.Element
+     * @event tapstart
+     * @deprecated 2.0.0 Please listener to 'touchstart' event instead
+     * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
+     * @param {HTMLElement} node The target of the event.
+     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     */
+
+    /**
+     * @member Ext.dom.Element
+     * @event tapcancel
+     * @deprecated 2.0.0 Please listener to 'touchmove' event instead
+     * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
+     * @param {HTMLElement} node The target of the event.
+     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     */
     extend: 'Ext.event.recognizer.SingleTouch',
 
     onTouchMove: function() {

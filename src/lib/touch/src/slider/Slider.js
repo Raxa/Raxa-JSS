@@ -7,7 +7,6 @@ Ext.define('Ext.slider.Slider', {
     xtype: 'slider',
 
     requires: [
-        'Ext.util.SizeMonitor',
         'Ext.slider.Thumb',
         'Ext.fx.easing.EaseOut'
     ],
@@ -152,24 +151,10 @@ Ext.define('Ext.slider.Slider', {
             dragend: 'onThumbDragEnd'
         });
 
-        this.on('painted', 'onPainted');
-
-        this.sizeMonitor = new Ext.util.SizeMonitor({
-            element: element,
-            callback: this.onSizeChange,
-            scope: this
+        this.on({
+            painted: 'refresh',
+            resize: 'refresh'
         });
-    },
-
-    onPainted: function() {
-        this.sizeMonitor.refresh();
-        this.refreshElementWidth();
-        this.refreshValue();
-    },
-
-    onSizeChange: function() {
-        this.refreshElementWidth();
-        this.refreshValue();
     },
 
     /**
@@ -209,6 +194,11 @@ Ext.define('Ext.slider.Slider', {
         this.thumbWidth = this.getThumb(0).getElementWidth();
     },
 
+    refresh: function() {
+        this.refreshElementWidth();
+        this.refreshValue();
+    },
+
     setActiveThumb: function(thumb) {
         var oldActiveThumb = this.activeThumb;
 
@@ -233,6 +223,7 @@ Ext.define('Ext.slider.Slider', {
         if (this.getAllowThumbsOverlapping()) {
             this.setActiveThumb(thumb);
         }
+
         this.dragStartValue = this.getValue()[this.getThumbIndex(thumb)];
         this.fireEvent('dragstart', this, thumb, this.dragStartValue, e);
     },
@@ -309,6 +300,10 @@ Ext.define('Ext.slider.Slider', {
 
     // @private
     onTap: function(e) {
+        if (this.isDisabled()) {
+            return;
+        }
+            
         var targetElement = Ext.get(e.target);
 
         if (!targetElement || targetElement.hasCls('x-thumb')) {
@@ -367,7 +362,8 @@ Ext.define('Ext.slider.Slider', {
 
             if (filteredValue < previousFilteredValue) {
                 //<debug warn>
-                Ext.Logger.warn("Invalid values of '"+Ext.encode(values)+"', values at smaller indexes must be smaller than or equal to values at greater indexes");
+                Ext.Logger.warn("Invalid values of '"+Ext.encode(values)+"', values at smaller indexes must " +
+                    "be smaller than or equal to values at greater indexes");
                 //</debug>
                 filteredValue = previousFilteredValue;
             }
@@ -412,8 +408,8 @@ Ext.define('Ext.slider.Slider', {
     /**
      * @private
      * Takes a desired value of a thumb and returns the nearest snap value. e.g if minValue = 0, maxValue = 100, increment = 10 and we
-     * pass a value of 67 here, the returned value will be 70. The returned number is constrained within {@link minValue} and {@link maxValue},
-     * so in the above example 68 would be returned if {@link maxValue} was set to 68.
+     * pass a value of 67 here, the returned value will be 70. The returned number is constrained within {@link #minValue} and {@link #maxValue},
+     * so in the above example 68 would be returned if {@link #maxValue} was set to 68.
      * @param {Number} value The value to snap
      * @return {Number} The snapped value
      */
@@ -511,6 +507,18 @@ Ext.define('Ext.slider.Slider', {
     updateIncrement: function(newValue, oldValue) {
         if (typeof oldValue != 'undefined') {
             this.refreshValue();
+        }
+    },
+
+    doSetDisabled: function(disabled) {
+        this.callParent(arguments);
+
+        var items = this.getItems().items,
+            ln = items.length,
+            i;
+
+        for (i = 0; i < ln; i++) {
+            items[i].setDisabled(disabled);
         }
     }
 });

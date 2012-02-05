@@ -234,12 +234,34 @@ Ext.define('Ext.dataview.component.Container', {
     },
 
     getDataItemConfig: function(xtype, record, itemConfig) {
+        var dataview = this.dataview;
         return {
             xtype: xtype,
             record: record,
-            dataview: this.dataview,
+            dataview: dataview,
+            itemCls: dataview.getItemCls(),
             defaults: itemConfig
         };
+    },
+
+    doRemoveItemCls: function(cls) {
+        var items = this.getViewItems(),
+            ln = items.length,
+            i = 0;
+
+        for (; i < ln; i++) {
+            items[i].removeCls(cls);
+        }
+    },
+
+    doAddItemCls: function(cls) {
+        var items = this.getViewItems(),
+            ln = items.length,
+            i = 0;
+
+        for (; i < ln; i++) {
+            items[i].addCls(cls);
+        }
     },
 
     destroy: function() {
@@ -251,5 +273,6 @@ Ext.define('Ext.dataview.component.Container', {
         for (; i < ln; i++) {
             itemCache[i].destroy();
         }
+        this.callParent();
     }
 });

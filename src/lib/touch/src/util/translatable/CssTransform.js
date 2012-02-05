@@ -1,4 +1,4 @@
-/**
+/*
  * @class Ext.util.translatable.CssTransform
  * @private
  *
@@ -33,7 +33,10 @@ Ext.define('Ext.util.translatable.CssTransform', {
     },
 
     destroy: function() {
-        this.getElement().dom.style.webkitTransform = null;
+        var element = this.getElement();
+        if (element && !element.isDestroyed) {
+            element.dom.style.webkitTransform = null;
+        }
 
         this.callParent(arguments);
     }

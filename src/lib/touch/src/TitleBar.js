@@ -105,14 +105,15 @@ Ext.define('Ext.TitleBar', {
         this.callParent(arguments);
     },
 
-    initialize: function() {
+    beforeInitialize: function() {
         this.applyItems = this.applyInitialItems;
+    },
 
-        this.callParent();
-
+    initialize: function() {
         delete this.applyItems;
-
+        
         this.doAdd = this.doBoxAdd;
+        this.remove = this.doBoxRemove;
         this.doInsert = this.doBoxInsert;
 
         this.add(this.initialItems);
@@ -193,7 +194,19 @@ Ext.define('Ext.TitleBar', {
         }
     },
 
-    //TODO doBoxRemove
+    doBoxRemove: function(item) {
+        if (item.config.align == 'right') {
+            this.rightBox.remove(item);
+        }
+        else {
+            this.leftBox.remove(item);
+        }
+
+        if (this.painted) {
+            this.refreshTitlePosition();
+        }
+    },
+
     doBoxInsert: function(index, item) {
         if (item.config.align == 'right') {
             this.rightBox.add(item);

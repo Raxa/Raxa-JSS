@@ -226,6 +226,13 @@ Ext.define('Ext.dataview.DataView', {
 
     config: {
         /**
+         * @cfg layout
+         * Hide layout config in DataView. It only causes confusion.
+         * @accessor
+         * @private
+         */
+
+        /**
          * @cfg {Ext.data.Store/Object} store
          * Can be either a Store instance or a configuration object that will be turned into a Store. The Store is used
          * to populate the set of items that will be rendered in the DataView. See the DataView intro documentation for
@@ -259,7 +266,14 @@ Ext.define('Ext.dataview.DataView', {
          * The CSS class to apply to an item on the view while it is being pressed.
          * @accessor
          */
-        pressedCls : 'x-item-pressed',
+        pressedCls: 'x-item-pressed',
+
+        /**
+         * @cfg {String} itemCls
+         * An additional CSS class to apply to items within the DataView.
+         * @accessor
+         */
+        itemCls: null,
 
         /**
          * @cfg {String} selectedCls
@@ -315,6 +329,8 @@ Ext.define('Ext.dataview.DataView', {
          * @cfg {Boolean} useComponents
          * Flag the use a component based DataView implementation.  This allows the full use of components in the
          * DataView at the cost of some performance.
+         *
+         * Checkout the [DataView Guide](#!/guide/dataview) for more information on using this configuration.
          * @accessor
          */
         useComponents: null,
@@ -350,9 +366,23 @@ Ext.define('Ext.dataview.DataView', {
     constructor: function() {
         var me = this;
 
+        me.hasLoadedStore = false;
+
         me.mixins.selectable.constructor.apply(me, arguments);
 
         me.callParent(arguments);
+    },
+
+    updateItemCls: function(newCls, oldCls) {
+        var container = this.container;
+        if (container) {
+            if (oldCls) {
+                container.doRemoveItemCls(oldCls);
+            }
+            if (newCls) {
+                container.doAddItemCls(newCls);
+            }
+        }
     },
 
     storeEventHooks: {
@@ -585,6 +615,11 @@ Ext.define('Ext.dataview.DataView', {
             if (store && Ext.isObject(store) && store.isStore) {
                 store.on(bindEvents);
             }
+            //<debug warn>
+            else {
+                Ext.Logger.warn("The specified Store cannot be found", this);
+            }
+            //</debug>
         }
 
         return store;
@@ -592,7 +627,8 @@ Ext.define('Ext.dataview.DataView', {
 
     updateStore: function(newStore, oldStore) {
         var me = this,
-            bindEvents = Ext.apply({}, me.storeEventHooks, { scope: me });
+            bindEvents = Ext.apply({}, me.storeEventHooks, { scope: me }),
+            proxy;
 
         if (oldStore && Ext.isObject(oldStore) && oldStore.isStore) {
             if (oldStore.autoDestroy) {
@@ -603,12 +639,19 @@ Ext.define('Ext.dataview.DataView', {
             }
         }
 
-        if (newStore && newStore.loading) {
-            me.onBeforeLoad();
-        }
+        if (newStore) {
+            proxy = newStore.getProxy();
+            if (newStore.isAutoLoading()) {
+                this.hasLoadedStore = true;
+            }
 
-        if (newStore && me.container) {
-            me.refresh();
+            if (newStore.isLoading()) {
+                this.hasLoadedStore = true;
+                me.onBeforeLoad();
+            }
+            if (me.container) {
+                me.refresh();
+            }
         }
     },
 
@@ -617,8 +660,8 @@ Ext.define('Ext.dataview.DataView', {
         if (loadingText) {
 
             this.setMasked({
-                // xtype: 'loadmask',
-                // message: loadingText
+                xtype: 'loadmask',
+                message: loadingText
             });
         }
     },
@@ -629,7 +672,8 @@ Ext.define('Ext.dataview.DataView', {
             me.emptyTextCmp = me.add({
                 xtype: 'component',
                 cls: me.getBaseCls() + '-emptytext',
-                html: newEmptyText
+                html: newEmptyText,
+                hidden: true
             });
         }
         else if (me.emptyTextCmp) {
@@ -640,6 +684,7 @@ Ext.define('Ext.dataview.DataView', {
 
     onLoad: function() {
         //remove any masks on the store
+        this.hasLoadedStore = true;
         this.setMasked(false);
     },
 
@@ -651,8 +696,8 @@ Ext.define('Ext.dataview.DataView', {
             container = me.container;
 
         if (!me.getStore()) {
-            if (!this.getDeferEmptyText()) {
-                this.showEmptyText();
+            if (!me.hasLoadedStore && !me.getDeferEmptyText()) {
+                me.showEmptyText();
             }
             return;
         }
@@ -716,7 +761,7 @@ Ext.define('Ext.dataview.DataView', {
     },
 
     showEmptyText: function() {
-        if (this.getEmptyText()) {
+        if (this.hasLoadedStore && this.getEmptyText()) {
             this.emptyTextCmp.show();
         }
     },
@@ -766,15 +811,6 @@ Ext.define('Ext.dataview.DataView', {
         else {
             // Bypassing setter because sometimes we pass the same record (different data)
             container.updateListItem(record, container.getViewItems()[newIndex]);
-        }
-    },
-
-    destroy: function() {
-        if (this.container) {
-            this.container.destroy();
-        }
-        if (this.emptyTextCmp) {
-            this.emptyTextCmp.destroy();
         }
     }
 }, function() {

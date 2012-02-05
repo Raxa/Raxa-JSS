@@ -359,7 +359,10 @@ Ext.define('Ext.util.Draggable', {
             sizeMonitors.container.destroy();
         }
 
-        this.getElement().removeCls(this.getCls());
+        var element = this.getElement();
+        if (element && !element.isDestroyed) {
+            element.removeCls(this.getCls());
+        }
         this.detachListeners();
 
         if (translatable) {

@@ -32,14 +32,26 @@ Ext.define('Ext.slider.Thumb', {
     },
 
     onDragStart: function() {
+        if (this.isDisabled()) {
+            return false;
+        }
+
         this.relayEvent(arguments);
     },
 
     onDrag: function() {
+        if (this.isDisabled()) {
+            return false;
+        }
+
         this.relayEvent(arguments);
     },
 
     onDragEnd: function() {
+        if (this.isDisabled()) {
+            return false;
+        }
+
         this.relayEvent(arguments);
     },
 

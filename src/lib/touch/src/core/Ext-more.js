@@ -28,7 +28,7 @@
  *
  * [getting_started]: #!/guide/getting_started
  */
-Ext.setVersion('touch', '2.0.0.pr4');
+Ext.setVersion('touch', '2.0.0.beta1');
 
 Ext.apply(Ext, {
     /**
@@ -276,6 +276,9 @@ function(el){
             },
             componentPaint: {
                 xclass: 'Ext.event.publisher.ComponentPaint'
+            },
+            componentSize: {
+                xclass: 'Ext.event.publisher.ComponentSize'
             }
         },
 
@@ -406,6 +409,14 @@ function(el){
      * @param {Boolean} glossOnIcon
      * True to add a gloss effect to the icon.
      *
+     * @param {String} phoneStartupScreen
+     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on phones.
+     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+     *
+     * @param {String} tabletStartupScreen
+     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on tablets.
+     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+     *
      * @param {String} statusBarStyle
      * The style of status bar to be shown on applications added to the iOS homescreen. Valid options are:
      *
@@ -480,8 +491,7 @@ function(el){
         delete config.onReady;
         delete config.scope;
 
-        //TODO: Move Ext.dom.CompositeElementLite
-        Ext.require(['Ext.event.Dispatcher', 'Ext.dom.CompositeElementLite']);
+        Ext.require(['Ext.event.Dispatcher', 'Ext.MessageBox']);
 
         callback = function() {
             var listeners = Ext.setupListeners,
@@ -545,6 +555,11 @@ function(el){
             });
         });
 
+        /*
+         * Note: previously we only added these icon meta tags to iOS devices but as Android 2.1+ reads the same tags
+         * we now add them if they're defined
+         */
+
         if (!document.body) {
             // Inject meta viewport tag
             document.write(
@@ -553,33 +568,33 @@ function(el){
                        'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />');
             document.write('<meta name="apple-mobile-web-app-capable" content="yes">');
             document.write('<meta name="apple-touch-fullscreen" content="yes">');
-            
-            if (Ext.os.is.iOS) {
-                //status bar style
-                if (Ext.isString(config.statusBarStyle)) {
-                    document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + config.statusBarStyle + '">');
-                }
 
-                //startup screens
-                if (config.tabletStartupScreen && Ext.os.is.iPad) {
-                    document.write('<link rel="apple-touch-startup-image" href="' + config.tabletStartupScreen + '">');
-                }
+            //status bar style
+            if (Ext.isString(config.statusBarStyle)) {
+                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + config.statusBarStyle + '">');
+            }
 
-                if (config.phoneStartupScreen && !Ext.os.is.iPad) {
-                    document.write('<link rel="apple-touch-startup-image" href="' + config.phoneStartupScreen + '">');
-                }
+            //startup screens
+            if (config.tabletStartupScreen && Ext.os.is.iPad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + config.tabletStartupScreen + '">');
+            }
 
-                // icon
-                if (Ext.isString(config.icon) || Ext.isString(config.phoneIcon) || Ext.isString(config.tabletIcon)) {
-                    icon = {
-                        '57': config.phoneIcon || config.tabletIcon || config.icon,
-                        '72': config.tabletIcon || config.phoneIcon || config.icon,
-                        '114': config.phoneIcon || config.tabletIcon || config.icon
-                    };
-                }
-                
-                precomposed = (config.glossOnIcon === false) ? '-precomposed' : '';
+            if (config.phoneStartupScreen && !Ext.os.is.iPad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + config.phoneStartupScreen + '">');
+            }
 
+            // icon
+            if (Ext.isString(config.icon) || Ext.isString(config.phoneIcon) || Ext.isString(config.tabletIcon)) {
+                icon = {
+                    '57': config.phoneIcon || config.tabletIcon || config.icon,
+                    '72': config.tabletIcon || config.phoneIcon || config.icon,
+                    '114': config.phoneIcon || config.tabletIcon || config.icon
+                };
+            }
+
+            precomposed = (config.glossOnIcon === false) ? '-precomposed' : '';
+
+            if (icon) {
                 if (Ext.os.is.iPad && icon['72']) {
                     document.write('<link rel="apple-touch-icon' + precomposed + '" sizes="72x72" href="' + icon['72'] + '">');
                 }
@@ -668,6 +683,14 @@ function(el){
      * @param {Boolean} glossOnIcon
      * True to add a gloss effect to the icon.
      *
+     * @param {String} phoneStartupScreen
+     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on phones.
+     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+     *
+     * @param {String} tabletStartupScreen
+     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on tablets.
+     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+     *
      * @param {String} statusBarStyle
      * The style of status bar to be shown on applications added to the iOS homescreen. Valid options are:
      *
@@ -748,55 +771,13 @@ function(el){
         };
 
         Ext.setup(config);
-
-        //<deprecated product=touch since=2.0>
-        /**
-         * Restores compatibility for the old Ext.Router.draw syntax. This needs to be here because apps often include
-         * routes.js just after app.js, so this is our only opportunity to hook this in. There is a small piece of code
-         * inside Application's onDependenciesLoaded that sets up the other end of this
-         */
-        Ext.Router = {};
-
-        var drawStack = [];
-
-        /**
-         * Application's onDependenciesLoaded has a deprecated-wrapped line that calls this. Basic idea is that once an
-         * app has been instantiated we set that at Ext.Router's appInstance and then redirect any calls to
-         * Ext.Router.draw to that app's Router. We keep a drawStack above so that we can call Ext.Router.draw one or
-         * more times before the application is even instantiated and it will simply link it up once everything is
-         * present.
-         */
-        Ext.Router.setAppInstance = function(app) {
-            Ext.Router.appInstance = app;
-
-            if (drawStack.length > 0) {
-                Ext.each(drawStack, Ext.Router.draw);
-            }
-        };
-
-        Ext.Router.draw = function(mapperFn) {
-            Ext.Logger.deprecate(
-                'Ext.Router.map is deprecated, please define your routes inline inside each Controller. ' +
-                'Please see the 1.x -> 2.x migration guide for more details.'
-            );
-
-            var app = Ext.Router.appInstance,
-                router;
-
-            if (app) {
-                router = app.getRouter();
-                mapperFn(router);
-            } else {
-                drawStack.push(mapperFn);
-            }
-        };
-        //</deprecated>
     },
 
     /**
      * @private
      * @param config
      * @param callback
+     * @member Ext
      */
     factoryConfig: function(config, callback) {
         var isSimpleObject = Ext.isSimpleObject(config);
@@ -878,6 +859,7 @@ function(el){
      * @param config
      * @param classReference
      * @param instance
+     * @member Ext
      */
     factory: function(config, classReference, instance, aliasNamespace) {
         var manager = Ext.ClassManager,
@@ -947,13 +929,15 @@ function(el){
 
     /**
      * @private
+     * @member Ext
      */
     deprecateClassMember: function(cls, oldName, newName, message) {
         return this.deprecateProperty(cls.prototype, oldName, newName, message);
     },
 
-   /**
+    /**
      * @private
+     * @member Ext
      */
     deprecateClassMembers: function(cls, members) {
        var prototype = cls.prototype,
@@ -970,6 +954,7 @@ function(el){
 
     /**
      * @private
+     * @member Ext
      */
     deprecateProperty: function(object, oldName, newName, message) {
         if (!message) {
@@ -988,13 +973,15 @@ function(el){
                 Ext.Logger.deprecate(message, 1);
                 //</debug>
                 this[newName] = value;
-            }
+            },
+            configurable: true
         });
     },
 
-   /**
-    * @private
-    */
+    /**
+     * @private
+     * @member Ext
+     */
     deprecatePropertyValue: function(object, name, value, message) {
         Ext.Object.defineProperty(object, name, {
             get: function() {
@@ -1002,12 +989,14 @@ function(el){
                 Ext.Logger.deprecate(message, 1);
                 //</debug>
                 return value;
-            }
+            },
+            configurable: true
         });
     },
 
     /**
      * @private
+     * @member Ext
      */
     deprecateMethod: function(object, name, method, message) {
         object[name] = function() {
@@ -1020,6 +1009,7 @@ function(el){
 
     /**
      * @private
+     * @member Ext
      */
     deprecateClassMethod: function(cls, name, method, message) {
         var isLateBinding = typeof method == 'string',
@@ -1053,12 +1043,21 @@ function(el){
             };
         }
 
+        if (name in cls.prototype) {
+            Ext.Object.defineProperty(cls.prototype, name, {
+                value: null,
+                writable: true,
+                configurable: true
+            });
+        }
         cls.addMember(name, member);
     },
 
+    //<debug>
     /**
      * @private
      * @param cls
+     * @member Ext
      */
     deprecateClassConfigDirectAccess: function(cls, data) {
         var prototype = cls.prototype,
@@ -1159,18 +1158,44 @@ function(el){
     },
 
     /**
+     * Useful snippet to show an exact, narrowed-down list of top-level Components that are not yet destroyed.
+     * @private
+     */
+    showLeaks: function() {
+        var map = Ext.ComponentManager.all.map,
+            leaks = [],
+            parent;
+
+        Ext.Object.each(map, function(id, component) {
+            while ((parent = component.getParent()) && map.hasOwnProperty(parent.getId())) {
+                component = parent;
+            }
+
+            if (leaks.indexOf(component) === -1) {
+                leaks.push(component);
+            }
+        });
+
+        console.log(leaks);
+    },
+    //</debug>
+
+    /**
      * True when the document is fully initialized and ready for action
      * @type Boolean
+     * @member Ext
      */
     isReady : false,
 
     /**
      * @private
+     * @member Ext
      */
     readyListeners: [],
 
     /**
      * @private
+     * @member Ext
      */
     triggerReady: function() {
         var listeners = Ext.readyListeners,
@@ -1179,10 +1204,7 @@ function(el){
         if (!Ext.isReady) {
             Ext.isReady = true;
 
-            // We need to defer calling these methods until the browser is done executing
-            // it's ready code. Other we can end up firing too early.
-            // TODO Unless we can show that it won't work properly without this timer, this needs
-            // to be taken out completely
+            // See https://sencha.jira.com/browse/TOUCH-1481 for background on the defer function here
 //            Ext.Function.defer(function() {
             for (i = 0, ln = listeners.length; i < ln; i++) {
                 listener = listeners[i];
@@ -1195,6 +1217,7 @@ function(el){
 
     /**
      * @private
+     * @member Ext
      */
     onDocumentReady: function(fn, scope) {
         if (Ext.isReady) {
@@ -1227,10 +1250,12 @@ function(el){
     },
 
     /**
+     * Calls function after specified delay, or right away when delay == 0.
      * @param {Function} callback The callback to execute
      * @param {Object} scope (optional) The scope to execute in
      * @param {Array} args (optional) The arguments to pass to the function
      * @param {Number} delay (optional) Pass a number to delay the call by a number of milliseconds.
+     * @member Ext
      */
     callback: function(callback, scope, args, delay) {
         if (Ext.isFunction(callback)) {

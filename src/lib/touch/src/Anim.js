@@ -126,7 +126,6 @@ Ext.Anim = Ext.extend(Object, {
 
     initConfig: function(el, runConfig) {
         var me = this,
-            runtime = {},
             config = Ext.apply({}, runConfig || {}, me.config);
 
         config.el = el = Ext.get(el);
@@ -198,7 +197,7 @@ Ext.Anim = Ext.extend(Object, {
             // If this is a 3d animation we have to set the perspective on the parent
             if (config.is3d === true) {
                 el.parent().setStyle({
-                    // TODO: Ability to set this with 3dConfig
+                    // See https://sencha.jira.com/browse/TOUCH-1498
                     '-webkit-perspective': '1200',
                     '-webkit-transform-style': 'preserve-3d'
                 });
@@ -236,12 +235,12 @@ Ext.Anim = Ext.extend(Object, {
 
         var style = el.dom.style,
             config = o.config,
-            property,
-            me = this;
+            me = this,
+            property;
 
         if (config.autoClear) {
             for (property in config.to) {
-                if (!config.to.hasOwnProperty(property)) {
+                if (!config.to.hasOwnProperty(property) || config[property] === false) {
                     continue;
                 }
                 style[property] = '';
@@ -326,6 +325,7 @@ Ext.anims = {
      * Fade Animation
      */
     fade: new Ext.Anim({
+        type: 'fade',
         before: function(el) {
             var fromOpacity = 1,
                 toOpacity = 1,
@@ -357,10 +357,15 @@ Ext.anims = {
         direction: 'left',
         cover: false,
         reveal: false,
+        opacity: false,
+        'z-index': false,
 
         before: function(el) {
-            var curZ = el.getStyle('z-index') == 'auto' ? 0 : el.getStyle('z-index'),
-                zIndex = curZ + 1,
+            var currentZIndex = el.getStyle('z-index') == 'auto' ? 0 : el.getStyle('z-index'),
+                currentOpacity = el.getStyle('opacity'),
+                zIndex = currentZIndex + 1,
+                out = this.out,
+                direction = this.direction,
                 toX = 0,
                 toY = 0,
                 fromX = 0,
@@ -368,16 +373,16 @@ Ext.anims = {
                 elH = el.getHeight(),
                 elW = el.getWidth();
 
-            if (this.direction == 'left' || this.direction == 'right') {
-                if (this.out == true) {
+            if (direction == 'left' || direction == 'right') {
+                if (out) {
                     toX = -elW;
                 }
                 else {
                     fromX = elW;
                 }
             }
-            else if (this.direction == 'up' || this.direction == 'down') {
-                if (this.out == true) {
+            else if (direction == 'up' || direction == 'down') {
+                if (out) {
                     toY = -elH;
                 }
                 else {
@@ -385,33 +390,33 @@ Ext.anims = {
                 }
             }
 
-            if (this.direction == 'right' || this.direction == 'down') {
+            if (direction == 'right' || direction == 'down') {
                 toY *= -1;
                 toX *= -1;
                 fromY *= -1;
                 fromX *= -1;
             }
 
-            if (this.cover && this.out) {
+            if (this.cover && out) {
                 toX = 0;
                 toY = 0;
-                zIndex = curZ;
+                zIndex = currentZIndex;
             }
-            else if (this.reveal && !this.out) {
+            else if (this.reveal && !out) {
                 fromX = 0;
                 fromY = 0;
-                zIndex = curZ;
+                zIndex = currentZIndex;
             }
 
             this.from = {
                 '-webkit-transform': 'translate3d(' + fromX + 'px, ' + fromY + 'px, 0)',
                 'z-index': zIndex,
-                'opacity': 0.99
+                'opacity': currentOpacity - 0.01
             };
             this.to = {
                 '-webkit-transform': 'translate3d(' + toX + 'px, ' + toY + 'px, 0)',
                 'z-index': zIndex,
-                'opacity': 1
+                'opacity': currentOpacity
             };
         }
     }),

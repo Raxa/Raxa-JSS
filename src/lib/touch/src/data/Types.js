@@ -82,7 +82,7 @@ Ext.define('Ext.data.Types', {
             convert: function(value) {
                 // 'this' is the actual field that calls this convert method
                 return (value === undefined || value === null)
-                    ? (this.getUseNull() ? null : '')
+                    ? (this.getAllowNull() ? null : '')
                     : String(value);
             },
             sortType: sortTypes.asUCString,
@@ -98,10 +98,10 @@ Ext.define('Ext.data.Types', {
             convert: function(value) {
                 return (value !== undefined && value !== null && value !== '')
                     ? ((typeof value === 'number')
-                        ? value
+                        ? parseInt(value, 10)
                         : parseInt(String(value).replace(Types.stripRe, ''), 10)
                     )
-                    : (this.getUseNull() ? null : 0);
+                    : (this.getAllowNull() ? null : 0);
             },
             sortType: sortTypes.none,
             type: 'int'
@@ -119,7 +119,7 @@ Ext.define('Ext.data.Types', {
                         ? value
                         : parseFloat(String(value).replace(Types.stripRe, ''), 10)
                     )
-                    : (this.getUseNull() ? null : 0);
+                    : (this.getAllowNull() ? null : 0);
             },
             sortType: sortTypes.none,
             type: 'float'
@@ -133,7 +133,7 @@ Ext.define('Ext.data.Types', {
          */
         BOOL: {
             convert: function(value) {
-                if ((value === undefined || value === null || value === '') && this.getUseNull()) {
+                if ((value === undefined || value === null || value === '') && this.getAllowNull()) {
                     return null;
                 }
                 return value === true || value === 'true' || value == 1;
@@ -169,8 +169,17 @@ Ext.define('Ext.data.Types', {
                     return Ext.Date.parse(value, dateFormat);
                 }
 
-                parsed = Date.parse(value);
-                return parsed ? new Date(parsed) : null;
+                parsed = new Date(Date.parse(value));
+                if (isNaN(parsed)) {
+                    // Dates with the format "2012-01-20" fail, but "2012/01/20" work in some browsers. We'll try and
+                    // get around that.
+                    parsed = new Date(Date.parse(value.replace(/-/g, "/")));
+                    if (isNaN(parsed)) {
+                        Ext.Logger.warn("Cannot parse the passed value (" + value + ") into a valid date");
+                    }
+                }
+
+                return isNaN(parsed) ? null : parsed;
             },
             sortType: sortTypes.asDate,
             type: 'date'

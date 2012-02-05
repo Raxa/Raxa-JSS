@@ -1,4 +1,4 @@
-/**
+/*
  * @private
  */
 Ext.define('Ext.viewport.Ios', {
@@ -15,7 +15,9 @@ Ext.define('Ext.viewport.Ios', {
     constructor: function() {
         this.callParent(arguments);
 
-        this.addWindowListener('touchstart', Ext.Function.bind(this.onTouchStart, this));
+        if (this.getAutoMaximize() && !this.isFullscreen()) {
+            this.addWindowListener('touchstart', Ext.Function.bind(this.onTouchStart, this));
+        }
     },
 
     maximize: function() {
@@ -68,13 +70,17 @@ Ext.define('Ext.viewport.Ios', {
     },
 
     onElementFocus: function() {
-        clearTimeout(this.scrollToTopTimer);
+        if (this.getAutoMaximize() && !this.isFullscreen()) {
+            clearTimeout(this.scrollToTopTimer);
+        }
 
         this.callParent(arguments);
     },
 
     onElementBlur: function() {
-        this.scrollToTopTimer = setTimeout(this.scrollToTop, 500);
+        if (this.getAutoMaximize() && !this.isFullscreen()) {
+            this.scrollToTopTimer = setTimeout(this.scrollToTop, 500);
+        }
 
         this.callParent(arguments);
     },

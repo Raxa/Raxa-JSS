@@ -1,4 +1,4 @@
-/**
+/*
  * @class Ext.util.Translatable
  *
  * The utility class to abstract different implementations to have the best performance when applying 2D translation

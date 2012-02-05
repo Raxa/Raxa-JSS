@@ -27,10 +27,20 @@ Ext.define('Ext.fx.animation.Flip', {
             out = this.getOut(),
             half = this.getHalf(),
             rotate = (half) ? 90 : 180,
+            fromScale = 1,
+            toScale = 1,
             fromRotateX = 0,
             fromRotateY = 0,
             toRotateX = 0,
             toRotateY = 0;
+
+
+        if (out) {
+            toScale = 0.8;
+        }
+        else {
+            fromScale = 0.8;
+        }
 
         switch (direction) {
             case this.DIRECTION_UP:
@@ -72,12 +82,14 @@ Ext.define('Ext.fx.animation.Flip', {
 
         from.setTransform({
             rotateX: fromRotateX,
-            rotateY: fromRotateY
+            rotateY: fromRotateY,
+            scale: fromScale
         });
 
         to.setTransform({
             rotateX: toRotateX,
-            rotateY: toRotateY
+            rotateY: toRotateY,
+            scale: toScale
         });
 
         return this.callParent(arguments);

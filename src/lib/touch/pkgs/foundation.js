@@ -3611,6 +3611,12 @@ Ext.encode = Ext.JSON.encode;
 Ext.decode = Ext.JSON.decode;
 
 
+Ext.Error = {
+    raise: function(object) {
+        throw new Error(object.msg);
+    }
+};
+
 /**
  *
  */
@@ -3645,20 +3651,14 @@ Ext.merge(Ext, {
 });
 //</deprecated>
 
-Ext.Error = {
-    raise: function(error) {
-        throw new Error(error.msg);
-    }
-};
-
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
- * @docauthor Jacky Nguyen <jacky@sencha.com>
  * @class Ext.Base
  *
- * The root of all classes created with {@link Ext#define}
- * All prototype and static members of this class are inherited by any other class
+ * The root of all classes created with {@link Ext#define}.
  *
+ * Ext.Base is the building block of all Ext classes. All classes in Ext inherit from Ext.Base.
+ * All prototype and static members of this class are inherited by all other classes.
  */
 (function(flexSetter) {
 
@@ -3694,7 +3694,8 @@ var noArgs = [],
 
         /**
          * @private
-         * @param config
+         * @static
+         * @inheritable
          */
         extend: function(parent) {
             var parentPrototype = parent.prototype,
@@ -3743,13 +3744,15 @@ var noArgs = [],
 
         /**
          * @private
-         * @param config
+         * @static
+         * @inheritable
          */
         '$onExtended': [],
 
         /**
          * @private
-         * @param config
+         * @static
+         * @inheritable
          */
         triggerExtended: function() {
             var callbacks = this.$onExtended,
@@ -3766,7 +3769,8 @@ var noArgs = [],
 
         /**
          * @private
-         * @param config
+         * @static
+         * @inheritable
          */
         onExtended: function(fn, scope) {
             this.$onExtended.push({
@@ -3779,7 +3783,8 @@ var noArgs = [],
 
         /**
          * @private
-         * @param config
+         * @static
+         * @inheritable
          */
         addConfig: function(config, fullMerge) {
             var prototype = this.prototype,
@@ -3859,7 +3864,8 @@ var noArgs = [],
 
         /**
          * @private
-         * @param {Object} members
+         * @static
+         * @inheritable
          */
         addInheritableStatics: function(members) {
             var inheritableStatics,
@@ -3962,8 +3968,8 @@ var noArgs = [],
 
         /**
          * @private
-         * @param name
-         * @param member
+         * @static
+         * @inheritable
          */
         addMember: function(name, member) {
             if (typeof member == 'function' && !member.$isClass && member !== Ext.emptyFn) {
@@ -3981,6 +3987,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          */
         implement: function() {
             this.addMembers.apply(this, arguments);
@@ -4105,7 +4113,6 @@ var noArgs = [],
          * @return {Ext.Base} this class
          * @static
          * @inheritable
-         * @markdown
          * @deprecated 4.1.0 Use {@link Ext#define Ext.define} instead
          */
         override: function(members) {
@@ -4178,6 +4185,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          */
         callParent: function(args) {
             var method;
@@ -4192,6 +4201,7 @@ var noArgs = [],
         /**
          * Used internally by the mixins pre-processor
          * @private
+         * @static
          * @inheritable
          */
         mixin: function(name, mixinClass) {
@@ -4286,6 +4296,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          */
         addXtype: function(xtype) {
             var prototype = this.prototype,
@@ -4621,7 +4633,7 @@ var noArgs = [],
                 initConfigList = initConfigList.slice();
 
                 for (name in instanceConfig) {
-                    if (name in defaultConfig && config[name] !== null && !initConfigMap[name]) {
+                    if (name in defaultConfig && !initConfigMap[name]) {
                         initConfigList.push(name);
                     }
                 }
@@ -4648,6 +4660,9 @@ var noArgs = [],
             return this;
         },
 
+        /**
+         * @private
+         */
         getCurrentConfig: function() {
             var defaultConfig = this.defaultConfig,
                 configNameCache = Ext.Class.configNameCache,
@@ -4707,7 +4722,6 @@ var noArgs = [],
 
         /**
          * @private
-         * @param name
          */
         getConfig: function(name) {
             return this[Ext.Class.configNameCache[name].get].call(this);
@@ -4722,7 +4736,6 @@ var noArgs = [],
 
         /**
          *
-         * @param name
          */
         getInitialConfig: function(name) {
             var config = this.config;
@@ -4737,9 +4750,6 @@ var noArgs = [],
 
         /**
          * @private
-         * @param names
-         * @param callback
-         * @param scope
          */
         onConfigUpdate: function(names, callback, scope) {
             var self = this.self,
@@ -4772,8 +4782,12 @@ var noArgs = [],
         },
         //</feature>
 
+        /**
+         * @private
+         */
         destroy: function() {
             this.destroy = Ext.emptyFn;
+            this.isDestroyed = true;
         }
     });
 
@@ -4816,196 +4830,17 @@ var noArgs = [],
 
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
- * @docauthor Jacky Nguyen <jacky@sencha.com>
  * @class Ext.Class
  *
- * Handles class creation throughout the whole framework. Note that most of the time {@link Ext#define Ext.define} should
- * be used instead, since it's a higher level wrapper that aliases to Ext.ClassManager.create
- * to enable namespacing and dynamic dependency resolution.
+ * Handles class creation throughout the framework. This is a low level factory that is used by Ext.ClassManager and generally
+ * should not be used directly. If you choose to use Ext.Class you will lose out on the namespace, aliasing and depency loading
+ * features made available by Ext.ClassManager. The only time you would use Ext.Class directly is to create an anonymous class.
  *
- * # Basic syntax: #
+ * If you wish to create a class you should use {@link Ext#define Ext.define} which aliases
+ * {@link Ext.ClassManager#create Ext.ClassManager.create} to enable namespacing and dynamic dependency resolution.
  *
- *     Ext.define(className, properties);
- *
- * in which `properties` is an object represent a collection of properties that apply to the class. See
- * {@link Ext#define} for more detailed instructions.
- *
- *     Ext.define('Person', {
- *          name: 'Unknown',
- *
- *          constructor: function(name) {
- *              if (name) {
- *                  this.name = name;
- *              }
- *
- *              return this;
- *          },
- *
- *          eat: function(foodType) {
- *              alert("I'm eating: " + foodType);
- *
- *              return this;
- *          }
- *     });
- *
- *     var aaron = new Person("Aaron");
- *     aaron.eat("Sandwich"); // alert("I'm eating: Sandwich");
- *
- * Ext.Class has a powerful set of extensible pre-processors which takes care of
- * everything related to class creation, including but not limited to inheritance, mixins, configuration, statics, etc.
- *
- * # Inheritance: #
- *
- *     Ext.define('Developer', {
- *          extend: 'Person',
- *
- *          constructor: function(name, isGeek) {
- *              this.isGeek = isGeek;
- *
- *              // Apply a method from the parent class' prototype
- *              this.callParent([name]);
- *
- *              return this;
- *
- *          },
- *
- *          code: function(language) {
- *              alert("I'm coding in: " + language);
- *
- *              this.eat("Bugs");
- *
- *              return this;
- *          }
- *     });
- *
- *     var jacky = new Developer("Jacky", true);
- *     jacky.code("JavaScript"); // alert("I'm coding in: JavaScript");
- *                               // alert("I'm eating: Bugs");
- *
- * See {@link Ext.Base#callParent} for more details on calling superclass' methods
- *
- * # Mixins: #
- *
- *     Ext.define('CanPlayGuitar', {
- *          playGuitar: function() {
- *             alert("F#...G...D...A");
- *          }
- *     });
- *
- *     Ext.define('CanComposeSongs', {
- *          composeSongs: function() { ... }
- *     });
- *
- *     Ext.define('CanSing', {
- *          sing: function() {
- *              alert("I'm on the highway to hell...")
- *          }
- *     });
- *
- *     Ext.define('Musician', {
- *          extend: 'Person',
- *
- *          mixins: {
- *              canPlayGuitar: 'CanPlayGuitar',
- *              canComposeSongs: 'CanComposeSongs',
- *              canSing: 'CanSing'
- *          }
- *     })
- *
- *     Ext.define('CoolPerson', {
- *          extend: 'Person',
- *
- *          mixins: {
- *              canPlayGuitar: 'CanPlayGuitar',
- *              canSing: 'CanSing'
- *          },
- *
- *          sing: function() {
- *              alert("Ahem....");
- *
- *              this.mixins.canSing.sing.call(this);
- *
- *              alert("[Playing guitar at the same time...]");
- *
- *              this.playGuitar();
- *          }
- *     });
- *
- *     var me = new CoolPerson("Jacky");
- *
- *     me.sing(); // alert("Ahem...");
- *                // alert("I'm on the highway to hell...");
- *                // alert("[Playing guitar at the same time...]");
- *                // alert("F#...G...D...A");
- *
- * # Config: #
- *
- *     Ext.define('SmartPhone', {
- *          config: {
- *              hasTouchScreen: false,
- *              operatingSystem: 'Other',
- *              price: 500
- *          },
- *
- *          isExpensive: false,
- *
- *          constructor: function(config) {
- *              this.initConfig(config);
- *
- *              return this;
- *          },
- *
- *          applyPrice: function(price) {
- *              this.isExpensive = (price > 500);
- *
- *              return price;
- *          },
- *
- *          applyOperatingSystem: function(operatingSystem) {
- *              if (!(/^(iOS|Android|BlackBerry)$/i).test(operatingSystem)) {
- *                  return 'Other';
- *              }
- *
- *              return operatingSystem;
- *          }
- *     });
- *
- *     var iPhone = new SmartPhone({
- *          hasTouchScreen: true,
- *          operatingSystem: 'iOS'
- *     });
- *
- *     iPhone.getPrice(); // 500;
- *     iPhone.getOperatingSystem(); // 'iOS'
- *     iPhone.getHasTouchScreen(); // true;
- *     iPhone.hasTouchScreen(); // true
- *
- *     iPhone.isExpensive; // false;
- *     iPhone.setPrice(600);
- *     iPhone.getPrice(); // 600
- *     iPhone.isExpensive; // true;
- *
- *     iPhone.setOperatingSystem('AlienOS');
- *     iPhone.getOperatingSystem(); // 'Other'
- *
- * # Statics: #
- *
- *     Ext.define('Computer', {
- *          statics: {
- *              factory: function(brand) {
- *                 // 'this' in static methods refer to the class itself
- *                  return new this(brand);
- *              }
- *          },
- *
- *          constructor: function() { ... }
- *     });
- *
- *     var dellComputer = Computer.factory('Dell');
- *
- * Also see {@link Ext.Base#statics} and {@link Ext.Base#self} for more details on accessing
- * static properties within class methods
- *
+ * Ext.Class is the factory and **not** the superclass of everything. For the base class that **all** Ext classes inherit
+ * from, see {@link Ext.Base}.
  */
 (function() {
     var ExtClass,
@@ -5023,7 +4858,7 @@ var noArgs = [],
 
     /**
      * @method constructor
-     * Create a new anonymous class.
+     * Creates a new anonymous class.
      *
      * @param {Object} data An object represent the properties of this class
      * @param {Function} onCreated Optional, the callback function to be executed when this class is fully created.
@@ -5052,9 +4887,7 @@ var noArgs = [],
     Ext.apply(ExtClass, {
         /**
          * @private
-         * @param Class
-         * @param data
-         * @param hooks
+         * @static
          */
         onBeforeCreated: function(Class, data, hooks) {
             Class.addMembers(data);
@@ -5064,9 +4897,7 @@ var noArgs = [],
 
         /**
          * @private
-         * @param Class
-         * @param classData
-         * @param onClassCreated
+         * @static
          */
         create: function(Class) {
             var name, i;
@@ -5087,9 +4918,7 @@ var noArgs = [],
 
         /**
          * @private
-         * @param Class
-         * @param data
-         * @param onCreated
+         * @static
          */
         process: function(Class, data, onCreated) {
             var preprocessorStack = data.preprocessors || ExtClass.defaultPreprocessors,
@@ -5142,26 +4971,30 @@ var noArgs = [],
             process.call(this, Class, data, hooks);
         },
 
-        /** @private */
+        /**
+         * @private
+         * @static
+         */
         preprocessors: {},
 
         /**
          * Register a new pre-processor to be used during the class creation process
          *
-         * @member Ext.Class registerPreprocessor
+         * @private
+         * @static
          * @param {String} name The pre-processor's name
          * @param {Function} fn The callback function to be executed. Typical format:
-
-    function(cls, data, fn) {
-        // Your code here
-
-        // Execute this when the processing is finished.
-        // Asynchronous processing is perfectly ok
-        if (fn) {
-            fn.call(this, cls, data);
-        }
-    });
-
+         *
+         *     function(cls, data, fn) {
+         *         // Your code here
+         *
+         *         // Execute this when the processing is finished.
+         *         // Asynchronous processing is perfectly ok
+         *         if (fn) {
+         *             fn.call(this, cls, data);
+         *         }
+         *     });
+         *
          * Passed arguments for this function are:
          *
          * - `{Function} cls`: The created class
@@ -5169,9 +5002,7 @@ var noArgs = [],
          * - `{Function} fn`: The callback function that <b>must</b> to be executed when this pre-processor finishes,
          * regardless of whether the processing is synchronous or aynchronous
          *
-         * @private
          * @return {Ext.Class} this
-         * @markdown
          */
         registerPreprocessor: function(name, fn, properties, position, relativeTo) {
             if (!position) {
@@ -5197,6 +5028,7 @@ var noArgs = [],
          * Retrieve a pre-processor callback function by its name, which has been registered before
          *
          * @private
+         * @static
          * @param {String} name
          * @return {Function} preprocessor
          */
@@ -5206,6 +5038,7 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
          */
         getPreprocessors: function() {
             return this.preprocessors;
@@ -5213,12 +5046,14 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
          */
         defaultPreprocessors: [],
 
         /**
          * Retrieve the array stack of default pre-processors
          * @private
+         * @static
          * @return {Function} defaultPreprocessors
          */
         getDefaultPreprocessors: function() {
@@ -5229,6 +5064,7 @@ var noArgs = [],
          * Set the default array stack of default pre-processors
          *
          * @private
+         * @static
          * @param {Array} preprocessors
          * @return {Ext.Class} this
          */
@@ -5241,23 +5077,23 @@ var noArgs = [],
         /**
          * Insert this pre-processor at a specific position in the stack, optionally relative to
          * any existing pre-processor. For example:
-
-    Ext.Class.registerPreprocessor('debug', function(cls, data, fn) {
-        // Your code here
-
-        if (fn) {
-            fn.call(this, cls, data);
-        }
-    }).insertDefaultPreprocessor('debug', 'last');
-
+         *
+         *     Ext.Class.registerPreprocessor('debug', function(cls, data, fn) {
+         *         // Your code here
+         *
+         *         if (fn) {
+         *             fn.call(this, cls, data);
+         *         }
+         *     }).insertDefaultPreprocessor('debug', 'last');
+         *
          * @private
+         * @static
          * @param {String} name The pre-processor name. Note that it needs to be registered with
-         * {@link Ext#registerPreprocessor registerPreprocessor} before this
+         * {@link Ext.Class#registerPreprocessor registerPreprocessor} before this
          * @param {String} offset The insertion position. Four possible values are:
          * 'first', 'last', or: 'before', 'after' (relative to the name provided in the third argument)
          * @param {String} relativeName
          * @return {Ext.Class} this
-         * @markdown
          */
         setDefaultPreprocessorPosition: function(name, offset, relativeName) {
             var defaultPreprocessors = this.defaultPreprocessors,
@@ -5287,8 +5123,16 @@ var noArgs = [],
             return this;
         },
 
+        /**
+         * @private
+         * @static
+         */
         configNameCache: {},
 
+        /**
+         * @private
+         * @static
+         */
         getConfigNameMap: function(name) {
             var cache = this.configNameCache,
                 map = cache[name],
@@ -5314,6 +5158,10 @@ var noArgs = [],
             return map;
         },
 
+        /**
+         * @private
+         * @static
+         */
         generateSetter: function(nameMap) {
             var internalName = nameMap.internal,
                 getName = nameMap.get,
@@ -5348,6 +5196,10 @@ var noArgs = [],
             return setter;
         },
 
+        /**
+         * @private
+         * @static
+         */
         generateInitGetter: function(nameMap) {
             var name = nameMap.name,
                 setName = nameMap.set,
@@ -5365,6 +5217,10 @@ var noArgs = [],
             }
         },
 
+        /**
+         * @private
+         * @static
+         */
         generateGetter: function(nameMap) {
             var internalName = nameMap.internal;
 
@@ -5625,21 +5481,202 @@ var noArgs = [],
 
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
- * @docauthor Jacky Nguyen <jacky@sencha.com>
- * @class Ext.ClassManager
-
-Ext.ClassManager manages all classes and handles mapping from string class name to
-actual class objects throughout the whole framework. It is not generally accessed directly, rather through
-these convenient shorthands:
-
-- {@link Ext#define Ext.define}
-- {@link Ext#create Ext.create}
-- {@link Ext#widget Ext.widget}
-- {@link Ext#getClass Ext.getClass}
-- {@link Ext#getClassName Ext.getClassName}
-
+ * @class  Ext.ClassManager
+ *
+ * Ext.ClassManager manages all classes and handles mapping from string class name to
+ * actual class objects throughout the whole framework. It is not generally accessed directly, rather through
+ * these convenient shorthands:
+ *
+ * - {@link Ext#define Ext.define}
+ * - {@link Ext#create Ext.create}
+ * - {@link Ext#widget Ext.widget}
+ * - {@link Ext#getClass Ext.getClass}
+ * - {@link Ext#getClassName Ext.getClassName}
+ *
+ * ## Basic syntax:
+ *
+ *     Ext.define(className, properties);
+ *
+ * in which `properties` is an object represent a collection of properties that apply to the class. See
+ * {@link Ext.ClassManager#create} for more detailed instructions.
+ *
+ *     Ext.define('Person', {
+ *          name: 'Unknown',
+ *
+ *          constructor: function(name) {
+ *              if (name) {
+ *                  this.name = name;
+ *              }
+ *
+ *              return this;
+ *          },
+ *
+ *          eat: function(foodType) {
+ *              alert("I'm eating: " + foodType);
+ *
+ *              return this;
+ *          }
+ *     });
+ *
+ *     var aaron = new Person("Aaron");
+ *     aaron.eat("Sandwich"); // alert("I'm eating: Sandwich");
+ *
+ * Ext.Class has a powerful set of extensible {@link Ext.Class#registerPreprocessor pre-processors} which takes care of
+ * everything related to class creation, including but not limited to inheritance, mixins, configuration, statics, etc.
+ *
+ * ## Inheritance:
+ *
+ *     Ext.define('Developer', {
+ *          extend: 'Person',
+ *
+ *          constructor: function(name, isGeek) {
+ *              this.isGeek = isGeek;
+ *
+ *              // Apply a method from the parent class' prototype
+ *              this.callParent([name]);
+ *
+ *              return this;
+ *
+ *          },
+ *
+ *          code: function(language) {
+ *              alert("I'm coding in: " + language);
+ *
+ *              this.eat("Bugs");
+ *
+ *              return this;
+ *          }
+ *     });
+ *
+ *     var jacky = new Developer("Jacky", true);
+ *     jacky.code("JavaScript"); // alert("I'm coding in: JavaScript");
+ *                               // alert("I'm eating: Bugs");
+ *
+ * See {@link Ext.Base#callParent} for more details on calling superclass' methods
+ *
+ * ## Mixins:
+ *
+ *     Ext.define('CanPlayGuitar', {
+ *          playGuitar: function() {
+ *             alert("F#...G...D...A");
+ *          }
+ *     });
+ *
+ *     Ext.define('CanComposeSongs', {
+ *          composeSongs: function() { ... }
+ *     });
+ *
+ *     Ext.define('CanSing', {
+ *          sing: function() {
+ *              alert("I'm on the highway to hell...")
+ *          }
+ *     });
+ *
+ *     Ext.define('Musician', {
+ *          extend: 'Person',
+ *
+ *          mixins: {
+ *              canPlayGuitar: 'CanPlayGuitar',
+ *              canComposeSongs: 'CanComposeSongs',
+ *              canSing: 'CanSing'
+ *          }
+ *     })
+ *
+ *     Ext.define('CoolPerson', {
+ *          extend: 'Person',
+ *
+ *          mixins: {
+ *              canPlayGuitar: 'CanPlayGuitar',
+ *              canSing: 'CanSing'
+ *          },
+ *
+ *          sing: function() {
+ *              alert("Ahem....");
+ *
+ *              this.mixins.canSing.sing.call(this);
+ *
+ *              alert("[Playing guitar at the same time...]");
+ *
+ *              this.playGuitar();
+ *          }
+ *     });
+ *
+ *     var me = new CoolPerson("Jacky");
+ *
+ *     me.sing(); // alert("Ahem...");
+ *                // alert("I'm on the highway to hell...");
+ *                // alert("[Playing guitar at the same time...]");
+ *                // alert("F#...G...D...A");
+ *
+ * ## Config:
+ *
+ *     Ext.define('SmartPhone', {
+ *          config: {
+ *              hasTouchScreen: false,
+ *              operatingSystem: 'Other',
+ *              price: 500
+ *          },
+ *
+ *          isExpensive: false,
+ *
+ *          constructor: function(config) {
+ *              this.initConfig(config);
+ *
+ *              return this;
+ *          },
+ *
+ *          applyPrice: function(price) {
+ *              this.isExpensive = (price > 500);
+ *
+ *              return price;
+ *          },
+ *
+ *          applyOperatingSystem: function(operatingSystem) {
+ *              if (!(/^(iOS|Android|BlackBerry)$/i).test(operatingSystem)) {
+ *                  return 'Other';
+ *              }
+ *
+ *              return operatingSystem;
+ *          }
+ *     });
+ *
+ *     var iPhone = new SmartPhone({
+ *          hasTouchScreen: true,
+ *          operatingSystem: 'iOS'
+ *     });
+ *
+ *     iPhone.getPrice(); // 500;
+ *     iPhone.getOperatingSystem(); // 'iOS'
+ *     iPhone.getHasTouchScreen(); // true;
+ *     iPhone.hasTouchScreen(); // true
+ *
+ *     iPhone.isExpensive; // false;
+ *     iPhone.setPrice(600);
+ *     iPhone.getPrice(); // 600
+ *     iPhone.isExpensive; // true;
+ *
+ *     iPhone.setOperatingSystem('AlienOS');
+ *     iPhone.getOperatingSystem(); // 'Other'
+ *
+ * ## Statics:
+ *
+ *     Ext.define('Computer', {
+ *          statics: {
+ *              factory: function(brand) {
+ *                 // 'this' in static methods refer to the class itself
+ *                  return new this(brand);
+ *              }
+ *          },
+ *
+ *          constructor: function() { ... }
+ *     });
+ *
+ *     var dellComputer = Computer.factory('Dell');
+ *
+ * Also see {@link Ext.Base#statics} and {@link Ext.Base#self} for more details on accessing
+ * static properties within class methods
+ *
  * @singleton
- * @markdown
  */
 (function(Class, alias, arraySlice, arrayFrom, global) {
 
@@ -5850,14 +5887,12 @@ these convenient shorthands:
 
         /**
          * Creates a namespace and assign the `value` to the created object
-
-    Ext.ClassManager.setNamespace('MyCompany.pkg.Example', someObject);
-
-    alert(MyCompany.pkg.Example === someObject); // alerts true
-
+         *
+         *     Ext.ClassManager.setNamespace('MyCompany.pkg.Example', someObject);
+         *     alert(MyCompany.pkg.Example === someObject); // alerts true
+         *
          * @param {String} name
          * @param {Mixed} value
-         * @markdown
          */
         setNamespace: function(name, value) {
             var root = global,
@@ -6056,7 +6091,7 @@ these convenient shorthands:
          * Get the name of the class by its reference or its instance;
          * usually invoked by the shorthand {@link Ext#getClassName Ext.getClassName}
 
-    Ext.ClassManager.getName(Ext.Action); // returns "Ext.Action"
+         *     Ext.ClassManager.getName(Ext.Action); // returns "Ext.Action"
 
          * @param {Ext.Class/Object} object
          * @return {String} className
@@ -6070,13 +6105,12 @@ these convenient shorthands:
          * Get the class of the provided object; returns null if it's not an instance
          * of any class created with Ext.define. This is usually invoked by the shorthand {@link Ext#getClass Ext.getClass}
          *
-    var component = new Ext.Component();
-
-    Ext.ClassManager.getClass(component); // returns Ext.Component
+         *     var component = new Ext.Component();
+         *
+         *     Ext.ClassManager.getClass(component); // returns Ext.Component
          *
          * @param {Object} object
          * @return {Ext.Class} class
-         * @markdown
          */
         getClass: function(object) {
             return object && object.self || null;
@@ -6241,14 +6275,12 @@ these convenient shorthands:
          * Instantiate a class by its alias; usually invoked by the convenient shorthand {@link Ext#createByAlias Ext.createByAlias}
          * If {@link Ext.Loader} is {@link Ext.Loader#setConfig enabled} and the class has not been defined yet, it will
          * attempt to load the class via synchronous loading.
-
-    var window = Ext.ClassManager.instantiateByAlias('widget.window', { width: 600, height: 800, ... });
-
+         *
+         *     var window = Ext.ClassManager.instantiateByAlias('widget.window', { width: 600, height: 800, ... });
+         *
          * @param {String} alias
-         * @param {Mixed} args,... Additional arguments after the alias will be passed to the
-         * class constructor.
+         * @param {Mixed...} args Additional arguments after the alias will be passed to the class constructor.
          * @return {Object} instance
-         * @markdown
          */
         instantiateByAlias: function() {
             var alias = arguments[0],
@@ -6287,20 +6319,19 @@ these convenient shorthands:
          * attempt to load the class via synchronous loading.
          *
          * For example, all these three lines return the same result:
-
-    // alias
-    var window = Ext.ClassManager.instantiate('widget.window', { width: 600, height: 800, ... });
-
-    // alternate name
-    var window = Ext.ClassManager.instantiate('Ext.Window', { width: 600, height: 800, ... });
-
-    // full class name
-    var window = Ext.ClassManager.instantiate('Ext.window.Window', { width: 600, height: 800, ... });
-
+         *
+         *     // alias
+         *     var window = Ext.ClassManager.instantiate('widget.window', { width: 600, height: 800, ... });
+         *
+         *     // alternate name
+         *     var window = Ext.ClassManager.instantiate('Ext.Window', { width: 600, height: 800, ... });
+         *
+         *     // full class name
+         *     var window = Ext.ClassManager.instantiate('Ext.window.Window', { width: 600, height: 800, ... });
+         *
          * @param {String} name
          * @param {Mixed} args,... Additional arguments after the name will be passed to the class' constructor.
          * @return {Object} instance
-         * @markdown
          */
         instantiate: function() {
             var name = arguments[0],
@@ -6502,16 +6533,16 @@ these convenient shorthands:
         /**
          * Converts a string expression to an array of matching class names. An expression can either refers to class aliases
          * or class names. Expressions support wildcards:
-
-     // returns ['Ext.window.Window']
-    var window = Ext.ClassManager.getNamesByExpression('widget.window');
-
-    // returns ['widget.panel', 'widget.window', ...]
-    var allWidgets = Ext.ClassManager.getNamesByExpression('widget.*');
-
-    // returns ['Ext.data.Store', 'Ext.data.ArrayProxy', ...]
-    var allData = Ext.ClassManager.getNamesByExpression('Ext.data.*');
-
+         *
+         *      // returns ['Ext.window.Window']
+         *     var window = Ext.ClassManager.getNamesByExpression('widget.window');
+         *
+         *     // returns ['widget.panel', 'widget.window', ...]
+         *     var allWidgets = Ext.ClassManager.getNamesByExpression('widget.*');
+         *
+         *     // returns ['Ext.data.Store', 'Ext.data.ArrayProxy', ...]
+         *     var allData = Ext.ClassManager.getNamesByExpression('Ext.data.*');
+         *
          * @param {String} expression
          * @return {Array} classNames
          * @markdown
@@ -6678,13 +6709,12 @@ these convenient shorthands:
 
         /**
          * Convenient shorthand to create a widget by its xtype, also see {@link Ext.ClassManager#instantiateByAlias}
-
-    var button = Ext.widget('button'); // Equivalent to Ext.create('widget.button')
-    var panel = Ext.widget('panel'); // Equivalent to Ext.create('widget.panel')
-
+         *
+         *     var button = Ext.widget('button'); // Equivalent to Ext.create('widget.button')
+         *     var panel = Ext.widget('panel'); // Equivalent to Ext.create('widget.panel')
+         *
          * @member Ext
          * @method widget
-         * @markdown
          */
         widget: function(name) {
             var args = arraySlice.call(arguments);
@@ -6701,22 +6731,19 @@ these convenient shorthands:
         createByAlias: alias(Manager, 'instantiateByAlias'),
 
         /**
-         * @method
          * Defines a class or override. A basic class is defined like this:
          *
          *      Ext.define('My.awesome.Class', {
          *          someProperty: 'something',
          *
-         *          someMethod: function() {
-         *              alert(s + this.someProperty);
+         *          someMethod: function(s) {
+         *              console.log(s + this.someProperty);
          *          }
-         *
-         *          ...
          *      });
          *
          *      var obj = new My.awesome.Class();
          *
-         *      obj.someMethod('Say '); // alerts 'Say something'
+         *      obj.someMethod('Say '); // logs 'Say something' to the console
          *
          * To defines an override, include the `override` property. The content of an
          * override is aggregated with the specified class in order to extend or modify
@@ -6794,11 +6821,14 @@ these convenient shorthands:
          *
          * @param {String} className The class name to create in string dot-namespaced format, for example:
          * 'My.very.awesome.Class', 'FeedViewer.plugin.CoolPager'
+         *
          * It is highly recommended to follow this simple convention:
          *  - The root and the class name are 'CamelCased'
          *  - Everything else is lower-cased
-         * @param {Object} data The key - value pairs of properties to apply to this class. Property names can be of any valid
-         * strings, except those in the reserved listed below:
+         *
+         * @param {Object} data The key - value pairs of properties to apply to this class. Property names can be of
+         * any valid strings, except those in the reserved listed below:
+         *
          *  - `mixins`
          *  - `statics`
          *  - `config`
@@ -6811,7 +6841,7 @@ these convenient shorthands:
          * @param {Function} createdFn Optional callback to execute after the class (or override)
          * is created. The execution scope (`this`) will be the newly created class itself.
          * @return {Ext.Base}
-         * @markdown
+         *
          * @member Ext
          * @method define
          */
@@ -6862,16 +6892,16 @@ these convenient shorthands:
         /**
          * Creates namespaces to be used for scoping variables and classes so that they are not global.
          * Specifying the last node of a namespace implicitly creates all other nodes. Usage:
-
-    Ext.namespace('Company', 'Company.data');
-
-     // equivalent and preferable to the above syntax
-    Ext.namespace('Company.data');
-
-    Company.Widget = function() { ... };
-
-    Company.data.CustomStore = function(config) { ... };
-
+         *
+         *     Ext.namespace('Company', 'Company.data');
+         *
+         *      // equivalent and preferable to the above syntax
+         *     Ext.namespace('Company.data');
+         *
+         *     Company.Widget = function() { ... };
+         *
+         *     Company.data.CustomStore = function(config) { ... };
+         *
          * @param {String} namespace1
          * @param {String} namespace2
          * @param {String} etc
@@ -6879,7 +6909,6 @@ these convenient shorthands:
          * @function
          * @member Ext
          * @method namespace
-         * @markdown
          */
         namespace: alias(Manager, 'createNamespaces')
     });
@@ -7606,7 +7635,7 @@ This process will be automated with Sencha Command, to be released and documente
          *
          * @param {String} url
          * @param {Function} onLoad
-         * @param {Scope} scope
+         * @param {Object} scope
          * @param {Boolean} synchronous
          * @private
          */
@@ -7984,9 +8013,7 @@ This process will be automated with Sencha Command, to be released and documente
             return this;
         },
 
-        /**
-         * @ignore
-         */
+        // @ignore
         onReady: function(fn, scope, withDomReady, options) {
             var oldFn;
 
