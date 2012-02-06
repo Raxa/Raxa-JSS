@@ -5,6 +5,39 @@ Ext.define('RaxaEmr.view.Login', {
         layout: 'vbox',
         id: 'halo',
         items: [{
+            xtype: 'toolbar',
+            docked: 'top',
+            items: [{
+                xtype: 'spacer'
+            },{
+                iconCls: 'settings',
+                iconMask: true, 
+                ui: 'plain',
+                handler: function(){
+                    if(!this.overlay){
+                        this.overlay = Ext.Viewport.add({
+                            xtype: 'panel',
+                            modal: true,
+                            top: 45,
+                            right: 0,
+                            style: 'right: -5px;top: 45px',
+                            items: [{
+                                xtype: 'fieldset',
+                                items:[{
+                                    xtype: 'textfield',
+                                    placeHolder: 'Host URL',
+                                    name: 'hostField',
+                                    width: 450,
+                                    style: 'background-color: white;',
+                                    value: host 
+                                }]
+                            }]
+                        });
+                    }
+                    this.overlay.show();
+                }
+            }]
+        },{
             id: 'logoPanel',
             centered: true,
             style: 'margin-top: -350px',
@@ -31,6 +64,7 @@ Ext.define('RaxaEmr.view.Login', {
         },{
             xtype: 'button',
             text: 'SIGN IN',
+            ui: 'decline-round',
             centered: true,
             width: 350,
             style: 'margin-top: 180px;'
