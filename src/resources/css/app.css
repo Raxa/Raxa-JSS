@@ -1,0 +1,20 @@
+#halo {
+    background-color: #E1E4dE;
+    background-image: url(images/radial_bg.png); 
+    background-position: center center; 
+    background-repeat: no-repeat; 
+
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-radial-gradient(circle, #ffffff, #cccccc); 
+}
+
+#logoPanel {
+    padding-top: 2%;
+    padding-bottom: 5%;
+    text-align: center;
+}
+
+.logoText {
+    font-family: Arial, sans-serif;
+    font-size: x-large;
+}

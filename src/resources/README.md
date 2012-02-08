@@ -1,0 +1,1 @@
+Contains resources like CSS stylesheets and images to be used for the core application
