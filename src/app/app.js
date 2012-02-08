@@ -10,7 +10,7 @@ Ext.application({
     tabletStartupScreen: 'resources/img/icon.png',
     
     models: ['Session'], // List of Models for dynamic loading
-    views: ['Login','Dashboard','Vitals'], // List of Views for dynamic loading
+    views: ['Login','Dashboard'], // List of Views for dynamic loading
     controllers: ['Session'], // List of Controllers for dynamic loading
     store: ['SessionStore'] // List of Stores for dynamic loading
 });
