@@ -171,7 +171,7 @@ Ext.define('Ext.data.Field', {
          *             type: 'json',
          *             model: 'Dude',
          *             idProperty: 'key',
-         *             root: 'daRoot',
+         *             rootProperty: 'daRoot',
          *             totalProperty: 'total'
          *         }
          *     });
@@ -233,7 +233,7 @@ Ext.define('Ext.data.Field', {
          * - {@link Ext.data.reader.Json}
          *
          *   The mapping is a string containing the javascript expression to reference the data from an element of the data2
-         *   item's {@link Ext.data.reader.Json#root root} Array. Defaults to the field name.
+         *   item's {@link Ext.data.reader.Json#rootProperty rootProperty} Array. Defaults to the field name.
          *
          * - {@link Ext.data.reader.Xml}
          *

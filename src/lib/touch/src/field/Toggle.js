@@ -1,7 +1,7 @@
 /**
  * Specialized {@link Ext.field.Slider} with a single thumb which only supports two {@link #value values}.
  *
- * # Examples
+ * ## Examples
  *
  *     @example preview
  *     Ext.Viewport.add({

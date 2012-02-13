@@ -25,6 +25,12 @@ Ext.define('Ext.scroll.View', {
          */
         flashIndicatorTimeout: 1000,
 
+        /**
+         * @cfg {String} ui
+         * The style of the indicators of this view. Available options are `dark` or `light`.
+         */
+        ui: 'dark',
+
         element: null,
         scroller: {},
         indicators: {
@@ -83,12 +89,6 @@ Ext.define('Ext.scroll.View', {
     constructor: function(config) {
         config = this.processConfig(config);
 
-        this.indicatorLength = { x: 0, y: 0 };
-
-        this.indicatorMaxLength = { x: 0, y: 0 };
-
-        this.indicatorMaxOffset = { x: 0, y: 0 };
-
         this.useIndicators = { x: true, y: true };
 
         this.initConfig(config);
@@ -96,6 +96,12 @@ Ext.define('Ext.scroll.View', {
 
     setConfig: function(config) {
         return this.callParent([this.processConfig(config)]);
+    },
+
+    updateUi: function(newUi) {
+        var indicators = this.getIndicators();
+        indicators.x.setUi(newUi);
+        indicators.y.setUi(newUi);
     },
 
     applyScroller: function(config, currentScroller) {
@@ -151,9 +157,9 @@ Ext.define('Ext.scroll.View', {
         scroller.on({
             scope: this,
             scrollstart: 'onScrollStart',
-            scroll     : 'onScroll',
-            scrollend  : 'onScrollEnd',
-            refresh    : 'refreshIndicators'
+            scroll: 'onScroll',
+            scrollend: 'onScrollEnd',
+            refresh: 'refreshIndicators'
         });
     },
 

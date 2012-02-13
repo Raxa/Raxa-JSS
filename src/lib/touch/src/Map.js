@@ -1,7 +1,5 @@
 /**
- * Wraps a Google Map in an Ext.Component.
- *
- * http://code.google.com/apis/maps/documentation/v3/introduction.html
+ * Wraps a Google Map in an Ext.Component using the [Google Maps API](http://code.google.com/apis/maps/documentation/v3/introduction.html).
  *
  * To use this component you must include an additional JavaScript file from Google:
  *
@@ -9,7 +7,6 @@
  *
  * ## Example
  *
- *     @example
  *     Ext.Viewport.add({
  *         xtype: 'map',
  *         useCurrentLocation: true
@@ -97,6 +94,14 @@ Ext.define('Ext.Map', {
         }
     },
 
+    initialize: function() {
+        this.callParent();
+        this.on({
+            painted: 'doResize',
+            scope: this
+        });
+    },
+
     updateUseCurrentLocation: function(useCurrentLocation) {
         this.setGeo(useCurrentLocation);
         if (!useCurrentLocation) {
@@ -125,11 +130,6 @@ Ext.define('Ext.Map', {
         }
     },
 
-    show: function() {
-        this.callParent(arguments);
-        this.doResize();
-    },
-
     doResize: function() {
         var gm = (window.google || {}).maps,
             map = this.getMap();
@@ -147,14 +147,6 @@ Ext.define('Ext.Map', {
             mapOptions = me.getMapOptions(),
             map = me.getMap(),
             event;
-
-        if (!me.isPainted()) {
-            me.on({
-                painted: 'doResize',
-                scope: me,
-                single: true
-            });
-        }
 
         if (gm) {
             if (Ext.os.is.iPad) {
@@ -177,7 +169,7 @@ Ext.define('Ext.Map', {
             }
 
             if (element.dom.firstChild) {
-                Ext.fly(element.dom.firstChild).remove();
+                Ext.fly(element.dom.firstChild).destroy();
             }
 
             if (map) {
@@ -307,14 +299,14 @@ Ext.define('Ext.Map', {
 
     /**
      * @cfg {Boolean} maskMap
-     * @deprecated 2.0.0 Please mask this components container instead.
      * Masks the map
+     * @deprecated 2.0.0 Please mask this components container instead.
      */
 
     /**
      * @cfg {String} maskMapCls
-     * @deprecated 2.0.0 Please mask this components container instead.
      * CSS class to add to the map when maskMap is set to true.
+     * @deprecated 2.0.0 Please mask this components container instead.
      */
 
     /**

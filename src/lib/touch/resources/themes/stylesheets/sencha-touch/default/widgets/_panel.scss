@@ -22,8 +22,9 @@ $panel-border-radius: .3em;
         @include background-gradient($base-color, 'flat');
       }
 
-      .x-body,
-      .x-scroll-view {
+      > .x-panel-inner,
+      .x-scroll-view,
+      .x-body {
         background-color: #fff;
         @if $include-border-radius { @include border_radius($panel-border-radius); }
       }

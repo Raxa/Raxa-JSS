@@ -18,6 +18,7 @@ Ext.define('RaxaEmr.view.Login', {
                         this.overlay = Ext.Viewport.add({
                             xtype: 'panel',
                             modal: true,
+                            hideOnMaskTap: true,
                             top: 45,
                             right: 0,
                             style: 'right: -5px;top: 45px',
@@ -27,6 +28,13 @@ Ext.define('RaxaEmr.view.Login', {
                                     xtype: 'textfield',
                                     placeHolder: 'Host URL',
                                     name: 'hostField',
+                                    listeners: {
+                                        change: {
+                                            fn: function() {
+                                                alert('changed');
+                                            }
+                                        }
+                                    },
                                     width: 450,
                                     style: 'background-color: white;',
                                     value: host 

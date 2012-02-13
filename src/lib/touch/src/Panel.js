@@ -10,7 +10,7 @@
  * whether those child elements need to be sized using one of Ext's built-in `**{@link Ext.Container#layout layout}**`
  * schemes.
  *
- * # Example:
+ * ## Example:
  *
  *     @example preview
  *     var panel = Ext.create('Ext.Panel', {

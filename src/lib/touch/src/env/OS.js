@@ -152,12 +152,12 @@ Ext.define('Ext.env.OS', {
 
     /**
      * @class Ext.is
+     * @private
      * Used to detect if the current browser supports a certain feature, and the type of the current browser.
      *
-     * @deprecated
-     * Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
+     * @deprecated 2.0.0 Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
      */
-    var navigator = Ext.global.navigator,
+    var navigation = Ext.global.navigator,
         osEnv, osName, deviceType;
 
     //<deprecated product=touch since=2.0>
@@ -179,7 +179,7 @@ Ext.define('Ext.env.OS', {
     });
     //</deprecated>
 
-    Ext.os = osEnv = new this(navigator.userAgent, navigator.platform);
+    Ext.os = osEnv = new this(navigation.userAgent, navigation.platform);
 
     osName = osEnv.name;
 
@@ -190,8 +190,7 @@ Ext.define('Ext.env.OS', {
     if (search && search[1]) {
         deviceType = search[1];
     } else {
-        // See https://sencha.jira.com/browse/TOUCH-1517
-        if (/Windows|Linux|MacOS/.test(osName)) {
+        if (!osEnv.is.Android && !osEnv.is.iOS && /Windows|Linux|MacOS/.test(osName)) {
             deviceType = 'Desktop';
         }
         else if (osEnv.is.iPad || osEnv.is.Android3) {

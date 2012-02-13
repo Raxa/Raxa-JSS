@@ -59,7 +59,9 @@ Ext.define('Ext.field.Slider', {
      * @event change
      * Fires when an option selection has changed.
      * @param {Ext.field.Select} me
-     * @param {Mixed} value
+     * @param {Ext.slider.Thumb} thumb
+     * @param {Number} newValue the new value of this thumb
+     * @param {Number} oldValue the old value of this thumb
      */
 
     config: {
@@ -127,8 +129,8 @@ Ext.define('Ext.field.Slider', {
         return Ext.factory(config, Ext.slider.Slider);
     },
 
-    onSliderChange: function(me, value) {
-        this.fireEvent('change', this, value);
+    onSliderChange: function(me, thumb, newValue, oldValue) {
+        this.fireEvent('change', this, thumb, newValue, oldValue);
     },
 
     /**

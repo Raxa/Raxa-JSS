@@ -49,8 +49,6 @@ Ext.define('Ext.data.ArrayStore', {
     },
 
     loadData: function(data, append) {
-//        debugger;
-
 //        if (this.expandData === true) {
 //            var r = [],
 //                i = 0,

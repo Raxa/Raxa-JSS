@@ -29,15 +29,19 @@
  *
  * ## Dependencies
  *
- * In our example above we defined Model, View, Controller and Store dependencies. Application follows a simple
- * convention when it comes to naming those classes - in each case we take the app {@link #name} ('MyApp' in this case)
- * and the name of the dependency (e.g. 'User' for the first defined Model dependency) and combine them to create
- * MyApp.model.User, MyApp.model.Group etc. In each case we use the singular form of the dependency type to create this
- * name - *model* instead of *models*, *controller* instead of *controllers*, etc.
+ * Application follows a simple convention when it comes to specifying the controllers, views, models, stores and
+ * profiles it requires. By default it expects each of them to be found inside the *app/controller*, *app/view*,
+ * *app/model*, *app/store* and *app/profile* directories in your app - if you follow this convention you can just
+ * specify the last part of each class name and Application will figure out the rest for you:
  *
- * Based on these class names, the Application uses the class system's dynamic loading capabilities to automatically
- * load the classes specified. These map to files in your application that follow the same format - MyApp.model.User
- * would be found in app/model/User.js, MyApp.view.EditUser in app/view/EditUser.js and so on.
+ *     Ext.application({
+ *         name: 'MyApp',
+ *
+ *         controllers: ['Users'],
+ *         models: ['User', 'Group'],
+ *         stores: ['Users'],
+ *         views: ['Main', 'ShowUser']
+ *     });
  *
  * The example above will load 6 files:
  *
@@ -47,6 +51,70 @@
  * * app/controller/Users.js
  * * app/view/Main.js
  * * app/view/ShowUser.js
+ * 
+ * ### Nested Dependencies
+ * 
+ * For larger apps it's common to split the models, views and controllers into subfolders so keep the project 
+ * organized. This is especially true of views - it's not unheard of for large apps to have over a hundred separate 
+ * view classes so organizing them into folders can make maintenance much simpler.
+ * 
+ * To specify dependencies in subfolders just use a period (".") to specify the folder:
+ * 
+ *     Ext.application({
+ *         name: 'MyApp',
+ * 
+ *         controllers: ['Users', 'nested.MyController'],
+ *         views: ['products.Show', 'products.Edit', 'user.Login']
+ *     });
+ * 
+ * In this case these 5 files will be loaded:
+ * 
+ * * app/controller/Users.js
+ * * app/controller/nested/MyController.js
+ * * app/view/products/Show.js
+ * * app/view/products/Edit.js
+ * * app/view/user/Login.js
+ * 
+ * Note that we can mix and match within each configuration here - for each model, view, controller, profile or store 
+ * you can specify either just the final part of the class name (if you follow the directory conventions), or the full
+ * class name.
+ * 
+ * ### External Dependencies
+ * 
+ * Finally, we can specify application dependencies from outside our application by fully-qualifying the classes we 
+ * want to load. A common use case for this is sharing authentication logic between multiple applications. Perhaps you
+ * have several apps that login via a common user database and you want to share that code between them. An easy way to
+ * do this is to create a folder alongside your app folder and then add its contents as dependencies for your app.
+ * 
+ * For example, let's say our shared login code contains a login controller, a user model and a login form view. We 
+ * want to use all of these in our application:
+ * 
+ *     Ext.application({
+ *         views: ['Auth.view.LoginForm', 'Welcome'],
+ *         controllers: ['Auth.controller.Sessions', 'Main'],
+ *         models: ['Auth.model.User']
+ *     });
+ * 
+ * This will load the following files:
+ * 
+ * * Auth/view/LoginForm.js
+ * * Auth/controller/Sessions.js
+ * * Auth/model/User.js
+ * * app/view/Welcome.js
+ * * app/controller/Main.js
+ * 
+ * The first three were loaded from outside our application, the last two from the application itself. Note how we can
+ * still mix and match application files and external dependency files.
+ * 
+ * You may be wondering how the framework understands what is a nested local dependency (like 'products.Edit' above) 
+ * and what is an external dependency (like 'Auth.view.LoginForm'). All it does here is look at the first letter of 
+ * each dependency. If it's lower case, it's treated as a nested local dependency and loaded from within the **app** 
+ * folder. If it's upper case, it's treated as an external dependency and not part of your application's namespace.
+ * 
+ * This follows the simple convention that top-level namespaces should always start with a capital letter (e.g. "MyApp"
+ * vs "myapp"), and that packages within a top-level namespace should always be lower case (e.g. "MyApp.views" vs 
+ * "MyApp.Views"). If the external dependencies are not honoring this convention (e.g. the 'Auth' namespace was 'auth'
+ * instead) then you will need to just use Ext.require to load the dependencies manually.
  *
  * ## Launching
  *
@@ -293,6 +361,14 @@ Ext.define('Ext.app.Application', {
          */
         enableLoader: true
     },
+    
+    /**
+     * @private
+     * Cached regex for testing if a string contains a dot. Used internally by applyStores and similar
+     * @property dotRe
+     * @type RegExp
+     */
+    dotRe: /\./,
 
     /**
      * Constructs a new Application instance
@@ -529,6 +605,8 @@ Ext.define('Ext.app.Application', {
             controllers, name;
 
         //<deprecated product=touch since=2.0>
+        Ext.app.Application.appInstance = this;
+
         if (Ext.Router) {
             Ext.Router.setAppInstance(this);
         }
@@ -642,14 +720,14 @@ Ext.define('Ext.app.Application', {
         for (i = 0; i < length; i++) {
             name = controllers[i];
 
-            if (!name.match('\\.')) {
+            if (!name.match(this.dotRe)|| name.charCodeAt(0) > 96) {
                 controllers[i] = appName + '.controller.' + name;
             }
         }
 
         return controllers;
     },
-
+    
     /**
      * @private
      * As a convenience developers can locally qualify store names (e.g. 'MyStore' vs
@@ -663,7 +741,7 @@ Ext.define('Ext.app.Application', {
         for (i = 0; i < length; i++) {
             name = stores[i];
 
-            if (Ext.isString(name) && !name.match('\\.')) {
+            if (Ext.isString(name) && (!name.match(this.dotRe) || name.charCodeAt(0) > 96)) {
                 stores[i] = appName + '.store.' + name;
             }
         }
@@ -684,7 +762,7 @@ Ext.define('Ext.app.Application', {
         for (i = 0; i < length; i++) {
             name = models[i];
 
-            if (Ext.isString(name) && !name.match('\\.')) {
+            if (Ext.isString(name) && (!name.match(this.dotRe) || name.charCodeAt(0) > 96)) {
                 models[i] = appName + '.model.' + name;
             }
         }
@@ -705,7 +783,7 @@ Ext.define('Ext.app.Application', {
         for (i = 0; i < length; i++) {
             name = views[i];
 
-            if (Ext.isString(name) && !name.match('\\.')) {
+            if (Ext.isString(name) && (!name.match(this.dotRe) || name.charCodeAt(0) > 96)) {
                 views[i] = appName + '.view.' + name;
             }
         }
@@ -726,7 +804,7 @@ Ext.define('Ext.app.Application', {
         for (i = 0; i < length; i++) {
             name = profiles[i];
 
-            if (Ext.isString(name) && !name.match('\\.')) {
+            if (Ext.isString(name) && (!name.match(this.dotRe) || name.charCodeAt(0) > 96)) {
                 profiles[i] = appName + '.profile.' + name;
             }
         }
@@ -824,6 +902,26 @@ Ext.define('Ext.app.Application', {
         );
 
         Ext.ClassManager.setAlias(cls, alias);
+    };
+
+    Ext.redirect = function() {
+        var app = Ext.app.Application.appInstance;
+
+        console.log('[Ext.app.Application] Ext.redirect is deprecated, please use YourApp.redirectTo instead');
+
+        if (app) {
+            app.redirectTo.apply(app, arguments);
+        }
+    };
+
+    Ext.dispatch = function() {
+        var app = Ext.app.Application.appInstance;
+
+        console.log('[Ext.app.Application] Ext.dispatch is deprecated, please use YourApp.dispatch instead');
+
+        if (app) {
+            app.dispatch.apply(app, arguments);
+        }
     };
 
     // </deprecated>

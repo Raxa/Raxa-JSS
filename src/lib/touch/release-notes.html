@@ -13,19 +13,186 @@
         <div id="releases">
             <div class="release">
                 <h1>
+                    Release Notes for Sencha Touch 2.0.beta2
+                </h1>
+                <p class="notes">
+                    Release Notes: Release Notes: February 8, 2012<br>
+                    Version Number: 2.0.0.beta2
+                </p>
+
+                <div style="margin: 10px">
+                    <p><b>Android 4 transitions are hampered by a <a href="http://code.google.com/p/android/issues/detail?id=25147" target="_blank">bug reported to the Android team</a>.  Help get its attention by starring the issue.</b></p>
+                </div>
+
+                <div style="margin: 10px">
+                    <p><b>Notes:</b></p>
+
+                    <p>Navigation View has been updated so the 'stack' is now based on the <b>items</b> config/collection. This means that if you define more than 1 item in a navigation view, the last item will <i>always</i> be the active item. The animation methods have also been removed from Navigaiton View. Instead, you should change the animation using the view.getLayout().setAnimation() setter instead, just like you would on a Ext.Container.</p>
+
+                    <p>The signature returned in the <b>callback</b> configuration of <b>Ext.util.JSONP#request</b> has changed. Previously it only returned the JSON object. It now returns the success value (Boolean) as the first argument and then the JSON object as the second argument. The class has also been deprecated</p>
+                    <p>The sencha-touch-debug.js shipped with Beta 2 now includes deprecated compatibility methods.  Please remember that in order to use the smaller build without compatibility, you will need to fix any deprecation warnings you receive during development</p>
+                </div>
+
+                <ul>
+                    <li>Enhancements/Changes
+                        <ul>
+                            <li>Deprecated enterAnimation/exitAnimation in favor of showAnimation/hideAnimation as this is a more accurate description</li>
+                            <li>[TOUCH-1400] Deprecated setRootNode and getRootNode methods.</li>
+                            <li>Deprecated hide node configuration on TreeStore</li>
+                            <li>[TOUCH-1593, TOUCH-1591] Added warnings when adding listeners to deprecated events on Store</li>
+                            <li>Added deprecation warnings for Store sortOnLoad, filterOnLoad and sortOnFilter</li>
+                            <li>[TOUCH-1605] Deprecated setOrientation, layoutOnOrientationChange, monitorOrientation, beforeorientationchange, and orientation change within component.  Links added to Viewport where applicable.  Warnings will now be thrown when using these old methods</li>
+                            <li>[TOUCH-1627] Deprecated Container.cardSwitchAnimation</li>
+                            <li>Deprecated Component#getEl()</li>
+                            <li>[TOUCH-1615] Added the old flip, cube, wipe animations to Anim.  Removed the now unused Anim-more.js file</li>
+                            <li>Clarified docs on Application dependencies</li>
+                            <li>[TOUCH-1550] Added styling for disabled and checked checkboxefield</li>
+                            <li>[TOUCH-1639] Always hide the clear icon when you tap it</li>
+                            <li>Added a unit test to cover trailing slashes in Routes</li>
+                            <li>[TOUCH-1424] Cleaned up instantiation on Card Animations.  Passed config should now be properly passed to individual animations</li>
+                            <li>[TOUCH-1710] Added emptyText configuration to the twitter example and custom styling for it</li>
+                            <li>[TOUCH-1710] Added a check to the twitter example to ensure there is always at least one search</li>
+                            <li>Picker sheets are now hidden when navigating away using the browser back buttons</li>
+                            <li>Added more documentation for Ext.Button#ui</li>
+                            <li>[TOUCH-1462] Updated picker to not use component query to find its children</li>
+                            <li>[TOUCH-1719] Updated onProxyLoad method to not use the removeAll API when clearing the store on load as this caused an issue whenever autoSync was set to true</li>
+                            <li>[TOUCH-1462] Added local variable in picker to reduce code</li>
+                            <li>Added backwards compatibility to Carousel isVertical and isHorizontal</li>
+                            <li>Added backwards compatibility for Carousel#prev</li>
+                            <li>[TOUCH-1768] Ext.Store.isLoading now always returns a Boolean</li>
+                            <li>[TOUCH-1767] Removed unused stylesheets directory</li>
+                            <li>[TOUCH-1676] Updated the styling of nested loading and YQL examples in kitchensink</li>
+                            <li>Updated the styling of Kiva example</li>
+                            <li>Disable scrolling within DataView while its bound store is loading</li>
+                            <li>[TOUCH-1743] Added styling for search fields outside toolbars</li>
+                            <li>[TOUCH-1589] Added syncRemovedRecords config to Store that allows you to disable the synchronization of removed records in a Store</li>
+                            <li>[TOUCH-1765] getRecord now returns undefined in WebStorage when the record cannot be found in the storage object</li>
+                            <li>Added a sortProperty configuration on the Grouper class. This allows you to sort the groups on something different then the returned group</li>
+                            <li>Added support for just passing 'data' to a Store, and having it automatically create a Model based on the fields in the data</li>
+                            <li>Added margin to floating panels so they don't stick to the edge of the screen</li>
+                            <li>Disabled scrollable in the kiva example when there is an error in the response</li>
+                            <li>[TOUCH-1701] Removed zIndex configuration from mask as it is automatically allocated now</li>
+                            <li>Added support for passing a function as argument to the Model.load method</li>
+                            <li>[TOUCH-1543] Removed unnecessary prototype cacheConfig from List</li>
+                            <li>Updated the docs for some of the protected Proxy methods to indicate that you have to call the callback when you override them</li>
+                            <li>[TOUCH-1373] Added support for the file:// protocol in Connection</li>
+                            <li>Added support for multiple source types for a video</li>
+                            <li>Improved listPaging/autoPaging behavior in the ListPaging plugin</li>
+                            <li>[TOUCH-1756] Updated Class documentation to make it more clear on when developers may need to implement initConfig</li>
+                            <li>Store no longer automatically loads new data from the server after sorting or filtering when remoteSort/remoteFilter are set to true. Instead the user manually has to call the load methods</li>
+                            <li>Added scrollToTopOnRefresh option to DataView</li>
+                            <li>[TOUCH-1082] Throw a warning when trying to add the render event</li>
+                            <li>Added an 'updatedata' event to Component</li>
+                            <li>[TOUCH-1797] List will now pass the event object to the disclosure handler so developers can stop the event</li>
+                            <li>[TOUCH-1363] GPU-accelerate scrollers on Android 4 by default</li>
+                            <li>Ext.Viewport is now the default scope of onReady for convenience</li>
+                            <li>Removed inclusion of ScrollCover and ScrollReveal animations (Android) until they're properly implemented</li>
+                            <li>Changed Scroller factory to use CssTransform for all devices except Android 2 (Android 4.0.3 now performs as expected)</li>
+                            <li>Added a removeInnerItemAt method into container</li>
+                            <li>Store no longer sets the Proxy on it's Model if the Model doesn't have one defined itself</li>
+                            <li>[TOUCH-1801] Added load and error events to the Img component</li>
+                            <li>[TOUCH-1728] Slot center is now vertically aligned when titles are used</li>
+                            <li>[TOUCH-1777] Added 'initialConfig' for Scroller</li>
+                            <li>[TOUCH-1802] Added listConfig option to NestedList to modify the sub-list configurations</li>
+                            <li>Allow Application-specified models, views, controllers, stores and profiles to take locally-qualified names and look in the local app folder first if they don't look like a custom namespace</li>
+                            <li>Added startup icons to navigation view example</li>
+                            <li>Added documentation for 'order' in listeners</li>
+                            <li>Added some documentation to Selectable methods</li>
+                            <li>[TOUCH-470] Added a nested list guide</li>
+                            <li>Adjusted the logic for detection of a desktop to be more restrictive</li>
+                            <li>Added a First App guide</li>
+                            <li>Added a ui configuration to scrollviews so you can specify the color of scroll indicators</li>
+                            <li>[TOUCH-1814] Added defaultPhonePickerConfig and defaultTabletPickerConfig configs into selectfield so allow customization of the picker</li>
+                            <li>Added back in the ability to specify configs directly on the prototypee of all classes in the Data package in the compat build</li>
+                            <li>Removed unnecesary vbox layouts from FieldSet and FormPanel to improve performance</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Bug Fixes
+                        <ul>
+                            <li>Fixed the change event in sliderfield to return the thumb that was moved and the new value</li>
+                            <li>[TOUCH-1751] Fixed Ext.MessageBox#onClick method to use the returned buttons config.userConfig</li>
+                            <li>Source overlay is now hidden when hitting device back button</li>
+                            <li>[TOUCH-285] Fixed styling of pull to refresh plugin on Android 4</li>
+                            <li>[TOUCH-1720] Fixed an issue where Selectable instantiated it own store</li>
+                            <li>[TOUCH-1750] Fixed an issue in the removeAll method on Store</li>
+                            <li>[TOUCH-1710] Fixed a bug in data view where the emptyText was not being hide when adding a new store</li>
+                            <li>[TOUCH-1752] Fixed Ext.dom.Query select method to properly read the attribute values from nodes</li>
+                            <li>[TOUCH-1755] Fixed an issue with MessageBox where if you showed another alert inside the callback, it would not work</li>
+                            <li>Fixed an issue in the save method on Model that would cause null to be passed as the first argument to the callback</li>
+                            <li>[TOUCH-1758] Fixed min, max, sum and average methods on Store</li>
+                            <li>Fixed documentation for HasOne associations in the data package</li>
+                            <li>[TOUCH-1675] Fixed issue with suspending automatic Geolocation and allow the Traffic plugin to work on Maps that have already been created</li>
+                            <li>Fixed documentation for Ext.Img#setSrc</li>
+                            <li>Fixed documentation issues with getting started guide</li>
+                            <li>Fixed styling issues with the JSON example in kitchensink</li>
+                            <li>[TOUCH-834] Fixed source overlay regex for removing HTML tags in kitchensink example</li>
+                            <li>Fixed detection of pressed buttons in the Map example</li>
+                            <li>Fixed Reader#rootProperty docs</li>
+                            <li>[TOUCH-1426] Fixed Map repaint issue when the Map is resized within a hidden container</li>
+                            <li>[TOUCH-1771] Fixed applyStyles error and cleaned up some regex caching</li>
+                            <li>Fixed an issue where the map was not displaying properly in the information popup</li>
+                            <li>Fixed a bug in FormPanel where the container items were not using the getter</li>
+                            <li>Fixed a bug with reading associated data through an XML reader</li>
+                            <li>[TOUCH-1700] Fixed issue with LoadMask in a scrollable container (dataview, list)</li>
+                            <li>[TOUCH-1770] Fixed the SessionStorage proxy</li>
+                            <li>[TOUCH-1779] Fixed Sheet's enter and exit options when using 'right'</li>
+                            <li>[TOUCH-1779] Fixed a bug with Button where drag was calling release multiple times</li>
+                            <li>[TOUCH-1565] Fixed the error message that is being thrown when defining a non-existing model on a Store</li>
+                            <li>[TOUCH-1781] Fixed issues with merging in platform classes</li>
+                            <li>Fixed sorting on a Component based DataView, Element based DataView</li>
+                            <li>[TOUCH-1717] Fixed NestedList to work properly with new TreeStore events</li>
+                            <li>Fixed documentation for Ext.Map deprecated members</li>
+                            <li>[TOUCH-1790] Fixed the getById method on Store to not do a strict equal check</li>
+                            <li>[TOUCH-1734] Fixed Video playback on Android 4</li>
+                            <li>Fixed Reader's parsing of totalProperty - this is now set to null if a total was not explicitly sent back by the server</li>
+                            <li>[TOUCH-1097] Fixed scrolling left from map carousel showing repayment schedule screen</li>
+                            <li>[TOUCH-1797] Fixed issues which prevented element events from firing in the correct order (bubble up)</li>
+                            <li>[TOUCH-1803] Fixed a 1px positioning issue with grouped list headers</li>
+                            <li>Fixed a bug where creating two copies of a TreeStore, the root property accessor wouldn't be properly set on the Reader of the second TreeStore</li>
+                            <li>Fixed an issue where the parent class updateProxy wasn't called in TreeStore. This caused the proxy to not have a model defined yet when it was building the extractors</li>
+                            <li>[TOUCH-1810] Fixed issue with pausing inline video caused the video to stop on iOS</li>
+                            <li>Fixed issue with Ext.app.Action so that it now uses the Profile namespace correctly to find a controller. Previously it had been incorrectly using the Profile name config, instead of the namespace config</li>
+                            <li>[TOUCH-1816] Fixed Carousel setActiveItem() not hiding unused items</li>
+                            <li>Fixed XML Writer</li>
+                            <li>Fixed a bug where an assosciation's inverse wouldn't properly be found for an association</li>
+                            <li>[TOUCH-1834] Fixed initialize method in Segmented Button to call callParent()</li>
+                            <li>[TOUCH-1840] Fixed the check in Ext-more for PhoneGap to also check if it is *not* desktop when adding the listener. This means if you include phonegap.js and run on the desktop, it will still launch</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Known Issues
+                        <ul>
+                            <li>The Chrome Mobile beta was just released this week.  We expect to have proper detection and implementation beginning with the next release.</li>
+                            <li>There is an issue witht he snapping the last item on Picker lists</li>
+                            <li>Assosciations are not compatible with localstorage</li>
+                            <li>WebStorage id are not in sync with Model's identifier strategy</li>
+                            <li>Android 4 transitions are hampered by a <a href="http://code.google.com/p/android/issues/detail?id=25147" target="_blank">bug reported to the Android team</a>.  Help get its attention by starring the issue.</li>
+                            <li>Styling of the alignTo pointer and padding of the overlay are not quite correct yet</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div class="release">
+                <h1>
                     Release Notes for Sencha Touch 2.0.beta1
                 </h1>
                 <p class="notes">
                     Release Notes: Release Notes: February 1, 2012<br>
                     Version Number: 2.0.0.beta1
                 </p>
-<div style="margin:10px">
-<p>
-                        <b>Note:</b> if you have been using the preview Preview Release builds of Sencha Touch, be aware that B1 ships with an updated set of built JavaScript files. There are now five builds in total, all of which are described in the <a href="http://docs.sencha.com/touch/2-0/#!/guide/building" target="_blank">builds and building guide</a>.
+
+                <div style="margin: 10px">
+                    <p>
+                        <b>Note:</b> if you have been using the preview Preview Release builds of Sencha Touch, be aware that B1 ships with an updated set of built JavaScript files. There are now five builds in total, all of which are described in the <a href="http://docs.sencha.com/touch/2-0/#!/guide/building">builds and building guide</a>.
                     </p>
-                    
+
                     <p><b>As of beta 1 most people will need to update their PRx app to use sencha-touch-debug.js while developing, then switch to sencha-touch.js in production</b>.</p>
-</div>
+                </div>
+
                 <ul>
                     <li>Enhancements/Changes
                         <ul>

@@ -189,6 +189,8 @@ Ext.define('Ext.data.NodeStore', {
                 load    : 'onNodeLoad'
             });
 
+            node.join(this);
+
             var data = [];
             if (node.childNodes.length) {
                 data = data.concat(this.retrieveChildNodes(node));
@@ -199,9 +201,14 @@ Ext.define('Ext.data.NodeStore', {
                 node.set('expanded', true);
             }
 
-            this.setData(data);
+            this.data.clear();
+            this.fireEvent('clear', this);
 
-            node.join(this);
+            this.suspendEvents();
+            this.add(data);
+            this.resumeEvents();
+
+            this.fireEvent('refresh', this, this.data);
         }
     },
 

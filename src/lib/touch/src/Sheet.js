@@ -1,20 +1,8 @@
 /**
  * A general sheet class. This renderable container provides base support for orientation-aware transitions for popup or
- * side-anchored sliding Panels. In most cases, you should use {@link Ext.ActionSheet}, {@link Ext.MessageBox}, {@link Ext.picker.Picker} or {@link Ext.picker.Date}.
+ * side-anchored sliding Panels.
  *
- * ## Example
- *
- *     @example preview
- *     var sheet = Ext.create('Ext.Sheet', {
- *         items: [
- *             {
- *                 docked: 'bottom',
- *                 xtype: 'button',
- *                 text: 'Click me'
- *             }
- *         ]
- *     });
- *     sheet.show();
+ * In most cases, you should use {@link Ext.ActionSheet}, {@link Ext.MessageBox}, {@link Ext.picker.Picker} or {@link Ext.picker.Date}.
  */
 Ext.define('Ext.Sheet', {
     extend: 'Ext.Panel',
@@ -70,29 +58,25 @@ Ext.define('Ext.Sheet', {
         exit: 'bottom',
 
         /**
-         * @cfg {String/Object} enterAnimation
-         * the named Ext.anim effect or animation configuration object used for transitions
-         * when the component is shown. Defaults to 'slide'
+         * @inherit
          */
-        enterAnimation: !Ext.os.is.Android2 ? {
+        showAnimation: !Ext.os.is.Android2 ? {
             type: 'slideIn',
             duration: 250,
             easing: 'ease-out'
         } : null,
 
         /**
-         * @cfg {String/Object} exitAnimation
-         * the named Ext.anim effect or animation configuration object used for transitions
-         * when the component is hidden. Defaults to 'slide'
+         * @inherit
          */
-        exitAnimation: !Ext.os.is.Android2 ? {
+        hideAnimation: !Ext.os.is.Android2 ? {
             type: 'slideOut',
             duration: 250,
             easing: 'ease-in'
         } : null
     },
 
-    applyExitAnimation: function(config) {
+    applyHideAnimation: function(config) {
         if (config === true) {
             config = {
                 type: 'slideOut'
@@ -107,7 +91,7 @@ Ext.define('Ext.Sheet', {
 
         if (anim) {
             var exit = this.getExit(),
-                direction;
+                direction = exit;
 
             if (exit == 'bottom') {
                 direction = 'down';
@@ -120,7 +104,7 @@ Ext.define('Ext.Sheet', {
         return anim;
     },
 
-    applyEnterAnimation: function(config) {
+    applyShowAnimation: function(config) {
         if (config === true) {
             config = {
                 type: 'slideIn'
@@ -135,7 +119,7 @@ Ext.define('Ext.Sheet', {
 
         if (anim) {
             var enter = this.getEnter(),
-                direction;
+                direction = enter;
 
             if (enter == 'bottom') {
                 direction = 'down';

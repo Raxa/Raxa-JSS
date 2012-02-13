@@ -704,9 +704,6 @@ Ext.define('Ext.util.Collection', {
 
             me.length++;
 
-            keys.push(key);
-            items.push(item);
-
             Ext.Array.splice(items, index + i, 0, item);
             Ext.Array.splice(keys, index + i, 0, key);
 

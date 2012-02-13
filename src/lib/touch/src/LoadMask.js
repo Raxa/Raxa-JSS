@@ -1,6 +1,28 @@
 /**
  * A simple class used to mask any {@link Ext.Container}.
+ *
  * This should rarely be used directly, instead look at the {@link Ext.Container#masked} configuration.
+ *
+ * ## Example
+ *
+ *     @example
+ *     Ext.Viewport.add({
+ *         masked: {
+ *            xtype: 'loadmask'
+ *         }
+ *     });
+ *
+ * You can customize the loading {@link #message} and whether or not you want to show the {@link #indicator}:
+ *
+ *     @example
+ *     Ext.Viewport.add({
+ *         masked: {
+ *            xtype: 'loadmask',
+ *            message: 'A message..',
+ *            indicator: false
+ *         }
+ *     });
+ *
  */
 Ext.define('Ext.LoadMask', {
     extend: 'Ext.Mask',
@@ -115,12 +137,15 @@ Ext.define('Ext.LoadMask', {
      */
     refreshPosition: function() {
         var parent = this.getParent(),
+            scrollable = parent.getScrollable(),
+            scroller = (scrollable) ? scrollable.getScroller() : null,
+            offset = (scroller) ? scroller.position : { x: 0, y: 0 },
             parentSize = parent.element.getSize(),
             innerSize = this.element.getSize();
 
         this.innerElement.setStyle({
-            marginTop: (parentSize.height - innerSize.height) + 'px',
-            marginLeft: (parentSize.width - innerSize.width) + 'px'
+            marginTop: Math.round(parentSize.height - innerSize.height + (offset.y * 2)) + 'px',
+            marginLeft: Math.round(parentSize.width - innerSize.width + offset.x) + 'px'
         });
     }
 }, function() {

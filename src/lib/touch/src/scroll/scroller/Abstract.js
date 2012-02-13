@@ -91,12 +91,9 @@ Ext.define('Ext.scroll.scroller.Abstract', {
 
         /**
          * @cfg {Object} momentumEasing
-         * This is a object configuration which controls the easing propertys for both the momentum of the scroller
-         * and the bounce of the scroller.
+         * A valid config for {@link Ext.fx.easing.BoundMomentum}. The default value is:
          *
-         * The values are set as properties for momentum and bounce. The default value for {@link #momentumEasing} is:
-         *
-         *     momentumEasing: {
+         *     {
          *         momentum: {
          *             acceleration: 30,
          *             friction: 0.5
@@ -107,10 +104,10 @@ Ext.define('Ext.scroll.scroller.Abstract', {
          *         }
          *     }
          *
-         * When changing these values, you do not have to include everything. The class configuration system will automatically
-         * merge your values. So you can do the following:
+         * Note that supplied object will be recursively merged with the default object. For example: you can simply
+         * pass this to change the momentum acceleration:
          *
-         *     momentumEasing: {
+         *     {
          *         momentum: {
          *             acceleration: 10
          *         }
@@ -209,7 +206,16 @@ Ext.define('Ext.scroll.scroller.Abstract', {
          * @cfg
          * @private
          */
-        containerCls: Ext.baseCSSPrefix + 'scroll-container'
+        containerCls: Ext.baseCSSPrefix + 'scroll-container',
+
+        /**
+         * @cfg
+         * @private
+         */
+        initialOffset: {
+            x: 0,
+            y: 0
+        }
     },
 
     dragStartTime: 0,
@@ -264,7 +270,7 @@ Ext.define('Ext.scroll.scroller.Abstract', {
 
         if (element) {
             delete config.element;
-            this.initElement(element);
+            this.setElement(element);
         }
 
         return this;
@@ -332,6 +338,15 @@ Ext.define('Ext.scroll.scroller.Abstract', {
         else {
             this.attachListeneners();
         }
+    },
+
+    updateInitialOffset: function(initialOffset) {
+        var position = this.position;
+
+        position.x = initialOffset.x;
+        position.y = initialOffset.y;
+
+        this.doScrollTo(position.x, position.y);
     },
 
     /**
@@ -581,7 +596,7 @@ Ext.define('Ext.scroll.scroller.Abstract', {
         var container = this.container;
 
         if (!container) {
-            container = this.container = this.getElement().getParent();
+            this.container = container = this.getElement().getParent();
             container.addCls(this.getContainerCls());
         }
 
@@ -678,6 +693,15 @@ Ext.define('Ext.scroll.scroller.Abstract', {
         }
 
         return this;
+    },
+
+    /**
+     * @private
+     */
+    scrollToTop: function() {
+        var initialOffset = this.getInitialOffset();
+
+        this.scrollTo(initialOffset.x, initialOffset.y);
     },
 
     /**
@@ -822,7 +846,7 @@ Ext.define('Ext.scroll.scroller.Abstract', {
 
         if (directionLock && direction !== 'both') {
             if ((direction === 'horizontal' && absDeltaX > absDeltaY)
-                || (direction === 'vertical' && absDeltaY > absDeltaX)) {
+                    || (direction === 'vertical' && absDeltaY > absDeltaX)) {
                 e.stopPropagation();
             }
             else {
@@ -894,7 +918,8 @@ Ext.define('Ext.scroll.scroller.Abstract', {
             dragDirection[axis] = -1;
         }
 
-        if ((lastDirection !== 0 && (dragDirection[axis] !== lastDirection)) || (now - flickStartTime[axis]) > startMomentumResetTime) {
+        if ((lastDirection !== 0 && (dragDirection[axis] !== lastDirection))
+                || (now - flickStartTime[axis]) > startMomentumResetTime) {
             flickStartPosition[axis] = old;
             flickStartTime[axis] = now;
         }
@@ -1030,7 +1055,8 @@ Ext.define('Ext.scroll.scroller.Abstract', {
 
         endValue = Math.round((currentPosition + offset) / snap) * snap;
 
-        //if the currentPosition is less than the containerScrollSize - containerSize (so it is at the end of the list), then use it
+        //if the currentPosition is less than the containerScrollSize - containerSize (so it is at the end of the list),
+        // then use it
         if ((containerScrollSize - containerSize) <= currentPosition) {
             return false;
         }
@@ -1166,7 +1192,7 @@ Ext.define('Ext.scroll.scroller.Abstract', {
      * @private
      */
     snapToBoundary: function() {
-        var position    = this.position,
+        var position = this.position,
             minPosition = this.getMinPosition(),
             maxPosition = this.getMaxPosition(),
             minX = minPosition.x,
@@ -1338,6 +1364,7 @@ Ext.define('Ext.scroll.scroller.Abstract', {
          * @param {Object} offset The offset to move to
          * @param {Number} offset.x The x axis offset
          * @param {Number} offset.y The y axis offset
+         * @deprecated 2.0.0 Please use {@link #scrollTo} instead
          * @return {Ext.scroll.Scroller} this
          */
         setOffset: function(offset) {

@@ -154,12 +154,13 @@ Ext.define('Ext.layout.Card', {
     },
 
     doItemDockedChange: function(item, docked) {
+        var element = item.element;
         // See https://sencha.jira.com/browse/TOUCH-1508
         if (docked) {
-            item.element.removeCls(this.itemCls);
+            element.removeCls(this.itemCls);
         }
         else {
-            item.element.addCls(this.itemCls);
+            element.addCls(this.itemCls);
         }
 
         this.callParent(arguments);

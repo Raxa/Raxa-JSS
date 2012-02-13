@@ -2,16 +2,16 @@
  * @author Ed Spencer
  * @ignore
  * @private
- * 
- * Manages the stack of {@link Ext.app.Action} instances that have been decoded, pushes new urls into the browser's 
+ *
+ * Manages the stack of {@link Ext.app.Action} instances that have been decoded, pushes new urls into the browser's
  * location object and listens for changes in url, firing the {@link #change} event when a change is detected.
- * 
- * This is tied to an {@link Ext.app.Application Application} instance. The Application performs all of the 
+ *
+ * This is tied to an {@link Ext.app.Application Application} instance. The Application performs all of the
  * interactions with the History object, no additional integration should be required.
  */
 Ext.define('Ext.app.History', {
     mixins: ['Ext.mixin.Observable'],
-    
+
     /**
      * @event change
      * Fires when a change in browser url is detected
@@ -23,12 +23,12 @@ Ext.define('Ext.app.History', {
          * @cfg {Array} actions The stack of {@link Ext.app.Action action} instances that have occured so far
          */
         actions: [],
-        
+
         /**
          * @cfg {Boolean} updateUrl True to automatically update the browser's url when {@link #add} is called
          */
         updateUrl: true,
-        
+
         /**
          * @cfg {String} token The current token as read from the browser's location object
          */
@@ -47,7 +47,7 @@ Ext.define('Ext.app.History', {
     },
 
     /**
-     * Adds an {@link Ext.app.Action Action} to the stack, optionally updating the browser's url and firing the 
+     * Adds an {@link Ext.app.Action Action} to the stack, optionally updating the browser's url and firing the
      * {@link #change} event.
      * @param {Ext.app.Action} action The Action to add to the stack
      * @param {Boolean} silent Cancels the firing of the {@link #change} event if true

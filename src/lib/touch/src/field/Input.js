@@ -674,14 +674,15 @@ Ext.define('Ext.field.Input', {
         }
 
         me.showMask();
-
-        // Ext.currentlyFocusedField = null;
     },
 
     // @private
     onClearIconTap: function(e) {
         var oldValue = this.getValue(),
             newValue;
+
+        //hide the clear icon
+        this.clearIcon.hide();
 
         this.fireEvent('clearicontap', this, e);
 

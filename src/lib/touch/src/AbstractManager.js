@@ -1,5 +1,5 @@
 /**
- * Base Manager class
+ * @private
  */
 Ext.define('Ext.AbstractManager', {
 
@@ -99,7 +99,7 @@ Ext.define('Ext.AbstractManager', {
     onAvailable : function(id, fn, scope){
         var all = this.all,
             item;
-        
+
         if (all.containsKey(id)) {
             item = all.get(id);
             fn.call(scope || item, item);
@@ -112,7 +112,7 @@ Ext.define('Ext.AbstractManager', {
             });
         }
     },
-    
+
     /**
      * Executes the specified function once for each item in the collection.
      * @param {Function} fn The function to execute.
@@ -123,9 +123,9 @@ Ext.define('Ext.AbstractManager', {
      * @param {Object} scope The scope to execute in. Defaults to `this`.
      */
     each: function(fn, scope){
-        this.all.each(fn, scope || this);    
+        this.all.each(fn, scope || this);
     },
-    
+
     /**
      * Gets the number of items in the collection.
      * @return {Number} The number of items in the collection.

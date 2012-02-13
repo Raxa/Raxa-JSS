@@ -48,8 +48,8 @@
  * ## Reading other JSON formats
  *
  * If you already have your JSON format defined and it doesn't look quite like what we have above, you can usually pass
- * JsonReader a couple of configuration options to make it parse your format. For example, we can use the {@link #root}
- * configuration to parse data that comes back like this:
+ * JsonReader a couple of configuration options to make it parse your format. For example, we can use the 
+ * {@link #rootProperty} configuration to parse data that comes back like this:
  *
  *     {
  *         "users": [
@@ -66,11 +66,11 @@
  *         ]
  *     }
  *
- * To parse this we just pass in a {@link #root} configuration that matches the 'users' above:
+ * To parse this we just pass in a {@link #rootProperty} configuration that matches the 'users' above:
  *
  *     reader: {
  *         type: 'json',
- *         root: 'users'
+ *         rootProperty: 'users'
  *     }
  *
  * Sometimes the JSON structure is even more complicated. Document databases like CouchDB often provide metadata around
@@ -97,9 +97,9 @@
  * above we need to specify the {@link #record} configuration like this:
  *
  *     reader: {
- *         type  : 'json',
- *         root  : 'users',
- *         record: 'user'
+ *         type: 'json',
+ *         record: 'user',
+ *         rootProperty: 'users'
  *     }
  *
  * ## Response MetaData
@@ -109,8 +109,8 @@
  * add a `metaData` attribute to the root of the response data. The metaData attribute can contain anything,
  * but supports a specific set of properties that are handled by the Reader if they are present:
  *
- * - {@link #root}: the property name of the root response node containing the record data
  * - {@link #idProperty}: property name for the primary key field of the data
+ * - {@link #rootProperty}: the property name of the root response node containing the record data
  * - {@link #totalProperty}: property name for the total number of records in the data
  * - {@link #successProperty}: property name for the success status of the response
  * - {@link #messageProperty}: property name for an optional response message
@@ -121,10 +121,10 @@
  * included in the Model definition, not shown):
  *
  *     reader: {
- *         type : 'json',
- *         root : 'root',
- *         idProperty     : 'id',
- *         totalProperty  : 'total',
+ *         type: 'json',
+ *         idProperty: 'id',
+ *         rootProperty: 'root',
+ *         totalProperty: 'total',
  *         successProperty: 'success',
  *         messageProperty: 'message'
  *     }
@@ -142,8 +142,8 @@
  *             "email": "ed@sencha.com"
  *         }],
  *         "metaData": {
- *             "root": "users",
  *             "idProperty": 'userId',
+ *             "rootProperty": "users",
  *             "totalProperty": 'count',
  *             "successProperty": 'ok',
  *             "messageProperty": 'msg'

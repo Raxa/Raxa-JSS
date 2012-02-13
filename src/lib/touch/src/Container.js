@@ -151,6 +151,11 @@ Ext.define('Ext.Container', {
 
     config: {
         /**
+         * @cfg {String/Object/Boolean} cardSwitchAnimation
+         * @deprecated 2.0.0 please use {@link Ext.layout.Card#animation}
+         */
+
+        /**
          * @cfg {Object/String} layout Configuration for this Container's layout. Example:
          *
          *    Ext.create('Ext.Container', {
@@ -806,7 +811,6 @@ Ext.define('Ext.Container', {
         return this.items.getAt(index);
     },
 
-
     /**
      * Removes the Component at the specified index:
      *
@@ -816,6 +820,23 @@ Ext.define('Ext.Container', {
      */
     removeAt: function(index) {
         var item = this.getAt(index);
+
+        if (item) {
+            this.remove(item);
+        }
+
+        return this;
+    },
+
+    /**
+     * Removes an inner Component at the specified index:
+     *
+     *     myContainer.removeInnerAt(0); //removes the first item of the innerItems propety
+     *
+     * @param {Number} index The index of the Component to remove
+     */
+    removeInnerAt: function(index) {
+        var item = this.getInnerItems()[index];
 
         if (item) {
             this.remove(item);
@@ -1373,6 +1394,17 @@ Ext.define('Ext.Container', {
         return this.query(selector)[0] || null;
     },
 
+
+    //<deprecated product=touch since=2.0>
+    onClassExtended: function(Class, members) {
+        if ('onAdd' in members || 'onRemove' in members) {
+            throw new Error("["+Class.$className+"] 'onAdd()' and 'onRemove()' methods " +
+                            "no longer exist in Ext.Container, please use 'onItemAdd()' " +
+                            "and 'onItemRemove()' instead }");
+        }
+    },
+    //</deprecated>
+
     destroy: function() {
         var modal = this.getModal();
 
@@ -1383,17 +1415,7 @@ Ext.define('Ext.Container', {
         this.removeAll(true, true);
         Ext.destroy(this.getScrollable(), this.bodyElement);
         this.callParent();
-    },
-
-    //<deprecated product=touch since=2.0>
-    onClassExtended: function(Class, members) {
-        if ('onAdd' in members || 'onRemove' in members) {
-            throw new Error("["+Class.$className+"] 'onAdd()' and 'onRemove()' methods " +
-                            "no longer exist in Ext.Container, please use 'onItemAdd()' " +
-                            "and 'onItemRemove()' instead }");
-        }
     }
-    //</deprecated>
 
 }, function() {
     this.addMember('defaultItemClass', this);

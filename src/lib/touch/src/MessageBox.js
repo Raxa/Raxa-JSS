@@ -9,7 +9,7 @@
  * some user feedback from the MessageBox, you must use a callback function (see the `fn` configuration option parameter
  * for the {@link #method-show show} method for more details).
  *
- * # Example
+ * ## Example
  *
  *     @example preview
  *     Ext.Msg.alert('Title', 'The quick brown fox jumped over the lazy dog.', Ext.emptyFn);
@@ -39,25 +39,24 @@ Ext.define('Ext.MessageBox', {
          */
         iconCls: null,
 
-        /**
-         * @cfg {String/Mixed} enterAnimation
-         * Effect when the message box is being displayed.
-         */
-        enterAnimation: {
+        // @inherit
+        showAnimation: {
             type: 'popIn',
             duration: 250,
             easing: 'ease-out'
         },
 
-        /**
-         * @cfg {String/Mixed} exitAnimation
-         * Effect when the message box is being hidden.
-         */
-        exitAnimation: {
+        // @inherit
+        hideAnimation: {
             type: 'popOut',
             duration: 250,
             easing: 'ease-out'
         },
+
+        /**
+         * Override the default zIndex so it is normally always above floating components.
+         */
+        zIndex: 10,
 
         /**
          * @cfg {Number} defaultTextHeight
@@ -345,21 +344,24 @@ Ext.define('Ext.MessageBox', {
     // @private
     // pass `fn` config to show method instead
     onClick: function(button) {
-        this.hide();
-
         if (button) {
-            var config = button.userConfig || {},
+            var config = button.config.userConfig || {},
                 initialConfig = button.getInitialConfig(),
                 prompt = this.getPrompt();
 
             if (typeof config.fn == 'function') {
-
-                config.fn.call(
-                    config.scope || null,
-                    initialConfig.itemId || initialConfig.text,
-                    prompt ? prompt.getValue() : null,
-                    config
-                );
+                this.on({
+                    hiddenchange: function() {
+                        config.fn.call(
+                            config.scope || null,
+                            initialConfig.itemId || initialConfig.text,
+                            prompt ? prompt.getValue() : null,
+                            config
+                        );
+                    },
+                    single: true,
+                    scope: this
+                });
             }
 
             if (config.cls) {
@@ -370,6 +372,8 @@ Ext.define('Ext.MessageBox', {
                 config.input.dom.blur();
             }
         }
+
+        this.hide();
     },
 
     /**
@@ -692,7 +696,7 @@ Ext.define('Ext.MessageBox', {
          *
          * Allows for simple creation of various different alerts and notifications.
          *
-         * # Examples
+         * ## Examples
          *
          * ### Alert
          * Use the {@link #alert} method to show a basic alert:

@@ -235,8 +235,7 @@ Ext.define('Ext.dataview.element.Container', {
             dataview = me.dataview,
             store = dataview.getStore(),
             ln = records.length,
-            i = 0,
-            record;
+            i, record;
 
         if (ln) {
             dataview.hideEmptyText();
@@ -260,10 +259,6 @@ Ext.define('Ext.dataview.element.Container', {
     // Transform ChildNodes into a proper Array so we can do indexOf...
     getViewItems: function() {
         return Array.prototype.slice.call(this.element.dom.childNodes);
-    },
-
-    doCreateItems: function(records) {
-        this.moveItemsFromCache(records);
     },
 
     destroy: function() {

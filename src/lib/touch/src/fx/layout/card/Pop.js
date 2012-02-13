@@ -8,7 +8,6 @@ Ext.define('Ext.fx.layout.card.Pop', {
 
     config: {
         duration: 500,
-        reverse: null,
 
         inAnimation: {
             type: 'pop',

@@ -112,7 +112,10 @@ Ext.define('Ext.plugin.PullRefresh', {
         me.setList(list);
         me.lastUpdated = new Date();
 
-        me.getList().insert(0, me);
+        list.insert(0, me);
+        
+        // Disable main list load mask
+        list.setLoadingText(null);
 
         pullTpl.overwrite(element, {
             message: me.getPullRefreshText(),
@@ -204,7 +207,7 @@ Ext.define('Ext.plugin.PullRefresh', {
                     } else {
                         store.load();
                     }
-                    me.resetRefreshState()
+                    me.resetRefreshState();
                 },
                 delay: 100,
                 single: true,
@@ -227,7 +230,6 @@ Ext.define('Ext.plugin.PullRefresh', {
             return me;
         }
         me.currentViewState = state;
-
 
         if (messageEl && loadingElement) {
             switch (state) {

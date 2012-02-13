@@ -490,22 +490,21 @@ If you are unsure which license is appropriate for your use, please contact the 
             }
 
             // DOM nodes
-            // TODO proxy this to Ext.Element.clone to handle automatic id attribute changing
-            // recursively
             if (item.nodeType && item.cloneNode) {
                 return item.cloneNode(true);
             }
 
+            // Strings
             var type = toString.call(item);
 
-            // Date
+            // Dates
             if (type === '[object Date]') {
                 return new Date(item.getTime());
             }
 
             var i, j, k, clone, key;
 
-            // Array
+            // Arrays
             if (type === '[object Array]') {
                 i = item.length;
 
@@ -515,7 +514,7 @@ If you are unsure which license is appropriate for your use, please contact the 
                     clone[i] = Ext.clone(item[i]);
                 }
             }
-            // Object
+            // Objects
             else if (type === '[object Object]' && item.constructor === Object) {
                 clone = {};
 
@@ -3631,10 +3630,16 @@ Ext.Date = {
     }
 };
 
+Ext.merge(Ext, {
+	util: {
+		Date: Ext.Date
+	}
+});
 
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
  * @class Ext.Base
+ * @private
  *
  * The root of all classes created with {@link Ext#define}.
  *
@@ -4776,6 +4781,7 @@ var noArgs = [],
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
  * @class Ext.Class
+ * @private
  *
  * Handles class creation throughout the framework. This is a low level factory that is used by Ext.ClassManager and generally
  * should not be used directly. If you choose to use Ext.Class you will lose out on the namespace, aliasing and depency loading
@@ -5260,29 +5266,111 @@ var noArgs = [],
 
     /**
      * @cfg {Object} config
-     * List of configuration options with their default values, for which automatically
-     * accessor methods are generated.  For example:
      *
-     *     Ext.define('SmartPhone', {
-     *          config: {
-     *              hasTouchScreen: false,
-     *              operatingSystem: 'Other',
-     *              price: 500
-     *          },
-     *          constructor: function(cfg) {
-     *              this.initConfig(cfg);
-     *          }
+     * List of configuration options with their default values.
+     *
+     * **Note** You need to make sure {@link Ext.Base#initConfig} is called from your constructor if you are defining
+     * your own class or singleton, unless you are extending a Component. Otherwise the generated getter and setter
+     * methods will not be initialized.
+     *
+     * Each config item will have its own setter and getter method automatically generated inside the class prototype
+     * during class creation time, if the class does not have those methods explicitly defined.
+     *
+     * As an example, let’s convert the name property of a Person class to be a config item, then add extra age and
+     * gender items.
+     *
+     *     Ext.define('My.sample.Person', {
+     *         config: {
+     *             name: 'Mr. Unknown',
+     *             age: 0,
+     *             gender: 'Male'
+     *         },
+     *
+     *         constructor: function(config) {
+     *             this.initConfig(config);
+     *
+     *             return this;
+     *         }
+     *
+     *         // ...
      *     });
      *
-     *     var iPhone = new SmartPhone({
-     *          hasTouchScreen: true,
-     *          operatingSystem: 'iOS'
+     * Within the class, this.name still has the default value of “Mr. Unknown”. However, it’s now publicly accessible
+     * without sacrificing encapsulation, via setter and getter methods.
+     *
+     *     var jacky = new Person({
+     *         name: "Jacky",
+     *         age: 35
      *     });
      *
-     *     iPhone.getPrice(); // 500;
-     *     iPhone.getOperatingSystem(); // 'iOS'
-     *     iPhone.getHasTouchScreen(); // true;
-     *     iPhone.hasTouchScreen(); // true
+     *     alert(jacky.getAge());      // alerts 35
+     *     alert(jacky.getGender());   // alerts "Male"
+     *
+     *     jacky.walk(10);             // alerts "Jacky is walking 10 steps"
+     *
+     *     jacky.setName("Mr. Nguyen");
+     *     alert(jacky.getName());     // alerts "Mr. Nguyen"
+     *
+     *     jacky.walk(10);             // alerts "Mr. Nguyen is walking 10 steps"
+     *
+     * Notice that we changed the class constructor to invoke this.initConfig() and pass in the provided config object.
+     * Two key things happened:
+     *
+     *  - The provided config object when the class is instantiated is recursively merged with the default config object.
+     *  - All corresponding setter methods are called with the merged values.
+     *
+     * Beside storing the given values, thoughout the frameworks, setters generally have two key responsibilities:
+     *
+     *  - Filtering / validation / transformation of the given value before it’s actually stored within the instance.
+     *  - Notification (such as firing events) / post-processing after the value has been set, or changed from a
+     *    previous value.
+     *
+     * By standardize this common pattern, the default generated setters provide two extra template methods that you
+     * can put your own custom logics into, i.e: a “applyFoo” and “updateFoo” method for a “foo” config item, which are
+     * executed before and after the value is actually set, respectively. Back to the example class, let’s validate that
+     * age must be a valid positive number, and fire an 'agechange' if the value is modified.
+     *
+     *     Ext.define('My.sample.Person', {
+     *         config: { .... },
+     *
+     *         constructor: { .... }
+     *
+     *         applyAge: function(age) {
+     *             if (typeof age != 'number' || age &lt; 0) {
+     *                 console.warn("Invalid age, must be a positive number");
+     *                 return;
+     *             }
+     *
+     *             return age;
+     *         },
+     *
+     *         updateAge: function(newAge, oldAge) {
+     *             // age has changed from "oldAge" to "newAge"
+     *             this.fireEvent('agechange', this, newAge, oldAge);
+     *         }
+     *
+     *         // ....
+     *     });
+     *
+     *     var jacky = new Person({
+     *         name: "Jacky",
+     *         age: 'invalid'
+     *     });
+     *
+     *     alert(jacky.getAge());      // alerts 0
+     *
+     *     alert(jacky.setAge(-100));  // alerts 0
+     *     alert(jacky.getAge());      // alerts 0
+     *
+     *     alert(jacky.setAge(35));    // alerts 0
+     *     alert(jacky.getAge());      // alerts 35
+     *
+     * In other words, when leveraging the config feature, you mostly never need to define setter and getter methods
+     * explicitly. Instead, "apply*" and "update*" methods should be implemented where neccessary. Your code will be
+     * consistent throughout and only contain the minimal logic that you actually care about.
+     *
+     * When it comes to inheritance, the default config of the parent class is automatically, recursively merged with
+     * the child’s default config. The same applies for mixins.
      */
     ExtClass.registerPreprocessor('config', function(Class, data) {
         var config = data.config,
@@ -8142,12 +8230,127 @@ If you are unsure which license is appropriate for your use, please contact the 
 /**
  * @class Ext.EventManager
  *
- * This object is deprecated.
+ * This object has been deprecated in Sencha Touch 2.0.0. Please refer to the method documentation for specific alternatives.
  *
- * @deprecated
+ * @deprecated 2.0.0
  * @singleton
+ * @private
  */
 
+Ext.ns('Ext.core');
+Ext.core.EventManager =
+Ext.EventManager = {
+    /**
+     * Appends an event handler to an element.  The shorthand version {@link #on} is equivalent.  Typically you will
+     * use {@link Ext.Element#addListener} directly on an Element in favor of calling this version.
+     * @param {String/HTMLElement} el The html element or id to assign the event handler to.
+     * @param {String} eventName The name of the event to listen for.
+     * @param {Function} handler The handler function the event invokes. This function is passed
+     * the following parameters:<ul>
+     * <li>evt : EventObject<div class="sub-desc">The {@link Ext.EventObject EventObject} describing the event.</div></li>
+     * <li>t : Element<div class="sub-desc">The {@link Ext.Element Element} which was the target of the event.
+     * Note that this may be filtered by using the <tt>delegate</tt> option.</div></li>
+     * <li>o : Object<div class="sub-desc">The options object from the addListener call.</div></li>
+     * </ul>
+     * @param {Object} scope (optional) The scope (<b><code>this</code></b> reference) in which the handler function is executed. <b>Defaults to the Element</b>.
+     * @param {Object} options (optional) An object containing handler configuration properties.
+     * This may contain any of the following properties:<ul>
+     * <li>scope : Object<div class="sub-desc">The scope (<b><code>this</code></b> reference) in which the handler function is executed. <b>Defaults to the Element</b>.</div></li>
+     * <li>delegate : String<div class="sub-desc">A simple selector to filter the target or look for a descendant of the target</div></li>
+     * <li>stopEvent : Boolean<div class="sub-desc">True to stop the event. That is stop propagation, and prevent the default action.</div></li>
+     * <li>preventDefault : Boolean<div class="sub-desc">True to prevent the default action</div></li>
+     * <li>stopPropagation : Boolean<div class="sub-desc">True to prevent event propagation</div></li>
+     * <li>normalized : Boolean<div class="sub-desc">False to pass a browser event to the handler function instead of an Ext.EventObject</div></li>
+     * <li>delay : Number<div class="sub-desc">The number of milliseconds to delay the invocation of the handler after te event fires.</div></li>
+     * <li>single : Boolean<div class="sub-desc">True to add a handler to handle just the next firing of the event, and then remove itself.</div></li>
+     * <li>buffer : Number<div class="sub-desc">Causes the handler to be scheduled to run in an {@link Ext.util.DelayedTask} delayed
+     * by the specified number of milliseconds. If the event fires again within that time, the original
+     * handler is <em>not</em> invoked, but the new handler is scheduled in its place.</div></li>
+     * <li>target : Element<div class="sub-desc">Only call the handler if the event was fired on the target Element, <i>not</i> if the event was bubbled up from a child node.</div></li>
+     * </ul><br>
+     * <p>See {@link Ext.Element#addListener} for examples of how to use these options.</p>
+     * @deprecated 2.0.0 Please use {@link Ext.dom.Element#addListener addListener} on an instance of Ext.Element instead.
+     */
+    addListener: function(element, eventName, fn, scope, options) {
+        Ext.Logger.deprecate("Ext.EventManager.addListener is deprecated, use addListener() directly from an instance of Ext.Element instead", 2);
+        element.on(eventName, fn, scope, options);
+    },
+
+    /**
+     * Removes an event handler from an element.  The shorthand version {@link #un} is equivalent.  Typically
+     * you will use {@link Ext.Element#removeListener} directly on an Element in favor of calling this version.
+     * @param {String/HTMLElement} el The id or html element from which to remove the listener.
+     * @param {String} eventName The name of the event.
+     * @param {Function} fn The handler function to remove. <b>This must be a reference to the function passed into the {@link #addListener} call.</b>
+     * @param {Object} scope If a scope (<b><code>this</code></b> reference) was specified when the listener was added,
+     * then this must refer to the same object.
+     * @deprecated 2.0.0 Please use {@link Ext.dom.Element#removeListener removeListener} on an instance of Ext.Element instead.
+     */
+    removeListener: function(element, eventName, fn, scope) {
+        Ext.Logger.deprecate("Ext.EventManager.removeListener is deprecated, use removeListener() directly from an instance of Ext.Element instead", 2);
+        element.un(eventName, fn, scope);
+    },
+
+    /**
+     * Removes all event handers from an element.  Typically you will use {@link Ext.Element#clearListeners}
+     * directly on an Element in favor of calling this version.
+     * @param {String/HTMLElement} el The id or html element from which to remove all event handlers.
+     * @deprecated 2.0.0 Please use {@link Ext.dom.Element#clearListeners clearListeners} on an instance of Ext.Element instead.
+     */
+    removeAll: function(element){
+        Ext.Logger.deprecate("Ext.EventManager.removeAll is deprecated, use clearListeners() directly from an instance of Ext.Element instead", 3);
+        Ext.get(element).clearListeners();
+    },
+
+    /**
+     * Adds a listener to be notified when the browser window is resized and provides resize event buffering (50 milliseconds),
+     * passes new viewport width and height to handlers.
+     * @param {Function} fn      The handler function the window resize event invokes.
+     * @param {Object}   scope   The scope (<code>this</code> reference) in which the handler function executes. Defaults to the browser window.
+     * @param {Boolean}  options Options object as passed to {@link Ext.Element#addListener}
+     * @deprecated 2.0.0 Please listen to the {@link Ext.Viewport#event-resize resize} on Ext.Viewport instead.
+     */
+    onWindowResize: function(fn, scope, options) {
+        Ext.Logger.deprecate("Ext.EventManager.onWindowResize is deprecated, attach listener to Ext.Viewport instead, i.e: Ext.Viewport.on('resize', ...)", 2);
+        Ext.Viewport.on('resize', fn, scope, options);
+    },
+
+    onOrientationChange: function(fn, scope, options) {
+        Ext.Logger.deprecate("Ext.EventManager.onOrientationChange is deprecated, attach listener to Ext.Viewport instead, i.e: Ext.Viewport.on('orientationchange', ...)", 2);
+        Ext.Viewport.on('orientationchange', fn, scope, options);
+    },
+
+    unOrientationChange: function(fn, scope, options) {
+        Ext.Logger.deprecate("Ext.EventManager.unOrientationChange is deprecated, remove listener from Ext.Viewport instead, i.e: Ext.Viewport.un('orientationchange', ...)", 2);
+        Ext.Viewport.un('orientationchange', fn, scope, options);
+    }
+};
+
+/**
+* Appends an event handler to an element.  Shorthand for {@link #addListener}.
+* @param {String/HTMLElement} el The html element or id to assign the event handler to
+* @param {String} eventName The name of the event to listen for.
+* @param {Function} handler The handler function the event invokes.
+* @param {Object} scope (optional) (<code>this</code> reference) in which the handler function executes. <b>Defaults to the Element</b>.
+* @param {Object} options (optional) An object containing standard {@link #addListener} options
+* @member Ext.EventManager
+* @method on
+* @deprecated 2.0.0 Please use {@link Ext.dom.Element#addListener addListener} on an instance of Ext.Element instead.
+*/
+Ext.EventManager.on = Ext.EventManager.addListener;
+
+/**
+ * Removes an event handler from an element.  Shorthand for {@link #removeListener}.
+ * @param {String/HTMLElement} el The id or html element from which to remove the listener.
+ * @param {String} eventName The name of the event.
+ * @param {Function} fn The handler function to remove. <b>This must be a reference to the function passed into the {@link #on} call.</b>
+ * @param {Object} scope If a scope (<b><code>this</code></b> reference) was specified when the listener was added,
+ * then this must refer to the same object.
+ * @member Ext.EventManager
+ * @method un
+ * @deprecated 2.0.0 Please use {@link Ext.dom.Element#removeListener removeListener} on an instance of Ext.Element instead.
+ */
+Ext.EventManager.un = Ext.EventManager.removeListener;
 
 /**
  * @class Ext
@@ -8179,7 +8382,7 @@ If you are unsure which license is appropriate for your use, please contact the 
  *
  * [getting_started]: #!/guide/getting_started
  */
-Ext.setVersion('touch', '2.0.0.beta1');
+Ext.setVersion('touch', '2.0.0.beta2');
 
 Ext.apply(Ext, {
     /**
@@ -8340,7 +8543,7 @@ Ext.apply(Ext, {
                     arg.destroy();
                 }
                 else if (arg.dom) {
-                    arg.remove();
+                    arg.destroy();
                 }
             }
         }
@@ -8683,6 +8886,14 @@ function(el){
                 if (data.viewport) {
                     Ext.Viewport = viewport = data.viewport;
 
+                    if (!scope) {
+                        scope = viewport;
+                    }
+
+                    Ext.getOrientation = function() {
+                        Ext.Logger.deprecate("Ext.getOrientation() is deprecated, use Ext.Viewport.getOrientation() instead", 2);
+                        return viewport.getOrientation();
+                    };
 
                     Ext.require(requires, function() {
                         Ext.Viewport.on('ready', callback, null, {single: true});
@@ -8700,49 +8911,59 @@ function(el){
          */
 
         if (!document.body) {
+            var phoneIcon = config.phoneIcon,
+                tabletIcon = config.tabletIcon,
+                tabletStartupScreen = config.tabletStartupScreen,
+                statusBarStyle = config.statusBarStyle,
+                phoneStartupScreen = config.phoneStartupScreen,
+                isIpad = Ext.os.is.iPad;
             // Inject meta viewport tag
             document.write(
                 '<meta id="extViewportMeta" ' +
                        'name="viewport" ' +
-                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />');
+                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">');
             document.write('<meta name="apple-mobile-web-app-capable" content="yes">');
             document.write('<meta name="apple-touch-fullscreen" content="yes">');
 
             //status bar style
-            if (Ext.isString(config.statusBarStyle)) {
-                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + config.statusBarStyle + '">');
+            if (Ext.isString(statusBarStyle)) {
+                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + statusBarStyle + '">');
             }
 
             //startup screens
-            if (config.tabletStartupScreen && Ext.os.is.iPad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + config.tabletStartupScreen + '">');
+            if (tabletStartupScreen && isIpad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + tabletStartupScreen + '">');
             }
 
-            if (config.phoneStartupScreen && !Ext.os.is.iPad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + config.phoneStartupScreen + '">');
+            if (phoneStartupScreen && !isIpad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + phoneStartupScreen + '">');
             }
 
             // icon
-            if (Ext.isString(config.icon) || Ext.isString(config.phoneIcon) || Ext.isString(config.tabletIcon)) {
+            if (Ext.isString(icon) || Ext.isString(phoneIcon) || Ext.isString(tabletIcon)) {
                 icon = {
-                    '57': config.phoneIcon || config.tabletIcon || config.icon,
-                    '72': config.tabletIcon || config.phoneIcon || config.icon,
-                    '114': config.phoneIcon || config.tabletIcon || config.icon
+                    '57': phoneIcon || tabletIcon || icon,
+                    '72': tabletIcon || phoneIcon || icon,
+                    '114': phoneIcon || tabletIcon || icon
                 };
             }
 
             precomposed = (config.glossOnIcon === false) ? '-precomposed' : '';
 
             if (icon) {
-                if (Ext.os.is.iPad && icon['72']) {
-                    document.write('<link rel="apple-touch-icon' + precomposed + '" sizes="72x72" href="' + icon['72'] + '">');
+                var icon72 = icon['72'],
+                    icon57 = icon['57'],
+                    icon114 = icon['114'],
+                    iconString = '<link rel="apple-touch-icon';
+                if (isIpad && icon72) {
+                    document.write(iconString + precomposed + '" sizes="72x72" href="' + icon72 + '">');
                 }
-                else if (!Ext.os.is.iPad) {
-                    if (icon['57']) {
-                        document.write('<link rel="apple-touch-icon' + precomposed + '" href="' + icon['57'] + '">');
+                else if (!isIpad) {
+                    if (icon57) {
+                        document.write(iconString + precomposed + '" href="' + icon57 + '">');
                     }
-                    if (icon['114']) {
-                        document.write('<link rel="apple-touch-icon' + precomposed + '" sizes="114x114" href="' + icon['114'] + '">');
+                    if (icon114) {
+                        document.write(iconString + precomposed + '" sizes="114x114" href="' + icon114 + '">');
                     }
                 }
             }
@@ -9336,7 +9557,7 @@ function(el){
                 scope: scope
             });
 
-            if (Ext.browser.is.PhoneGap) {
+            if (Ext.browser.is.PhoneGap && !Ext.os.is.Desktop) {
                 if (!Ext.readyListenerAttached) {
                     Ext.readyListenerAttached = true;
                     document.addEventListener('deviceready', triggerFn, false);
@@ -9375,6 +9596,22 @@ function(el){
     }
 });
 
+/**
+ * @member Ext.Function
+ * @method createDelegate
+ * @deprecated 2.0.0
+ * createDelegate is deprecated, please use {@link Ext.Function#bind bind} instead
+ */
+Ext.deprecateMethod(Ext.Function, 'createDelegate', Ext.Function.bind, "Ext.createDelegate() is deprecated, please use Ext.Function.bind() instead");
+
+/**
+ * @member Ext
+ * @method createInterceptor
+ * @deprecated 2.0.0
+ * createInterceptor is deprecated, please use {@link Ext.Function#createInterceptor createInterceptor} instead
+ */
+Ext.deprecateMethod(Ext, 'createInterceptor', Ext.Function.createInterceptor, "Ext.createInterceptor() is deprecated, " +
+    "please use Ext.Function.createInterceptor() instead");
 
 /**
  * Provides useful information about the current browser. Should not be manually instantiated unless for unit-testing;
@@ -9406,6 +9643,7 @@ Ext.define('Ext.env.Browser', {
             opera: 'Opera',
             dolfin: 'Dolfin',
             webosbrowser: 'webOSBrowser',
+            chromeMobile: 'ChromeMobile',
             other: 'Other'
         },
         engineNames: {
@@ -9428,7 +9666,8 @@ Ext.define('Ext.env.Browser', {
             safari: 'Version/',
             opera: 'Opera/',
             dolfin: 'Dolfin/',
-            webosbrowser: 'wOSBrowser/'
+            webosbrowser: 'wOSBrowser/',
+            chromeMobile: 'CrMo/'
         }
     },
 
@@ -9630,6 +9869,22 @@ Ext.define('Ext.env.Browser', {
 }, function() {
     var browserEnv = Ext.browser = new this(Ext.global.navigator.userAgent);
 
+    var flags = browserEnv.is,
+        name;
+
+    if (!Ext.is) {
+        Ext.is = {};
+    }
+
+    for (name in flags) {
+        if (flags.hasOwnProperty(name)) {
+            Ext.deprecatePropertyValue(Ext.is, name, flags[name], "Ext.is." + name + " is deprecated, please use Ext.browser.is." + name + " instead");
+        }
+    }
+
+    Ext.deprecatePropertyValue(Ext, 'isSecure', browserEnv.isSecure, "Ext.isSecure is deprecated, please use Ext.browser.isSecure instead");
+    Ext.deprecatePropertyValue(Ext, 'isStrict', browserEnv.isStrict, "Ext.isStrict is deprecated, please use Ext.browser.isStrict instead");
+    Ext.deprecatePropertyValue(Ext, 'userAgent', browserEnv.userAgent, "Ext.userAgent is deprecated, please use Ext.browser.userAgent instead");
 });
 
 /**
@@ -9786,16 +10041,32 @@ Ext.define('Ext.env.OS', {
 
     /**
      * @class Ext.is
+     * @private
      * Used to detect if the current browser supports a certain feature, and the type of the current browser.
      *
-     * @deprecated
-     * Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
+     * @deprecated 2.0.0 Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
      */
-    var navigator = Ext.global.navigator,
+    var navigation = Ext.global.navigator,
         osEnv, osName, deviceType;
 
+    this.override('constructor', function() {
+        this.callOverridden(arguments);
 
-    Ext.os = osEnv = new this(navigator.userAgent, navigator.platform);
+        var is = this.is;
+
+        if (is.MacOS) {
+            Ext.deprecatePropertyValue(is, 'Mac', true, "Ext.is.Mac is deprecated, please use Ext.os.is.MacOS instead");
+            Ext.deprecatePropertyValue(is, 'mac', true, "Ext.is.Mac is deprecated, please use Ext.os.is.MacOS instead");
+        }
+
+        if (is.BlackBerry) {
+            Ext.deprecatePropertyValue(is, 'Blackberry', true, "Ext.is.Blackberry is deprecated, please use Ext.os.is.BlackBerry instead");
+        }
+
+        return this;
+    });
+
+    Ext.os = osEnv = new this(navigation.userAgent, navigation.platform);
 
     osName = osEnv.name;
 
@@ -9806,8 +10077,7 @@ Ext.define('Ext.env.OS', {
     if (search && search[1]) {
         deviceType = search[1];
     } else {
-        // See https://sencha.jira.com/browse/TOUCH-1517
-        if (/Windows|Linux|MacOS/.test(osName)) {
+        if (!osEnv.is.Android && !osEnv.is.iOS && /Windows|Linux|MacOS/.test(osName)) {
             deviceType = 'Desktop';
         }
         else if (osEnv.is.iPad || osEnv.is.Android3) {
@@ -9821,6 +10091,18 @@ Ext.define('Ext.env.OS', {
     osEnv.setFlag(deviceType, true);
     osEnv.deviceType = deviceType;
 
+    var flags = Ext.os.is,
+        name;
+
+    if (!Ext.is) {
+        Ext.is = {};
+    }
+
+    for (name in flags) {
+        if (flags.hasOwnProperty(name)) {
+            Ext.deprecatePropertyValue(Ext.is, name, flags[name], "Ext.is." + name + " is deprecated, please use Ext.os.is." + name + " instead");
+        }
+    }
 
 });
 
@@ -9885,9 +10167,7 @@ Ext.define('Ext.env.Feature', {
 
         var element = this.getTestElement(tag),
             eventName = 'on' + name.toLowerCase(),
-            isSupported = false;
-
-        isSupported = (eventName in element);
+            isSupported = (eventName in element);
 
         if (!isSupported) {
             if (element.setAttribute && element.removeAttribute) {
@@ -10114,6 +10394,71 @@ Ext.define('Ext.env.Feature', {
         }
     });
 
+    /**
+     * @class Ext.supports
+     * @deprecated
+     * Please use the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes.
+     */
+
+    /**
+     * @member Ext.supports
+     * @property Transitions
+     * @deprecated 2.0.0 Please use {@link Ext.feature.has#CssTransitions} instead
+     */
+    Ext.deprecatePropertyValue(has, 'Transitions', has.CssTransitions,
+                          "Ext.supports.Transitions is deprecated, please use Ext.feature.has.CssTransitions instead");
+
+    /**
+     * @member Ext.supports
+     * @property SVG
+     * @deprecated 2.0.0 Please use {@link Ext.feature.has#Svg} instead
+     */
+    Ext.deprecatePropertyValue(has, 'SVG', has.Svg,
+                          "Ext.supports.SVG is deprecated, please use Ext.feature.has.Svg instead");
+
+    /**
+     * @member Ext.supports
+     * @property VML
+     * @deprecated 2.0.0 Please use {@link Ext.feature.has#Vml} instead
+     */
+    Ext.deprecatePropertyValue(has, 'VML', has.Vml,
+                          "Ext.supports.VML is deprecated, please use Ext.feature.has.Vml instead");
+
+    /**
+     * @member Ext.supports
+     * @property AudioTag
+     * @deprecated 2.0.0 Please use {@link Ext.feature.has#Audio} instead
+     */
+    Ext.deprecatePropertyValue(has, 'AudioTag', has.Audio,
+                          "Ext.supports.AudioTag is deprecated, please use Ext.feature.has.Audio instead");
+
+    /**
+     * @member Ext.supports
+     * @property GeoLocation
+     * @deprecated 2.0.0 Please use {@link Ext.feature.has#Geolocation} instead
+     */
+    Ext.deprecatePropertyValue(has, 'GeoLocation', has.Geolocation,
+                          "Ext.supports.GeoLocation is deprecated, please use Ext.feature.has.Geolocation instead");
+
+    /**
+     * @member Ext.supports
+     * @property ClassList
+     * @deprecated 2.0.0 Please use {@link Ext.feature.has#ClassList} instead
+     */
+    Ext.deprecatePropertyValue(has, 'ClassList', has.ClassList,
+                          "Ext.supports.ClassList is deprecated, please use Ext.feature.has.ClassList instead");
+
+    var name;
+
+    if (!Ext.supports) {
+        Ext.supports = {};
+    }
+
+    for (name in has) {
+        if (has.hasOwnProperty(name)) {
+            Ext.deprecatePropertyValue(Ext.supports, name, has[name], "Ext.supports." + name + " is deprecated, please use Ext.feature.has." + name + " instead");
+        }
+    }
 });
 
 /**
@@ -10203,7 +10548,7 @@ Ext.define('Ext.dom.Query', {
             if (typeof q[i] == 'string') {
 
                 //support for node attribute selection
-                if (typeof q[i][0] == '@') {
+                if (q[i][0] == '@') {
                     nodes = root.getAttributeNode(q[i].substring(1));
                     results.push(nodes);
                 }
@@ -10686,6 +11031,8 @@ Ext.define('Ext.dom.Helper', {
  * ## Composite (Collections of) Elements
  *
  * For working with collections of Elements, see Ext.CompositeElement
+ *
+ * @mixins Ext.mixin.Observable
  */
 Ext.define('Ext.dom.Element', {
     alternateClassName: 'Ext.Element',
@@ -11136,6 +11483,10 @@ Ext.define('Ext.dom.Element', {
         Element.mixin('observable', Ext.mixin.Observable);
     }, null, 'Ext.mixin.Observable');
 
+    Ext.deprecateClassMethod(this, 'remove', 'destroy');
+    Ext.deprecateClassMethod(this, 'setHTML', 'setHtml');
+    Ext.deprecateClassMethod(this, 'update', 'setHtml');
+    Ext.deprecateClassMethod(this, 'getHTML', 'getHtml');
 });
 
 /**
@@ -11323,10 +11674,303 @@ Ext.dom.Element.addStatics({
     }
 });
 
+Ext.dom.Element.addStatics({
+    /**
+     * Serializes a DOM form into a url encoded string
+     * @deprecated 2.0.0 This method is no longer supported, please see {@link Ext.form.Panel#getValues} instead
+     * @param {Object} form The form
+     * @return {String} The url encoded form
+     */
+    serializeForm: function(form) {
+        var fElements = form.elements || (document.forms[form] || Ext.getDom(form)).elements,
+            hasSubmit = false,
+            encoder = encodeURIComponent,
+            name,
+            data = '',
+            type,
+            hasValue;
+
+        Ext.each(fElements, function(element) {
+            name = element.name;
+            type = element.type;
+
+            if (!element.disabled && name) {
+                if (/select-(one|multiple)/i.test(type)) {
+                    Ext.each(element.options, function(opt) {
+                        if (opt.selected) {
+                            hasValue = opt.hasAttribute ? opt.hasAttribute('value') : opt.getAttributeNode('value').specified;
+                            data += Ext.String.format("{0}={1}&", encoder(name), encoder(hasValue ? opt.value : opt.text));
+                        }
+                    });
+                } else if (!(/file|undefined|reset|button/i.test(type))) {
+                    if (!(/radio|checkbox/i.test(type) && !element.checked) && !(type == 'submit' && hasSubmit)) {
+                        data += encoder(name) + '=' + encoder(element.value) + '&';
+                        hasSubmit = /submit/i.test(type);
+                    }
+                }
+            }
+        });
+
+        return data.substr(0, data.length - 1);
+    },
+
+    /**
+     * Retrieves the document height
+     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowHeight} instead
+     * @static
+     * @return {Number} documentHeight
+     */
+    getDocumentHeight: function() {
+        Ext.Logger.deprecate("Ext.Element.getDocumentHeight() is no longer supported. " +
+            "Please use Ext.Viewport#getWindowHeight() instead", this);
+        return Math.max(!Ext.isStrict ? document.body.scrollHeight : document.documentElement.scrollHeight, this.getViewportHeight());
+    },
+
+    /**
+     * Retrieves the document width
+     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowWidth} instead
+     * @static
+     * @return {Number} documentWidth
+     */
+    getDocumentWidth: function() {
+        Ext.Logger.deprecate("Ext.Element.getDocumentWidth() is no longer supported. " +
+            "Please use Ext.Viewport#getWindowWidth() instead", this);
+        return Math.max(!Ext.isStrict ? document.body.scrollWidth : document.documentElement.scrollWidth, this.getViewportWidth());
+    },
+
+    /**
+     * Retrieves the viewport height of the window.
+     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowHeight} instead
+     * @static
+     * @return {Number} viewportHeight
+     */
+    getViewportHeight: function() {
+        Ext.Logger.deprecate("Ext.Element.getDocumentHeight() is no longer supported. " +
+            "Please use Ext.Viewport#getWindowHeight() instead", this);
+        return window.innerHeight;
+    },
+
+    /**
+     * Retrieves the viewport width of the window.
+     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowWidth} instead
+     * @static
+     * @return {Number} viewportWidth
+     */
+    getViewportWidth: function() {
+        Ext.Logger.deprecate("Ext.Element.getDocumentWidth() is no longer supported. " +
+            "Please use Ext.Viewport#getWindowWidth() instead", this);
+        return window.innerWidth;
+    },
+
+    /**
+     * Retrieves the viewport size of the window.
+     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getSize} instead
+     * @static
+     * @return {Object} object containing width and height properties
+     */
+    getViewSize: function() {
+        Ext.Logger.deprecate("Ext.Element.getViewSize() is no longer supported. " +
+            "Please use Ext.Viewport#getSize() instead", this);
+        return {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+    },
+
+    /**
+     * Retrieves the current orientation of the window. This is calculated by
+     * determing if the height is greater than the width.
+     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getOrientation} instead
+     * @static
+     * @return {String} Orientation of window: 'portrait' or 'landscape'
+     */
+    getOrientation: function() {
+        Ext.Logger.deprecate("Ext.Element.getOrientation() is no longer supported. " +
+            "Please use Ext.Viewport#getOrientation() instead", this);
+        if (Ext.supports.OrientationChange) {
+            return (window.orientation == 0) ? 'portrait' : 'landscape';
+        }
+
+        return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
+    }
+});
 
 /**
  * @class Ext.dom.Element
  */
+Ext.dom.Element.addMembers({
+    /**
+     * Gets the x,y coordinates specified by the anchor position on the element.
+     *
+     * @deprecated 2.0.0 This method is no longer available for Ext.Element. Please see {@link Ext.Component#showBy}
+     * to do anchoring at Component level instead
+     *
+     * @param {String} anchor (optional) The specified anchor position (defaults to "c").
+     * @param {Boolean} local (optional) True to get the local (element top/left-relative) anchor position instead
+     * of page coordinates
+     * @param {Object} size (optional) An object containing the size to use for calculating anchor position
+     * {width: (target width), height: (target height)} (defaults to the element's current size)
+     * @return {Array} [x, y] An array containing the element's x and y coordinates
+     */
+    getAnchorXY: function(anchor, local, size) {
+        Ext.Logger.deprecate("getAnchorXY() is no longer available for Ext.Element. Please see Ext.Component#showBy() " +
+            "to do anchoring at Component level instead", this);
+
+        //Passing a different size is useful for pre-calculating anchors,
+        //especially for anchored animations that change the el size.
+        anchor = (anchor || "tl").toLowerCase();
+        size = size || {};
+
+        var me = this,
+            vp = me.dom == document.body || me.dom == document,
+            width = size.width || vp ? window.innerWidth: me.getWidth(),
+            height = size.height || vp ? window.innerHeight: me.getHeight(),
+            xy,
+            rnd = Math.round,
+            myXY = me.getXY(),
+            extraX = vp ? 0: !local ? myXY[0] : 0,
+            extraY = vp ? 0: !local ? myXY[1] : 0,
+            hash = {
+                c: [rnd(width * 0.5), rnd(height * 0.5)],
+                t: [rnd(width * 0.5), 0],
+                l: [0, rnd(height * 0.5)],
+                r: [width, rnd(height * 0.5)],
+                b: [rnd(width * 0.5), height],
+                tl: [0, 0],
+                bl: [0, height],
+                br: [width, height],
+                tr: [width, 0]
+            };
+
+        xy = hash[anchor];
+        return [xy[0] + extraX, xy[1] + extraY];
+    },
+
+    alignToRe: /^([a-z]+)-([a-z]+)(\?)?$/,
+
+    /**
+     * Gets the x,y coordinates to align this element with another element.
+     * @param {Mixed} element The element to align to.
+     * @param {String} position (optional, defaults to "tl-bl?") The position to align to.
+     * @param {Array} offsets (optional) Offset the positioning by [x, y]
+     * @return {Array} [x, y]
+     */
+    getAlignToXY: function(el, position, offsets, local) {
+        Ext.Logger.deprecate("getAlignToXY() is no longer available for Ext.Element. Please see Ext.Component#showBy() " +
+            "to do anchoring at Component level instead", this);
+
+        local = !!local;
+        el = Ext.get(el);
+
+        if (!el || !el.dom) {
+            throw new Error("Element.alignToXY with an element that doesn't exist");
+        }
+        offsets = offsets || [0, 0];
+
+        if (!position || position == '?') {
+            position = 'tl-bl?';
+        }
+        else if (! (/-/).test(position) && position !== "") {
+            position = 'tl-' + position;
+        }
+        position = position.toLowerCase();
+
+        var me = this,
+            matches = position.match(this.alignToRe),
+            dw = window.innerWidth,
+            dh = window.innerHeight,
+            p1 = "",
+            p2 = "",
+            a1,
+            a2,
+            x,
+            y,
+            swapX,
+            swapY,
+            p1x,
+            p1y,
+            p2x,
+            p2y,
+            width,
+            height,
+            region,
+            constrain;
+
+        if (!matches) {
+            throw "Element.alignTo with an invalid alignment " + position;
+        }
+
+        p1 = matches[1];
+        p2 = matches[2];
+        constrain = !!matches[3];
+
+        //Subtract the aligned el's internal xy from the target's offset xy
+        //plus custom offset to get the aligned el's new offset xy
+        a1 = me.getAnchorXY(p1, true);
+        a2 = el.getAnchorXY(p2, local);
+
+        x = a2[0] - a1[0] + offsets[0];
+        y = a2[1] - a1[1] + offsets[1];
+
+        if (constrain) {
+            width = me.getWidth();
+            height = me.getHeight();
+
+            region = el.getPageBox();
+
+            //If we are at a viewport boundary and the aligned el is anchored on a target border that is
+            //perpendicular to the vp border, allow the aligned el to slide on that border,
+            //otherwise swap the aligned el to the opposite border of the target.
+            p1y = p1.charAt(0);
+            p1x = p1.charAt(p1.length - 1);
+            p2y = p2.charAt(0);
+            p2x = p2.charAt(p2.length - 1);
+
+            swapY = ((p1y == "t" && p2y == "b") || (p1y == "b" && p2y == "t"));
+            swapX = ((p1x == "r" && p2x == "l") || (p1x == "l" && p2x == "r"));
+
+            if (x + width > dw) {
+                x = swapX ? region.left - width: dw - width;
+            }
+            if (x < 0) {
+                x = swapX ? region.right: 0;
+            }
+            if (y + height > dh) {
+                y = swapY ? region.top - height: dh - height;
+            }
+            if (y < 0) {
+                y = swapY ? region.bottom: 0;
+            }
+        }
+
+        return [x, y];
+    },
+
+    // private
+    getAnchor: function(){
+        var dom = this.dom;
+            if (!dom) {
+                return;
+            }
+            var anchor = this.self.data.call(this.self, dom, '_anchor');
+
+        if(!anchor){
+            anchor = this.self.data.call(this.self, dom, '_anchor', {});
+        }
+        return anchor;
+    },
+
+    // private ==>  used outside of core
+    adjustForConstraints: function(xy, parent) {
+        var vector = this.getConstrainVector(parent, xy);
+        if (vector) {
+            xy[0] += vector[0];
+            xy[1] += vector[1];
+        }
+        return xy;
+    }
+
+});
 
 /**
  * @class Ext.dom.Element
@@ -11905,30 +12549,31 @@ Ext.dom.Element.addMembers({
     BOTTOM: 'bottom',
     LEFT: 'left',
     /**
-     * @property
+     * @property VISIBILITY
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use visibility to hide element
      */
     VISIBILITY: 1,
 
     /**
-     * @property
+     * @property DISPLAY
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use display to hide element
      */
     DISPLAY: 2,
 
     /**
-     * @property
+     * @property OFFSETS
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use offsets to hide element
      */
     OFFSETS: 3,
 
     SEPARATOR: '-',
 
-    spacesRegex: /\s+/,
-
     trimRe: /^\s+|\s+$/g,
     wordsRe: /\w/g,
     spacesRe: /\s+/,
+    styleSplitRe: /\s*(?::|;)\s*/,
+    transparentRe: /^(?:transparent|(?:rgba[(](?:\s*\d+\s*[,]){3}\s*0\s*[)]))$/i,
+    classNameSplitRegex: /[\s]+/,
 
     borders: {
         t: 'border-top-width',
@@ -11956,8 +12601,6 @@ Ext.dom.Element.addMembers({
      * The default unit to append to CSS values where a unit isn't provided.
      */
     defaultUnit: "px",
-
-    classNameSplitRegex: /[\s]+/,
 
     isSynchronized: false,
 
@@ -12016,7 +12659,7 @@ Ext.dom.Element.addMembers({
         suffix = suffix ? SEPARATOR + suffix : '';
 
         if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
+            names = names.split(this.spacesRe);
         }
 
         for (i = 0, ln = names.length; i < ln; i++) {
@@ -12062,7 +12705,7 @@ Ext.dom.Element.addMembers({
         suffix = suffix ? SEPARATOR + suffix : '';
 
         if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
+            names = names.split(this.spacesRe);
         }
 
         for (i = 0, ln = names.length; i < ln; i++) {
@@ -12451,12 +13094,10 @@ Ext.dom.Element.addMembers({
         // well as the fact that 0/false are valid answers...
         result = (cs && cs[hook.name]); // || dom.style[hook.name];
 
-        // Webkit returns rgb values for transparent.
+        // Webkit returns rgb values for transparent, how does this work n IE9+
         //        if (!supportsTransparentColor && result == 'rgba(0, 0, 0, 0)') {
         //            result = 'transparent';
         //        }
-        // TODO - we should use isTransparent to handle this. The above is not a very
-        // reliable technique depending on the intent (e.g., rgba(255,0,0,0) is also transparent)
 
         return result;
     },
@@ -12474,15 +13115,14 @@ Ext.dom.Element.addMembers({
             hooks = me.styleHooks,
             style = dom.style,
             valueFrom = Ext.valueFrom,
-            name = prop,
-            hook;
+            name, hook;
 
         // we don't promote the 2-arg form to object-form to avoid the overhead...
-        if (typeof name == 'string') {
-            hook = hooks[name];
+        if (typeof prop == 'string') {
+            hook = hooks[prop];
 
             if (!hook) {
-                hooks[name] = hook = { name: statics.normalize(name) };
+                hooks[prop] = hook = { name: statics.normalize(prop) };
             }
             value = valueFrom(value, '');
 
@@ -12566,20 +13206,20 @@ Ext.dom.Element.addMembers({
      */
     applyStyles: function(styles) {
         if (styles) {
-            var i,
-                len,
-                dom = this.dom;
+            var dom = this.dom,
+                styleType, i, len;
 
             if (typeof styles == 'function') {
                 styles = styles.call();
             }
-            if (typeof styles == 'string') {
-                styles = Ext.util.Format.trim(styles).split(/\s*(?::|;)\s*/);
+            styleType = typeof styles;
+            if (styleType == 'string') {
+                styles = Ext.util.Format.trim(styles).split(this.styleSplitRe);
                 for (i = 0, len = styles.length; i < len;) {
-                    dom.style[Element.normalize(styles[i++])] = styles[i++];
+                    dom.style[Element.dom.normalize(styles[i++])] = styles[i++];
                 }
             }
-            else if (typeof styles == 'object') {
+            else if (styleType == 'object') {
                 this.setStyle(styles);
             }
         }
@@ -12636,6 +13276,91 @@ Ext.dom.Element.addMembers({
     }
 });
 
+Ext.dom.Element.addMembers({
+    /**
+     * Returns the dimensions of the element available to lay content out in.
+     *
+     * If the element (or any ancestor element) has CSS style `display: none`, the dimensions will be zero.
+     *
+     * Example:
+     *
+     *     var vpSize = Ext.getBody().getViewSize();
+     *
+     *     // all Windows created afterwards will have a default value of 90% height and 95% width
+     *     Ext.Window.override({
+     *         width: vpSize.width * 0.9,
+     *         height: vpSize.height * 0.95
+     *     });
+     *     // To handle window resizing you would have to hook onto onWindowResize.
+     *
+     * getViewSize utilizes clientHeight/clientWidth which excludes sizing of scrollbars.
+     * To obtain the size including scrollbars, use getStyleSize
+     *
+     * Sizing of the document body is handled at the adapter level which handles special cases for IE and strict modes, etc.
+     *
+     * @deprecated 2.0.0 This method is no longer supported in Sencha Touch
+     * @return {Object} Object describing width and height.
+     * @return {Number} return.width
+     * @return {Number} return.height
+     */
+    getViewSize: function() {
+        Ext.Logger.deprecate("This method is no longer supported in Sencha Touch", this);
+
+        var doc = document,
+            dom = this.dom;
+
+        if (dom == doc || dom == doc.body) {
+            return {
+                width: Element.getViewportWidth(),
+                height: Element.getViewportHeight()
+            };
+        }
+        else {
+            return {
+                width: dom.clientWidth,
+                height: dom.clientHeight
+            };
+        }
+    },
+
+    /**
+     * Returns true if the value of the given property is visually transparent. This
+     * may be due to a 'transparent' style value or an rgba value with 0 in the alpha
+     * component.
+     * @deprecated 2.0.0 This method is no longer supported in Sencha Touch
+     * @param {String} prop The style property whose value is to be tested.
+     * @return {Boolean} True if the style property is visually transparent.
+     */
+    isTransparent: function(prop) {
+        Ext.Logger.deprecate("This method is no longer supported in Sencha Touch", this);
+
+        var value = this.getStyle(prop);
+
+        return value ? this.transparentRe.test(value) : false;
+    },
+
+
+    /**
+     * Adds one or more CSS classes to this element and removes the same class(es) from all siblings.
+     * @deprecated 2.0.0 This method is no longer supported in Sencha Touch
+     * @param {String/String[]} className The CSS class to add, or an array of classes
+     * @return {Ext.dom.Element} this
+     */
+    radioCls: function(className) {
+        Ext.Logger.deprecate("This method is no longer supported in Sencha Touch", this);
+
+        var cn = this.dom.parentNode.childNodes,
+            v;
+        className = Ext.isArray(className) ? className : [className];
+        for (var i = 0, len = cn.length; i < len; i++) {
+            v = cn[i];
+            if (v && v.nodeType == 1) {
+                Ext.fly(v, '_internal').removeCls(className);
+            }
+        }
+        return this.addCls(className);
+    }
+});
 
 /**
  * @class Ext.dom.Element
@@ -13255,16 +13980,11 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 this.ExtBootstrapData = {
     "nameToAliasesMap":{
+        "Ext.AbstractComponent":[],
         "Ext.AbstractManager":[],
-        "Ext.Ajax":[],
-        "Ext.ComponentManager":[],
-        "Ext.ComponentQuery":[],
-        "Ext.Template":[],
-        "Ext.XTemplate":[],
-        "Ext.XTemplateCompiler":[],
-        "Ext.XTemplateParser":[],
         "Ext.ActionSheet":["widget.actionsheet"
         ],
+        "Ext.Ajax":[],
         "Ext.Anim":[],
         "Ext.Audio":["widget.audio"
         ],
@@ -13272,6 +13992,8 @@ this.ExtBootstrapData = {
         ],
         "Ext.Component":["widget.component"
         ],
+        "Ext.ComponentManager":[],
+        "Ext.ComponentQuery":[],
         "Ext.Container":["widget.container"
         ],
         "Ext.Decorator":[],
@@ -13299,6 +14021,7 @@ this.ExtBootstrapData = {
         ],
         "Ext.Spacer":["widget.spacer"
         ],
+        "Ext.Template":[],
         "Ext.Title":["widget.title"
         ],
         "Ext.TitleBar":["widget.titlebar"
@@ -13307,6 +14030,9 @@ this.ExtBootstrapData = {
         ],
         "Ext.Video":["widget.video"
         ],
+        "Ext.XTemplate":[],
+        "Ext.XTemplateCompiler":[],
+        "Ext.XTemplateParser":[],
         "Ext.app.Action":[],
         "Ext.app.Application":[],
         "Ext.app.Controller":[],
@@ -13346,8 +14072,6 @@ this.ExtBootstrapData = {
         "Ext.data.Store":["store.store"
         ],
         "Ext.data.StoreManager":[],
-        "Ext.data.Tree":["data.tree"
-        ],
         "Ext.data.TreeStore":["store.tree"
         ],
         "Ext.data.Types":[],
@@ -13381,6 +14105,8 @@ this.ExtBootstrapData = {
         ],
         "Ext.data.proxy.Server":["proxy.server"
         ],
+        "Ext.data.proxy.SessionStorage":["proxy.sessionstorage"
+        ],
         "Ext.data.proxy.WebStorage":[],
         "Ext.data.reader.Array":["reader.array"
         ],
@@ -13392,6 +14118,8 @@ this.ExtBootstrapData = {
         "Ext.data.writer.Json":["writer.json"
         ],
         "Ext.data.writer.Writer":["writer.base"
+        ],
+        "Ext.data.writer.Xml":["writer.xml"
         ],
         "Ext.dataview.DataView":["widget.dataview"
         ],
@@ -13598,6 +14326,12 @@ this.ExtBootstrapData = {
         ],
         "Ext.tab.Tab":["widget.tab"
         ],
+        "Ext.table.Cell":["widget.tablecell"
+        ],
+        "Ext.table.Row":["widget.tablerow"
+        ],
+        "Ext.table.Table":["widget.table"
+        ],
         "Ext.util.AbstractMixedCollection":[],
         "Ext.util.Collection":[],
         "Ext.util.DelayedTask":[],
@@ -13607,7 +14341,6 @@ this.ExtBootstrapData = {
         "Ext.util.GeoLocation":[],
         "Ext.util.Grouper":[],
         "Ext.util.HashMap":[],
-        "Ext.util.JSONP":[],
         "Ext.util.LineSegment":[],
         "Ext.util.MixedCollection":[],
         "Ext.util.Point":[],
@@ -13627,13 +14360,14 @@ this.ExtBootstrapData = {
         "Ext.viewport.Viewport":[]
     },
     "alternateToNameMap":{
-        "Ext.ComponentMgr":"Ext.ComponentManager",
         "Ext.lib.Component":"Ext.Component",
+        "Ext.ComponentMgr":"Ext.ComponentManager",
         "Ext.lib.Container":"Ext.Container",
         "Ext.EventedBase":"Ext.Evented",
         "Ext.lib.Panel":"Ext.Panel",
         "Ext.Carousel":"Ext.carousel.Carousel",
         "Ext.Carousel.Indicator":"Ext.carousel.Indicator",
+        "Ext.util.JSONP":"Ext.data.JsonP",
         "Ext.data.Record":"Ext.data.Model",
         "Ext.ModelMgr":"Ext.data.ModelManager",
         "Ext.ModelManager":"Ext.data.ModelManager",
@@ -13645,9 +14379,10 @@ this.ExtBootstrapData = {
         "Ext.data.Association":"Ext.data.association.Association",
         "Ext.data.BelongsToAssociation":"Ext.data.association.BelongsTo",
         "Ext.data.HasManyAssociation":"Ext.data.association.HasMany",
+        "Ext.data.HasOneAssociation":"Ext.data.association.HasOne",
         "Ext.data.HttpProxy":"Ext.data.proxy.Ajax",
         "Ext.data.AjaxProxy":"Ext.data.proxy.Ajax",
-        "Ext.data.ClientProxy":"Ext.data.proxy.Client",
+        "Ext.proxy.ClientProxy":"Ext.data.proxy.Client",
         "Ext.data.ScriptTagProxy":"Ext.data.proxy.JsonP",
         "Ext.data.LocalStorageProxy":"Ext.data.proxy.LocalStorage",
         "Ext.data.MemoryProxy":"Ext.data.proxy.Memory",
@@ -13655,6 +14390,7 @@ this.ExtBootstrapData = {
         "Ext.data.Proxy":"Ext.data.proxy.Proxy",
         "Ext.data.RestProxy":"Ext.data.proxy.Rest",
         "Ext.data.ServerProxy":"Ext.data.proxy.Server",
+        "Ext.data.SessionStorageProxy":"Ext.data.proxy.SessionStorage",
         "Ext.data.WebStorageProxy":"Ext.data.proxy.WebStorage",
         "Ext.data.ArrayReader":"Ext.data.reader.Array",
         "Ext.data.JsonReader":"Ext.data.reader.Json",
@@ -13664,6 +14400,7 @@ this.ExtBootstrapData = {
         "Ext.data.JsonWriter":"Ext.data.writer.Json",
         "Ext.data.DataWriter":"Ext.data.writer.Writer",
         "Ext.data.Writer":"Ext.data.writer.Writer",
+        "Ext.data.XmlWriter":"Ext.data.writer.Xml",
         "Ext.DataView":"Ext.dataview.DataView",
         "Ext.IndexBar":"Ext.dataview.IndexBar",
         "Ext.List":"Ext.dataview.List",

@@ -63,7 +63,7 @@ reader: {
  *
  * <p>If you already have your XML format defined and it doesn't look quite like what we have above, you can usually
  * pass XmlReader a couple of configuration options to make it parse your format. For example, we can use the
- * {@link #root} configuration to parse data that comes back like this:</p>
+ * {@link #rootProperty} configuration to parse data that comes back like this:</p>
  *
 <pre><code>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -81,18 +81,18 @@ reader: {
 &lt;/users&gt;
 </code></pre>
  *
- * <p>To parse this we just pass in a {@link #root} configuration that matches the 'users' above:</p>
+ * <p>To parse this we just pass in a {@link #rootProperty} configuration that matches the 'users' above:</p>
  *
 <pre><code>
 reader: {
-    type  : 'xml',
-    root  : 'users',
-    record: 'user'
+    type: 'xml',
+    record: 'user',
+    rootProperty: 'users'
 }
 </code></pre>
  *
- * <p>Note that XmlReader doesn't care whether your {@link #root} and {@link #record} elements are nested deep inside
- * a larger structure, so a response like this will still work:
+ * <p>Note that XmlReader doesn't care whether your {@link #rootProperty} and {@link #record} elements are nested deep 
+ * inside a larger structure, so a response like this will still work:
  *
 <pre><code>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -147,7 +147,7 @@ reader: {
 <pre><code>
 reader: {
     type: 'xml',
-    root: 'users',
+    rootProperty: 'users',
     totalProperty  : 'total',
     successProperty: 'success'
 }
@@ -207,6 +207,11 @@ Ext.define('Ext.data.reader.Xml', {
 
     //inherit docs
     getResponseData: function(response) {
+        // Check to see if the response is already an xml node.
+        if (response.nodeType === 1) {
+            return response;
+        }
+
         var xml = response.responseXML;
 
         //<debug>

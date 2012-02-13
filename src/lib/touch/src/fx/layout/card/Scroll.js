@@ -11,11 +11,7 @@ Ext.define('Ext.fx.layout.card.Scroll', {
     alias: 'fx.layout.card.scroll',
 
     config: {
-        direction: 'left',
-
-        duration: 150,
-
-        reverse: null
+        duration: 150
     },
 
     constructor: function(config) {

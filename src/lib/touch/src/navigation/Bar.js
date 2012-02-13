@@ -2,6 +2,7 @@
  * This component is used in {@link Ext.navigation.View} to control animations in the toolbar. You should never need to
  * interact with the component directly, unless you are subclassing it.
  * @private
+ * @author Robert Dougan <rob@sencha.com>
  */
 Ext.define('Ext.navigation.Bar', {
     extend: 'Ext.Container',
@@ -84,7 +85,23 @@ Ext.define('Ext.navigation.Bar', {
          * on the back button. True if you want to use the previous views title.
          * @hide
          */
-        useTitleForBackButtonText: false
+        useTitleForBackButtonText: null,
+
+        /**
+         * @private
+         * @cfg {Ext.navigation.View} view A reference to the navigation view this bar is linked to.
+         */
+        view: null,
+
+        /**
+         * @private
+         * @cfg {Ext.Button/Object} backButton The configuration for the back button
+         */
+        backButton: {
+            align: 'left',
+            ui: 'back',
+            hidden: true
+        }
     },
 
     /**
@@ -105,6 +122,7 @@ Ext.define('Ext.navigation.Bar', {
 
     beforeInitialize: function() {
         this.backButtonStack = [];
+        this.lastAnimationProperties = {};
         this.animating = false;
 
         this.onSizeMonitorChange = Ext.Function.createThrottled(this.onSizeMonitorChange, 50, this);
@@ -118,19 +136,121 @@ Ext.define('Ext.navigation.Bar', {
             erased: 'onErased'
         });
 
-        if (!me.backButton) {
-            me.backButton = me.add({
-                align: 'left',
-                ui: 'back',
-                hidden: true,
-                listeners: {
-                    scope: this,
-                    tap: this.onBackButtonTap
+        me.onSizeMonitorChange();
+    },
+
+    /**
+     * @private
+     */
+    updateView: function(newView, oldView) {
+        var backButton = this.getBackButton(),
+            innerItems, i, backButtonText;
+
+        this.getItems();
+
+        if (newView) {
+            this.backButtonStack = [];
+
+            //update the back button stack with the current inner items of the view
+            innerItems = newView.getInnerItems();
+            for (i = 0; i < innerItems.length; i++) {
+                this.backButtonStack.push(innerItems[i].config.title || this.getDefaultBackButtonText());
+            }
+
+            this.titleComponent.setTitle(this.getTitleText());
+
+            backButtonText = this.getBackButtonText();
+            if (backButtonText) {
+                backButton.setText(this.getBackButtonText());
+                backButton.show();
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    onViewAdd: function(view, item, index) {
+        var animation = view.getLayout().getAnimation();
+
+        this.endAnimation();
+
+        this.backButtonStack.push(item.config.title || this.getDefaultBackButtonText());
+
+        this.refreshNavigationBarProxy();
+
+        if (animation && animation.isAnimation) {
+            this.pushBackButtonAnimated(this.getBackButtonText());
+            this.pushTitleAnimated(this.getTitleText());
+        } else {
+            this.pushBackButton(this.getBackButtonText());
+            this.pushTitle(this.getTitleText());
+        }
+    },
+
+    /**
+     * @private
+     */
+    onViewRemove: function(view, item, index) {
+        var animation = view.getLayout().getAnimation();
+
+        this.endAnimation();
+
+        this.backButtonStack.pop();
+
+        this.refreshNavigationBarProxy();
+
+        if (animation && animation.isAnimation) {
+            this.popBackButtonAnimated(this.getBackButtonText());
+            this.popTitleAnimated(this.getTitleText());
+        } else {
+            this.popBackButton(this.getBackButtonText());
+            this.popTitle(this.getTitleText());
+        }
+    },
+
+    endAnimation: function() {
+        var lastAnimationProperties = this.lastAnimationProperties,
+            animation, el, key;
+
+        if (lastAnimationProperties) {
+            for (animation in lastAnimationProperties) {
+                el = Ext.get(animation);
+
+                for (key in lastAnimationProperties[animation].to) {
+                    el.setStyle(key, lastAnimationProperties[animation][key]);
                 }
-            });
+
+                if (lastAnimationProperties[animation].onEnd) {
+                    lastAnimationProperties[animation].onEnd.call(this);
+                }
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    applyBackButton: function(config) {
+        return Ext.factory(config, Ext.Button, this.getBackButton());
+    },
+
+    /**
+     * @private
+     */
+    updateBackButton: function(newBackButton, oldBackButton) {
+        if (oldBackButton) {
+            this.remove(oldBackButton);
         }
 
-        me.onSizeMonitorChange();
+        if (newBackButton) {
+            this.add(newBackButton);
+
+            newBackButton.on({
+                scope: this,
+                tap: this.onBackButtonTap
+            });
+        }
     },
 
     onBackButtonTap: function() {
@@ -138,14 +258,10 @@ Ext.define('Ext.navigation.Bar', {
     },
 
     updateUseTitleForBackButtonText: function(newUseTitleForBackButtonText) {
-        var backButton = this.backButton;
+        var backButton = this.getBackButton();
 
         if (backButton) {
-            if (newUseTitleForBackButtonText) {
-                backButton.setText(this.backButtonStack[this.backButtonStack.length - 1]);
-            } else {
-                backButton.setText(this.getDefaultBackButtonText());
-            }
+            backButton.setText(this.getBackButtonText());
         }
 
         this.onSizeMonitorChange();
@@ -228,12 +344,6 @@ Ext.define('Ext.navigation.Bar', {
         }
     },
 
-    // @private
-    updateTitle: function(newTitle) {
-        this.titleComponent.setTitle(newTitle);
-        this.updateNavigationBarProxy(newTitle);
-    },
-
     /**
      * Called when any size of this component changes.
      * It refreshes the navigation bar proxy so that the title and back button is in the correct location.
@@ -244,7 +354,7 @@ Ext.define('Ext.navigation.Bar', {
             return;
         }
 
-        var backButton = this.backButton,
+        var backButton = this.getBackButton(),
             titleComponent = this.titleComponent;
 
         if (backButton && backButton.rendered) {
@@ -254,7 +364,6 @@ Ext.define('Ext.navigation.Bar', {
         this.refreshNavigationBarProxy();
 
         var properties = this.getNavigationBarProxyProperties();
-
         if (backButton && backButton.rendered) {
             backButton.renderElement.setWidth(properties.backButton.width);
         }
@@ -271,7 +380,7 @@ Ext.define('Ext.navigation.Bar', {
     getBackButtonAnimationProperties: function() {
         var me = this,
             element = me.renderElement,
-            backButtonElement = me.backButton.renderElement,
+            backButtonElement = me.getBackButton().renderElement,
             titleElement = me.titleComponent.renderElement,
             minButtonOffset = Math.min(element.getWidth() / 3, 200),
             proxyProperties = this.getNavigationBarProxyProperties(),
@@ -313,7 +422,7 @@ Ext.define('Ext.navigation.Bar', {
     getBackButtonAnimationReverseProperties: function() {
         var me = this,
             element = me.renderElement,
-            backButtonElement = me.backButton.renderElement,
+            backButtonElement = me.getBackButton().renderElement,
             titleElement = me.titleComponent.renderElement,
             minButtonGhostOffset = Math.min(element.getWidth() / 3, 200),
             proxyProperties = this.getNavigationBarProxyProperties(),
@@ -446,15 +555,18 @@ Ext.define('Ext.navigation.Bar', {
      * @private
      */
     animate: function(element, from, to, onEnd) {
-        var config = {
+        var me = this,
+            config = {
             element: element,
             easing: 'ease-in-out',
-            duration: this.getAnimation().duration
+            duration: this.getAnimation().duration,
+            replacePrevious: true
         };
 
-        if (onEnd) {
-            config.onEnd = onEnd;
-        }
+        this.lastAnimationProperties[element.id] = {
+            to: to,
+            onEnd: onEnd
+        };
 
         //reset the left of the element
         element.setLeft(0);
@@ -509,6 +621,16 @@ Ext.define('Ext.navigation.Bar', {
             }
         }
 
+        fn = function() {
+            if (onEnd) {
+                onEnd.call(me);
+            }
+
+            me.lastAnimationProperties = {};
+        };
+
+        config.onEnd = fn;
+
         Ext.Animator.run(config);
     },
 
@@ -517,109 +639,24 @@ Ext.define('Ext.navigation.Bar', {
      * @private
      */
     getBackButtonText: function() {
-        return (this.getUseTitleForBackButtonText()) ? this.backButtonStack[this.backButtonStack.length - 1] : this.getDefaultBackButtonText();
+        var text = this.backButtonStack[this.backButtonStack.length - 2],
+            useTitleForBackButtonText = this.getUseTitleForBackButtonText();
+
+        if (!useTitleForBackButtonText) {
+            if (text) {
+                text = this.getDefaultBackButtonText();
+            }
+        }
+
+        return text;
     },
 
     /**
-     * The animated version of the push method. You simply pass it a title and it will update the bar accordingly.
-     * IF you are currently animating, it will not do anything.
-     * It just calls the appropriate methods to updates the navigation bar proxy, then animate the back btuton and title changes
+     * Returns the text needed for the current title at anytime.
      * @private
      */
-    pushAnimated: function(title, config) {
-        var me = this;
-
-        if (me.animating) {
-            return;
-        }
-
-        if (Ext.isObject(config)) {
-            me.setAnimation(config);
-        }
-
-        me.animating = true;
-
-        var backButtonText = this.titleComponent.getTitle() || me.getDefaultBackButtonText();
-
-        me.backButtonStack.push(backButtonText);
-
-        me.updateNavigationBarProxy(title, (backButtonText) ? me.getBackButtonText() : null);
-
-        me.pushBackButtonAnimated(backButtonText);
-        me.pushTitleAnimated(title);
-    },
-
-    /**
-     * Method to push a new title into the stack of this bar.
-     * It will never do anything if you are currently animating anything.
-     * It just calls the appropriate methods to update the navigation bar proxy and then the back button and title.
-     * @private
-     */
-    push: function(title) {
-        var me = this;
-
-        if (me.animating) {
-            return;
-        }
-
-        var backButtonText = this.titleComponent.getTitle() || me.getDefaultBackButtonText();
-
-        me.backButtonStack.push(backButtonText);
-
-        me.updateNavigationBarProxy(title, (backButtonText) ? me.getBackButtonText() : null);
-
-        me.pushBackButton((backButtonText) ? me.getBackButtonText() : null);
-        me.pushTitle(title);
-    },
-
-    /**
-     * The animated version of the {@link #pop} method. It will never do anything if you are currenlty animating.
-     * It just updates the back button and title, updates the proxy and then animates.
-     * @private
-     */
-    popAnimated: function(title, config) {
-        var me = this;
-
-        if (me.animating) {
-            return;
-        }
-
-        if (Ext.isObject(config)) {
-            me.setAnimation(config);
-        }
-
-        me.animating = true;
-
-        me.backButtonStack.pop();
-
-        var backButtonText = (me.backButtonStack.length == 1) ? null : me.backButtonStack[me.backButtonStack.length - 1];
-
-        me.updateNavigationBarProxy(title, (backButtonText) ? me.getBackButtonText() : null);
-
-        me.popBackButtonAnimated(backButtonText);
-        me.popTitleAnimated(title);
-    },
-
-    /**
-     * the pop method when a view is popped. it will always return and do nothing if you are currently animating.
-     * all it does is update the navigation bar proxy and then pop the button and title if it needs too.
-     * @private
-     */
-    pop: function(title) {
-        var me = this;
-
-        if (me.animating) {
-            return;
-        }
-
-        me.backButtonStack.pop();
-
-        var backButtonText = (me.backButtonStack.length == 1) ? null : me.backButtonStack[me.backButtonStack.length - 1];
-
-        me.updateNavigationBarProxy(title, (backButtonText) ? me.getBackButtonText() : null);
-
-        me.popBackButton(backButtonText);
-        me.popTitle(title);
+    getTitleText: function() {
+        return this.backButtonStack[this.backButtonStack.length - 1];
     },
 
     /**
@@ -627,18 +664,19 @@ Ext.define('Ext.navigation.Bar', {
      * @private
      */
     pushBackButton: function(title) {
-        this.backButton.setText(title);
-        this.backButton.show();
+        var backButton = this.getBackButton();
+        backButton.setText(title);
+        backButton.show();
 
         var properties = this.getBackButtonAnimationProperties(),
             to = properties.element.to;
 
         if (to.left) {
-            this.backButton.setLeft(to.left);
+            backButton.setLeft(to.left);
         }
 
         if (to.width) {
-            this.backButton.setWidth(to.width);
+            backButton.setWidth(to.width);
         }
     },
 
@@ -649,7 +687,7 @@ Ext.define('Ext.navigation.Bar', {
     pushBackButtonAnimated: function(title) {
         var me = this;
 
-        var backButton = me.backButton,
+        var backButton = me.getBackButton(),
             previousTitle = backButton.getText(),
             backButtonElement = backButton.renderElement,
             properties = me.getBackButtonAnimationProperties(),
@@ -682,23 +720,25 @@ Ext.define('Ext.navigation.Bar', {
      * @private
      */
     popBackButton: function(title) {
-        this.backButton.setText(null);
+        var backButton = this.getBackButton();
+
+        backButton.setText(null);
 
         if (title) {
-            this.backButton.setText(this.getBackButtonText());
+            backButton.setText(this.getBackButtonText());
         } else {
-            this.backButton.hide();
+            backButton.hide();
         }
 
         var properties = this.getBackButtonAnimationReverseProperties(),
             to = properties.element.to;
 
         if (to.left) {
-            this.backButton.setLeft(to.left);
+            backButton.setLeft(to.left);
         }
 
         if (to.width) {
-            this.backButton.setWidth(to.width);
+            backButton.setWidth(to.width);
         }
     },
 
@@ -710,14 +750,7 @@ Ext.define('Ext.navigation.Bar', {
     popBackButtonAnimated: function(title) {
         var me = this;
 
-        if (!me.backButton) {
-            me.backButton = me.add({
-                align: 'left',
-                ui: 'back'
-            });
-        }
-
-        var backButton = me.backButton,
+        var backButton = me.getBackButton(),
             previousTitle = backButton.getText(),
             backButtonElement = backButton.renderElement,
             properties = me.getBackButtonAnimationReverseProperties(),
@@ -778,7 +811,7 @@ Ext.define('Ext.navigation.Bar', {
     pushTitleAnimated: function(newTitle) {
         var me = this;
 
-        var backButton = me.backButton,
+        var backButton = me.getBackButton(),
             previousTitle = (backButton) ? backButton.getText() : null,
             title = me.titleComponent,
             titleElement = title.renderElement,
@@ -833,7 +866,7 @@ Ext.define('Ext.navigation.Bar', {
     popTitleAnimated: function(newTitle) {
         var me = this;
 
-        var backButton = me.backButton,
+        var backButton = me.getBackButton(),
             previousTitle = me.titleComponent.getTitle(),
             title = me.titleComponent,
             titleElement = title.renderElement,
@@ -915,14 +948,15 @@ Ext.define('Ext.navigation.Bar', {
     },
 
     /**
-     * This method syncs the navigation bar proxy with the navigation bar. Used anytime the data is changed in the view,
-     * i.e. when something is pushed/popped.
+     * Refreshes the navigation bar proxy with the latest data available in the backButtonStack.
      * @private
      */
     refreshNavigationBarProxy: function() {
         var proxy = this.proxy,
             renderElement = this.renderElement,
-            backButton = this.backButton;
+            backButtonStack = this.backButtonStack,
+            title = backButtonStack[backButtonStack.length - 1],
+            oldTitle = this.getBackButtonText();
 
         if (!proxy) {
             this.createNavigationBarProxy();
@@ -932,32 +966,7 @@ Ext.define('Ext.navigation.Bar', {
         proxy.renderElement.setWidth(renderElement.getWidth());
         proxy.renderElement.setHeight(renderElement.getHeight());
 
-        if (proxy.backButton && backButton) {
-            proxy.backButton.setText(backButton.getText());
-        }
-
-        proxy.refreshTitlePosition();
-    },
-
-    /**
-     * Method which updates the navigaiton bar proxy with new data. This is used when the active view is changed.
-     * If you push a new view, it will have the newTitle and show it. Then put the oldtitle as the back button.
-     * It will also refresh all proxy positions.
-     * @private
-     */
-    updateNavigationBarProxy: function(newTitle, oldTitle) {
-        var proxy = this.proxy,
-            renderElement = this.renderElement;
-
-        if (!proxy) {
-            this.createNavigationBarProxy();
-            proxy = this.proxy;
-        }
-
-        proxy.renderElement.setWidth(renderElement.getWidth());
-        proxy.renderElement.setHeight(renderElement.getHeight());
-
-        proxy.setTitle(newTitle);
+        proxy.setTitle(title);
 
         if (oldTitle) {
             proxy.backButton.setText(oldTitle);
@@ -1010,19 +1019,22 @@ Ext.define('Ext.navigation.Bar', {
      * @private
      */
     createProxy: function(component, useParent) {
-        var element = (useParent) ? component.element.getParent() : component.element;
+        var element = (useParent) ? component.element.getParent() : component.element,
+            ghost = Ext.get(element.id + '-proxy');
 
-        var ghost = element.dom.cloneNode(true);
-        ghost.id = element.id + '-proxy';
+        if (!ghost) {
+            ghost = element.dom.cloneNode(true);
+            ghost.id = element.id + '-proxy';
 
-        //insert it into the toolbar
-        element.getParent().dom.appendChild(ghost);
+            //insert it into the toolbar
+            element.getParent().dom.appendChild(ghost);
 
-        //set the x/y
-        ghost = Ext.get(ghost);
-        ghost.setStyle('position', 'absolute');
-        ghost.setY(element.getY());
-        ghost.setX(element.getX());
+            //set the x/y
+            ghost = Ext.get(ghost);
+            ghost.setStyle('position', 'absolute');
+            ghost.setY(element.getY());
+            ghost.setX(element.getX());
+        }
 
         return ghost;
     }

@@ -18,7 +18,7 @@
  *         autoUpdate: false,
  *         listeners: {
  *             locationupdate: function(geo) {
- *                 alert('New latitude: ' + geo.latitude);
+ *                 alert('New latitude: ' + geo.getLatitude());
  *             },
  *             locationerror: function(geo, bTimeout, bPermissionDenied, bLocationUnavailable, message) {
  *                 if(bTimeout){
@@ -186,10 +186,6 @@ Ext.define('Ext.util.GeoLocation', {
         provider : undefined
     },
 
-    constructor: function(config) {
-        this.initConfig(config);
-    },
-
     updateMaximumAge: function() {
         if (this.watchOperation) {
             this.updateWatchOperation();
@@ -262,7 +258,7 @@ Ext.define('Ext.util.GeoLocation', {
                 Ext.bind(me.fireUpdate, me),
                 Ext.bind(me.fireError, me),
                 me.parseOptions()
-            )
+            );
         }
 
         pollPosition();

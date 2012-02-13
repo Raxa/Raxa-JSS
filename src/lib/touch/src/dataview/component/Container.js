@@ -191,30 +191,39 @@ Ext.define('Ext.dataview.component.Container', {
     moveItemsFromCache: function(records) {
         var me = this,
             dataview = me.dataview,
+            store = dataview.getStore(),
             ln = records.length,
             xtype = dataview.getDefaultType(),
             itemConfig = dataview.getItemConfig(),
             itemCache = me.itemCache,
             cacheLn = itemCache.length,
             items = [],
-            i = 0,
-            item, record;
+            i, item, record;
 
         if (ln) {
             dataview.hideEmptyText();
         }
 
-        for (; i < ln; i++) {
+        for (i = 0; i < ln; i++) {
+            records[i]._tmpIndex = store.indexOf(records[i]);
+        }
+
+        Ext.Array.sort(records, function(record1, record2) {
+            return record1._tmpIndex > record2._tmpIndex ? 1 : -1;
+        });
+
+        for (i = 0; i < ln; i++) {
             record = records[i];
             if (cacheLn) {
                 cacheLn--;
                 item = itemCache.pop();
                 item.setRecord(record);
-                items.push(item);
             }
             else {
-                items.push(me.getDataItemConfig(xtype, record, itemConfig));
+                item = me.getDataItemConfig(xtype, record, itemConfig);
             }
+            this.insert(record._tmpIndex, item);
+            delete record._tmpIndex;
         }
         return items;
     },
@@ -227,10 +236,6 @@ Ext.define('Ext.dataview.component.Container', {
         if (item.setRecord) {
             item.setRecord(record);
         }
-    },
-
-    doCreateItems: function(records) {
-        this.add(this.moveItemsFromCache(records));
     },
 
     getDataItemConfig: function(xtype, record, itemConfig) {

@@ -18,6 +18,8 @@
  * ## Composite (Collections of) Elements
  *
  * For working with collections of Elements, see Ext.CompositeElement
+ *
+ * @mixins Ext.mixin.Observable
  */
 Ext.define('Ext.dom.Element', {
     alternateClassName: 'Ext.Element',

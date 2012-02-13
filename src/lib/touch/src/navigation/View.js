@@ -1,4 +1,6 @@
 /**
+ * @author Robert Dougan <rob@sencha.com>
+ *
  * NavigationView is basically a {@link Ext.Container} with a {@link Ext.layout.Card card} layout, so only one view
  * can be visible at a time. However, NavigationView also adds extra functionality on top of this to allow
  * you to `push` and `pop` views at any time. When you do this, your NavigationView will automatically animate
@@ -38,7 +40,7 @@
  *
  * As you can see, it is as simple as calling the {@link #method-push} method, with a new view (instance or object). Done.
  *
- * You can also `pop` a view at any time. This will remove the top-most view from the NavigationView, and animate back
+ * You can also `pop` a view at any time. This will remove the top-most view from the NavigationView, and amimate back
  * to the previous view. You can do this using the {@link #method-pop} method (which requires no arguments).
  *
  *     view.pop();
@@ -125,7 +127,7 @@ Ext.define('Ext.navigation.View', {
             type: 'card',
             animation: {
                 duration: 300,
-                easing: 'ease-in-out',
+                easing: 'ease-out',
                 type: 'slide',
                 direction: 'left'
             }
@@ -152,22 +154,6 @@ Ext.define('Ext.navigation.View', {
      * @param {Mixed} view The view that has been popped
      */
 
-    /**
-     * A stack array of all views in this navigation view.
-     * @cfg {Array} stack
-     * @private
-     */
-
-    /**
-     * True of we are popping a view from the NavigationView
-     * @cfg {Boolean} popping
-     * @private
-     */
-
-    beforeInitialize: function() {
-        this.stack = [];
-    },
-
     // @private
     initialize: function() {
         //add a listener onto the back button in the navigationbar
@@ -175,6 +161,25 @@ Ext.define('Ext.navigation.View', {
             scope: this,
             back: this.onBackButtonTap
         });
+
+        this.relayEvents(this, {
+            add: 'push',
+            remove: 'pop'
+        });
+    },
+
+    /**
+     * @private
+     * Disable all animations on Android
+     */
+    applyLayout: function(config) {
+        config = config || {};
+
+        if (Ext.os.is.Android) {
+            config.animation = false;
+        }
+
+        return config;
     },
 
     /**
@@ -182,7 +187,9 @@ Ext.define('Ext.navigation.View', {
      * Called when the user taps on the back button
      */
     onBackButtonTap: function() {
-        this.popAnimated();
+        this.pop();
+
+        this.fireEvent('back', this);
     },
 
     /**
@@ -191,44 +198,7 @@ Ext.define('Ext.navigation.View', {
      * @return {Ext.Component} The new item you just pushed
      */
     push: function(view) {
-        if (!this.canPush()) {
-            return;
-        }
-
-        this.popping = false;
-
-        return this.setActiveItem(view);
-    },
-
-    /**
-     * Pushes a new view into this navigation view using a animation passed as a configuration.
-     * @param {Object} view The view to push
-     * @param {Boolean/Object} config The animation configuration.
-     * @return {Ext.Component} The new item you just pushed
-     */
-    pushAnimated: function(view, config) {
-        if (!this.canPush()) {
-            return;
-        }
-
-        this.popping = false;
-
-        var layout = this.getLayout(),
-            animation = layout.getAnimation(),
-            item;
-
-        //merge the new animation configuration with the existing one
-        if (Ext.isObject(config)) {
-            config = Ext.Object.merge({}, animation.getInitialConfig(), config);
-        }
-
-        layout.setAnimation(config);
-        item = this.setActiveItem(view);
-        layout.getAnimation().disable();
-        layout.setAnimation(animation);
-        layout.getAnimation().enable();
-
-        return item;
+        return this.add(view);
     },
 
     /**
@@ -244,18 +214,6 @@ Ext.define('Ext.navigation.View', {
     },
 
     /**
-     * Removes the current active view from the stack and animates it to the previous view using the specified config.
-     * @param {Number} count The number of views you want to pop
-     * @param {Boolean/Object} config The animation configuration.
-     * @return {Ext.Component} The new active item
-     */
-    popAnimated: function(count, config) {
-        if (this.onBeforePop(count)) {
-            return this.doPop(config);
-        }
-    },
-
-    /**
      * @private
      * Calculates whether it needs to remove any items from the stack when you are popping more than 1
      * item. If it does, it removes those views from the stack and returns `true`.
@@ -263,10 +221,9 @@ Ext.define('Ext.navigation.View', {
      */
     onBeforePop: function(count) {
         var me = this,
-            stack = me.stack,
-            newStack = [],
-            ln = stack.length,
-            last, i;
+            innerItems = this.getInnerItems(),
+            ln = innerItems.length,
+            toRemove, last, i;
 
         //default to 1 pop
         if (!Ext.isNumber(count) || count < 1) {
@@ -274,29 +231,17 @@ Ext.define('Ext.navigation.View', {
         }
 
         //check if we are trying to remove more items than we have
-        count = Math.min(count, stack.length - 1);
+        count = Math.min(count, ln - 1);
 
         if (count) {
             //we need to reset the backButtonStack in the navigation bar
             me.getNavigationBar().onBeforePop(count);
 
-            //we dont want count to take into account the last item, as we need to keep it for animations
-            count--;
-
-            //we only want to keep the first and last views because we are going from the last view, to the first view
-            newStack.push(stack.shift());
-            last = stack.pop();
-
-            //loop through all other views in the stack and remove them from the view
-            for (i = 0; i < count; i++) {
-                stack.pop();
+            //get the items we need to remove from the view and remove theme
+            toRemove = innerItems.splice(-count, count - 1);
+            for (i = 0; i < toRemove.length; i++) {
+                this.remove(toRemove[i]);
             }
-
-            newStack = newStack.concat(stack);
-            newStack.push(last);
-
-            //update the stack and pop back to the first view
-            me.stack = newStack;
 
             return true;
         }
@@ -309,82 +254,14 @@ Ext.define('Ext.navigation.View', {
      */
     doPop: function(config) {
         var me = this,
+            innerItems = this.getInnerItems(),
             layout = me.getLayout(),
             animation = layout.getAnimation();
 
-        if (!this.canPop()) {
-            //<debug>
-            Ext.Logger.warn('Ext.navigation.View#pop: Trying to pop a view, but there are no views to pop.');
-            //</debug>
-            return;
-        }
-
-        //remove the last item in the stack
-        me.stack.pop();
-
-        if (Ext.isDefined(config)) {
-            //merge the new animation configuration with the existing one
-            if (Ext.isObject(config)) {
-                config = Ext.Object.merge({}, animation.getInitialConfig(), config);
-            }
-
-            //set the animation configuration
-            layout.setAnimation(config);
-            layout.getAnimation().enable();
-        } else {
-            //reverse the animation
-            if (animation && animation.isAnimation) {
-                animation.setReverse(true);
-            }
-        }
-
         //set the new active item to be the new last item of the stack
-        me.popping = true;
-        me.setActiveItem(me.stack[me.stack.length - 1]);
-        me.popping = false;
-
-        if (Ext.isDefined(config)) {
-            //revert the animation
-            layout.setAnimation(animation);
-            layout.getAnimation().enable();
-        } else {
-            //unreverse the animation
-            if (animation && animation.isAnimation) {
-                animation.setReverse(false);
-            }
-        }
+        me.remove(innerItems[innerItems.length - 1]);
 
         return this.getActiveItem();
-    },
-
-    /**
-     * Simply returns true if this navigation view can purrently push a new item.
-     * @return {Boolean} True if you can push
-     */
-    canPush: function() {
-        var navigationBar = this.getNavigationBar();
-
-        if (navigationBar && navigationBar.animating) {
-            return false;
-        }
-
-        return true;
-    },
-
-    /**
-     * Simply returns true if this navigation view can currently pop and item. False if there is only one view
-     * in the stack.
-     * @return {Boolean} True if you can pop
-     */
-    canPop: function() {
-        var canPop = this.stack.length > 1,
-            navigationBar = this.getNavigationBar();
-
-        if (navigationBar && navigationBar.animating) {
-            return false;
-        }
-
-        return canPop;
     },
 
     /**
@@ -392,8 +269,8 @@ Ext.define('Ext.navigation.View', {
      * @return {Mixed} The previous view
      */
     getPreviousItem: function() {
-        var stack = this.stack;
-        return stack[stack.length - 1];
+        var innerItems = this.getInnerItems();
+        return innerItems[innerItems.length - 1];
     },
 
     /**
@@ -424,6 +301,8 @@ Ext.define('Ext.navigation.View', {
             //</debug>
         }
 
+        config.view = this;
+
         return Ext.factory(config, Ext.navigation.Bar, this.getNavigationBar());
     },
 
@@ -444,52 +323,117 @@ Ext.define('Ext.navigation.View', {
         }
     },
 
-    // @private
-    doSetActiveItem: function(activeItem, oldActiveItem) {
+    /**
+     * @private
+     */
+    applyActiveItem: function(activeItem, currentActiveItem) {
+        var innerItems = this.getInnerItems();
+
+        // Make sure the items are already initialized
+        this.getItems();
+
+        // If we are not initialzed yet, we should set the active item to the last item in the stack
+        if (!this.initialized) {
+            activeItem = innerItems.length - 1;
+        }
+
+        if (typeof activeItem == 'number') {
+            activeItem = Math.max(0, Math.min(activeItem, innerItems.length - 1));
+            activeItem = innerItems[activeItem];
+
+            if (activeItem) {
+                return activeItem;
+            }
+            else if (currentActiveItem) {
+                return null;
+            }
+        } else if (activeItem) {
+            if (!activeItem.isComponent) {
+                activeItem = this.factoryItem(activeItem);
+            }
+
+            //<debug error>
+            if (!activeItem.isInnerItem()) {
+                Ext.Logger.error("Setting activeItem to be a non-inner item");
+            }
+            //</debug>
+
+            if (!this.has(activeItem)) {
+                this.add(activeItem);
+            }
+
+            return activeItem;
+        }
+    },
+
+    remove: function(item, destroy) {
         var me = this,
-            navigationBar = me.getNavigationBar(),
-            stack = me.stack,
-            layout = me.getLayout(),
-            animation = layout.getAnimation(),
-            useAnimation = animation && animation.isAnimation && this.isPainted(),
-            pushFn = (useAnimation) ? 'pushAnimated' : 'push',
-            popFn = (useAnimation) ? 'popAnimated' : 'pop',
-            title;
+            index = me.indexOf(item),
+            innerItems = this.getInnerItems(),
+            animation = this.getLayout().getAnimation(),
+            innerIndex;
 
-        if (!activeItem) {
-            return;
+        if (destroy === undefined) {
+            destroy = me.getAutoDestroy();
         }
 
-        title = activeItem.getInitialConfig().title;
+        if (index !== -1) {
+            if (!this.removingAll && innerItems.length > 1 && item === this.getActiveItem()) {
+                this.on({
+                    activeitemchange: 'doRemove',
+                    scope: this,
+                    single: true,
+                    order: 'after',
+                    args: [item, index, destroy]
+                });
 
-        //if we are not popping a view, then add it to the stack
-        if (!me.popping) {
-            stack.push(activeItem);
-            me.fireEvent('push', this, activeItem);
-        } else {
-            me.fireEvent('pop', this, oldActiveItem);
-        }
+                innerIndex = innerItems.indexOf(item);
 
-        if (navigationBar) {
-            //if there is a previous item in the stack, then we must show the backbutton
-            //else we should just hide it
-            if (stack.length > 1) {
-                if (me.popping) {
-                    navigationBar[popFn](title, animation.config);
-                } else {
-                    navigationBar[pushFn](title, animation.config);
+                if (innerIndex > 0) {
+                    if (animation && animation.isAnimation) {
+                        animation.setReverse(true);
+                    }
+
+                    this.setActiveItem(innerIndex - 1);
+
+                    this.getNavigationBar().onViewRemove(this, innerItems[innerIndex], innerIndex);
                 }
-            } else {
-                if (me.isPainted()) {
-                    navigationBar[popFn](title, animation.config);
-                } else {
-                    navigationBar.setTitle(title);
-                    navigationBar.backButtonStack.push(title);
-                }
+            }
+            else {
+                this.doRemove(item, index, destroy);
             }
         }
 
-        me.callParent(arguments);
+        return me;
+    },
+
+    /**
+     * @private
+     */
+    doRemove: function() {
+        var animation = this.getLayout().getAnimation();
+
+        if (animation && animation.isAnimation) {
+            animation.setReverse(false);
+        }
+
+        this.callParent(arguments);
+    },
+
+    /**
+     * @private
+     */
+    onItemAdd: function(item, index) {
+        this.doItemLayoutAdd(item, index);
+
+        if (!this.isItemsInitializing && item.isInnerItem()) {
+            this.setActiveItem(item);
+            this.getNavigationBar().onViewAdd(this, item, index);
+        }
+
+        if (this.initialized) {
+            this.fireEvent('add', this, item, index);
+        }
     },
 
     /**
@@ -497,14 +441,6 @@ Ext.define('Ext.navigation.View', {
      * @return {Ext.Component} The view that is now active
      */
     reset: function() {
-        this.pop(this.stack.length);
-    },
-
-    /**
-     * Resets the view by removing all items between the first and last item, and animates to that view
-     * @return {Ext.Component} The view that is now active
-     */
-    resetAnimated: function() {
-        this.popAnimated(this.stack.length);
+        this.pop(this.getInnerItems().length);
     }
 });

@@ -311,7 +311,6 @@ Ext.define('Ext.data.association.BelongsTo', {
                 args = [instance];
                 scope = scope || model;
 
-                //See https://sencha.jira.com/browse/TOUCH-1483
                 Ext.callback(options, scope, args);
                 Ext.callback(options.success, scope, args);
                 Ext.callback(options.failure, scope, args);

@@ -1,12 +1,11 @@
 //<feature logger>
 /**
  * @class Ext.Logger
- * Logs messages to help with debugging. Can log messages to the console, document title, or remote server. Defaults
- * to the console.
+ * Logs messages to help with debugging.
  *
  * ## Example
  *
- *     Ext.logger.error('This method is no longer supported.')
+ *     Ext.logger.deprecated('This method is no longer supported.')
  *
  * @singleton
  */

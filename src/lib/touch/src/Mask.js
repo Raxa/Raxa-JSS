@@ -1,6 +1,20 @@
 /**
  * A simple class used to mask any {@link Ext.Container}.
+ *
  * This should rarely be used directly, instead look at the {@link Ext.Container#masked} configuration.
+ *
+ * ## Example
+ *
+ *     // Create our container
+ *     var container = Ext.create('Ext.Container', {
+ *         html: 'My container!'
+ *     });
+ *
+ *     // Add the container to the Viewport
+ *     Ext.Viewport.add(container);
+ *
+ *     // Mask the container
+ *     container.setMasked(true;)
  */
 Ext.define('Ext.Mask', {
     extend: 'Ext.Component',
@@ -14,16 +28,6 @@ Ext.define('Ext.Mask', {
          * @cfg {Boolean} transparent True to make this mask transparent.
          */
         transparent: false,
-
-        /**
-         * @hide
-         */
-        zIndex: 1000,
-//
-//        /**
-//         * @hide
-//         */
-//        hidden: true,
 
         /**
          * @hide

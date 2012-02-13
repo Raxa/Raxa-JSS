@@ -85,7 +85,7 @@ Ext.define('Ext.dom.Query', {
             if (typeof q[i] == 'string') {
 
                 //support for node attribute selection
-                if (typeof q[i][0] == '@') {
+                if (q[i][0] == '@') {
                     nodes = root.getAttributeNode(q[i].substring(1));
                     results.push(nodes);
                 }

@@ -1,67 +1,67 @@
 /**
  * @author Ed Spencer
- * 
+ *
  * A Profile represents a range of devices that fall under a common category. For the vast majority of apps that use
- * device profiles, the app defines a Phone profile and a Tablet profile. Doing this enables you to easily customize 
+ * device profiles, the app defines a Phone profile and a Tablet profile. Doing this enables you to easily customize
  * the experience for the different sized screens offered by those device types.
- * 
+ *
  * Only one Profile can be active at a time, and each Profile defines a simple {@link #isActive} function that should
  * return either true or false. The first Profile to return true from its isActive function is set as your Application's
  * {@link Ext.app.Application#currentProfile current profile}.
- * 
+ *
  * A Profile can define any number of {@link #models}, {@link #views}, {@link #controllers} and {@link #stores} which
  * will be loaded if the Profile is activated. It can also define a {@link #launch} function that will be called after
- * all of its dependencies have been loaded, just before the {@link Ext.app.Application#launch application launch} 
+ * all of its dependencies have been loaded, just before the {@link Ext.app.Application#launch application launch}
  * function is called.
- * 
+ *
  * ## Sample Usage
- * 
+ *
  * First you need to tell your Application about your Profile(s):
- * 
+ *
  *     Ext.application({
  *         name: 'MyApp',
  *         profiles: ['Phone', 'Tablet']
  *     });
- * 
+ *
  * This will load app/profile/Phone.js and app/profile/Tablet.js. Here's how we might define the Phone profile:
- * 
+ *
  *     Ext.define('MyApp.profile.Phone', {
  *         extend: 'Ext.app.Profile',
- *         
+ *
  *         views: ['Main'],
- * 
+ *
  *         isActive: function() {
  *             return Ext.os.is.Phone;
  *         }
  *     });
- * 
- * The isActive function returns true if we detect that we are running on a phone device. If that is the case the 
+ *
+ * The isActive function returns true if we detect that we are running on a phone device. If that is the case the
  * Application will set this Profile active and load the 'Main' view specified in the Profile's {@link #views} config.
- * 
+ *
  * ## Class Specializations
- * 
+ *
  * Because Profiles are specializations of an application, all of the models, views, controllers and stores defined
  * in a Profile are expected to be namespaced under the name of the Profile. Here's an expanded form of the example
  * above:
- * 
+ *
  *     Ext.define('MyApp.profile.Phone', {
  *         extend: 'Ext.app.Profile',
- *         
+ *
  *         views: ['Main'],
  *         controllers: ['Signup'],
  *         models: ['MyApp.model.Group'],
- *     
+ *
  *         isActive: function() {
  *             return Ext.os.is.Phone;
  *         }
  *     });
- * 
- * In this case, the Profile is going to load *app/view/phone/Main.js*, *app/controller/phone/Signup.js* and 
+ *
+ * In this case, the Profile is going to load *app/view/phone/Main.js*, *app/controller/phone/Signup.js* and
  * *app/model/Group.js*. Notice that in each of the first two cases the name of the profile ('phone' in this case) was
- * injected into the class names. In the third case we specified the full Model name (for Group) so the Profile name 
+ * injected into the class names. In the third case we specified the full Model name (for Group) so the Profile name
  * was not injected.
- * 
- * For a fuller understanding of the ideas behind Profiles and how best to use them in your app, we suggest you read 
+ *
+ * For a fuller understanding of the ideas behind Profiles and how best to use them in your app, we suggest you read
  * the <a href="#!/guide/profiles">device profiles guide</a>.
  */
 Ext.define('Ext.app.Profile', {
@@ -72,14 +72,14 @@ Ext.define('Ext.app.Profile', {
     config: {
         /**
          * @cfg {String} namespace The namespace that this Profile's classes can be found in. Defaults to the lowercased
-         * Profile {@link #name}, for example a Profile called MyApp.profile.Phone will by default have a 'phone' 
+         * Profile {@link #name}, for example a Profile called MyApp.profile.Phone will by default have a 'phone'
          * namespace, which means that this Profile's additional models, stores, views and controllers will be loaded
          * from the MyApp.model.phone.*, MyApp.store.phone.*, MyApp.view.phone.* and MyApp.controller.phone.* namespaces
          * respectively.
          * @accessor
          */
         namespace: 'auto',
-        
+
         /**
          * @cfg {String} name The name of this Profile. Defaults to the last section of the class name (e.g. a profile
          * called MyApp.profile.Phone will default the name to 'Phone').
@@ -221,22 +221,22 @@ Ext.define('Ext.app.Profile', {
                 controller: this.getControllers(),
                 store: this.getStores()
             },
-            classType, classNames, namespacedClassName, fullyQualified;
+            classType, classNames, fullyQualified;
 
         for (classType in map) {
             classNames = [];
 
             Ext.each(map[classType], function(className) {
                 if (Ext.isString(className)) {
-                    
-                    //if there is a '.' anywhere in the string we treat it as fully qualified, if not compute the 
+
+                    //if there is a '.' anywhere in the string we treat it as fully qualified, if not compute the
                     //namespaced classname below
                     if (className.match("\\.")) {
                         fullyQualified = className;
                     } else {
                         fullyQualified = format('{0}.{1}.{2}.{3}', appName, classType, namespace, className);
                     }
-                    
+
                     classNames.push(fullyQualified);
                     allClasses.push(fullyQualified);
                 }

@@ -135,7 +135,8 @@ Ext.define('Ext.data.proxy.Proxy', {
     },
 
     /**
-     * Performs the given create operation.
+     * Performs the given create operation. If you override this method in a custom Proxy, remember to always call the provided
+     * callback method when you are done with your operation.
      * @param {Ext.data.Operation} operation The Operation to perform
      * @param {Function} callback Callback function to be called when the Operation has completed (whether successful or not)
      * @param {Object} scope Scope to execute the callback function in
@@ -144,7 +145,8 @@ Ext.define('Ext.data.proxy.Proxy', {
     create: Ext.emptyFn,
 
     /**
-     * Performs the given read operation.
+     * Performs the given read operation. If you override this method in a custom Proxy, remember to always call the provided
+     * callback method when you are done with your operation.
      * @param {Ext.data.Operation} operation The Operation to perform
      * @param {Function} callback Callback function to be called when the Operation has completed (whether successful or not)
      * @param {Object} scope Scope to execute the callback function in
@@ -153,7 +155,8 @@ Ext.define('Ext.data.proxy.Proxy', {
     read: Ext.emptyFn,
 
     /**
-     * Performs the given update operation.
+     * Performs the given update operation. If you override this method in a custom Proxy, remember to always call the provided
+     * callback method when you are done with your operation.
      * @param {Ext.data.Operation} operation The Operation to perform
      * @param {Function} callback Callback function to be called when the Operation has completed (whether successful or not)
      * @param {Object} scope Scope to execute the callback function in
@@ -162,7 +165,8 @@ Ext.define('Ext.data.proxy.Proxy', {
     update: Ext.emptyFn,
 
     /**
-     * Performs the given destroy operation.
+     * Performs the given destroy operation. If you override this method in a custom Proxy, remember to always call the provided
+     * callback method when you are done with your operation.
      * @param {Ext.data.Operation} operation The Operation to perform
      * @param {Function} callback Callback function to be called when the Operation has completed (whether successful or not)
      * @param {Object} scope Scope to execute the callback function in
@@ -187,10 +191,6 @@ Ext.define('Ext.data.proxy.Proxy', {
      * Where the myModel* above are {@link Ext.data.Model Model} instances - in this case 1 and 2 are new instances and
      * have not been saved before, 3 has been saved previously but needs to be updated, and 4 and 5 have already been
      * saved but should now be destroyed.
-     *
-     * Note that the previous version of this method took 2 arguments (operations and listeners). While this is still
-     * supported for now, the current signature is now a single `options` argument that can contain both operations and
-     * listeners, in addition to other options. The multi-argument signature will likely be deprecated in a future release.
      *
      * @param {Object} options Object containing one or more properties supported by the batch method:
      *
@@ -218,8 +218,7 @@ Ext.define('Ext.data.proxy.Proxy', {
      *
      * @param {Function} [options.failure] The function to be called upon unsuccessful completion of the batch. The
      * failure function is called when one or more operations returns an exception during processing (even if some
-     * operations were also successful). In this case you can check the batch's exceptions array to see exactly which
-     * operations had exceptions. The failure function is called with the following parameters:
+     * operations were also successful). The failure function is called with the following parameters:
      * @param {Ext.data.Batch} options.failure.batch The {@link Ext.data.Batch batch} that was processed,
      * containing all operations in their current state after processing
      * @param {Object} options.failure.options The options argument that was originally passed into batch

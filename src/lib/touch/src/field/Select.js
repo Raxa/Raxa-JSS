@@ -103,18 +103,20 @@ Ext.define('Ext.field.Select', {
          * `false` if you want it to use a popup overlay {@link Ext.List}.
          * `auto` if you want to show a {@link Ext.picker.Picker} only on phones.
          */
-        usePicker: 'auto'
+        usePicker: 'auto',
+
+        /**
+         * @cfg {Object} defaultPhonePickerConfig
+         * The default configuration for the picker component when you are on a phone
+         */
+        defaultPhonePickerConfig: null,
+
+        /**
+         * @cfg {Object} defaultTabletPickerConfig
+         * The default configuration for the picker component when you are on a tablet
+         */
+        defaultTabletPickerConfig: null
     },
-
-    /**
-     * @cfg {Ext.data.Model} record
-     * @private
-     */
-
-    /**
-     * @cfg {Ext.data.Model} previousRecord
-     * @private
-     */
 
     // @private
     constructor: function(config) {
@@ -140,6 +142,26 @@ Ext.define('Ext.field.Select', {
         });
 
         component.input.dom.disabled = true;
+    },
+
+    /**
+     * @private
+     */
+    updateDefaultPhonePickerConfig: function(newConfig) {
+        var picker = this.picker;
+        if (picker) {
+            picker.setConfig(newConfig);
+        }
+    },
+
+    /**
+     * @private
+     */
+    updateDefaultTabletPickerConfig: function(newConfig) {
+        var listPanel = this.listPanel;
+        if (listPanel) {
+            listPanel.setConfig(newConfig);
+        }
     },
 
     /**
@@ -193,14 +215,20 @@ Ext.define('Ext.field.Select', {
         return (record) ? record.get(this.getValueField()) : null;
     },
 
+    /**
+     * Returns the current selected {@link Ext.data.Model record} instance selected in this field.
+     * @return {Ext.data.Model} the record.
+     */
     getRecord: function() {
         return this.record;
     },
 
     // @private
     getPhonePicker: function() {
+        var config = this.getDefaultPhonePickerConfig();
+
         if (!this.picker) {
-            this.picker = Ext.create('Ext.picker.Picker', {
+            this.picker = Ext.create('Ext.picker.Picker', Ext.apply({
                 slots: [{
                     align       : 'center',
                     name        : this.getName(),
@@ -213,7 +241,7 @@ Ext.define('Ext.field.Select', {
                     change: this.onPickerChange,
                     scope: this
                 }
-            });
+            }, config));
         }
 
         return this.picker;
@@ -221,13 +249,14 @@ Ext.define('Ext.field.Select', {
 
     // @private
     getTabletPicker: function() {
+        var config = this.getDefaultTabletPickerConfig();
+
         if (!this.listPanel) {
-            this.listPanel = Ext.create('Ext.Panel', {
-                top     : 0,
-                left    : 0,
-                modal   : true,
-                cls     : Ext.baseCSSPrefix + 'select-overlay',
-                layout  : 'fit',
+            this.listPanel = Ext.create('Ext.Panel', Ext.apply({
+                centered: true,
+                modal: true,
+                cls: Ext.baseCSSPrefix + 'select-overlay',
+                layout: 'fit',
                 hideOnMaskTap: true,
                 items: {
                     xtype: 'list',
@@ -239,7 +268,7 @@ Ext.define('Ext.field.Select', {
                         scope  : this
                     }
                 }
-            });
+            }, config));
         }
 
         return this.listPanel;

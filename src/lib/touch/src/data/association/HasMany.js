@@ -325,7 +325,7 @@ Ext.define('Ext.data.association.HasMany', {
         //now that we've added the related records to the hasMany association, set the inverse belongsTo
         //association on each of them if it exists
         inverse = this.getAssociatedModel().associations.findBy(function(assoc) {
-            return assoc.type === 'belongsTo' && assoc.getAssociatedName() === record.$className;
+            return assoc.getType() === 'belongsTo' && assoc.getAssociatedName() === record.$className;
         });
 
         //if the inverse association was found, set it now on each record we've just created

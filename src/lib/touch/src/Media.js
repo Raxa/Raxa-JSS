@@ -1,5 +1,8 @@
 /**
  * Provides a base class for audio/visual controls. Should not be used directly.
+ *
+ * Please see the {@link Ext.Audio} and {@link Ext.Video} classes for more information.
+ * @private
  */
 Ext.define('Ext.Media', {
     extend: 'Ext.Component',
@@ -265,7 +268,11 @@ Ext.define('Ext.Media', {
      * Toggles the media playback state
      */
     toggle: function() {
-        this.isPlaying() ? this.pause() : this.play();
+        if (this.isPlaying()) {
+            this.pause();
+        } else {
+            this.play();
+        }
     },
 
     /**
@@ -275,9 +282,7 @@ Ext.define('Ext.Media', {
         var me = this;
 
         me.setCurrentTime(0);
-
         me.fireEvent('stop', me);
-
         me.pause();
     },
 

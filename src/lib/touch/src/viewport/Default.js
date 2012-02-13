@@ -1,30 +1,38 @@
-/*
- * This is the default viewport instance used when you use {@link Ext#setup} or {@link Ext#application}.
- * You can override any configurations in this call by setting the `viewport` property when calling
- * {@link Ext#setup}:
+/**
+ * @class Ext.Viewport
+ * @extends Ext.Container
+ * @singleton
+ *
+ * Ext.Viewport is a instance created when you use {@link Ext#setup}. Because {@link Ext.Viewport} extends from
+ * {@link Ext.Container}, it has as {@link #layout} (which defaults to {@link Ext.layout.Card}). This means you
+ * can add items to it at any time, from anywhere in your code. The {@link Ext.Viewport} {@link #cfg-fullscreen}
+ * configuration is `true` by default, so it will take up your whole screen.
+ *
+ *     Ext.setup({
+ *         onReady: function() {
+ *             Ext.Viewport.add({
+ *                 xtype: 'container',
+ *                 html: 'My new container!'
+ *             });
+ *         }
+ *     });
+ *
+ * If you want to customize anything about this {@link Ext.Viewport} instance, you can do so by adding a property
+ * called `viewport` into your {@link Ext#setup} object:
  *
  *     Ext.setup({
  *         viewport: {
- *             preventZooming: true,
- *             autoMaximize: false
+ *             layout: 'vbox'
  *         },
  *         onReady: function() {
- *             //...
+ *             //do something
  *         }
  *     });
  *
- * or when using {@link Ext#application}:
- *
- *     Ext.application({
- *         viewport: {
- *             preventZooming: true
- *         },
- *         launch: function() {
- *             //...
- *         }
- *     });
- *
+ * **Note** if you use {@link Ext#onReady}, this instance of {@link Ext.Viewport} will **not** be created. Though, in most cases,
+ * you should **not** use {@link Ext#onReady}.
  */
+
 Ext.define('Ext.viewport.Default', {
     extend: 'Ext.Container',
 
@@ -37,9 +45,6 @@ Ext.define('Ext.viewport.Default', {
     requires: [
         'Ext.LoadMask'
     ],
-
-// Move all the following members to another class
-/** @class Ext.Viewport */
 
     /**
      * @event ready
@@ -244,7 +249,6 @@ Ext.define('Ext.viewport.Default', {
 
             this.renderTo(body);
 
-            // See https://sencha.jira.com/browse/TOUCH-1600
             classList.push(clsPrefix + osEnv.deviceType.toLowerCase());
 
             if (osEnv.is.iPad) {
@@ -361,11 +365,11 @@ Ext.define('Ext.viewport.Default', {
     },
 
     addWindowListener: function(eventName, fn, capturing) {
-        window.addEventListener(eventName, fn, capturing);
+        window.addEventListener(eventName, fn, Boolean(capturing));
     },
 
     removeWindowListener: function(eventName, fn, capturing) {
-        window.removeEventListener(eventName, fn, capturing);
+        window.removeEventListener(eventName, fn, Boolean(capturing));
     },
 
     doAddListener: function(eventName, fn, scope, options) {

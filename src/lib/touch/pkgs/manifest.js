@@ -14,16 +14,11 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 this.ExtBootstrapData = {
     "nameToAliasesMap":{
+        "Ext.AbstractComponent":[],
         "Ext.AbstractManager":[],
-        "Ext.Ajax":[],
-        "Ext.ComponentManager":[],
-        "Ext.ComponentQuery":[],
-        "Ext.Template":[],
-        "Ext.XTemplate":[],
-        "Ext.XTemplateCompiler":[],
-        "Ext.XTemplateParser":[],
         "Ext.ActionSheet":["widget.actionsheet"
         ],
+        "Ext.Ajax":[],
         "Ext.Anim":[],
         "Ext.Audio":["widget.audio"
         ],
@@ -31,6 +26,8 @@ this.ExtBootstrapData = {
         ],
         "Ext.Component":["widget.component"
         ],
+        "Ext.ComponentManager":[],
+        "Ext.ComponentQuery":[],
         "Ext.Container":["widget.container"
         ],
         "Ext.Decorator":[],
@@ -58,6 +55,7 @@ this.ExtBootstrapData = {
         ],
         "Ext.Spacer":["widget.spacer"
         ],
+        "Ext.Template":[],
         "Ext.Title":["widget.title"
         ],
         "Ext.TitleBar":["widget.titlebar"
@@ -66,6 +64,9 @@ this.ExtBootstrapData = {
         ],
         "Ext.Video":["widget.video"
         ],
+        "Ext.XTemplate":[],
+        "Ext.XTemplateCompiler":[],
+        "Ext.XTemplateParser":[],
         "Ext.app.Action":[],
         "Ext.app.Application":[],
         "Ext.app.Controller":[],
@@ -105,8 +106,6 @@ this.ExtBootstrapData = {
         "Ext.data.Store":["store.store"
         ],
         "Ext.data.StoreManager":[],
-        "Ext.data.Tree":["data.tree"
-        ],
         "Ext.data.TreeStore":["store.tree"
         ],
         "Ext.data.Types":[],
@@ -140,6 +139,8 @@ this.ExtBootstrapData = {
         ],
         "Ext.data.proxy.Server":["proxy.server"
         ],
+        "Ext.data.proxy.SessionStorage":["proxy.sessionstorage"
+        ],
         "Ext.data.proxy.WebStorage":[],
         "Ext.data.reader.Array":["reader.array"
         ],
@@ -151,6 +152,8 @@ this.ExtBootstrapData = {
         "Ext.data.writer.Json":["writer.json"
         ],
         "Ext.data.writer.Writer":["writer.base"
+        ],
+        "Ext.data.writer.Xml":["writer.xml"
         ],
         "Ext.dataview.DataView":["widget.dataview"
         ],
@@ -357,6 +360,12 @@ this.ExtBootstrapData = {
         ],
         "Ext.tab.Tab":["widget.tab"
         ],
+        "Ext.table.Cell":["widget.tablecell"
+        ],
+        "Ext.table.Row":["widget.tablerow"
+        ],
+        "Ext.table.Table":["widget.table"
+        ],
         "Ext.util.AbstractMixedCollection":[],
         "Ext.util.Collection":[],
         "Ext.util.DelayedTask":[],
@@ -366,7 +375,6 @@ this.ExtBootstrapData = {
         "Ext.util.GeoLocation":[],
         "Ext.util.Grouper":[],
         "Ext.util.HashMap":[],
-        "Ext.util.JSONP":[],
         "Ext.util.LineSegment":[],
         "Ext.util.MixedCollection":[],
         "Ext.util.Point":[],
@@ -386,13 +394,14 @@ this.ExtBootstrapData = {
         "Ext.viewport.Viewport":[]
     },
     "alternateToNameMap":{
-        "Ext.ComponentMgr":"Ext.ComponentManager",
         "Ext.lib.Component":"Ext.Component",
+        "Ext.ComponentMgr":"Ext.ComponentManager",
         "Ext.lib.Container":"Ext.Container",
         "Ext.EventedBase":"Ext.Evented",
         "Ext.lib.Panel":"Ext.Panel",
         "Ext.Carousel":"Ext.carousel.Carousel",
         "Ext.Carousel.Indicator":"Ext.carousel.Indicator",
+        "Ext.util.JSONP":"Ext.data.JsonP",
         "Ext.data.Record":"Ext.data.Model",
         "Ext.ModelMgr":"Ext.data.ModelManager",
         "Ext.ModelManager":"Ext.data.ModelManager",
@@ -404,9 +413,10 @@ this.ExtBootstrapData = {
         "Ext.data.Association":"Ext.data.association.Association",
         "Ext.data.BelongsToAssociation":"Ext.data.association.BelongsTo",
         "Ext.data.HasManyAssociation":"Ext.data.association.HasMany",
+        "Ext.data.HasOneAssociation":"Ext.data.association.HasOne",
         "Ext.data.HttpProxy":"Ext.data.proxy.Ajax",
         "Ext.data.AjaxProxy":"Ext.data.proxy.Ajax",
-        "Ext.data.ClientProxy":"Ext.data.proxy.Client",
+        "Ext.proxy.ClientProxy":"Ext.data.proxy.Client",
         "Ext.data.ScriptTagProxy":"Ext.data.proxy.JsonP",
         "Ext.data.LocalStorageProxy":"Ext.data.proxy.LocalStorage",
         "Ext.data.MemoryProxy":"Ext.data.proxy.Memory",
@@ -414,6 +424,7 @@ this.ExtBootstrapData = {
         "Ext.data.Proxy":"Ext.data.proxy.Proxy",
         "Ext.data.RestProxy":"Ext.data.proxy.Rest",
         "Ext.data.ServerProxy":"Ext.data.proxy.Server",
+        "Ext.data.SessionStorageProxy":"Ext.data.proxy.SessionStorage",
         "Ext.data.WebStorageProxy":"Ext.data.proxy.WebStorage",
         "Ext.data.ArrayReader":"Ext.data.reader.Array",
         "Ext.data.JsonReader":"Ext.data.reader.Json",
@@ -423,6 +434,7 @@ this.ExtBootstrapData = {
         "Ext.data.JsonWriter":"Ext.data.writer.Json",
         "Ext.data.DataWriter":"Ext.data.writer.Writer",
         "Ext.data.Writer":"Ext.data.writer.Writer",
+        "Ext.data.XmlWriter":"Ext.data.writer.Xml",
         "Ext.DataView":"Ext.dataview.DataView",
         "Ext.IndexBar":"Ext.dataview.IndexBar",
         "Ext.List":"Ext.dataview.List",
