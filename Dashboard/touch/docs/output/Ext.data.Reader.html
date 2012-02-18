@@ -1,0 +1,142 @@
+<div xmlns:ext="http://www.extjs.com" class="body-wrap"><h1>Class <a href="source/Reader.html#cls-Ext.data.Reader">Ext.data.Reader</a></h1><table cellspacing="0"><tr><td class="label">Package:</td><td class="hd-info">Ext.data</td></tr><tr><td class="label">Defined In:</td><td class="hd-info"><a href="source/Reader.html#cls-Ext.data.Reader">Reader.js</a></td></tr><tr><td class="label">Class:</td><td class="hd-info"><a href="source/Reader.html#cls-Ext.data.Reader">Reader</a></td></tr><tr><td class="label">Subclasses:</td><td class="hd-info"><a href="output/Ext.data.JsonReader.html" ext:cls="Ext.data.JsonReader">JsonReader</a>,&#13;<a href="output/Ext.data.XmlReader.html" ext:cls="Ext.data.XmlReader">XmlReader</a></td></tr><tr><td class="label">Extends:</td><td class="hd-info">Object</td></tr></table><div class="description"><p>Readers are used to interpret data to be loaded into a <a href="output/Ext.data.Model.html" ext:cls="Ext.data.Model">Model</a> instance or a <a href="output/Ext.data.Store.html" ext:cls="Ext.data.Store">Store</a>
+- usually in response to an AJAX request. This is normally handled transparently by passing some configuration to either the 
+<a href="output/Ext.data.Model.html" ext:cls="Ext.data.Model">Model</a> or the <a href="output/Ext.data.Store.html" ext:cls="Ext.data.Store">Store</a> in question - see their documentation for further details.</p>
+<p><u>Loading Nested Data</u></p>
+<p>Readers have the ability to automatically load deeply-nested data objects based on the <a href="output/Ext.data.Association.html" ext:cls="Ext.data.Association">associations</a>
+configured on each Model. Below is an example demonstrating the flexibility of these associations in a fictional CRM system which
+manages a User, their Orders, OrderItems and Products. First we'll define the models:
+<pre><code>Ext.regModel(<em>"User"</em>, {
+    fields: [
+        <em>'id'</em>, <em>'name'</em>
+    ],
+
+    hasMany: {model: <em>'Order'</em>, name: <em>'orders'</em>},
+
+    proxy: {
+        type: <em>'rest'</em>,
+        url : <em>'users.json'</em>,
+        reader: {
+            type: <em>'json'</em>,
+            root: <em>'users'</em>
+        }
+    }
+});
+
+Ext.regModel(<em>"Order"</em>, {
+    fields: [
+        <em>'id'</em>, <em>'total'</em>
+    ],
+
+    hasMany  : {model: <em>'OrderItem'</em>, name: <em>'orderItems'</em>, associationKey: <em>'order_items'</em>},
+    belongsTo: <em>'User'</em>
+});
+
+Ext.regModel(<em>"OrderItem"</em>, {
+    fields: [
+        <em>'id'</em>, <em>'price'</em>, <em>'quantity'</em>, <em>'order_id'</em>, <em>'product_id'</em>
+    ],
+
+    belongsTo: [<em>'Order'</em>, {model: <em>'Product'</em>, associationKey: <em>'product'</em>}]
+});
+
+Ext.regModel(<em>"Product"</em>, {
+    fields: [
+        <em>'id'</em>, <em>'name'</em>
+    ],
+
+    hasMany: <em>'OrderItem'</em>
+});</code></pre>
+<p>This may be a lot to take in - basically a User has many Orders, each of which is composed of several OrderItems. Finally,
+each OrderItem has a single Product. This allows us to consume data like this:</p>
+<pre><code>{
+    <em>"users"</em>: [
+        {
+            <em>"id"</em>: 123,
+            <em>"name"</em>: <em>"Ed"</em>,
+            <em>"orders"</em>: [
+                {
+                    <em>"id"</em>: 50,
+                    <em>"total"</em>: 100,
+                    <em>"order_items"</em>: [
+                        {
+                            <em>"id"</em>      : 20,
+                            <em>"price"</em>   : 40,
+                            <em>"quantity"</em>: 2,
+                            <em>"product"</em> : {
+                                <em>"id"</em>: 1000,
+                                <em>"name"</em>: <em>"MacBook Pro"</em>
+                            }
+                        },
+                        {
+                            <em>"id"</em>      : 21,
+                            <em>"price"</em>   : 20,
+                            <em>"quantity"</em>: 3,
+                            <em>"product"</em> : {
+                                <em>"id"</em>: 1001,
+                                <em>"name"</em>: <em>"iPhone"</em>
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}</code></pre>
+<p>The JSON response is deeply nested - it returns all Users (in this case just 1 for simplicity's sake), all of the Orders
+for each User (again just 1 in this case), all of the OrderItems for each Order (2 order items in this case), and finally
+the Product associated with each OrderItem. Now we can read the data and use it as follows:
+<pre><code><b>var</b> store = <b>new</b> Ext.data.Store({
+    model: <em>"User"</em>
+});
+
+store.load({
+    callback: <b>function</b>() {
+        <i>//the user that was loaded</i>
+        <b>var</b> user = store.first();
+
+        console.log(<em>"Orders <b>for</b> "</em> + user.get(<em>'name'</em>) + <em>":"</em>)
+
+        <i>//iterate over the Orders <b>for</b> each User</i>
+        user.orders().each(<b>function</b>(order) {
+            console.log(<em>"Order ID: "</em> + order.getId() + <em>", which contains items:"</em>);
+
+            <i>//iterate over the OrderItems <b>for</b> each Order</i>
+            order.orderItems().each(<b>function</b>(orderItem) {
+                <i>//we know that the Product data is already loaded, so we can use the synchronous getProduct</i>
+                <i>//usually, we would use the asynchronous version (see <a href="output/Ext.data.BelongsToAssociation.html" ext:cls="Ext.data.BelongsToAssociation">Ext.data.BelongsToAssociation</a>)</i>
+                <b>var</b> product = orderItem.getProduct();
+
+                console.log(orderItem.get(<em>'quantity'</em>) + <em>' orders of '</em> + product.get(<em>'name'</em>));
+            });
+        });
+    }
+});</code></pre>
+<p>Running the code above results in the following:</p>
+<pre><code>Orders <b>for</b> Ed:
+Order ID: 50, which contains items:
+2 orders of MacBook Pro
+3 orders of iPhone</code></pre></div><div class="hr"></div><a id="Ext.data.Reader-configs"></a><h2>Config Options</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Config Options</th><th class="msource-header">Defined By</th></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-idProperty"></a><b><a href="source/Reader.html#cfg-Ext.data.Reader-idProperty">idProperty</a></b> : String<div class="mdesc">Name of the property within a row object
+that contains a record identifier value.  Defaults to <tt>id</tt></div></td><td class="msource">Reader</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-implicitIncludes"></a><b><a href="source/Reader.html#cfg-Ext.data.Reader-implicitIncludes">implicitIncludes</a></b> : Boolean<div class="mdesc"><div class="short">True to automatically parse models nested within other models in a response
+object. See the Ext.data.Reader intro doc...</div><div class="long">True to automatically parse models nested within other models in a response
+object. See the Ext.data.Reader intro docs for full explanation. Defaults to true.</div></div></td><td class="msource">Reader</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-root"></a><b><a href="source/Reader.html#cfg-Ext.data.Reader-root">root</a></b> : String<div class="mdesc"><div class="short">Required.  The name of the property
+which contains the Array of row objects.  Defaults to undefined.
+An exception wil...</div><div class="long"><b>Required</b>.  The name of the property
+which contains the Array of row objects.  Defaults to <tt>undefined</tt>.
+An exception will be thrown if the root property is undefined. The data
+packet value for this property should be an empty array to clear the data
+or show no data.</div></div></td><td class="msource">Reader</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-successProperty"></a><b><a href="source/Reader.html#cfg-Ext.data.Reader-successProperty">successProperty</a></b> : String<div class="mdesc"><div class="short">Name of the property from which to
+retrieve the success attribute. Defaults to success.  See
+Ext.data.DataProxy.excep...</div><div class="long">Name of the property from which to
+retrieve the success attribute. Defaults to <tt>success</tt>.  See
+<a href="output/Ext.data.DataProxy.html" ext:cls="Ext.data.DataProxy">Ext.data.DataProxy</a>.<a href="output/Ext.data.DataProxy.html#Ext.data.DataProxy-exception" ext:member="exception" ext:cls="Ext.data.DataProxy">exception</a>
+for additional information.</div></div></td><td class="msource">Reader</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-totalProperty"></a><b><a href="source/Reader.html#cfg-Ext.data.Reader-totalProperty">totalProperty</a></b> : String<div class="mdesc"><div class="short">Name of the property from which to
+retrieve the total number of records in the dataset. This is only needed
+if the wh...</div><div class="long">Name of the property from which to
+retrieve the total number of records in the dataset. This is only needed
+if the whole dataset is not passed in one go, but is being paged from
+the remote server.  Defaults to <tt>total</tt>.</div></div></td><td class="msource">Reader</td></tr></tbody></table><a id="Ext.data.Reader-props"></a><h2>Public Properties</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Property</th><th class="msource-header">Defined By</th></tr><tr class="property-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-rawData"></a><b><a href="source/Reader.html#prop-Ext.data.Reader-rawData">rawData</a></b> : Mixed<div class="mdesc">The raw data object that was last passed to readRecords. Stored for further processing if needed</div></td><td class="msource">Reader</td></tr></tbody></table><a id="Ext.data.Reader-methods"></a><h2>Public Methods</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Method</th><th class="msource-header">Defined By</th></tr><tr class="method-row expandable"><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-Reader"></a><b class="constructor"><a href="source/Reader.html#cls-Ext.data.Reader">Reader</a></b><span class="openparen">(&nbsp;</span><span title="Required" class="required">Object&nbsp;config</span><span class="closeparen">&nbsp;)</span><div class="mdesc"><div class="short"></div><div class="long"><div class="mdetail-params"><strong>Parameters:</strong><ul><li><code>config</code> : Object<div class="sub-desc">Optional config object</div></li></ul><strong>Returns:</strong><ul><li>void</li></ul></div></div></div></td><td class="msource">Reader</td></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-getResponseData"></a><b class="method"><a href="source/Reader.html#method-Ext.data.Reader-getResponseData">getResponseData</a></b><span class="openparen">(&nbsp;</span><span title="Required" class="required">Object&nbsp;response</span><span class="closeparen">&nbsp;)</span><span class="colon">&nbsp;:&nbsp;</span><span class="return">Object</span><div class="mdesc"><div class="short">Takes a raw response object (as passed to this.read) and returns the useful data segment of it. This must be implemen...</div><div class="long">Takes a raw response object (as passed to this.read) and returns the useful data segment of it. This must be implemented by each subclass<div class="mdetail-params"><strong>Parameters:</strong><ul><li><code>response</code> : Object<div class="sub-desc">The responce object</div></li></ul><strong>Returns:</strong><ul><li><code>Object</code><div class="sub-desc">The useful data from the response</div></li></ul></div></div></div></td><td class="msource">Reader</td></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-read"></a><b class="method"><a href="source/Reader.html#method-Ext.data.Reader-read">read</a></b><span class="openparen">(&nbsp;</span><span title="Required" class="required">Object&nbsp;response</span><span class="closeparen">&nbsp;)</span><span class="colon">&nbsp;:&nbsp;</span><span class="return">Ext.data.ResultSet</span><div class="mdesc"><div class="short">Reads the given response object. This method normalizes the different types of response object that may be passed
+to ...</div><div class="long">Reads the given response object. This method normalizes the different types of response object that may be passed
+to it, before handing off the reading of records to the <a href="output/readRecords.html" ext:cls="readRecords">readRecords</a> function.<div class="mdetail-params"><strong>Parameters:</strong><ul><li><code>response</code> : Object<div class="sub-desc">The response object. This may be either an XMLHttpRequest object or a plain JS object</div></li></ul><strong>Returns:</strong><ul><li><code>Ext.data.ResultSet</code><div class="sub-desc">The parsed ResultSet object</div></li></ul></div></div></div></td><td class="msource">Reader</td></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Reader-readRecords"></a><b class="method"><a href="source/Reader.html#method-Ext.data.Reader-readRecords">readRecords</a></b><span class="openparen">(&nbsp;</span><span title="Required" class="required">Mixed&nbsp;data</span><span class="closeparen">&nbsp;)</span><span class="colon">&nbsp;:&nbsp;</span><span class="return">Ext.data.ResultSet</span><div class="mdesc"><div class="short">Abstracts common functionality used by all Reader subclasses. Each subclass is expected to call
+this function before ...</div><div class="long">Abstracts common functionality used by all Reader subclasses. Each subclass is expected to call
+this function before running its own logic and returning the Ext.data.ResultSet instance. For most
+Readers additional processing should not be needed.<div class="mdetail-params"><strong>Parameters:</strong><ul><li><code>data</code> : Mixed<div class="sub-desc">The raw data object</div></li></ul><strong>Returns:</strong><ul><li><code>Ext.data.ResultSet</code><div class="sub-desc">A ResultSet object</div></li></ul></div></div></div></td><td class="msource">Reader</td></tr></tbody></table><a id="Ext.data.Reader-events"></a><h2>Public Events</h2><div class="no-members">This class has no public events.</div></div>

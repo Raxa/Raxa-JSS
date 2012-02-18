@@ -1,0 +1,307 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.form.Select"></div>/**
+ * @class Ext.form.Select
+ * @extends Ext.form.Text
+ * Simple Select field wrapper. Example usage:
+<pre><code>
+new Ext.form.Select({
+    options: [
+        {text: 'First Option',  value: 'first'},
+        {text: 'Second Option', value: 'second'},
+        {text: 'Third Option',  value: 'third'}
+    ]
+});
+</code></pre>
+ * @xtype selectfield
+ * @xtype select
+ */
+Ext.form.Select = Ext.extend(Ext.form.Text, {
+    ui: 'select',
+    <div id="cfg-Ext.form.Select-useClearIcon"></div>/**
+     * @cfg {Boolean} useClearIcon @hide
+     */
+
+    <div id="cfg-Ext.form.Select-valueField"></div>/**
+     * @cfg {String/Integer} valueField The underlying {@link Ext.data.Field#name data value name} (or numeric Array index) to bind to this
+     * Select control. (defaults to 'value')
+     */
+    valueField: 'value',
+
+    <div id="cfg-Ext.form.Select-displayField"></div>/**
+     * @cfg {String/Integer} displayField The underlying {@link Ext.data.Field#name data value name} (or numeric Array index) to bind to this
+     * Select control. This resolved value is the visibly rendered value of the available selection options.
+     * (defaults to 'text')
+     */
+    displayField: 'text',
+
+    <div id="cfg-Ext.form.Select-store"></div>/**
+     * @cfg {Ext.data.Store} store (Optional) store instance used to provide selection options data.
+     */
+
+    <div id="cfg-Ext.form.Select-options"></div>/**
+     * @cfg {Array} options (Optional) An array of select options.
+<pre><code>
+    [
+        {text: 'First Option',  value: 'first'},
+        {text: 'Second Option', value: 'second'},
+        {text: 'Third Option',  value: 'third'}
+    ]
+</code></pre>
+     * Note: option object member names should correspond with defined {@link #valueField valueField} and {@link #displayField displayField} values.
+     * This config will be ignore if a {@link #store store} instance is provided
+     */
+    
+    <div id="cfg-Ext.form.Select-hiddenName"></div>/**
+     * @cfg {String} hiddenName Specify a hiddenName if you're using the {@link Ext.form.FormPanel#standardSubmit standardSubmit} option.
+     * This name will be used to post the underlying value of the select to the server.
+     */
+    
+    // @cfg {Number} tabIndex @hide
+    tabIndex: -1,
+
+    // @cfg {Boolean} useMask @hide
+    useMask: true,
+
+    monitorOrientation: true,
+    
+    // @private
+    initComponent: function() {
+        var options = this.options;
+
+        if (this.store) {
+            this.store = Ext.StoreMgr.lookup(this.store);
+        }
+        else {
+            this.store = new Ext.data.Store({
+                fields: [this.valueField, this.displayField]
+            });
+
+            if (options && Ext.isArray(options) && options.length > 0) {
+                this.setOptions(this.options);
+            }
+        }
+
+        Ext.form.Select.superclass.initComponent.call(this);
+
+        this.addEvents(
+            <div id="event-Ext.form.Select-change"></div>/**
+             * @event change
+             * Fires when an option selection has changed
+             * @param {Ext.form.Select} this
+             * @param {Mixed} value
+             */
+            'change'
+        );
+    },
+
+    // @private
+    onRender: function(){
+        Ext.form.Select.superclass.onRender.apply(this, arguments);
+        
+        var name = this.hiddenName;
+        if (name) {
+            this.hiddenField = this.el.insertSibling({
+                name: name,
+                tag: 'input',
+                type: 'hidden'
+            }, 'after');
+        }    
+    },
+
+    // @private
+    getPicker: function() {
+        if (!this.picker) {
+            this.picker = new Ext.Picker({
+                slots: [{
+                    align       : 'center',
+                    name        : this.name,
+                    valueField  : this.valueField,
+                    displayField: this.displayField,
+                    value       : this.getValue(),
+                    store       : this.store
+                }],
+                listeners: {
+                    change: this.onPickerChange,
+                    scope: this
+                }
+            });
+        }
+
+        return this.picker;
+    },
+
+    // @private
+    getListPanel: function() {
+        if (!this.listPanel) {
+            this.listPanel = new Ext.Panel({
+                floating         : true,
+                stopMaskTapEvent : false,
+                hideOnMaskTap    : true,
+                cls              : 'x-select-overlay',
+                scroll           : 'vertical',
+                items: {
+                    xtype: 'list',
+                    store: this.store,
+                    itemId: 'list',
+                    scroll: false,
+                    itemTpl : [
+                        '<span class="x-list-label">{' + this.displayField + '}</span>',
+                        '<span class="x-list-selected"></span>'
+                    ],
+                    listeners: {
+                        select : this.onListSelect,
+                        scope  : this
+                    }
+                }
+            });
+        }
+
+        return this.listPanel;
+    },
+
+    // @private
+    onOrientationChange: function() {
+        if (this.listPanel && !this.listPanel.hidden && !Ext.is.Phone) {
+            this.listPanel.showBy(this.el, false, false);
+        }
+    },
+
+    // @private
+    onMaskTap: function() {
+        if (this.disabled) {
+            return;
+        }
+        
+        this.showComponent();
+    },
+
+    // @private
+    showComponent: function() {
+        if (Ext.is.Phone) {
+            var picker = this.getPicker(),
+                name   = this.name,
+                value  = {};
+                
+            value[name] = this.getValue();
+            picker.show();
+            picker.setValue(value);
+        }
+        else {
+            var listPanel = this.getListPanel(),
+                index = this.store.findExact(this.valueField, this.value);
+
+            listPanel.showBy(this.el, 'fade', false);
+            listPanel.down('#list').getSelectionModel().select(index != -1 ? index: 0, false, true);
+        }
+    },
+
+    // @private
+    onListSelect: function(selModel, selected) {
+        if (selected) {
+            this.setValue(selected.get(this.valueField));
+            this.fireEvent('change', this, this.getValue());
+        }
+        
+        this.listPanel.hide({
+            type: 'fade',
+            out: true,
+            scope: this
+        });
+    },
+
+    // @private
+    onPickerChange: function(picker, value) {
+        var currentValue = this.getValue(),
+            newValue = value[this.name];
+
+        if (newValue != currentValue) {
+            this.setValue(newValue);
+            this.fireEvent('change', this, newValue);
+        }
+    },
+
+    // Inherited docs
+    setValue: function(value) {
+        var idx = 0,
+            hiddenField = this.hiddenField,
+            record;
+
+        if (value) {
+            idx = this.store.findExact(this.valueField, value)
+        } 
+        record = this.store.getAt(idx);
+
+        if (record && this.rendered) {
+            this.fieldEl.dom.value = record.get(this.displayField);
+            this.value = record.get(this.valueField);
+            if (hiddenField) {
+                hiddenField.dom.value = this.value;
+            }
+        } else {
+            if (this.rendered) {
+                this.fieldEl.dom.value = value;
+            }
+            this.value = value;
+        }
+
+        // Temporary fix, the picker should sync with the store automatically by itself
+        if (this.picker) {
+            var pickerValue = {};
+            pickerValue[this.name] = this.value;
+            this.picker.setValue(pickerValue);
+        }
+        
+        return this;
+    },
+
+    // Inherited docs
+    getValue: function(){
+        return this.value;
+    },
+
+    <div id="method-Ext.form.Select-setOptions"></div>/**
+     * Updates the underlying &lt;options&gt; list with new values.
+     * @param {Array} options An array of options configurations to insert or append.
+     * @param {Boolean} append <tt>true</tt> to append the new options existing values.
+<pre><code>
+selectBox.setOptions(
+    [   {text: 'First Option',  value: 'first'},
+        {text: 'Second Option', value: 'second'},
+        {text: 'Third Option',  value: 'third'}
+    ]).setValue('third');
+</code></pre>
+     * Note: option object member names should correspond with defined {@link #valueField valueField} and
+     * {@link #displayField displayField} values.
+     * @return {Ext.form.Select} this
+     */
+    setOptions: function(options, append) {
+        if (!options) {
+            this.store.clearData();
+            this.setValue(null);
+        }
+        else {
+            this.store.loadData(options, append);
+        }
+    },
+
+    destroy: function() {
+        Ext.form.Select.superclass.destroy.apply(this, arguments);
+        Ext.destroy(this.listPanel, this.picker, this.hiddenField);
+    }
+});
+
+Ext.reg('selectfield', Ext.form.Select);
+
+//<deprecated since=0.99>
+//DEPRECATED - remove this in 1.0. See RC1 Release Notes for details
+Ext.reg('select', Ext.form.Select);
+//</deprecated></pre>    
+</body>
+</html>

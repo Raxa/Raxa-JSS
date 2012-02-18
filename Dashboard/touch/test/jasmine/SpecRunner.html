@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Jasmine Test Runner - Sencha Touch</title>
+        <link rel="stylesheet" type="text/css" href="../../src/platform/test/jasmine/lib/reporter/resources/reporter.css">
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-1.0.1/jasmine.js"></script>
+                
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/Browser.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/CodeHighLighter.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/Dom.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/Spec.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/DomSandbox.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/BadGlobals.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/StringPrettyPrinter.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/Utils.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/panels/Namespace.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/panels/SpecBlocks.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/panels/SpecDomSandbox.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/panels/SpecInfos.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/panels/SpecStackTrace.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/jasmine-extensions/panels/TabPanel.js"></script>
+        <script type="text/javascript" src="../../src/platform/test/jasmine/lib/reporter/src/Reporter.js"></script>
+
+        <!--
+            Source files
+        -->
+
+        <!-- build: Sencha Touch -->
+        <!-- package: Platform Util -->
+        <script type="text/javascript" src="../../src/platform/src/Ext.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Observable.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Stateful.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/HashMap.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/MixedCollection.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/AbstractManager.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/DelayedTask.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/GeoLocation.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Region.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Point.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Offset.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Template.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/XTemplate.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Sorter.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Filter.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Function.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Date.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Number.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/Format.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/util/LoadMask.js"></script>
+
+        <!-- package: Platform Native -->
+        <script type="text/javascript" src="../../src/platform/src/native/Array.js"></script>
+
+        <!-- package: Platform Core -->
+        <script type="text/javascript" src="../../src/platform/src/ComponentMgr.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/ComponentQuery.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/PluginMgr.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/EventManager.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/Support.js"></script>
+
+        <!-- package: Data Foundation -->
+        <script type="text/javascript" src="../../src/platform/src/data/Batch.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Model.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Association.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/HasManyAssociation.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/BelongsToAssociation.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/PolymorphicAssociation.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Validations.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Errors.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Field.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/SortTypes.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Types.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/ModelMgr.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Operation.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/ProxyMgr.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/ReaderMgr.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Request.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/ResultSet.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/stores/AbstractStore.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Store.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/stores/TreeStore.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/StoreMgr.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/WriterMgr.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Tree.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/Node.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/Proxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/ServerProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/AjaxProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/RestProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/ScriptTagProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/ClientProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/MemoryProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/WebStorageProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/LocalStorageProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/proxies/SessionStorageProxy.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/readers/Reader.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/writers/Writer.js"></script>
+
+        <!-- package: Data - Json -->
+        <script type="text/javascript" src="../../src/platform/src/data/writers/JsonWriter.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/readers/JsonReader.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/readers/TreeReader.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/readers/ArrayReader.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/stores/ArrayStore.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/stores/JsonStore.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/stores/JsonPStore.js"></script>
+
+        <!-- package: Data - XML -->
+        <script type="text/javascript" src="../../src/platform/src/data/writers/XmlWriter.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/readers/XmlReader.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/data/stores/XmlStore.js"></script>
+
+        <!-- package: Platform MVC -->
+        <script type="text/javascript" src="../../src/core/History.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/ControllerManager.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/Controller.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/Dispatcher.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/Router.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/Route.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/Interaction.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/Application.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/app/ApplicationManager.js"></script>
+
+        <!-- package: Touch DOM -->
+        <script type="text/javascript" src="../../src/core/Element.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/core/Element.static.js"></script>
+        <script type="text/javascript" src="../../src/core/Element.static-more.js"></script>
+        <script type="text/javascript" src="../../src/core/Element.position.js"></script>
+        <script type="text/javascript" src="../../src/core/Element.style.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/core/Element.traversal.js"></script>
+        <script type="text/javascript" src="../../src/core/Element.traversal-more.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/core/Element.insertion.js"></script>
+        <script type="text/javascript" src="../../src/core/Element.alignment.js"></script>
+        <script type="text/javascript" src="../../src/core/CompositeElement.js"></script>
+        <script type="text/javascript" src="../../src/core/DomHelper.js"></script>
+        <script type="text/javascript" src="../../src/core/DomQuery.js"></script>
+        <script type="text/javascript" src="../../src/core/Anim.js"></script>
+
+        <!-- package: Touch Core -->
+        <script type="text/javascript" src="../../src/core/Ext.js"></script>
+        <script type="text/javascript" src="../../src/core/Viewport.js"></script>
+        <script type="text/javascript" src="../../src/util/TapRepeater.js"></script>
+        <script type="text/javascript" src="../../src/util/JSON.js"></script>
+        <script type="text/javascript" src="../../src/util/JSONP.js"></script>
+        <script type="text/javascript" src="../../src/util/Draggable.js"></script>
+        <script type="text/javascript" src="../../src/util/Droppable.js"></script>
+        <script type="text/javascript" src="../../src/util/Scroller.js"></script>
+        <script type="text/javascript" src="../../src/util/Sortable.js"></script>
+        <script type="text/javascript" src="../../src/util/Date.js"></script>
+        <script type="text/javascript" src="../../src/util/EventSimulator.js"></script>
+        <script type="text/javascript" src="../../src/data/Connection.js"></script>
+
+        <!-- package: Touch Gestures -->
+        <script type="text/javascript" src="../../src/gestures/Manager.js"></script>
+        <script type="text/javascript" src="../../src/gestures/Event.js"></script>
+        <script type="text/javascript" src="../../src/gestures/Gesture.js"></script>
+        <script type="text/javascript" src="../../src/gestures/Touch.js"></script>
+        <script type="text/javascript" src="../../src/gestures/Tap.js"></script>
+        <script type="text/javascript" src="../../src/gestures/Swipe.js"></script>
+        <script type="text/javascript" src="../../src/gestures/Drag.js"></script>
+        <script type="text/javascript" src="../../src/gestures/Pinch.js"></script>
+
+        <!-- package: Widgets -->
+        <script type="text/javascript" src="../../src/platform/src/Component.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Component.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/Container.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Container.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/Panel.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Panel.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Button.js"></script>
+        <script type="text/javascript" src="../../src/widgets/SegmentedButton.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/misc/AbstractStoreSelectionModel.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/misc/DataViewSelectionModel.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/misc/DataView.js"></script>
+        <script type="text/javascript" src="../../src/widgets/DataView.js"></script>
+        <script type="text/javascript" src="../../src/widgets/List.js"></script>
+        <script type="text/javascript" src="../../src/widgets/IndexBar.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Toolbar.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Sheet.js"></script>
+        <script type="text/javascript" src="../../src/widgets/TabBar.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Tab.js"></script>
+        <script type="text/javascript" src="../../src/widgets/TabPanel.js"></script>        
+        <script type="text/javascript" src="../../src/widgets/Carousel.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Map.js"></script>
+        <script type="text/javascript" src="../../src/widgets/NestedList.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Picker.js"></script>
+        <script type="text/javascript" src="../../src/widgets/DatePicker.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Media.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Video.js"></script>
+        <script type="text/javascript" src="../../src/widgets/Audio.js"></script>
+        <script type="text/javascript" src="../../src/widgets/MessageBox.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/FormPanel.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/FieldSet.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Field.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Slider.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Toggle.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Text.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Password.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Email.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Url.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Search.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Number.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Spinner.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Hidden.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Checkbox.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Radio.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/Select.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/TextArea.js"></script>
+        <script type="text/javascript" src="../../src/widgets/form/DatePicker.js"></script>
+
+        <!-- package: Touch Layouts -->
+        <script type="text/javascript" src="../../src/platform/src/layout/LayoutManager.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/Layout.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/component/ComponentLayout.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/component/AutoComponentLayout.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/component/DockLayout.js"></script>
+        <script type="text/javascript" src="../../src/layout/component/FieldLayout.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/container/ContainerLayout.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/container/AutoContainerLayout.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/container/FitLayout.js"></script>
+        <script type="text/javascript" src="../../src/platform/src/layout/container/CardLayout.js"></script>
+        <script type="text/javascript" src="../../src/layout/container/BoxLayout.js"></script>
+        
+        <!-- SPECS -->
+        <!-- core/ -->
+        <script type="text/javascript" src="spec/core/CompositeElement.js"></script>
+        <script type="text/javascript" src="spec/core/DomHelper.js"></script>
+        <script type="text/javascript" src="spec/core/DomQuery.js"></script>
+        <script type="text/javascript" src="spec/core/Element.js"></script>
+        <script type="text/javascript" src="spec/core/Element.alignment.js"></script>
+        <script type="text/javascript" src="spec/core/Element.position.js"></script>
+        <script type="text/javascript" src="spec/core/Element.static-more.js"></script>
+        <script type="text/javascript" src="spec/core/Element.style.js"></script>
+        <script type="text/javascript" src="spec/core/Element.traversal-more.js"></script>
+        <script type="text/javascript" src="spec/core/Ext.js"></script>
+        <script type="text/javascript" src="spec/core/Fx.js"></script>
+
+        <!-- data/ -->
+        <script type="text/javascript" src="spec/data/Connection.js"></script>
+        
+
+        <!-- layout/ -->
+        <script type="text/javascript" src="spec/layout/component/FieldLayout.js"></script>
+
+        <!-- util/ -->
+
+<!--        <script type="text/javascript" src="spec/util/Draggable.js"></script> -->
+        
+<!--        <script type="text/javascript" src="spec/util/Droppable.js"></script>-->
+
+        <script type="text/javascript" src="spec/util/JSONP.js"></script>
+        <script type="text/javascript" src="spec/util/Scroller.js"></script>
+        <script type="text/javascript" src="spec/util/Sortable.js"></script>
+        <script type="text/javascript" src="spec/util/TapRepeater.js"></script>
+
+        <!-- widgets/ -->
+        <script type="text/javascript" src="spec/widgets/Audio.js"></script>
+        <script type="text/javascript" src="spec/widgets/Button.js"></script>
+        <script type="text/javascript" src="spec/widgets/Carousel.js"></script>
+        <script type="text/javascript" src="spec/widgets/Component.js"></script>
+        <script type="text/javascript" src="spec/widgets/Container.js"></script>
+        <script type="text/javascript" src="spec/widgets/DataView.js"></script>
+        <script type="text/javascript" src="spec/widgets/IndexBar.js"></script>
+        <script type="text/javascript" src="spec/widgets/List.js"></script>
+        <script type="text/javascript" src="spec/widgets/Map.js"></script>
+        <script type="text/javascript" src="spec/widgets/Media.js"></script>
+        <script type="text/javascript" src="spec/widgets/MessageBox.js"></script>
+        <script type="text/javascript" src="spec/widgets/NestedList.js"></script>
+        <script type="text/javascript" src="spec/widgets/Panel.js"></script>
+        <script type="text/javascript" src="spec/widgets/Picker.js"></script>
+        <script type="text/javascript" src="spec/widgets/ProgressBar.js"></script>
+        <script type="text/javascript" src="spec/widgets/Sheet.js"></script>
+        <script type="text/javascript" src="spec/widgets/SegmentedButton.js"></script>
+        <script type="text/javascript" src="spec/widgets/TabPanel.js"></script>
+        <script type="text/javascript" src="spec/widgets/Toolbar.js"></script>
+        <script type="text/javascript" src="spec/widgets/Video.js"></script>
+
+        <!-- widgets/form/ -->
+        <script type="text/javascript" src="spec/widgets/form/Checkbox.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/DatePicker.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Email.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Field.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/FieldSet.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/FormPanel.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Hidden.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Number.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Password.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Radio.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Search.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Select.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Slider.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Spinner.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/TextArea.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Text.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Toggle.js"></script>
+        <script type="text/javascript" src="spec/widgets/form/Url.js"></script>
+
+        <script type="text/javascript" src="spec/gestures/Manager.js"></script>
+        <script type="text/javascript" src="spec/gestures/Touch.js"></script>
+        <script type="text/javascript" src="spec/gestures/Tap.js"></script>
+        <script type="text/javascript" src="spec/gestures/Swipe.js"></script>
+        <script type="text/javascript" src="spec/gestures/Drag.js"></script>
+        
+        <!-- Boot -->
+        <script type="text/javascript">
+                var config = {};
+
+                if (!Ext.is.Desktop) {
+                    config.fullscreen = true;
+                }
+                
+                config.onReady = function() {
+                    jasmine.getEnv().addReporter(new SenchaReporter());
+                    jasmine.getEnv().execute();
+                }
+
+                var eventSimulator = new Ext.util.EventSimulator();
+
+                Ext.setup(config);
+        </script>
+        
+    </head>
+
+    <body>
+    </body>
+
+
+</html>

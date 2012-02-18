@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>235</title>
+        <link rel="stylesheet" href="/sencha-touch-1.1.0/resources/css/sencha-touch.css"/>
+        <script src="/sencha-touch-1.1.0/sencha-touch-debug.js"></script>
+        <script>
+//note that when using Ext.form.FormPanel that the problem is still there
+Ext.onReady(function () {
+  new Ext.Container({
+        renderTo : 'IncomeStrategySelections',
+        cls: 'mobileRadioGroupBody',
+        xtype: 'fieldset',
+        defaults: { xtype: 'radiofield' },
+        items : [ {
+                name : 'incomeStrategy1',
+                value : '1',
+                label : 'xxxx Lifetime Income Advantage 2.0',
+                boxLabel : 'xxxx Lifetime Income Advantage 2.0',
+                labelWidth: '90%',
+                cls: 'mobileRadioLabels'
+        }, {
+                name : 'incomeStrategy1',
+                value : '2',
+                label : 'i4LIFE Advantage',
+                boxLabel : 'i4LIFE Advantage',
+                labelWidth: '90%',
+                cls: 'mobileRadioLabels'
+        }, {
+                name : 'incomeStrategy1',
+                value : '3',
+                label : 'Compare xxxx Income Advantage 2.0<br>and yyyy Advantage',
+                boxLabel : 'Compare xxxx Lifetime Income Advantage 2.0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and yyyy Advantage',
+                labelWidth: '90%',
+                cls: 'mobileRadioLabels'
+        } ]
+  });
+});
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

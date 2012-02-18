@@ -1,0 +1,274 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">/**
+ * @class Ext.DataView
+ * @extends Ext.Component
+ * A mechanism for displaying data using custom layout templates and formatting. DataView uses an {@link Ext.XTemplate}
+ * as its internal templating mechanism, and is bound to an {@link Ext.data.Store}
+ * so that as the data in the store changes the view is automatically updated to reflect the changes.  The view also
+ * provides built-in behavior for many common events that can occur for its contained items including itemtap, itemdoubletap, itemswipe, containertap,
+ * etc. as well as a built-in selection model. <b>In order to use these features, an {@link #itemSelector}
+ * config must be provided for the DataView to determine what nodes it will be working with.</b>
+ *
+ * <p>The example below binds a DataView to a {@link Ext.data.Store} and renders it into an {@link Ext.Panel}.</p>
+ * <pre><code>
+var store = new Ext.data.JsonStore({
+    url: 'get-images.php',
+    root: 'images',
+    fields: [
+        'name', 'url',
+        {name:'size', type: 'float'},
+        {name:'lastmod', type:'date', dateFormat:'timestamp'}
+    ]
+});
+store.load();
+
+var tpl = new Ext.XTemplate(
+    '&lt;tpl for="."&gt;',
+        '&lt;div class="thumb-wrap" id="{name}"&gt;',
+        '&lt;div class="thumb"&gt;&lt;img src="{url}" title="{name}"&gt;&lt;/div&gt;',
+        '&lt;span class="x-editable"&gt;{shortName}&lt;/span&gt;&lt;/div&gt;',
+    '&lt;/tpl&gt;',
+    '&lt;div class="x-clear"&gt;&lt;/div&gt;'
+);
+
+var panel = new Ext.Panel({
+    id:'images-view',
+    frame:true,
+    width:535,
+    autoHeight:true,
+    collapsible:true,
+    layout:'fit',
+    title:'Simple DataView',
+
+    items: new Ext.DataView({
+        store: store,
+        tpl: tpl,
+        autoHeight:true,
+        multiSelect: true,
+        overClass:'x-view-over',
+        itemSelector:'div.thumb-wrap',
+        emptyText: 'No images to display'
+    })
+});
+panel.render(Ext.getBody());
+   </code></pre>
+ * @constructor
+ * Create a new DataView
+ * @param {Object} config The config object
+ * @xtype dataview
+ */
+Ext.DataView.override({
+    scroll: 'vertical',
+
+    <div id="cfg-Ext.DataView-pressedCls"></div>/**
+     * @cfg {String} pressedCls
+     * A CSS class to apply to an item on the view while it is being pressed (defaults to 'x-item-pressed').
+     */
+    pressedCls : "x-item-pressed",
+
+    <div id="cfg-Ext.DataView-pressedDelay"></div>/**
+     * @cfg {Number} pressedDelay
+     * The amount of delay between the tapstart and the moment we add the pressedCls.
+     * Settings this to true defaults to 100ms
+     */
+    pressedDelay: 100,
+    
+    <div id="cfg-Ext.DataView-allowDeselect"></div>/**
+     * @cfg {Boolean} allowDeselect Only respected if {@link #singleSelect} is true. If this is set to false,
+     * a selected item will not be deselected when tapped on, ensuring that once an item has been selected at
+     * least one item will always be selected. Defaults to allowed (true).
+     */
+    allowDeselect: true,
+
+    <div id="cfg-Ext.DataView-triggerEvent"></div>/**
+     * @cfg {String} triggerEvent
+     * Defaults to 'singletap'. Other valid options are 'tap'
+     */
+    triggerEvent: 'singletap',
+    
+    triggerCtEvent: 'containertap',
+    
+    
+    // @private
+    addCmpEvents: function() {
+        //<deprecated since=0.99>
+        if (Ext.isDefined(this.forceSelection)) {
+            throw new Error("DataView: forceSelection has been replaced by allowDeselect.");
+        }
+        //</deprecated>
+
+        this.addEvents(
+            <div id="event-Ext.DataView-itemtap"></div>/**
+             * @event itemtap
+             * Fires when a node is tapped on
+             * @param {Ext.DataView} this The DataView object
+             * @param {Number} index The index of the item that was tapped
+             * @param {Ext.Element} item The item element
+             * @param {Ext.EventObject} e The event object
+             */
+            'itemtap',
+
+            <div id="event-Ext.DataView-itemdoubletap"></div>/**
+             * @event itemdoubletap
+             * Fires when a node is double tapped on
+             * @param {Ext.DataView} this The DataView object
+             * @param {Number} index The index of the item that was tapped
+             * @param {Ext.Element} item The item element
+             * @param {Ext.EventObject} e The event object
+             */
+            'itemdoubletap',
+
+            <div id="event-Ext.DataView-itemswipe"></div>/**
+             * @event itemswipe
+             * Fires when a node is swipped
+             * @param {Ext.DataView} this The DataView object
+             * @param {Number} index The index of the item that was tapped
+             * @param {Ext.Element} item The item element
+             * @param {Ext.EventObject} e The event object
+             */
+            'itemswipe',
+
+            <div id="event-Ext.DataView-containertap"></div>/**
+             * @event containertap
+             * Fires when a tap occurs and it is not on a template node.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            "containertap",
+
+            <div id="event-Ext.DataView-selectionchange"></div>/**
+             * @event selectionchange
+             * Fires when the selected nodes change.
+             * @param {Ext.DataViewSelectionModel} selectionModel The selection model of this DataView object
+             * @param {Array} records Array of the selected records
+             */
+            "selectionchange",
+
+            <div id="event-Ext.DataView-beforeselect"></div>/**
+             * @event beforeselect
+             * Fires before a selection is made. If any handlers return false, the selection is cancelled.
+             * @param {Ext.DataView} this
+             * @param {HTMLElement} node The node to be selected
+             * @param {Array} selections Array of currently selected nodes
+             */
+            "beforeselect"
+        );
+
+    },
+
+    // @private
+    afterRender: function() {
+        var me = this;
+
+        Ext.DataView.superclass.afterRender.call(me);
+
+        var eventHandlers = {
+            tapstart : me.onTapStart,
+            tapcancel: me.onTapCancel,
+            touchend : me.onTapCancel,
+            doubletap: me.onDoubleTap,
+            swipe    : me.onSwipe,
+            scope    : me
+        };
+        eventHandlers[this.triggerEvent] = me.onTap;
+        me.mon(me.getTargetEl(), eventHandlers);
+        
+        if (this.store) {
+            this.bindStore(this.store, true);
+        }
+    },
+
+    // @private
+    onTap: function(e) {
+        var item = this.findTargetByEvent(e);
+        if (item) {
+            Ext.fly(item).removeCls(this.pressedCls);
+            var index = this.indexOf(item);
+            if (this.onItemTap(item, index, e) !== false) {
+                this.fireEvent("itemtap", this, index, item, e);
+            }
+        }
+        else {
+            if(this.fireEvent("containertap", this, e) !== false) {
+                this.onContainerTap(e);
+            }
+        }
+    },
+
+    // @private
+    onTapStart: function(e, t) {
+        var me = this,
+            item = this.findTargetByEvent(e);
+
+        if (item) {
+            if (me.pressedDelay) {
+                if (me.pressedTimeout) {
+                    clearTimeout(me.pressedTimeout);
+                }
+                me.pressedTimeout = setTimeout(function() {
+                    Ext.fly(item).addCls(me.pressedCls);
+                }, Ext.isNumber(me.pressedDelay) ? me.pressedDelay : 100);
+            }
+            else {
+                Ext.fly(item).addCls(me.pressedCls);
+            }
+        }
+    },
+
+    // @private
+    onTapCancel: function(e, t) {
+        var me = this,
+            item = this.findTargetByEvent(e);
+
+        if (me.pressedTimeout) {
+            clearTimeout(me.pressedTimeout);
+            delete me.pressedTimeout;
+        }
+
+        if (item) {
+            Ext.fly(item).removeCls(me.pressedCls);
+        }
+    },
+
+    // @private
+    onContainerTap: function(e) {
+        //if (this.allowDeselect) {
+        //    this.clearSelections();
+        //}
+    },
+
+    // @private
+    onDoubleTap: function(e) {
+        var item = this.findTargetByEvent(e);
+        if (item) {
+            this.fireEvent("itemdoubletap", this, this.indexOf(item), item, e);
+        }
+    },
+
+    // @private
+    onSwipe: function(e) {
+        var item = this.findTargetByEvent(e);
+        if (item) {
+            this.fireEvent("itemswipe", this, this.indexOf(item), item, e);
+        }
+    },
+
+    // @private
+    onItemTap: function(item, index, e) {
+        if (this.pressedTimeout) {
+            clearTimeout(this.pressedTimeout);
+            delete this.pressedTimeout;
+        }
+        return true;
+    }
+});
+</pre>    
+</body>
+</html>

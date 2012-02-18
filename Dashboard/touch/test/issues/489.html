@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../deploy/resources/css/sencha-touch.css"/>
+        <script src="../../deploy/sencha-touch-debug.js"></script>
+        <script>
+  	    //Model 1 : The name and mapping are the same
+           Ext.regModel('DataRecordModel1', {
+              fields : [
+                  {name: 'id',   mapping: 'id'},
+                  {name: 'name', mapping: 'name'},
+                  {name: 'age',  mapping: 'age'}
+              ]
+          });
+
+           //Model 2 : the names map to a different property in the JSON data
+           Ext.regModel('DataRecordModel2', {
+              fields : [
+                  {name: 'id',   mapping: 'theId'},
+                  {name: 'name', mapping: 'theName'},
+                  {name: 'age',  mapping: 'theAge'}
+              ]
+          });
+
+
+           Ext.onReady(function(){
+
+               //Create store 1
+               var store1 = new Ext.data.Store({
+                   proxy : {
+                       type: 'memory',
+                       reader: {
+                           type: 'json'
+                       }
+                   },
+
+                   model: 'DataRecordModel1',
+                   data: [
+                       { "id" : 1, "name": "Fred 1", "age" : 11},
+                       { "id" : 2, "name": "Joe 1",  "age" : 21},
+                       { "id" : 3, "name": "Sam 1",  "age" : 31}
+                   ]
+               });
+
+               //Create store 2
+               var store2 = new Ext.data.Store({
+                   proxy : {
+                       type: 'memory',
+                       reader: {
+                           type: 'json'
+                       }
+                   },
+
+                   model: 'DataRecordModel2',
+                   data: [
+                       { "theId" : 10, "theName": "Freddy1", "theAge" : 51},
+                       { "theId" : 11, "theName": "Joey 1",  "theAge" : 61},
+                       { "theId" : 12, "theName": "Sammy 1", "theAge" : 71},
+                       { "theId" : 13, "theName": "Bobby",   "theAge" : 81}
+                   ]
+               });
+
+               console.log("Store 1", store1.getCount());
+               store1.each(function(rec, i ){
+                   console.log("Record="+i,":rec=", rec, ":rec.getId()=", rec.getId(), ":id=", rec.get('id'), ":name=", rec.get('name'), ":age=", rec.get('age') );
+               });
+
+               console.log("Store 2", store2.getCount());
+               store2.each(function(rec, i ){
+                   console.log("Record="+i,":rec=", rec, ":rec.getId()=", rec.getId(), ":id=", rec.get('id'), ":name=", rec.get('name'), ":age=", rec.get('age') );
+               });
+
+               //Create some data where some records have changed and one has been added
+               var data1 = [
+                   { "id" : 1, "name": "Fred 2",    "age" : 42},
+                   { "id" : 2, "name": "Joe 2",     "age" : 52},
+                   { "id" : 3, "name": "Sam 2",     "age" : 62},
+                   { "id" : 4, "name": "NewName 1", "age": 102}
+               ];
+
+               //Create some data where some records have changed and one has been added
+               var data2 = [
+                   { "theId" : 10, "theName": "Freddy 2",    "theAge" : 10},
+                   { "theId" : 11, "theName": "Joey 2",      "theAge" : 11},
+                   { "theId" : 12, "theName": "Sammmy 2",    "theAge" : 12},
+                   { "theId" : 13, "theName": "Bobbby 2",    "theAge" : 13},
+                   { "theId" : 14, "theName": "NewyNamey 1", "theAge": 201}
+               ];
+
+               console.log("Load Data 1");
+               var reader = store1.getProxy().getReader();
+               var result = reader.read(data1);
+               console.log(result.records);
+               store1.loadData(result.records, true);
+               store1.each(function(rec, i ){
+                   console.log("Record="+i,":rec=", rec, ":rec.getId()=", rec.getId(), ":id=", rec.get('id'), ":name=", rec.get('name'), ":age=", rec.get('age') );
+               });
+
+               console.log("Load Data 2");
+               reader = store2.getProxy().getReader();
+               result = reader.read(data2);
+               console.log(result.records);
+               store2.loadData(result.records, true);
+               store2.each(function(rec, i ){
+                   console.log("Record="+i,":rec=", rec, ":rec.getId()=", rec.getId(), ":id=", rec.get('id'), ":name=", rec.get('name'), ":age=", rec.get('age') );
+               });
+           });
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+        <title>Dashboard</title> 
+ 
+        <script src="touch/sencha-touch.js" type="text/javascript"></script> 
+        <link href="touch/sencha-touch.css" rel="stylesheet" type="text/css" /> 
+<script type="text/javascript"> 
+Ext.create('Ext.DataView', {
+    fullscreen: true,
+    useComponents: true,
+    defaultType: 'kittenslistitem',
+    store: {
+        fields: [
+            "name",
+            "image",
+            { name: "cuteness", type: 'int' }
+        ],
+        data: [
+           { name: 'Yawning kitten', image: 'assets/icons/dashboard/profile.png', cuteness: 70 },
+           { name: 'Sitting kitten', image: 'assets/icons/dashboard/profile.png', cuteness: 90 },
+           { name: 'Evil kitten', image: 'assets/icons/dashboard/profile.png', cuteness: 70 },
+           { name: 'Ginger kitten', image: 'assets/icons/dashboard/profile.png', cuteness: 80 },
+           { name: 'Kitten friends', image: 'assets/icons/dashboard/profile.png', cuteness: 20 },
+           { name: 'Milk kitten', image: 'assets/icons/dashboard/profile.png', cuteness: 50 }
+        ]
+    }
+});
+Ext.define('KittensListItem', {
+    extend: 'Ext.dataview.component.DataItem',
+    xtype: 'kittenslistitem',
+ 
+    config: {
+        image: true,
+ 
+        name: {
+            cls: 'x-name',
+            flex: 1
+        },
+ 
+        slider: {
+            flex: 2
+        },
+ 
+        layout: {
+            type: 'hbox',
+            align: 'center'
+        }
+    }
+});
+config: {
+    …
+ 
+    dataMap: {
+        getImage: {
+            setSrc: 'image'
+        },
+        getName: {
+            setHtml: 'name'
+        },
+        getSlider: {
+            setValue: 'cuteness'
+        }
+    }
+}
+
+this.getImage().setSrc(record.get('image'));
+</script> 
+</head> 
+<body>
+</body> 
+</html>

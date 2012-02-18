@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Drag &amp; Drop</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    
+    <style>
+        body {
+            background-color: #7B7B7B;
+        }
+        
+        #draggable, #invalid {
+            width: 100px;
+            height: 100px;
+            background-color: #5283D1;
+            top: 170px;
+            left: 5px;
+            position: absolute;
+            z-index: 1;
+            -webkit-border-radius: 4px;
+            padding-top: 40px;
+            text-align: center;
+            color: rgba(0,0,0,.5);
+            border-bottom: 1px solid rgba(0,0,0,.3);
+        }
+        
+        #invalid {
+            left: 130px;
+        }
+        
+        #draggable.x-dragging,
+        #invalid.x-dragging {
+            background-color: #2066C2;
+        }
+        
+        #droppable {
+            text-align: center;
+            -webkit-border-radius: 4px;
+            color: rgba(0,0,0,.5);
+            border-top: 1px solid rgba(0,0,0,.3);
+            padding-top: 60px;
+            height: 150px;
+            width: 310px;
+            background-color: #435699;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+        }
+        
+        #droppable.x-drop-active {
+            background-color: #44935E;
+        }
+
+        #droppable.x-drop-hover {
+            background-color: #295A3A;
+        }
+        
+        #droppable.x-drop-invalid {
+            background-color: #932D2E;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="droppable">Droppable</div>
+    <div id="draggable">Draggable</div>
+    <div id="invalid">Draggable</div>
+</body>
+
+</html>

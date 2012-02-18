@@ -1,0 +1,30 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">/**
+ * @class Ext.Element
+ */
+Ext.Element.addMethods({
+    <div id="method-Ext.Element-getScrollParent"></div>/**
+     * Gets the Scroller instance of the first parent that has one.
+     * @return {Ext.util.Scroller/null} The first parent scroller
+     */
+    getScrollParent : function() {
+        var parent = this.dom, scroller;
+        while (parent && parent != document.body) {
+            if (parent.id && (scroller = Ext.ScrollManager.get(parent.id))) {
+                return scroller;
+            }
+            parent = parent.parentNode;
+        }
+        return null;
+    }
+});
+</pre>    
+</body>
+</html>

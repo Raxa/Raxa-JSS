@@ -1,0 +1,182 @@
+<div xmlns:ext="http://www.extjs.com" class="body-wrap"><h1>Class <a href="source/Field.html#cls-Ext.data.Field">Ext.data.Field</a></h1><table cellspacing="0"><tr><td class="label">Package:</td><td class="hd-info">Ext.data</td></tr><tr><td class="label">Defined In:</td><td class="hd-info"><a href="source/Field.html#cls-Ext.data.Field">Field.js</a></td></tr><tr><td class="label">Class:</td><td class="hd-info"><a href="source/Field.html#cls-Ext.data.Field">Field</a></td></tr><tr><td class="label">Extends:</td><td class="hd-info">Object</td></tr></table><div class="description"><p>Fields are used to define what a Model is. They aren't instantiated directly - instead, <a href="output/Ext.html#Ext-regModel" ext:member="regModel" ext:cls="Ext">Ext.regModel</a> 
+creates a Field instance for each field configured in a <a href="output/Ext.data.Model.html" ext:cls="Ext.data.Model">Model</a>. For example, we might set up a
+model like this:</p>
+<pre><code>Ext.regModel(<em>'User'</em>, {
+    fields: [
+        <em>'name'</em>, <em>'email'</em>,
+        {name: <em>'age'</em>, type: <em>'int'</em>},
+        {name: <em>'gender'</em>, type: <em>'string'</em>, defaultValue: <em>'Unknown'</em>}
+    ]
+});</code></pre>
+<p>Four fields will have been created for the User Model - name, email, age and gender. Note that we specified a
+couple of different formats here; if we only pass in the string name of the field (as with name and email), the
+field is set up with the 'auto' type. It's as if we'd done this instead:</p>
+<pre><code>Ext.regModel(<em>'User'</em>, {
+    fields: [
+        {name: <em>'name'</em>, type: <em>'auto'</em>},
+        {name: <em>'email'</em>, type: <em>'auto'</em>},
+        {name: <em>'age'</em>, type: <em>'int'</em>},
+        {name: <em>'gender'</em>, type: <em>'string'</em>, defaultValue: <em>'Unknown'</em>}
+    ]
+});</code></pre>
+<p><u>Types and conversion</u></p>
+<p>The <a href="output/Ext.data.Field.html#Ext.data.Field-type" ext:member="type" ext:cls="Ext.data.Field">type</a> is important - it's used to automatically convert data passed to the field into the correct
+format. In our example above, the name and email fields used the 'auto' type and will just accept anything that is
+passed into them. The 'age' field had an 'int' type however, so if we passed 25.4 this would be rounded to 25.</p>
+<p>Sometimes a simple type isn't enough, or we want to perform some processing when we load a Field's data. We can
+do this using a <a href="output/Ext.data.Field.html#Ext.data.Field-convert" ext:member="convert" ext:cls="Ext.data.Field">convert</a> function. Here, we're going to create a new field based on another:</p>
+<code><pre>
+Ext.regModel(<em>'User'</em>, {
+    fields: [
+        <em>'name'</em>, <em>'email'</em>,
+        {name: <em>'age'</em>, type: <em>'int'</em>},
+        {name: <em>'gender'</em>, type: <em>'string'</em>, defaultValue: <em>'Unknown'</em>},
+
+        {
+            name: <em>'firstName'</em>,
+            convert: <b>function</b>(value, record) {
+                <b>var</b> fullName  = record.get(<em>'name'</em>),
+                    splits    = fullName.split(<em>" "</em>),
+                    firstName = splits[0];
+
+                <b>return</b> firstName;
+            }
+        }
+    ]
+});</code></pre>
+<p>Now when we create a new User, the firstName is populated automatically based on the name:</p>
+<code><pre>
+<b>var</b> ed = Ext.ModelMgr.create({name: <em>'Ed Spencer'</em>}, <em>'User'</em>);
+
+console.log(ed.get(<em>'firstName'</em>)); <i>//logs <em>'Ed'</em>, based on our convert <b>function</b></i></code></pre>
+<p>In fact, if we log out all of the data inside ed, we'll see this:</p>
+<code><pre>
+console.log(ed.data);
+
+<i>//outputs this:</i>
+{
+    age: 0,
+    email: <em>""</em>,
+    firstName: <em>"Ed"</em>,
+    gender: <em>"Unknown"</em>,
+    name: <em>"Ed Spencer"</em>
+}</code></pre>
+<p>The age field has been given a default of zero because we made it an int type. As an auto field, email has
+defaulted to an empty string. When we registered the User model we set gender's <a href="output/Ext.data.Field.html#Ext.data.Field-defaultValue" ext:member="defaultValue" ext:cls="Ext.data.Field">defaultValue</a> to 'Unknown'
+so we see that now. Let's correct that and satisfy ourselves that the types work as we expect:</p>
+<code><pre>
+ed.set(<em>'gender'</em>, <em>'Male'</em>);
+ed.get(<em>'gender'</em>); <i>//returns <em>'Male'</em></i>
+
+ed.set(<em>'age'</em>, 25.4);
+ed.get(<em>'age'</em>); <i>//returns 25 - we wanted an int, not a float, so no decimal places allowed</i></code></pre></div><div class="hr"></div><a id="Ext.data.Field-configs"></a><h2>Config Options</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Config Options</th><th class="msource-header">Defined By</th></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-convert"></a><b><a href="source/Field.html#cfg-Ext.data.Field-convert">convert</a></b> : Function<div class="mdesc"><div class="short">A function which converts the value provided by the Reader into an object that will be stored
+in the Model. It is pas...</div><div class="long">A function which converts the value provided by the Reader into an object that will be stored
+in the Model. It is passed the following parameters:<div class="mdetail-params"><ul>
+<li><b>v</b> : Mixed<div class="sub-desc">The data value as read by the Reader, if undefined will use
+the configured <code><a href="output/Ext.data.Field.html#Ext.data.Field-defaultValue" ext:member="defaultValue" ext:cls="Ext.data.Field">defaultValue</a></code>.</div></li>
+<li><b>rec</b> : Ext.data.Model<div class="sub-desc">The data object containing the Model as read so far by the 
+Reader. Note that the Model may not be fully populated at this point as the fields are read in the order that 
+they are defined in your <a href="output/Ext.data.Field.html#Ext.data.Field-fields" ext:member="fields" ext:cls="Ext.data.Field">fields</a> array.</div></li>
+</ul></div>
+<pre><code><i>// example of convert <b>function</b></i>
+<b>function</b> fullName(v, record){
+    <b>return</b> record.name.last + <em>', '</em> + record.name.first;
+}
+
+<b>function</b> location(v, record){
+    <b>return</b> !record.city ? <em>''</em> : (record.city + <em>', '</em> + record.state);
+}
+
+<b>var</b> Dude = Ext.regModel({
+    fields: [
+        {name: <em>'fullname'</em>,  convert: fullName},
+        {name: <em>'firstname'</em>, mapping: <em>'name.first'</em>},
+        {name: <em>'lastname'</em>,  mapping: <em>'name.last'</em>},
+        {name: <em>'city'</em>, defaultValue: <em>'homeless'</em>},
+        <em>'state'</em>,
+        {name: <em>'location'</em>,  convert: location}
+    ]
+});
+
+<i>// create the data store</i>
+<b>var</b> store = <b>new</b> Ext.data.Store({
+    reader: {
+        type: <em>'json'</em>,
+        model: <em>'Dude'</em>,
+        idProperty: <em>'key'</em>,
+        root: <em>'daRoot'</em>,
+        totalProperty: <em>'total'</em>
+    }
+});
+
+<b>var</b> myData = [
+    { key: 1,
+      name: { first: <em>'Fat'</em>,    last:  <em>'Albert'</em> }
+      <i>// notice no city, state provided <b>in</b> data object</i>
+    },
+    { key: 2,
+      name: { first: <em>'Barney'</em>, last:  <em>'Rubble'</em> },
+      city: <em>'Bedrock'</em>, state: <em>'Stoneridge'</em>
+    },
+    { key: 3,
+      name: { first: <em>'Cliff'</em>,  last:  <em>'Claven'</em> },
+      city: <em>'Boston'</em>,  state: <em>'MA'</em>
+    }
+];</code></pre></div></div></td><td class="msource">Field</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-dateFormat"></a><b><a href="source/Field.html#cfg-Ext.data.Field-dateFormat">dateFormat</a></b> : String<div class="mdesc"><div class="short">(Optional) Used when converting received data into a Date when the type is specified as "date".
+A format string for t...</div><div class="long"><p>(Optional) Used when converting received data into a Date when the <a href="output/Ext.data.Field.html#Ext.data.Field-type" ext:member="type" ext:cls="Ext.data.Field">type</a> is specified as <code><em>"date"</em></code>.</p>
+<p>A format string for the <a href="output/Date.html#Date-parseDate" ext:member="parseDate" ext:cls="Date">Date.parseDate</a> function, or "timestamp" if the
+value provided by the Reader is a UNIX timestamp, or "time" if the value provided by the Reader is a
+javascript millisecond timestamp. See <a href="output/Date.html" ext:cls="Date">Date</a></p></div></div></td><td class="msource">Field</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-defaultValue"></a><b><a href="source/Field.html#cfg-Ext.data.Field-defaultValue">defaultValue</a></b> : Mixed<div class="mdesc"><div class="short">The default value used when a Model is being created by a Reader
+when the item referenced by the mapping does not exi...</div><div class="long">The default value used <b>when a Model is being created by a <a href="output/Ext.data.Reader.html" ext:cls="Ext.data.Reader">Reader</a></b>
+when the item referenced by the <code><a href="output/Ext.data.Field.html#Ext.data.Field-mapping" ext:member="mapping" ext:cls="Ext.data.Field">mapping</a></code> does not exist in the data
+object (i.e. undefined). (defaults to "")</div></div></td><td class="msource">Field</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-mapping"></a><b><a href="source/Field.html#cfg-Ext.data.Field-mapping">mapping</a></b> : String/Number<div class="mdesc"><div class="short">(Optional) A path expression for use by the Ext.data.DataReader implementation
+that is creating the Model to extract ...</div><div class="long"><p>(Optional) A path expression for use by the <a href="output/Ext.data.DataReader.html" ext:cls="Ext.data.DataReader">Ext.data.DataReader</a> implementation
+that is creating the <a href="output/Ext.data.Model.html" ext:cls="Ext.data.Model">Model</a> to extract the Field value from the data object.
+If the path expression is the same as the field name, the mapping may be omitted.</p>
+<p>The form of the mapping expression depends on the Reader being used.</p>
+<div class="mdetail-params"><ul>
+<li><a href="output/Ext.data.JsonReader.html" ext:cls="Ext.data.JsonReader">Ext.data.JsonReader</a><div class="sub-desc">The mapping is a string containing the javascript
+expression to reference the data from an element of the data item's <a href="output/Ext.data.JsonReader.html#Ext.data.JsonReader-root" ext:member="root" ext:cls="Ext.data.JsonReader">root</a> Array. Defaults to the field name.</div></li>
+<li><a href="output/Ext.data.XmlReader.html" ext:cls="Ext.data.XmlReader">Ext.data.XmlReader</a><div class="sub-desc">The mapping is an <a href="output/Ext.DomQuery.html" ext:cls="Ext.DomQuery">Ext.DomQuery</a> path to the data
+item relative to the DOM element that represents the <a href="output/Ext.data.XmlReader.html#Ext.data.XmlReader-record" ext:member="record" ext:cls="Ext.data.XmlReader">record</a>. Defaults to the field name.</div></li>
+<li><a href="output/Ext.data.ArrayReader.html" ext:cls="Ext.data.ArrayReader">Ext.data.ArrayReader</a><div class="sub-desc">The mapping is a number indicating the Array index
+of the field's value. Defaults to the field specification's Array position.</div></li>
+</ul></div>
+<p>If a more complex value extraction strategy is required, then configure the Field with a <a href="output/Ext.data.Field.html#Ext.data.Field-convert" ext:member="convert" ext:cls="Ext.data.Field">convert</a>
+function. This is passed the whole row object, and may interrogate it in whatever way is necessary in order to
+return the desired data.</p></div></div></td><td class="msource">Field</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-name"></a><b><a href="source/Field.html#cfg-Ext.data.Field-name">name</a></b> : String<div class="mdesc"><div class="short">The name by which the field is referenced within the Model. This is referenced by, for example,
+the dataIndex propert...</div><div class="long">The name by which the field is referenced within the Model. This is referenced by, for example,
+the <code>dataIndex</code> property in column definition objects passed to <a href="output/Ext.grid.ColumnModel.html" ext:cls="Ext.grid.ColumnModel">Ext.grid.ColumnModel</a>.
+<p>Note: In the simplest case, if no properties other than <code>name</code> are required, a field
+definition may consist of just a String for the field name.</p></div></div></td><td class="msource">Field</td></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-sortDir"></a><b><a href="source/Field.html#cfg-Ext.data.Field-sortDir">sortDir</a></b> : String<div class="mdesc">Initial direction to sort (<code><em>"ASC"</em></code> or  <code><em>"DESC"</em></code>).  Defaults to
+<code><em>"ASC"</em></code>.</div></td><td class="msource">Field</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-sortType"></a><b><a href="source/Field.html#cfg-Ext.data.Field-sortType">sortType</a></b> : Function<div class="mdesc"><div class="short">A function which converts a Field's value to a comparable value in order to ensure
+correct sort ordering. Predefined ...</div><div class="long">A function which converts a Field's value to a comparable value in order to ensure
+correct sort ordering. Predefined functions are provided in <a href="output/Ext.data.SortTypes.html" ext:cls="Ext.data.SortTypes">Ext.data.SortTypes</a>. A custom
+sort example:<pre><code><i>// current sort     after sort we want</i>
+<i>// +-+------+          +-+------+</i>
+<i>// |1|First |          |1|First |</i>
+<i>// |2|Last  |          |3|Second|</i>
+<i>// |3|Second|          |2|Last  |</i>
+<i>// +-+------+          +-+------+</i>
+
+sortType: <b>function</b>(value) {
+   <b>switch</b> (value.toLowerCase()) <i>// native toLowerCase():</i>
+   {
+      <b>case</b> <em>'first'</em>: <b>return</b> 1;
+      <b>case</b> <em>'second'</em>: <b>return</b> 2;
+      <b>default</b>: <b>return</b> 3;
+   }
+}</code></pre></div></div></td><td class="msource">Field</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-type"></a><b><a href="source/Field.html#cfg-Ext.data.Field-type">type</a></b> : Mixed<div class="mdesc"><div class="short">The data type for automatic conversion from received data to the stored value if convert
+has not been specified. This...</div><div class="long">The data type for automatic conversion from received data to the <i>stored</i> value if <code><a href="output/Ext.data.Field.html#Ext.data.Field-convert" ext:member="convert" ext:cls="Ext.data.Field">convert</a></code>
+has not been specified. This may be specified as a string value. Possible values are
+<div class="mdetail-params"><ul>
+<li>auto (Default, implies no conversion)</li>
+<li>string</li>
+<li>int</li>
+<li>float</li>
+<li>boolean</li>
+<li>date</li></ul></div>
+<p>This may also be specified by referencing a member of the <a href="output/Ext.data.Types.html" ext:cls="Ext.data.Types">Ext.data.Types</a> class.</p>
+<p>Developers may create their own application-specific data types by defining new members of the
+<a href="output/Ext.data.Types.html" ext:cls="Ext.data.Types">Ext.data.Types</a> class.</p></div></div></td><td class="msource">Field</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.data.Field-useNull"></a><b><a href="source/Field.html#cfg-Ext.data.Field-useNull">useNull</a></b> : Boolean<div class="mdesc"><div class="short">(Optional) Use when converting received data into a Number type (either int or float). If the value cannot be parsed,...</div><div class="long"><p>(Optional) Use when converting received data into a Number type (either int or float). If the value cannot be parsed,
+null will be used if useNull is true, otherwise the value will be 0. Defaults to <tt>false</tt></div></div></td><td class="msource">Field</td></tr></tbody></table><a id="Ext.data.Field-props"></a><h2>Public Properties</h2><div class="no-members">This class has no public properties.</div><a id="Ext.data.Field-methods"></a><h2>Public Methods</h2><div class="no-members">This class has no public methods.</div><a id="Ext.data.Field-events"></a><h2>Public Events</h2><div class="no-members">This class has no public events.</div></div>
