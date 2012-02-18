@@ -16,7 +16,7 @@ Ext.application({
     store: [], // List of Stores for dynamic loading
 
 	launch: function(){
-		Ext.create('Confirmation');
+		Ext.create('RaxaEmr.Registration.view.Confirmation');
 	}
 });
 
