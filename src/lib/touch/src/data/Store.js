@@ -11,12 +11,14 @@
  *     // Set up a {@link Ext.data.Model model} to use in our Store
  *     Ext.define('User', {
  *         extend: 'Ext.data.Model',
- *         fields: [
- *             {name: 'firstName', type: 'string'},
- *             {name: 'lastName',  type: 'string'},
- *             {name: 'age',       type: 'int'},
- *             {name: 'eyeColor',  type: 'string'}
- *         ]
+ *         config: {
+ *             fields: [
+ *                 {name: 'firstName', type: 'string'},
+ *                 {name: 'lastName',  type: 'string'},
+ *                 {name: 'age',       type: 'int'},
+ *                 {name: 'eyeColor',  type: 'string'}
+ *             ]
+ *         }
  *     });
  *
  *     var myStore = Ext.create('Ext.data.Store', {
@@ -383,8 +385,6 @@ Ext.define('Ext.data.Store', {
          */
         remoteGroup: false,
 
-        // See https://sencha.jira.com/browse/TOUCH-1585
-
         /**
          * @cfg {Object[]} filters
          * Array of {@link Ext.util.Filter Filters} for this store. This configuration is handled by the
@@ -463,11 +463,19 @@ Ext.define('Ext.data.Store', {
          * can be destroyed.
          * @private
          */
-        autoDestroy: false
+        autoDestroy: false,
+
+        /**
+         * @cfg {Boolean} syncRemovedRecords This configuration allows you to disable the synchronization of
+         * removed records on this Store. By default, when you call removeAll or remove, records will be added
+         * to an internal removed array. When you then sync the Store, we send a destroy request for these records.
+         * If you don't want this to happen, you can set this configuration to false.
+         */
+        syncRemovedRecords: true
     },
 
     /**
-     * @property
+     * @property {Number} currentPage
      * The page that the Store has most recently loaded (see {@link #loadPage})
      */
     currentPage: 1,
@@ -486,6 +494,32 @@ Ext.define('Ext.data.Store', {
             config.storeId = config.id;
             delete config.id;
         }
+
+        // <deprecated product=touch since=2.0>
+        // <debug>
+        if (config.hasOwnProperty('sortOnLoad')) {
+            console.warn(
+                '[Ext.data.Store] sortOnLoad is always activated in Sencha Touch 2 so your Store is always fully ' +
+                'sorted after loading. The only expection is if you are using remoteSort and change sorting after ' +
+                'the Store as loaded, in which case you need to call store.load() to fetch the sorted data from the server.'
+            );
+        }
+
+        if (config.hasOwnProperty('filterOnLoad')) {
+            console.warn(
+                '[Ext.data.Store] filterOnLoad is always activated in Sencha Touch 2 so your Store is always fully ' +
+                'sorted after loading. The only expection is if you are using remoteFilter and change filtering after ' +
+                'the Store as loaded, in which case you need to call store.load() to fetch the filtered data from the server.'
+            );
+        }
+
+        if (config.hasOwnProperty('sortOnFilter')) {
+            console.warn(
+                '[Ext.data.Store] sortOnFilter is deprecated and is always effectively true when sorting and filtering locally'
+            );
+        }
+        // </debug>
+        // </deprecated>
 
         this.initConfig(config);
     },
@@ -514,29 +548,37 @@ Ext.define('Ext.data.Store', {
 
     applyModel: function(model) {
         if (typeof model == 'string') {
-            model = Ext.data.ModelManager.getModel(model);
-
-            if (!model) {
-                Ext.Logger.error('Model with name ' + arguments[0] + ' doesnt exist.');
+            var registeredModel = Ext.data.ModelManager.getModel(model);
+            if (!registeredModel) {
+                Ext.Logger.error('Model with name "' + model + '" does not exist.');
             }
+            model = registeredModel;
         }
 
         if (model && !model.prototype.isModel && Ext.isObject(model)) {
             model = Ext.data.ModelManager.registerType(model.storeId || model.id || Ext.id(), model);
         }
 
-        if (!model && this.getFields()) {
-            model = Ext.define('Ext.data.Store.ImplicitModel-' + (this.getStoreId() || Ext.id()), {
-                extend: 'Ext.data.Model',
-                config: {
-                    fields: this.getFields(),
-                    proxy: this.getProxy()
-                }
-            });
+        if (!model) {
+            var fields = this.getFields(),
+                data = this.config.data;
 
-            this.implicitModel = true;
+            if (!fields && data && data.length) {
+                fields = Ext.Object.getKeys(data[0]);
+            }
+
+            if (fields) {
+                model = Ext.define('Ext.data.Store.ImplicitModel-' + (this.getStoreId() || Ext.id()), {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: fields,
+                        proxy: this.getProxy()
+                    }
+                });
+
+                this.implicitModel = true;
+            }
         }
-
         if (!model && this.getProxy()) {
             model = this.getProxy().getModel();
         }
@@ -555,10 +597,6 @@ Ext.define('Ext.data.Store', {
 
         if (proxy && !proxy.getModel()) {
             proxy.setModel(model);
-        }
-
-        if (proxy && !model.getProxy()) {
-            model.setProxy(proxy);
         }
     },
 
@@ -730,6 +768,14 @@ Ext.define('Ext.data.Store', {
         }
     },
 
+    /**
+     * This method tells you if this store has a grouper defined on it.
+     * @return {Boolean} true if this store has a grouper defined.
+     */
+    isGrouped: function() {
+        return !!this.getGrouped();
+    },
+
     updateSorters: function(sorters) {
         var grouper = this.getGrouper(),
             data = this.data,
@@ -812,8 +858,6 @@ Ext.define('Ext.data.Store', {
             records = Array.prototype.slice.call(arguments, 1);
         }
 
-        // See https://sencha.jira.com/browse/TOUCH-1586
-
         var me = this,
             sync = false,
             ln = records.length,
@@ -867,8 +911,7 @@ Ext.define('Ext.data.Store', {
     },
 
     /**
-     * Removes the given record from the Store, firing the 'remove' event for each instance that is removed, plus a single
-     * 'datachanged' event after removal.
+     * Removes the given record from the Store, firing the 'removerecords' event passing all the instances that are removed.
      * @param {Ext.data.Model/Ext.data.Model[]} records Model instance or array of instances to remove
      */
     remove: function(records) {
@@ -899,8 +942,7 @@ Ext.define('Ext.data.Store', {
                     indices.push(index);
                 }
 
-                // See https://sencha.jira.com/browse/TOUCH-1589
-                if (!isPhantom) {
+                if (!isPhantom && me.getSyncRemovedRecords()) {
                      // don't push phantom records onto removed
                      me.removed.push(record);
                 }
@@ -939,7 +981,7 @@ Ext.define('Ext.data.Store', {
         if (silent !== true) {
             this.fireAction('clear', [this], 'doRemoveAll');
         } else {
-            this.doRemoveAll(this, true);
+            this.doRemoveAll.call(this, true);
         }
     },
 
@@ -948,7 +990,9 @@ Ext.define('Ext.data.Store', {
         me.data.each(function(record) {
             record.unjoin(me);
         });
-        me.removed = me.removed.concat(me.data.items);
+        if (me.getSyncRemovedRecords()) {
+            me.removed = me.removed.concat(me.data.items);
+        }
         me.data.clear();
 
         if (silent !== true) {
@@ -1006,7 +1050,7 @@ Ext.define('Ext.data.Store', {
      */
     getById: function(id) {
         return this.data.findBy(function(record) {
-            return record.getId() === id;
+            return record.getId() == id;
         });
     },
 
@@ -1073,13 +1117,6 @@ Ext.define('Ext.data.Store', {
      * @param {Ext.data.Model} record The model instance that was edited
      */
     afterReject: function(record) {
-        // Must pass the 5th param (modifiedFieldNames) as null, otherwise the
-        // event firing machinery appends the listeners "options" object to the arg list
-        // which may get used as the modified fields array by a handler.
-        // This array is used for selective grid cell updating by Grid View.
-        // Null will be treated as though all cells need updating.
-        // See https://sencha.jira.com/browse/TOUCH-1591
-        //this.fireEvent('update', this, record, Ext.data.Model.REJECT, null);
         var index = this.data.indexOf(record);
         this.fireEvent('updaterecord', this, record, index, index);
     },
@@ -1161,7 +1198,7 @@ Ext.define('Ext.data.Store', {
      *     ]);
      *
      * Internally, Store converts the passed arguments into an array of {@link Ext.util.Sorter} instances, and delegates
-     * the actual sorting to its internal {@link Ext.util.MixedCollection}.
+     * the actual sorting to its internal {@link Ext.util.Collection}.
      *
      * When passing a single string argument to sort, Store maintains a ASC/DESC toggler per field, so this code:
      *
@@ -1174,6 +1211,9 @@ Ext.define('Ext.data.Store', {
      *     store.sort('myField', 'DESC');
      *
      * because Store handles the toggling automatically.
+     *
+     * If the {@link #remoteSort} configuration has been set to true, you will have to manually call the {@link #method-load}
+     * method after you sort to retrieve the sorted data from the server.
      *
      * @param {String/Ext.util.Sorter[]} sorters Either a string name of one of the fields in this Store's configured
      * {@link Ext.data.Model Model}, or an array of sorter configurations.
@@ -1209,9 +1249,7 @@ Ext.define('Ext.data.Store', {
             data.setAutoSort(autoSort);
         }
 
-        if (this.getRemoteSort()) {
-            this.load();
-        } else {
+        if (!this.getRemoteSort()) {
             // If we havent added any new sorters we have to manually call sort
             if (!sorters) {
                 this.data.sort();
@@ -1246,6 +1284,9 @@ Ext.define('Ext.data.Store', {
      *         Ext.create('Ext.util.Filter', {filterFn: function(item) { return item.get("age") > 10; }, root: 'data'})
      *     ]);
      *
+     * If the {@link #remoteFilter} configuration has been set to true, you will have to manually call the {@link #method-load}
+     * method after you filter to retrieve the filtered data from the server.
+     *
      * @param {Object[]/Ext.util.Filter[]/String} filters The set of filters to apply to the data.
      * These are stored internally on the store, but the filtering itself is done on the Store's
      * {@link Ext.util.MixedCollection MixedCollection}. See MixedCollection's
@@ -1273,7 +1314,6 @@ Ext.define('Ext.data.Store', {
                     data.addFilters(property);
                 }
             }
-            this.load();
         } else {
             data.filter(property, value);
             this.fireEvent('filter', this, data, data.getFilters());
@@ -1330,7 +1370,7 @@ Ext.define('Ext.data.Store', {
 
     /**
      * Reverts to a view of the Record cache with no filtering applied.
-     * @param {Boolean} [suppressEvent=false] True to clear silently without firing the `datachanged` event.
+     * @param {Boolean} [suppressEvent=false] True to clear silently without firing the `refresh` event.
      */
     clearFilter: function(suppressEvent) {
         var ln = this.data.length;
@@ -1579,7 +1619,7 @@ Ext.define('Ext.data.Store', {
      * @return {Boolean} True if the Store is currently loading
      */
     isLoading: function() {
-        return this.loading;
+        return Boolean(this.loading);
     },
 
     /**
@@ -1625,19 +1665,107 @@ Ext.define('Ext.data.Store', {
     },
 
     /**
-     * Returns the first Model instance in this Store
-     * @return {Ext.data.Model} The first Model instance
+     * Convenience function for getting the first model instance in the store
+     * @return {Ext.data.Model/undefined} The first model instance in the store, or undefined
      */
     first: function() {
-        return this.getAt(0);
+        return this.data.first();
     },
 
     /**
-     * Returns the last Model instance in this Store
-     * @return {Ext.data.Model} The last Model instance
+     * Convenience function for getting the last model instance in the store
+     * @return {Ext.data.Model/undefined} The last model instance in the store, or undefined
      */
     last: function() {
-        return this.getAt(this.getCount() - 1);
+        return this.data.last();
+    },
+
+    /**
+     * Sums the value of <tt>property</tt> for each {@link Ext.data.Model record} between <tt>start</tt>
+     * and <tt>end</tt> and returns the result.
+     * @param {String} field The field in each record
+     * @return {Number} The sum
+     */
+    sum: function(field) {
+        var total = 0,
+            i = 0,
+            records = this.data.items,
+            len = records.length;
+
+        for (; i < len; ++i) {
+            total += records[i].get(field);
+        }
+
+        return total;
+    },
+
+    /**
+     * Gets the minimum value in the store.
+     * @param {String} field The field in each record
+     * @return {Object} The minimum value, if no items exist, undefined.
+     */
+    min: function(field) {
+        var i = 1,
+            records = this.data.items,
+            len = records.length,
+            value, min;
+
+        if (len > 0) {
+            min = records[0].get(field);
+        }
+
+        for (; i < len; ++i) {
+            value = records[i].get(field);
+            if (value < min) {
+                min = value;
+            }
+        }
+        return min;
+    },
+
+    /**
+     * Gets the maximum value in the store.
+     * @param {String} field The field in each record
+     * @return {Object} The maximum value, if no items exist, undefined.
+     */
+    max: function(field) {
+        var i = 1,
+            records = this.data.items,
+            len = records.length,
+            value,
+            max;
+
+        if (len > 0) {
+            max = records[0].get(field);
+        }
+
+        for (; i < len; ++i) {
+            value = records[i].get(field);
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
+    },
+
+    /**
+     * Gets the average value in the store.
+     * @param {String} field The field in each record you want to get the average for.
+     * @return {Object} The average value, if no items exist, 0.
+     */
+    average: function(field) {
+        var i = 0,
+            records = this.data.items,
+            len = records.length,
+            sum = 0;
+
+        if (records.length > 0) {
+            for (; i < len; ++i) {
+                sum += records[i].get(field);
+            }
+            return sum / len;
+        }
+        return 0;
     },
 
     /**
@@ -1668,9 +1796,6 @@ Ext.define('Ext.data.Store', {
         for (i = 0; i < length; i++) {
             me.onProxyWrite(operations[i]);
         }
-
-        // See https://sencha.jira.com/browse/TOUCH-1593
-        //me.fireEvent('datachanged', me);
     },
 
     onBatchException: function(batch, operation) {
@@ -1697,8 +1822,10 @@ Ext.define('Ext.data.Store', {
 
         if (successful) {
             if (operation.getAddRecords() !== true) {
-                // We make it silent cause we don't want a refresh event to be fired
-                me.removeAll(true);
+                me.data.each(function(record) {
+                    record.unjoin(me);
+                });
+                me.data.clear();
 
                 // This means we have to fire a clear event though
                 me.fireEvent('clear', this);
@@ -1744,9 +1871,6 @@ Ext.define('Ext.data.Store', {
 
         if (success) {
             me.fireEvent('write', me, operation);
-
-            // See https://sencha.jira.com/browse/TOUCH-1593
-            // me.fireEvent('datachanged', me);
         }
         //this is a callback that would have been passed to the 'create', 'update' or 'destroy' function and is optional
         Ext.callback(operation.getCallback(), operation.getScope() || me, [records, operation, success]);
@@ -1799,7 +1923,14 @@ Ext.define('Ext.data.Store', {
      * @param {Number} page The number of the page to load
      * @param {Object} options See options for {@link #method-load}
      */
-    loadPage: function(page, options) {
+    loadPage: function(page, options, scope) {
+        if (typeof options === 'function') {
+            options = {
+                callback: options,
+                scope: scope || this
+            };
+
+        }
         var me = this,
             pageSize = me.getPageSize(),
             clearOnPageLoad = me.getClearOnPageLoad();
@@ -1850,6 +1981,7 @@ Ext.define('Ext.data.Store', {
                 // </debug>
             }
         }
+
         data.config = config;
     }
 }, function() {
@@ -1868,12 +2000,33 @@ Ext.define('Ext.data.Store', {
             } else {
                 this.setData(data);
             }
+        },
+
+        //@private
+        doAddListener: function(name, fn, scope, options, order) {
+            // <debug>
+            switch(name) {
+                case 'update':
+                    Ext.Logger.warn('The update event on Store has been deprecated. Please use the updaterecord event from now on.');
+                    return this;
+                case 'add':
+                    Ext.Logger.warn('The add event on Store has been deprecated. Please use the addrecords event from now on.');
+                    return this;
+                case 'remove':
+                    Ext.Logger.warn('The remove event on Store has been deprecated. Please use the removerecords event from now on.');
+                    return this;
+                case 'datachanged':
+                    Ext.Logger.warn('The datachanged event on Store has been deprecated. Please use the refresh event from now on.');
+                    return this;
+                break;
+            }
+            // </debug>
+
+            return this.callParent(arguments);
         }
     });
 
     // @TODO: put back backwards compat version of the collect method, or just leave it out
-
-    // @TODO: put back some of the other aggregation methods even though they seem to be useless
 
     // </deprecated>
 });

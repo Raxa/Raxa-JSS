@@ -334,7 +334,7 @@ Ext.define('Ext.Button', {
         /**
          * @cfg {String} ui
          * The ui style to render this button with. The valid default options are:
-         * 'normal', 'back', 'round', 'action', and 'forward'.
+         * 'normal', 'back', 'round', 'action', 'confirm' and 'forward'.
          * @accessor
          */
         ui: 'normal',
@@ -375,7 +375,7 @@ Ext.define('Ext.Button', {
             scope      : this,
             tap        : 'onTap',
             touchstart : 'onPress',
-            touchmove  : 'onRelease',
+            touchmove  : 'onTouchMove',
             touchend   : 'onRelease'
         });
     },
@@ -660,6 +660,10 @@ Ext.define('Ext.Button', {
                 element.addCls(pressedCls);
             }
         }
+    },
+
+    onTouchMove: function(e) {
+        return;
     },
 
     // @private

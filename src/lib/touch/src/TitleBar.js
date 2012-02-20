@@ -8,9 +8,10 @@
  * You can also give items of a {@link Ext.TitleBar} an `align` configuration of `left` or `right`
  * which will dock them to the `left` or `right` of the bar.
  *
- * # Example:
+ * ## Example
  *
- *     var myNavBar = new Ext.TitleBar({
+ *     @example miniphone
+ *     var myNavBar = Ext.create('Ext.TitleBar', {
  *         docked: 'top',
  *         title: 'Navigation',
  *         items: [
@@ -25,9 +26,9 @@
  *     });
  *
  *     Ext.create('Ext.Container', {
- *         dockedItems: [myNavBar],
  *         fullscreen : true,
- *         html       : 'Test Panel'
+ *         items: [myNavBar],
+ *         html: 'Test Panel'
  *     });
  *
  * The {@link #defaultType} of Toolbar's is {@link Ext.Button button}.
@@ -111,7 +112,7 @@ Ext.define('Ext.TitleBar', {
 
     initialize: function() {
         delete this.applyItems;
-        
+
         this.doAdd = this.doBoxAdd;
         this.remove = this.doBoxRemove;
         this.doInsert = this.doBoxInsert;

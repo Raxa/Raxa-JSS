@@ -59,9 +59,7 @@ Ext.define('Ext.env.Feature', {
 
         var element = this.getTestElement(tag),
             eventName = 'on' + name.toLowerCase(),
-            isSupported = false;
-
-        isSupported = (eventName in element);
+            isSupported = (eventName in element);
 
         if (!isSupported) {
             if (element.setAttribute && element.removeAttribute) {

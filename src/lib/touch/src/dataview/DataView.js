@@ -224,6 +224,21 @@ Ext.define('Ext.dataview.DataView', {
      * @param {Ext.dataview.DataView} this
      */
 
+    /**
+     * @hide
+     * @event add
+     */
+
+    /**
+     * @hide
+     * @event remove
+     */
+
+    /**
+     * @hide
+     * @event move
+     */
+
     config: {
         /**
          * @cfg layout
@@ -360,11 +375,25 @@ Ext.define('Ext.dataview.DataView', {
          * Note this is only used when useComponents is true.
          * @accessor
          */
-        defaultType: 'dataitem'
+        defaultType: 'dataitem',
+
+        /**
+         * @cfg {String} scrollToTopOnRefresh
+         * Scroll the DataView to the top when the DataView is refreshed
+         * @accessor
+         */
+        scrollToTopOnRefresh: true
     },
 
-    constructor: function() {
+    constructor: function(config) {
         var me = this;
+
+        // <debug warn>
+        if (config && config.layout) {
+            Ext.Logger.warn('Attempting to create a DataView with a layout. DataViews do not have a layout configuration as their items are laid out automatically.');
+            delete config.layout;
+        }
+        // </debug>
 
         me.hasLoadedStore = false;
 
@@ -598,8 +627,8 @@ Ext.define('Ext.dataview.DataView', {
     updateData: function(data) {
         var store = this.getStore();
         if (!store) {
-            this.setStore(Ext.create('Ext.data.ArrayStore', {
-                fields: data
+            this.setStore(Ext.create('Ext.data.Store', {
+                data: data
             }));
         } else {
             store.add(data);
@@ -627,8 +656,7 @@ Ext.define('Ext.dataview.DataView', {
 
     updateStore: function(newStore, oldStore) {
         var me = this,
-            bindEvents = Ext.apply({}, me.storeEventHooks, { scope: me }),
-            proxy;
+            bindEvents = Ext.apply({}, me.storeEventHooks, { scope: me });
 
         if (oldStore && Ext.isObject(oldStore) && oldStore.isStore) {
             if (oldStore.autoDestroy) {
@@ -640,7 +668,6 @@ Ext.define('Ext.dataview.DataView', {
         }
 
         if (newStore) {
-            proxy = newStore.getProxy();
             if (newStore.isAutoLoading()) {
                 this.hasLoadedStore = true;
             }
@@ -656,14 +683,25 @@ Ext.define('Ext.dataview.DataView', {
     },
 
     onBeforeLoad: function() {
+        var scrollable = this.getScrollable();
+        if (scrollable) {
+            scrollable.getScroller().stopAnimation();
+        }
+
         var loadingText = this.getLoadingText();
         if (loadingText) {
-
             this.setMasked({
                 xtype: 'loadmask',
                 message: loadingText
             });
+
+            //disable scorlling while it is masked
+            if (scrollable) {
+                scrollable.getScroller().setDisabled(true);
+            }
         }
+
+        this.hideEmptyText();
     },
 
     updateEmptyText: function(newEmptyText) {
@@ -683,9 +721,16 @@ Ext.define('Ext.dataview.DataView', {
     },
 
     onLoad: function() {
+        var scrollable = this.getScrollable();
+
         //remove any masks on the store
         this.hasLoadedStore = true;
         this.setMasked(false);
+
+        //enable the scroller again
+        if (scrollable) {
+            scrollable.getScroller().setDisabled(false);
+        }
     },
 
     /**
@@ -731,8 +776,8 @@ Ext.define('Ext.dataview.DataView', {
             scrollable = me.getScrollable(),
             i, item;
 
-        if (scrollable) {
-            scrollable.getScroller().scrollTo(0, 0);
+        if (this.getScrollToTopOnRefresh() && scrollable) {
+            scrollable.getScroller().scrollToTop();
         }
 
         // No items, hide all the items from the collection.
@@ -750,7 +795,7 @@ Ext.define('Ext.dataview.DataView', {
         }
         // Not enough items, create new ones
         else if (deltaLn > 0) {
-            container.doCreateItems(store.getRange(itemsLn), itemsLn);
+            container.moveItemsFromCache(store.getRange(itemsLn));
         }
 
         // Update Data and insert the new html for existing items
@@ -784,7 +829,7 @@ Ext.define('Ext.dataview.DataView', {
     // private
     onStoreAdd: function(store, records) {
         if (records) {
-            this.container.doCreateItems(records);
+            this.container.moveItemsFromCache(records);
         }
     },
 

@@ -6,6 +6,10 @@ Ext.define('Ext.fx.layout.card.Abstract', {
     isAnimation: true,
 
     config: {
+        direction: 'left',
+
+        duration: null,
+
         reverse: null,
 
         layout: null

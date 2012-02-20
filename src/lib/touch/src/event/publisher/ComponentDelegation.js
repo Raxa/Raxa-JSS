@@ -167,7 +167,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
 
     publish: function(eventName, component) {
         var subscribers = this.getSubscribers(eventName);
-        
+
         if (!subscribers) {
             return;
         }
@@ -213,7 +213,6 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
                             parentId = ancestorIds[0];
                         }
                         else {
-                            // See https://sencha.jira.com/browse/TOUCH-1546
                             parentComponent = component.getParent();
                             if (parentComponent) {
                                 parentId = parentComponent.getId();

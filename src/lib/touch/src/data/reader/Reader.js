@@ -162,7 +162,7 @@ Ext.define('Ext.data.reader.Reader', {
         'Ext.data.ResultSet'
     ],
     alternateClassName: ['Ext.data.Reader', 'Ext.data.DataReader'],
-    
+
     mixins: ['Ext.mixin.Observable'],
 
     // private
@@ -203,7 +203,7 @@ Ext.define('Ext.data.reader.Reader', {
         messageProperty: null,
 
         /**
-         * @cfg {String} root
+         * @cfg {String} rootProperty
          * The name of the property which contains the Array of row objects.  For JSON reader it's dot-separated list
          * of property names.  For XML reader it's a CSS selector.  For array reader it's not applicable.
          *
@@ -224,17 +224,6 @@ Ext.define('Ext.data.reader.Reader', {
     },
 
     constructor: function(config) {
-        config = config || {};
-
-        if (config.root) {
-            // <debug>
-            console.warn('root has been deprecated as a configuration on Reader. Please use rootProperty instead.');
-            // </debug>
-
-            config.rootProperty = config.root;
-            delete config.root;
-        }
-
         this.initConfig(config);
     },
 
@@ -462,10 +451,6 @@ Ext.define('Ext.data.reader.Reader', {
             recordCount = 0,
             total, value, records, message;
 
-        if (root) {
-            total = root.length;
-        }
-
         if (me.getTotalProperty()) {
             value = parseInt(me.getTotal(data), 10);
             if (!isNaN(value)) {
@@ -493,7 +478,7 @@ Ext.define('Ext.data.reader.Reader', {
         }
 
         return new Ext.data.ResultSet({
-            total  : total || recordCount,
+            total  : total,
             count  : recordCount,
             records: records,
             success: success,
@@ -598,6 +583,30 @@ Ext.define('Ext.data.reader.Reader', {
         return data[associationName];
     }
 
+
+    // Convert old properties in data into a config object
+    // <deprecated product=touch since=2.0>
+    ,onClassExtended: function(cls, data, hooks) {
+        var Component = this,
+            defaultConfig = Component.prototype.config,
+            config = data.config || {},
+            key;
+
+
+        for (key in defaultConfig) {
+            if (key in data) {
+                config[key] = data[key];
+                delete data[key];
+                // <debug warn>
+                console.warn(key + ' is deprecated as a property directly on the Reader prototype. Please put it inside the config object.');
+                // </debug>
+            }
+        }
+
+        data.config = config;
+    }
+    // </deprecated>
+
 //
 //    /**
 //     * @private
@@ -652,4 +661,34 @@ Ext.define('Ext.data.reader.Reader', {
             success: true
         })
     });
+
+    //<deprecated product=touch since=2.0>
+    /**
+     * @cfg {String} root
+     * @deprecated 2.0.0 Please use the {@link #rootProperty} configuration instead.
+     * The name of the property which contains the Array of row objects.  For JSON reader it's dot-separated list
+     * of property names.  For XML reader it's a CSS selector.  For array reader it's not applicable.
+     *
+     * By default the natural root of the data will be used.  The root Json array, the root XML element, or the array.
+     *
+     * The data packet value for this property should be an empty array to clear the data or show no data.
+     */
+
+    this.override({
+        constructor: function(config) {
+            config = config || {};
+
+            if (config.root) {
+                // <debug>
+                console.warn('root has been deprecated as a configuration on Reader. Please use rootProperty instead.');
+                // </debug>
+
+                config.rootProperty = config.root;
+                delete config.root;
+            }
+
+            this.callOverridden([config]);
+        }
+    });
+    //</deprecated>
 });

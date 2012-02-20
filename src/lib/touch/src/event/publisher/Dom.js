@@ -64,6 +64,7 @@ Ext.define('Ext.event.publisher.Dom', {
                     $length: 0
                 },
                 selector: [],
+                all: 0,
                 $length: 0
             }
         }
@@ -137,13 +138,18 @@ Ext.define('Ext.event.publisher.Dom', {
             }
         }
         else {
-            if (selectorSubscribers.hasOwnProperty(target)) {
-                selectorSubscribers[target]++;
-                return true;
+            if (target === this.SELECTOR_ALL) {
+                subscribers.all++;
             }
+            else {
+                if (selectorSubscribers.hasOwnProperty(target)) {
+                    selectorSubscribers[target]++;
+                    return true;
+                }
 
-            selectorSubscribers[target] = 1;
-            selectorSubscribers.push(target);
+                selectorSubscribers[target] = 1;
+                selectorSubscribers.push(target);
+            }
         }
 
         subscribers.$length++;
@@ -187,12 +193,22 @@ Ext.define('Ext.event.publisher.Dom', {
             }
         }
         else {
-            if (!selectorSubscribers.hasOwnProperty(target) || (!all && --selectorSubscribers[target] > 0)) {
-                return true;
+            if (target === this.SELECTOR_ALL) {
+                if (all) {
+                    subscribers.all = 0;
+                }
+                else {
+                    subscribers.all--;
+                }
             }
+            else {
+                if (!selectorSubscribers.hasOwnProperty(target) || (!all && --selectorSubscribers[target] > 0)) {
+                    return true;
+                }
 
-            delete selectorSubscribers[target];
-            Ext.Array.remove(selectorSubscribers, target);
+                delete selectorSubscribers[target];
+                Ext.Array.remove(selectorSubscribers, target);
+            }
         }
 
         subscribers.$length--;
@@ -229,9 +245,7 @@ Ext.define('Ext.event.publisher.Dom', {
     },
 
     dispatch: function(target, eventName, args) {
-        // See https://sencha.jira.com/browse/TOUCH-1519
         args.push(args[0].target);
-
         this.callParent(arguments);
     },
 
@@ -257,11 +271,11 @@ Ext.define('Ext.event.publisher.Dom', {
             hasIdSubscribers = idSubscribers.$length > 0,
             hasClassNameSubscribers = classNameSubscribers.$length > 0,
             hasSelectorSubscribers = selectorSubscribers.length > 0,
+            hasAllSubscribers = subscribers.all > 0,
             isClassNameHandled = {},
             args = [event],
             hasDispatched = false,
             classNameSplitRegex = this.classNameSplitRegex,
-            allSelector = this.SELECTOR_ALL,
             i, ln, j, subLn, target, id, className, classNames, selector;
 
         for (i = 0,ln = targets.length; i < ln; i++) {
@@ -306,33 +320,31 @@ Ext.define('Ext.event.publisher.Dom', {
             }
         }
 
+        if (hasAllSubscribers && !hasDispatched) {
+            event.setDelegatedTarget(event.browserEvent.target);
+            hasDispatched = true;
+            this.dispatch(this.ALL_SELECTOR, eventName, args);
+            if (event.isStopped) {
+                return hasDispatched;
+            }
+        }
+
         if (hasSelectorSubscribers) {
-            for (i = 0,ln = selectorSubscribers.length; i < ln; i++) {
-                selector = selectorSubscribers[i];
+            for (j = 0,subLn = targets.length; j < subLn; j++) {
+                target = targets[j];
 
-                if (selector === allSelector && !hasDispatched) {
-                    event.setDelegatedTarget(event.browserEvent.target);
-                    hasDispatched = true;
-                    this.dispatch(allSelector, eventName, args);
-                }
-                else {
-                    for (j = 0,subLn = targets.length; j < subLn; j++) {
-                        target = targets[j];
+                for (i = 0,ln = selectorSubscribers.length; i < ln; i++) {
+                    selector = selectorSubscribers[i];
 
-                        if (this.matchesSelector(target, selector)) {
-                            event.setDelegatedTarget(target);
-                            hasDispatched = true;
-                            this.dispatch(selector, eventName, args);
-                        }
-
-                        if (event.isStopped) {
-                            return hasDispatched;
-                        }
+                    if (this.matchesSelector(target, selector)) {
+                        event.setDelegatedTarget(target);
+                        hasDispatched = true;
+                        this.dispatch(selector, eventName, args);
                     }
-                }
 
-                if (event.isStopped) {
-                    return hasDispatched;
+                    if (event.isStopped) {
+                        return hasDispatched;
+                    }
                 }
             }
         }

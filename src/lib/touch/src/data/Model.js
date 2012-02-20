@@ -392,7 +392,15 @@ Ext.define('Ext.data.Model', {
          * @static
          * @inheritable
          */
-        load: function(id, config) {
+        load: function(id, config, scope) {
+            scope = config.scope || this;
+            if (Ext.isFunction(config)) {
+                config = {
+                    callback: config,
+                    scope: scope
+                };
+            }
+
             config = Ext.apply({}, config);
             config = Ext.applyIf(config, {
                 action: 'read',
@@ -403,7 +411,6 @@ Ext.define('Ext.data.Model', {
             });
 
             var operation  = Ext.create('Ext.data.Operation', config),
-                scope      = config.scope || this,
                 proxy      = this.getProxy(),
                 record     = null,
                 callback;
@@ -541,7 +548,7 @@ Ext.define('Ext.data.Model', {
 
         return this;
     },
-    
+
     /**
      * @method getData
      * Returns the current field data for this Model instance.
@@ -693,7 +700,6 @@ Ext.define('Ext.data.Model', {
          * If we're passed an object, iterate over that object. NOTE: we pull out fields with a convert function and
          * set those last so that all other possible data is set before the convert function is called
          */
-        //See https://sencha.jira.com/browse/TOUCH-1486
         if (arguments.length == 1) {
             for (key in fieldName) {
                 if (fieldName.hasOwnProperty(key)) {
@@ -900,8 +906,7 @@ Ext.define('Ext.data.Model', {
     save: function(options, scope) {
         var me     = this,
             action = me.phantom ? 'create' : 'update',
-            record = null,
-            proxy  = this.getProxy(),
+            proxy  = me.getProxy(),
             operation,
             callback;
 
@@ -922,19 +927,19 @@ Ext.define('Ext.data.Model', {
         Ext.applyIf(options, {
             records: [me],
             action : action,
-            model: this.self
+            model: me.self
         });
 
         operation = Ext.create('Ext.data.Operation', options);
 
         callback = function(operation) {
             if (operation.wasSuccessful()) {
-                Ext.callback(options.success, scope, [record, operation]);
+                Ext.callback(options.success, scope, [me, operation]);
             } else {
-                Ext.callback(options.failure, scope, [record, operation]);
+                Ext.callback(options.failure, scope, [me, operation]);
             }
 
-            Ext.callback(options.callback, scope, [record, operation]);
+            Ext.callback(options.callback, scope, [me, operation]);
         };
 
         proxy[action](operation, callback, me);
@@ -943,7 +948,10 @@ Ext.define('Ext.data.Model', {
     },
 
     /**
-     * Destroys the model instance using the configured proxy.
+     * Destroys the record using the configured proxy. This will create a 'destroy' operation.
+     * Note that this doesn't destroy this instance after the server comes back with a response.
+     * It will however call afterErase on any Stores it is joined to. Stores by default will
+     * automatically remove this instance from their data collection.
      * @param {Object} options Options to pass to the proxy. Config object for {@link Ext.data.Operation}.
      * @return {Ext.data.Model} The Model instance
      */
@@ -1303,6 +1311,18 @@ Ext.define('Ext.data.Model', {
             name   = pieces[pieces.length - 1].toLowerCase();
 
         return name + '/' + this.getId();
+    },
+
+    /**
+     * Destroys this model instance. Note that this doesn't do a 'destroy' operation. If you want to destroy
+     * the record in your localstorage or on the server you should use the {@link #erase} method.
+     */
+    destroy: function() {
+        var me = this;
+        me.notifyStores('afterErase', me);
+        Ext.data.Model.cache.remove(me);
+        me.data = me._data = me.raw = me.stores = me.modified = null;
+        me.callParent(arguments);
     },
 
     //<debug>

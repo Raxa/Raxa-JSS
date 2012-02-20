@@ -1,7 +1,7 @@
 Installing Sencha Touch
 -----------------------
 
-*Using Sencha Touch 2 beta 1. Removed the docs and examples folder to reduce codebase size. These can be viewed online.*
+*Using Sencha Touch 2 beta 2. Docs and examples are ignored from commit to reduce codebase size. These can be viewed online.*
 
 Download the Sencha Touch SDK from [here](http://www.sencha.com/products/touch/download/) and place (or symlink) the unzipped directory, renamed to <code>touch</code>, into the <code>lib</code> folder.
 

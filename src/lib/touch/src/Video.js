@@ -3,7 +3,7 @@
  *
  * ## Notes
  *
- * - There are quite a few issues with the <video> tag on Android devices. On Android 2+, the video will
+ * - There are quite a few issues with the `<video>` tag on Android devices. On Android 2+, the video will
  * appear and play on first attempt, but any attempt afterwards will not work.
  *
  * ## Useful Properties
@@ -77,15 +77,64 @@ Ext.define('Ext.Video', {
         me.callParent();
 
         me.media.hide();
+
+        me.onBefore({
+            erased: 'onErased',
+            scope: me
+        });
+
         me.ghost.on({
             tap: 'onGhostTap',
             scope: me
         });
 
         me.media.on({
-            scope: this,
-            pause: 'onPause'
+            pause: 'onPause',
+            scope: me
         });
+
+        if (Ext.os.is.Android4 || Ext.os.is.iPad) {
+            this.isInlineVideo = true;
+        }
+    },
+
+    applyUrl: function(url) {
+        return [].concat(url);
+    },
+
+    /**
+     * Sets the URL of the media element. If the media element already exists, it is update the src attribute of the
+     * element. If it is currently playing, it will start the new video.
+     */
+    updateUrl: function(newUrl) {
+        var me = this,
+            media = me.media,
+            newLn = newUrl.length,
+            existingSources = media.query('source'),
+            oldLn = existingSources.length,
+            i;
+
+
+        for (i = 0; i < oldLn; i++) {
+            Ext.fly(existingSources[i]).destroy();
+        }
+
+        for (i = 0; i < newLn; i++) {
+            media.appendChild(Ext.Element.create({
+                tag: 'source',
+                src: newUrl[i]
+            }));
+        }
+
+        if (me.getPlaying()) {
+            me.play();
+        }
+    },
+
+    onErased: function() {
+        this.pause();
+        this.media.setTop(-2000);
+        this.ghost.show();
     },
 
     /**
@@ -93,32 +142,41 @@ Ext.define('Ext.Video', {
      * Called when the {@link #ghost} element is tapped.
      */
     onGhostTap: function() {
-        var me = this;
+        var me = this,
+            media = this.media,
+            ghost = this.ghost;
 
-        me.media.show();
-
-        this.media.setTop(0);
-
-        if (Ext.os.is.Android) {
+        media.show();
+        if (Ext.os.is.Android2) {
             setTimeout(function() {
                 me.play();
-            }, 200);
+                setTimeout(function() {
+                    media.hide();
+                }, 10);
+            }, 10);
         } else {
-            me.ghost.hide();
-            me.media.dom.play();
+            // Browsers which support native video tag display only, move the media down so
+            // we can control the Viewport
+            ghost.hide();
+            me.play();
+            setTimeout(function() {
+                me.play();
+            }, 10);
         }
     },
 
+    // native video tag display only only, move the media down so we can control the Viewport
     onPause: function() {
         this.callParent(arguments);
-
-        this.media.setTop(-2000);
-        this.ghost.show();
+        if (!this.isInlineVideo) {
+            this.media.setTop(-2000);
+            this.ghost.show();
+        }
     },
 
+    // native video tag display only only, move the media down so we can control the Viewport
     onPlay: function() {
         this.callParent(arguments);
-
         this.media.setTop(0);
     },
 

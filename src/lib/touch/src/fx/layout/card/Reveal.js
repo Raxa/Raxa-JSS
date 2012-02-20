@@ -7,8 +7,6 @@ Ext.define('Ext.fx.layout.card.Reveal', {
     alias: 'fx.layout.card.reveal',
 
     config: {
-        reverse: null,
-
         inAnimation: {
             easing: 'ease-out',
             from: {

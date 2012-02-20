@@ -28,7 +28,7 @@
  *
  * [getting_started]: #!/guide/getting_started
  */
-Ext.setVersion('touch', '2.0.0.beta1');
+Ext.setVersion('touch', '2.0.0.beta2');
 
 Ext.apply(Ext, {
     /**
@@ -189,7 +189,7 @@ Ext.apply(Ext, {
                     arg.destroy();
                 }
                 else if (arg.dom) {
-                    arg.remove();
+                    arg.destroy();
                 }
             }
         }
@@ -536,6 +536,10 @@ function(el){
                 if (data.viewport) {
                     Ext.Viewport = viewport = data.viewport;
 
+                    if (!scope) {
+                        scope = viewport;
+                    }
+
                     //<deprecated product=touch since=2.0>
                     Ext.getOrientation = function() {
                         //<debug warn>
@@ -561,49 +565,59 @@ function(el){
          */
 
         if (!document.body) {
+            var phoneIcon = config.phoneIcon,
+                tabletIcon = config.tabletIcon,
+                tabletStartupScreen = config.tabletStartupScreen,
+                statusBarStyle = config.statusBarStyle,
+                phoneStartupScreen = config.phoneStartupScreen,
+                isIpad = Ext.os.is.iPad;
             // Inject meta viewport tag
             document.write(
                 '<meta id="extViewportMeta" ' +
                        'name="viewport" ' +
-                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />');
+                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">');
             document.write('<meta name="apple-mobile-web-app-capable" content="yes">');
             document.write('<meta name="apple-touch-fullscreen" content="yes">');
 
             //status bar style
-            if (Ext.isString(config.statusBarStyle)) {
-                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + config.statusBarStyle + '">');
+            if (Ext.isString(statusBarStyle)) {
+                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + statusBarStyle + '">');
             }
 
             //startup screens
-            if (config.tabletStartupScreen && Ext.os.is.iPad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + config.tabletStartupScreen + '">');
+            if (tabletStartupScreen && isIpad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + tabletStartupScreen + '">');
             }
 
-            if (config.phoneStartupScreen && !Ext.os.is.iPad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + config.phoneStartupScreen + '">');
+            if (phoneStartupScreen && !isIpad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + phoneStartupScreen + '">');
             }
 
             // icon
-            if (Ext.isString(config.icon) || Ext.isString(config.phoneIcon) || Ext.isString(config.tabletIcon)) {
+            if (Ext.isString(icon) || Ext.isString(phoneIcon) || Ext.isString(tabletIcon)) {
                 icon = {
-                    '57': config.phoneIcon || config.tabletIcon || config.icon,
-                    '72': config.tabletIcon || config.phoneIcon || config.icon,
-                    '114': config.phoneIcon || config.tabletIcon || config.icon
+                    '57': phoneIcon || tabletIcon || icon,
+                    '72': tabletIcon || phoneIcon || icon,
+                    '114': phoneIcon || tabletIcon || icon
                 };
             }
 
             precomposed = (config.glossOnIcon === false) ? '-precomposed' : '';
 
             if (icon) {
-                if (Ext.os.is.iPad && icon['72']) {
-                    document.write('<link rel="apple-touch-icon' + precomposed + '" sizes="72x72" href="' + icon['72'] + '">');
+                var icon72 = icon['72'],
+                    icon57 = icon['57'],
+                    icon114 = icon['114'],
+                    iconString = '<link rel="apple-touch-icon';
+                if (isIpad && icon72) {
+                    document.write(iconString + precomposed + '" sizes="72x72" href="' + icon72 + '">');
                 }
-                else if (!Ext.os.is.iPad) {
-                    if (icon['57']) {
-                        document.write('<link rel="apple-touch-icon' + precomposed + '" href="' + icon['57'] + '">');
+                else if (!isIpad) {
+                    if (icon57) {
+                        document.write(iconString + precomposed + '" href="' + icon57 + '">');
                     }
-                    if (icon['114']) {
-                        document.write('<link rel="apple-touch-icon' + precomposed + '" sizes="114x114" href="' + icon['114'] + '">');
+                    if (icon114) {
+                        document.write(iconString + precomposed + '" sizes="114x114" href="' + icon114 + '">');
                     }
                 }
             }
@@ -1231,7 +1245,7 @@ function(el){
                 scope: scope
             });
 
-            if (Ext.browser.is.PhoneGap) {
+            if (Ext.browser.is.PhoneGap && !Ext.os.is.Desktop) {
                 if (!Ext.readyListenerAttached) {
                     Ext.readyListenerAttached = true;
                     document.addEventListener('deviceready', triggerFn, false);

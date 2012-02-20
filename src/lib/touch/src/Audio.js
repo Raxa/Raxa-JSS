@@ -127,34 +127,10 @@ Ext.define('Ext.Audio', {
         }
     },
 
-    getTemplate: function() {
-        var clsPrefix = Ext.baseCSSPrefix;
-
-        if (Ext.feature.has.Audio) {
-            return [{
-                reference: 'media',
-                tag: 'audio',
-                classList: [clsPrefix + 'component']
-            }];
-        } else {
-            return [{
-                reference: 'media',
-                tag: 'audio',
-                classList: [clsPrefix + 'component']
-            }];
-
-            // return {
-            //     reference: 'element',
-            //     classList: [clsPrefix + 'outer'],
-            //     children: [{
-            //         reference: 'element',
-            //         tag: 'embed',
-            //         type: 'audio/mpeg',
-            //         target: 'myself',
-            //         controls: 'true',
-            //         classList: [clsPrefix + 'component']
-            //     }]
-            // };
-        }
-    }
+    template: [{
+        reference: 'media',
+        preload: 'auto',
+        tag: 'audio',
+        cls: Ext.baseCSSPrefix + 'component'
+    }]
 });

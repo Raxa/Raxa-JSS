@@ -10,7 +10,13 @@ Ext.application({
     tabletStartupScreen: 'resources/img/icon.png',
     
     models: [], // List of Models for dynamic loading
-    views: ['PatientProfile', 'Vitals'], // List of Views for dynamic loading
+    views: ['Confirmation', 'PatientProfile', 'Vitals'], // List of Views for dynamic loading
+	views: [], // List of Views for dynamic loading
     controllers: [], // List of Controllers for dynamic loading
-    store: [] // List of Stores for dynamic loading
+    store: [], // List of Stores for dynamic loading
+
+	launch: function(){
+		Ext.create('Confirmation');
+	}
 });
+

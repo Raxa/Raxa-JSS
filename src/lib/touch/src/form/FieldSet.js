@@ -51,13 +51,7 @@ Ext.define('Ext.form.FieldSet', {
          * @cfg {String} instructions Optional fieldset instructions, rendered just below the grouped fields
          * @accessor
          */
-        instructions: null,
-
-        // @inherit
-        layout: {
-            type : 'vbox',
-            align: 'stretch'
-        }
+        instructions: null
     },
 
     // @private

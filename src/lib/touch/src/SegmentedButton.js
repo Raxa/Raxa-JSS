@@ -6,7 +6,7 @@
  *
  * - {@link #allowMultiple}
  *
- * # Example usage:
+ * ## Example usage:
  *
  *     var segmentedButton = new Ext.SegmentedButton({
  *         allowMultiple: true,
@@ -89,6 +89,8 @@ Ext.define('Ext.SegmentedButton', {
 
     initialize: function() {
         var me = this;
+
+        me.callParent();
 
         me.on({
             delegate: '> button',

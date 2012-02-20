@@ -422,17 +422,17 @@ Ext.define('Ext.app.Controller', {
 
         for (url in routes) {
             route = routes[url];
-            
+
             config = {
                 controller: parts[parts.length - 1]
             };
-            
+
             if (Ext.isString(route)) {
                 config.action = route;
             } else {
                 Ext.apply(config, route);
             }
-            
+
             router.connect(url, config);
         }
 

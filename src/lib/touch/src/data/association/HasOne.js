@@ -8,7 +8,7 @@
  *     Ext.define('Person', {
  *         extend: 'Ext.data.Model',
  *         fields: [
- *             { name: 'id',   type: 'int' },
+ *             { name: 'id', type: 'int' },
  *             { name: 'name', type: 'string' },
  *             { name: 'address_id', type: 'int'}
  *         ]
@@ -17,14 +17,14 @@
  *     Ext.define('Address', {
  *         extend: 'Ext.data.Model',
  *         fields: [
- *             { name: 'id',          type: 'int' },
+ *             { name: 'id', type: 'int' },
  *             { name: 'number', type: 'string' },
  *             { name: 'street', type: 'string' },
  *             { name: 'city', type: 'string' },
  *             { name: 'zip', type: 'string' },
  *         ],
  *         // we can use the hasOne shortcut on the model to create a hasOne association
- *         associations: { type: 'hasOne', model: 'Address' }
+ *         associations: { type: 'hasOne', model: 'Person' }
  *     });
  *
  * In the example above we have created models for People and Addresses, and linked them together
@@ -312,7 +312,6 @@ Ext.define('Ext.data.association.HasOne', {
                 args = [instance];
                 scope = scope || model;
 
-                //See https://sencha.jira.com/browse/TOUCH-1483
                 Ext.callback(options, scope, args);
                 Ext.callback(options.success, scope, args);
                 Ext.callback(options.failure, scope, args);
@@ -332,7 +331,7 @@ Ext.define('Ext.data.association.HasOne', {
      */
     read: function(record, reader, associationData) {
         var inverse = this.getAssociatedModel().associations.findBy(function(assoc) {
-            return assoc.type === 'belongsTo' && assoc.getAssociatedName() === record.$className;
+            return assoc.getType() === 'belongsTo' && assoc.getAssociatedName() === record.$className;
         }), newRecord = reader.read([associationData]).getRecords()[0];
 
         record[this.getInstanceName()] = newRecord;

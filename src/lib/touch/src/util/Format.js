@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.util.Format', {
     requires: [
-        // See https://sencha.jira.com/browse/TOUCH-1549
         'Ext.DateExtras'
     ],
 

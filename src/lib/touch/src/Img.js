@@ -46,9 +46,24 @@ Ext.define('Ext.Img', {
      * @param {Ext.EventObject} e The event object
      */
 
+    /**
+     * @event load
+     * Fires when the image is loaded
+     * @param {Ext.Img} this The Image instance
+     * @param {Ext.EventObject} e The event object
+     */
+
+    /**
+     * @event error
+     * Fires if an error occured when trying to load the image
+     * @param {Ext.Img} this The Image instance
+     * @param {Ext.EventObject} e The event object
+     */
+
     config: {
         /**
          * @cfg {String} src The source of this image
+         * @accessor
          */
         src: null,
 
@@ -56,6 +71,12 @@ Ext.define('Ext.Img', {
         baseCls: Ext.baseCSSPrefix + 'img',
 
         mode: 'background'
+    },
+
+    beforeInitialize: function() {
+        var me = this;
+        me.onLoad = Ext.Function.bind(me.onLoad, me);
+        me.onError = Ext.Function.bind(me.onError, me);
     },
 
     initialize: function() {
@@ -109,12 +130,43 @@ Ext.define('Ext.Img', {
      * @private
      */
     updateSrc: function(newSrc) {
-        if (this.getMode() === 'background') {
-            this.element.dom.style.backgroundImage = newSrc ? 'url("' + newSrc + '")' : '';
+        var me = this,
+            dom;
+
+        if (me.getMode() === 'background') {
+            dom = this.imageObject || new Image();
         }
         else {
-            this.imageElement.dom.setAttribute('src', newSrc);
+            dom = me.imageElement.dom;
         }
+
+        this.imageObject = dom;
+
+        dom.setAttribute('src', newSrc);
+        dom.addEventListener('load', me.onLoad, false);
+        dom.addEventListener('error', me.onError, false);
+    },
+
+    detachListeners: function() {
+        var dom = this.imageObject;
+
+        dom.removeEventListener('load', this.onLoad, false);
+        dom.removeEventListener('error', this.onError, false);
+    },
+
+    onLoad : function(e) {
+        this.detachListeners();
+
+        if (this.getMode() === 'background') {
+            this.element.dom.style.backgroundImage = 'url("' + this.imageObject.src + '")';
+        }
+
+        this.fireEvent('load', this, e);
+    },
+
+    onError : function(e) {
+        this.detachListeners();
+        this.fireEvent('error', this, e);
     },
 
     doSetWidth: function(width) {
@@ -134,9 +186,10 @@ Ext.define('Ext.Img', {
     },
 
     destroy: function() {
-        if (this.imageElement) {
-            this.imageElement.destroy();
-        }
+        this.detachListeners();
+
+        Ext.destroy(this.imageElement);
+        delete this.imageObject;
 
         this.callParent();
     }

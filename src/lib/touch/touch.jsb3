@@ -8,35 +8,35 @@
             "id": "foundation",
             "files": [
                 {
-                    "path": "../platform/core/src/",
+                    "path": "src/core/",
                     "name": "Ext.js"
                 },
                 {
-                    "path": "../platform/core/src/version/",
+                    "path": "src/core/version/",
                     "name": "Version.js"
                 },
                 {
-                    "path": "../platform/core/src/lang/",
+                    "path": "src/core/lang/",
                     "name": "String.js"
                 },
                 {
-                    "path": "../platform/core/src/lang/",
+                    "path": "src/core/lang/",
                     "name": "Array.js"
                 },
                 {
-                    "path": "../platform/core/src/lang/",
+                    "path": "src/core/lang/",
                     "name": "Number.js"
                 },
                 {
-                    "path": "../platform/core/src/lang/",
+                    "path": "src/core/lang/",
                     "name": "Object.js"
                 },
                 {
-                    "path": "../platform/core/src/lang/",
+                    "path": "src/core/lang/",
                     "name": "Function.js"
                 },
                 {
-                    "path": "../platform/core/src/misc/",
+                    "path": "src/core/lang/",
                     "name": "JSON.js"
                 },
                 {
@@ -48,19 +48,19 @@
                     "name": "Date.js"
                 },
                 {
-                    "path": "../platform/core/src/class/",
+                    "path": "src/core/class/",
                     "name": "Base.js"
                 },
                 {
-                    "path": "../platform/core/src/class/",
+                    "path": "src/core/class/",
                     "name": "Class.js"
                 },
                 {
-                    "path": "../platform/core/src/class/",
+                    "path": "src/core/class/",
                     "name": "ClassManager.js"
                 },
                 {
-                    "path": "../platform/core/src/class/",
+                    "path": "src/core/class/",
                     "name": "Loader.js"
                 }
             ]
@@ -158,12 +158,12 @@
                     "clsName": "Ext.ComponentManager"
                 },
                 {
-                    "path": "../platform/src/",
+                    "path": "src/",
                     "name": "ComponentQuery.js",
                     "clsName": "Ext.ComponentQuery"
                 },
                 {
-                    "path": "../platform/src/",
+                    "path": "src/",
                     "name": "XTemplateParser.js",
                     "clsName": "Ext.XTemplateParser"
                 },
@@ -236,6 +236,11 @@
                     "path": "src/data/writer/",
                     "name": "Writer.js",
                     "clsName": "Ext.data.writer.Writer"
+                },
+                {
+                    "path": "src/data/writer/",
+                    "name": "Xml.js",
+                    "clsName": "Ext.data.writer.Xml"
                 },
                 {
                     "path": "src/dom/",
@@ -349,11 +354,6 @@
                 },
                 {
                     "path": "src/util/",
-                    "name": "JSONP.js",
-                    "clsName": "Ext.util.JSONP"
-                },
-                {
-                    "path": "src/util/",
                     "name": "Point.js",
                     "clsName": "Ext.util.Point"
                 },
@@ -378,7 +378,7 @@
                     "clsName": "Ext.Anim"
                 },
                 {
-                    "path": "../platform/src/",
+                    "path": "src/",
                     "name": "XTemplateCompiler.js",
                     "clsName": "Ext.XTemplateCompiler"
                 },
@@ -538,6 +538,11 @@
                     "clsName": "Ext.Evented"
                 },
                 {
+                    "path": "src/",
+                    "name": "AbstractComponent.js",
+                    "clsName": "Ext.AbstractComponent"
+                },
+                {
                     "path": "src/app/",
                     "name": "Controller.js",
                     "clsName": "Ext.app.Controller"
@@ -571,11 +576,6 @@
                     "path": "src/",
                     "name": "Ajax.js",
                     "clsName": "Ext.Ajax"
-                },
-                {
-                    "path": "src/data/",
-                    "name": "Tree.js",
-                    "clsName": "Ext.data.Tree"
                 },
                 {
                     "path": "src/data/reader/",
@@ -621,6 +621,11 @@
                     "path": "src/data/proxy/",
                     "name": "LocalStorage.js",
                     "clsName": "Ext.data.proxy.LocalStorage"
+                },
+                {
+                    "path": "src/data/proxy/",
+                    "name": "SessionStorage.js",
+                    "clsName": "Ext.data.proxy.SessionStorage"
                 },
                 {
                     "path": "src/data/reader/",
@@ -733,6 +738,11 @@
                     "clsName": "Ext.fx.layout.card.Slide"
                 },
                 {
+                    "path": "src/fx/layout/",
+                    "name": "Card.js",
+                    "clsName": "Ext.fx.layout.Card"
+                },
+                {
                     "path": "src/fx/runner/",
                     "name": "Css.js",
                     "clsName": "Ext.fx.runner.Css"
@@ -759,6 +769,11 @@
                 },
                 {
                     "path": "src/layout/",
+                    "name": "Card.js",
+                    "clsName": "Ext.layout.Card"
+                },
+                {
+                    "path": "src/layout/",
                     "name": "HBox.js",
                     "clsName": "Ext.layout.HBox"
                 },
@@ -766,6 +781,11 @@
                     "path": "src/layout/",
                     "name": "VBox.js",
                     "clsName": "Ext.layout.VBox"
+                },
+                {
+                    "path": "src/layout/",
+                    "name": "Layout.js",
+                    "clsName": "Ext.layout.Layout"
                 },
                 {
                     "path": "src/log/writer/",
@@ -798,12 +818,12 @@
                     "clsName": "Ext.util.Format"
                 },
                 {
-                    "path": "../platform/src/",
+                    "path": "src/",
                     "name": "Template.js",
                     "clsName": "Ext.Template"
                 },
                 {
-                    "path": "../platform/src/",
+                    "path": "src/",
                     "name": "XTemplate.js",
                     "clsName": "Ext.XTemplate"
                 },
@@ -823,7 +843,7 @@
                     "clsName": "Ext.util.HashMap"
                 },
                 {
-                    "path": "../platform/src/",
+                    "path": "src/",
                     "name": "AbstractManager.js",
                     "clsName": "Ext.AbstractManager"
                 },
@@ -986,11 +1006,6 @@
                     "path": "src/behavior/",
                     "name": "Draggable.js",
                     "clsName": "Ext.behavior.Draggable"
-                },
-                {
-                    "path": "src/",
-                    "name": "AbstractComponent.js",
-                    "clsName": "Ext.AbstractComponent"
                 },
                 {
                     "path": "src/",
@@ -1223,31 +1238,6 @@
                     "clsName": "Ext.fx.Runner"
                 },
                 {
-                    "path": "src/fx/layout/card/",
-                    "name": "ScrollCover.js",
-                    "clsName": "Ext.fx.layout.card.ScrollCover"
-                },
-                {
-                    "path": "src/fx/layout/card/",
-                    "name": "ScrollReveal.js",
-                    "clsName": "Ext.fx.layout.card.ScrollReveal"
-                },
-                {
-                    "path": "src/fx/layout/",
-                    "name": "Card.js",
-                    "clsName": "Ext.fx.layout.Card"
-                },
-                {
-                    "path": "src/layout/",
-                    "name": "Card.js",
-                    "clsName": "Ext.layout.Card"
-                },
-                {
-                    "path": "src/layout/",
-                    "name": "Layout.js",
-                    "clsName": "Ext.layout.Layout"
-                },
-                {
                     "path": "src/scroll/scroller/",
                     "name": "CssPosition.js",
                     "clsName": "Ext.scroll.scroller.CssPosition"
@@ -1418,6 +1408,21 @@
                     "clsName": "Ext.tab.Panel"
                 },
                 {
+                    "path": "src/table/",
+                    "name": "Cell.js",
+                    "clsName": "Ext.table.Cell"
+                },
+                {
+                    "path": "src/table/",
+                    "name": "Row.js",
+                    "clsName": "Ext.table.Row"
+                },
+                {
+                    "path": "src/table/",
+                    "name": "Table.js",
+                    "clsName": "Ext.table.Table"
+                },
+                {
                     "path": "src/viewport/",
                     "name": "Default.js",
                     "clsName": "Ext.viewport.Default"
@@ -1481,7 +1486,7 @@
             "compress": false,
             "options": {
                 "product": "touch",
-                "minVersion": 3,
+                "minVersion": 2,
                 "debug": true,
                 "logger": "yes"
             },
@@ -1529,10 +1534,6 @@
     "resources": [
         {
             "src": "src/",
-            "dest": "src"
-        },
-        {
-            "src": "../platform/src/",
             "dest": "src"
         },
         {

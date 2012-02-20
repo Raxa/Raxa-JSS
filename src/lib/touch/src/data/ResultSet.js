@@ -23,7 +23,7 @@ Ext.define('Ext.data.ResultSet', {
          * The total number of records reported by the data source. This ResultSet may form a subset of
          * those records (see {@link #count}).
          */
-        total: 0,
+        total: null,
 
         /**
          * @cfg {Boolean} success

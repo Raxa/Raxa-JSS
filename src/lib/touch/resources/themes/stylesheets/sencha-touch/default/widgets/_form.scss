@@ -306,6 +306,15 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
   }
 
+  .x-field.x-item-disabled {
+    .x-input-radio,
+    .x-input-checkbox {
+      &:checked:after {
+        @include checkmark(mix($form-light, $active-color, 70));
+      }
+    }
+  }
+
   // Ext.field.Spinner
   .x-spinner {
     .x-component-outer {
@@ -407,6 +416,19 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
   }
 
+  .x-field-search {
+    .x-field-input {
+      background-image: -webkit-gradient(linear,0% 0%,0% 100%,from(rgba($toolbar-input-bg,.6))), theme_image($theme-name, "pictos/search.png");
+      -webkit-background-size: .83em .83em, .83em .83em;
+      background-repeat: no-repeat;
+      background-position: .5em 50%;
+
+      .x-form-field {
+        margin-left: $toolbar-search-left-padding - 0.67em;
+      }
+    }
+  }
+
   //clear icon
   $form-clear-size: 1.1em;
 
@@ -454,6 +476,7 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
   //disabled fields
   .x-item-disabled .x-form-label span,
   .x-item-disabled input,
+  .x-item-disabled .x-input-el,
   .x-item-disabled .x-spinner-body,
   .x-item-disabled select,
   .x-item-disabled textarea,

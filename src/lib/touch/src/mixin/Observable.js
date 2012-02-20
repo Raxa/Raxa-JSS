@@ -5,7 +5,7 @@
  * Classes can also define a {@link #listeners} config to add an event hanler to the current object. See
  * {@link #addListener} for more details.
  *
- * # Example
+ * ## Example
  *
  *     Ext.define('Employee', {
  *         mixins: ['Ext.mixin.Observable'],
@@ -473,6 +473,14 @@ Ext.define('Ext.mixin.Observable', {
      * - **single** : Boolean
      *
      *   True to add a handler to handle just the next firing of the event, and then remove itself.
+     *
+     * - **order** : String
+     *
+     *   The order of when the listener should be added into the listener queue.
+     *
+     *   If you set an order of `before` and the event you are listening to is preventable, you can return `false` and it will stop the event.
+     *
+     *   Available options are `before`, `current` and `after`. Defaults to `current`.
      *
      * - **buffer** : Number
      *

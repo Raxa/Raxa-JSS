@@ -28,6 +28,7 @@ Ext.define('Ext.env.Browser', {
             opera: 'Opera',
             dolfin: 'Dolfin',
             webosbrowser: 'webOSBrowser',
+            chromeMobile: 'ChromeMobile',
             other: 'Other'
         },
         engineNames: {
@@ -50,7 +51,8 @@ Ext.define('Ext.env.Browser', {
             safari: 'Version/',
             opera: 'Opera/',
             dolfin: 'Dolfin/',
-            webosbrowser: 'wOSBrowser/'
+            webosbrowser: 'wOSBrowser/',
+            chromeMobile: 'CrMo/'
         }
     },
 

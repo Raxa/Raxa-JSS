@@ -7,8 +7,6 @@ Ext.define('Ext.fx.layout.card.Slide', {
     alias: 'fx.layout.card.slide',
 
     config: {
-        reverse: null,
-
         inAnimation: {
             type: 'slide',
             easing: 'ease-out'

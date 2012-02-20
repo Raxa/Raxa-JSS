@@ -25,8 +25,7 @@ Ext.define('Ext.fx.layout.card.Style', {
     },
 
     constructor: function(config) {
-        var animationConfig = {},
-            name, inAnimation, outAnimation;
+        var inAnimation, outAnimation;
 
         this.initConfig(config);
 
@@ -38,16 +37,9 @@ Ext.define('Ext.fx.layout.card.Style', {
         inAnimation.on('animationend', 'incrementEnd', this);
         outAnimation.on('animationend', 'incrementEnd', this);
 
-        for (name in config) {
-            if (config.hasOwnProperty(name)) {
-                if (!this.hasConfig(name)) {
-                    animationConfig[name] = config[name];
-                }
-            }
-        }
 
-        inAnimation.setConfig(animationConfig);
-        outAnimation.setConfig(animationConfig);
+        inAnimation.setConfig(config);
+        outAnimation.setConfig(config);
     },
 
     incrementEnd: function() {
@@ -78,8 +70,7 @@ Ext.define('Ext.fx.layout.card.Style', {
     onActiveItemChange: function(cardLayout, newItem, oldItem, options, controller) {
         var inAnimation = this.getInAnimation(),
             outAnimation = this.getOutAnimation(),
-            inElement, outElement,
-            previousInElement, previousOutElement;
+            inElement, outElement, previousInElement, previousOutElement;
 
         if (newItem && oldItem) {
             inElement = newItem.renderElement;

@@ -10,7 +10,9 @@ Ext.define('Ext.scroll.indicator.Abstract', {
 
         length: null,
 
-        hidden: true
+        hidden: true,
+
+        ui: 'dark'
     },
 
     cachedConfig: {

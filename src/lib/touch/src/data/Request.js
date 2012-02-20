@@ -77,6 +77,13 @@ Ext.define('Ext.data.Request', {
          */
         jsonData: null,
 
+        /**
+         * @cfg {Object} xmlData
+         * This is used by some write actions to attach data to the request without encoding it
+         * as a parameter, but instead sending it as XML.
+         */
+        xmlData: null,
+
         callback: null,
         scope: null,
         timeout: 30000,

@@ -50,14 +50,13 @@ Ext.define('Ext.scroll.Scroller', {
 
         scrollMethod: 'auto'
     },
-    
+
     constructor: function(config) {
         var namespace = Ext.scroll.scroller,
             ScrollPosition = namespace.ScrollPosition,
             CssTransform = namespace.CssTransform,
             CssPosition = namespace.CssPosition,
             Scroller = ScrollPosition,
-            osName = Ext.os.name,
             osVersion = Ext.os.version,
             userAgent = Ext.browser.userAgent,
             scrollMethod, fps, element;
@@ -116,7 +115,7 @@ Ext.define('Ext.scroll.Scroller', {
                 break;
 
             case 'auto':
-                if (/^(iOS|RIMTablet|MacOS|Windows)$/.test(osName) || Ext.os.is.BlackBerry) {
+                if (!Ext.os.is.Android2) {
                     Scroller = CssTransform;
                 }
                 break;

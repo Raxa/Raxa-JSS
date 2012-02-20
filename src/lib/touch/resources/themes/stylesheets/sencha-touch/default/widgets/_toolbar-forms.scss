@@ -128,14 +128,7 @@ $toolbar-search-left-padding: 1.67em;
 
     .x-field-search {
       .x-field-input {
-        background-image: -webkit-gradient(linear,0% 0%,0% 100%,from(rgba($toolbar-input-bg,.6))), theme_image($theme-name, "pictos/search.png");
-        -webkit-background-size: .83em .83em, .83em .83em;
-        background-repeat: no-repeat;
         background-position: .5em 50%;
-
-        .x-form-field {
-          margin-left: $toolbar-search-left-padding - 0.67em;
-        }
       }
     }
 

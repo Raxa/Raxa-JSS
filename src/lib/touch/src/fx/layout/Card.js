@@ -10,9 +10,7 @@ Ext.define('Ext.fx.layout.Card', {
         'Ext.fx.layout.card.Flip',
         'Ext.fx.layout.card.Pop',
         'Ext.fx.layout.card.Cube',
-        'Ext.fx.layout.card.Scroll',
-        'Ext.fx.layout.card.ScrollCover',
-        'Ext.fx.layout.card.ScrollReveal'
+        'Ext.fx.layout.card.Scroll'
     ],
 
     constructor: function(config) {
@@ -35,18 +33,14 @@ Ext.define('Ext.fx.layout.Card', {
         config.elementBox = false;
 
         if (type) {
+
             if (Ext.os.is.Android2) {
-                if (type == 'cover') {
-//                    type = 'scrollcover';
-                }
-                else if (type == 'reveal') {
-//                    type = 'scrollreveal';
-                }
-                // In Android we only support cover, reveal, slide, fade.  Otherwise force it to slide.
-                else if (type != 'fade') {
+                // In Android 2 we only support scroll and fade. Otherwise force it to slide.
+                if (type != 'fade') {
                     type = 'scroll';
                 }
             }
+
             defaultClass = Ext.ClassManager.getByAlias('fx.layout.card.' + type);
 
             //<debug error>

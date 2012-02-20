@@ -1,6 +1,11 @@
 /**
- * @private
+ * @class Ext.fx.easing.BoundMomentum
+ *
+ * This easing is typically used for {@link Ext.scroll.Scroller}. It's a combination of
+ * {@link Ext.fx.easing.Momentum} and {@link Ext.fx.easing.Bounce}, which emulates deceleration when the animated element
+ * is still within its boundary, then bouncing back (snapping) when it's out-of-bound.
  */
+
 Ext.define('Ext.fx.easing.BoundMomentum', {
     extend: 'Ext.fx.easing.Abstract',
 
@@ -10,16 +15,36 @@ Ext.define('Ext.fx.easing.BoundMomentum', {
     ],
 
     config: {
+        /**
+         * @cfg {Object} momentum
+         * A valid config object for {@link Ext.fx.easing.Momentum}
+         * @accessor
+         */
         momentum: null,
 
+        /**
+         * @cfg {Object} bounce
+         * A valid config object for {@link Ext.fx.easing.Bounce}
+         * @accessor
+         */
         bounce: null,
 
         minMomentumValue: 0,
 
         maxMomentumValue: 0,
 
+        /**
+         * @cfg {Number} minVelocity
+         * The minimum velocity to end this easing
+         * @accessor
+         */
         minVelocity: 0.01,
 
+        /**
+         * @cfg {Number} startVelocity
+         * The start velocity
+         * @accessor
+         */
         startVelocity: 0
     },
 

@@ -14,30 +14,31 @@ Ext.dom.Element.addMembers({
     BOTTOM: 'bottom',
     LEFT: 'left',
     /**
-     * @property
+     * @property VISIBILITY
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use visibility to hide element
      */
     VISIBILITY: 1,
 
     /**
-     * @property
+     * @property DISPLAY
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use display to hide element
      */
     DISPLAY: 2,
 
     /**
-     * @property
+     * @property OFFSETS
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use offsets to hide element
      */
     OFFSETS: 3,
 
     SEPARATOR: '-',
 
-    spacesRegex: /\s+/,
-
     trimRe: /^\s+|\s+$/g,
     wordsRe: /\w/g,
     spacesRe: /\s+/,
+    styleSplitRe: /\s*(?::|;)\s*/,
+    transparentRe: /^(?:transparent|(?:rgba[(](?:\s*\d+\s*[,]){3}\s*0\s*[)]))$/i,
+    classNameSplitRegex: /[\s]+/,
 
     borders: {
         t: 'border-top-width',
@@ -65,8 +66,6 @@ Ext.dom.Element.addMembers({
      * The default unit to append to CSS values where a unit isn't provided.
      */
     defaultUnit: "px",
-
-    classNameSplitRegex: /[\s]+/,
 
     isSynchronized: false,
 
@@ -125,7 +124,7 @@ Ext.dom.Element.addMembers({
         suffix = suffix ? SEPARATOR + suffix : '';
 
         if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
+            names = names.split(this.spacesRe);
         }
 
         for (i = 0, ln = names.length; i < ln; i++) {
@@ -171,7 +170,7 @@ Ext.dom.Element.addMembers({
         suffix = suffix ? SEPARATOR + suffix : '';
 
         if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
+            names = names.split(this.spacesRe);
         }
 
         for (i = 0, ln = names.length; i < ln; i++) {
@@ -560,12 +559,10 @@ Ext.dom.Element.addMembers({
         // well as the fact that 0/false are valid answers...
         result = (cs && cs[hook.name]); // || dom.style[hook.name];
 
-        // Webkit returns rgb values for transparent.
+        // Webkit returns rgb values for transparent, how does this work n IE9+
         //        if (!supportsTransparentColor && result == 'rgba(0, 0, 0, 0)') {
         //            result = 'transparent';
         //        }
-        // TODO - we should use isTransparent to handle this. The above is not a very
-        // reliable technique depending on the intent (e.g., rgba(255,0,0,0) is also transparent)
 
         return result;
     },
@@ -583,15 +580,14 @@ Ext.dom.Element.addMembers({
             hooks = me.styleHooks,
             style = dom.style,
             valueFrom = Ext.valueFrom,
-            name = prop,
-            hook;
+            name, hook;
 
         // we don't promote the 2-arg form to object-form to avoid the overhead...
-        if (typeof name == 'string') {
-            hook = hooks[name];
+        if (typeof prop == 'string') {
+            hook = hooks[prop];
 
             if (!hook) {
-                hooks[name] = hook = { name: statics.normalize(name) };
+                hooks[prop] = hook = { name: statics.normalize(prop) };
             }
             value = valueFrom(value, '');
 
@@ -675,20 +671,20 @@ Ext.dom.Element.addMembers({
      */
     applyStyles: function(styles) {
         if (styles) {
-            var i,
-                len,
-                dom = this.dom;
+            var dom = this.dom,
+                styleType, i, len;
 
             if (typeof styles == 'function') {
                 styles = styles.call();
             }
-            if (typeof styles == 'string') {
-                styles = Ext.util.Format.trim(styles).split(/\s*(?::|;)\s*/);
+            styleType = typeof styles;
+            if (styleType == 'string') {
+                styles = Ext.util.Format.trim(styles).split(this.styleSplitRe);
                 for (i = 0, len = styles.length; i < len;) {
-                    dom.style[Element.normalize(styles[i++])] = styles[i++];
+                    dom.style[Element.dom.normalize(styles[i++])] = styles[i++];
                 }
             }
-            else if (typeof styles == 'object') {
+            else if (styleType == 'object') {
                 this.setStyle(styles);
             }
         }
@@ -794,8 +790,6 @@ Ext.dom.Element.addMembers({
             };
         }
     },
-
-    transparentRe: /^(?:transparent|(?:rgba[(](?:\s*\d+\s*[,]){3}\s*0\s*[)]))$/i,
 
     /**
      * Returns true if the value of the given property is visually transparent. This

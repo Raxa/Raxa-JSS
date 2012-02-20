@@ -15,16 +15,48 @@ If you are unsure which license is appropriate for your use, please contact the 
 /**
  * @class Ext.EventManager
  *
- * This object is deprecated.
+ * This object has been deprecated in Sencha Touch 2.0.0. Please refer to the method documentation for specific alternatives.
  *
- * @deprecated
+ * @deprecated 2.0.0
  * @singleton
+ * @private
  */
 
 //<deprecated product=touch since=2.0>
 Ext.ns('Ext.core');
 Ext.core.EventManager =
 Ext.EventManager = {
+    /**
+     * Appends an event handler to an element.  The shorthand version {@link #on} is equivalent.  Typically you will
+     * use {@link Ext.Element#addListener} directly on an Element in favor of calling this version.
+     * @param {String/HTMLElement} el The html element or id to assign the event handler to.
+     * @param {String} eventName The name of the event to listen for.
+     * @param {Function} handler The handler function the event invokes. This function is passed
+     * the following parameters:<ul>
+     * <li>evt : EventObject<div class="sub-desc">The {@link Ext.EventObject EventObject} describing the event.</div></li>
+     * <li>t : Element<div class="sub-desc">The {@link Ext.Element Element} which was the target of the event.
+     * Note that this may be filtered by using the <tt>delegate</tt> option.</div></li>
+     * <li>o : Object<div class="sub-desc">The options object from the addListener call.</div></li>
+     * </ul>
+     * @param {Object} scope (optional) The scope (<b><code>this</code></b> reference) in which the handler function is executed. <b>Defaults to the Element</b>.
+     * @param {Object} options (optional) An object containing handler configuration properties.
+     * This may contain any of the following properties:<ul>
+     * <li>scope : Object<div class="sub-desc">The scope (<b><code>this</code></b> reference) in which the handler function is executed. <b>Defaults to the Element</b>.</div></li>
+     * <li>delegate : String<div class="sub-desc">A simple selector to filter the target or look for a descendant of the target</div></li>
+     * <li>stopEvent : Boolean<div class="sub-desc">True to stop the event. That is stop propagation, and prevent the default action.</div></li>
+     * <li>preventDefault : Boolean<div class="sub-desc">True to prevent the default action</div></li>
+     * <li>stopPropagation : Boolean<div class="sub-desc">True to prevent event propagation</div></li>
+     * <li>normalized : Boolean<div class="sub-desc">False to pass a browser event to the handler function instead of an Ext.EventObject</div></li>
+     * <li>delay : Number<div class="sub-desc">The number of milliseconds to delay the invocation of the handler after te event fires.</div></li>
+     * <li>single : Boolean<div class="sub-desc">True to add a handler to handle just the next firing of the event, and then remove itself.</div></li>
+     * <li>buffer : Number<div class="sub-desc">Causes the handler to be scheduled to run in an {@link Ext.util.DelayedTask} delayed
+     * by the specified number of milliseconds. If the event fires again within that time, the original
+     * handler is <em>not</em> invoked, but the new handler is scheduled in its place.</div></li>
+     * <li>target : Element<div class="sub-desc">Only call the handler if the event was fired on the target Element, <i>not</i> if the event was bubbled up from a child node.</div></li>
+     * </ul><br>
+     * <p>See {@link Ext.Element#addListener} for examples of how to use these options.</p>
+     * @deprecated 2.0.0 Please use {@link Ext.dom.Element#addListener addListener} on an instance of Ext.Element instead.
+     */
     addListener: function(element, eventName, fn, scope, options) {
         //<debug warn>
         Ext.Logger.deprecate("Ext.EventManager.addListener is deprecated, use addListener() directly from an instance of Ext.Element instead", 2);
@@ -32,6 +64,16 @@ Ext.EventManager = {
         element.on(eventName, fn, scope, options);
     },
 
+    /**
+     * Removes an event handler from an element.  The shorthand version {@link #un} is equivalent.  Typically
+     * you will use {@link Ext.Element#removeListener} directly on an Element in favor of calling this version.
+     * @param {String/HTMLElement} el The id or html element from which to remove the listener.
+     * @param {String} eventName The name of the event.
+     * @param {Function} fn The handler function to remove. <b>This must be a reference to the function passed into the {@link #addListener} call.</b>
+     * @param {Object} scope If a scope (<b><code>this</code></b> reference) was specified when the listener was added,
+     * then this must refer to the same object.
+     * @deprecated 2.0.0 Please use {@link Ext.dom.Element#removeListener removeListener} on an instance of Ext.Element instead.
+     */
     removeListener: function(element, eventName, fn, scope) {
         //<debug warn>
         Ext.Logger.deprecate("Ext.EventManager.removeListener is deprecated, use removeListener() directly from an instance of Ext.Element instead", 2);
@@ -39,6 +81,12 @@ Ext.EventManager = {
         element.un(eventName, fn, scope);
     },
 
+    /**
+     * Removes all event handers from an element.  Typically you will use {@link Ext.Element#clearListeners}
+     * directly on an Element in favor of calling this version.
+     * @param {String/HTMLElement} el The id or html element from which to remove all event handlers.
+     * @deprecated 2.0.0 Please use {@link Ext.dom.Element#clearListeners clearListeners} on an instance of Ext.Element instead.
+     */
     removeAll: function(element){
         //<debug warn>
         Ext.Logger.deprecate("Ext.EventManager.removeAll is deprecated, use clearListeners() directly from an instance of Ext.Element instead", 3);
@@ -46,6 +94,14 @@ Ext.EventManager = {
         Ext.get(element).clearListeners();
     },
 
+    /**
+     * Adds a listener to be notified when the browser window is resized and provides resize event buffering (50 milliseconds),
+     * passes new viewport width and height to handlers.
+     * @param {Function} fn      The handler function the window resize event invokes.
+     * @param {Object}   scope   The scope (<code>this</code> reference) in which the handler function executes. Defaults to the browser window.
+     * @param {Boolean}  options Options object as passed to {@link Ext.Element#addListener}
+     * @deprecated 2.0.0 Please listen to the {@link Ext.Viewport#event-resize resize} on Ext.Viewport instead.
+     */
     onWindowResize: function(fn, scope, options) {
         //<debug warn>
         Ext.Logger.deprecate("Ext.EventManager.onWindowResize is deprecated, attach listener to Ext.Viewport instead, i.e: Ext.Viewport.on('resize', ...)", 2);
@@ -68,7 +124,30 @@ Ext.EventManager = {
     }
 };
 
+/**
+* Appends an event handler to an element.  Shorthand for {@link #addListener}.
+* @param {String/HTMLElement} el The html element or id to assign the event handler to
+* @param {String} eventName The name of the event to listen for.
+* @param {Function} handler The handler function the event invokes.
+* @param {Object} scope (optional) (<code>this</code> reference) in which the handler function executes. <b>Defaults to the Element</b>.
+* @param {Object} options (optional) An object containing standard {@link #addListener} options
+* @member Ext.EventManager
+* @method on
+* @deprecated 2.0.0 Please use {@link Ext.dom.Element#addListener addListener} on an instance of Ext.Element instead.
+*/
 Ext.EventManager.on = Ext.EventManager.addListener;
+
+/**
+ * Removes an event handler from an element.  Shorthand for {@link #removeListener}.
+ * @param {String/HTMLElement} el The id or html element from which to remove the listener.
+ * @param {String} eventName The name of the event.
+ * @param {Function} fn The handler function to remove. <b>This must be a reference to the function passed into the {@link #on} call.</b>
+ * @param {Object} scope If a scope (<b><code>this</code></b> reference) was specified when the listener was added,
+ * then this must refer to the same object.
+ * @member Ext.EventManager
+ * @method un
+ * @deprecated 2.0.0 Please use {@link Ext.dom.Element#removeListener removeListener} on an instance of Ext.Element instead.
+ */
 Ext.EventManager.un = Ext.EventManager.removeListener;
 //</deprecated>
 
@@ -102,7 +181,7 @@ Ext.EventManager.un = Ext.EventManager.removeListener;
  *
  * [getting_started]: #!/guide/getting_started
  */
-Ext.setVersion('touch', '2.0.0.beta1');
+Ext.setVersion('touch', '2.0.0.beta2');
 
 Ext.apply(Ext, {
     /**
@@ -263,7 +342,7 @@ Ext.apply(Ext, {
                     arg.destroy();
                 }
                 else if (arg.dom) {
-                    arg.remove();
+                    arg.destroy();
                 }
             }
         }
@@ -610,6 +689,10 @@ function(el){
                 if (data.viewport) {
                     Ext.Viewport = viewport = data.viewport;
 
+                    if (!scope) {
+                        scope = viewport;
+                    }
+
                     //<deprecated product=touch since=2.0>
                     Ext.getOrientation = function() {
                         //<debug warn>
@@ -635,49 +718,59 @@ function(el){
          */
 
         if (!document.body) {
+            var phoneIcon = config.phoneIcon,
+                tabletIcon = config.tabletIcon,
+                tabletStartupScreen = config.tabletStartupScreen,
+                statusBarStyle = config.statusBarStyle,
+                phoneStartupScreen = config.phoneStartupScreen,
+                isIpad = Ext.os.is.iPad;
             // Inject meta viewport tag
             document.write(
                 '<meta id="extViewportMeta" ' +
                        'name="viewport" ' +
-                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />');
+                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">');
             document.write('<meta name="apple-mobile-web-app-capable" content="yes">');
             document.write('<meta name="apple-touch-fullscreen" content="yes">');
 
             //status bar style
-            if (Ext.isString(config.statusBarStyle)) {
-                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + config.statusBarStyle + '">');
+            if (Ext.isString(statusBarStyle)) {
+                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + statusBarStyle + '">');
             }
 
             //startup screens
-            if (config.tabletStartupScreen && Ext.os.is.iPad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + config.tabletStartupScreen + '">');
+            if (tabletStartupScreen && isIpad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + tabletStartupScreen + '">');
             }
 
-            if (config.phoneStartupScreen && !Ext.os.is.iPad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + config.phoneStartupScreen + '">');
+            if (phoneStartupScreen && !isIpad) {
+                document.write('<link rel="apple-touch-startup-image" href="' + phoneStartupScreen + '">');
             }
 
             // icon
-            if (Ext.isString(config.icon) || Ext.isString(config.phoneIcon) || Ext.isString(config.tabletIcon)) {
+            if (Ext.isString(icon) || Ext.isString(phoneIcon) || Ext.isString(tabletIcon)) {
                 icon = {
-                    '57': config.phoneIcon || config.tabletIcon || config.icon,
-                    '72': config.tabletIcon || config.phoneIcon || config.icon,
-                    '114': config.phoneIcon || config.tabletIcon || config.icon
+                    '57': phoneIcon || tabletIcon || icon,
+                    '72': tabletIcon || phoneIcon || icon,
+                    '114': phoneIcon || tabletIcon || icon
                 };
             }
 
             precomposed = (config.glossOnIcon === false) ? '-precomposed' : '';
 
             if (icon) {
-                if (Ext.os.is.iPad && icon['72']) {
-                    document.write('<link rel="apple-touch-icon' + precomposed + '" sizes="72x72" href="' + icon['72'] + '">');
+                var icon72 = icon['72'],
+                    icon57 = icon['57'],
+                    icon114 = icon['114'],
+                    iconString = '<link rel="apple-touch-icon';
+                if (isIpad && icon72) {
+                    document.write(iconString + precomposed + '" sizes="72x72" href="' + icon72 + '">');
                 }
-                else if (!Ext.os.is.iPad) {
-                    if (icon['57']) {
-                        document.write('<link rel="apple-touch-icon' + precomposed + '" href="' + icon['57'] + '">');
+                else if (!isIpad) {
+                    if (icon57) {
+                        document.write(iconString + precomposed + '" href="' + icon57 + '">');
                     }
-                    if (icon['114']) {
-                        document.write('<link rel="apple-touch-icon' + precomposed + '" sizes="114x114" href="' + icon['114'] + '">');
+                    if (icon114) {
+                        document.write(iconString + precomposed + '" sizes="114x114" href="' + icon114 + '">');
                     }
                 }
             }
@@ -1305,7 +1398,7 @@ function(el){
                 scope: scope
             });
 
-            if (Ext.browser.is.PhoneGap) {
+            if (Ext.browser.is.PhoneGap && !Ext.os.is.Desktop) {
                 if (!Ext.readyListenerAttached) {
                     Ext.readyListenerAttached = true;
                     document.addEventListener('deviceready', triggerFn, false);
@@ -1393,6 +1486,7 @@ Ext.define('Ext.env.Browser', {
             opera: 'Opera',
             dolfin: 'Dolfin',
             webosbrowser: 'webOSBrowser',
+            chromeMobile: 'ChromeMobile',
             other: 'Other'
         },
         engineNames: {
@@ -1415,7 +1509,8 @@ Ext.define('Ext.env.Browser', {
             safari: 'Version/',
             opera: 'Opera/',
             dolfin: 'Dolfin/',
-            webosbrowser: 'wOSBrowser/'
+            webosbrowser: 'wOSBrowser/',
+            chromeMobile: 'CrMo/'
         }
     },
 
@@ -1791,12 +1886,12 @@ Ext.define('Ext.env.OS', {
 
     /**
      * @class Ext.is
+     * @private
      * Used to detect if the current browser supports a certain feature, and the type of the current browser.
      *
-     * @deprecated
-     * Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
+     * @deprecated 2.0.0 Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
      */
-    var navigator = Ext.global.navigator,
+    var navigation = Ext.global.navigator,
         osEnv, osName, deviceType;
 
     //<deprecated product=touch since=2.0>
@@ -1818,7 +1913,7 @@ Ext.define('Ext.env.OS', {
     });
     //</deprecated>
 
-    Ext.os = osEnv = new this(navigator.userAgent, navigator.platform);
+    Ext.os = osEnv = new this(navigation.userAgent, navigation.platform);
 
     osName = osEnv.name;
 
@@ -1829,8 +1924,7 @@ Ext.define('Ext.env.OS', {
     if (search && search[1]) {
         deviceType = search[1];
     } else {
-        // See https://sencha.jira.com/browse/TOUCH-1517
-        if (/Windows|Linux|MacOS/.test(osName)) {
+        if (!osEnv.is.Android && !osEnv.is.iOS && /Windows|Linux|MacOS/.test(osName)) {
             deviceType = 'Desktop';
         }
         else if (osEnv.is.iPad || osEnv.is.Android3) {
@@ -1922,9 +2016,7 @@ Ext.define('Ext.env.Feature', {
 
         var element = this.getTestElement(tag),
             eventName = 'on' + name.toLowerCase(),
-            isSupported = false;
-
-        isSupported = (eventName in element);
+            isSupported = (eventName in element);
 
         if (!isSupported) {
             if (element.setAttribute && element.removeAttribute) {
@@ -2307,7 +2399,7 @@ Ext.define('Ext.dom.Query', {
             if (typeof q[i] == 'string') {
 
                 //support for node attribute selection
-                if (typeof q[i][0] == '@') {
+                if (q[i][0] == '@') {
                     nodes = root.getAttributeNode(q[i].substring(1));
                     results.push(nodes);
                 }
@@ -2790,6 +2882,8 @@ Ext.define('Ext.dom.Helper', {
  * ## Composite (Collections of) Elements
  *
  * For working with collections of Elements, see Ext.CompositeElement
+ *
+ * @mixins Ext.mixin.Observable
  */
 Ext.define('Ext.dom.Element', {
     alternateClassName: 'Ext.Element',
@@ -4332,30 +4426,31 @@ Ext.dom.Element.addMembers({
     BOTTOM: 'bottom',
     LEFT: 'left',
     /**
-     * @property
+     * @property VISIBILITY
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use visibility to hide element
      */
     VISIBILITY: 1,
 
     /**
-     * @property
+     * @property DISPLAY
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use display to hide element
      */
     DISPLAY: 2,
 
     /**
-     * @property
+     * @property OFFSETS
      * Visibility mode constant for use with {@link #setVisibilityMode}. Use offsets to hide element
      */
     OFFSETS: 3,
 
     SEPARATOR: '-',
 
-    spacesRegex: /\s+/,
-
     trimRe: /^\s+|\s+$/g,
     wordsRe: /\w/g,
     spacesRe: /\s+/,
+    styleSplitRe: /\s*(?::|;)\s*/,
+    transparentRe: /^(?:transparent|(?:rgba[(](?:\s*\d+\s*[,]){3}\s*0\s*[)]))$/i,
+    classNameSplitRegex: /[\s]+/,
 
     borders: {
         t: 'border-top-width',
@@ -4383,8 +4478,6 @@ Ext.dom.Element.addMembers({
      * The default unit to append to CSS values where a unit isn't provided.
      */
     defaultUnit: "px",
-
-    classNameSplitRegex: /[\s]+/,
 
     isSynchronized: false,
 
@@ -4443,7 +4536,7 @@ Ext.dom.Element.addMembers({
         suffix = suffix ? SEPARATOR + suffix : '';
 
         if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
+            names = names.split(this.spacesRe);
         }
 
         for (i = 0, ln = names.length; i < ln; i++) {
@@ -4489,7 +4582,7 @@ Ext.dom.Element.addMembers({
         suffix = suffix ? SEPARATOR + suffix : '';
 
         if (typeof names == 'string') {
-            names = names.split(this.spacesRegex);
+            names = names.split(this.spacesRe);
         }
 
         for (i = 0, ln = names.length; i < ln; i++) {
@@ -4878,12 +4971,10 @@ Ext.dom.Element.addMembers({
         // well as the fact that 0/false are valid answers...
         result = (cs && cs[hook.name]); // || dom.style[hook.name];
 
-        // Webkit returns rgb values for transparent.
+        // Webkit returns rgb values for transparent, how does this work n IE9+
         //        if (!supportsTransparentColor && result == 'rgba(0, 0, 0, 0)') {
         //            result = 'transparent';
         //        }
-        // TODO - we should use isTransparent to handle this. The above is not a very
-        // reliable technique depending on the intent (e.g., rgba(255,0,0,0) is also transparent)
 
         return result;
     },
@@ -4901,15 +4992,14 @@ Ext.dom.Element.addMembers({
             hooks = me.styleHooks,
             style = dom.style,
             valueFrom = Ext.valueFrom,
-            name = prop,
-            hook;
+            name, hook;
 
         // we don't promote the 2-arg form to object-form to avoid the overhead...
-        if (typeof name == 'string') {
-            hook = hooks[name];
+        if (typeof prop == 'string') {
+            hook = hooks[prop];
 
             if (!hook) {
-                hooks[name] = hook = { name: statics.normalize(name) };
+                hooks[prop] = hook = { name: statics.normalize(prop) };
             }
             value = valueFrom(value, '');
 
@@ -4993,20 +5083,20 @@ Ext.dom.Element.addMembers({
      */
     applyStyles: function(styles) {
         if (styles) {
-            var i,
-                len,
-                dom = this.dom;
+            var dom = this.dom,
+                styleType, i, len;
 
             if (typeof styles == 'function') {
                 styles = styles.call();
             }
-            if (typeof styles == 'string') {
-                styles = Ext.util.Format.trim(styles).split(/\s*(?::|;)\s*/);
+            styleType = typeof styles;
+            if (styleType == 'string') {
+                styles = Ext.util.Format.trim(styles).split(this.styleSplitRe);
                 for (i = 0, len = styles.length; i < len;) {
-                    dom.style[Element.normalize(styles[i++])] = styles[i++];
+                    dom.style[Element.dom.normalize(styles[i++])] = styles[i++];
                 }
             }
-            else if (typeof styles == 'object') {
+            else if (styleType == 'object') {
                 this.setStyle(styles);
             }
         }
@@ -5112,8 +5202,6 @@ Ext.dom.Element.addMembers({
             };
         }
     },
-
-    transparentRe: /^(?:transparent|(?:rgba[(](?:\s*\d+\s*[,]){3}\s*0\s*[)]))$/i,
 
     /**
      * Returns true if the value of the given property is visually transparent. This

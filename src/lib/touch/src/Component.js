@@ -353,9 +353,7 @@ Ext.define('Ext.Component', {
          * True to automatically style the html inside the content target of this component (body for panels).
          * @accessor
          */
-        styleHtmlContent: null,
-
-        hidden: false
+        styleHtmlContent: null
     },
 
     eventedConfig: {
@@ -530,6 +528,7 @@ Ext.define('Ext.Component', {
         /**
          * @cfg {Object} droppable Configuration options to make this Component droppable
          * @accessor
+         * @hide
          */
         droppable: null,
 
@@ -559,17 +558,33 @@ Ext.define('Ext.Component', {
 
         /**
          * @cfg {String/Mixed} enterAnimation
-         * Effect when the message box is being displayed.
+         * @deprecated
+         * Animation effect to apply when the Component is being shown.
          * @accessor
          */
         enterAnimation: null,
 
         /**
          * @cfg {String/Mixed} exitAnimation
-         * Effect when the message box is being hidden.
+         * @deprecated
+         * Animation effect to apply when the Component is being hidden.
          * @accessor
          */
         exitAnimation: null,
+
+        /**
+         * @cfg {String/Mixed} showAnimation
+         * Animation effect to apply when the Component is being shown.
+         * @accessor
+         */
+        showAnimation: null,
+
+        /**
+         * @cfg {String/Mixed} hideAnimation
+         * Animation effect to apply when the Component is being hidden.
+         * @accessor
+         */
+        hideAnimation: null,
 
         /**
          * @cfg {Mixed} renderTpl
@@ -755,6 +770,16 @@ Ext.define('Ext.Component', {
      */
 
     /**
+     * @event beforeorientationchange
+     * @deprecated 2.0.0 This event is now only available onBefore the Viewport's {@link Ext.Viewport#orientationchange}
+     */
+
+    /**
+     * @event orientationchange
+     * @deprecated 2.0.0 This event is now only available on the Viewport's {@link Ext.Viewport#orientationchange}
+     */
+
+    /**
      * @private
      */
     listenerOptionsRegex: /^(?:delegate|single|delay|buffer|args|prepend|element)$/,
@@ -909,14 +934,6 @@ Ext.define('Ext.Component', {
                 scope: scope
             });
         }
-    },
-
-    /**
-     * Retrieves the top level element representing this component.
-     * @return {Ext.dom.Element}
-     */
-    getEl: function() {
-        return this.renderElement;
     },
 
     renderTo: function(container, insertBeforeElement) {
@@ -1344,38 +1361,6 @@ Ext.define('Ext.Component', {
         this.element.setMaxHeight(height);
     },
 
-    // See https://sencha.jira.com/browse/TOUCH-1501
-//    animatePosition: function(property, value, animation) {
-//        var me = this,
-//            config = {};
-//
-//        animation = Ext.factory(animation || true, Ext.fx.Animation);
-//        animation.setElement(this.element);
-//        animation.setBefore({
-//            position: 'absolute'
-//        });
-//        animation.getFrom().set(property, this.getConfig(property));
-//        animation.getTo().set(property, value);
-//        animation.setAfter({
-//            position: null
-//        });
-//        animation.setOnEnd(function() {
-//            me.setConfig(config);
-//        });
-//
-//        config[property] = value;
-//
-//        Ext.Animator.run(animation);
-//    },
-//
-//    animateSize: function(property, value, animation) {
-//
-//    },
-//
-//    animateVisibility: function(value, animation) {
-//
-//    },
-
     applyCentered: function(centered) {
         centered = Boolean(centered);
 
@@ -1560,7 +1545,7 @@ Ext.define('Ext.Component', {
     hide: function(animation) {
         if (!this.getHidden()) {
             if (animation === undefined) {
-                animation = this.getExitAnimation();
+                animation = this.getHideAnimation();
             }
             if (animation && !animation.isComponent) {
                 if (animation === true) {
@@ -1584,7 +1569,7 @@ Ext.define('Ext.Component', {
     show: function(animation) {
         if (this.getHidden()) {
             if (animation === undefined) {
-                animation = this.getEnterAnimation();
+                animation = this.getShowAnimation();
             }
             if (animation && !animation.isComponent) {
                 if (animation === true) {
@@ -1664,6 +1649,14 @@ Ext.define('Ext.Component', {
             if (tpl) {
                 tpl[tplWriteMode](me.getInnerHtmlElement(), newData);
             }
+
+            /**
+             * @event updatedata
+             * Fires whenever the data of the component is updated
+             * @param {Ext.Component} this The component instance
+             * @param {Object} newData The new data
+             */
+            this.fireEvent('updatedata', me, newData);
         }
     },
 
@@ -2088,13 +2081,12 @@ var owningTabPanel = grid.up('tabpanel');
         Ext.ComponentManager.unregister(this);
 
         this.callParent();
-    },
+    }
 
     // Convert old properties in data into a config object
     // <deprecated product=touch since=2.0>
-    onClassExtended: function(cls, data, hooks) {
-        var onBeforeClassCreated = hooks.onBeforeCreated,
-            Component = this,
+    ,onClassExtended: function(cls, data, hooks) {
+        var Component = this,
             defaultConfig = Component.prototype.config,
             config = data.config || {},
             key;
@@ -2146,6 +2138,22 @@ var owningTabPanel = grid.up('tabpanel');
                     delete config.dock;
                 }
 
+                if (config.enterAnimation) {
+                    //<debug warn>
+                    Ext.Logger.deprecate("'enterAnimation' config for Components is deprecated, please use 'showAnimation' instead");
+                    //</debug>
+                    config.showAnimation = config.enterAnimation;
+                    delete config.enterAnimation;
+                }
+
+                if (config.exitAnimation) {
+                    //<debug warn>
+                    Ext.Logger.deprecate("'exitAnimation' config for Components is deprecated, please use 'hideAnimation' instead");
+                    //</debug>
+                    config.hideAnimation = config.exitAnimation;
+                    delete config.exitAnimation;
+                }
+
                 /**
                  * @member Ext.Component
                  * @cfg {String} componentCls CSS class to add to this Component. Deprecated, please use {@link #cls} instead
@@ -2176,6 +2184,20 @@ var owningTabPanel = grid.up('tabpanel');
                     if (config.hasOwnProperty(name) && name !== 'xtype' && name !== 'xclass' && !this.hasConfig(name)) {
                         this[name] = config[name];
                     }
+                }
+
+                if (config.layoutOnOrientationChange) {
+                    //<debug warn>
+                    Ext.Logger.deprecate("'layoutOnOrientationChange' is fully deprecated and no longer used");
+                    //</debug>
+                    delete config.layoutOnOrientationChange;
+                }
+
+                if (config.monitorOrientation) {
+                    //<debug warn>
+                    Ext.Logger.deprecate("'monitorOrientation' is deprecated. If you need to monitor the orientaiton, please use the 'resize' event.");
+                    //</debug>
+                    delete config.monitorOrientation;
                 }
             }
 
@@ -2208,6 +2230,13 @@ var owningTabPanel = grid.up('tabpanel');
                 //</debug>
                 this.initComponent();
             }
+
+            if (this.setOrientation !== emptyFn) {
+                //<debug warn>
+                Ext.Logger.deprecate("setOrientation() is deprecated", this);
+                //</debug>
+                this.setOrientation();
+            }
         },
 
         onRender: emptyFn,
@@ -2217,6 +2246,8 @@ var owningTabPanel = grid.up('tabpanel');
         initEvents: emptyFn,
 
         initComponent: emptyFn,
+
+        setOrientation: emptyFn,
 
         show: function() {
             if (this.renderElement.dom) {
@@ -2234,6 +2265,20 @@ var owningTabPanel = grid.up('tabpanel');
             return this.callParent(arguments);
         },
 
+        doAddListener: function(name, fn, scope, options, order) {
+            // <debug>
+            switch(name) {
+                case 'render':
+                    Ext.Logger.warn("The render event on Components is deprecated. Please use the painted event. " +
+                        "Please refer to: http://bit.ly/xgv3K1 for more details.", this);
+                    return this;
+                break;
+            }
+            // </debug>
+
+            return this.callParent(arguments);
+        },
+
         addListener: function(options) {
             if (arguments.length === 1 && Ext.isObject(options) && (('el' in options) || ('body' in options))) {
                 Ext.Logger.error("Adding component element listeners using the old format is no longer supported. " +
@@ -2241,6 +2286,22 @@ var owningTabPanel = grid.up('tabpanel');
             }
 
             return this.callParent(arguments);
+        },
+
+        /**
+         * Retrieves the top level element representing this component.
+         * @deprecated 2.0.0 Please access the Component's element from the 'element' property instead, i.e:
+         *
+         *      var element = component.element;
+         *
+         * @return {Ext.dom.Element}
+         */
+        getEl: function() {
+            //<debug warn>
+            Ext.Logger.deprecate("getEl() is deprecated, please access the Component's element from " +
+                "the 'element' property instead", this);
+            //</debug>
+            return this.renderElement;
         }
     });
 

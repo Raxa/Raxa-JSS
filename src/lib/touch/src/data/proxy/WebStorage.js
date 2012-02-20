@@ -91,7 +91,6 @@ Ext.define('Ext.data.proxy.WebStorage', {
         //read a single record
         if (params.id !== undefined) {
             record = this.getRecord(params.id);
-
             if (record) {
                 records.push(record);
                 operation.setSuccessful();
@@ -176,16 +175,23 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * @private
      * Fetches a model instance from the Proxy by ID. Runs each field's decode function (if present) to decode the data.
      * @param {String} id The record's unique ID
-     * @return {Ext.data.Model} The model instance
+     * @return {Ext.data.Model} The model instance or undefined if the record did not exist in the storage.
      */
     getRecord: function(id) {
         if (this.cache[id] === undefined) {
-            var rawData = Ext.decode(this.getStorageObject().getItem(this.getRecordKey(id))),
+            var recordKey = this.getRecordKey(id),
+                item = this.getStorageObject().getItem(recordKey),
                 data    = {},
                 Model   = this.getModel(),
                 fields  = Model.getFields().items,
                 length  = fields.length,
-                i, field, name, record;
+                i, field, name, record, rawData;
+
+            if (!item) {
+                return;
+            }
+
+            rawData = Ext.decode(item);
 
             for (i = 0; i < length; i++) {
                 field = fields[i];

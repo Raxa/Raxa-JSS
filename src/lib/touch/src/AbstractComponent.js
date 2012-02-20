@@ -1,5 +1,8 @@
 /**
+ * @private
+ * This is the abstract class for {@link Ext.Component}.
  *
+ * This should never be overriden.
  */
 Ext.define('Ext.AbstractComponent', {
     extend: 'Ext.Evented',

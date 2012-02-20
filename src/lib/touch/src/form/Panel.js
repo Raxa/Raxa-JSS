@@ -184,12 +184,6 @@ Ext.define('Ext.form.Panel', {
          */
         record: null,
 
-        // @inherit
-        layout: {
-            type : 'vbox',
-            align: 'stretch'
-        },
-
         /**
          * @cfg {String} method
          * The method which this form will be submitted. `post` or `get`.
@@ -646,7 +640,7 @@ Ext.define('Ext.form.Panel', {
             }
         };
 
-        this.items.each(getFieldsFrom);
+        this.getItems().each(getFieldsFrom);
 
         return (byName) ? (fields[byName] || []) : fields;
     },

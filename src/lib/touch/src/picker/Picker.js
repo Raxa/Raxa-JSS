@@ -362,10 +362,23 @@ Ext.define('Ext.picker.Picker', {
     updateUseTitles: function(useTitles) {
         var innerItems = this.getInnerItems(),
             ln = innerItems.length,
-            i;
+            cls = Ext.baseCSSPrefix + 'use-titles',
+            i, innerItem;
 
+        //add a cls onto the picker
+        if (useTitles) {
+            this.addCls(cls);
+        } else {
+            this.removeCls(cls);
+        }
+
+        //show the titme on each of the slots
         for (i = 0; i < ln; i++) {
-            innerItems[i].setShowTitle(useTitles);
+            innerItem = innerItems[i];
+
+            if (innerItem.isSlot) {
+                innerItem.setShowTitle(useTitles);
+            }
         }
     },
 
@@ -388,16 +401,7 @@ Ext.define('Ext.picker.Picker', {
      * @private
      */
     updateSlots: function(newSlots) {
-        var innerItems = this.getInnerItems(),
-            ln, i;
-
-        if (innerItems) {
-            ln = innerItems.length;
-
-            for (i = 0; i < ln; i++) {
-                this.remove(innerItems[i]);
-            }
-        }
+        this.removeAll();
 
         if (newSlots) {
             this.add(newSlots);
@@ -461,17 +465,25 @@ Ext.define('Ext.picker.Picker', {
      * @return {Ext.Picker} this This picker
      */
     setValue: function(values, animated) {
-        var slot,
-            me = this;
+        var me = this,
+            slots = me.getInnerItems(),
+            slot, loopSlot;
+
 
         // Value is an object with keys mapping to slot names
         if (!values) {
             return this;
         }
 
-        if (this.rendered && !this.isHidden()) {
+        if (me.rendered && !me.isHidden()) {
             Ext.iterate(values, function(key, value) {
-                slot = me.child('[_name=' + key + ']');
+                for (i = 0; i < slots.length; i++) {
+                    loopSlot = slots[i];
+                    if (loopSlot.config.name == key) {
+                        slot = loopSlot;
+                        break;
+                    }
+                }
 
                 if (slot) {
                     if (animated) {
@@ -480,13 +492,13 @@ Ext.define('Ext.picker.Picker', {
                         slot.setValue(value);
                     }
                 }
-            }, this);
+            }, me);
         }
 
         me._value = values;
         me._values = values;
 
-        return this;
+        return me;
     },
 
     setValueAnimated: function(values) {

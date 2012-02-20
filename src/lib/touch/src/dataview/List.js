@@ -1,7 +1,7 @@
 /**
  * List is a custom styled DataView which allows Grouping, Indexing, Icons, and a Disclosure.
  *
- * # Example:
+ * ## Example:
  *
  * Here is an example of the usage in a {@link Ext.List}:
  *
@@ -80,10 +80,8 @@ Ext.define('Ext.dataview.List', {
 
         /**
          * @cfg {Boolean} clearSelectionOnDeactivate
-         * True to clear any selections on the list when the list is deactivated (defaults to true).
-         * @accessor
+         * @deprecated 2.0.0
          */
-        clearSelectionOnDeactivate: true,
 
         /**
          * @cfg {Boolean} preventSelectionOnDisclose True to prevent the item selection when the user
@@ -507,7 +505,7 @@ Ext.define('Ext.dataview.List', {
         var onItemDisclosure = me.getOnItemDisclosure();
 
         if (onItemDisclosure && onItemDisclosure.handler) {
-            onItemDisclosure.handler.call(me, record, item, index);
+            onItemDisclosure.handler.call(me, record, item, index, e);
         }
     },
 
@@ -556,10 +554,4 @@ Ext.define('Ext.dataview.List', {
         Ext.destroy(this.getIndexBar(), this.indexBarElement, this.header);
         this.callParent();
     }
-}, function() {
-    // See https://sencha.jira.com/browse/TOUCH-1543
-    var prototype = this.prototype;
-
-    prototype.cachedConfigList = prototype.cachedConfigList.slice();
-    Ext.Array.remove(prototype.cachedConfigList, 'baseCls');
 });

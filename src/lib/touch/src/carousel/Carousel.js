@@ -167,6 +167,13 @@ Ext.define('Ext.carousel.Carousel', {
         this.carouselItems = [];
 
         this.orderedCarouselItems = [];
+
+        this.inactiveCarouselItems = [];
+
+        this.hiddenTranslation = {
+            x: 0,
+            y: 0
+        }
     },
 
     updateBufferSize: function(size) {
@@ -235,8 +242,8 @@ Ext.define('Ext.carousel.Carousel', {
     },
 
     onSizeChange: function() {
-        this.refreshCarouselItems();
         this.refreshSizing();
+        this.refreshCarouselItems();
         this.refreshOffset();
     },
 
@@ -584,13 +591,18 @@ Ext.define('Ext.carousel.Carousel', {
     refreshSizing: function() {
         var element = this.element,
             itemLength = this.getItemLength(),
+            hiddenTranslation = this.hiddenTranslation,
             itemOffset, containerSize;
 
         if (this.getDirection() === 'horizontal') {
             containerSize = element.getWidth();
+            hiddenTranslation.x = -containerSize;
+            hiddenTranslation.y = 0;
         }
         else {
             containerSize = element.getHeight();
+            hiddenTranslation.y = -containerSize;
+            hiddenTranslation.x = 0;
         }
 
         if (itemLength === null) {
@@ -626,12 +638,25 @@ Ext.define('Ext.carousel.Carousel', {
     },
 
     refreshCarouselItems: function() {
-        var carouselItems = this.carouselItems,
-            i, ln, carouselItem;
+        var items = this.carouselItems,
+            i, ln, item;
 
-        for (i = 0,ln = carouselItems.length; i < ln; i++) {
-            carouselItem = carouselItems[i];
-            carouselItem.getTranslatable().refresh();
+        for (i = 0,ln = items.length; i < ln; i++) {
+            item = items[i];
+            item.getTranslatable().refresh();
+        }
+
+        this.refreshInactiveCarouselItems();
+    },
+
+    refreshInactiveCarouselItems: function() {
+        var items = this.inactiveCarouselItems,
+            hiddenTranslation = this.hiddenTranslation,
+            i, ln, item;
+
+        for (i = 0,ln = items.length; i < ln; i++) {
+            item = items[i];
+            item.translate(hiddenTranslation);
         }
     },
 
@@ -721,8 +746,11 @@ Ext.define('Ext.carousel.Carousel', {
             }
         }
 
+        this.inactiveCarouselItems.length = 0;
+        this.inactiveCarouselItems = carouselItems;
         this.activeIndex = activeIndex;
         this.refreshOffset();
+        this.refreshInactiveCarouselItems();
 
         if (indicator) {
             indicator.setActiveIndex(activeIndex);
@@ -815,6 +843,24 @@ Ext.define('Ext.carousel.Carousel', {
             }
 
             this.callParent([config]);
+        },
+
+        prev: function() {
+            console.warn('[Ext.carousel.Carousel] Carousel#prev is deprecated, please use Carousel#previous instead');
+
+            return this.previous();
+        },
+
+        isVertical: function() {
+            console.warn('[Ext.carousel.Carousel] Carousel#isVertical is deprecated, please use Carousel#getDirection instead');
+
+            return this.getDirection() === 'vertical';
+        },
+
+        isHorizontal: function() {
+            console.warn('[Ext.carousel.Carousel] Carousel#isHorizontal is deprecated, please use Carousel#getDirection instead');
+
+            return this.getDirection() === 'horizontal';
         }
     });
     //</deprecated>
