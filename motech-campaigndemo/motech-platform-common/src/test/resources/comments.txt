@@ -1,3 +1,0 @@
-Implementing idempotent operations
-----------------------------------
-Resource: Transactional (ActiveMQ, MySQL), Non-Transactional (CouchDB)
