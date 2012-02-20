@@ -1,0 +1,35 @@
+Campaign Demo Implementation
+
+The following changes were made to MoteCH modules in order to add and deploy a demonstration campaign module 
+
+platform-server changes
+Commented out rule engine beans from applicationPlatformServer.xml
+"\" removed from applicationPlatformServer.xml 
+added <import resource="classpath:campaignDemoResources.xml" /> to applicationPlatformServer.xml to make web context aware of the demo beans
+modified dispatcher-servlet.xml to contain Voxeo and campaign demo controllers
+In the web.xml file, commented out OSGi listener/servlet and uncommented the dispatcher servlet
+added jsp folder with a jsp form page
+added jstl dependency for jsp page features in pom file
+added slf4j dependency in pom file
+added campaign demo module dependency in pom file
+
+platform-server-api changes
+commented out OSGi beans
+commented out component-scan of osgi and ruleengine packages
+
+platform-ivr changes
+Added Json annotations to CallRequest class for proper Json serialization when storing in CouchDB
+
+message-campaign changes
+MessageCampaignScheduler schedules job IDs by message key, but attempts to unschedule by message name. The stop() method was changed to unschedule messages by their key.
+
+voxeo changes
+added IVRservice bean
+Various code changes for Json serialization, CouchDB lookup and callerID with Voxeo
+
+Information about campaign demo module
+The campaign demo module contains a listener for raised campaign events
+Contains the campaign JSON definition file in the resources package
+
+The parent pom was modified to include the campaign demo project as a module
+

@@ -1,0 +1,43 @@
+[
+    {
+        "name" : "IPTI Schedule",
+        "milestones" : [
+            {
+                "name" : "IPTI 1",
+                "scheduleWindows" : {
+                    "earliest" : "13 Weeks",
+                    "due" : "14 Weeks",
+                    "late" : "16 Weeks",
+                    "max" : ""
+                },
+                "data" : {
+                    "Foo" : "Bar"
+                },
+                "alerts" : [
+                    {
+                        "window" : "due",
+                        "interval" : "1 Day",
+                        "count" : "7"
+                    },
+                    {
+                        "window" : "late",
+                        "interval" : "1 Week",
+                        "count" : "51"
+                    }
+                ]
+            },
+            {
+                "name" : "IPTI 2",
+                "scheduleWindows" : {
+                    "earliest" : "1 Weeks",
+                    "due" : "2 Weeks",
+                    "late" : "3 Weeks",
+                    "max" : ""
+                },
+                "data" : {
+                    "doo" : "Bar"
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,52 @@
+diff --git a/motech-openmrs-api/src/main/resources/applicationOpenmrsAPI.xml b/motech-openmrs-api/src/main/resources/applicationOpenmrsAPI.xml
+index 24afdf7..d379813 100644
+--- a/motech-openmrs-api/src/main/resources/applicationOpenmrsAPI.xml
++++ b/motech-openmrs-api/src/main/resources/applicationOpenmrsAPI.xml
+@@ -12,7 +12,7 @@
+     <context:spring-configured/>
+     <context:component-scan base-package="org.motechproject.openmrs"/>
+ 
+-    <context:property-placeholder location="classpath:openmrs.properties"/>
++    <context:property-placeholder location="classpath:openmrs.properties" ignore-unresolvable="true" />
+     <util:properties id="openmrsProperties" location="classpath:openmrs.properties"/>
+ 
+     <bean id="context" class="org.motechproject.openmrs.Context" init-method="initialize" scope="singleton">
+diff --git a/motech-platform-server/src/main/resources/applicationPlatformServer.xml b/motech-platform-server/src/main/resources/applicationPlatformServer.xml
+index 45bddb3..6898348 100644
+--- a/motech-platform-server/src/main/resources/applicationPlatformServer.xml
++++ b/motech-platform-server/src/main/resources/applicationPlatformServer.xml
+@@ -5,7 +5,7 @@
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+-    <context:property-placeholder location="classpath:activemq.properties"/>
++    <context:property-placeholder location="classpath:activemq.properties" ignore-unresolvable="true"/>
+ 
+     <context:annotation-config />
+ 
+diff --git a/motech-sms-http/src/main/resources/applicationSmsHttp.xml b/motech-sms-http/src/main/resources/applicationSmsHttp.xml
+index e0f0ba8..9d1a8a7 100644
+--- a/motech-sms-http/src/main/resources/applicationSmsHttp.xml
++++ b/motech-sms-http/src/main/resources/applicationSmsHttp.xml
+@@ -7,7 +7,7 @@
+ 
+     <import resource="classpath:applicationPlatformServerAPI.xml" />
+ 
+-    <context:property-placeholder location="classpath:activemq.properties"/>
++    <context:property-placeholder location="classpath:activemq.properties" ignore-unresolvable="true"/>
+     <context:component-scan base-package="org.motechproject.sms.http"/>
+     <context:annotation-config />
+ 
+diff --git a/motech-sms-smpp/src/main/resources/applicationSmsSmpp.xml b/motech-sms-smpp/src/main/resources/applicationSmsSmpp.xml
+index 70813e6..4d6791a 100644
+--- a/motech-sms-smpp/src/main/resources/applicationSmsSmpp.xml
++++ b/motech-sms-smpp/src/main/resources/applicationSmsSmpp.xml
+@@ -9,7 +9,7 @@
+ 
+     <import resource="classpath:applicationPlatformServerAPI.xml"/>
+ 
+-    <context:property-placeholder location="classpath:activemq.properties"/>
++    <context:property-placeholder location="classpath:activemq.properties" ignore-unresolvable="true"/>
+     <context:component-scan base-package="org.motechproject.sms.smpp"/>
+     <context:annotation-config/>
+ 

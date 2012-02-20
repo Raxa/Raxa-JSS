@@ -1,0 +1,142 @@
+[
+    {
+        "name" : "Demo Concept Schedule",
+        "milestones" : [
+            {
+                "name" : "Demo Schedule Milestone 1",
+                "scheduleWindows" : {
+                    "earliest" : "1 minutes",
+                    "due" : "3 minutes",
+                    "late" : "6 minutes",
+                    "max" : "15 minutes"
+                },
+                "data" : {
+                    "conceptName" : "Demo Concept Question #1",
+                    "IVRFormat" : "true",
+                    "SMSFormat" : "true",
+                    "language" : "en",
+                    "messageName" : "DemoConceptQuestion1"
+                },
+                "alerts" : [
+                    {
+                        "window" : "due",
+                        "interval" : "1 minute",
+                        "count" : "0"
+                    },
+                    {
+                        "window" : "late",
+                        "interval" : "1 minute",
+                        "count" : "1"
+                    }, 
+                    {
+                    	"window" : "max",
+ 						"interval" : "1 minute",
+ 						"count" : "99"
+                    }
+                ]
+            },
+            {
+                "name" : "Demo Schedule Milestone 2",
+                "scheduleWindows" : {
+                    "earliest" : "1 minutes",
+                    "due" : "3 minutes",
+                    "late" : "6 minutes",
+                    "max" : "15 minutes"
+                },
+                "data" : {
+                    "conceptName" : "Demo Concept Question #2",
+                    "IVRFormat" : "true",
+                    "SMSFormat" : "true",
+                    "language" : "en",
+                    "messageName" : "DemoConceptQuestion2"
+                },
+                "alerts" : [
+                                    {
+                        "window" : "due",
+                        "interval" : "1 minute",
+                        "count" : "0"
+                    },
+                    {
+                        "window" : "late",
+                        "interval" : "1 minute",
+                        "count" : "1"
+                    }, 
+                    {
+                    	"window" : "max",
+ 						"interval" : "1 minute",
+ 						"count" : "99"
+                    }
+                
+                ]
+            },
+            {
+                "name" : "Demo Schedule Milestone 3",
+                "scheduleWindows" : {
+                    "earliest" : "1 minutes",
+                    "due" : "3 minutes",
+                    "late" : "6 minutes",
+                    "max" : "15 minutes"
+                },
+                "data" : {
+                    "conceptName" : "Demo Concept Question #3",
+                    "IVRFormat" : "true",
+                    "SMSFormat" : "true",
+                    "language" : "en",
+                    "messageName" : "DemoConceptQuestion3"
+                },
+                "alerts" : [
+                                    {
+                        "window" : "due",
+                        "interval" : "1 minute",
+                        "count" : "0"
+                    },
+                    {
+                        "window" : "late",
+                        "interval" : "1 minute",
+                        "count" : "1"
+                    }, 
+                    {
+                    	"window" : "max",
+ 						"interval" : "1 minute",
+ 						"count" : "99"
+                    }
+                
+                ]
+            },
+            {
+                "name" : "Demo Schedule Milestone 4",
+                "scheduleWindows" : {
+                    "earliest" : "1 minutes",
+                    "due" : "3 minutes",
+                    "late" : "6 minutes",
+                    "max" : "15 minutes"
+                },
+                "data" : {
+                    "conceptName" : "Demo Concept Question #4",
+                    "IVRFormat" : "true",
+                    "SMSFormat" : "true",
+                    "language" : "en",
+                    "messageName" : "DemoConceptQuestion4"
+                },
+                "alerts" : [
+                                    {
+                        "window" : "due",
+                        "interval" : "1 minute",
+                        "count" : "0"
+                    },
+                    {
+                        "window" : "late",
+                        "interval" : "1 minute",
+                        "count" : "1"
+                    }, 
+                    {
+                    	"window" : "max",
+ 						"interval" : "1 minute",
+ 						"count" : "99"
+                    }
+                
+                ]
+            }
+        ]
+    }
+]

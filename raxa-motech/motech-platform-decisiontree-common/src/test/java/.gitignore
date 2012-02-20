@@ -1,0 +1,16 @@
+.classpath
+.project
+.settings/
+target/
+.externalToolBuilders/
+maven-eclipse.xml
+.idea/
+*.iml
+*.ipr
+*.iws
+*.class
+out/
+Error_log/
+test-output/
+felix-cache/
+activemq-data/

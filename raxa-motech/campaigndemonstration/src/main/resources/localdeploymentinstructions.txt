@@ -1,0 +1,28 @@
+Local deployment instructions for campaign demo
+
+Checkout the latest code from the motech-campaigndemo branch from the Google code location, using Git: http://code.google.com/p/motech
+
+Run a Maven clean install on the parent Motech project, which will package a WAR file named motech-platform-server.
+
+Set up the environment. The demo requires a running activemq broker and CouchDB.
+
+ActiveMQ can be obtained from http://activemq.apache.org/download.html
+Run activemq from the bin folder, using the default port
+
+CouchDB needs to be set up on port 5984 (default) - http://couchdb.apache.org/downloads.html
+When CouchDB is set up, you shoudl be able to access it from: http://localhost:5984/_utils/index.html
+
+Deploy the demo WAR to an application server, e.g., Tomcat 7.0. Start the server.
+
+In order for Voxeo to interact with your local server, you need a Voxeo developer account. You can sign up here: http://evolution.voxeo.com/
+
+The ccxml file found in the campaign demo module's resource package needs to be modified so that Voxeo is aware of your relative server URL.
+Modify   <var name="base_url" expr="'http://130.111.132.11:8080/motech-platform-server'"/> to instead point to your server URL
+
+In your Voxeo account, under files, logs and reports, upload the ccxml file to your www folder. Upload a demo.xml VXML document as well. One is included in the resource package of the demo module. This is used for the demo call's speech.
+
+In your Voxeo account, under "application manager", add an application for phone voice calls. Select voice application type to be CCXML. Point the URL to http://webhosting.voxeo.net/XXXXX/www/ccxml.xml, where XXXXX is your Voxeo account number. Or you may upload your ccxml file to another remote URL location and point to that URL, with the demo.xml file located in the same directory.
+
+For Voxeo to make calls, you must have a token ID. Contact Voxeo support and ask for a token to be generated for your application. When your token has been generated, you may obtain it by going to your application and clicking the "contact methods" tab. The token id is at the bottom of the page. Once you have the token, you need to edit the Voxeo module's IVRServiceImpl,         String tokenId = "0858bc70143a994a9dfc42b066452d9b4a8bc96e15e6558aaa71bb1990d44e407c935af7e3958e2585b7be76";  Replace that string with your own token id
+
+For the demo form, navigate to: http://localhost:8080/motech-platform-server/form/test

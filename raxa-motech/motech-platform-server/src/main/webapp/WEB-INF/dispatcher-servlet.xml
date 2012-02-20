@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MOTECH PLATFORM OPENSOURCE LICENSE AGREEMENT Copyright (c) 2011 Grameen 
+	Foundation USA. All rights reserved. Redistribution and use in source and 
+	binary forms, with or without modification, are permitted provided that the 
+	following conditions are met: 1. Redistributions of source code must retain 
+	the above copyright notice, this list of conditions and the following disclaimer. 
+	2. Redistributions in binary form must reproduce the above copyright notice, 
+	this list of conditions and the following disclaimer in the documentation 
+	and/or other materials provided with the distribution. 3. Neither the name 
+	of Grameen Foundation USA, nor its respective contributors may be used to 
+	endorse or promote products derived from this software without specific prior 
+	written permission. THIS SOFTWARE IS PROVIDED BY GRAMEEN FOUNDATION USA AND 
+	ITS CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, 
+	BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+	FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL GRAMEEN FOUNDATION 
+	USA OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+	OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+	STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+	ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+	OF SUCH DAMAGE. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:annotation-config />
+
+	<bean id="controllerClassNameUrlMapping"
+		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+	</bean>
+
+	<bean name="voxeoController" class="org.motechproject.server.voxeo.web.IvrController">
+	</bean>
+
+	<bean name="testController"
+		class="org.motechproject.CampaignDemo.controllers.CampaignController">
+	</bean>
+
+	<bean name="testFormController"
+		class="org.motechproject.CampaignDemo.controllers.FormController">
+	</bean>
+
+	<bean name="userController"
+		class="org.motechproject.CampaignDemo.controllers.UserController">
+	</bean>
+	
+	<bean name="enrollmentController"
+		class="org.motechproject.ScheduleTrackingDemo.controllers.EnrollController">
+	</bean>
+	
+		<bean name="patientController"
+		class="org.motechproject.ScheduleTrackingDemo.controllers.PatientController">
+	</bean>
+
+<!---->
+	<!-- <bean id="test" class="org.motechproject.tama.server.TestController"> -->
+	<!-- <property name="contextProvider" ref="contextProvider" /> -->
+	<!-- </bean> -->
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+	
+<!---->
+
+	<!-- <context:component-scan base-package="org.motechproject.tama.server"/> -->
+	<!-- <context:component-scan base-package="org.motechproject.platform.server.web.controller"/> -->
+
+
+	<!-- <bean id="velocityConfig" -->
+	<!-- class="org.springframework.web.servlet.view.velocity.VelocityConfigurer"> -->
+	<!-- <property name="resourceLoaderPath" value="" /> -->
+	<!-- </bean> -->
+<!---->
+	<!-- <bean id="viewResolver" -->
+	<!-- class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"> -->
+	<!-- <property name="cache" value="true" /> -->
+	<!-- <property name="prefix" value="" /> -->
+	<!-- <property name="suffix" value=".vm" /> -->
+<!---->
+	<!-- if you want to use the Spring Velocity macros, set this property to -->
+	<!-- true -->
+	<!-- <property name="exposeSpringMacroHelpers" value="true" /> -->
+<!---->
+	<!-- </bean> -->
+<!---->
+	<!-- <bean id="contextProvider" class="org.motechproject.tama.server.ContextProvider"></bean> -->
+
+</beans>

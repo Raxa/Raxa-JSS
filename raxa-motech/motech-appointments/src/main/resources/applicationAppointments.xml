@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:annotation-config/>
+
+    <import resource="classpath:applicationPlatformCommon.xml"/>
+
+    <bean id="reminderCRUDEventHandler" class="org.motechproject.server.appointments.ReminderCRUDEventHandler"/>
+
+    <bean id="appointmentDeletedEventHandler"
+          class="org.motechproject.server.appointments.AppointmentDeletedEventHandler"/>
+
+    <bean id="appointmentsDatabase" class="org.ektorp.impl.StdCouchDbConnector">
+        <constructor-arg value="motech-appointments"/>
+        <constructor-arg ref="couchDbInstance"/>
+    </bean>
+
+    <bean id="appointmentsDAO" class="org.motechproject.appointments.api.dao.impl.AppointmentsCouchDBDAOImpl">
+        <constructor-arg ref="appointmentsDatabase"/>
+    </bean>
+
+    <bean id="remindersDAO" class="org.motechproject.appointments.api.dao.impl.RemindersCouchDBDAOImpl">
+        <constructor-arg ref="appointmentsDatabase"/>
+    </bean>
+
+    <bean id="visitsDAO" class="org.motechproject.appointments.api.dao.impl.VisitsCouchDBDAOImpl">
+        <constructor-arg ref="appointmentsDatabase"/>
+    </bean>
+
+    <bean id="appointmentService" class="org.motechproject.appointments.api.AppointmentService"/>
+
+    <bean id="reminderService" class="org.motechproject.appointments.api.ReminderService"/>
+
+    <bean id="visitService" class="org.motechproject.appointments.api.VisitService"/>
+
+    <bean id="appointmentContext" class="org.motechproject.appointments.api.context.AppointmentsContext"
+          factory-method="getInstance"/>
+</beans>

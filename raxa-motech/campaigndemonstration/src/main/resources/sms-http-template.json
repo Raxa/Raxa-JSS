@@ -1,0 +1,17 @@
+{
+    "request": {
+        "urlPath": "http://api.messaging.staging.voxeo.net/1.0/messaging",
+        "queryParameters": {
+            "user": "$recipients",
+            "msg": "$message",
+            "botkey": "291784",
+            "apimethod": "send",
+            "network": "SMS",
+            "from": 8572848721 
+        },
+        "recipientsSeparator": "+"
+    },
+    "response": {
+        "success": "accepted"
+    }
+}

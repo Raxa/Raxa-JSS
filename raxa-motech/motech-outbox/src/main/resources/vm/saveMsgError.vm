@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml">
+	<form>
+ 		<block>
+             <prompt>
+                <audio src="$contextPath/../audio/$language/hello.wav"/>
+             </prompt>
+            <prompt>
+                This message can not be saved at the moment due to technical issues. Sorry.
+            </prompt>
+		</block>
+		#set ($url = "$contextPath/outbox/vxml/outboxMessage?ln=$language")
+        <goto next="$escape.escapeXml($url)"/>        
+	</form>
+</vxml>
