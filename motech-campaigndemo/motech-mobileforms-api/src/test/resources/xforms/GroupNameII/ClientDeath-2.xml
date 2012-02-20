@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xf:xforms xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="7">
+  <xf:model>
+    <xf:instance id="death">
+      <death id="7" name="Client Death">
+        <staffId/>
+      </death>
+    </xf:instance>
+    <xf:bind id="staffId" nodeset="/death/staffId" required="true()" type="xsd:int" constraint=". &lt; 2147483647" message="Number too large. Keep under 2147483647"/>
+  </xf:model>
+</xf:xforms>

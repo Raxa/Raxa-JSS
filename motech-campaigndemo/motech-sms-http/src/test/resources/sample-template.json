@@ -1,0 +1,15 @@
+{
+    "request": {
+        "urlPath": "http://smshost.com/sms/send",
+        "queryParameters": {
+            "recipient": "$numbers" ,
+            "message": "$message" ,
+            "apiKey": "jdhf7yelkjae"
+        },
+        "recipientsSeparator": "+"
+    },
+    "response": {
+        "success": "sent"
+    }
+}
+

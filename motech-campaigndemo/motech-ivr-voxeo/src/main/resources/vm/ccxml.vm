@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccxml version="1.0">
+  <log expr="'**** SCRIPT START ****'"/>
+
+  <!-- Set this to the URL of your incoming VXML script -->
+  <var name="incomingVXML" expr="'${incomingVXML}'"/>
+
+  <!-- Set this to the number of seconds you want the script to run before it is
+       killed.  This is to prevent scripts from never ending and eating sessions in
+       the event it gets into a state where a disconnect is not recorded -->
+  <var name="timeout" expr="'${timeout}'"/>
+
+  <!-- Set this to the MOTECH server base URL.  This is used for callbacks to report
+       on call events -->
+  <var name="base_url" expr="'${baseUrl}'"/>
+
+  <!-- The timeout attribute specifies the amount of time to allow the call attempt
+       to be made. If the call is not answered by the end of the duration of the
+       maxtime attribute, then a 'connection.failed' event will be returned.
+       The platform default is 60s, and a maximum of 180s is allowable.
+
+       This is the global value, it can be overidden on a per-call basis -->
+  <var name="call_timeout" expr="'${callTimeout}'"/>
+
+  <!-- For outgoing calls the following variables need to be provided to the script
+       phonenum - This is the number of the phone to call
+       cid - This is the caller id number that will be used
+       vxml - This is the URL to the VXML script you wish to run
+       externalId - An id within MOTECH that references this call.  Used for matching
+                    up CDR events
+       -->
+  <var name="vxml" expr="undefined"/>
+  <var name="phonenum" expr="undefined"/>
+  <var name="cid" expr="undefined"/>
+
+  <var name="app_state" expr="'incoming'"/>
+  <var name="callId"/>
+
+  <if cond="session.startupmode == 'external'">
+    <var name="app_state" expr="'outgoing'"/>
+    <var name="phonenum" expr="session.values.phonenum"/>
+    <var name="cid" expr="session.values.cid"/>
+    <var name="vxml" expr="session.values.vxml"/>
+    <var name="externalId" expr="session.values.externalId"/>
+
+    <if cond="typeof session.values.timeout !== 'undefined'">
+        <var name="call_timeout" expr="session.values.timeout"/>
+    </if>
+  </if>
+
+  <eventprocessor statevariable="app_state">
+    <!-- This transition detects if this is an outgoing or incoming call and sets the
+	 state appropiatly.  For an outgoing call it also creates the call -->
+    <transition event="ccxml.loaded">
+      <log expr="'*** CCXML.LOADED ***'"/>
+
+      <!-- Timebox script execution to prevent stale sessions from accumulating -->
+      <send name="'TIMEOUT_REACHED'" target="session.id" delay="timeout"/>
+
+      <if cond="typeof vxml !== 'undefined'">
+	    <log expr="vxml"/>
+	    <log expr="phonenum"/>
+	    <log expr="cid"/>
+
+        <assign name="app_state" expr="'outgoing'"/>
+        <log expr="'*** PLACING CALL ***'"/>
+
+        <createcall dest="'tel:+' + session.values.phonenum" callerid="session.values.cid" timeout="call_timeout"/>
+      </if>
+    </transition>
+
+    <!-- Event sent on an incoming call.  The call is not yet answered. -->
+    <transition state="incoming" event="connection.alerting">
+      <log expr="'*** CONNECTION.ALERTING ***'"/>
+
+      <assign name="callId" expr="event$.connectionid"/>
+
+      <var name="status" expr="'ALERTING'"/>
+      <assign name="application.callerId" expr="event$.connection.remote"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/incoming'" targettype="'basichttp'" name="'http.get'" namelist="session.id status application.callerId timestamp"/>
+
+      <accept connectionid="callId"/>
+    </transition>
+
+    <transition state="incoming" event="connection.connected">
+      <log expr="'***** CONNECTION.CONNECTED: INCOMING *****'"/>
+
+      <dialogstart src="incomingVXML" type="'application/voicexml+xml'"/>
+      <var name="status" expr="'CONNECTED'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/incoming'" targettype="'basichttp'" name="'http.get'" namelist="session.id status application.callerId timestamp"/>
+    </transition>
+
+    <transition state="incoming" event="dialog.started">
+      <log expr="'***** DIALOG STARTED *****'"/>
+
+      <var name="status" expr="'DIALOG_STARTED'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/incoming'" targettype="'basichttp'" name="'http.get'" namelist="session.id status application.callerId timestamp"/>
+    </transition>
+
+    <transition state="incoming" event="dialog.exit">
+      <log expr="'***** DIALOG EXITING *****'"/>
+
+      <var name="status" expr="'DIALOG_EXIT'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/incoming'" targettype="'basichttp'" name="'http.get'" namelist="session.id status application.callerId timestamp"/>
+
+      <disconnect connectionid="callId"/>
+    </transition>
+
+    <transition state="incoming" event="connection.disconnected">
+      <log expr="'***** CONNECTION DISCONNECTED *****'"/>
+
+      <var name="status" expr="'DISCONNECTED'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/incoming'" targettype="'basichttp'" name="'http.get'" namelist="session.id status application.callerId timestamp"/>
+    </transition>
+
+    <!-- ******************************* OUTGOING **************************** -->
+    <transition state="outgoing" event="connection.progressing">
+      <log expr="'***** CONNECTION PROGRESSING *****'"/>
+
+      <assign name="callId" expr="event$.connectionid"/>
+
+      <var name="status" expr="'PROGRESSING'"/>
+      <assign name="application.callerId" expr="event$.connection.remote"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/outgoing'" targettype="'basichttp'" name="'http.get'" namelist="session.id externalId status application.callerId timestamp"/>
+    </transition>
+
+    <transition state="outgoing" event="connection.connected">
+      <log expr="'***** CONNECTION.CONNECTED: OUTGOING *****'"/>
+
+      <var name="status" expr="'CONNECTED'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/outgoing'" targettype="'basichttp'" name="'http.get'" namelist="session.id externalId status application.callerId timestamp"/>
+      <dialogstart src="vxml" type="'application/voicexml+xml'"/>
+    </transition>
+
+    <transition state="outgoing" event="dialog.started">
+      <log expr="'***** DIALOG STARTED *****'"/>
+
+      <var name="status" expr="'DIALOG_STARTED'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/outgoing'" targettype="'basichttp'" name="'http.get'" namelist="session.id externalId status application.callerId timestamp"/>
+    </transition>
+
+    <transition state="outgoing" event="dialog.exit">
+      <log expr="'***** DIALOG EXITING *****'"/>
+
+      <var name="status" expr="'DIALOG_EXIT'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/outgoing'" targettype="'basichttp'" name="'http.get'" namelist="session.id externalId status application.callerId timestamp"/>
+
+      <disconnect connectionid="callId"/>
+    </transition>
+
+    <transition state="outgoing" event="connection.disconnected">
+      <log expr="'***** CONNECTION DISCONNECTED *****'"/>
+
+      <var name="status" expr="'DISCONNECTED'"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/outgoing'" targettype="'basichttp'" name="'http.get'" namelist="session.id externalId status application.callerId timestamp"/>
+    </transition>
+
+    <transition state="outgoing" event="connection.failed">
+      <log expr="'***** CONNECTION FAILED *****'"/>
+
+      <var name="status" expr="'FAILED'"/>
+      <var name="reason" expr="event$.reason"/>
+      <var name="timestamp" expr="(+new Date)"/>
+      <send target="base_url + '/ivr/outgoing'" targettype="'basichttp'" name="'http.get'" namelist="session.id externalId status reason application.callerId timestamp"/>
+    </transition>
+
+    <transition event="TIMEOUT_REACHED">
+      <log expr="'***** CALL TIME EXCEEDED *****'"/>
+      <exit/>
+    </transition>
+
+  </eventprocessor>
+</ccxml>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml">
+    <menu>
+      <property name="inputmodes" value="dtmf"/>
+        #set ($repeatUrl = "$contextPath/outbox/vxml/outboxMessage?mId=$message.id&ln=$language")
+        #set ($saveUrl = "$contextPath/outbox/vxml/save?mId=$message.id&ln=$language")
+        #set ($nextUrl = "$contextPath/outbox/vxml/outboxMessage?pId=$message.partyId&ln=$language")
+        #set ($mainMenuUrl = "$contextPath/tama/menu/select?pId=$message.partyId")
+      <prompt>
+          #if($message.voiceMessageType.canBeReplayed)
+              To listen this message again press 1,
+          #end
+          #if($message.voiceMessageType.canBeSaved)
+              to save this message press 2
+          #end
+          to go to the next message press 3
+      </prompt>
+        #if($message.voiceMessageType.canBeReplayed)
+            <choice dtmf="1" next="$escape.escapeXml($repeatUrl)"/>
+        #end
+        #if($message.voiceMessageType.canBeSaved)
+            <choice dtmf="2" next="$escape.escapeXml($saveUrl)"/>
+        #end
+        <choice dtmf="3" next="$escape.escapeXml($nextUrl)"/>
+        <choice dtmf="9" next="$escape.escapeXml($mainMenuUrl)"/>
+    </menu>
+</vxml>

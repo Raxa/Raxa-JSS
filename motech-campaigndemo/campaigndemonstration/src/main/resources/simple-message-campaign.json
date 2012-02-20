@@ -1,0 +1,382 @@
+[
+    {
+        "name" : "Absolute Dates Message Program",
+        "type" : "ABSOLUTE",
+        "messages" : [
+            {
+                "name" : "First",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "random-1",
+                "date" : "2013-06-15"
+            },
+            {
+                "name" : "Second",
+                "formats" : ["IVR"],
+                "languages" : ["en"],
+                "messageKey": "random-2",
+                "date" : "2013-06-22"
+            }
+        ]
+    },
+        {
+        "name" : "Ghana Pregnancy Message Program" ,
+        "type" : "OFFSET",
+        "messages" : [
+            {
+                "name" : "Week 5",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-5",
+                "timeOffset" : "2 Minutes"
+            },
+            {
+                "name" : "Week 6",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-6",
+                "timeOffset" : "4 Minutes"
+            },
+            {
+                "name" : "Week 7",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-7",
+                "timeOffset" : "6 Minutes"
+            },
+            {
+                "name" : "Week 8",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-8",
+                "timeOffset" : "8 Minutes"
+            },
+            {
+                "name" : "Week 9",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-9",
+                "timeOffset" : "10 Minutes"
+            },
+            {
+                "name" : "Week 10",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-10",
+                "timeOffset" : "12 Minutes"
+            },
+                        {
+                "name" : "Week 11",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-11",
+                "timeOffset" : "14 Minutes"
+            },
+                        {
+                "name" : "Week 12",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-12",
+                "timeOffset" : "16 Minutes"
+            },
+                        {
+                "name" : "Week 13",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-13",
+                "timeOffset" : "18 Minutes"
+            },
+                        {
+                "name" : "Week 14",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-14",
+                "timeOffset" : "20 Minutes"
+            },
+            {
+                "name" : "Week 15",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-15",
+                "timeOffset" : "22 Minutes"
+            }, 
+            {
+                "name" : "Week 16",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-16",
+                "timeOffset" : "24 Minutes"
+            },       
+            {
+                "name" : "Week 17",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-17",
+                "timeOffset" : "26 Minutes"
+            },       
+            {
+                "name" : "Week 18",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-18",
+                "timeOffset" : "28 Minutes"
+            },    
+            {
+                "name" : "Week 19",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-19",
+                "timeOffset" : "30 Minutes"
+            },
+            {
+                "name" : "Week 20",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-20",
+                "timeOffset" : "32 Minutes"
+            },     
+            {
+                "name" : "Week 21",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-21",
+                "timeOffset" : "34 Minutes"
+            },             
+            {
+                "name" : "Week 22",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-22",
+                "timeOffset" : "36 Minutes"
+            },           
+            {
+                "name" : "Week 23",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-23",
+                "timeOffset" : "38 Minutes"
+            },        
+            {
+                "name" : "Week 24",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-24",
+                "timeOffset" : "40 Minutes"
+            },       
+            {
+                "name" : "Week 25",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-25",
+                "timeOffset" : "42 Minutes"
+            },      
+            {
+                "name" : "Week 26",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-26",
+                "timeOffset" : "44 Minutes"
+            },   
+            {
+                "name" : "Week 27",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-27",
+                "timeOffset" : "46 Minutes"
+            },      
+            {
+                "name" : "Week 28",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-28",
+                "timeOffset" : "48 Minutes"
+            },     
+            {
+                "name" : "Week 29",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-29",
+                "timeOffset" : "50 Minutes"
+            },     
+            {
+                "name" : "Week 30",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-30",
+                "timeOffset" : "52 Minutes"
+            },        
+            {
+                "name" : "Week 31",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-31",
+                "timeOffset" : "54 Minutes"
+            },         
+            {
+                "name" : "Week 32",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-32",
+                "timeOffset" : "56 Minutes"
+            },      
+            {
+                "name" : "Week 33",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-33",
+                "timeOffset" : "58 Minutes"
+            },             
+            {
+                "name" : "Week 34",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-34",
+                "timeOffset" : "60 Minutes"
+            },       
+            {
+                "name" : "Week 35",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-35",
+                "timeOffset" : "62 Minutes"
+            },   
+            {
+                "name" : "Week 36",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-36",
+                "timeOffset" : "64 Minutes"
+            },      
+            {
+                "name" : "Week 37",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-37",
+                "timeOffset" : "66 Minutes"
+            },    
+            {
+                "name" : "Week 38",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-38",
+                "timeOffset" : "68 Minutes"
+            },   
+            {
+                "name" : "Week 39",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-39",
+                "timeOffset" : "70 Minutes"
+            },      
+            {
+                "name" : "Week 40",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "pregnancy-info-week-40",
+                "timeOffset" : "72 Minutes"
+            }                                                                                                                                                               
+        ]
+    },
+    {
+        "name" : "Relative Dates Message Program" ,
+        "type" : "OFFSET",
+        "messages" : [
+            {
+                "name" : "Week 1",
+                "formats" : ["IVR"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-1",
+                "timeOffset" : "2 Minutes"
+            },
+            {
+                "name" : "Week 1A",
+                "formats" : ["IVR"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-1a",
+                "timeOffset" : "3 Minutes"
+            },
+            {
+                "name" : "Week 1B",
+                "formats" : ["IVR"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-1b",
+                "timeOffset" : "6 Minutes"
+            },
+            {
+                "name" : "Week 1C",
+                "formats" : ["IVR"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-1c",
+                "timeOffset" : "9 Minutes"
+            },
+            {
+                "name" : "Week 1D",
+                "formats" : ["IVR"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-1d",
+                "timeOffset" : "15 Minutes"
+            }
+        ]
+    },
+    {
+        "name" : "Relative Parameterized Dates Message Program",
+        "type" : "REPEATING",
+        "maxDuration" : "5 weeks",
+        "messages" : [
+            {
+                "name" : "Weekly Message #1",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-{Offset}-1",
+                "repeatInterval" : "1 Week",
+                "deliverTime" : "10:30"
+            },
+            {
+                "name" : "Weekly Message #2",
+                "formats" : ["SMS"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-{Offset}-2",
+                "repeatInterval" : "9 Days",
+                "deliverTime" : "10:30"
+            },
+            {
+                "name" : "Weekly Message #3",
+                "formats" : ["SMS"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-{Offset}-3",
+                "repeatInterval" : "12 Days",
+                "deliverTime" : "10:30"
+            },
+            {
+                "name" : "Weekly Message #4",
+                "formats" : ["SMS"],
+                "languages" : ["en"],
+                "messageKey": "child-info-week-{Offset}-{WeekDay}",
+                "weekDaysApplicable" : ["Monday", "Wednesday", "Friday"],
+                "deliverTime" : "10:30"
+            },
+            {
+                "name" : "Weekly Message #5",
+                "formats" : ["SMS"],
+                "languages" : ["en"],
+                "messageKey": "child-info-calendar-week-{Offset}-{WeekDay}",
+                "calendarStartOfWeek" : "Sunday", 
+                "weekDaysApplicable" : ["Monday", "Wednesday", "Friday"],
+                "deliverTime" : "10:30"
+            }
+        ]
+    },
+    {
+        "name" : "Cron based Message Program",
+        "type" : "CRON",
+        "messages" : [
+            {
+                "name" : "First",
+                "formats" : ["IVR", "SMS"],
+                "languages" : ["en"],
+                "messageKey": "cron-message",
+                "cron" : "0 0/2 * * * ?"
+            }
+        ]
+    }
+]

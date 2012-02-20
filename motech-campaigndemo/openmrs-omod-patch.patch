@@ -1,0 +1,12 @@
+diff --git a/motech-openmrs-omod/src/main/resources/config.xml b/motech-openmrs-omod/src/main/resources/config.xml
+index 997a129..fc9f685 100644
+--- a/motech-openmrs-omod/src/main/resources/config.xml
++++ b/motech-openmrs-omod/src/main/resources/config.xml
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.1//EN" "http://resources.openmrs.org/doctype/config-1.1.dtd">
+-<module configVersion="1.0">
++<module configVersion="1.1">
+     <id>${moduleName}</id>
+     <name>${project.name}</name>
+     <version>${project.version}</version>

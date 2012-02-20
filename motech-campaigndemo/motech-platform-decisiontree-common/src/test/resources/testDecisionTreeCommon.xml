@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<context:annotation-config />
+	<util:properties id="couchdbProperties" location="classpath:couchdb.properties" />
+	<bean id="treesDatabase" class="org.ektorp.impl.StdCouchDbConnector">
+		<constructor-arg value="trees" />
+		<constructor-arg>
+			<bean id="couchDbInstance" class="org.ektorp.impl.StdCouchDbInstance">
+				<constructor-arg>
+					<bean class="org.ektorp.spring.HttpClientFactoryBean" />
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="treeDao" class="org.motechproject.decisiontree.dao.couchdb.TreeDaoImpl"/>
+</beans>

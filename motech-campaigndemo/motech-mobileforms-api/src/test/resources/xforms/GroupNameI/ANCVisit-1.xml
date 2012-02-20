@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xf:xforms xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="1">
+  <xf:model>
+    <xf:instance id="anc">
+      <anc id="1" name="ANC Visit">
+        <staffid/>
+        <facilityId/>
+        <date/>
+        <motechid/>
+        <serialNumber/>
+        <visitNumber/>
+        <estDeliveryDate/>
+        <bpSystolic/>
+        <bpDiastolic/>
+        <weight/>
+        <ttdose/>
+        <iptdose/>
+        <iptReactive/>
+        <itnUse/>
+        <fht/>
+        <fhr/>
+        <urineTestProteinPositive/>
+        <urineTestGlucosePositive/>
+        <hemoglobin/>
+        <vdrlReactive/>
+        <vdrlTreatment/>
+        <dewormer/>
+        <pmtct/>
+        <preTestCounseled/>
+        <hivTestResult/>
+        <postTestCounseled/>
+        <pmtctTreament/>
+        <location/>
+        <house/>
+        <community/>
+        <referred/>
+        <maleInvolved/>
+        <nextANCDate/>
+        <comments/>
+        <formtype>data_entry</formtype>
+        <formname>anc-jf</formname>
+      </anc>
+    </xf:instance>
+    <xf:bind id="staffid" nodeset="/anc/staffid" required="true()" type="xsd:int" constraint=". &lt; 2147483647" message="Number too large. Keep under 2147483647"/>
+    <xf:bind id="facilityId" nodeset="/anc/facilityId" required="true()" type="xsd:int" constraint=". &lt; 2147483647" message="Number too large. Keep under 2147483647"/>
+    <xf:bind constraint=". &lt;= 'today()'" id="date" message="Invalid date: date specified is in the future" nodeset="/anc/date" required="true()" type="xsd:date"/>
+    <xf:bind id="motechid" nodeset="/anc/motechid" required="true()" type="xsd:int" constraint=". &gt; 999999 and . &lt; 10000000" message="MoTeCH ID must be 7 digits long"/>
+    <xf:bind id="serialNumber" nodeset="/anc/serialNumber"  type="xsd:string" required="true()"/>
+    <xf:bind id="visitNumber" nodeset="/anc/visitNumber" required="true()" type="xsd:string"/>
+    <xf:bind id="estDeliveryDate" nodeset="/anc/estDeliveryDate" type="xsd:date"/>
+    <xf:bind constraint=". &gt;= 60 and . &lt;= 300" id="bpSystolic" message="Value out of range: must be between 60 and 300" nodeset="/anc/bpSystolic" type="xsd:int"/>
+    <xf:bind constraint=". &gt;= 30 and . &lt;= 140" id="bpDiastolic" message="Value out of range: Must be between 30 and 140" nodeset="/anc/bpDiastolic" type="xsd:int"/>
+    <xf:bind constraint=". &gt;= 10 and . &lt;= 500" id="weight" message="Value out of range: must be between 10 and 500" nodeset="/anc/weight" type="xsd:decimal"/>
+    <xf:bind id="ttdose" nodeset="/anc/ttdose" required="true()" type="xsd:string"/>
+    <xf:bind id="iptdose" nodeset="/anc/iptdose" required="true()" type="xsd:string"/>
+    <xf:bind action="show" id="iptReactive" nodeset="/anc/iptReactive" relevant="/anc/iptdose = '1' or /anc/iptdose = '2' or /anc/iptdose = '3'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind id="itnUse" nodeset="/anc/itnUse" required="true()" type="xsd:string"/>
+    <xf:bind constraint=". &gt;= 12 and . &lt;= 40" id="fht" message="Value out of range: must be between 12 and 40" nodeset="/anc/fht" type="xsd:decimal"/>
+    <xf:bind constraint=". &gt;= 80 and . &lt;= 200" id="fhr" message="Value out of range: must be between 80 and 200" nodeset="/anc/fhr" type="xsd:int"/>
+    <xf:bind id="urineTestProteinPositive" nodeset="/anc/urineTestProteinPositive" type="xsd:string"/>
+    <xf:bind id="urineTestGlucosePositive" nodeset="/anc/urineTestGlucosePositive" type="xsd:string"/>
+    <xf:bind id="hemoglobin" nodeset="/anc/hemoglobin" type="xsd:decimal"/>
+    <xf:bind id="vdrlReactive" nodeset="/anc/vdrlReactive" type="xsd:string"/>
+    <xf:bind action="show" id="vdrlTreatment" nodeset="/anc/vdrlTreatment" relevant="/anc/vdrlReactive = 'Y'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind id="dewormer" nodeset="/anc/dewormer" required="true()" type="xsd:string"/>
+    <xf:bind id="pmtct" nodeset="/anc/pmtct" required="true()" type="xsd:string"/>
+    <xf:bind action="show" id="preTestCounseled" nodeset="/anc/preTestCounseled" relevant="/anc/pmtct = 'Y'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind action="show" id="hivTestResult" nodeset="/anc/hivTestResult" relevant="/anc/pmtct = 'Y'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind action="show" id="postTestCounseled" nodeset="/anc/postTestCounseled" relevant="/anc/hivTestResult = 'POSITIVE' or /anc/hivTestResult = 'NEGATIVE'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind action="show" id="pmtctTreament" nodeset="/anc/pmtctTreament" relevant="/anc/hivTestResult = 'POSITIVE'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind id="location" nodeset="/anc/location" required="true()" type="xsd:string"/>
+    <xf:bind action="show" id="house" nodeset="/anc/house" relevant="/anc/location = '2'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind action="show" id="community" nodeset="/anc/community" relevant="/anc/location = '2'" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind id="referred" nodeset="/anc/referred" required="true()" type="xsd:string"/>
+    <xf:bind id="maleInvolved" nodeset="/anc/maleInvolved" required="true()" type="xsd:string"/>
+    <xf:bind constraint=". &gt; 'today()'" id="nextANCDate" message="Invalid date: date must be in the future" nodeset="/anc/nextANCDate" required="true()" type="xsd:date"/>
+    <xf:bind id="comments" nodeset="/anc/comments" type="xsd:string"/>
+    <xf:bind id="formtype" nodeset="/anc/formtype" required="true()" type="xsd:string" visible="false()"/>
+    <xf:bind id="formname" nodeset="/anc/formname" required="true()" type="xsd:string" visible="false()"/>
+  </xf:model>
+  <xf:group id="1">
+    <xf:label>Page1</xf:label>
+    <xf:input bind="staffid">
+      <xf:label>Staff ID</xf:label>
+    </xf:input>
+    <xf:input bind="facilityId">
+      <xf:label>Facility ID</xf:label>
+    </xf:input>
+    <xf:input bind="date">
+      <xf:label>Visit date</xf:label>
+    </xf:input>
+    <xf:input bind="motechid">
+      <xf:label>MoTeCH ID</xf:label>
+    </xf:input>
+    <xf:input bind="serialNumber">
+      <xf:label>Serial Number</xf:label>
+    </xf:input>
+    <xf:select1 bind="visitNumber">
+      <xf:label>Visit number</xf:label>
+      <xf:item id="1">
+        <xf:label>ANC 1</xf:label>
+        <xf:value>1</xf:value>
+      </xf:item>
+      <xf:item id="2">
+        <xf:label>ANC 2</xf:label>
+        <xf:value>2</xf:value>
+      </xf:item>
+      <xf:item id="3">
+        <xf:label>ANC 3</xf:label>
+        <xf:value>3</xf:value>
+      </xf:item>
+      <xf:item id="4">
+        <xf:label>ANC 4</xf:label>
+        <xf:value>4</xf:value>
+      </xf:item>
+      <xf:item id="5">
+        <xf:label>ANC 5</xf:label>
+        <xf:value>5</xf:value>
+      </xf:item>
+      <xf:item id="6">
+        <xf:label>ANC 6</xf:label>
+        <xf:value>6</xf:value>
+      </xf:item>
+      <xf:item id="7">
+        <xf:label>ANC 7</xf:label>
+        <xf:value>7</xf:value>
+      </xf:item>
+      <xf:item id="8">
+        <xf:label>ANC 8</xf:label>
+        <xf:value>8</xf:value>
+      </xf:item>
+      <xf:item id="9">
+        <xf:label>ANC 9</xf:label>
+        <xf:value>9</xf:value>
+      </xf:item>
+      <xf:item id="10">
+        <xf:label>ANC 10</xf:label>
+        <xf:value>10</xf:value>
+      </xf:item>
+      <xf:item id="11">
+        <xf:label>ANC 11</xf:label>
+        <xf:value>11</xf:value>
+      </xf:item>
+      <xf:item id="12">
+        <xf:label>ANC 12</xf:label>
+        <xf:value>12</xf:value>
+      </xf:item>
+      <xf:item id="13">
+        <xf:label>ANC 13</xf:label>
+        <xf:value>13</xf:value>
+      </xf:item>
+      <xf:item id="14">
+        <xf:label>ANC 14</xf:label>
+        <xf:value>14</xf:value>
+      </xf:item>
+      <xf:item id="15">
+        <xf:label>ANC 15</xf:label>
+        <xf:value>15</xf:value>
+      </xf:item>
+      <xf:item id="16">
+        <xf:label>ANC 16</xf:label>
+        <xf:value>16</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:input bind="estDeliveryDate">
+      <xf:label>Updated EDD</xf:label>
+    </xf:input>
+    <xf:input bind="bpSystolic">
+      <xf:label>BP - Systolic</xf:label>
+    </xf:input>
+    <xf:input bind="bpDiastolic">
+      <xf:label>BP - Diastolic</xf:label>
+    </xf:input>
+    <xf:input bind="weight">
+      <xf:label>Weight (Kg)</xf:label>
+    </xf:input>
+    <xf:select1 bind="ttdose">
+      <xf:label>TT</xf:label>
+      <xf:item id="NA">
+        <xf:label>No TT on this visit</xf:label>
+        <xf:value>NA</xf:value>
+      </xf:item>
+      <xf:item id="1">
+        <xf:label>TT 1</xf:label>
+        <xf:value>1</xf:value>
+      </xf:item>
+      <xf:item id="2">
+        <xf:label>TT 2</xf:label>
+        <xf:value>2</xf:value>
+      </xf:item>
+      <xf:item id="3">
+        <xf:label>TT 3</xf:label>
+        <xf:value>3</xf:value>
+      </xf:item>
+      <xf:item id="4">
+        <xf:label>TT 4</xf:label>
+        <xf:value>4</xf:value>
+      </xf:item>
+      <xf:item id="5">
+        <xf:label>TT 5</xf:label>
+        <xf:value>5</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="iptdose">
+      <xf:label>IPT</xf:label>
+      <xf:item id="NA">
+        <xf:label>No SP on this visit</xf:label>
+        <xf:value>NA</xf:value>
+      </xf:item>
+      <xf:item id="1">
+        <xf:label>SP 1</xf:label>
+        <xf:value>1</xf:value>
+      </xf:item>
+      <xf:item id="2">
+        <xf:label>SP 2</xf:label>
+        <xf:value>2</xf:value>
+      </xf:item>
+      <xf:item id="3">
+        <xf:label>SP 3</xf:label>
+        <xf:value>3</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="iptReactive">
+      <xf:label>IPT reaction</xf:label>
+      <xf:item id="Y">
+        <xf:label>Reactive</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>Non-reactive</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="itnUse">
+      <xf:label>ITN</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:input bind="fht">
+      <xf:label>FHt (cm)</xf:label>
+    </xf:input>
+    <xf:input bind="fhr">
+      <xf:label>FHr (bpm)</xf:label>
+    </xf:input>
+    <xf:select1 bind="urineTestProteinPositive">
+      <xf:label>Urine test-protein</xf:label>
+      <xf:item id="0">
+        <xf:label>Negative</xf:label>
+        <xf:value>0</xf:value>
+      </xf:item>
+      <xf:item id="1">
+        <xf:label>Positive</xf:label>
+        <xf:value>1</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="urineTestGlucosePositive">
+      <xf:label>Urine test-glucose</xf:label>
+      <xf:item id="0">
+        <xf:label>Negative</xf:label>
+        <xf:value>0</xf:value>
+      </xf:item>
+      <xf:item id="1">
+        <xf:label>Positive</xf:label>
+        <xf:value>1</xf:value>
+      </xf:item>
+      <xf:item id="2">
+        <xf:label>Trace</xf:label>
+        <xf:value>2</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:input bind="hemoglobin">
+      <xf:label>Hemoglobin (gm/dl)</xf:label>
+    </xf:input>
+    <xf:select1 bind="vdrlReactive">
+      <xf:label>VDRL</xf:label>
+      <xf:item id="Y">
+        <xf:label>Reactive</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>Non-reactive</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="vdrlTreatment">
+      <xf:label>VDRL Treatment</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="dewormer">
+      <xf:label>Dewormer</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="pmtct">
+      <xf:label>PMTCT this visit?</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="preTestCounseled">
+      <xf:label>Pre-test counseled</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="hivTestResult">
+      <xf:label>HIV Test</xf:label>
+      <xf:item id="NO_TEST">
+        <xf:label>None on this visit</xf:label>
+        <xf:value>NO_TEST</xf:value>
+      </xf:item>
+      <xf:item id="POSITIVE">
+        <xf:label>Positive result</xf:label>
+        <xf:value>POSITIVE</xf:value>
+      </xf:item>
+      <xf:item id="NEGATIVE">
+        <xf:label>Negative result</xf:label>
+        <xf:value>NEGATIVE</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="postTestCounseled">
+      <xf:label>Post-test counseled</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="pmtctTreament">
+      <xf:label>PMTCT treatment</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="location">
+      <xf:label>Location</xf:label>
+      <xf:item id="1">
+        <xf:label>Facility or clinic</xf:label>
+        <xf:value>1</xf:value>
+      </xf:item>
+      <xf:item id="2">
+        <xf:label>Home</xf:label>
+        <xf:value>2</xf:value>
+      </xf:item>
+      <xf:item id="3">
+        <xf:label>Outreach</xf:label>
+        <xf:value>3</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:input bind="house">
+      <xf:label>House</xf:label>
+    </xf:input>
+    <xf:input bind="community">
+      <xf:label>Community</xf:label>
+    </xf:input>
+    <xf:select1 bind="referred">
+      <xf:label>Referred</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:select1 bind="maleInvolved">
+      <xf:label>Male involvement</xf:label>
+      <xf:item id="Y">
+        <xf:label>Yes</xf:label>
+        <xf:value>Y</xf:value>
+      </xf:item>
+      <xf:item id="N">
+        <xf:label>No</xf:label>
+        <xf:value>N</xf:value>
+      </xf:item>
+    </xf:select1>
+    <xf:input bind="nextANCDate">
+      <xf:label>Next ANC Date</xf:label>
+    </xf:input>
+    <xf:input bind="comments">
+      <xf:label>Comments</xf:label>
+    </xf:input>
+    <xf:input bind="formtype">
+      <xf:label>formType</xf:label>
+    </xf:input>
+    <xf:input bind="formname">
+      <xf:label>formName</xf:label>
+    </xf:input>
+  </xf:group>
+</xf:xforms>

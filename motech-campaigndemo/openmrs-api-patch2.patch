@@ -1,0 +1,17 @@
+diff --git a/motech-openmrs-api/src/main/java/org/motechproject/openmrs/Context.java b/motech-openmrs-api/src/main/java/org/motechproject/openmrs/Context.java
+index e714709..b2e6e5a 100644
+--- a/motech-openmrs-api/src/main/java/org/motechproject/openmrs/Context.java
++++ b/motech-openmrs-api/src/main/java/org/motechproject/openmrs/Context.java
+@@ -37,9 +37,9 @@ public class Context {
+         logger.warn(format("connecting to openmrs instance at %s", url));
+         Properties properties = new Properties();
+         properties.setProperty(AUTO_UPDATE_DATABASE_RUNTIME_PROPERTY, String.valueOf(true));
+-        String path = getClass().getClassLoader().getResource("openmrs-data").toURI().getPath();
+-        logger.warn(format("openmrs data folder is  set to %s", path));
+-        properties.setProperty(APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY, path);
++//        String path = getClass().getClassLoader().getResource("openmrs-data").toURI().getPath();
++//        logger.warn(format("openmrs data folder is  set to %s", path));
++//        properties.setProperty(APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY, path);
+         properties.setProperty(ENABLE_HIBERNATE_SECOND_LEVEL_CACHE, String.valueOf(false));
+         startup(url, user, password, properties);
+         logger.warn(format("loaded %d modules", ModuleFactory.getLoadedModules().size()));

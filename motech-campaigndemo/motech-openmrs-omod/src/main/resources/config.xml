@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.1//EN" "http://resources.openmrs.org/doctype/config-1.1.dtd">
+<module configVersion="1.1">
+    <id>${moduleName}</id>
+    <name>${project.name}</name>
+    <version>${project.version}</version>
+    <package>${modulePackage}</package>
+    <author>Motech</author>
+    <description>${project.description}</description>
+    <activator>${modulePackage}.listener.OmodActivator</activator>
+    <require_version>1.8.2</require_version>
+
+    <require_modules>
+		<require_module version="2.1">org.openmrs.module.idgen</require_module>
+	</require_modules>
+
+    <advice>
+        <point>org.openmrs.api.ObsService</point>
+        <class>${modulePackage}.advice.ObsAdvice</class>
+    </advice>
+    <advice>
+        <point>org.openmrs.api.EncounterService</point>
+        <class>${modulePackage}.advice.EncounterAdvice</class>
+    </advice>
+    <advice>
+        <point>org.openmrs.api.PatientService</point>
+        <class>${modulePackage}.advice.PatientAdvice</class>
+    </advice>
+
+</module>
+

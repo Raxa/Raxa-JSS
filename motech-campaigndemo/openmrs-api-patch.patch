@@ -1,0 +1,16 @@
+diff --git a/motech-openmrs-api/pom.xml b/motech-openmrs-api/pom.xml
+index 8f8ef5d..e9b5f14 100644
+--- a/motech-openmrs-api/pom.xml
++++ b/motech-openmrs-api/pom.xml
+@@ -99,6 +99,11 @@
+     </dependencies>
+     <build>
+         <plugins>
++        	<plugin>
++        		<groupId>org.apache.maven.plugins</groupId>
++        		<artifactId>maven-eclipse-plugin</artifactId>
++        		<version>2.8</version>
++        	</plugin>
+             <!--PROPERTIES READ-->
+             <plugin>
+                 <groupId>org.codehaus.mojo</groupId>
