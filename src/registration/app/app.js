@@ -18,6 +18,7 @@ Ext.application({
 	launch: function(){
 		Ext.create('RaxaEmr.Registration.view.Confirmation');
 		//Ext.create('RaxaEmr.Registration.view.Vitals');
+		//Ext.create('RaxaEmr.Registration.view.PatientProfile');
 	}
 });
 

@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Registration.view.Login', {
+Ext.define('RaxaEmr.Registration.view.PatientProfile', {
     extend: 'Ext.Carousel',
     config: {
         fullscreen: true,
