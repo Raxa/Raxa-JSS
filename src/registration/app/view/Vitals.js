@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.view.Vitals', {
+Ext.define('RaxaEmr.Registration.view.Vitals', {
     extend: 'Ext.Container',
     config: {
         fullscreen: true,
