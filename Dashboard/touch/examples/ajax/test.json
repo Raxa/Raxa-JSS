@@ -1,9 +1,0 @@
-{
-    "productName": "Sencha Touch",
-    "version": "1.0 Alpha",
-    "sampleData": [
-        {
-            "foo": "bar" 
-        } 
-    ]
-}

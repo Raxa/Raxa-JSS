@@ -1,3 +1,0 @@
-describe("Ext.Anim", function() {
-    
-});
