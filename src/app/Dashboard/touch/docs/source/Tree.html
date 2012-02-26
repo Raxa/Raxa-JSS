@@ -1,0 +1,173 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.data.Tree"></div>/**
+ * @class Ext.data.Tree
+ * @extends Ext.util.Observable
+ * Represents a tree data structure and bubbles all the events for its nodes. The nodes
+ * in the tree have most standard DOM functionality.
+ * @constructor
+ * @param {Node} root (optional) The root node
+ */
+Ext.data.Tree = Ext.extend(Ext.util.Observable, {
+    
+    constructor: function(root) {
+        this.nodeHash = {};
+        
+        <div id="prop-Ext.data.Tree-root"></div>/**
+         * The root node for this tree
+         * @type Node
+         */
+        this.root = null;
+        
+        if (root) {
+            this.setRootNode(root);
+        }
+        
+        this.addEvents(
+            <div id="event-Ext.data.Tree-append"></div>/**
+             * @event append
+             * Fires when a new child node is appended to a node in this tree.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The newly appended node
+             * @param {Number} index The index of the newly appended node
+             */
+            "append",
+            
+            <div id="event-Ext.data.Tree-remove"></div>/**
+             * @event remove
+             * Fires when a child node is removed from a node in this tree.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node removed
+             */
+            "remove",
+            
+            <div id="event-Ext.data.Tree-move"></div>/**
+             * @event move
+             * Fires when a node is moved to a new location in the tree
+             * @param {Tree} tree The owner tree
+             * @param {Node} node The node moved
+             * @param {Node} oldParent The old parent of this node
+             * @param {Node} newParent The new parent of this node
+             * @param {Number} index The index it was moved to
+             */
+            "move",
+            
+            <div id="event-Ext.data.Tree-insert"></div>/**
+             * @event insert
+             * Fires when a new child node is inserted in a node in this tree.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node inserted
+             * @param {Node} refNode The child node the node was inserted before
+             */
+            "insert",
+            
+            <div id="event-Ext.data.Tree-beforeappend"></div>/**
+             * @event beforeappend
+             * Fires before a new child is appended to a node in this tree, return false to cancel the append.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node to be appended
+             */
+            "beforeappend",
+            
+            <div id="event-Ext.data.Tree-beforeremove"></div>/**
+             * @event beforeremove
+             * Fires before a child is removed from a node in this tree, return false to cancel the remove.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node to be removed
+             */
+            "beforeremove",
+            
+            <div id="event-Ext.data.Tree-beforemove"></div>/**
+             * @event beforemove
+             * Fires before a node is moved to a new location in the tree. Return false to cancel the move.
+             * @param {Tree} tree The owner tree
+             * @param {Node} node The node being moved
+             * @param {Node} oldParent The parent of the node
+             * @param {Node} newParent The new parent the node is moving to
+             * @param {Number} index The index it is being moved to
+             */
+            "beforemove",
+            
+            <div id="event-Ext.data.Tree-beforeinsert"></div>/**
+             * @event beforeinsert
+             * Fires before a new child is inserted in a node in this tree, return false to cancel the insert.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node to be inserted
+             * @param {Node} refNode The child node the node is being inserted before
+             */
+            "beforeinsert"
+        );
+        
+        Ext.data.Tree.superclass.constructor.call(this);        
+    },
+    
+    <div id="cfg-Ext.data.Tree-pathSeparator"></div>/**
+     * @cfg {String} pathSeparator
+     * The token used to separate paths in node ids (defaults to '/').
+     */
+    pathSeparator: "/",
+
+    // private
+    proxyNodeEvent : function(){
+        return this.fireEvent.apply(this, arguments);
+    },
+
+    <div id="method-Ext.data.Tree-getRootNode"></div>/**
+     * Returns the root node for this tree.
+     * @return {Node}
+     */
+    getRootNode : function() {
+        return this.root;
+    },
+
+    <div id="method-Ext.data.Tree-setRootNode"></div>/**
+     * Sets the root node for this tree.
+     * @param {Node} node
+     * @return {Node}
+     */
+    setRootNode : function(node) {
+        this.root = node;
+        node.ownerTree = this;
+        node.isRoot = true;
+        this.registerNode(node);
+        return node;
+    },
+
+    <div id="method-Ext.data.Tree-getNodeById"></div>/**
+     * Gets a node in this tree by its id.
+     * @param {String} id
+     * @return {Node}
+     */
+    getNodeById : function(id) {
+        return this.nodeHash[id];
+    },
+
+    // private
+    registerNode : function(node) {
+        this.nodeHash[node.id] = node;
+    },
+
+    // private
+    unregisterNode : function(node) {
+        delete this.nodeHash[node.id];
+    },
+
+    toString : function() {
+        return "[Tree"+(this.id?" "+this.id:"")+"]";
+    }
+});
+</pre>    
+</body>
+</html>

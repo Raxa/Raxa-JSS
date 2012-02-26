@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../deploy/resources/css/sencha-touch.css"/>
+        <script src="../../deploy/sencha-touch-debug.js"></script>
+        <script>
+          new Ext.Application({
+              name: 'MyApp',
+              launch: function() {
+                  this.viewport = new Ext.TabPanel({
+                      fullscreen: true,
+                      id    : 'mainPanel',
+                      ui: 'dark',
+                      dockedItems: [{
+                         dock: 'bottom',
+                         xtype: 'form',
+                         items: [{
+                            xtype: 'fieldset',
+                            items: [{
+                                 xtype: 'togglefield',
+                                 label: 'Animations',
+                                 value: 1,
+                                 listeners: {
+                                     change: function(slider, thumb, newValue, oldValue) {
+                                         Ext.Anim.override({
+                                             disableAnimations: newValue == 1 ? false : true
+                                         });
+                                     }
+                                 }
+                             }] 
+                         }]
+                      }],
+                      defaults: {
+                        listeners: {
+                            activate: function() {
+                                console.log('activate called')
+                            },
+                            beforeactivate: function() {
+                                console.log('beforeactive called')
+                            }
+                        }
+                      },
+                      items : [{
+                          title: 'Page 1',
+                          styleHtmlContent: true,
+                          contentEl: 'steps-to-reproduce'
+                      },{
+                          title: 'Page 2',
+                          html: 'This is page 2'
+                      }, {
+                          title: 'Page 3',
+                          html: 'This is page 3'
+                      }]
+                  });
+              }
+          });            
+        </script>
+    </head>
+    <body>
+        <div id="steps-to-reproduce" class="x-hidden-display">
+            <ol>
+                <li>Open javascript console</li>
+                <li>Switch between tabs, console output shows activate and beforeactivate events are being fired</li>
+                <li>Turn animations off</li>
+                <li>Switch between tabs again, console output shows that only the beforeactivate event is being fired when animations are disabled</li>
+            </ol>
+        </div>
+    </body>
+</html>

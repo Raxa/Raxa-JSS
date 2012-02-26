@@ -1,0 +1,18 @@
+<div xmlns:ext="http://www.extjs.com" class="body-wrap"><h1>Class <a href="source/EventManager.html#cls-Ext.EventObject">Ext.EventObject</a></h1><table cellspacing="0"><tr><td class="label">Package:</td><td class="hd-info">Ext</td></tr><tr><td class="label">Defined In:</td><td class="hd-info"><a href="source/EventManager.html#cls-Ext.EventObject">EventManager.js</a></td></tr><tr><td class="label">Class:</td><td class="hd-info"><a href="source/EventManager.html#cls-Ext.EventObject">EventObject</a></td></tr><tr><td class="label">Extends:</td><td class="hd-info">Object</td></tr></table><div class="description">Just as <a href="output/Ext.Element.html" ext:cls="Ext.Element">Ext.Element</a> wraps around a native DOM node, Ext.EventObject
+wraps the browser's native event-object normalizing cross-browser differences,
+such as which mouse button is clicked, keys pressed, mechanisms to stop
+event-propagation along with a method to prevent default actions from taking place.
+<p>For example:</p>
+<pre><code><b>function</b> handleClick(e, t){ <i>// e is not a standard event object, it is a Ext.EventObject</i>
+    e.preventDefault();
+    <b>var</b> target = e.getTarget(); <i>// same as t (the target HTMLElement)</i>
+    ...
+}
+<b>var</b> myDiv = <a href="output/Ext.html#Ext-get" ext:member="get" ext:cls="Ext">Ext.get</a>(<em>"myDiv"</em>);  <i>// get reference to an <a href="output/Ext.Element.html" ext:cls="Ext.Element">Ext.Element</a></i>
+myDiv.on(         <i>// <em>'on'</em> is shorthand <b>for</b> addListener</i>
+    <em>"click"</em>,      <i>// perform an action on click of myDiv</i>
+    handleClick   <i>// reference to the action handler</i>
+);
+<i>// other methods to <b>do</b> the same:</i>
+Ext.EventManager.on(<em>"myDiv"</em>, <em>'click'</em>, handleClick);
+Ext.EventManager.addListener(<em>"myDiv"</em>, <em>'click'</em>, handleClick);</code></pre><br><br><i>This class is a singleton and cannot be created directly.</i></div><div class="hr"></div><a id="Ext.EventObject-props"></a><h2>Public Properties</h2><div class="no-members">This class has no public properties.</div><a id="Ext.EventObject-methods"></a><h2>Public Methods</h2><div class="no-members">This class has no public methods.</div><a id="Ext.EventObject-events"></a><h2>Public Events</h2><div class="no-members">This class has no public events.</div></div>

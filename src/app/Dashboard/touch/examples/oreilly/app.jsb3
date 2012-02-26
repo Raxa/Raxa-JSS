@@ -1,0 +1,276 @@
+{
+    "projectName": "Sencha Touch",
+    "licenseText": "Copyright(c) 2011 Sencha Inc.\nlicensing@sencha.com\nhttp://www.sencha.com/touchlicense",
+    "packages": [
+        {
+            "name"  : "Platform Util",
+            "target": "pkgs/platform/util.js",
+            "id"    : "platform-util",
+            "files" : [
+                {"path": "../../src/platform/src/",      "name": "Ext.js"},
+                {"path": "../../src/platform/src/util/", "name": "Observable.js"},
+                {"path": "../../src/platform/src/util/", "name": "Stateful.js"},
+                {"path": "../../src/platform/src/util/", "name": "MixedCollection.js"},
+                {"path": "../../src/platform/src/util/", "name": "AbstractManager.js"},
+                {"path": "../../src/platform/src/util/", "name": "DelayedTask.js"},
+                {"path": "../../src/platform/src/util/", "name": "GeoLocation.js"},
+                {"path": "../../src/platform/src/util/", "name": "Point.js"},
+                {"path": "../../src/platform/src/util/", "name": "Offset.js"},
+                {"path": "../../src/platform/src/util/", "name": "Region.js"},
+                {"path": "../../src/platform/src/util/", "name": "Template.js"},
+                {"path": "../../src/platform/src/util/", "name": "XTemplate.js"},
+                {"path": "../../src/platform/src/util/", "name": "Sorter.js"},
+                {"path": "../../src/platform/src/util/", "name": "Filter.js"},
+                {"path": "../../src/platform/src/util/", "name": "Function.js"},
+                {"path": "../../src/platform/src/util/", "name": "Date.js"},
+                {"path": "../../src/platform/src/util/", "name": "Number.js"},
+                {"path": "../../src/platform/src/util/", "name": "Format.js"},
+                {"path": "../../src/platform/src/util/", "name": "LoadMask.js"}
+            ]
+        },
+        {
+            "name"  : "Platform Native",
+            "target": "pkgs/platform/native.js",
+            "id"    : "platform-native",
+            "files" : [
+                {"path": "../../src/platform/src/native/", "name": "Array.js"}
+            ]
+        },
+        {
+            "name"  : "Platform Core",
+            "target": "pkgs/platform/core.js",
+            "id"    : "platform-core",
+            "files" : [
+                {"path": "../../src/platform/src/", "name": "ComponentMgr.js"},
+                {"path": "../../src/platform/src/", "name": "ComponentQuery.js"},
+                {"path": "../../src/platform/src/", "name": "PluginMgr.js"},
+                {"path": "../../src/platform/src/", "name": "EventManager.js"},
+                {"path": "../../src/platform/src/", "name": "Support.js"}
+            ]
+        },
+        {
+            "name"  : "Platform MVC",
+            "target": "pkgs/platform/mvc.js",
+            "id"    : "platform-mvc",
+            "files" : [
+                {"path": "../../src/core/",             "name": "History.js"},
+                {"path": "../../src/platform/src/app/", "name": "ControllerManager.js"},
+                {"path": "../../src/platform/src/app/", "name": "Controller.js"},
+                {"path": "../../src/platform/src/app/", "name": "Dispatcher.js"},
+                {"path": "../../src/platform/src/app/", "name": "Router.js"},
+                {"path": "../../src/platform/src/app/", "name": "Route.js"},
+                {"path": "../../src/platform/src/app/", "name": "Interaction.js"},
+                {"path": "../../src/platform/src/app/", "name": "Application.js"},
+                {"path": "../../src/platform/src/app/", "name": "ApplicationManager.js"}
+            ]
+        },
+        
+        {
+            "name": "Data Foundation",
+            "id": "data-foundation",
+            "target": "pkgs/platform/data-foundation.js",
+            "files": [            
+                {"path": "../../src/platform/src/data/",         "name": "Batch.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Model.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Association.js"},
+                {"path": "../../src/platform/src/data/",         "name": "HasManyAssociation.js"},
+                {"path": "../../src/platform/src/data/",         "name": "BelongsToAssociation.js"},
+                {"path": "../../src/platform/src/data/",         "name": "PolymorphicAssociation.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Validations.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Errors.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Field.js"},
+                {"path": "../../src/platform/src/data/",         "name": "SortTypes.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Types.js"},
+                {"path": "../../src/platform/src/data/",         "name": "ModelMgr.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Operation.js"},
+                {"path": "../../src/platform/src/data/",         "name": "ProxyMgr.js"},
+                {"path": "../../src/platform/src/data/",         "name": "ReaderMgr.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Request.js"},
+                {"path": "../../src/platform/src/data/",         "name": "ResultSet.js"},
+                {"path": "../../src/platform/src/data/stores/",  "name": "AbstractStore.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Store.js"},
+                {"path": "../../src/platform/src/data/stores/",  "name": "TreeStore.js"},
+                {"path": "../../src/platform/src/data/",         "name": "StoreMgr.js"},
+                {"path": "../../src/platform/src/data/",         "name": "WriterMgr.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Tree.js"},
+                {"path": "../../src/platform/src/data/",         "name": "Node.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "Proxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "ServerProxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "AjaxProxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "RestProxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "ScriptTagProxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "ClientProxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "MemoryProxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "WebStorageProxy.js"},
+                {"path": "../../src/platform/src/data/proxies/", "name": "LocalStorageProxy.js"},
+                {"path": "../../src/platform/src/data/readers/", "name": "Reader.js"},
+                {"path": "../../src/platform/src/data/writers/", "name": "Writer.js"}
+            ]
+        },
+        {
+            "name": "Data - Json",
+            "id": "data-json",
+            "target": "pkgs/platform/data-json.js",
+            "files": [
+                {"path": "../../src/platform/src/data/writers/", "name": "JsonWriter.js"},
+                {"path": "../../src/platform/src/data/readers/", "name": "JsonReader.js"},
+                {"path": "../../src/platform/src/data/readers/", "name": "TreeReader.js"},
+                {"path": "../../src/platform/src/data/readers/", "name": "ArrayReader.js"},
+                {"path": "../../src/platform/src/data/stores/",  "name": "ArrayStore.js"},
+                {"path": "../../src/platform/src/data/stores/",  "name": "JsonStore.js"},
+                {"path": "../../src/platform/src/data/stores/",  "name": "JsonPStore.js"}
+            ]
+        },
+        {
+            "name": "Data - XML",
+            "id": "data-xml",
+            "target": "pkgs/platform/data-xml.js",
+            "files": [
+                {"path": "../../src/platform/src/data/writers/", "name": "XmlWriter.js"},
+                {"path": "../../src/platform/src/data/readers/", "name": "XmlReader.js"},
+                {"path": "../../src/platform/src/data/stores/",  "name": "XmlStore.js"}
+            ]
+        },
+        
+        {
+            "name"  : "Touch Core",
+            "target": "pkgs/core.js",
+            "id"    : "core",
+            "files" : [
+                {"path": "../../src/core/", "name": "Ext.js"},
+                {"path": "../../src/util/", "name": "TapRepeater.js"},
+                {"path": "../../src/util/", "name": "JSON.js"},
+                {"path": "../../src/util/", "name": "JSONP.js"},
+                {"path": "../../src/util/", "name": "Draggable.js"},
+                {"path": "../../src/util/", "name": "Droppable.js"},
+                {"path": "../../src/util/", "name": "Scroller.js"},
+                {"path": "../../src/util/", "name": "Sortable.js"},
+                {"path": "../../src/util/", "name": "Date.js"},
+                {"path": "../../src/data/", "name": "Connection.js"}
+            ]
+        },
+        
+        {
+            "name"  : "Touch Gestures",
+            "target": "pkgs/gestures.js",
+            "id"    : "gestures",
+            "files" : [
+                {"path": "../../src/gestures/", "name": "Manager.js"},
+                {"path": "../../src/gestures/", "name": "Event.js"},
+                {"path": "../../src/gestures/", "name": "Gesture.js"},
+                {"path": "../../src/gestures/", "name": "Touch.js"},
+                {"path": "../../src/gestures/", "name": "Tap.js"},
+                {"path": "../../src/gestures/", "name": "Swipe.js"},
+                {"path": "../../src/gestures/", "name": "Drag.js"},
+                {"path": "../../src/gestures/", "name": "Pinch.js"}
+            ]            
+        },
+        
+        {
+            "name"  : "Touch DOM",
+            "target": "pkgs/dom.js",
+            "id"    : "dom",
+            "files" : [
+                {"path": "../../src/core/", "name": "Element.js"},
+                {"path": "../../src/platform/src/core/", "name": "Element.static.js"},
+                {"path": "../../src/core/", "name": "Element.static-more.js"},
+                {"path": "../../src/core/", "name": "Element.position.js"},
+                {"path": "../../src/core/", "name": "Element.style.js"},
+                {"path": "../../src/platform/src/core/", "name": "Element.traversal.js"},
+                {"path": "../../src/core/", "name": "Element.traversal-more.js"},
+                {"path": "../../src/platform/src/core/", "name": "Element.insertion.js"},
+                {"path": "../../src/core/", "name": "Element.alignment.js"},
+                {"path": "../../src/core/", "name": "CompositeElement.js"},
+                {"path": "../../src/core/", "name": "DomHelper.js"},
+                {"path": "../../src/core/", "name": "DomQuery.js"},
+                {"path": "../../src/core/", "name": "Anim.js"}
+            ]
+        },
+        {
+            "name"  : "Touch Layouts",
+            "target": "pkgs/layouts.js",
+            "id"    : "layouts",
+            "files" : [
+                {"path": "../../src/platform/src/layout/",           "name": "LayoutManager.js"},
+                {"path": "../../src/platform/src/layout/",           "name": "Layout.js"},
+                {"path": "../../src/platform/src/layout/component/", "name": "ComponentLayout.js"},
+                {"path": "../../src/platform/src/layout/component/", "name": "AutoComponentLayout.js"},
+                {"path": "../../src/platform/src/layout/component/", "name": "DockLayout.js"},
+                {"path": "../../src/layout/component/",              "name": "FieldLayout.js"},
+                {"path": "../../src/platform/src/layout/container/", "name": "ContainerLayout.js"},
+                {"path": "../../src/platform/src/layout/container/", "name": "AutoContainerLayout.js"},
+                {"path": "../../src/platform/src/layout/container/", "name": "FitLayout.js"},
+                {"path": "../../src/platform/src/layout/container/", "name": "CardLayout.js"},
+                {"path": "../../src/layout/container/",              "name": "BoxLayout.js"}                
+            ]
+        },    
+        {
+            "name": "Widgets",
+            "target": "pkgs/widgets.js",
+            "id": "widgets",
+            "files": [
+                {"path": "../../src/platform/src/", "name": "Component.js"},
+                {"path": "../../src/widgets/",      "name": "Component.js"},
+                {"path": "../../src/platform/src/", "name": "Container.js"},
+                {"path": "../../src/widgets/",      "name": "Container.js"},
+                {"path": "../../src/platform/src/", "name": "Panel.js"},
+                {"path": "../../src/widgets/",      "name": "Panel.js"},
+                
+                {"path": "../../src/widgets/", "name": "Button.js"},
+                {"path": "../../src/widgets/", "name": "SegmentedButton.js"},
+                {"path": "../../src/platform/src/misc/", "name": "AbstractStoreSelectionModel.js"},
+                {"path": "../../src/platform/src/misc/", "name": "DataViewSelectionModel.js"},
+                {"path": "../../src/platform/src/misc/", "name": "DataView.js"},
+                {"path": "../../src/widgets/", "name": "DataView.js"},
+                {"path": "../../src/widgets/", "name": "List.js"},
+                {"path": "../../src/widgets/", "name": "IndexBar.js"},
+                {"path": "../../src/widgets/", "name": "Toolbar.js"},
+                {"path": "../../src/widgets/", "name": "TabBar.js"},
+                {"path": "../../src/widgets/", "name": "Tab.js"},
+                {"path": "../../src/widgets/", "name": "TabPanel.js"},
+                {"path": "../../src/widgets/", "name": "Map.js"},
+                {"path": "../../src/widgets/", "name": "Sheet.js"},
+                {"path": "../../src/widgets/", "name": "MessageBox.js"}
+            ]
+        }
+    ],
+    "builds": [
+        {
+            "name": "Oreilly Sencha Touch",
+            "target": "sencha-touch-mod.js",
+            "debug": true,
+            "packages": [
+                "platform-util",
+                "platform-native",
+                "platform-core",
+                "data-foundation",
+                "data-json",
+                "dom",
+                "core",
+                "gestures",
+                "widgets",
+                "layouts"
+            ]
+        }, {
+            "name": "Oreilly",
+            "target": "oreilly-all.js",
+            "debug": true,
+            "files": [         
+                {"path": "src/", "name": "index.js"},
+                {"path": "src/", "name": "Models.js"},
+                {"path": "src/", "name": "App.js"},
+                {"path": "src/", "name": "SessionList.js"},
+                {"path": "src/", "name": "SpeakerList.js"},
+                {"path": "src/", "name": "HtmlPage.js"},
+                {"path": "src/", "name": "SpeakerDetail.js"},
+                {"path": "src/", "name": "SessionDetail.js"},
+                {"path": "src/", "name": "LocationMap.js"},
+                {"path": "src/", "name": "AboutList.js"},
+                {"path": "src/", "name": "VideoList.js"},
+                {"path": "src/", "name": "TweetList.js"}
+            ]
+        }
+    ],
+    "resources": [
+    ]
+}

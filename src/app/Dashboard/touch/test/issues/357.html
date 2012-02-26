@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../deploy/resources/css/sencha-touch.css"/>
+        <script src="../../deploy/sencha-touch-debug.js"></script>
+        
+        <script>
+            Ext.setup({
+                onReady: function() {
+                    var data = {
+                        text: 'Groceries',
+                        items: [{
+                            text: 'Drinks',
+                            items: [{
+                                text: 'Water',
+                                items: [{
+                                    text: 'Sparkling',
+                                    leaf: true
+                                },{
+                                    text: 'Still',
+                                    leaf: true
+                                }]
+                            },{
+                                text: 'Coffee',
+                                leaf: true
+                            },{
+                                text: 'Espresso',
+                                leaf: true
+                            },{
+                                text: 'Redbull',
+                                leaf: true
+                            },{
+                                text: 'Coke',
+                                leaf: true
+                            },{
+                                text: 'Diet Coke',
+                                leaf: true
+                            }]
+                        },{
+                            text: 'Fruit',
+                            items: [{
+                                text: 'Bananas',
+                                leaf: true
+                            },{
+                                text: 'Lemon',
+                                leaf: true
+                            }]
+                        },{
+                            text: 'Snacks',
+                            items: [{
+                                text: 'Nuts',
+                                leaf: true
+                            },{
+                                text: 'Pretzels',
+                                leaf: true
+                            },{
+                                text: 'Wasabi Peas',
+                                leaf: true
+                            }]
+                        },{
+                            text: 'Empty Category',
+                            items: []
+                        }]
+                    };
+                    Ext.regModel('ListItem', {
+                        fields: [{name: 'text', type: 'string'}]
+                    });
+                    var store = new Ext.data.TreeStore({
+                        autoLoad: false,
+                        model: 'ListItem',
+                        root: data,
+                        proxy: {
+                            type: 'ajax',
+                            reader: {
+                                type: 'tree',
+                                root: 'items'
+                            }
+                        },
+                        listeners: {
+                    	    beforeLoad: function() {
+                    	        console.log('You didn\'t say store.load(), did you?');
+                            }
+                        }
+                    });
+
+                    var nestedList = new Ext.NestedList({
+                        fullscreen: true,
+                        title: 'Groceries',
+                        displayField: 'text',
+                        store: store
+                    });
+                    
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

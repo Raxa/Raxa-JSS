@@ -1,0 +1,62 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.data.Errors"></div>/**
+ * @author Ed Spencer
+ * @class Ext.data.Errors
+ * @extends Ext.util.MixedCollection
+ * 
+ * <p>Wraps a collection of validation error responses and provides convenient functions for
+ * accessing and errors for specific fields.</p>
+ * 
+ * <p>Usually this class does not need to be instantiated directly - instances are instead created
+ * automatically when {@link Ext.data.Model#validate validate} on a model instance:</p>
+ * 
+<pre><code>
+//validate some existing model instance - in this case it returned 2 failures messages
+var errors = myModel.validate();
+
+errors.isValid(); //false
+
+errors.length; //2
+errors.getByField('name');  // [{field: 'name',  error: 'must be present'}]
+errors.getByField('title'); // [{field: 'title', error: 'is too short'}]
+</code></pre>
+ */
+Ext.data.Errors = Ext.extend(Ext.util.MixedCollection, {
+    <div id="method-Ext.data.Errors-isValid"></div>/**
+     * Returns true if there are no errors in the collection
+     * @return {Boolean} 
+     */
+    isValid: function() {
+        return this.length == 0;
+    },
+    
+    <div id="method-Ext.data.Errors-getByField"></div>/**
+     * Returns all of the errors for the given field
+     * @param {String} fieldName The field to get errors for
+     * @return {Array} All errors for the given field
+     */
+    getByField: function(fieldName) {
+        var errors = [],
+            error, field, i;
+            
+        for (i = 0; i < this.length; i++) {
+            error = this.items[i];
+            
+            if (error.field == fieldName) {
+                errors.push(error);
+            }
+        }
+        
+        return errors;
+    }
+});
+</pre>    
+</body>
+</html>

@@ -1,0 +1,72 @@
+<div xmlns:ext="http://www.extjs.com" class="body-wrap"><h1>Class <a href="source/IndexBar.html#cls-Ext.IndexBar">Ext.IndexBar</a></h1><table cellspacing="0"><tr><td class="label">Package:</td><td class="hd-info">Ext</td></tr><tr><td class="label">Defined In:</td><td class="hd-info"><a href="source/IndexBar.html#cls-Ext.IndexBar">IndexBar.js</a></td></tr><tr><td class="label">Class:</td><td class="hd-info"><a href="source/IndexBar.html#cls-Ext.IndexBar">IndexBar</a></td></tr><tr><td class="label">Extends:</td><td class="hd-info">Object</td></tr></table><div class="description"><p>IndexBar is a component used to display a list of data (primarily an <a href="output/Ext.IndexBar.html#Ext.IndexBar-alphabet" ext:member="alphabet" ext:cls="Ext.IndexBar">alphabet</a>) which can then be used to quickly
+navigate through a list (see <a href="output/Ext.List.html" ext:cls="Ext.List">Ext.List</a>) of data. When a user taps on an item in the <a href="output/Ext.IndexBar.html" ext:cls="Ext.IndexBar">Ext.IndexBar</a>, it will fire
+the <tt><a href="output/Ext.IndexBar.html#Ext.IndexBar-index" ext:member="index" ext:cls="Ext.IndexBar">index</a></tt> event.</p>
+<h2>Screenshot:</h2>
+{@img Ext.IndexBar/screenshot.png Ext.IndexBar screenshot}
+<h2>Example code:</h2>
+<p>Here is an example of the usage in a <a href="output/Ext.List.html" ext:cls="Ext.List">Ext.List</a>:</p>
+<pre><code>Ext.regModel(<em>'Contact'</em>, {
+    fields: [<em>'firstName'</em>, <em>'lastName'</em>]
+});
+
+<b>var</b> store = <b>new</b> Ext.data.JsonStore({
+    model  : <em>'Contact'</em>,
+    sorters: <em>'lastName'</em>,
+
+    getGroupString : <b>function</b>(record) {
+        <b>return</b> record.get(<em>'lastName'</em>)[0];
+    },
+
+    data: [
+        {firstName: <em>'Tommy'</em>,   lastName: <em>'Maintz'</em>},
+        {firstName: <em>'Rob'</em>,     lastName: <em>'Dougan'</em>},
+        {firstName: <em>'Ed'</em>,      lastName: <em>'Spencer'</em>},
+        {firstName: <em>'Jamie'</em>,   lastName: <em>'Avins'</em>},
+        {firstName: <em>'Aaron'</em>,   lastName: <em>'Conran'</em>},
+        {firstName: <em>'Dave'</em>,    lastName: <em>'Kaneda'</em>},
+        {firstName: <em>'Michael'</em>, lastName: <em>'Mullany'</em>},
+        {firstName: <em>'Abraham'</em>, lastName: <em>'Elias'</em>},
+        {firstName: <em>'Jay'</em>,     lastName: <em>'Robinson'</em>},
+        {firstName: <em>'Tommy'</em>,   lastName: <em>'Maintz'</em>},
+        {firstName: <em>'Rob'</em>,     lastName: <em>'Dougan'</em>},
+        {firstName: <em>'Ed'</em>,      lastName: <em>'Spencer'</em>},
+        {firstName: <em>'Jamie'</em>,   lastName: <em>'Avins'</em>},
+        {firstName: <em>'Aaron'</em>,   lastName: <em>'Conran'</em>},
+        {firstName: <em>'Dave'</em>,    lastName: <em>'Kaneda'</em>},
+        {firstName: <em>'Michael'</em>, lastName: <em>'Mullany'</em>},
+        {firstName: <em>'Abraham'</em>, lastName: <em>'Elias'</em>},
+        {firstName: <em>'Jay'</em>,     lastName: <em>'Robinson'</em>}
+    ]
+});
+
+<b>var</b> list = <b>new</b> Ext.List({
+    tpl: <em>'&lt;tpl <b>for</b>=<em>"."</em>&gt;&lt;div class=<em>"contact"</em>&gt;{firstName} &lt;strong&gt;{lastName}&lt;/strong&gt;&lt;/div&gt;&lt;/tpl&gt;'</em>,
+
+    itemSelector: <em>'div.contact'</em>,
+    singleSelect: true,
+    grouped     : true,
+    indexBar    : true,
+
+    store: store,
+
+    floating     : true,
+    width        : 350,
+    height       : 370,
+    centered     : true,
+    modal        : true,
+    hideOnMaskTap: false
+});
+list.show();</code></pre>
+<p>Alternatively you can initate the <a href="output/Ext.IndexBar.html" ext:cls="Ext.IndexBar">Ext.IndexBar</a> component manually in a custom component by using something
+similar to the following example:<p>
+<code><pre>
+<b>var</b> indexBar = <b>new</b> Ext.IndexBar({
+    dock    : <em>'right'</em>,
+    overlay : true,
+    alphabet: true
+});</code></pre></div><div class="hr"></div><a id="Ext.IndexBar-configs"></a><h2>Config Options</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Config Options</th><th class="msource-header">Defined By</th></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-alphabet"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-alphabet">alphabet</a></b> : Boolean<div class="mdesc">true to use the <a href="output/Ext.IndexBar.html#Ext.IndexBar-letters" ext:member="letters" ext:cls="Ext.IndexBar">letters</a> property to show a list of the alphabet. Should <b>not</b> be used
+in conjunction with <a href="output/Ext.IndexBar.html#Ext.IndexBar-store" ext:member="store" ext:cls="Ext.IndexBar">store</a>.</div></td><td class="msource">IndexBar</td></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-componentCls"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-componentCls">componentCls</a></b> : String<div class="mdesc">Base CSS class
+Defaults to <tt>'x-indexbar'</tt></div></td><td class="msource">IndexBar</td></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-direction"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-direction">direction</a></b> : String<div class="mdesc">Layout direction, can be either 'vertical' or 'horizontal'
+Defaults to <tt>'vertical'</tt></div></td><td class="msource">IndexBar</td></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-itemSelector"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-itemSelector">itemSelector</a></b> : String<div class="mdesc"><b>Required</b>. A simple CSS selector (e.g. <tt>div.x-indexbar-item</tt> for items</div></td><td class="msource">IndexBar</td></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-letters"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-letters">letters</a></b> : Array<div class="mdesc">The letters to show on the index bar. Defaults to the English alphabet, A-Z.</div></td><td class="msource">IndexBar</td></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-listPrefix"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-listPrefix">listPrefix</a></b> : String<div class="mdesc">The prefix string to be appended at the beginning of the list. E.g: useful to add a "#" prefix before numbers</div></td><td class="msource">IndexBar</td></tr><tr class="config-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-store"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-store">store</a></b> : Ext.data.Store<div class="mdesc"><div class="short">The store to be used for displaying data on the index bar. The store model must have a value field when using the
+def...</div><div class="long">The store to be used for displaying data on the index bar. The store model must have a <tt>value</tt> field when using the
+default <a href="output/Ext.IndexBar.html#Ext.IndexBar-tpl" ext:member="tpl" ext:cls="Ext.IndexBar">tpl</a>. If no <a href="output/Ext.IndexBar.html#Ext.IndexBar-store" ext:member="store" ext:cls="Ext.IndexBar">store</a> is defined, it will create a store using the <tt>IndexBarModel</tt> model.</div></div></td><td class="msource">IndexBar</td></tr><tr class="config-row  "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-tpl"></a><b><a href="source/IndexBar.html#cfg-Ext.IndexBar-tpl">tpl</a></b> : String<div class="mdesc">Template for items</div></td><td class="msource">IndexBar</td></tr></tbody></table><a id="Ext.IndexBar-props"></a><h2>Public Properties</h2><div class="no-members">This class has no public properties.</div><a id="Ext.IndexBar-methods"></a><h2>Public Methods</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Method</th><th class="msource-header">Defined By</th></tr><tr class="method-row expandable"><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-IndexBar"></a><b class="constructor"><a href="source/IndexBar.html#cls-Ext.IndexBar">IndexBar</a></b><span class="openparen">(&nbsp;</span><span title="Required" class="required">Object&nbsp;config</span><span class="closeparen">&nbsp;)</span><div class="mdesc"><div class="short">Create a new IndexBar</div><div class="long">Create a new IndexBar<div class="mdetail-params"><strong>Parameters:</strong><ul><li><code>config</code> : Object<div class="sub-desc">The config object</div></li></ul><strong>Returns:</strong><ul><li>void</li></ul></div></div></div></td><td class="msource">IndexBar</td></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-isHorizontal"></a><b class="method"><a href="source/IndexBar.html#method-Ext.IndexBar-isHorizontal">isHorizontal</a></b><span class="openparen">(</span><span class="closeparen">)</span><span class="colon">&nbsp;:&nbsp;</span><span class="return">Boolean</span><div class="mdesc"><div class="short">Method to determine whether this Sortable is currently sorting.</div><div class="long">Method to determine whether this Sortable is currently sorting.<div class="mdetail-params"><strong>Parameters:</strong><ul><li>None.</li></ul><strong>Returns:</strong><ul><li><code>Boolean</code><div class="sub-desc">the sorting state of this Sortable.</div></li></ul></div></div></div></td><td class="msource">IndexBar</td></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-isVertical"></a><b class="method"><a href="source/IndexBar.html#method-Ext.IndexBar-isVertical">isVertical</a></b><span class="openparen">(</span><span class="closeparen">)</span><span class="colon">&nbsp;:&nbsp;</span><span class="return">Boolean</span><div class="mdesc"><div class="short">Method to determine whether this Sortable is currently disabled.</div><div class="long">Method to determine whether this Sortable is currently disabled.<div class="mdetail-params"><strong>Parameters:</strong><ul><li>None.</li></ul><strong>Returns:</strong><ul><li><code>Boolean</code><div class="sub-desc">the disabled state of this Sortable.</div></li></ul></div></div></div></td><td class="msource">IndexBar</td></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-refresh"></a><b class="method"><a href="source/IndexBar.html#method-Ext.IndexBar-refresh">refresh</a></b><span class="openparen">(</span><span class="closeparen">)</span><span class="colon">&nbsp;:&nbsp;</span><span class="return">void</span><div class="mdesc"><div class="short">Refreshes the view by reloading the data from the store and re-rendering the template.</div><div class="long">Refreshes the view by reloading the data from the store and re-rendering the template.<div class="mdetail-params"><strong>Parameters:</strong><ul><li>None.</li></ul><strong>Returns:</strong><ul><li>void</li></ul></div></div></div></td><td class="msource">IndexBar</td></tr></tbody></table><a id="Ext.IndexBar-events"></a><h2>Public Events</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Event</th><th class="msource-header">Defined By</th></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.IndexBar-index"></a><b class="event"><a href="source/IndexBar.html#event-Ext.IndexBar-index">index</a></b><span class="colon">&nbsp;:&nbsp;</span><span class="openparen">(&nbsp;</span><span title="Required" class="required">Ext.data.Model&nbsp;record</span><span class="comma">,&nbsp;</span><span title="Required" class="required">HTMLElement&nbsp;target</span><span class="comma">,&nbsp;</span><span title="Required" class="required">Number&nbsp;index</span><span class="closeparen">&nbsp;)</span><span>&nbsp;</span><div class="mdesc"><div class="short">Fires when an item in the index bar display has been tapped</div><div class="long">Fires when an item in the index bar display has been tapped<div class="mdetail-params"><strong style="font-weight: normal;">Listeners will be called with the following arguments:</strong><ul><li><code>record</code> : Ext.data.Model<div class="sub-desc">The record tapped on the indexbar</div></li><li><code>target</code> : HTMLElement<div class="sub-desc">The node on the indexbar that has been tapped</div></li><li><code>index</code> : Number<div class="sub-desc">The index of the record tapped on the indexbar</div></li></ul></div></div></div></td><td class="msource">IndexBar</td></tr></tbody></table></div>
