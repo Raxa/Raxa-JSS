@@ -1,4 +1,4 @@
-describe("Bmi", function() {
+describe("Registration: Bmi", function() {
 
     /////////////////////////////////
     // UI Verifications
