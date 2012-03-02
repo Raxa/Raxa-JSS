@@ -806,9 +806,8 @@ Ext.define('Ext.data.NodeInterface', {
 
                 //<deprecated since=0.99>
                 cascade: function() {
-                    if (Ext.isDefined(Ext.global.console)) {
-                        Ext.global.console.warn('Ext.data.Node: cascade has been deprecated. Please use cascadeBy instead.');
-                    }
+                    Ext.Logger.deprecate('Ext.data.Node: cascade has been deprecated. Please use cascadeBy instead.');
+
                     return this.cascadeBy.apply(this, arguments);
                 },
                 //</deprecated>
@@ -950,6 +949,8 @@ Ext.define('Ext.data.NodeInterface', {
                                 n.sort(sortFn, true, true);
                             }
                         }
+
+                        this.notifyStores('afterEdit', ['sorted'], {sorted: 'sorted'});
 
                         if (suppressEvent !== true) {
                             this.fireEvent('sort', this, cs);

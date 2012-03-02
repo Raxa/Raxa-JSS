@@ -226,6 +226,7 @@ Ext.define('Ext.Media', {
 
         //when changing the src, we must call load:
         //http://developer.apple.com/library/safari/#documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/ControllingMediaWithJavaScript/ControllingMediaWithJavaScript.html
+
         dom.src = newUrl;
         dom.load();
 

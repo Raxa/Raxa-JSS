@@ -1,5 +1,5 @@
 /**
- *
+ * @private
  */
 Ext.define('Ext.fx.State', {
 

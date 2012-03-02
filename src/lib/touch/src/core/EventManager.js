@@ -81,6 +81,16 @@ Ext.EventManager = {
     },
 
     /**
+     * Adds a listener to be notified when the document is ready (before onload and before images are loaded).
+     * @removed 2.0.0 Please use {@link Ext#onReady onReady}
+     */
+    onDocumentReady: function() {
+        //<debug warn>
+        Ext.Logger.deprecate("Ext.EventManager.onDocumentReady has been removed, please use Ext.onReady instead", 3);
+        //</debug>
+    },
+
+    /**
      * Adds a listener to be notified when the browser window is resized and provides resize event buffering (50 milliseconds),
      * passes new viewport width and height to handlers.
      * @param {Function} fn      The handler function the window resize event invokes.

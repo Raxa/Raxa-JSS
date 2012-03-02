@@ -15,8 +15,10 @@
  *        model: 'Contact',
  *        sorters: 'lastName',
  *
- *        getGroupString: function(record) {
- *            return record.get('lastName')[0];
+ *        grouper: {
+ *            groupFn: function(record) {
+ *                return record.get('lastName')[0];
+ *            }
  *        },
  *
  *        data: [
@@ -40,7 +42,8 @@
  *     Ext.create('Ext.List', {
  *        fullscreen: true,
  *        itemTpl: '<div class="contact">{firstName} <strong>{lastName}</strong></div>',
- *        store: store
+ *        store: store,
+ *        grouped: true
  *     });
  *
 */
@@ -80,7 +83,8 @@ Ext.define('Ext.dataview.List', {
 
         /**
          * @cfg {Boolean} clearSelectionOnDeactivate
-         * @deprecated 2.0.0
+         * True to clear any selections on the list when the list is deactivated.
+         * @removed 2.0.0
          */
 
         /**
@@ -105,22 +109,63 @@ Ext.define('Ext.dataview.List', {
          * Whether or not to group items in the provided Store with a header for each item.
          * @accessor
          */
-        grouped: null,
+        grouped: false,
 
         /**
          * @cfg {Boolean/Function/Object} onItemDisclosure
          * True to display a disclosure icon on each list item.
-         * This won't bind a listener to the tap event. The list
-         * will still fire the disclose event though.
-         * By setting this config to a function, it will automatically
-         * add a tap event listeners to the disclosure buttons which
-         * will fire your function.
+         * The list will still fire the disclose event, and the event can be stopped before itemtap.
+         * By setting this config to a function, the function passed will be called when the disclosure
+         * is tapped.
          * Finally you can specify an object with a 'scope' and 'handler'
          * property defined. This will also be bound to the tap event listener
          * and is useful when you want to change the scope of the handler.
          * @accessor
          */
-        onItemDisclosure: null
+        onItemDisclosure: null,
+
+        /**
+         * @cfg {String} ui
+         * The style of this list. Available options are `normal` and `round`.
+         */
+        ui: 'normal'
+
+        /**
+         * @cfg {Boolean} useComponents
+         * Flag the use a component based DataView implementation.  This allows the full use of components in the
+         * DataView at the cost of some performance.
+         *
+         * Checkout the [DataView Guide](#!/guide/dataview) for more information on using this configuration.
+         * @accessor
+         * @private
+         */
+
+        /**
+         * @cfg {Object} itemConfig
+         * A configuration object that is passed to every item created by a component based DataView. Because each
+         * item that a DataView renders is a Component, we can pass configuration options to each component to
+         * easily customize how each child component behaves.
+         * Note this is only used when useComponents is true.
+         * @accessor
+         * @private
+         */
+
+        /**
+         * @cfg {Number} maxItemCache
+         * Maintains a cache of reusable components when using a component based DataView.  Improveing performance at
+         * the cost of memory.
+         * Note this is currently only used when useComponents is true.
+         * @accessor
+         * @private
+         */
+
+        /**
+         * @cfg {String} defaultType
+         * The xtype used for the component based DataView. Defaults to dataitem.
+         * Note this is only used when useComponents is true.
+         * @accessor
+         * @private
+         */
     },
 
     constructor: function() {
@@ -129,13 +174,13 @@ Ext.define('Ext.dataview.List', {
     },
 
     // apply to the selection model to maintain visual UI cues
-    onItemTrigger: function(container, target, index, e) {
+    onItemTrigger: function(me, index, target, record, e) {
         if (!(this.getPreventSelectionOnDisclose() && Ext.fly(e.target).hasCls(this.getBaseCls() + '-disclosure'))) {
             this.callParent(arguments);
         }
     },
 
-    doInitialize: function() {
+    initialize: function() {
         var me = this,
             container;
 
@@ -146,7 +191,7 @@ Ext.define('Ext.dataview.List', {
         }));
         container.dataview = me;
 
-        container.on(me.getTriggerEvent(), me.onItemTrigger, me);
+        me.on(me.getTriggerEvent(), me.onItemTrigger, me);
 
         container.element.on({
             delegate: '.' + this.getBaseCls() + '-disclosure',
@@ -160,6 +205,7 @@ Ext.define('Ext.dataview.List', {
             itemtap: 'onItemTap',
             itemtaphold: 'onItemTapHold',
             itemtouchmove: 'onItemTouchMove',
+            itemsingletap: 'onItemSingleTap',
             itemdoubletap: 'onItemDoubleTap',
             itemswipe: 'onItemSwipe',
             scope: me
@@ -167,6 +213,15 @@ Ext.define('Ext.dataview.List', {
 
         if (this.getStore()) {
             this.refresh();
+        }
+    },
+
+    updateInline: function(newInline) {
+        this.callParent(arguments);
+        if (newInline) {
+            this.setOnItemDisclosure(false);
+            this.setIndexBar(false);
+            this.setGrouped(false);
         }
     },
 
@@ -188,12 +243,24 @@ Ext.define('Ext.dataview.List', {
     },
 
     updateGrouped: function(grouped) {
+        var baseCls = this.getBaseCls(),
+            cls = baseCls + '-grouped',
+            unCls = baseCls + '-ungrouped';
+
         if (grouped) {
+            this.addCls(cls);
+            this.removeCls(unCls);
             this.doRefreshHeaders();
             this.updatePinHeaders(this.getPinHeaders());
         }
         else {
-            this.container.doRemoveHeaders();
+            this.addCls(unCls);
+            this.removeCls(cls);
+
+            if (this.container) {
+                this.container.doRemoveHeaders();
+            }
+
             this.updatePinHeaders(null);
         }
     },
@@ -359,7 +426,8 @@ Ext.define('Ext.dataview.List', {
     },
 
     getItemHeader: function(item) {
-        return item.childNodes[0];
+        var element = Ext.fly(item).down(this.container.headerClsCache);
+        return element ? element.dom : null;
     },
 
     onScroll: function(scroller, x, y) {
@@ -422,7 +490,7 @@ Ext.define('Ext.dataview.List', {
         var me = this,
             header = me.header;
         if (header) {
-            if (group) {
+            if (group && group.header) {
                 if (!me.activeGroup || me.activeGroup.header != group.header) {
                     header.show();
 
@@ -430,7 +498,7 @@ Ext.define('Ext.dataview.List', {
                         header.setHtml(group.header.innerHTML);
                     }
                 }
-            } else if (header && header.dom) {
+            } else if (header && header.element) {
                 header.hide();
             }
         }

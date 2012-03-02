@@ -5,7 +5,7 @@ The {@link Ext.Spacer} component is generally used to put space between items in
 
 By default the {@link #flex} configuration is set to 1:
 
-    @example preview
+    @example miniphone preview
     Ext.create('Ext.Container', {
         fullscreen: true,
         items: [

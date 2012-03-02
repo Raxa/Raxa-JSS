@@ -215,6 +215,9 @@ Ext.define('Ext.util.GeoLocation', {
                 }
             }
         }
+        else {
+            this.fireEvent('locationerror', this, false, false, true, 'This device does not support Geolocation.');
+        }
         return config;
     },
 

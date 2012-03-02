@@ -5,7 +5,7 @@ Ext.define('Ext.util.AbstractMixedCollection', {
     requires: ['Ext.util.Filter'],
 
     mixins: {
-        observable: 'Ext.util.Observable'
+        observable: 'Ext.mixin.Observable'
     },
 
     /**
@@ -36,6 +36,15 @@ Ext.define('Ext.util.AbstractMixedCollection', {
      * @param {String} key (optional) The key associated with the removed item.
      */
 
+    /**
+     * Creates new MixedCollection.
+     * @param {Boolean} [allowFunctions] Specify `true` if the {@link #addAll}
+     * function should add function references to the collection. (defaults to `false`)
+     * @param {Function} [keyFn] A function that can accept an item of the type(s) stored in this MixedCollection
+     * and return the key value for that item.  This is used when available to look up the key on items that
+     * were passed without an explicit key parameter to a MixedCollection method.  Passing this parameter is
+     * equivalent to providing an implementation for the {@link #getKey} method.
+     */
     constructor: function(allowFunctions, keyFn) {
         var me = this;
 
@@ -600,8 +609,8 @@ var middleAged = people.filter('age', 24);
 
             for (i = 0; i < length; i++) {
                 var filter = filters[i],
-                    fn     = filter.filterFn,
-                    scope  = filter.scope;
+                    fn     = filter.getFilterFn(),
+                    scope  = filter.getScope();
 
                 isMatch = isMatch && fn.call(scope, record);
             }

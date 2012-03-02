@@ -8,11 +8,13 @@
  *
  *     Ext.define('User', {
  *         extend: 'Ext.data.Model',
- *         fields: [
- *             'name', 'email',
- *             {name: 'age', type: 'int'},
- *             {name: 'gender', type: 'string', defaultValue: 'Unknown'}
- *         ]
+ *         config: {
+ *             fields: [
+ *                 'name', 'email',
+ *                 {name: 'age', type: 'int'},
+ *                 {name: 'gender', type: 'string', defaultValue: 'Unknown'}
+ *             ]
+ *         }
  *     });
  *
  * Four fields will have been created for the User Model - name, email, age and gender. Note that we specified a couple
@@ -21,12 +23,14 @@
  *
  *     Ext.define('User', {
  *         extend: 'Ext.data.Model',
- *         fields: [
- *             {name: 'name', type: 'auto'},
- *             {name: 'email', type: 'auto'},
- *             {name: 'age', type: 'int'},
- *             {name: 'gender', type: 'string', defaultValue: 'Unknown'}
- *         ]
+ *         config: {
+ *             fields: [
+ *                 {name: 'name', type: 'auto'},
+ *                 {name: 'email', type: 'auto'},
+ *                 {name: 'age', type: 'int'},
+ *                 {name: 'gender', type: 'string', defaultValue: 'Unknown'}
+ *             ]
+ *         }
  *     });
  *
  * # Types and conversion
@@ -40,22 +44,24 @@
  *
  *     Ext.define('User', {
  *         extend: 'Ext.data.Model',
- *         fields: [
- *             'name', 'email',
- *             {name: 'age', type: 'int'},
- *             {name: 'gender', type: 'string', defaultValue: 'Unknown'},
+ *         config: {
+ *             fields: [
+ *                 'name', 'email',
+ *                 {name: 'age', type: 'int'},
+ *                 {name: 'gender', type: 'string', defaultValue: 'Unknown'},
  *
- *             {
- *                 name: 'firstName',
- *                 convert: function(value, record) {
- *                     var fullName  = record.get('name'),
- *                         splits    = fullName.split(" "),
- *                         firstName = splits[0];
+ *                 {
+ *                     name: 'firstName',
+ *                     convert: function(value, record) {
+ *                         var fullName  = record.get('name'),
+ *                             splits    = fullName.split(" "),
+ *                             firstName = splits[0];
  *
- *                     return firstName;
+ *                         return firstName;
+ *                     }
  *                 }
- *             }
- *         ]
+ *             ]
+ *         }
  *     });
  *
  * Now when we create a new User, the firstName is populated automatically based on the name:
@@ -311,14 +317,6 @@ Ext.define('Ext.data.Field', {
             config = {name: config};
         }
 
-        if (config.useNull !== undefined) {
-            config.allowNull = config.useNull;
-            delete config.useNull;
-            // <debug>
-            Ext.Logger.warn('useNull has been deprecated on a Field definition. Please use allowNull instead.');
-            // </debug>
-        }
-
         this.initConfig(config);
     },
 
@@ -376,4 +374,15 @@ Ext.define('Ext.data.Field', {
     hasCustomConvert: function() {
         return this._hasCustomConvert;
     }
+
+    // <deprecated product=touch since=2.0>
+}, function() {
+    /**
+     * @member Ext.data.Field
+     * @cfg {Boolean} useNull
+     * @inheritdoc Ext.data.Field#allowNull
+     * @deprecated 2.0.0 Please use {@link #allowNull} instead.
+     */
+    Ext.deprecateProperty(this, 'useNull', 'allowNull');
+    // </deprecated>
 });

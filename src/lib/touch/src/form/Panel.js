@@ -2,7 +2,9 @@
  * The Form panel presents a set of form fields and provides convenient ways to load and save data. Usually a form
  * panel just contains the set of fields you want to display, ordered inside the items configuration like this:
  *
+ *     @example
  *     var form = Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
  *         items: [
  *             {
  *                 xtype: 'textfield',
@@ -42,7 +44,10 @@
  * to load a particular instance into our form:
  *
  *     Ext.define('MyApp.model.User', {
- *         fields: ['name', 'email', 'password']
+ *         extend: 'Ext.data.Model',
+ *         config: {
+ *             fields: ['name', 'email', 'password']
+ *         }
  *     });
  *
  *     var ed = Ext.create('MyApp.model.User', {
@@ -107,6 +112,8 @@
  * full list), including callback functions for success and failure, which are called depending on whether or not the
  * form submission was successful. These functions are usually used to take some action in your app after your data
  * has been saved to the server side.
+ *
+ * @aside guide forms
  */
 Ext.define('Ext.form.Panel', {
     alternateClassName: 'Ext.form.FormPanel',
@@ -192,7 +199,7 @@ Ext.define('Ext.form.Panel', {
 
         // @inherit
         scrollable: {
-            scrollMethod: 'scrollposition'
+            translationMethod: 'scrollposition'
         }
     },
 
@@ -483,67 +490,80 @@ Ext.define('Ext.form.Panel', {
 
     /**
      * Returns an object containing the value of each field in the form, keyed to the field's name.
-     * For groups of checkbox fields with the same name, it will be arrays of values. For examples:
-
-     <pre><code>
-     {
-         name: "Jacky Nguyen", // From a TextField
-         favorites: [
-             'pizza',
-             'noodle',
-             'cake'
-         ]
-     }
-     </code></pre>
-
+     * For groups of checkbox fields with the same name, it will be arrays of values. For example:
+     *
+     *     {
+     *         name: "Jacky Nguyen", // From a TextField
+     *         favorites: [
+     *             'pizza',
+     *             'noodle',
+     *             'cake'
+     *         ]
+     *     }
+     *
      * @param {Boolean} enabled <tt>true</tt> to return only enabled fields
      * @return {Object} Object mapping field name to its value
      */
     getValues: function(enabled) {
         var fields = this.getFields(),
             values = {},
-            field, name, ln, i;
+            isArray = Ext.isArray,
+            field, value, addValue, bucket, name, ln, i;
 
-        for (name in fields) {
-            if (fields.hasOwnProperty(name)) {
-                if (Ext.isArray(fields[name])) {
-                    values[name] = [];
-
-                    ln = fields[name].length;
-
-                    for (i = 0; i < ln; i++) {
-                        field = fields[name][i];
-
-                        if (!field.getChecked) {
-                            values[name] = field.getValue();
-
-                            //<debug>
-                            throw new Error("Ext.form.Panel: [getValues] You have multiple fields with the same 'name' configuration of '" + name + "' in your form panel (#" + this.id + ").");
-                            //</debug>
-
-                            break;
-                        }
-
-                        if (!(enabled && field.getDisabled())) {
-                            if (field.isRadio) {
-                                values[name] = field.getGroupValue();
-                            } else {
-                                values[name].push(field.getValue());
-                            }
-                        }
+        // Function which you give a field and a name, and it will add it into the values
+        // object accordingly
+        addValue = function(field, name) {
+            if (field.isCheckbox) {
+                value = field.getSubmitValue();
+            } else {
+                value = field.getValue();
+            }
 
 
+            if (!(enabled && field.getDisabled())) {
+                // RadioField is a special case where the value returned is the fields valUE
+                // ONLY if it is checked
+                if (field.isRadio) {
+                    if (field.isChecked()) {
+                        values[name] = value;
                     }
                 } else {
-                    field = fields[name];
-
-                    if (!(enabled && field.getDisabled())) {
-                        if (field.isCheckbox) {
-                            values[name] = (field.getChecked()) ? field.getValue() : null;
-                        } else {
-                            values[name] = field.getValue();
+                    // Check if the value already exists
+                    bucket = values[name];
+                    if (bucket) {
+                        // if it does and it isn't an array, we need to make it into an array
+                        // so we can push more
+                        if (!isArray(bucket)) {
+                            bucket = values[name] = [bucket];
                         }
+
+                        // Check if it is an array
+                        if (isArray(bucket)) {
+                            // Concat it into the other values
+                            bucket = values[name] = bucket.concat(value);
+                        } else {
+                            // If it isn't an array, just pushed more values
+                            bucket.push(value);
+                        }
+                    } else {
+                        values[name] = value;
                     }
+                }
+            }
+        };
+
+        // Loop through each of the fields, and add the values for those fields.
+        for (name in fields) {
+            if (fields.hasOwnProperty(name)) {
+                field = fields[name];
+
+                if (isArray(field)) {
+                    ln = field.length;
+                    for (i = 0; i < ln; i++) {
+                        addValue(field[i], name);
+                    }
+                } else {
+                    addValue(field, name);
                 }
             }
         }
@@ -671,7 +691,6 @@ Ext.define('Ext.form.Panel', {
     getFieldsFromItem: Ext.emptyFn,
 
     /**
-     * @deprecated 2.0.0 showMask is now deprecated. Please use {@link #setMasked} instead.
      * Shows a generic/custom mask over a designated Element.
      * @param {String/Object} cfg Either a string message or a configuration object supporting
      * the following options:
@@ -682,6 +701,7 @@ Ext.define('Ext.form.Panel', {
      *     }
      *
      * @return {Ext.form.Panel} This form
+     * @deprecated 2.0.0 Please use {@link #setMasked} instead.
      */
     showMask: function(cfg, target) {
         //<debug>
@@ -703,9 +723,9 @@ Ext.define('Ext.form.Panel', {
     },
 
     /**
-     * @deprecated 2.0.0 hideMask is now deprecated. Please use {@link #unmask} or {@link #setMasked} instead.
      * Hides a previously shown wait mask (See {@link #showMask})
      * @return {Ext.form.Panel} this
+     * @deprecated 2.0.0 Please use {@link #unmask} or {@link #setMasked} instead.
      */
     hideMask: function() {
         this.setMasked(false);
@@ -807,10 +827,28 @@ Ext.define('Ext.form.Panel', {
         return false;
     }
 }, function() {
+
     //<deprecated product=touch since=2.0>
-    Ext.deprecateClassMethod(this, 'loadRecord', 'setRecord');
-    Ext.deprecateClassMethod(this, 'loadModel', 'setRecord');
-    Ext.deprecateClassMethod(this, 'load', 'setRecord');
+    Ext.deprecateClassMethod(this, {
+        /**
+         * @method
+         * @inheritdoc Ext.form.Panel#setRecord
+         * @deprecated 2.0.0 Please use #setRecord instead.
+         */
+        loadRecord: 'setRecord',
+        /**
+         * @method
+         * @inheritdoc Ext.form.Panel#setRecord
+         * @deprecated 2.0.0 Please use #setRecord instead.
+         */
+        loadModel: 'setRecord',
+        /**
+         * @method
+         * @inheritdoc Ext.form.Panel#setRecord
+         * @deprecated 2.0.0 Please use #setRecord instead.
+         */
+        load: 'setRecord'
+    });
 
     this.override({
         constructor: function(config) {
@@ -819,13 +857,13 @@ Ext.define('Ext.form.Panel', {
              * The defined waitMsg template.  Used for precise control over the masking agent used
              * to mask the FormPanel (or other Element) during form Ajax/submission actions. For more options, see
              * {@link #showMask} method.
-             * @deprecated 2.0.0 waitTpl is now deprecated. Please use a custom {@link Ext.LoadMask} class and the {@link #masked} configuration
+             * @removed 2.0.0 Please use a custom {@link Ext.LoadMask} class and the {@link #masked} configuration
              * when {@link #method submitting} your form.
              */
 
             /**
              * @cfg {Ext.dom.Element} waitMsgTarget The target of any mask shown on this form.
-             * @deprecated 2.0.0 There is no need to set a mask target anymore. Please see the {@link #masked} configuration instead.
+             * @removed 2.0.0 There is no need to set a mask target anymore. Please see the {@link #masked} configuration instead.
              */
             if (config && config.hasOwnProperty('waitMsgTarget')) {
                 delete config.waitMsgTarget;

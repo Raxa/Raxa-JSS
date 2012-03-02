@@ -1,6 +1,6 @@
 /**
  * A simple event recogniser which knows when you double tap.
- * 
+ *
  * @private
  */
 Ext.define('Ext.event.recognizer.DoubleTap', {
@@ -19,16 +19,16 @@ Ext.define('Ext.event.recognizer.DoubleTap', {
      * Fires when there is a single tap.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
-    
+
     /**
      * @member Ext.dom.Element
      * @event doubletap
      * Fires when there is a double tap.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
 
     singleTapTimer: null,

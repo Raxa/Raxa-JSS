@@ -43,9 +43,6 @@ Ext.define('Ext.util.SizeMonitor', {
         element.appendChild(expandDetector);
         element.appendChild(shrinkDetector);
 
-        expandDetector.addEventListener('scroll', expandListener, true);
-        shrinkDetector.addEventListener('scroll', shrinkListener, true);
-
         this.detectors = {
             expand: expandDetector,
             shrink: shrinkDetector
@@ -68,6 +65,9 @@ Ext.define('Ext.util.SizeMonitor', {
         };
 
         this.refresh();
+
+        expandDetector.addEventListener('scroll', expandListener, true);
+        shrinkDetector.addEventListener('scroll', shrinkListener, true);
     },
 
     applyElement: function(element) {

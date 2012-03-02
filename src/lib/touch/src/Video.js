@@ -42,7 +42,7 @@ Ext.define('Ext.Video', {
 
     config: {
         /**
-         * @cfg {String} url
+         * @cfg {String/Array} urls
          * Location of the video to play. This should be in H.264 format and in a .mov file format.
          * @accessor
          */
@@ -102,10 +102,6 @@ Ext.define('Ext.Video', {
         return [].concat(url);
     },
 
-    /**
-     * Sets the URL of the media element. If the media element already exists, it is update the src attribute of the
-     * element. If it is currently playing, it will start the new video.
-     */
     updateUrl: function(newUrl) {
         var me = this,
             media = me.media,

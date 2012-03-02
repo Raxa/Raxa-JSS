@@ -80,8 +80,8 @@ Ext.define('Ext.util.Point', {
     },
 
     /**
-     * Clones this Point. Deprecated, please use {@link #clone} instead
-     * @deprecated 2.0.0
+     * Clones this Point.
+     * @deprecated 2.0.0 Please use {@link #clone} instead
      */
     copy: function() {
         return this.clone.apply(this, arguments);
@@ -141,8 +141,8 @@ Ext.define('Ext.util.Point', {
     },
 
     /**
-     * Returns true if this point is close to another one. Deprecated, please use {@link #isCloseTo} instead
-     * @deprecated 2.0.0
+     * Returns true if this point is close to another one.
+     * @deprecated 2.0.0 Please use {@link #isCloseTo} instead
      */
     isWithin: function() {
         return this.isCloseTo.apply(this, arguments);

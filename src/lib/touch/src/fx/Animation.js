@@ -1,4 +1,5 @@
 /**
+ * @private
  * @author Jacky Nguyen <jacky@sencha.com>
  */
 Ext.define('Ext.fx.Animation', {

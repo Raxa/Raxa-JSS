@@ -30,6 +30,7 @@
  *          }
  *      },
  */
+
 Ext.define('Ext.dataview.component.DataItem', {
     extend: 'Ext.Container',
     xtype : 'dataitem',
@@ -76,6 +77,12 @@ Ext.define('Ext.dataview.component.DataItem', {
         }]
     },
 
+    updateBaseCls: function(newBaseCls, oldBaseCls) {
+        var me = this;
+
+        me.callParent(arguments);
+    },
+
     updateItemCls: function(newCls, oldCls) {
         if (oldCls) {
             this.removeCls(oldCls);
@@ -91,6 +98,10 @@ Ext.define('Ext.dataview.component.DataItem', {
      * @private
      */
     updateRecord: function(newRecord) {
+        if (!newRecord) {
+            return;
+        }
+
         var me = this,
             dataview = me.config.dataview,
             data = dataview.prepareData(newRecord.getData(true), dataview.getStore().indexOf(newRecord), newRecord),
@@ -113,6 +124,15 @@ Ext.define('Ext.dataview.component.DataItem', {
                 }
             }
         }
+
+        /**
+         * @event updatedata
+         * Fires whenever the data of the DataItem is updated
+         * @param {Ext.dataview.component.DataItem} this The DataItem instance
+         * @param {Object} newData The new data
+         */
+        me.fireEvent('updatedata', me, data);
+
         // Bypassing setter because sometimes we pass the same object (different properties)
         item.updateData(data);
     }

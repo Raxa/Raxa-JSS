@@ -96,7 +96,7 @@ Ext.define('Ext.util.Collection', {
         // gets called whenever you remove a sorter. If we are still sorted after we removed this sorter,
         // then we have to resort the whole collection.
         this.mixins.sortable.removeSorters.call(this, sorters);
-        if (this.sorted && this.getAutoSort() && this.item.length) {
+        if (this.sorted && this.getAutoSort() && this.items.length) {
             this.sort();
         }
         return this;
@@ -413,7 +413,7 @@ Ext.define('Ext.util.Collection', {
                 }
             }
 
-            index = me.indexOfKey(oldKey);
+            index = me.items.indexOf(oldItem);
 
             keys[index] = newKey;
             items[index] = item;

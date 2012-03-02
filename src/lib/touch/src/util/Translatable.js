@@ -1,6 +1,4 @@
-/*
- * @class Ext.util.Translatable
- *
+/**
  * The utility class to abstract different implementations to have the best performance when applying 2D translation
  * on any DOM element.
  *
@@ -13,10 +11,29 @@ Ext.define('Ext.util.Translatable', {
     ],
 
     constructor: function(config) {
-        if (Ext.os.is.Android2) {
-            return new Ext.util.translatable.ScrollPosition(config);
+        var namespace = Ext.util.translatable,
+            CssTransform = namespace.CssTransform,
+            ScrollPosition = namespace.ScrollPosition,
+            classReference;
+
+        if (typeof config == 'object' && 'translationMethod' in config) {
+            if (config.translationMethod === 'scrollposition') {
+                classReference = ScrollPosition;
+            }
+            else if (config.translationMethod === 'csstransform') {
+                classReference = CssTransform;
+            }
         }
 
-        return new Ext.util.translatable.CssTransform(config);
+        if (!classReference) {
+            if (Ext.os.is.Android2 || Ext.browser.is.ChromeMobile) {
+                classReference = ScrollPosition;
+            }
+            else {
+                classReference = CssTransform;
+            }
+        }
+
+        return new classReference(config);
     }
 });

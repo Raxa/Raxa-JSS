@@ -50,6 +50,15 @@ Ext.define('Ext.dataview.element.Container', {
      */
 
     /**
+     * @event itemsingletap
+     * Fires whenever an item is doubletapped
+     * @param {Ext.dataview.element.Container} this
+     * @param {Ext.dataview.component.DataItem} item The item singletapped
+     * @param {Number} index The index of the item singletapped
+     * @param {Ext.EventObject} e The event object
+     */
+
+    /**
      * @event itemdoubletap
      * Fires whenever an item is doubletapped
      * @param {Ext.dataview.element.Container} this
@@ -74,6 +83,7 @@ Ext.define('Ext.dataview.element.Container', {
             tap: 'onItemTap',
             taphold: 'onItemTapHold',
             touchmove: 'onItemTouchMove',
+            singletap: 'onItemSingleTap',
             doubletap: 'onItemDoubleTap',
             swipe: 'onItemSwipe',
             delegate: '> div',
@@ -85,6 +95,12 @@ Ext.define('Ext.dataview.element.Container', {
     initialize: function() {
         this.callParent();
         this.doInitialize();
+    },
+
+    updateBaseCls: function(newBaseCls, oldBaseCls) {
+        var me = this;
+
+        me.callParent([newBaseCls + '-container', oldBaseCls]);
     },
 
     onItemTouchStart: function(e) {
@@ -144,6 +160,14 @@ Ext.define('Ext.dataview.element.Container', {
             index = me.getViewItems().indexOf(target);
 
         me.fireEvent('itemdoubletap', me, Ext.get(target), index, e);
+    },
+
+    onItemSingleTap: function(e) {
+        var me = this,
+            target = e.getTarget(),
+            index = me.getViewItems().indexOf(target);
+
+        me.fireEvent('itemsingletap', me, Ext.get(target), index, e);
     },
 
     onItemSwipe: function(e) {

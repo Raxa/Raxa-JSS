@@ -24,6 +24,10 @@
 Ext.define('Ext.dom.Element', {
     alternateClassName: 'Ext.Element',
 
+    mixins: [
+        'Ext.mixin.Identifiable'
+    ],
+
     requires: [
         'Ext.dom.Query',
         'Ext.dom.Helper'
@@ -250,9 +254,20 @@ Ext.define('Ext.dom.Element', {
             throw new Error("Invalid domNode reference or an id of an existing domNode: " + dom);
         }
 
+        /**
+         * The DOM element
+         * @property dom
+         * @type HTMLElement
+         */
         this.dom = dom;
 
         this.getUniqueId();
+    },
+
+    attach: function (dom) {
+        this.dom = dom;
+        this.id = dom.id;
+        return this;
     },
 
     getUniqueId: function() {
@@ -284,6 +299,12 @@ Ext.define('Ext.dom.Element', {
         }
 
         this.dom.id = id;
+
+        /**
+         * The DOM element ID
+         * @property id
+         * @type String
+         */
         this.id = id;
 
         cache[id] = this;
@@ -291,10 +312,18 @@ Ext.define('Ext.dom.Element', {
         return this;
     },
 
+    /**
+     * Sets the innerHTML of this element.
+     * @param {String} html The new HTML
+     */
     setHtml: function(html) {
         this.dom.innerHTML = html;
     },
 
+    /**
+     * Returns the innerHTML of an Element.
+     * @return {String}
+     */
     getHtml: function() {
         return this.dom.innerHTML;
     },
@@ -385,8 +414,10 @@ Ext.define('Ext.dom.Element', {
                || dom.getAttribute(name) || dom[name];
     },
 
+    /**
+     * Removes this element's dom reference. Note that event and cache removal is handled at {@link Ext#removeNode}
+     */
     destroy: function() {
-        this.destroy = Ext.emptyFn;
         this.isDestroyed = true;
 
         var cache = Ext.Element.cache,
@@ -471,9 +502,114 @@ Ext.define('Ext.dom.Element', {
     }, null, 'Ext.mixin.Observable');
 
     //<deprecated product=touch since=2.0>
-    Ext.deprecateClassMethod(this, 'remove', 'destroy');
-    Ext.deprecateClassMethod(this, 'setHTML', 'setHtml');
-    Ext.deprecateClassMethod(this, 'update', 'setHtml');
-    Ext.deprecateClassMethod(this, 'getHTML', 'getHtml');
+    Ext.deprecateClassMethod(this, {
+        /**
+         * @member Ext.dom.Element
+         * @method remove
+         * @inheritdoc Ext.dom.Element#destroy
+         * @deprecated 2.0.0 Please use {@link #destroy} instead.
+         */
+        remove: 'destroy',
+        /**
+         * @member Ext.dom.Element
+         * @method setHTML
+         * @inheritdoc Ext.dom.Element#setHtml
+         * @deprecated 2.0.0 Please use {@link #setHtml} instead.
+         */
+        setHTML: 'setHtml',
+        /**
+         * @member Ext.dom.Element
+         * @method update
+         * @inheritdoc Ext.dom.Element#setHtml
+         * @deprecated 2.0.0 Please use {@link #setHtml} instead.
+         */
+        update: 'setHtml',
+        /**
+         * @member Ext.dom.Element
+         * @method getHTML
+         * @inheritdoc Ext.dom.Element#getHtml
+         * @deprecated 2.0.0 Please use {@link #getHtml} instead.
+         */
+        getHTML: 'getHtml',
+        /**
+         * @member Ext.dom.Element
+         * @method purgeAllListeners
+         * @inheritdoc Ext.dom.Element#clearListeners
+         * @deprecated 2.0.0 Please use {@link #clearListeners} instead.
+         */
+        purgeAllListeners: 'clearListeners',
+        /**
+         * @member Ext.dom.Element
+         * @method removeAllListeners
+         * @inheritdoc Ext.dom.Element#clearListeners
+         * @deprecated 2.0.0 Please use {@link #clearListeners} instead.
+         */
+        removeAllListeners: 'clearListeners'
+    });
+
+    /**
+     * @member Ext.dom.Element
+     * @method cssTranslate
+     * Translates an element using CSS 3 in 2D.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'cssTranslate', null, "Ext.dom.Element.cssTranslate() has been removed");
+
+    /**
+     * @member Ext.dom.Element
+     * @method getOuterHeight
+     * Retrieves the height of the element account for the top and bottom margins.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'getOuterHeight', null, "Ext.dom.Element.getOuterHeight() has been removed");
+
+    /**
+     * @member Ext.dom.Element
+     * @method getOuterWidth
+     * Retrieves the width of the element accounting for the left and right margins.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'getOuterWidth', null, "Ext.dom.Element.getOuterWidth() has been removed");
+
+    /**
+     * @member Ext.dom.Element
+     * @method getScrollParent
+     * Gets the Scroller instance of the first parent that has one.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'getScrollParent', null, "Ext.dom.Element.getScrollParent() has been removed");
+
+    /**
+     * @member Ext.dom.Element
+     * @method isDescendent
+     * Determines if this element is a descendent of the passed in Element.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'isDescendent', null, "Ext.dom.Element.isDescendent() has been removed");
+
+    /**
+     * @member Ext.dom.Element
+     * @method mask
+     * Puts a mask over this element to disable user interaction.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'mask', null, "Ext.dom.Element.mask() has been removed");
+
+    /**
+     * @member Ext.dom.Element
+     * @method setTopLeft
+     * Sets the element's top and left positions directly using CSS style.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'setTopLeft', null, "Ext.dom.Element.setTopLeft() has been removed");
+
+    /**
+     * @member Ext.dom.Element
+     * @method unmask
+     * Removes a previously applied mask.
+     * @removed 2.0.0
+     */
+    Ext.deprecateMethod(Ext.dom.Element, 'unmask', null, "Ext.dom.Element.unmask() has been removed");
     //</deprecated>
+
 });

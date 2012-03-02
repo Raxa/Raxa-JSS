@@ -1,14 +1,28 @@
 /**
  * Simple Select field wrapper. Example usage:
-<pre><code>
-new Ext.field.Select({
-    options: [
-        {text: 'First Option',  value: 'first'},
-        {text: 'Second Option', value: 'second'},
-        {text: 'Third Option',  value: 'third'}
-    ]
-});
-</code></pre>
+ *
+ *     @example
+ *     Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'fieldset',
+ *                 title: 'Select',
+ *                 items: [
+ *                     {
+ *                         xtype: 'selectfield',
+ *                         label: 'Choose one',
+ *                         options: [
+ *                             {text: 'First Option',  value: 'first'},
+ *                             {text: 'Second Option', value: 'second'},
+ *                             {text: 'Third Option',  value: 'third'}
+ *                         ]
+ *                     }
+ *                 ]
+ *             }
+ *         ]
+ *     });
+ *
  */
 Ext.define('Ext.field.Select', {
     extend: 'Ext.field.Text',
@@ -83,7 +97,8 @@ Ext.define('Ext.field.Select', {
         hiddenName: null,
 
         /**
-         * @cfg {Object} input
+         * @cfg {Object} component
+         * @accessor
          * @hide
          */
         component: {
@@ -115,7 +130,12 @@ Ext.define('Ext.field.Select', {
          * @cfg {Object} defaultTabletPickerConfig
          * The default configuration for the picker component when you are on a tablet
          */
-        defaultTabletPickerConfig: null
+        defaultTabletPickerConfig: null,
+
+        /**
+         * @inherit
+         */
+        name: 'picker'
     },
 
     // @private
@@ -177,6 +197,8 @@ Ext.define('Ext.field.Select', {
         return Boolean(usePicker);
     },
 
+    syncEmptyCls: Ext.emptyFn,
+
     /**
      * @private
      */
@@ -207,7 +229,9 @@ Ext.define('Ext.field.Select', {
 
         this.callParent([newValue ? newValue.get(this.getDisplayField()) : '']);
 
-        this.fireEvent('change', this, newValue, oldValue);
+        if (oldValue !== newValue && this.initialized) {
+            this.fireEvent('change', this, newValue, oldValue);
+        }
     },
 
     getValue: function() {
@@ -471,7 +495,6 @@ selectBox.setOptions(
 
         this.isFocused = true;
 
-        Ext.Viewport.hideKeyboard();
         this.showPicker();
     },
 

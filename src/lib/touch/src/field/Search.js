@@ -6,16 +6,20 @@
  * As with all other form fields in Sencha Touch, the search field gains a "clear" button that appears whenever there
  * is text entered into the form, and which removes that text when tapped.
  *
+ *     @example
  *     Ext.create('Ext.form.Panel', {
- *         tbar: {
- *             text: 'Search'
- *         },
- *
+ *         fullscreen: true,
  *         items: [
  *             {
- *                 xtype: 'searchfield',
- *                 label: 'Query',
- *                 name: 'query'
+ *                 xtype: 'fieldset',
+ *                 title: 'Search',
+ *                 items: [
+ *                     {
+ *                         xtype: 'searchfield',
+ *                         label: 'Query',
+ *                         name: 'query'
+ *                     }
+ *                 ]
  *             }
  *         ]
  *     });

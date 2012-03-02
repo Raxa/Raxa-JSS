@@ -8,26 +8,14 @@ Ext.define('Ext.fx.easing.Abstract', {
         startValue: 0
     },
 
+    isEasing: true,
+
     isEnded: false,
 
     constructor: function(config) {
         this.initConfig(config);
 
         return this;
-    },
-
-    clone: function() {
-        var config = this.config,
-            cloneConfig = {},
-            name;
-
-        for (name in config) {
-            if (config.hasOwnProperty(name)) {
-                cloneConfig[name] = this[name];
-            }
-        }
-
-        return new this.self(cloneConfig);
     },
 
     applyStartTime: function(startTime) {

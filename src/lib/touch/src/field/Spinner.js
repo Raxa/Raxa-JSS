@@ -25,17 +25,34 @@ Ext.define('Ext.field.Spinner', {
      * @param {Number} value
      * @param {String} direction 'up' or 'down'
      */
+
     /**
      * @event spindown
      * Fires when the value is changed via the spinner down button
      * @param {Ext.field.Spinner} this
      * @param {Number} value
      */
+
     /**
      * @event spinup
      * Fires when the value is changed via the spinner up button
      * @param {Ext.field.Spinner} this
      * @param {Number} value
+     */
+
+    /**
+     * @event change
+     * @hide
+     */
+
+    /**
+     * @event updatedata
+     * @hide
+     */
+
+    /**
+     * @event action
+     * @hide
      */
 
     config: {
@@ -105,6 +122,8 @@ Ext.define('Ext.field.Spinner', {
             this.setValue(this.getDefaultValue());
         }
     },
+
+    syncEmptyCls: Ext.emptyFn,
 
     /**
      * Updates the {@link #component} configuration

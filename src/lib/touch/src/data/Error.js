@@ -10,8 +10,6 @@
  */
 
 Ext.define('Ext.data.Error', {
-    extend: 'Ext.util.MixedCollection',
-
     config: {
         /**
          * @cfg {String} field

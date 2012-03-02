@@ -3,29 +3,30 @@
  * like any other component. This component typically takes between 1 and 3 configurations - a {@link #src}, and
  * optionally a {@link #height} and a {@link #width}:
  *
- *     Ext.create('Ext.Img', {
- *         src: 'path/to/my/image.jpg',
- *         height: 300,
- *         width: 400
+ *     @example miniphone
+ *     var img = Ext.create('Ext.Img', {
+ *         src: 'http://www.sencha.com/assets/images/sencha-avatar-64x64.png',
+ *         height: 64,
+ *         width: 64
  *     });
+ *     Ext.Viewport.add(img);
  *
  * It's also easy to add an image into a panel or other container using its xtype:
  *
+ *     @example miniphone
  *     Ext.create('Ext.Panel', {
- *         layout: '{@link Ext.layout.HBox hbox}',
+ *         fullscreen: true,
+ *         layout: 'hbox',
  *         items: [
  *             {
  *                 xtype: 'image',
- *                 src: 'path/to/my/profilePicture.jpg',
+ *                 src: 'http://www.sencha.com/assets/images/sencha-avatar-64x64.png',
  *                 flex: 1
  *             },
  *             {
- *                 xtype: 'textareafield',
+ *                 xtype: 'panel',
  *                 flex: 2,
- *                 label: {
- *                     text: 'My Profile',
- *                     align: 'top'
- *                 }
+ *                 html: 'Sencha Inc.<br/>1700 Seaport Boulevard Suite 120, Redwood City, CA'
  *             }
  *         ]
  *     });
@@ -142,7 +143,7 @@ Ext.define('Ext.Img', {
 
         this.imageObject = dom;
 
-        dom.setAttribute('src', newSrc);
+        dom.setAttribute('src', Ext.isString(newSrc) ? newSrc : '');
         dom.addEventListener('load', me.onLoad, false);
         dom.addEventListener('error', me.onError, false);
     },
@@ -150,8 +151,10 @@ Ext.define('Ext.Img', {
     detachListeners: function() {
         var dom = this.imageObject;
 
-        dom.removeEventListener('load', this.onLoad, false);
-        dom.removeEventListener('error', this.onError, false);
+        if (dom) {
+            dom.removeEventListener('load', this.onLoad, false);
+            dom.removeEventListener('error', this.onError, false);
+        }
     },
 
     onLoad : function(e) {
@@ -188,7 +191,7 @@ Ext.define('Ext.Img', {
     destroy: function() {
         this.detachListeners();
 
-        Ext.destroy(this.imageElement);
+        Ext.destroy(this.imageObject);
         delete this.imageObject;
 
         this.callParent();

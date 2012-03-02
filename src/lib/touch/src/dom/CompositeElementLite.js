@@ -72,7 +72,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
     // private
     getElement: function(el) {
         // Set the shared flyweight dom property to the current element
-        return this.el.attach(el);
+        return this.el.attach(el).synchronize();
     },
 
     // private

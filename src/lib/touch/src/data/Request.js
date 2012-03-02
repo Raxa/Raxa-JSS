@@ -84,10 +84,21 @@ Ext.define('Ext.data.Request', {
          */
         xmlData: null,
 
+        /**
+         * @cfg {Boolean} withCredentials
+         * This field is necessary when using cross-origin resource sharing.
+         */
+        withCredentials: null,
+
         callback: null,
         scope: null,
         timeout: 30000,
-        records: null
+        records: null,
+
+        // The following two configurations are only used by Ext.data.proxy.Direct and are just
+        // for being able to retrieve them after the request comes back from the server.
+        directFn: null,
+        args: null
     },
 
     /**

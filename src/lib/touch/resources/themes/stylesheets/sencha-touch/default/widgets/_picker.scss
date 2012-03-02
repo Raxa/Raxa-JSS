@@ -47,13 +47,13 @@ $picker-bar-gradient: $base-gradient !default;
         border-right: 1px solid #ACACAC;
       }
 
-      &:first-child {
+      &.x-first {
         .x-body {
           border-left: 0;
         }
       }
 
-      &:last-child {
+      &.x-last {
         .x-body {
           border-left: 0;
           border-right: 0;
