@@ -11,7 +11,9 @@ this by using the Model type directly. The following 3 snippets are equivalent:
 
     Ext.define('User', {
         extend: 'Ext.data.Model',
-        fields: ['first', 'last']
+        config: {
+            fields: ['first', 'last']
+        }
     });
 
     // method 1, create using Ext.create (recommended)
@@ -39,7 +41,9 @@ are normal classes, you can access the type directly. The following snippets are
 
     Ext.define('User', {
         extend: 'Ext.data.Model',
-        fields: ['first', 'last']
+        config: {
+            fields: ['first', 'last']
+        }
     });
 
     // method 1, access model type through the manager
@@ -53,24 +57,26 @@ are normal classes, you can access the type directly. The following snippets are
 Ext.define('Ext.data.ModelManager', {
     extend: 'Ext.AbstractManager',
     alternateClassName: ['Ext.ModelMgr', 'Ext.ModelManager'],
-    //requires: ['Ext.data.association.Association'],
 
     singleton: true,
 
-    // typeName: 'mtype',
-    //
-    // /**
-    //  * Private stack of associations that must be created once their associated model has been defined
-    //  * @property {Ext.data.Association[]} associationStack
-    //  */
-    // associationStack: [],
+    /**
+     * @property defaultProxyType
+     * The string type of the default Model Proxy.
+     * @removed 2.0.0
+     */
+
+    /**
+     * @property associationStack
+     * Private stack of associations that must be created once their associated model has been defined.
+     * @removed 2.0.0
+     */
 
     modelNamespace: null,
 
     /**
      * Registers a model definition. All model plugins marked with isDefault: true are bootstrapped
      * immediately, as are any addition plugins defined in the model config.
-     * @private
      */
     registerType: function(name, config) {
         var proto = config.prototype,
@@ -178,13 +184,12 @@ Ext.define('Ext.data.ModelManager', {
      * @param {Object} config A configuration object for the Model you wish to create.
      * @return {Ext.data.Model} The newly registered Model
      * @member Ext
-     * @deprecated 2.0.0 Use {@link Ext#define} instead.
+     * @deprecated 2.0.0 Please use {@link Ext#define} instead.
      */
     Ext.regModel = function() {
         //<debug>
-        if (Ext.isDefined(Ext.global.console)) {
-            Ext.global.console.warn('Ext.regModel has been deprecated. Models can now be created by extending Ext.data.Model: Ext.define("MyModel", {extend: "Ext.data.Model", fields: []});.');
-        }
+        Ext.Logger.deprecate('Ext.regModel has been deprecated. Models can now be created by ' +
+            'extending Ext.data.Model: Ext.define("MyModel", {extend: "Ext.data.Model", fields: []});.');
         //</debug>
         return this.ModelManager.registerType.apply(this.ModelManager, arguments);
     };

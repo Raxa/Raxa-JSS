@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.event.publisher.ComponentPaint', {
 
     extend: 'Ext.event.publisher.Publisher',
@@ -14,8 +17,8 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
     constructor: function() {
         this.callParent(arguments);
 
-        this.hiddenQueue = [];
-        this.renderedQueue = [];
+        this.hiddenQueue = {};
+        this.renderedQueue = {};
     },
 
     getSubscribers: function(eventName, createIfNotExist) {
@@ -39,8 +42,8 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
 
         dispatcher.doAddListener(targetType, '*', 'renderedchange', 'onBeforeComponentRenderedChange', this, null, 'before');
         dispatcher.doAddListener(targetType, '*', 'hiddenchange', 'onBeforeComponentHiddenChange', this, null, 'before');
-        dispatcher.doAddListener(targetType, '*', 'renderedchange', 'onComponentRenderedChange', this);
-        dispatcher.doAddListener(targetType, '*', 'hiddenchange', 'onComponentHiddenChange', this);
+        dispatcher.doAddListener(targetType, '*', 'renderedchange', 'onComponentRenderedChange', this, null, 'after');
+        dispatcher.doAddListener(targetType, '*', 'hiddenchange', 'onComponentHiddenChange', this, null, 'after');
 
         return this.callParent(arguments);
     },
@@ -97,9 +100,10 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
         var eventNames = this.eventNames,
             eventName = rendered ? eventNames.painted : eventNames.erased,
             subscribers = this.getSubscribers(eventName),
-            queue = this.renderedQueue;
+            queue;
 
         if (subscribers && subscribers.$length > 0) {
+            this.renderedQueue[component.getId()] = queue = [];
             this.publish(subscribers, component, eventName, queue);
         }
     },
@@ -108,22 +112,45 @@ Ext.define('Ext.event.publisher.ComponentPaint', {
         var eventNames = this.eventNames,
             eventName = hidden ? eventNames.erased : eventNames.painted,
             subscribers = this.getSubscribers(eventName),
-            queue = this.hiddenQueue;
+            queue;
 
         if (subscribers && subscribers.$length > 0) {
+            this.hiddenQueue[component.getId()] = queue = [];
             this.publish(subscribers, component, eventName, queue);
         }
     },
 
-    onComponentRenderedChange: function() {
-        if (this.renderedQueue.length > 0) {
-            this.dispatchQueue(this.renderedQueue);
+    onComponentRenderedChange: function(container, component) {
+        var renderedQueue = this.renderedQueue,
+            id = component.getId(),
+            queue;
+
+        if (!renderedQueue.hasOwnProperty(id)) {
+            return;
+        }
+
+        queue = renderedQueue[id];
+        delete renderedQueue[id];
+
+        if (queue.length > 0) {
+            this.dispatchQueue(queue);
         }
     },
 
-    onComponentHiddenChange: function() {
-        if (this.hiddenQueue.length > 0) {
-            this.dispatchQueue(this.hiddenQueue);
+    onComponentHiddenChange: function(component) {
+        var hiddenQueue = this.hiddenQueue,
+            id = component.getId(),
+            queue;
+
+        if (!hiddenQueue.hasOwnProperty(id)) {
+            return;
+        }
+
+        queue = hiddenQueue[id];
+        delete hiddenQueue[id];
+
+        if (queue.length > 0) {
+            this.dispatchQueue(queue);
         }
     },
 

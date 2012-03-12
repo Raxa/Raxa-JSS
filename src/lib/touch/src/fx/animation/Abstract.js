@@ -46,9 +46,9 @@ Ext.define('Ext.fx.animation.Abstract', {
 
         reverse: null,
 
-        preserveEndState: true,
+        preserveEndState: false,
 
-        replacePrevious: false
+        replacePrevious: true
     },
 
     STATE_FROM: '0%',

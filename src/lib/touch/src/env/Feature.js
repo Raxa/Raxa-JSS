@@ -208,6 +208,7 @@ Ext.define('Ext.env.Feature', {
         /**
          * @member Ext.feature.has
          * @property {Boolean} WebSockets
+         * True if the current device supports WebSockets.
          */
         WebSockets: function() {
             return 'WebSocket' in window;
@@ -215,7 +216,33 @@ Ext.define('Ext.env.Feature', {
 
         /**
          * @member Ext.feature.has
+         * @property {Boolean} Range
+         * True if the current device supports [DOM document fragments.][1]
+         *
+         * [1]: https://developer.mozilla.org/en/DOM/range
+         */
+        Range: function() {
+            return !!document.createRange;
+        },
+
+        /**
+         * @member Ext.feature.has
+         * @property {Boolean} CreateContextualFragment
+         * True if the current device supports HTML fragment parsing using [range.createContextualFragment()][1].
+         *
+         * [1]: https://developer.mozilla.org/en/DOM/range.createContextualFragment
+         */
+        CreateContextualFragment: function() {
+            var range = !!document.createRange ? document.createRange() : false;
+            return range && !!range.createContextualFragment;
+        },
+
+        /**
+         * @member Ext.feature.has
          * @property {Boolean} History
+         * True if the current device supports history management with [history.pushState()][1].
+         *
+         * [1]: https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history#The_pushState().C2.A0method
          */
         History: function() {
             return ('history' in window && 'pushState' in window.history);
@@ -289,13 +316,15 @@ Ext.define('Ext.env.Feature', {
     //<deprecated product=touch since=2.0>
     /**
      * @class Ext.supports
-     * @deprecated
+     * Determines information about features are supported in the current environment.
+     * @deprecated 2.0.0
      * Please use the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes.
      */
 
     /**
      * @member Ext.supports
      * @property Transitions
+     * @inheritdoc Ext.feature.has#CssTransitions
      * @deprecated 2.0.0 Please use {@link Ext.feature.has#CssTransitions} instead
      */
     Ext.deprecatePropertyValue(has, 'Transitions', has.CssTransitions,
@@ -304,6 +333,7 @@ Ext.define('Ext.env.Feature', {
     /**
      * @member Ext.supports
      * @property SVG
+     * @inheritdoc Ext.feature.has#Svg
      * @deprecated 2.0.0 Please use {@link Ext.feature.has#Svg} instead
      */
     Ext.deprecatePropertyValue(has, 'SVG', has.Svg,
@@ -312,6 +342,7 @@ Ext.define('Ext.env.Feature', {
     /**
      * @member Ext.supports
      * @property VML
+     * @inheritdoc Ext.feature.has#Vml
      * @deprecated 2.0.0 Please use {@link Ext.feature.has#Vml} instead
      */
     Ext.deprecatePropertyValue(has, 'VML', has.Vml,
@@ -320,6 +351,7 @@ Ext.define('Ext.env.Feature', {
     /**
      * @member Ext.supports
      * @property AudioTag
+     * @inheritdoc Ext.feature.has#Audio
      * @deprecated 2.0.0 Please use {@link Ext.feature.has#Audio} instead
      */
     Ext.deprecatePropertyValue(has, 'AudioTag', has.Audio,
@@ -328,19 +360,11 @@ Ext.define('Ext.env.Feature', {
     /**
      * @member Ext.supports
      * @property GeoLocation
+     * @inheritdoc Ext.feature.has#Geolocation
      * @deprecated 2.0.0 Please use {@link Ext.feature.has#Geolocation} instead
      */
     Ext.deprecatePropertyValue(has, 'GeoLocation', has.Geolocation,
                           "Ext.supports.GeoLocation is deprecated, please use Ext.feature.has.Geolocation instead");
-
-    /**
-     * @member Ext.supports
-     * @property ClassList
-     * @deprecated 2.0.0 Please use {@link Ext.feature.has#ClassList} instead
-     */
-    Ext.deprecatePropertyValue(has, 'ClassList', has.ClassList,
-                          "Ext.supports.ClassList is deprecated, please use Ext.feature.has.ClassList instead");
-
     var name;
 
     if (!Ext.supports) {

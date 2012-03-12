@@ -2,7 +2,7 @@
  * @author Ed Spencer
  * @class Ext.data.JsonStore
  * @extends Ext.data.Store
- * @ignore
+ * @private
  *
  * <p>Small helper class to make creating {@link Ext.data.Store}s from JSON data easier.
  * A JsonStore will be automatically configured with a {@link Ext.data.reader.Json}.</p>

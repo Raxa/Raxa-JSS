@@ -1,6 +1,6 @@
 {
     "projectName": "Sencha Touch",
-    "licenseText": "\nThis file is part of Sencha Touch 2\n\nCopyright (c) 2011 Sencha Inc\n\nContact:  http://www.sencha.com/contact\n\nCommercial Usage\nLicensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.\n\nIf you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.\n",
+    "licenseText": "\nThis file is part of Sencha Touch 2\n\nCopyright (c) 2012 Sencha Inc\n\nContact:  http://www.sencha.com/contact\n\nCommercial Usage\nLicensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.\n\nIf you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.\n",
     "packages": [
         {
             "name": "Foundation",
@@ -99,6 +99,11 @@
                     "name": "Helper.js"
                 },
                 {
+                    "path": "src/mixin/",
+                    "name": "Identifiable.js",
+                    "clsName": "Ext.mixin.Identifiable"
+                },
+                {
                     "path": "src/dom/",
                     "name": "Element.js"
                 },
@@ -189,6 +194,11 @@
                 },
                 {
                     "path": "src/data/",
+                    "name": "Error.js",
+                    "clsName": "Ext.data.Error"
+                },
+                {
+                    "path": "src/data/",
                     "name": "JsonP.js",
                     "clsName": "Ext.data.JsonP"
                 },
@@ -243,6 +253,16 @@
                     "clsName": "Ext.data.writer.Xml"
                 },
                 {
+                    "path": "src/direct/",
+                    "name": "RemotingMethod.js",
+                    "clsName": "Ext.direct.RemotingMethod"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "Transaction.js",
+                    "clsName": "Ext.direct.Transaction"
+                },
+                {
                     "path": "src/dom/",
                     "name": "CompositeElement.js",
                     "clsName": "Ext.dom.CompositeElement"
@@ -266,6 +286,16 @@
                     "path": "src/event/publisher/",
                     "name": "Publisher.js",
                     "clsName": "Ext.event.publisher.Publisher"
+                },
+                {
+                    "path": "src/event/recognizer/",
+                    "name": "Recognizer.js",
+                    "clsName": "Ext.event.recognizer.Recognizer"
+                },
+                {
+                    "path": "src/event/recognizer/",
+                    "name": "Touch.js",
+                    "clsName": "Ext.event.recognizer.Touch"
                 },
                 {
                     "path": "src/fx/",
@@ -321,11 +351,6 @@
                     "path": "src/log/writer/",
                     "name": "Writer.js",
                     "clsName": "Ext.log.writer.Writer"
-                },
-                {
-                    "path": "src/mixin/",
-                    "name": "Identifiable.js",
-                    "clsName": "Ext.mixin.Identifiable"
                 },
                 {
                     "path": "src/mixin/",
@@ -426,16 +451,6 @@
                     "path": "src/event/publisher/",
                     "name": "TouchGesture.js",
                     "clsName": "Ext.event.publisher.TouchGesture"
-                },
-                {
-                    "path": "src/event/recognizer/",
-                    "name": "Recognizer.js",
-                    "clsName": "Ext.event.recognizer.Recognizer"
-                },
-                {
-                    "path": "src/event/recognizer/",
-                    "name": "Touch.js",
-                    "clsName": "Ext.event.recognizer.Touch"
                 },
                 {
                     "path": "src/event/recognizer/",
@@ -638,6 +653,21 @@
                     "clsName": "Ext.data.reader.Xml"
                 },
                 {
+                    "path": "src/direct/",
+                    "name": "Provider.js",
+                    "clsName": "Ext.direct.Provider"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "JsonProvider.js",
+                    "clsName": "Ext.direct.JsonProvider"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "PollingProvider.js",
+                    "clsName": "Ext.direct.PollingProvider"
+                },
+                {
                     "path": "src/fx/animation/",
                     "name": "Abstract.js",
                     "clsName": "Ext.fx.animation.Abstract"
@@ -753,6 +783,11 @@
                     "clsName": "Ext.fx.runner.CssTransition"
                 },
                 {
+                    "path": "src/fx/",
+                    "name": "Runner.js",
+                    "clsName": "Ext.fx.Runner"
+                },
+                {
                     "path": "src/layout/",
                     "name": "Default.js",
                     "clsName": "Ext.layout.Default"
@@ -809,8 +844,38 @@
                 },
                 {
                     "path": "src/data/",
+                    "name": "Errors.js",
+                    "clsName": "Ext.data.Errors"
+                },
+                {
+                    "path": "src/data/",
                     "name": "StoreManager.js",
                     "clsName": "Ext.data.StoreManager"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "Manager.js",
+                    "clsName": "Ext.direct.Manager"
+                },
+                {
+                    "path": "src/data/proxy/",
+                    "name": "Direct.js",
+                    "clsName": "Ext.data.proxy.Direct"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "Event.js",
+                    "clsName": "Ext.direct.Event"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "RemotingEvent.js",
+                    "clsName": "Ext.direct.RemotingEvent"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "ExceptionEvent.js",
+                    "clsName": "Ext.direct.ExceptionEvent"
                 },
                 {
                     "path": "src/util/",
@@ -893,16 +958,6 @@
                     "clsName": "Ext.event.publisher.ComponentSize"
                 },
                 {
-                    "path": "src/scroll/scroller/",
-                    "name": "Abstract.js",
-                    "clsName": "Ext.scroll.scroller.Abstract"
-                },
-                {
-                    "path": "src/scroll/scroller/",
-                    "name": "CssTransform.js",
-                    "clsName": "Ext.scroll.scroller.CssTransform"
-                },
-                {
                     "path": "src/util/",
                     "name": "Sortable.js",
                     "clsName": "Ext.util.Sortable"
@@ -916,16 +971,6 @@
                     "path": "src/",
                     "name": "ItemCollection.js",
                     "clsName": "Ext.ItemCollection"
-                },
-                {
-                    "path": "src/data/",
-                    "name": "Error.js",
-                    "clsName": "Ext.data.Error"
-                },
-                {
-                    "path": "src/data/",
-                    "name": "Errors.js",
-                    "clsName": "Ext.data.Errors"
                 },
                 {
                     "path": "src/data/proxy/",
@@ -949,6 +994,11 @@
                 },
                 {
                     "path": "src/data/",
+                    "name": "DirectStore.js",
+                    "clsName": "Ext.data.DirectStore"
+                },
+                {
+                    "path": "src/data/",
                     "name": "JsonStore.js",
                     "clsName": "Ext.data.JsonStore"
                 },
@@ -966,6 +1016,11 @@
                     "path": "src/data/proxy/",
                     "name": "Rest.js",
                     "clsName": "Ext.data.proxy.Rest"
+                },
+                {
+                    "path": "src/direct/",
+                    "name": "RemotingProvider.js",
+                    "clsName": "Ext.direct.RemotingProvider"
                 },
                 {
                     "path": "src/util/",
@@ -996,6 +1051,11 @@
                     "path": "src/behavior/",
                     "name": "Translatable.js",
                     "clsName": "Ext.behavior.Translatable"
+                },
+                {
+                    "path": "src/scroll/",
+                    "name": "Scroller.js",
+                    "clsName": "Ext.scroll.Scroller"
                 },
                 {
                     "path": "src/util/",
@@ -1199,6 +1259,11 @@
                 },
                 {
                     "path": "src/scroll/indicator/",
+                    "name": "Default.js",
+                    "clsName": "Ext.scroll.indicator.Default"
+                },
+                {
+                    "path": "src/scroll/indicator/",
                     "name": "ScrollPosition.js",
                     "clsName": "Ext.scroll.indicator.ScrollPosition"
                 },
@@ -1206,51 +1271,6 @@
                     "path": "src/scroll/",
                     "name": "Indicator.js",
                     "clsName": "Ext.scroll.Indicator"
-                },
-                {
-                    "path": "src/slider/",
-                    "name": "Thumb.js",
-                    "clsName": "Ext.slider.Thumb"
-                },
-                {
-                    "path": "src/tab/",
-                    "name": "Tab.js",
-                    "clsName": "Ext.tab.Tab"
-                },
-                {
-                    "path": "src/event/recognizer/",
-                    "name": "Swipe.js",
-                    "clsName": "Ext.event.recognizer.Swipe"
-                },
-                {
-                    "path": "src/event/recognizer/",
-                    "name": "HorizontalSwipe.js",
-                    "clsName": "Ext.event.recognizer.HorizontalSwipe"
-                },
-                {
-                    "path": "src/fx/runner/",
-                    "name": "CssAnimation.js",
-                    "clsName": "Ext.fx.runner.CssAnimation"
-                },
-                {
-                    "path": "src/fx/",
-                    "name": "Runner.js",
-                    "clsName": "Ext.fx.Runner"
-                },
-                {
-                    "path": "src/scroll/scroller/",
-                    "name": "CssPosition.js",
-                    "clsName": "Ext.scroll.scroller.CssPosition"
-                },
-                {
-                    "path": "src/scroll/scroller/",
-                    "name": "ScrollPosition.js",
-                    "clsName": "Ext.scroll.scroller.ScrollPosition"
-                },
-                {
-                    "path": "src/scroll/",
-                    "name": "Scroller.js",
-                    "clsName": "Ext.scroll.Scroller"
                 },
                 {
                     "path": "src/scroll/",
@@ -1306,6 +1326,11 @@
                     "path": "src/carousel/",
                     "name": "Carousel.js",
                     "clsName": "Ext.carousel.Carousel"
+                },
+                {
+                    "path": "src/carousel/",
+                    "name": "Infinite.js",
+                    "clsName": "Ext.carousel.Infinite"
                 },
                 {
                     "path": "src/dataview/component/",
@@ -1379,6 +1404,11 @@
                 },
                 {
                     "path": "src/slider/",
+                    "name": "Thumb.js",
+                    "clsName": "Ext.slider.Thumb"
+                },
+                {
+                    "path": "src/slider/",
                     "name": "Slider.js",
                     "clsName": "Ext.slider.Slider"
                 },
@@ -1396,6 +1426,11 @@
                     "path": "src/field/",
                     "name": "Toggle.js",
                     "clsName": "Ext.field.Toggle"
+                },
+                {
+                    "path": "src/tab/",
+                    "name": "Tab.js",
+                    "clsName": "Ext.tab.Tab"
                 },
                 {
                     "path": "src/tab/",
@@ -1441,6 +1476,16 @@
                     "path": "src/viewport/",
                     "name": "Viewport.js",
                     "clsName": "Ext.viewport.Viewport"
+                },
+                {
+                    "path": "src/event/recognizer/",
+                    "name": "Swipe.js",
+                    "clsName": "Ext.event.recognizer.Swipe"
+                },
+                {
+                    "path": "src/event/recognizer/",
+                    "name": "HorizontalSwipe.js",
+                    "clsName": "Ext.event.recognizer.HorizontalSwipe"
                 }
             ]
         }

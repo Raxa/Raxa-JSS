@@ -16,14 +16,14 @@ Ext.define('Ext.carousel.Indicator', {
 
     /**
      * @event previous
-     * @param {Ext.carousel.Indicator} this
      * Fires when this indicator is tapped on the left half
+     * @param {Ext.carousel.Indicator} this
      */
 
     /**
      * @event next
-     * @param {Ext.carousel.Indicator} this
      * Fires when this indicator is tapped on the right half
+     * @param {Ext.carousel.Indicator} this
      */
 
     initialize: function() {

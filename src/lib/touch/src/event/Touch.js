@@ -1,3 +1,7 @@
+/**
+ * @private
+ * Touch event.
+ */
 Ext.define('Ext.event.Touch', {
     extend: 'Ext.event.Dom',
 

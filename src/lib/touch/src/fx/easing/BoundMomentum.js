@@ -1,5 +1,5 @@
 /**
- * @class Ext.fx.easing.BoundMomentum
+ * @private
  *
  * This easing is typically used for {@link Ext.scroll.Scroller}. It's a combination of
  * {@link Ext.fx.easing.Momentum} and {@link Ext.fx.easing.Bounce}, which emulates deceleration when the animated element

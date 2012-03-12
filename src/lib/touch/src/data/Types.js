@@ -35,14 +35,16 @@ Ext.data.Types.VELATLONG = {
 </code></pre>
  * <p>Then, when declaring a Model, use <pre><code>
 var types = Ext.data.Types; // allow shorthand type access
-Ext.define('Unit',
+Ext.define('Unit', {
     extend: 'Ext.data.Model',
-    fields: [
-        { name: 'unitName', mapping: 'UnitName' },
-        { name: 'curSpeed', mapping: 'CurSpeed', type: types.INT },
-        { name: 'latitude', mapping: 'lat', type: types.FLOAT },
-        { name: 'position', type: types.VELATLONG }
-    ]
+    config: {
+        fields: [
+            { name: 'unitName', mapping: 'UnitName' },
+            { name: 'curSpeed', mapping: 'CurSpeed', type: types.INT },
+            { name: 'latitude', mapping: 'lat', type: types.FLOAT },
+            { name: 'position', type: types.VELATLONG }
+        ]
+    }
 });
 </code></pre>
  * @singleton
@@ -56,7 +58,11 @@ Ext.define('Ext.data.Types', {
      * A regular expression for stripping non-numeric characters from a numeric value. Defaults to <tt>/[\$,%]/g</tt>.
      * This should be overridden for localization.
      */
-    stripRe: /[\$,%]/g
+    stripRe: /[\$,%]/g,
+    dashesRe: /-/g,
+    iso8601TestRe: /\d\dT\d\d/,
+    iso8601SplitRe: /[- :T\.Z\+]/
+
 }, function() {
     var Types = this,
         sortTypes = Ext.data.SortTypes;
@@ -171,11 +177,20 @@ Ext.define('Ext.data.Types', {
 
                 parsed = new Date(Date.parse(value));
                 if (isNaN(parsed)) {
-                    // Dates with the format "2012-01-20" fail, but "2012/01/20" work in some browsers. We'll try and
-                    // get around that.
-                    parsed = new Date(Date.parse(value.replace(/-/g, "/")));
+                    // Dates with ISO 8601 format are not well supported by mobile devices, this can work around the issue.
+                    if (Types.iso8601TestRe.test(value)) {
+                        parsed = value.split(Types.iso8601SplitRe);
+                        parsed = new Date(parsed[0], parsed[1]-1, parsed[2], parsed[3], parsed[4], parsed[5]);
+                    }
                     if (isNaN(parsed)) {
-                        Ext.Logger.warn("Cannot parse the passed value (" + value + ") into a valid date");
+                        // Dates with the format "2012-01-20" fail, but "2012/01/20" work in some browsers. We'll try and
+                        // get around that.
+                        parsed = new Date(Date.parse(value.replace(this.dashesRe, "/")));
+                        //<debug>
+                        if (isNaN(parsed)) {
+                            Ext.Logger.warn("Cannot parse the passed value (" + value + ") into a valid date");
+                        }
+                        //</debug>
                     }
                 }
 

@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.event.publisher.ComponentDelegation', {
     extend: 'Ext.event.publisher.Publisher',
 
@@ -150,7 +153,7 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
         id = target.substr(1);
         component = Ext.ComponentManager.get(id);
 
-        if (component && component.hasParent()) {
+        if (component) {
             this.dispatcher.doAddListener(this.targetType, target, eventName, 'publish', this, {
                 args: [eventName, component]
             }, 'before');

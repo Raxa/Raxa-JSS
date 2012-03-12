@@ -429,12 +429,11 @@ Ext.dom.Element.addMembers({
     },
 
     getVisibilityMode: function() {
-        var statics = this.self,
-            dom = this.dom,
-            mode = statics.data(dom, 'visibilityMode');
+        var dom = this.dom,
+            mode = Ext.dom.Element.data(dom, 'visibilityMode');
 
         if (mode === undefined) {
-            statics.data(dom, 'visibilityMode', mode = this.DISPLAY);
+            Ext.dom.Element.data(dom, 'visibilityMode', mode = this.DISPLAY);
         }
 
         return mode;
@@ -449,17 +448,28 @@ Ext.dom.Element.addMembers({
         return this;
     },
 
+    /**
+     * Shows this element.
+     * Uses display mode to determine whether to use "display" or "visibility". See {@link #setVisible}.
+     */
     show: function() {
-        this.dom.style.removeProperty('display');
+        var dom = this.dom;
+        if (dom) {
+            dom.style.removeProperty('display');
+        }
     },
 
+    /**
+     * Hides this element.
+     * Uses display mode to determine whether to use "display" or "visibility". See {@link #setVisible}.
+     */
     hide: function() {
         var dom = this.dom,
             domStyle = dom.style,
-            needsRedraw = Ext.os.is.iOS5;
+            needsRedraw = Ext.os.is.iOS;
 
         if (domStyle.getPropertyValue('display') !== 'none') {
-            // iOS5 sometimes has a long delay before redrawing elements with their CSS 'display' set to 'none'
+            // iOS sometimes has a long delay before redrawing elements with their CSS 'display' set to 'none'
             // This force a redraw to make sure the element is hidden instantly
             if (needsRedraw) {
                 domStyle.setProperty('display', 'none', 'important');
@@ -575,7 +585,6 @@ Ext.dom.Element.addMembers({
      */
     setStyle: function(prop, value) {
         var me = this,
-            statics = this.self,
             dom = me.dom,
             hooks = me.styleHooks,
             style = dom.style,
@@ -587,7 +596,7 @@ Ext.dom.Element.addMembers({
             hook = hooks[prop];
 
             if (!hook) {
-                hooks[prop] = hook = { name: statics.normalize(prop) };
+                hooks[prop] = hook = { name: Ext.dom.Element.normalize(prop) };
             }
             value = valueFrom(value, '');
 
@@ -603,7 +612,7 @@ Ext.dom.Element.addMembers({
                     hook = hooks[name];
 
                     if (!hook) {
-                        hooks[name] = hook = { name: statics.normalize(name) };
+                        hooks[name] = hook = { name: Ext.dom.Element.normalize(name) };
                     }
 
                     value = valueFrom(prop[name], '');
@@ -681,7 +690,7 @@ Ext.dom.Element.addMembers({
             if (styleType == 'string') {
                 styles = Ext.util.Format.trim(styles).split(this.styleSplitRe);
                 for (i = 0, len = styles.length; i < len;) {
-                    dom.style[Element.dom.normalize(styles[i++])] = styles[i++];
+                    dom.style[Ext.dom.Element.normalize(styles[i++])] = styles[i++];
                 }
             }
             else if (styleType == 'object') {
@@ -764,14 +773,14 @@ Ext.dom.Element.addMembers({
      *
      * Sizing of the document body is handled at the adapter level which handles special cases for IE and strict modes, etc.
      *
-     * @deprecated 2.0.0 This method is no longer supported in Sencha Touch
+     * @deprecated 2.0.0
      * @return {Object} Object describing width and height.
      * @return {Number} return.width
      * @return {Number} return.height
      */
     getViewSize: function() {
         //<debug warn>
-        Ext.Logger.deprecate("This method is no longer supported in Sencha Touch", this);
+        Ext.Logger.deprecate("Ext.dom.Element.getViewSize() is deprecated", this);
         //</debug>
 
         var doc = document,
@@ -795,13 +804,13 @@ Ext.dom.Element.addMembers({
      * Returns true if the value of the given property is visually transparent. This
      * may be due to a 'transparent' style value or an rgba value with 0 in the alpha
      * component.
-     * @deprecated 2.0.0 This method is no longer supported in Sencha Touch
+     * @deprecated 2.0.0
      * @param {String} prop The style property whose value is to be tested.
      * @return {Boolean} True if the style property is visually transparent.
      */
     isTransparent: function(prop) {
         //<debug warn>
-        Ext.Logger.deprecate("This method is no longer supported in Sencha Touch", this);
+        Ext.Logger.deprecate("Ext.dom.Element.isTransparent() is deprecated", this);
         //</debug>
 
         var value = this.getStyle(prop);
@@ -812,13 +821,13 @@ Ext.dom.Element.addMembers({
 
     /**
      * Adds one or more CSS classes to this element and removes the same class(es) from all siblings.
-     * @deprecated 2.0.0 This method is no longer supported in Sencha Touch
+     * @deprecated 2.0.0
      * @param {String/String[]} className The CSS class to add, or an array of classes
      * @return {Ext.dom.Element} this
      */
     radioCls: function(className) {
         //<debug warn>
-        Ext.Logger.deprecate("This method is no longer supported in Sencha Touch", this);
+        Ext.Logger.deprecate("Ext.dom.Element.radioCls() is deprecated", this);
         //</debug>
 
         var cn = this.dom.parentNode.childNodes,

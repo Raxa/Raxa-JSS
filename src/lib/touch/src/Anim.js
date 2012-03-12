@@ -286,7 +286,7 @@ Ext.Anim.seed = 1000;
  */
 Ext.Anim.run = function(el, anim, config) {
     if (el.isComponent) {
-        el = el.el;
+        el = el.element;
     }
 
     config = config || {};
@@ -314,7 +314,6 @@ Ext.Anim.run = function(el, anim, config) {
             if (el && el.dom) {
                 Ext.anims[anim].run(el, config);
             }
-
         }
     }
 };
@@ -527,8 +526,6 @@ Ext.anims = {
                 rotateProp = 'Y',
                 fromZ = 0,
                 toZ = 0,
-                fromOpacity = 1,
-                toOpacity = 1,
                 elW = el.getWidth(),
                 elH = el.getHeight(),
                 showTranslateZ = true,
@@ -539,12 +536,10 @@ Ext.anims = {
                 if (this.out) {
                     origin = '100% 100%';
                     toZ = elW;
-                    toOpacity = 0.5;
                     toRotate = -90;
                 } else {
                     origin = '0% 0%';
                     fromZ = elW;
-                    fromOpacity = 0.5;
                     fromRotate = 90;
                 }
             } else if (this.direction == 'up' || this.direction == 'down') {

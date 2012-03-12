@@ -229,15 +229,16 @@ Ext.define('Ext.data.proxy.Server', {
             try {
                 resultSet = reader.process(response);
             } catch(e) {
-                operation.setException(operation, {
-                    status: null,
-                    statusText: e.getMessage()
-                });
+                operation.setException(e.message);
 
                 me.fireEvent('exception', this, response, operation);
                 return;
             }
 
+            // This could happen if the model was configured using metaData
+            if (!operation.getModel()) {
+                operation.setModel(this.getModel());
+            }
 
             if (operation.process(action, resultSet, request, response) === false) {
                 this.fireEvent('exception', this, response, operation);
@@ -333,7 +334,7 @@ Ext.define('Ext.data.proxy.Server', {
     getParams: function(operation) {
         var me = this,
             params = {},
-            groupers = operation.getGroupers(),
+            grouper = operation.getGrouper(),
             sorters = operation.getSorters(),
             filters = operation.getFilters(),
             page = operation.getPage(),
@@ -364,9 +365,9 @@ Ext.define('Ext.data.proxy.Server', {
             }
         }
 
-        if (groupParam && groupers && groupers.length > 0) {
+        if (groupParam && grouper) {
             // Grouper is a subclass of sorter, so we can just use the sorter method
-            params[groupParam] = me.encodeSorters(groupers);
+            params[groupParam] = me.encodeSorters([grouper]);
         }
 
         if (sortParam && sorters && sorters.length > 0) {
@@ -418,7 +419,7 @@ Ext.define('Ext.data.proxy.Server', {
      * @return {String} The url
      */
     getUrl: function(request) {
-        return request.getUrl() || this.getApi()[request.getAction()] || this._url;
+        return request ? request.getUrl() || this.getApi()[request.getAction()] || this._url : this._url;
     },
 
     /**
@@ -430,6 +431,8 @@ Ext.define('Ext.data.proxy.Server', {
      * @param {Ext.data.Operation} operation The Ext.data.Operation object
      * @param {Function} callback The callback function to call when the Operation has completed
      * @param {Object} scope The scope in which to execute the callback
+     * @protected
+     * @template
      */
     doRequest: function(operation, callback, scope) {
         //<debug>

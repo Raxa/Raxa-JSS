@@ -992,7 +992,7 @@ This process will be automated with Sencha Command, to be released and documente
             return this;
         },
 
-        // @ignore
+        // duplicate definition (documented above)
         onReady: function(fn, scope, withDomReady, options) {
             var oldFn;
 
@@ -1067,25 +1067,34 @@ This process will be automated with Sencha Command, to be released and documente
      * {@link Ext.Loader} for examples.
      * @member Ext
      * @method require
+     * @inheritdoc Ext.Loader#require
      */
     Ext.require = alias(Loader, 'require');
 
     /**
      * Synchronous version of {@link Ext#require}, convenient alias of {@link Ext.Loader#syncRequire}.
-     *
      * @member Ext
      * @method syncRequire
+     * @inheritdoc Ext.Loader#syncRequire
      */
     Ext.syncRequire = alias(Loader, 'syncRequire');
 
     /**
-     * Convenient shortcut to {@link Ext.Loader#exclude}
+     * Convenient shortcut to {@link Ext.Loader#exclude}.
      * @member Ext
      * @method exclude
+     * @inheritdoc Ext.Loader#exclude
      */
     Ext.exclude = alias(Loader, 'exclude');
 
     /**
+     * Adds a listener to be notified when the document is ready (before onload and before images are loaded).
+     * Shorthand of {@link Ext.Loader#onReady}(fn, scope, true, options).
+     *
+     * @param {Function} fn The method the event invokes.
+     * @param {Object} [scope] The scope in which the handler function executes. Defaults to the browser window.
+     * @param {Boolean} [options] Options object as passed to {@link Ext.Element#addListener}. It is recommended
+     * that the options `{single: true}` be used so that the handler is removed on first invocation.
      * @member Ext
      * @method onReady
      */
@@ -1106,7 +1115,7 @@ This process will be automated with Sencha Command, to be released and documente
               extend: 'Ext.MyClass',
               requires: ['Ext.some.OtherClass'],
               mixins: {
-                  observable: 'Ext.util.Observable';
+                  observable: 'Ext.mixin.Observable';
               }
         }
         which will later be transformed into:
@@ -1114,7 +1123,7 @@ This process will be automated with Sencha Command, to be released and documente
               extend: Ext.MyClass,
               requires: [Ext.some.OtherClass],
               mixins: {
-                  observable: Ext.util.Observable;
+                  observable: Ext.mixin.Observable;
               }
         }
         */

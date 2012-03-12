@@ -201,6 +201,9 @@
  *
  * See <a href="#!/guide/controllers">the Controllers guide</a> for advanced Controller usage including before filters
  * and customizing for different devices.
+ * 
+ * @aside guide controllers
+ * @aside guide apps_intro
  */
 Ext.define('Ext.app.Controller', {
     mixins: {
@@ -320,7 +323,57 @@ Ext.define('Ext.app.Controller', {
          * automatically provided when using the MVC architecture so should rarely need to be set directly.
          * @accessor
          */
-        application: {}
+        application: {},
+        
+        /**
+         * @cfg {Array} stores The set of stores to load for this Application. Each store is expected to
+         * exist inside the *app/store* directory and define a class following the convention
+         * AppName.store.StoreName. For example, in the code below, the *AppName.store.Users* class will be loaded.
+         * Note that we are able to specify either the full class name (as with *AppName.store.Groups*) or just the
+         * final part of the class name and leave Application to automatically prepend *AppName.store.’* to each:
+         *
+         *     stores: [
+         *         'Users',
+         *         'AppName.store.Groups',
+         *         'SomeCustomNamespace.store.Orders'
+         *     ]
+         * @accessor
+         */
+        stores: [],
+
+        /**
+         * @cfg {Array} models The set of models to load for this Application. Each model is expected to exist inside the
+         * *app/model* directory and define a class following the convention AppName.model.ModelName. For example, in the
+         * code below, the classes *AppName.model.User*, *AppName.model.Group* and *AppName.model.Product* will be loaded.
+         * Note that we are able to specify either the full class name (as with *AppName.model.Product*) or just the
+         * final part of the class name and leave Application to automatically prepend *AppName.model.* to each:
+         *
+         *     models: [
+         *         'User',
+         *         'Group',
+         *         'AppName.model.Product',
+         *         'SomeCustomNamespace.model.Order'
+         *     ]
+         * @accessor
+         */
+        models: [],
+
+        /**
+         * @cfg {Array} views The set of views to load for this Application. Each view is expected to exist inside the
+         * *app/view* directory and define a class following the convention AppName.view.ViewName. For example, in the
+         * code below, the classes *AppName.view.Users*, *AppName.view.Groups* and *AppName.view.Products* will be loaded.
+         * Note that we are able to specify either the full class name (as with *AppName.view.Products*) or just the
+         * final part of the class name and leave Application to automatically prepend *AppName.view.* to each:
+         *
+         *     views: [
+         *         'Users',
+         *         'Groups',
+         *         'AppName.view.Products',
+         *         'SomeCustomNamespace.view.Orders'
+         *     ]
+         * @accessor
+         */
+        views: []
     },
 
     /**
@@ -401,7 +454,7 @@ Ext.define('Ext.app.Controller', {
     applyRefs: function(refs) {
         //<debug>
         if (Ext.isArray(refs)) {
-            console.warn("In Sencha Touch 2 the refs config accepts an object but you have passed it an array.");
+            Ext.Logger.deprecate("In Sencha Touch 2 the refs config accepts an object but you have passed it an array.");
         }
         //</debug>
 
@@ -417,14 +470,13 @@ Ext.define('Ext.app.Controller', {
     applyRoutes: function(routes) {
         var app    = this instanceof Ext.app.Application ? this : this.getApplication(),
             router = app.getRouter(),
-            parts  = this.$className.split('.'),
             route, url, config;
 
         for (url in routes) {
             route = routes[url];
 
             config = {
-                controller: parts[parts.length - 1]
+                controller: this.$className
             };
 
             if (Ext.isString(route)) {
@@ -437,6 +489,58 @@ Ext.define('Ext.app.Controller', {
         }
 
         return routes;
+    },
+    
+    /**
+     * @private
+     * As a convenience developers can locally qualify store names (e.g. 'MyStore' vs
+     * 'MyApp.store.MyStore'). This just makes sure everything ends up fully qualified
+     */
+    applyStores: function(stores) {
+        return this.getFullyQualified(stores, 'store');
+    },
+
+    /**
+     * @private
+     * As a convenience developers can locally qualify model names (e.g. 'MyModel' vs
+     * 'MyApp.model.MyModel'). This just makes sure everything ends up fully qualified
+     */
+    applyModels: function(models) {
+        return this.getFullyQualified(models, 'model');
+    },
+
+    /**
+     * @private
+     * As a convenience developers can locally qualify view names (e.g. 'MyView' vs
+     * 'MyApp.view.MyView'). This just makes sure everything ends up fully qualified
+     */
+    applyViews: function(views) {
+        return this.getFullyQualified(views, 'view');
+    },
+    
+    /**
+     * @private
+     * Returns the fully qualified name for any class name variant. This is used to find the FQ name for the model, 
+     * view, controller, store and profiles listed in a Controller or Application.
+     * @param {String[]} items The array of strings to get the FQ name for
+     * @param {String} namespace If the name happens to be an application class, add it to this namespace
+     * @return {String} The fully-qualified name of the class
+     */
+    getFullyQualified: function(items, namespace) {
+        var length  = items.length,
+            appName = this.getApplication().getName(),
+            name, i;
+
+        for (i = 0; i < length; i++) {
+            name = items[i];
+
+            //we check name === appName to allow MyApp.profile.MyApp to exist
+            if (Ext.isString(name) && (Ext.Loader.getPrefix(name) === "" || name === appName)) {
+                items[i] = appName + '.' + namespace + '.' + name;
+            }
+        }
+
+        return items;
     },
 
     /**
@@ -544,18 +648,17 @@ Ext.define('Ext.app.Controller', {
 
                 delete members[key];
                 // <debug warn>
-                // See https://sencha.jira.com/browse/TOUCH-1499
-                console.warn(key + ' is deprecated as a property directly on the ' + this.$className + ' prototype. Please put it inside the config object.');
+                Ext.Logger.deprecate(key + ' is deprecated as a property directly on the ' + this.$className + ' prototype. Please put it inside the config object.');
                 // </debug>
             }
         }
 
         if (stores) {
             length = stores.length;
+            config.stores = stores;
 
             // <debug warn>
-            // See https://sencha.jira.com/browse/TOUCH-1499
-            console.warn('\'stores\' is deprecated as a property directly on the ' + this.$className + ' prototype. Please move it ' +
+            Ext.Logger.deprecate('\'stores\' is deprecated as a property directly on the ' + this.$className + ' prototype. Please move it ' +
                 'to Ext.application({ stores: ... }) instead');
             // </debug>
 
@@ -572,10 +675,10 @@ Ext.define('Ext.app.Controller', {
 
         if (views) {
             length = views.length;
+            config.views = views;
 
             // <debug warn>
-            // See https://sencha.jira.com/browse/TOUCH-1499
-            console.warn('\'views\' is deprecated as a property directly on the ' + this.$className + ' prototype. Please move it ' +
+            Ext.Logger.deprecate('\'views\' is deprecated as a property directly on the ' + this.$className + ' prototype. Please move it ' +
                 'to Ext.application({ views: ... }) instead');
             // </debug>
 
@@ -594,8 +697,8 @@ Ext.define('Ext.app.Controller', {
     },
 
     /**
-     * @deprecated 2.0.0
-     * Returns a reference to a Model. Deprecated and considered bad practice - please just use the Model name instead
+     * Returns a reference to a Model. 
+     * @deprecated 2.0.0 Considered bad practice - please just use the Model name instead
      * (e.g. MyApp.model.User vs this.getModel('User')).
      */
     getModel: function(modelName) {
@@ -611,8 +714,8 @@ Ext.define('Ext.app.Controller', {
     },
 
     /**
-     * @deprecated 2.0.0
-     * Returns a reference to another Controller. Deprecated and considered bad practice - if you need to do this
+     * Returns a reference to another Controller. 
+     * @deprecated 2.0.0 Considered bad practice - if you need to do this
      * please use this.getApplication().getController() instead
      */
     getController: function(controllerName, profile) {
@@ -622,17 +725,8 @@ Ext.define('Ext.app.Controller', {
         //</debug>
 
         return this.getApplication().getController(controllerName, profile);
-    },
-
+    }
     // </deprecated>
-
-    //TO IMPLEMENT
-
-    addRefs: Ext.emptyFn,
-    addRoutes: Ext.emptyFn,
-    addStores: Ext.emptyFn,
-    addProfiles: Ext.emptyFn,
-    addModels: Ext.emptyFn
 }, function() {
     // <deprecated product=touch since=2.0>
     Ext.regController = function(name, config) {
@@ -640,7 +734,7 @@ Ext.define('Ext.app.Controller', {
             extend: 'Ext.app.Controller'
         });
 
-        console.warn(
+        Ext.Logger.deprecate(
             '[Ext.app.Controller] Ext.regController is deprecated, please use Ext.define to define a Controller as ' +
             'with any other class. For more information see the Touch 1.x -> 2.x migration guide'
         );

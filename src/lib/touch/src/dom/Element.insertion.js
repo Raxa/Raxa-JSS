@@ -14,6 +14,12 @@ Ext.dom.Element.addMembers({
         return this;
     },
 
+    removeChild: function(element) {
+        this.dom.removeChild(Ext.getDom(element));
+
+        return this;
+    },
+
     append: function() {
         this.appendChild.apply(this, arguments);
     },

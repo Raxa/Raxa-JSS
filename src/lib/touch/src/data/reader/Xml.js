@@ -9,7 +9,9 @@
 <pre><code>
 Ext.define('User', {
     extend: 'Ext.data.Model',
-    fields: ['id', 'name', 'email']
+    config: {
+        fields: ['id', 'name', 'email']
+    }
 });
 
 var store = Ext.create('Ext.data.Store', {
@@ -91,7 +93,7 @@ reader: {
 }
 </code></pre>
  *
- * <p>Note that XmlReader doesn't care whether your {@link #rootProperty} and {@link #record} elements are nested deep 
+ * <p>Note that XmlReader doesn't care whether your {@link #rootProperty} and {@link #record} elements are nested deep
  * inside a larger structure, so a response like this will still work:
  *
 <pre><code>
@@ -208,7 +210,7 @@ Ext.define('Ext.data.reader.Xml', {
     //inherit docs
     getResponseData: function(response) {
         // Check to see if the response is already an xml node.
-        if (response.nodeType === 1) {
+        if (response.nodeType === 1 || response.nodeType === 9) {
             return response;
         }
 
@@ -305,5 +307,23 @@ Ext.define('Ext.data.reader.Xml', {
             doc = doc[0];
         }
         return this.callParent([doc]);
+    },
+
+    /**
+     * @private
+     * Returns an accessor expression for the passed Field from an XML element using either the Field's mapping, or
+     * its ordinal position in the fields collsction as the index.
+     * This is used by buildExtractors to create optimized on extractor function which converts raw data into model instances.
+     */
+    createFieldAccessExpression: function(field, fieldVarName, dataName) {
+        var selector = field.getMapping() || field.getName(),
+            result;
+
+        if (typeof selector === 'function') {
+            result = fieldVarName + '.getMapping()(' + dataName + ', this)';
+        } else {
+            result = 'me.getNodeValue(Ext.DomQuery.selectNode("' + selector + '", ' + dataName + '))';
+        }
+        return result;
     }
 });

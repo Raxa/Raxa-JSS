@@ -8,19 +8,23 @@
  *
  * Here is an {@link Ext.Button} is it's simplist form:
  *
+ *     @example miniphone
  *     var button = Ext.create('Ext.Button', {
  *         text: 'Button'
  *     });
+ *     Ext.Viewport.add(button);
  *
  * ## Icons
  *
  * You can also create a {@link Ext.Button} with just an icon using the {@link #iconCls}
  * configuration:
  *
- *     var iconButton = Ext.create('Ext.Button', {
+ *     @example miniphone
+ *     var button = Ext.create('Ext.Button', {
  *         iconCls: 'refresh',
  *         iconMask: true
  *     });
+ *     Ext.Viewport.add(button);
  *
  * Note that the {@link #iconMask} configuration is required when you want to use any of the
  * bundled Pictos icons.
@@ -54,9 +58,13 @@
  * Buttons can also have a badge on them, by using the {@link #badgeText} configuration:
  *
  *     @example
- *     var badgedButton = Ext.create('Ext.Button', {
- *         text: 'My Button',
- *         badgeText: '2'
+ *     Ext.create('Ext.Container', {
+ *         fullscreen: true,
+ *         items: {
+ *             xtype: 'button',
+ *             text: 'My Button',
+ *             badgeText: '2'
+ *         }
  *     });
  *
  * ## UI
@@ -224,7 +232,7 @@ Ext.define('Ext.Button', {
          * The CSS class to add to the Button when it is pressed.
          * @accessor
          */
-        pressedCls: Ext.baseCSSPrefix + 'button-pressed',
+        pressedCls: Ext.baseCSSPrefix + 'button-pressing',
 
         /**
          * @cfg {String} badgeCls
@@ -289,7 +297,7 @@ Ext.define('Ext.Button', {
 
         /**
          * @cfg {String} iconAlign
-         * The position within the Button to render the icon Options are: `top`, `right`, `botom`, `left` and `center` (when you have
+         * The position within the Button to render the icon Options are: `top`, `right`, `bottom`, `left` and `center` (when you have
          * no {@link #text} set).
          * @accessor
          */
@@ -375,7 +383,6 @@ Ext.define('Ext.Button', {
             scope      : this,
             tap        : 'onTap',
             touchstart : 'onPress',
-            touchmove  : 'onTouchMove',
             touchend   : 'onRelease'
         });
     },
@@ -662,10 +669,6 @@ Ext.define('Ext.Button', {
         }
     },
 
-    onTouchMove: function(e) {
-        return;
-    },
-
     // @private
     onRelease: function(e) {
         this.fireAction('release', [this, e], 'doRelease');
@@ -677,7 +680,7 @@ Ext.define('Ext.Button', {
             return;
         }
 
-        me.isPressed = true;
+        me.isPressed = false;
 
         if (me.hasOwnProperty('pressedTimeout')) {
             clearTimeout(me.pressedTimeout);
@@ -730,7 +733,7 @@ Ext.define('Ext.Button', {
      * @param {String} text
      * @deprecated 2.0.0 Please use {@link #setBadgeText} instead.
      */
-    Ext.deprecateClassMethod(this, 'setBadge', this.prototype.setBadgeText, "'setBadge()' is deprecated, please use setBadgeText()");
+    Ext.deprecateClassMethod(this, 'setBadge', 'setBadgeText');
 
     /**
      * Updates the icon class
@@ -738,7 +741,7 @@ Ext.define('Ext.Button', {
      * @param {String} iconClass
      * @deprecated 2.0.0 Please use {@link #setIconCls} instead.
      */
-    Ext.deprecateClassMethod(this, 'setIconClass', this.prototype.setIconCls, "'setIconClass()' is deprecated, please use setIconCls()");
+    Ext.deprecateClassMethod(this, 'setIconClass', 'setIconCls');
 
     this.override({
         constructor: function(config) {

@@ -54,6 +54,15 @@ Ext.define('Ext.dataview.component.Container', {
      */
 
     /**
+     * @event itemsingletap
+     * Fires whenever an item is doubletapped
+     * @param {Ext.dataview.component.Container} this
+     * @param {Ext.dataview.component.DataItem} item The item singletapped
+     * @param {Number} index The index of the item singletapped
+     * @param {Ext.EventObject} e The event object
+     */
+
+    /**
      * @event itemdoubletap
      * Fires whenever an item is doubletapped
      * @param {Ext.dataview.component.Container} this
@@ -83,6 +92,7 @@ Ext.define('Ext.dataview.component.Container', {
             touchend: 'onItemTouchEnd',
             tap: 'onItemTap',
             touchmove: 'onItemTouchMove',
+            singletap: 'onItemSingleTap',
             doubletap: 'onItemDoubleTap',
             swipe: 'onItemSwipe',
             delegate: '> .' + Ext.baseCSSPrefix + 'data-item',
@@ -142,6 +152,13 @@ Ext.define('Ext.dataview.component.Container', {
             target = e.getTarget(),
             item = Ext.getCmp(target.id);
         me.fireEvent('itemtaphold', me, item, me.indexOf(item), e);
+    },
+
+    onItemSingleTap: function(e) {
+        var me = this,
+            target = e.getTarget(),
+            item = Ext.getCmp(target.id);
+        me.fireEvent('itemsingletap', me, item, me.indexOf(item), e);
     },
 
     onItemDoubleTap: function(e) {
@@ -217,7 +234,7 @@ Ext.define('Ext.dataview.component.Container', {
             if (cacheLn) {
                 cacheLn--;
                 item = itemCache.pop();
-                item.setRecord(record);
+                this.updateListItem(record, item);
             }
             else {
                 item = me.getDataItemConfig(xtype, record, itemConfig);
@@ -233,8 +250,8 @@ Ext.define('Ext.dataview.component.Container', {
     },
 
     updateListItem: function(record, item) {
-        if (item.setRecord) {
-            item.setRecord(record);
+        if (item.updateRecord) {
+            item.updateRecord(record);
         }
     },
 

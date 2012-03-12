@@ -33,7 +33,7 @@
  *         ]
  *     });
  *
- *     panel.getLayout().{@link Ext.Container#setActiveItem setActiveItem}(1);
+ *     panel.{@link Ext.Container#setActiveItem setActiveItem}(1);
  *
  * Here we create a Panel with a Card Layout and later set the second item active (the active item index is zero-based,
  * so 1 corresponds to the second item). Normally you're better off using a {@link Ext.tab.Panel tab panel} or a
@@ -66,15 +66,6 @@ Ext.define('Ext.layout.Card', {
     cls: Ext.baseCSSPrefix + 'layout-card',
 
     itemCls: Ext.baseCSSPrefix + 'layout-card-item',
-
-    config: {
-        /**
-         * @cfg {Ext.fx.layout.Card} animation Card animation configuration
-         * Controls how card transitions are animated
-         * @accessor
-         */
-        animation: null
-    },
 
     constructor: function() {
         this.callParent(arguments);
@@ -115,10 +106,10 @@ Ext.define('Ext.layout.Card', {
     /**
      * @private
      */
-    doItemRemove: function(item) {
+    doItemRemove: function(item, index, destroy) {
         this.callParent(arguments);
 
-        if (item.isInnerItem()) {
+        if (!destroy && item.isInnerItem()) {
             item.show();
         }
     },

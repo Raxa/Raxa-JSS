@@ -528,6 +528,8 @@ Ext.define('Ext.field.Input', {
         if (maxRows !== null && typeof maxRows !== 'number') {
             throw new Error("Ext.field.Input: [applyMaxRows] trying to pass a value which is not a number");
         }
+
+        return maxRows;
     },
     //</debug>
 
@@ -559,7 +561,7 @@ Ext.define('Ext.field.Input', {
     },
 
     /**
-     * Resets the current field value to the originally loaded value and clears any validation messages.
+     * Resets the current field value to the original value.
      */
     reset: function() {
         this.setValue(this.originalValue);
@@ -681,15 +683,18 @@ Ext.define('Ext.field.Input', {
         var oldValue = this.getValue(),
             newValue;
 
-        //hide the clear icon
-        this.clearIcon.hide();
-
         this.fireEvent('clearicontap', this, e);
 
         newValue = this.getValue();
 
         if (String(newValue) != String(oldValue)) {
             this.onChange(this, newValue, oldValue);
+        }
+
+        //focus the field after cleartap happens, but only on android.
+        //this is to stop the keyboard from hiding. TOUCH-2064
+        if (Ext.os.is.Android) {
+            this.focus();
         }
     },
 

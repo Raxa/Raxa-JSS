@@ -16,7 +16,7 @@ It can be very useful to set a default {@link #value} configuration on {@link Ex
 this example, we set the {@link #value} to be the current date. You can also use the {@link #setValue} method to
 update the value at any time.
 
-    @example preview
+    @example miniphone preview
     Ext.create('Ext.form.Panel', {
         fullscreen: true,
         items: [
@@ -154,12 +154,6 @@ Ext.define('Ext.field.DatePicker', {
         destroyPickerOnHide: false,
 
         /**
-         * @cfg {Number} tabIndex
-         * @hide
-         */
-        tabIndex: -1,
-
-        /**
          * @cfg {String} dateFormat The format to be used when displaying the date in this field.
          * Accepts any valid date format. You can view formats over in the {@link Ext.Date} documentation.
          * Defaults to `Ext.util.Format.defaultDateFormat`.
@@ -187,6 +181,8 @@ Ext.define('Ext.field.DatePicker', {
         this.getComponent().input.dom.disabled = true;
     },
 
+    syncEmptyCls: Ext.emptyFn,
+
     applyValue: function(value) {
         if (!Ext.isDate(value) && !Ext.isObject(value)) {
             value = null;
@@ -211,6 +207,10 @@ Ext.define('Ext.field.DatePicker', {
             this.getComponent().setValue(Ext.Date.format(newValue, this.getDateFormat() || Ext.util.Format.defaultDateFormat));
         } else {
             this.getComponent().setValue('');
+        }
+
+        if (this._picker && this._picker instanceof Ext.picker.Date) {
+            this._picker.setValue(newValue);
         }
     },
 
@@ -290,9 +290,6 @@ Ext.define('Ext.field.DatePicker', {
             return false;
         }
 
-        //hide the keyboard on devices
-        Ext.Viewport.hideKeyboard();
-
         this.getPicker().show();
 
         return false;
@@ -339,8 +336,8 @@ Ext.define('Ext.field.DatePicker', {
 
         this.callParent(arguments);
     }
-}, function() {
     //<deprecated product=touch since=2.0>
+}, function() {
     this.override({
         getValue: function(format) {
             if (format) {
@@ -352,5 +349,12 @@ Ext.define('Ext.field.DatePicker', {
             return this.callOverridden();
         }
     });
+
+    /**
+     * @method getDatePicker
+     * @inheritdoc Ext.field.DatePicker#getPicker
+     * @deprecated 2.0.0 Please use #getPicker instead
+     */
+    Ext.deprecateMethod(this, 'getDatePicker', 'getPicker');
     //</deprecated>
 });

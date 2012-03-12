@@ -143,11 +143,12 @@ Ext.define('Ext.util.Filter', {
      */
     createFilterFn: function() {
         var me       = this,
-            matcher  = me.createValueMatcher(),
-            property = me.getProperty(),
-            root     = me.getRoot();
+            matcher  = me.createValueMatcher();
 
         return function(item) {
+            var root     = me.getRoot(),
+                property = me.getProperty();
+
             if (root) {
                 item = item[root];
             }

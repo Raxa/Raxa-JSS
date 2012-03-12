@@ -171,7 +171,7 @@ Ext.define('Ext.field.Field', {
                 },
                 {
                     reference: 'innerElement',
-                    cls      : prefix + 'component-outer'
+                    cls: prefix + 'component-outer'
                 }
             ]
         };
@@ -183,7 +183,7 @@ Ext.define('Ext.field.Field', {
             prefix = Ext.baseCSSPrefix;
 
         if (newLabel) {
-            this.label.down('span').setHtml(newLabel);
+            this.labelspan.setHtml(newLabel);
             renderElement.addCls(prefix + 'field-labeled');
         } else {
             renderElement.removeCls(prefix + 'field-labeled');
@@ -271,7 +271,20 @@ Ext.define('Ext.field.Field', {
     },
 
     /**
-     * Resets the current field value to the originally loaded value and clears any validation messages.
+     * Resets the current field value back to the original value on this field when it was created.
+     *
+     *     // This will create a field with an original value
+     *     var field = Ext.Viewport.add({
+     *         xtype: 'textfield',
+     *         value: 'first value'
+     *     });
+     *
+     *     // Update the value
+     *     field.setValue('new value');
+     *
+     *     // Now you can reset it back to the `first value`
+     *     field.reset();
+     *
      * @return {Ext.field.Field} this
      */
     reset: function() {

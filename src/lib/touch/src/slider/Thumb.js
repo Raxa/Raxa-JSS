@@ -1,5 +1,5 @@
 /**
- * @ignore
+ * @private
  * Utility class used by Ext.slider.Slider - should never need to be used directly.
  */
 Ext.define('Ext.slider.Thumb', {
