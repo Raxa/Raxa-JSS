@@ -122,12 +122,16 @@ Ext.define('Ext.Decorator', {
 
     // @private
     doUnsetComponent: function(component) {
-        this.innerElement.dom.removeChild(component.renderElement.dom);
+        if (component.renderElement.dom) {
+            this.innerElement.dom.removeChild(component.renderElement.dom);
+        }
     },
 
     // @private
     doSetComponent: function(component) {
-        this.innerElement.dom.appendChild(component.renderElement.dom);
+        if (component.renderElement.dom) {
+            this.innerElement.dom.appendChild(component.renderElement.dom);
+        }
     },
 
     // @private

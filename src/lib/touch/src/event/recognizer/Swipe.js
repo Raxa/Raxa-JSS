@@ -16,24 +16,24 @@ Ext.define('Ext.event.recognizer.Swipe', {
      * When listening to this, ensure you know about the {@link Ext.event.Event#direction} property in the `event` object.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
-    
+
     /**
      * @property {Number} direction
      * The direction of the swipe. Available options are:
-     * 
+     *
      * * up
      * * down
      * * left
      * * right
-     * 
+     *
      * Note: In order to recognise swiping up and down, you must enable the vertical swipe recogniser.
-     * 
+     *
      * **This is only available when the event type is `swipe`**
      * @member Ext.event.Event
      */
-    
+
     /**
      * @property {Number} duration
      * The duration of the swipe.

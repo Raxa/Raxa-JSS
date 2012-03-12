@@ -52,12 +52,14 @@ Ext.define('Ext.data.proxy.Proxy', {
          * @cfg {String} batchOrder
          * Comma-separated ordering 'create', 'update' and 'destroy' actions when batching. Override this to set a different
          * order for the batched CRUD actions to be executed in. Defaults to 'create,update,destroy'.
+         * @accessor
          */
         batchOrder: 'create,update,destroy',
 
         /**
          * @cfg {Boolean} batchActions
          * True to batch actions of a particular type when synchronizing the store. Defaults to true.
+         * @accessor
          */
         batchActions: true,
 
@@ -65,6 +67,7 @@ Ext.define('Ext.data.proxy.Proxy', {
          * @cfg {String/Ext.data.Model} model
          * The name of the Model to tie to this Proxy. Can be either the string name of the Model, or a reference to the
          * Model constructor. Required.
+         * @accessor
          */
         model: null,
 
@@ -72,6 +75,7 @@ Ext.define('Ext.data.proxy.Proxy', {
          * @cfg {Object/String/Ext.data.reader.Reader} reader
          * The Ext.data.reader.Reader to use to decode the server's response or data read from client. This can either be a
          * Reader instance, a config object or just a valid Reader type name (e.g. 'json', 'xml').
+         * @accessor
          */
         reader: {
             type: 'json'
@@ -81,6 +85,7 @@ Ext.define('Ext.data.proxy.Proxy', {
          * @cfg {Object/String/Ext.data.writer.Writer} writer
          * The Ext.data.writer.Writer to use to encode any request sent to the server or saved to client. This can either be
          * a Writer instance, a config object or just a valid Writer type name (e.g. 'json', 'xml').
+         * @accessor
          */
         writer: {
             type: 'json'
@@ -119,15 +124,36 @@ Ext.define('Ext.data.proxy.Proxy', {
     },
 
     updateReader: function(reader) {
-        var model = this.getModel();
-        if (!model) {
-            model = reader.getModel();
-            if (model) {
-                this.setModel(model);
+        if (reader) {
+            var model = this.getModel();
+            if (!model) {
+                model = reader.getModel();
+                if (model) {
+                    this.setModel(model);
+                }
+            } else {
+                reader.setModel(model);
             }
-        } else {
-            reader.setModel(model);
+
+            if (reader.onMetaChange) {
+                 reader.onMetaChange = Ext.Function.createSequence(reader.onMetaChange, this.onMetaChange, this);
+            }
         }
+    },
+
+    onMetaChange: function(data) {
+        var model = this.getReader().getModel();
+        if (!this.getModel() && model) {
+            this.setModel(model);
+        }
+
+        /**
+         * @event metachange
+         * Fires whenever the server has sent back new metadata to reconfigure the Reader.
+         * @param {Ext.data.Proxy} this
+         * @param {Object} data The metadata sent back from the server
+         */
+        this.fireEvent('metachange', this, data);
     },
 
     applyWriter: function(writer, currentWriter) {

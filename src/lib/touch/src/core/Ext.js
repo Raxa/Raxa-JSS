@@ -137,7 +137,7 @@
          * @param {Function} superclass
          * @param {Object} overrides
          * @return {Function} The subclass constructor from the <tt>overrides</tt> parameter, or a generated one if not provided.
-         * @deprecated 4.0.0 Use {@link Ext#define Ext.define} instead
+         * @deprecated 4.0.0 Please use {@link Ext#define Ext.define} instead
          */
         extend: function() {
             // inline overrides
@@ -208,7 +208,7 @@
          * containing one or more properties.
          * @method override
          * @markdown
-         * @deprecated 4.1.0 Use {@link Ext#define Ext.define} instead
+         * @deprecated 4.1.0 Please use {@link Ext#define Ext.define} instead
          */
         override: function(cls, overrides) {
             if (cls.$isClass) {
@@ -569,25 +569,43 @@
             })();
         },
 
+        //<feature logger>
         /**
          * @private
          * @property
          */
         Logger: {
-            verbose: emptyFn,
-            log: emptyFn,
-            info: emptyFn,
-            warn: emptyFn,
+            log: function(message, priority) {
+                if ('console' in global) {
+                    if (!priority || !(priority in global.console)) {
+                        priority = 'log';
+                    }
+                    message = '[' + priority.toUpperCase() + '] ' + message;
+                    global.console[priority](message);
+                }
+            },
+            verbose: function(message) {
+                this.log(message, 'verbose');
+            },
+            info: function(message) {
+                this.log(message, 'info');
+            },
+            warn: function(message) {
+                this.log(message, 'warn');
+            },
             error: function(message) {
                 throw new Error(message);
             },
-            deprecate: emptyFn
+            deprecate: function(message) {
+                this.log(message, 'warn');
+            }
         }
+        //</feature>
     });
 
     /**
      * Old alias to {@link Ext#typeOf}
-     * @deprecated 4.0.0 Use {@link Ext#typeOf} instead
+     * @deprecated 4.0.0 Please use {@link Ext#typeOf} instead
      * @method
      * @alias Ext#typeOf
      */

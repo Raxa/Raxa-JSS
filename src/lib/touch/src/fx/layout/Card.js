@@ -40,6 +40,9 @@ Ext.define('Ext.fx.layout.Card', {
                     type = 'scroll';
                 }
             }
+            else if (type === 'slide' && Ext.browser.is.ChromeMobile) {
+                type = 'scroll';
+            }
 
             defaultClass = Ext.ClassManager.getByAlias('fx.layout.card.' + type);
 

@@ -77,6 +77,13 @@ Ext.define('Ext.Sheet', {
     },
 
     applyHideAnimation: function(config) {
+        var exit = this.getExit(),
+            direction = exit;
+
+        if (exit === null) {
+            return null;
+        }
+
         if (config === true) {
             config = {
                 type: 'slideOut'
@@ -90,9 +97,6 @@ Ext.define('Ext.Sheet', {
         var anim = Ext.factory(config, Ext.fx.Animation);
 
         if (anim) {
-            var exit = this.getExit(),
-                direction = exit;
-
             if (exit == 'bottom') {
                 direction = 'down';
             }
@@ -105,6 +109,13 @@ Ext.define('Ext.Sheet', {
     },
 
     applyShowAnimation: function(config) {
+        var enter = this.getEnter(),
+            direction = enter;
+
+        if (enter === null) {
+            return null;
+        }
+
         if (config === true) {
             config = {
                 type: 'slideIn'
@@ -118,9 +129,6 @@ Ext.define('Ext.Sheet', {
         var anim = Ext.factory(config, Ext.fx.Animation);
 
         if (anim) {
-            var enter = this.getEnter(),
-                direction = enter;
-
             if (enter == 'bottom') {
                 direction = 'down';
             }

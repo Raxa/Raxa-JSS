@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.event.Dispatcher', {
 
     requires: [

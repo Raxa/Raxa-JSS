@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.event.publisher.TouchGesture', {
 
     extend: 'Ext.event.publisher.Dom',

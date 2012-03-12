@@ -36,7 +36,6 @@ Ext.define('Ext.dom.CompositeElement', {
     }
 
 }, function() {
-
     Ext.dom.Element.select = function(selector, unique, root) {
         var elements;
 

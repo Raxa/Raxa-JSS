@@ -171,16 +171,23 @@ Ext.define('Ext.ComponentQuery', {
             var result = [],
                 i = 0,
                 length = items.length,
-                candidate;
+                candidate, getter, getValue;
             for (; i < length; i++) {
                 candidate = items[i];
-                if (!value ? !!candidate[property] : (String(candidate[property]) === value)) {
-                    result.push(candidate);
+                getter = Ext.Class.getConfigNameMap(property).get;
+                if (candidate[getter]) {
+                    getValue = candidate[getter]();
+                    if (!value ? !!getValue : (String(getValue) === value)) {
+                        result.push(candidate);
+                    }
                 }
-                else if (candidate.config) {
+                else if (candidate.config && candidate.config[property]) {
                     if (!value ? !!candidate.config[property] : (String(candidate.config[property]) === value)) {
                         result.push(candidate);
                     }
+                }
+                else if (!value ? !!candidate[property] : (String(candidate[property]) === value)) {
+                    result.push(candidate);
                 }
             }
             return result;
@@ -194,7 +201,7 @@ Ext.define('Ext.ComponentQuery', {
                 candidate;
             for (; i < length; i++) {
                 candidate = items[i];
-                if (candidate.getItemId() === id) {
+                if (candidate.getId() === id || candidate.getItemId() === id) {
                     result.push(candidate);
                 }
             }

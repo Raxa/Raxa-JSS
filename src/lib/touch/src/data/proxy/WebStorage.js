@@ -9,6 +9,8 @@ Ext.define('Ext.data.proxy.WebStorage', {
     extend: 'Ext.data.proxy.Client',
     alternateClassName: 'Ext.data.WebStorageProxy',
 
+    requires: 'Ext.Date',
+
     config: {
         /**
          * @cfg {String} id
@@ -82,15 +84,17 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
     //inherit docs
     read: function(operation, callback, scope) {
-        var records = [],
-            ids     = this.getIds(),
-            params  = operation.getParams() || {},
-            length  = ids.length,
+        var records    = [],
+            ids        = this.getIds(),
+            model      = this.getModel(),
+            idProperty = model.getIdProperty(),
+            params     = operation.getParams() || {},
+            length     = ids.length,
             i, record;
 
         //read a single record
-        if (params.id !== undefined) {
-            record = this.getRecord(params.id);
+        if (params[idProperty] !== undefined) {
+            record = this.getRecord(params[idProperty]);
             if (record) {
                 records.push(record);
                 operation.setSuccessful();
@@ -185,7 +189,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
                 Model   = this.getModel(),
                 fields  = Model.getFields().items,
                 length  = fields.length,
-                i, field, name, record, rawData;
+                i, field, name, record, rawData, dateFormat;
 
             if (!item) {
                 return;
@@ -201,7 +205,12 @@ Ext.define('Ext.data.proxy.WebStorage', {
                     data[name] = field.getDecode()(rawData[name]);
                 } else {
                     if (field.getType().type == 'date') {
-                        data[name] = new Date(rawData[name]);
+                        dateFormat = field.getDateFormat();
+                        if (dateFormat) {
+                            data[name] = Ext.Date.parse(rawData[name], dateFormat);
+                        } else {
+                            data[name] = new Date(rawData[name]);
+                        }
                     } else {
                         data[name] = rawData[name];
                     }
@@ -234,7 +243,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
             fields  = Model.getFields().items,
             length  = fields.length,
             i = 0,
-            field, name, obj, key;
+            field, name, obj, key, dateFormat;
 
         for (; i < length; i++) {
             field = fields[i];
@@ -244,7 +253,12 @@ Ext.define('Ext.data.proxy.WebStorage', {
                 data[name] = field.getEncode()(rawData[name], record);
             } else {
                 if (field.getType().type == 'date' && Ext.isDate(rawData[name])) {
-                    data[name] = rawData[name].getTime();
+                    dateFormat = field.getDateFormat();
+                    if (dateFormat) {
+                        data[name] = Ext.Date.format(rawData[name], dateFormat);
+                    } else {
+                        data[name] = rawData[name].getTime();
+                    }
                 } else {
                     data[name] = rawData[name];
                 }
@@ -339,11 +353,14 @@ Ext.define('Ext.data.proxy.WebStorage', {
     setIds: function(ids) {
         var obj = this.getStorageObject(),
             str = ids.join(","),
-            id = this.getId();
+            id  = this.getId(),
+            key = this.getRecordCounterKey();
 
         obj.removeItem(id);
 
-        if (!Ext.isEmpty(str)) {
+        if (Ext.isEmpty(str)) {
+            obj.removeItem(key);
+        } else {
             obj.setItem(id, str);
         }
     },

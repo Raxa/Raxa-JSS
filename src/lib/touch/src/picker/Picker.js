@@ -12,7 +12,7 @@ Remember, {@link Ext.picker.Slot} class extends from {@link Ext.dataview.DataVie
 
 ## Examples
 
-    @example preview
+    @example miniphone preview
     var picker = Ext.create('Ext.Picker', {
         slots: [
             {
@@ -27,11 +27,12 @@ Remember, {@link Ext.picker.Slot} class extends from {@link Ext.dataview.DataVie
             }
         ]
     });
+    Ext.Viewport.add(picker);
     picker.show();
 
 You can also customize the top toolbar on the {@link Ext.picker.Picker} by changing the {@link #doneButton} and {@link #cancelButton} configurations:
 
-    @example preview
+    @example miniphone preview
     var picker = Ext.create('Ext.Picker', {
         doneButton: 'I\'m done!',
         cancelButton: false,
@@ -48,32 +49,34 @@ You can also customize the top toolbar on the {@link Ext.picker.Picker} by chang
             }
         ]
     });
+    Ext.Viewport.add(picker);
     picker.show();
 
 Or by passing a custom {@link #toolbar} configuration:
 
-        @example preview
-        var picker = Ext.create('Ext.Picker', {
-            doneButton: false,
-            cancelButton: false,
-            toolbar: {
-                ui: 'light',
-                title: 'My Picker!'
-            },
-            slots: [
-                {
-                    name : 'limit_speed',
-                    title: 'Speed',
-                    data : [
-                        {text: '50 KB/s', value: 50},
-                        {text: '100 KB/s', value: 100},
-                        {text: '200 KB/s', value: 200},
-                        {text: '300 KB/s', value: 300}
-                    ]
-                }
-            ]
-        });
-        picker.show();
+    @example miniphone preview
+    var picker = Ext.create('Ext.Picker', {
+        doneButton: false,
+        cancelButton: false,
+        toolbar: {
+            ui: 'light',
+            title: 'My Picker!'
+        },
+        slots: [
+            {
+                name : 'limit_speed',
+                title: 'Speed',
+                data : [
+                    {text: '50 KB/s', value: 50},
+                    {text: '100 KB/s', value: 100},
+                    {text: '200 KB/s', value: 200},
+                    {text: '300 KB/s', value: 300}
+                ]
+            }
+        ]
+    });
+    Ext.Viewport.add(picker);
+    picker.show();
  */
 Ext.define('Ext.picker.Picker', {
     extend: 'Ext.Sheet',
@@ -93,9 +96,9 @@ Ext.define('Ext.picker.Picker', {
 
     /**
      * @event change
-     * Fired when the picked value has changed
-     * @param {Ext.Picker} this This Picker
-     * @param {Object} The values of this picker's slots, in {name:'value'} format
+     * Fired when the value of this picker has changed the Done button has been pressed.
+     * @param {Ext.picker.Picker} this This Picker
+     * @param {Object} value The values of this picker's slots, in {name:'value'} format
      */
 
     /**
@@ -135,7 +138,7 @@ Ext.define('Ext.picker.Picker', {
          * the title configuration of the slot.
          * @accessor
          */
-        useTitles: true,
+        useTitles: false,
 
         /**
          * @cfg {Array} slots
@@ -169,6 +172,7 @@ Ext.define('Ext.picker.Picker', {
         },
 
         /**
+         * @cfg
          * @hide
          */
         centered: false,
@@ -357,7 +361,7 @@ Ext.define('Ext.picker.Picker', {
     },
 
     /**
-     *
+     * @private
      */
     updateUseTitles: function(useTitles) {
         var innerItems = this.getInnerItems(),
@@ -401,10 +405,19 @@ Ext.define('Ext.picker.Picker', {
      * @private
      */
     updateSlots: function(newSlots) {
+        var bcss = Ext.baseCSSPrefix,
+            innerItems;
+
         this.removeAll();
 
         if (newSlots) {
             this.add(newSlots);
+        }
+
+        innerItems = this.getInnerItems();
+        if (innerItems.length > 0) {
+            innerItems[0].addCls(bcss + 'first');
+            innerItems[innerItems.length - 1].addCls(bcss + 'last');
         }
 
         this.updateUseTitles(this.getUseTitles());
@@ -415,14 +428,13 @@ Ext.define('Ext.picker.Picker', {
      * Called when the done button has been tapped.
      */
     onDoneButtonTap: function() {
-        // var anim = this.animSheet('exit');
-        // Ext.apply(anim, {
-        //     after: function() {
-        //
-        //     },
-        //     scope: this
-        // });
-        this.fireEvent('change', this, this.getValue());
+        var oldValue = this._value,
+            newValue = this.getValue();
+
+        if (newValue != oldValue) {
+            this.fireEvent('change', this, newValue);
+        }
+
         this.hide();
     },
 
@@ -431,15 +443,6 @@ Ext.define('Ext.picker.Picker', {
      * Called when the cancel button has been tapped.
      */
     onCancelButtonTap: function() {
-        // var anim = this.animSheet('exit');
-        // Ext.apply(anim, {
-        //     after: function() {
-        //         // Set the value back to what it was previously
-        //         this.setValue(this.values);
-        //         this.fireEvent('cancel', this);
-        //     },
-        //     scope: this
-        // });
         this.fireEvent('cancel', this);
         this.hide();
     },
@@ -467,36 +470,38 @@ Ext.define('Ext.picker.Picker', {
     setValue: function(values, animated) {
         var me = this,
             slots = me.getInnerItems(),
-            slot, loopSlot;
+            ln = slots.length,
+            key, slot, loopSlot, i;
 
-
-        // Value is an object with keys mapping to slot names
         if (!values) {
-            return this;
+            values = {};
+            for (i = 0; i < ln; i++) {
+                //set the value to false so the slot will return null when getValue is set
+                values[slots[i].config.name] = false;
+            }
         }
 
-        if (me.rendered && !me.isHidden()) {
-            Ext.iterate(values, function(key, value) {
-                for (i = 0; i < slots.length; i++) {
-                    loopSlot = slots[i];
-                    if (loopSlot.config.name == key) {
-                        slot = loopSlot;
-                        break;
-                    }
+        for (key in values) {
+            value = values[key];
+            for (i = 0; i < slots.length; i++) {
+                loopSlot = slots[i];
+                if (loopSlot.config.name == key) {
+                    slot = loopSlot;
+                    break;
                 }
+            }
 
-                if (slot) {
-                    if (animated) {
-                        slot.setValueAnimated(value);
-                    } else {
-                        slot.setValue(value);
-                    }
+            if (slot) {
+                if (animated) {
+                    slot.setValueAnimated(value);
+                } else {
+                    slot.setValue(value);
                 }
-            }, me);
+            }
         }
 
-        me._value = values;
-        me._values = values;
+        me._value = this.getValue();
+        me._values = me._value;
 
         return me;
     },
@@ -517,14 +522,14 @@ Ext.define('Ext.picker.Picker', {
 
         for (i = 0; i < ln; i++) {
             item = items[i];
-            if (item instanceof Ext.picker.Slot) {
+            if (item && item.isSlot) {
                 values[item.getName()] = item.getValue();
             }
         }
 
         this._values = values;
 
-        return values;
+        return this._values;
     },
 
     /**
@@ -540,6 +545,31 @@ Ext.define('Ext.picker.Picker', {
         Ext.destroy(this.mask, this.bar);
     }
 }, function() {
+    //<deprecated product=touch since=2.0>
+    /**
+     * @member Ext.picker.Picker
+     * @cfg {String} activeCls
+     * CSS class to be applied to individual list items when they have been chosen.
+     * @removed 2.0.0
+     */
+    Ext.deprecateProperty(this, 'activeCls', null, "Ext.picker.Picker.activeCls has been removed");
+
+    /**
+     * @method getCard
+     * @inheritdoc Ext.picker.Picker#getActiveItem
+     * @deprecated 2.0.0 Please use {@link #getActiveItem} instead
+     */
+    Ext.deprecateClassMethod(this, 'getCard', 'getActiveItem');
+
+    /**
+     * @method setCard
+     * @inheritdoc Ext.picker.Picker#setActiveItem
+     * @deprecated 2.0.0 Please use {@link #setActiveItem} instead
+     */
+    Ext.deprecateClassMethod(this, 'setCard', 'setActiveItem');
+
+    //</deprecated>
+
     Ext.define('x-textvalue', {
         extend: 'Ext.data.Model',
         config: {
@@ -547,3 +577,4 @@ Ext.define('Ext.picker.Picker', {
         }
     });
 });
+

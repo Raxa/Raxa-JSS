@@ -9,7 +9,10 @@
         <script type="text/javascript" src="app/app.js"></script>
 
         <script type="text/javascript">
-            var host = 'http://raxaemr.jelastic.servint.net/openmrs';
+            if(localStorage.getItem("host") == null){
+                var host = 'http://raxaemr.jelastic.servint.net/openmrs';
+            } else
+            host = localStorage.getItem("host");
         </script> 
     </head>
     <body>

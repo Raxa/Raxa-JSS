@@ -1,21 +1,11 @@
 /**
  * {@link Ext.Toolbar}s are most commonly used as docked items as within a {@link Ext.Container}. They can be docked either `top` or `bottom` using the {@link #docked} configuration.
  *
+ * They allow you to insert items (normally {@link Ext.Button buttons}) and also add a {@link #title}.
+ *
  * The {@link #defaultType} of {@link Ext.Toolbar} is {@link Ext.Button}.
  *
- * ## Notes
- *
- * You must use a HTML5 doctype for {@link #docked} `bottom` to work. To do this, simply add the following code to the HTML file:
- *
- *     <!doctype html>
- *
- * So your index.html file should look a little like this:
- *
- *     <!doctype html>
- *     <html>
- *         <head>
- *             <title>MY application title</title>
- *             ...
+ * You can alterntively use {@link Ext.TitleBar} if you want the title to automatically adjust the size of its items.
  *
  * ## Examples
  *
@@ -34,10 +24,6 @@
  *             },
  *             {
  *                 xtype: 'container',
- *                 layout: {
- *                     type: 'vbox',
- *                     pack: 'center'
- *                 },
  *                 defaults: {
  *                     xtype: 'button',
  *                     margin: '10 10 0 10'
@@ -78,6 +64,21 @@
  *             }
  *         ]
  *     });
+ *
+ * ## Notes
+ *
+ * You must use a HTML5 doctype for {@link #docked} `bottom` to work. To do this, simply add the following code to the HTML file:
+ *
+ *     <!doctype html>
+ *
+ * So your index.html file should look a little like this:
+ *
+ *     <!doctype html>
+ *     <html>
+ *         <head>
+ *             <title>MY application title</title>
+ *             ...
+ *
  */
 Ext.define('Ext.Toolbar', {
     extend: 'Ext.Container',
@@ -104,7 +105,7 @@ Ext.define('Ext.Toolbar', {
         ui: 'dark',
 
         /**
-         * @cfg {String} title
+         * @cfg {String/Ext.Title} title
          * The title of the toolbar.
          * @accessor
          */
@@ -232,4 +233,16 @@ Ext.define('Ext.Toolbar', {
      * @method setTitle
      * @param {String/Ext.Title} title You can either pass a String, or a config/instance of Ext.Title
      */
+
+}, function() {
+    //<deprecated product=touch since=2.0>
+    /**
+     * @member Ext.Toolbar
+     * @cfg {Boolean} titleCls
+     * The CSS class to apply to the titleEl.
+     * @removed 2.0.0 Title class is now a config option of the title
+     */
+    Ext.deprecateProperty(this, 'titleCls', null, "Ext.Toolbar.titleCls has been removed. Use #cls config of title instead.");
+    //</deprecated>
 });
+

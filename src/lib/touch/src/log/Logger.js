@@ -5,7 +5,7 @@
  *
  * ## Example
  *
- *     Ext.logger.deprecated('This method is no longer supported.')
+ *     Ext.Logger.deprecate('This method is no longer supported.');
  *
  * @singleton
  */

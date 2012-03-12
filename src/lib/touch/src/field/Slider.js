@@ -5,14 +5,16 @@
  * Sliders are equally useful inside {@link Ext.form.Panel forms} and standalone. Here's how to quickly create a
  * slider in form, in this case enabling a user to choose a percentage:
  *
+ *     @example
  *     Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
  *         items: [
  *             {
  *                 xtype: 'sliderfield',
  *                 label: 'Percentage',
  *                 value: 50,
- *                 {@link #minValue}: 0,
- *                 {@link #maxValue}: 100
+ *                 minValue: 0,
+ *                 maxValue: 100
  *             }
  *         ]
  *     });
@@ -25,12 +27,19 @@
  * allows a user to choose the waist measurement of a pair of jeans. Let's say the online store we're making this for
  * sells jeans with waist sizes from 24 inches to 60 inches in 2 inch increments - here's how we might achieve that:
  *
- *     var slider = Ext.create('Ext.field.Slider', {
- *         label: 'Waist Measurement',
- *         minValue: 24,
- *         maxValue: 60,
- *         increment: 2,
- *         value: 32
+ *     @example
+ *     Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'sliderfield',
+ *                 label: 'Waist Measurement',
+ *                 minValue: 24,
+ *                 maxValue: 60,
+ *                 increment: 2,
+ *                 value: 32
+ *             }
+ *         ]
  *     });
  *
  * Now that we've got our slider, we can ask it what value it currently has and listen to events that it fires. For

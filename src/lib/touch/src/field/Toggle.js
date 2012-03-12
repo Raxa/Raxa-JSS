@@ -3,7 +3,7 @@
  *
  * ## Examples
  *
- *     @example preview
+ *     @example miniphone preview
  *     Ext.Viewport.add({
  *         xtype: 'togglefield',
  *         name: 'awesome',
@@ -13,7 +13,7 @@
  *
  * Having a default value of 'toggled':
  *
- *     @example preview
+ *     @example miniphone preview
  *     Ext.Viewport.add({
  *         xtype: 'togglefield',
  *         name: 'awesome',
@@ -24,8 +24,8 @@
  *
  * And using the {@link #value} {@link #toggle} method:
  *
- *     @example preview
- *     Ext.Viewport.add(
+ *     @example miniphone preview
+ *     Ext.Viewport.add([
  *         {
  *             xtype: 'togglefield',
  *             name: 'awesome',
@@ -47,7 +47,7 @@
  *                 }
  *             ]
  *         }
- *     );
+ *     ]);
  */
 Ext.define('Ext.field.Toggle', {
     extend: 'Ext.field.Slider',

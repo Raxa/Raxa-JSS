@@ -1,3 +1,9 @@
+/**
+ * @private
+ * @extends Object
+ * DOM event. This class really extends Ext.event.Event, but for documentation
+ * purposes it's members are listed inside Ext.event.Event.
+ */
 Ext.define('Ext.event.Dom', {
     extend: 'Ext.event.Event',
 
@@ -33,28 +39,24 @@ Ext.define('Ext.event.Dom', {
     },
 
     /**
-     * @property {Number} disatance
-     * The disatance of the event.
+     * @property {Number} distance
+     * The distance of the event.
      *
      * **This is only available when the event type is `swipe` and `pinch`**
-     * @member Ext.event.Event
      */
 
     /**
      * @property {HTMLElement} target
      * The target HTMLElement for this event. For example; if you are listening to a tap event and you tap on a `<div>` element,
      * this will return that `<div>` element.
-     * @member Ext.event.Event
      */
 
     /**
      * @property {Number} pageX The browsers x coordinate of the event.
-     * @member Ext.event.Event
      */
 
     /**
      * @property {Number} pageY The browsers y coordinate of the event.
-     * @member Ext.event.Event
      */
 
     stopEvent: function() {
@@ -65,7 +67,6 @@ Ext.define('Ext.event.Dom', {
 
     /**
      * Prevents the browsers default handling of the event.
-     * @member Ext.event.Event
      */
     preventDefault: function() {
         this.browserEvent.preventDefault();
@@ -74,7 +75,6 @@ Ext.define('Ext.event.Dom', {
     /**
      * Gets the x coordinate of the event.
      * @deprecated 2.0 Please use {@link #pageX} property directly.
-     * @member Ext.event.Event
      */
     getPageX: function() {
         return this.browserEvent.pageX;
@@ -83,7 +83,6 @@ Ext.define('Ext.event.Dom', {
     /**
      * Gets the y coordinate of the event.
      * @deprecated 2.0 Please use {@link #pageX} property directly.
-     * @member Ext.event.Event
      */
     getPageY: function() {
         return this.browserEvent.pageY;
@@ -92,7 +91,6 @@ Ext.define('Ext.event.Dom', {
     /**
      * Gets the X and Y coordinates of the event.
      * @deprecated 2.0 Please use the {@link #pageX} and {@link #pageY} properties directly.
-     * @member Ext.event.Event
      */
     getXY: function() {
         if (!this.xy) {
@@ -114,7 +112,6 @@ Ext.define('Ext.event.Dom', {
      search as a number or element (defaults to 10 || document.body)
      * @param {Boolean} returnEl (optional) True to return a Ext.Element object instead of DOM node
      * @return {HTMLElement}
-     * @member Ext.event.Event
      */
     getTarget: function(selector, maxDepth, returnEl) {
         if (arguments.length === 0) {
@@ -127,7 +124,6 @@ Ext.define('Ext.event.Dom', {
     /**
      * Returns the time of the event.
      * @return {Date}
-     * @member Ext.event.Event
      */
     getTime: function() {
         return this.time;
@@ -135,5 +131,9 @@ Ext.define('Ext.event.Dom', {
 
     setDelegatedTarget: function(target) {
         this.delegatedTarget = target;
+    },
+
+    makeUnpreventable: function() {
+        this.browserEvent.preventDefault = Ext.emptyFn;
     }
 });

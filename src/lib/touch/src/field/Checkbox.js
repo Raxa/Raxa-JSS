@@ -5,7 +5,7 @@ choose one or more items from a set (for example choosing toppings for a pizza o
 
 ## Example
 
-    @example preview
+    @example miniphone preview
     var form = Ext.create('Ext.form.Panel', {
         fullscreen: true,
         items: [
@@ -60,6 +60,8 @@ Ext.define('Ext.field.Checkbox', {
     alternateClassName: 'Ext.form.Checkbox',
 
     xtype: 'checkboxfield',
+    qsaLeftRe: /[\[]/g,
+    qsaRightRe: /[\]]/g,
 
     isCheckbox: true,
 
@@ -161,7 +163,6 @@ Ext.define('Ext.field.Checkbox', {
     getChecked: function() {
         // we need to get the latest value from the {@link #input} and then update the value
         this._checked = this.getComponent().getChecked();
-
         return this._checked;
     },
 
@@ -169,8 +170,12 @@ Ext.define('Ext.field.Checkbox', {
         return this.getChecked();
     },
 
-    setValue: function(value) {
-        return this.setChecked(value);
+    /**
+     * Returns the submit value for the checkbox which can be used when submitting forms.
+     * @return {Boolean/String} value The value of {@link #value} or true, if {@link #checked}.
+     */
+    getSubmitValue: function() {
+        return (this.getChecked()) ? this._value || true : false;
     },
 
     setChecked: function(newChecked) {
@@ -246,13 +251,32 @@ Ext.define('Ext.field.Checkbox', {
     },
 
     getSameGroupFields: function() {
-        var component = this.up('formpanel') || this.up('fieldset');
+        var component = this.up('formpanel') || this.up('fieldset'),
+            name = this.getName(),
+            replaceLeft = this.qsaLeftRe,
+            replaceRight = this.qsaRightRe,
+            components = [],
+            elements, element, i, ln;
+
 
         if (!component) {
             return null;
         }
 
-        return component.query('[name=' + this.getName() + ']');
+        // This is to handle ComponentQuery's lack of handling [name=foo[bar]] properly
+        name = name.replace(replaceLeft, '\\[');
+        name = name.replace(replaceRight, '\\]');
+
+        elements = Ext.query('[name=' + name + ']', component.element.dom);
+        ln = elements.length;
+        for (i = 0; i < ln; i++) {
+            element = elements[i];
+            element = Ext.fly(element).up('.x-field-' + element.getAttribute('type'));
+            if (element && element.id) {
+                components.push(Ext.getCmp(element.id));
+            }
+        }
+        return components;
     },
 
     /**
@@ -286,7 +310,6 @@ Ext.define('Ext.field.Checkbox', {
 
     /**
      * Resets the status of all matched checkboxes in the same group to checked
-     * @param {Array} values An array of values
      * @return {Ext.field.Checkbox} This checkbox
      */
     resetGroupValues: function() {
@@ -299,7 +322,7 @@ Ext.define('Ext.field.Checkbox', {
 
     // @inherit
     reset: function() {
-        this.callParent(arguments);
-        this.resetGroupValues();
+        this.setChecked(this.originalState);
+        return this;
     }
 });

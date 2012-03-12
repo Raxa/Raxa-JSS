@@ -36,7 +36,9 @@
  *
  *     Ext.define('User', {
  *         extend: 'Ext.data.Model',
- *         fields: ['id', 'name', 'email']
+ *         config: {
+ *             fields: ['id', 'name', 'email']
+ *         }
  *     });
  *
  *     var store = Ext.create('Ext.data.Store', {
@@ -137,6 +139,7 @@ Ext.define('Ext.data.proxy.JsonP', {
         /**
          * @cfg {String} callbackKey
          * See {@link Ext.data.JsonP#callbackKey}.
+         * @accessor
          */
         callbackKey : 'callback',
 
@@ -144,23 +147,25 @@ Ext.define('Ext.data.proxy.JsonP', {
          * @cfg {String} recordParam
          * The param name to use when passing records to the server (e.g. 'records=someEncodedRecordString'). Defaults to
          * 'records'
+         * @accessor
          */
         recordParam: 'records',
 
         /**
          * @cfg {Boolean} autoAppendParams
          * True to automatically append the request's params to the generated url. Defaults to true
+         * @accessor
          */
         autoAppendParams: true
     },
 
     /**
-     * @private
      * Performs the read request to the remote domain. JsonP proxy does not actually create an Ajax request,
-     * instead we write out a <script> tag based on the configuration of the internal Ext.data.Request object
+     * instead we write out a `<script>` tag based on the configuration of the internal Ext.data.Request object
      * @param {Ext.data.Operation} operation The {@link Ext.data.Operation Operation} object to execute
      * @param {Function} callback A callback function to execute when the Operation has been completed
      * @param {Object} scope The scope to execute the callback in
+     * @protected
      */
     doRequest: function(operation, callback, scope) {
         //generate the unique IDs for this request
@@ -261,7 +266,7 @@ Ext.define('Ext.data.proxy.JsonP', {
         records = request.getRecords();
 
         if (Ext.isArray(records) && records.length > 0) {
-            url = Ext.urlAppend(url, Ext.String.format("{0}={1}", me.recordParam, me.encodeRecords(records)));
+            url = Ext.urlAppend(url, Ext.String.format("{0}={1}", me.getRecordParam(), me.encodeRecords(records)));
         }
 
         return url;

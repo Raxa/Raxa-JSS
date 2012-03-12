@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.event.publisher.Dom', {
     extend: 'Ext.event.publisher.Publisher',
 

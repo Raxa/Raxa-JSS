@@ -63,6 +63,8 @@
  *
  * For a fuller understanding of the ideas behind Profiles and how best to use them in your app, we suggest you read
  * the <a href="#!/guide/profiles">device profiles guide</a>.
+ * 
+ * @aside guide profiles
  */
 Ext.define('Ext.app.Profile', {
     mixins: {

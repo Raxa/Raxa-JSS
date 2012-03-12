@@ -1,5 +1,6 @@
 /**
  * @class Ext.DomQuery
+ * @alternateClassName Ext.dom.Query
  *
  * Provides functionality to select elements on the page based on a CSS selector. All selectors, attribute filters and
  * pseudos below can be combined infinitely in any order. For example "div.foo:nth-child(odd)[@foo=bar].bar:first"

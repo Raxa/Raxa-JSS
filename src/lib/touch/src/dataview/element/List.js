@@ -4,10 +4,9 @@
 Ext.define('Ext.dataview.element.List', {
     extend: 'Ext.dataview.element.Container',
 
-    updateBaseCls: function(newBaseCls, oldBaseCls) {
+    updateBaseCls: function(newBaseCls) {
         var me = this;
 
-        me.callParent(arguments);
         me.itemClsShortCache = newBaseCls + '-item';
 
         me.headerClsShortCache = newBaseCls + '-header';
@@ -26,6 +25,8 @@ Ext.define('Ext.dataview.element.List', {
 
         me.iconClsShortCache = newBaseCls + '-icon';
         me.iconClsCache = '.' + me.iconClsShortCache;
+
+        this.callParent(arguments);
     },
 
     hiddenDisplayCache: Ext.baseCSSPrefix + 'hidden-display',
@@ -90,6 +91,7 @@ Ext.define('Ext.dataview.element.List', {
 
     doRemoveHeaders: function() {
         var me = this,
+            headerClsShortCache = me.headerItemClsShortCache,
             existingHeaders = me.element.query(me.headerClsCache),
             existingHeadersLn = existingHeaders.length,
             i = 0,
@@ -97,29 +99,31 @@ Ext.define('Ext.dataview.element.List', {
 
         for (; i < existingHeadersLn; i++) {
             item = existingHeaders[i];
-            Ext.fly(item.parentNode).removeCls(me.headerItemClsShortCache);
+            Ext.fly(item.parentNode).removeCls(headerClsShortCache);
             Ext.removeNode(item);
         }
     },
 
     doRemoveFooterCls: function() {
         var me = this,
-            footerClsCache = me.footerClsCache,
-            existingFooters = me.element.query(footerClsCache),
+            footerClsShortCache = me.footerClsShortCache,
+            existingFooters = me.element.query(me.footerClsCache),
             existingFootersLn = existingFooters.length,
             i = 0;
 
         for (; i < existingFootersLn; i++) {
-            Ext.fly(existingFooters[i]).removeCls(footerClsCache);
+            Ext.fly(existingFooters[i]).removeCls(footerClsShortCache);
         }
     },
 
     doAddHeader: function(item, html) {
         item = Ext.fly(item);
-        item.insertFirst(Ext.Element.create({
-            cls: this.headerClsShortCache,
-            html: html
-        }));
+        if (html) {
+            item.insertFirst(Ext.Element.create({
+                cls: this.headerClsShortCache,
+                html: html
+            }));
+        }
         item.addCls(this.headerItemClsShortCache);
     },
 

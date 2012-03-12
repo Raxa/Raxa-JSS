@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.event.publisher.ComponentSize', {
 
     extend: 'Ext.event.publisher.Publisher',

@@ -12,11 +12,13 @@
  *     //this is the model we will be using in the store
  *     Ext.define('User', {
  *         extend: 'Ext.data.Model',
- *         fields: [
- *             {name: 'id',    type: 'int'},
- *             {name: 'name',  type: 'string'},
- *             {name: 'phone', type: 'string', mapping: 'phoneNumber'}
- *         ]
+ *         config: {
+ *             fields: [
+ *                 {name: 'id',    type: 'int'},
+ *                 {name: 'name',  type: 'string'},
+ *                 {name: 'phone', type: 'string', mapping: 'phoneNumber'}
+ *             ]
+ *         }
  *     });
  *
  *     //this data does not line up to our model fields - the phone field is called phoneNumber

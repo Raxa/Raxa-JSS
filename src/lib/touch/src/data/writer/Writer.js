@@ -162,7 +162,8 @@ Ext.define('Ext.data.writer.Writer', {
                 config[key] = data[key];
                 delete data[key];
                 // <debug warn>
-                console.warn(key + ' is deprecated as a property directly on the Writer prototype. Please put it inside the config object.');
+                Ext.Logger.deprecate(key + ' is deprecated as a property directly on the Writer prototype. ' +
+                    'Please put it inside the config object.');
                 // </debug>
             }
         }

@@ -110,6 +110,24 @@ Ext.define('Ext.data.TreeStore', {
         return root;
     },
 
+    handleTreeInsertionIndex: function(items, item, collection, originalFn) {
+        if (item.parentNode) {
+            item.parentNode.sort(collection.getSortFn(), true, true);
+        }
+        return this.callParent(arguments);
+    },
+
+    handleTreeSort: function(data, collection) {
+        if (this._sorting) {
+            return data;
+        }
+
+        this._sorting = true;
+        this.getNode().sort(collection.getSortFn(), true, true);
+        delete this._sorting;
+        return this.callParent(arguments);
+    },
+
     updateRoot: function(root, oldRoot) {
         if (oldRoot) {
             oldRoot.unBefore({
@@ -294,7 +312,7 @@ Ext.define('Ext.data.TreeStore', {
          * Sets the root node for this tree.
          * @param {Ext.data.Model} node
          * @return {Ext.data.Model}
-         * @deprecated
+         * @deprecated Use {@link #setRoot} instead.
          */
         setRootNode: function(node) {
             // <debug>
@@ -306,7 +324,7 @@ Ext.define('Ext.data.TreeStore', {
         /**
          * Returns the root node for this tree.
          * @return {Ext.data.Model}
-         * @deprecated
+         * @deprecated Use {@link #setRoot} instead.
          */
         getRootNode: function(node) {
             // <debug>
