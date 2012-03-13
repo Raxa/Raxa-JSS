@@ -33,9 +33,7 @@ Ext.dom.Element.addStatics({
         // Otherwise, warn if it's not a valid CSS measurement
         if (!this.unitRe.test(size)) {
             //<debug>
-            if (Ext.isDefined(Ext.global.console)) {
-                Ext.global.console.warn("Warning, size detected as NaN on Element.addUnits.");
-            }
+            Ext.Logger.warn("Warning, size detected as NaN on Element.addUnits.");
             //</debug>
             return size || '';
         }
@@ -189,7 +187,7 @@ Ext.dom.Element.addStatics({
 Ext.dom.Element.addStatics({
     /**
      * Serializes a DOM form into a url encoded string
-     * @deprecated 2.0.0 This method is no longer supported, please see {@link Ext.form.Panel#getValues} instead
+     * @deprecated 2.0.0 Please see {@link Ext.form.Panel#getValues} instead
      * @param {Object} form The form
      * @return {String} The url encoded form
      */
@@ -228,7 +226,7 @@ Ext.dom.Element.addStatics({
 
     /**
      * Retrieves the document height
-     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowHeight} instead
+     * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowHeight} instead
      * @static
      * @return {Number} documentHeight
      */
@@ -242,7 +240,7 @@ Ext.dom.Element.addStatics({
 
     /**
      * Retrieves the document width
-     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowWidth} instead
+     * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowWidth} instead
      * @static
      * @return {Number} documentWidth
      */
@@ -256,7 +254,7 @@ Ext.dom.Element.addStatics({
 
     /**
      * Retrieves the viewport height of the window.
-     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowHeight} instead
+     * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowHeight} instead
      * @static
      * @return {Number} viewportHeight
      */
@@ -270,7 +268,7 @@ Ext.dom.Element.addStatics({
 
     /**
      * Retrieves the viewport width of the window.
-     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getWindowWidth} instead
+     * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowWidth} instead
      * @static
      * @return {Number} viewportWidth
      */
@@ -284,7 +282,7 @@ Ext.dom.Element.addStatics({
 
     /**
      * Retrieves the viewport size of the window.
-     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getSize} instead
+     * @deprecated 2.0.0 Please use {@link Ext.Viewport#getSize} instead
      * @static
      * @return {Object} object containing width and height properties
      */
@@ -302,7 +300,7 @@ Ext.dom.Element.addStatics({
     /**
      * Retrieves the current orientation of the window. This is calculated by
      * determing if the height is greater than the width.
-     * @deprecated 2.0.0 This method is no longer supported, please use {@link Ext.Viewport#getOrientation} instead
+     * @deprecated 2.0.0 Please use {@link Ext.Viewport#getOrientation} instead
      * @static
      * @return {String} Orientation of window: 'portrait' or 'landscape'
      */

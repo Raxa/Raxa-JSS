@@ -1,6 +1,6 @@
 /**
  * A simple event recogniser which knows when you rotate.
- * 
+ *
  * @private
  */
 Ext.define('Ext.event.recognizer.Rotate', {
@@ -16,9 +16,9 @@ Ext.define('Ext.event.recognizer.Rotate', {
      * Fired once when a rotation has started.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
-    
+
     /**
      * @member Ext.dom.Element
      * @event rotate
@@ -27,30 +27,30 @@ Ext.define('Ext.event.recognizer.Rotate', {
      * properties in the `event` object.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
-    
+
     /**
      * @member Ext.dom.Element
      * @event rotateend
      * Fires when a rotation event has ended.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
 
     /**
      * @property {Number} angle
      * The angle of the rotation.
-     * 
+     *
      * **This is only available when the event type is `rotate`**
      * @member Ext.event.Event
      */
-    
+
     /**
      * @property {Number} rotation
      * A amount of rotation, since the start of the event.
-     * 
+     *
      * **This is only available when the event type is `rotate`**
      * @member Ext.event.Event
      */

@@ -5,22 +5,26 @@
  * input methods like select boxes or radio buttons are not possible. Text Areas are usually created inside forms, like
  * this:
  *
+ *     @example
  *     Ext.create('Ext.form.Panel', {
- *         tbar: {
- *             text: 'About you'
- *         },
- *
+ *         fullscreen: true,
  *         items: [
  *             {
- *                 xtype: 'textfield',
- *                 label: 'Name',
- *                 name: 'name'
- *             },
- *             {
- *                 xtype: 'textareafield',
- *                 label: 'Bio',
- *                 {@link #maxRows}: 4,
- *                 name: 'bio'
+ *                 xtype: 'fieldset',
+ *                 title: 'About you',
+ *                 items: [
+ *                     {
+ *                         xtype: 'textfield',
+ *                         label: 'Name',
+ *                         name: 'name'
+ *                     },
+ *                     {
+ *                         xtype: 'textareafield',
+ *                         label: 'Bio',
+ *                         maxRows: 4,
+ *                         name: 'bio'
+ *                     }
+ *                 ]
  *             }
  *         ]
  *     });
@@ -66,5 +70,29 @@ Ext.define('Ext.field.TextArea', {
     // @private
     updateMaxRows: function(newRows) {
         this.getComponent().setMaxRows(newRows);
+    },
+
+    doSetHeight: function(newHeight) {
+        this.callParent(arguments);
+        var component = this.getComponent();
+        component.input.setHeight(newHeight);
+    },
+
+    doSetWidth: function(newWidth) {
+        this.callParent(arguments);
+        var component = this.getComponent();
+        component.input.setWidth(newWidth);
+    },
+
+    /**
+     * Called when a key has been pressed in the `<input>`
+     * @private
+     */
+    doKeyUp: function(me) {
+        // getValue to ensure that we are in sync with the dom
+        var value = me.getValue();
+
+        // show the {@link #clearIcon} if it is being used
+        me[value ? 'showClearIcon' : 'hideClearIcon']();
     }
 });

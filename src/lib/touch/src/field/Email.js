@@ -3,21 +3,25 @@
  * input field, most browsers will show a specialized virtual keyboard for email address input. Aside from that, the
  * email field is just a normal text field. Here's an example of how to use it in a form:
  *
+ *     @example
  *     Ext.create('Ext.form.Panel', {
- *         tbar: {
- *             text: 'Register'
- *         },
- *
+ *         fullscreen: true,
  *         items: [
  *             {
- *                 xtype: 'emailfield',
- *                 label: 'Email',
- *                 name: 'email'
- *             },
- *             {
- *                 xtype: 'passwordfield',
- *                 label: 'Password',
- *                 name: 'password'
+ *                 xtype: 'fieldset',
+ *                 title: 'Register',
+ *                 items: [
+ *                     {
+ *                         xtype: 'emailfield',
+ *                         label: 'Email',
+ *                         name: 'email'
+ *                     },
+ *                     {
+ *                         xtype: 'passwordfield',
+ *                         label: 'Password',
+ *                         name: 'password'
+ *                     }
+ *                 ]
  *             }
  *         ]
  *     });

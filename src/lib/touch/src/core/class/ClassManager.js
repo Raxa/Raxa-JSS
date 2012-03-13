@@ -82,7 +82,7 @@
  *     });
  *
  *     Ext.define('CanComposeSongs', {
- *          composeSongs: function() { ... }
+ *          composeSongs: function() { }
  *     });
  *
  *     Ext.define('CanSing', {
@@ -167,7 +167,6 @@
  *     iPhone.getPrice(); // 500;
  *     iPhone.getOperatingSystem(); // 'iOS'
  *     iPhone.getHasTouchScreen(); // true;
- *     iPhone.hasTouchScreen(); // true
  *
  *     iPhone.isExpensive; // false;
  *     iPhone.setPrice(600);
@@ -187,7 +186,7 @@
  *              }
  *          },
  *
- *          constructor: function() { ... }
+ *          constructor: function() { }
  *     });
  *
  *     var dellComputer = Computer.factory('Dell');
@@ -198,7 +197,9 @@
  * @singleton
  */
 (function(Class, alias, arraySlice, arrayFrom, global) {
-
+    //<if nonBrowser>
+    var isNonBrowser = typeof window == 'undefined';
+    //</if>
     var Manager = Ext.ClassManager = {
 
         /**
@@ -546,8 +547,8 @@
 
             if (alias && aliasToNameMap[alias] !== className) {
                 //<debug info>
-                if (aliasToNameMap[alias] && Ext.isDefined(global.console)) {
-                    global.console.log("[Ext.ClassManager] Overriding existing alias: '" + alias + "' " +
+                if (aliasToNameMap[alias]) {
+                    Ext.Logger.info("[Ext.ClassManager] Overriding existing alias: '" + alias + "' " +
                         "of: '" + aliasToNameMap[alias] + "' with: '" + className + "'. Be sure it's intentional.");
                 }
                 //</debug>
@@ -816,10 +817,8 @@
                 //</debug>
 
                 //<debug warn>
-                if (global.console) {
-                    global.console.warn("[Ext.Loader] Synchronously loading '" + className + "'; consider adding " +
-                         "Ext.require('" + alias + "') above Ext.onReady");
-                }
+                Ext.Logger.warn("[Ext.Loader] Synchronously loading '" + className + "'; consider adding " +
+                     "Ext.require('" + alias + "') above Ext.onReady");
                 //</debug>
 
                 Ext.syncRequire(className);
@@ -896,10 +895,11 @@
             // Still not existing at this point, try to load it via synchronous mode as the last resort
             if (!cls) {
                 //<debug warn>
-                if (global.console) {
-                    global.console.warn("[Ext.Loader] Synchronously loading '" + name + "'; consider adding " +
-                         "Ext.require('" + ((possibleName) ? alias : name) + "') above Ext.onReady");
-                }
+                //<if nonBrowser>
+                !isNonBrowser &&
+                //</if>
+                Ext.Logger.warn("[Ext.Loader] Synchronously loading '" + name + "'; consider adding '" +
+                    ((possibleName) ? alias : name) + "' explicitly as a require of the corresponding class");
                 //</debug>
 
                 Ext.syncRequire(name);
@@ -1373,15 +1373,25 @@
         },
 
         /**
-         * Convenient shorthand, see {@link Ext.ClassManager#getName}
+         * Convenient shorthand for {@link Ext.ClassManager#getName}.
          * @member Ext
          * @method getClassName
+         * @inheritdoc Ext.ClassManager#getName
          */
         getClassName: alias(Manager, 'getName'),
 
         /**
+         * Returns the display name for object.  This name is looked for in order from the following places:
          *
-         * @param {Mixed} object
+         * - `displayName` field of the object.
+         * - `$name` and `$class` fields of the object.
+         * - '$className` field of the object.
+         *
+         * This method is used by {@link Ext.Logger#log} to display information about objects.
+         *
+         * @param {Mixed} [object] The object who's display name to determine.
+         * @return {String} The determined display name, or "Anonymous" if none found.
+         * @member Ext
          */
         getDisplayName: function(object) {
             if (object) {
@@ -1434,7 +1444,7 @@
 
     /**
      * Old name for {@link Ext#widget}.
-     * @deprecated 4.0.0 Use {@link Ext#widget} instead.
+     * @deprecated 4.0.0 Please use {@link Ext#widget} instead.
      * @method createWidget
      * @member Ext
      */

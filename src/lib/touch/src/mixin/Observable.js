@@ -451,6 +451,36 @@ Ext.define('Ext.mixin.Observable', {
     /**
      * Appends an event handler to this object.
      *
+     * ## Combining Options
+     *
+     * Using the options argument, it is possible to combine different types of listeners:
+     *
+     * A delayed, one-time listener.
+     *
+     *     container.on('tap', this.handleTap, this, {
+     *         single: true,
+     *         delay: 100
+     *     });
+     *
+     * ## Attaching multiple handlers in 1 call
+     *
+     * The method also allows for a single argument to be passed which is a config object containing properties which
+     * specify multiple events. For example:
+     *
+     *     container.on({
+     *         tap  : this.onTap,
+     *         swipe: this.onSwipe,
+     *
+     *         scope: this // Important. Ensure "this" is correct during handler execution
+     *     });
+     *
+     * One can also specify options for each event handler separately:
+     *
+     *     container.on({
+     *         tap  : { fn: this.onTap, scope: this, single: true },
+     *         swipe: { fn: button.onSwipe, scope: button }
+     *     });
+     *
      * @param {String} eventName The name of the event to listen for. May also be an object who's property names are
      * event names.
      * @param {Function} fn The method the event invokes.  Will be called with arguments given to
@@ -515,45 +545,37 @@ Ext.define('Ext.mixin.Observable', {
      *           }
      *       });
      *
-     * **Combining Options**
-     *
-     * Using the options argument, it is possible to combine different types of listeners:
-     *
-     * A delayed, one-time listener.
-     *
-     *     container.on('tap', this.handleTap, this, {
-     *         single: true,
-     *         delay: 100
-     *     });
-     *
-     * **Attaching multiple handlers in 1 call**
-     *
-     * The method also allows for a single argument to be passed which is a config object containing properties which
-     * specify multiple events. For example:
-     *
-     *     container.on({
-     *         tap  : this.onTap,
-     *         swipe: this.onSwipe,
-     *
-     *         scope: this // Important. Ensure "this" is correct during handler execution
-     *     });
-     *
-     * One can also specify options for each event handler separately:
-     *
-     *     container.on({
-     *         tap  : { fn: this.onTap, scope: this, single: true },
-     *         swipe: { fn: button.onSwipe, scope: button }
-     *     });
-     *
+     * @param {String} [order='current'] The order of when the listener should be added into the listener queue.
+     * Possible values are `before`, `current` and `after`.
      */
     addListener: function(eventName, fn, scope, options, order) {
         return this.changeListener(this.doAddListener, eventName, fn, scope, options, order);
     },
 
+    /**
+     * Appends a before-event handler.  Returning `false` from the handler will stop the event.
+     *
+     * Same as {@link #addListener} with `order` set to `'before'`.
+     *
+     * @param {String} eventName The name of the event to listen for.
+     * @param {Function} fn The method the event invokes.
+     * @param {Object} [scope] The scope for `fn`.
+     * @param {Object} [options] An object containing handler configuration.
+     */
     addBeforeListener: function(eventName, fn, scope, options) {
         return this.addListener(eventName, fn, scope, options, 'before');
     },
 
+    /**
+     * Appends an after-event handler.
+     *
+     * Same as {@link #addListener} with `order` set to `'after'`.
+     *
+     * @param {String} eventName The name of the event to listen for.
+     * @param {Function} fn The method the event invokes.
+     * @param {Object} [scope] The scope for `fn`.
+     * @param {Object} [options] An object containing handler configuration.
+     */
     addAfterListener: function(eventName, fn, scope, options) {
         return this.addListener(eventName, fn, scope, options, 'after');
     },
@@ -564,17 +586,40 @@ Ext.define('Ext.mixin.Observable', {
      * @param {String} eventName The type of event the handler was associated with.
      * @param {Function} fn The handler to remove. **This must be a reference to the function passed into the
      * {@link #addListener} call.**
-     * @param {Object} scope (optional) The scope originally specified for the handler. It must be the same as the
+     * @param {Object} [scope] The scope originally specified for the handler. It must be the same as the
      * scope argument specified in the original call to {@link #addListener} or the listener will not be removed.
+     * @param {Object} [options] Extra options object. See {@link #addListener} for details.
+     * @param {String} [order='current'] The order of the listener to remove.
+     * Possible values are `before`, `current` and `after`.
      */
     removeListener: function(eventName, fn, scope, options, order) {
         return this.changeListener(this.doRemoveListener, eventName, fn, scope, options, order);
     },
 
+    /**
+     * Removes a before-event handler.
+     *
+     * Same as {@link #removeListener} with `order` set to `'before'`.
+     *
+     * @param {String} eventName The name of the event the handler was associated with.
+     * @param {Function} fn The handler to remove.
+     * @param {Object} [scope] The scope originally specified for `fn`.
+     * @param {Object} [options] Extra options object.
+     */
     removeBeforeListener: function(eventName, fn, scope, options) {
         return this.removeListener(eventName, fn, scope, options, 'before');
     },
 
+    /**
+     * Removes a before-event handler.
+     *
+     * Same as {@link #removeListener} with `order` set to `'after'`.
+     *
+     * @param {String} eventName The name of the event the handler was associated with.
+     * @param {Function} fn The handler to remove.
+     * @param {Object} [scope] The scope originally specified for `fn`.
+     * @param {Object} [options] Extra options object.
+     */
     removeAfterListener: function(eventName, fn, scope, options) {
         return this.removeListener(eventName, fn, scope, options, 'after');
     },
@@ -754,27 +799,98 @@ Ext.define('Ext.mixin.Observable', {
 
 }, function() {
     this.createAlias({
+        /**
+         * @method
+         * Alias for {@link #addListener}.
+         * @inheritdoc Ext.mixin.Observable#addListener
+         */
         on: 'addListener',
+        /**
+         * @method
+         * Alias for {@link #removeListener}.
+         * @inheritdoc Ext.mixin.Observable#removeListener
+         */
         un: 'removeListener',
+        /**
+         * @method
+         * Alias for {@link #addBeforeListener}.
+         * @inheritdoc Ext.mixin.Observable#addBeforeListener
+         */
         onBefore: 'addBeforeListener',
+        /**
+         * @method
+         * Alias for {@link #addAfterListener}.
+         * @inheritdoc Ext.mixin.Observable#addAfterListener
+         */
         onAfter: 'addAfterListener',
+        /**
+         * @method
+         * Alias for {@link #removeBeforeListener}.
+         * @inheritdoc Ext.mixin.Observable#removeBeforeListener
+         */
         unBefore: 'removeBeforeListener',
+        /**
+         * @method
+         * Alias for {@link #removeAfterListener}.
+         * @inheritdoc Ext.mixin.Observable#removeAfterListener
+         */
         unAfter: 'removeAfterListener'
     });
 
     //<deprecated product=touch since=2.0>
+    /**
+     * @method addEvents
+     * Adds the specified events to the list of events which this Observable may fire.
+     * @param {Object/String...} eventNames Either an object with event names as properties with a value of `true`
+     * or the first event name string if multiple event names are being passed as separate parameters.
+     * @deprecated 2.0 It's no longer needed to add events before firing.
+     */
     Ext.deprecateClassMethod(this, 'addEvents', function(){}, "addEvents() is deprecated. It's no longer needed to add events before firing");
 
+    /**
+     * @method addManagedListener
+     * Adds listeners to any Observable object (or Element) which are automatically removed when this Component
+     * is destroyed.
+     * @param {Ext.mixin.Observable/HTMLElement} object The item to which to add a listener/listeners.
+     * @param {Object/String} eventName The event name, or an object containing event name properties.
+     * @param {Function} [fn] If the `eventName` parameter was an event name, this is the handler function.
+     * @param {Object} [scope] If the `eventName` parameter was an event name, this is the scope in which
+     * the handler function is executed.
+     * @param {Object} [options] If the `eventName` parameter was an event name, this is the
+     * {@link #addListener} options.
+     * @deprecated 2.0 All listeners are now automatically managed where necessary. Simply use {@link #addListener}.
+     */
     Ext.deprecateClassMethod(this, 'addManagedListener', function(object, eventName, fn, scope, options) {
         return object.addListener(eventName, fn, scope, options);
     }, "addManagedListener() / mon() is deprecated, simply use addListener() / on(). All listeners are now automatically managed where necessary.");
 
+    /**
+     * @method removeManagedListener
+     * Adds listeners to any Observable object (or Element) which are automatically removed when this Component
+     * is destroyed.
+     * @param {Ext.mixin.Observable/HTMLElement} object The item to which to add a listener/listeners.
+     * @param {Object/String} eventName The event name, or an object containing event name properties.
+     * @param {Function} [fn] If the `eventName` parameter was an event name, this is the handler function.
+     * @param {Object} [scope] If the `eventName` parameter was an event name, this is the scope in which
+     * the handler function is executed.
+     * @deprecated 2.0 All listeners are now automatically managed where necessary. Simply use {@link #removeListener}.
+     */
     Ext.deprecateClassMethod(this, 'removeManagedListener', function(object, eventName, fn, scope) {
         return object.removeListener(eventName, fn, scope);
     }, "removeManagedListener() / mun() is deprecated, simply use removeListener() / un(). All listeners are now automatically managed where necessary.");
 
     this.createAlias({
+        /**
+         * @method
+         * Alias for {@link #addManagedListener}.
+         * @inheritdoc Ext.mixin.Observable#addManagedListener
+         */
         mon: 'addManagedListener',
+        /**
+         * @method
+         * Alias for {@link #removeManagedListener}.
+         * @inheritdoc Ext.mixin.Observable#removeManagedListener
+         */
         mun: 'removeManagedListener'
     });
     //</deprecated>

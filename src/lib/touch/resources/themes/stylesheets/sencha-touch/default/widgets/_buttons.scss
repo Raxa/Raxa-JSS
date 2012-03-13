@@ -213,7 +213,6 @@ $include-button-highlights: $include-highlights !default;
   .x-toolbar .x-button.x-button-plain {
     background: none;
     border: 0 none;
-    @include box-shadow(none);
     @if $include-border-radius { @include border-radius(none); }
     min-height: 0;
     text-shadow: none;
@@ -231,9 +230,8 @@ $include-button-highlights: $include-highlights !default;
       height: $toolbar-icon-size;
     }
 
-    &.x-button-pressed {
+    &.x-button-pressing, &.x-button-pressed {
       background: none;
-      -webkit-box-shadow: none;
 
       $mask-radial-glow: lighten($active-color, 50%);
       @include background-image(radial-gradient(fade-out($mask-radial-glow, .3), fade-out($mask-radial-glow, 1) 24px));
@@ -265,34 +263,33 @@ $include-button-highlights: $include-highlights !default;
 
   // Badges
   $badge-size: 2em !default;
-  $badge-bg-color: darken($alert-color, 20%) !default;
-  $badge-bg-gradient: 'glossy';
+  $badge-radius: .2em !default;
+  $badge-bg-color: darken($alert-color, 10%) !default;
+  $badge-bg-gradient: $base-gradient !default;
 
   .x-hasbadge {
     overflow: visible;
     .x-badge {
       @extend .x-button-label;
-      @if $include-border-radius { @include border-radius($badge-size/2); }
       @include background-clip(padding-box);
-      padding: .15em .25em;
+      @if $include-border-radius { @include border-radius($badge-radius); }
+      padding: .1em .3em;
       z-index: 2;
       @if $include-button-highlights {
         @include bevel-by-background($badge-bg-color);
-        -webkit-box-shadow: #000 0 .1em .2em;
+        @include box-shadow(rgba(#000, .5) 0 .1em .1em);
       }
       overflow: hidden;
-      color: #fff;
-      border: 2px solid #fff;
+      @include color-by-background($badge-bg-color, $contrast: 50%);
+      border: 1px solid darken($badge-bg-color, 10%);
       position: absolute;
       width: auto;
       min-width: $badge-size;
-      height: $badge-size;
       line-height: 1.2em;
       font-size: .6em;
-      top: -.15em;
       right: 0px;
-      max-width: 100%;
-
+      top: -.2em;
+      max-width: 95%;
       @include background-gradient($badge-bg-color, $badge-bg-gradient);
       display: inline-block;
     }

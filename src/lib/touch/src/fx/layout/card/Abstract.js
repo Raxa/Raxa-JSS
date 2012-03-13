@@ -30,6 +30,10 @@ Ext.define('Ext.fx.layout.card.Abstract', {
     disable: function() {
         var layout = this.getLayout();
 
+        if (this.isAnimating) {
+            this.stopAnimation();
+        }
+
         if (layout) {
             layout.unBefore('activeitemchange', 'onActiveItemChange', this);
         }
@@ -39,6 +43,10 @@ Ext.define('Ext.fx.layout.card.Abstract', {
 
     destroy: function() {
         var layout = this.getLayout();
+
+        if (this.isAnimating) {
+            this.stopAnimation();
+        }
 
         if (layout) {
             layout.unBefore('activeitemchange', 'onActiveItemChange', this);

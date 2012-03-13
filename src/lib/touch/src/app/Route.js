@@ -1,6 +1,5 @@
 /**
  * @author Ed Spencer
- * @ignore
  * @private
  *
  * Represents a mapping between a url and a controller/action pair. May also contain additional params. This is a

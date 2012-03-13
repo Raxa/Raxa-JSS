@@ -31,6 +31,8 @@
  * The main reason for creating a separate {@link Ext.data.Connection} is for a
  * series of requests that share common settings that are different to all other
  * requests in the application.
+ * 
+ * @aside guide ajax
  */
 Ext.define('Ext.Ajax', {
     extend: 'Ext.data.Connection',

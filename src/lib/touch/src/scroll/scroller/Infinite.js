@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.scroll.scroller.Infinite', {
     extend: 'Ext.scroll.scroller.CssPosition',
 

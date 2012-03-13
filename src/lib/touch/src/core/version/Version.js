@@ -33,12 +33,14 @@ var version = '4.1.0', Version;
     Ext.Version = Version = Ext.extend(Object, {
 
         /**
+         * Creates new Version object.
          * @param {String/Number} version The version number in the follow standard format: major[.minor[.patch[.build[release]]]]
          * Examples: 1.0 or 1.2.3beta or 1.2.3.4RC
          * @return {Ext.Version} this
          */
         constructor: function(version) {
-            var parts, releaseStartIndex;
+            var toNumber = this.toNumber,
+                parts, releaseStartIndex;
 
             if (version instanceof Version) {
                 return version;
@@ -57,12 +59,22 @@ var version = '4.1.0', Version;
 
             parts = this.version.split('.');
 
-            this.major = parseInt(parts.shift() || 0, 10);
-            this.minor = parseInt(parts.shift() || 0, 10);
-            this.patch = parseInt(parts.shift() || 0, 10);
-            this.build = parseInt(parts.shift() || 0, 10);
+            this.major = toNumber(parts.shift());
+            this.minor = toNumber(parts.shift());
+            this.patch = toNumber(parts.shift());
+            this.build = toNumber(parts.shift());
 
             return this;
+        },
+
+        toNumber: function(value) {
+            value = parseInt(value || 0, 10);
+
+            if (isNaN(value)) {
+                value = 0;
+            }
+
+            return value;
         },
 
         /**

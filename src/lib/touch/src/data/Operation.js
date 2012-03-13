@@ -15,48 +15,63 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Boolean} synchronous
          * True if this Operation is to be executed synchronously. This property is inspected by a
          * {@link Ext.data.Batch Batch} to see if a series of Operations can be executed in parallel or not.
+         * @accessor
+         * @private
          */
         synchronous: true,
 
         /**
          * @cfg {String} action
          * The action being performed by this Operation. Should be one of 'create', 'read', 'update' or 'destroy'.
+         * @accessor
          */
         action: null,
 
         /**
          * @cfg {Ext.util.Filter[]} filters
          * Optional array of filter objects. Only applies to 'read' actions.
+         * @accessor
+         * @private
          */
         filters: null,
 
         /**
          * @cfg {Ext.util.Sorter[]} sorters
          * Optional array of sorter objects. Only applies to 'read' actions.
+         * @accessor
+         * @private
          */
         sorters: null,
 
         /**
-         * @cfg {Ext.util.Grouper[]} groupers
+         * @cfg {Ext.util.Grouper} grouper
          * Optional grouping configuration. Only applies to 'read' actions where grouping is desired.
+         * @accessor
+         * @private
          */
-        groupers: null,
+        grouper: null,
 
         /**
          * @cfg {Number} start
          * The start index (offset), used in paging when running a 'read' action.
+         * @accessor
+         * @private
          */
         start: null,
 
         /**
          * @cfg {Number} limit
          * The number of records to load. Used on 'read' actions when paging is being used.
+         * @accessor
+         * @private
          */
         limit: null,
 
         /**
          * @cfg {Ext.data.Batch} batch
          * The batch that this Operation is a part of.
+         * @accessor
+         * @private
          */
         batch: null,
 
@@ -66,39 +81,68 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Ext.data.Model[]} callback.records Array of records.
          * @cfg {Ext.data.Operation} callback.operation The Operation itself.
          * @cfg {Boolean} callback.success True when operation completed successfully.
+         * @accessor
+         * @private
          */
         callback: null,
 
         /**
          * @cfg {Object} scope
          * Scope for the {@link #callback} function.
+         * @accessor
+         * @private
          */
         scope: null,
 
         /**
          * @cfg {Ext.data.ResultSet} resultSet
          * The ResultSet for this operation.
+         * @accessor
          */
         resultSet: null,
 
+        /**
+         * @cfg {Array} records
+         * The records associated to this operation. Before an operation starts, these
+         * are the records you are updating, creating, or destroying. After an operation
+         * is completed, a Proxy usually sets these records on the Operation to become
+         * the processed records. If you don't set these records on your operation in
+         * your proxy, then the getter will return the ones defined on the {@link #resultSet}
+         * @accessor
+         */
         records: null,
 
         /**
          * @cfg {Ext.data.Request} request
          * The request used for this Operation. Operations don't usually care about Request and Response data, but in the
          * ServerProxy and any of its subclasses they may be useful for further processing.
+         * @accessor
          */
         request: null,
 
         /**
          * @cfg {Object} response
          * The response that was gotten from the server if there was one.
+         * @accessor
          */
         response: null,
 
+        /**
+         * @cfg {Boolean} withCredentials
+         * This field is necessary when using cross-origin resource sharing.
+         */
+        withCredentials: null,
+
+        /**
+         * @cfg {Object} params
+         * The params send along with this operation. These usually apply to a Server proxy if you are
+         * creating your own custom proxy,
+         * @accessor
+         */
         params: null,
         url: null,
         page: null,
+        node: null,
 
         /**
          * @cfg {Ext.data.Model} model
@@ -106,8 +150,6 @@ Ext.define('Ext.data.Operation', {
          * Since Operations take care of creating, updating, destroying and reading records, it needs access to the Model.
          */
         model: undefined,
-
-        node: null,
 
         addRecords: false
     },
@@ -179,11 +221,16 @@ Ext.define('Ext.data.Operation', {
 
         // <debug>
         if (!model) {
-            Ext.Logger.error('An Operation needs to have a model defined.');
+            Ext.Logger.warn('Unless you define your model using metadata, an Operation needs to have a model defined.');
         }
         // </debug>
 
         return model;
+    },
+
+    getRecords: function() {
+        var resultSet = this.getResultSet();
+        return this._records || (resultSet ? resultSet.getRecords() : []);
     },
 
     /**
@@ -308,12 +355,18 @@ Ext.define('Ext.data.Operation', {
 
     processCreate: function(resultSet) {
         var updatedRecords = resultSet.getRecords(),
+            currentRecords = this.getRecords(),
             ln = updatedRecords.length,
             i, currentRecord, updatedRecord;
 
         for (i = 0; i < ln; i++) {
             updatedRecord = updatedRecords[i];
-            currentRecord = this.findCurrentRecord(updatedRecord.clientId);
+
+            if (updatedRecord.clientId === null && currentRecords.length == 1 && updatedRecords.length == 1) {
+                currentRecord = currentRecords[i];
+            } else {
+                currentRecord = this.findCurrentRecord(updatedRecord.clientId);
+            }
 
             if (currentRecord) {
                 this.updateRecord(currentRecord, updatedRecord);
@@ -402,4 +455,14 @@ Ext.define('Ext.data.Operation', {
         
         currentRecord.commit();
     }
+    // <deprecated product=touch since=2.0>
+}, function() {
+    /**
+     * @member Ext.data.Operation
+     * @cfg {Boolean} group
+     * @inheritdoc Ext.data.Operation#grouper
+     * @deprecated 2.0.0 Please use {@link #grouper} instead.
+     */
+    Ext.deprecateProperty(this, 'group', 'grouper');
+    // </deprecated>
 });

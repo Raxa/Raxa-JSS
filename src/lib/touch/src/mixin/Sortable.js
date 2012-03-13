@@ -155,7 +155,7 @@ Ext.define('Ext.mixin.Sortable', {
                 if (!currentSorter) {
                     sorterConfig.property = sorter;
                 } else {
-                    if (defaultDirection !== undefined) {
+                    if (defaultDirection) {
                         currentSorter.setDirection(defaultDirection);
                     } else {
                         // If we already have a sorter for this property we just toggle its direction.

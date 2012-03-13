@@ -1,6 +1,5 @@
 /**
  * @author Ed Spencer
- * @ignore
  * @private
  *
  * Manages the stack of {@link Ext.app.Action} instances that have been decoded, pushes new urls into the browser's

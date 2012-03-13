@@ -50,6 +50,9 @@ Ext.define('Ext.data.NodeStore', {
             if (modifiedFields.indexOf('expanded') !== -1) {
                 return this.filter();
             }
+            if (modifiedFields.indexOf('sorted') !== -1) {
+                return this.sort();
+            }
         }
         this.callParent(arguments);
     },
@@ -91,14 +94,10 @@ Ext.define('Ext.data.NodeStore', {
     },
 
     handleTreeInsertionIndex: function(items, item, collection, originalFn) {
-        if (item.parentNode) {
-            item.parentNode.sort(collection.getSortFn(), true, true);
-        }
         return originalFn.call(collection, items, item, this.treeSortFn);
     },
 
-    handleTreeSort: function(data, collection) {
-        this.getNode().sort(collection.getSortFn(), true, true);
+    handleTreeSort: function(data) {
         Ext.Array.sort(data, this.treeSortFn);
         return data;
     },
@@ -172,7 +171,6 @@ Ext.define('Ext.data.NodeStore', {
                 append  : 'onNodeAppend',
                 insert  : 'onNodeInsert',
                 remove  : 'onNodeRemove',
-                sort    : 'onNodeSort',
                 load    : 'onNodeLoad',
                 scope: this
             });
@@ -185,7 +183,6 @@ Ext.define('Ext.data.NodeStore', {
                 append  : 'onNodeAppend',
                 insert  : 'onNodeInsert',
                 remove  : 'onNodeRemove',
-                sort    : 'onNodeSort',
                 load    : 'onNodeLoad'
             });
 

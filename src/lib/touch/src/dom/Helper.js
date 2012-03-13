@@ -1,5 +1,6 @@
 /**
  * @class Ext.DomHelper
+ * @alternateClassName Ext.dom.Helper
  *
  * The DomHelper class provides a layer of abstraction from DOM and transparently supports creating elements via DOM or
  * using HTML fragments. It also has the ability to create HTML fragment templates from your DOM building code.
@@ -69,17 +70,19 @@
  *     // get template
  *     var tpl = dh.createTemplate({tag: 'li', id: 'item{0}', html: 'List Item {0}'});
  *
- *     for(var i = 0; i < 5, i++){
- *         tpl.append(list, [i]); // use template to append to the actual node
+ *     for(var i = 0; i < 5; i++){
+ *         tpl.append(list, i); // use template to append to the actual node
  *     }
- *     An example using a template:
+ *
+ * An example using a template:
  *
  *     var html = '"{0}" href="{1}" class="nav">{2}';
  *
  *     var tpl = new Ext.DomHelper.createTemplate(html);
  *     tpl.append('blog-roll', ['link1', 'http://www.tommymaintz.com/', "Tommy's Site"]);
  *     tpl.append('blog-roll', ['link2', 'http://www.avins.org/', "Jamie's Site"]);
- *     The same example using named parameters:
+ *
+ * The same example using named parameters:
  *
  *     var html = '"{id}" href="{url}" class="nav">{text}';
  *
@@ -262,24 +265,28 @@ Ext.define('Ext.dom.Helper', {
      * a function which returns such a specification.
      */
     applyStyles: function(el, styles) {
-        if (styles) {
-            var i = 0,
-                len,
-                style;
+        Ext.fly(el).applyStyles(styles);
+    },
 
-            el = Ext.fly(el);
-            if (typeof styles == 'function') {
-                styles = styles.call();
-            }
-            if (typeof styles == 'string'){
-                styles = Ext.util.Format.trim(styles).split(/\s*(?::|;)\s*/);
-                for(len = styles.length; i < len;){
-                    el.setStyle(styles[i++], styles[i++]);
-                }
-            } else if (Ext.isObject(styles)) {
-                el.setStyle(styles);
-            }
+    /**
+     * @private
+     * Fix for browsers which no longer support createContextualFragment
+     */
+    createContextualFragment: function(html){
+        var div = document.createElement("div"),
+            fragment = document.createDocumentFragment(),
+            i = 0,
+            length, childNodes;
+
+        div.innerHTML = html;
+        childNodes = div.childNodes;
+        length = childNodes.length;
+
+        for (; i < length; i++) {
+            fragment.appendChild(childNodes[i].cloneNode(true));
         }
+
+        return fragment;
     },
 
     /**
@@ -300,47 +307,56 @@ Ext.define('Ext.dom.Helper', {
      * @return {HTMLElement} The new node
      */
     insertHtml: function(where, el, html) {
-        var hash = {},
-            hashVal,
-            setStart,
-            range,
-            frag,
-            rangeEl,
-            rs;
+        var setStart, range, frag, rangeEl, isBeforeBegin, isAfterBegin;
 
         where = where.toLowerCase();
 
-        // add these here because they are used in both branches of the condition.
-        hash['beforebegin'] = ['BeforeBegin', 'previousSibling'];
-        hash['afterend'] = ['AfterEnd', 'nextSibling'];
-
-        range = el.ownerDocument.createRange();
-        setStart = 'setStart' + (this.endRe.test(where) ? 'After' : 'Before');
-        if (hash[where]) {
-            range[setStart](el);
-            frag = range.createContextualFragment(html);
-            el.parentNode.insertBefore(frag, where == 'beforebegin' ? el : el.nextSibling);
-            return el[(where == 'beforebegin' ? 'previous' : 'next') + 'Sibling'];
+        if (Ext.isTextNode(el)) {
+            if (where == 'afterbegin' ) {
+                where = 'beforebegin';
+            }
+            else if (where == 'beforeend') {
+                where = 'afterend';
+            }
         }
-        else {
-            rangeEl = (where == 'afterbegin' ? 'first' : 'last') + 'Child';
-            if (el.firstChild) {
-                range[setStart](el[rangeEl]);
+
+        isBeforeBegin = where == 'beforebegin';
+        isAfterBegin = where == 'afterbegin';
+
+        range = Ext.feature.has.CreateContextualFragment ? el.ownerDocument.createRange() : undefined;
+        setStart = 'setStart' + (this.endRe.test(where) ? 'After' : 'Before');
+
+        if (isBeforeBegin || where == 'afterend') {
+            if (range) {
+                range[setStart](el);
                 frag = range.createContextualFragment(html);
-                if (where == 'afterbegin') {
-                    el.insertBefore(frag, el.firstChild);
-                }
-                else {
-                    el.appendChild(frag);
-                }
             }
             else {
+                frag = this.createContextualFragment(html);
+            }
+            el.parentNode.insertBefore(frag, isBeforeBegin ? el : el.nextSibling);
+            return el[(isBeforeBegin ? 'previous' : 'next') + 'Sibling'];
+        }
+        else {
+            rangeEl = (isAfterBegin ? 'first' : 'last') + 'Child';
+            if (el.firstChild) {
+                if (range) {
+                    range[setStart](el[rangeEl]);
+                    frag = range.createContextualFragment(html);
+                } else {
+                    frag = this.createContextualFragment(html);
+                }
+
+                if (isAfterBegin) {
+                    el.insertBefore(frag, el.firstChild);
+                } else {
+                    el.appendChild(frag);
+                }
+            } else {
                 el.innerHTML = html;
             }
             return el[rangeEl];
         }
-
-        throw 'Illegal insertion point -> "' + where + '"';
     },
 
     /**
@@ -362,7 +378,7 @@ Ext.define('Ext.dom.Helper', {
      * @return {HTMLElement/Ext.Element} The new node
      */
     insertAfter: function(el, o, returnElement) {
-        return this.doInsert(el, o, returnElement, 'afterend', 'nextSibling');
+        return this.doInsert(el, o, returnElement, 'afterend');
     },
 
     /**
@@ -373,7 +389,7 @@ Ext.define('Ext.dom.Helper', {
      * @return {HTMLElement/Ext.Element} The new node
      */
     insertFirst: function(el, o, returnElement) {
-        return this.doInsert(el, o, returnElement, 'afterbegin', 'firstChild');
+        return this.doInsert(el, o, returnElement, 'afterbegin');
     },
 
     /**
@@ -384,7 +400,7 @@ Ext.define('Ext.dom.Helper', {
      * @return {HTMLElement/Ext.Element} The new node
      */
     append: function(el, o, returnElement) {
-        return this.doInsert(el, o, returnElement, 'beforeend', '', true);
+        return this.doInsert(el, o, returnElement, 'beforeend');
     },
 
     /**
@@ -400,11 +416,20 @@ Ext.define('Ext.dom.Helper', {
         return returnElement ? Ext.get(el.firstChild) : el.firstChild;
     },
 
-    doInsert: function(el, o, returnElement, pos, sibling, append) {
+    doInsert: function(el, o, returnElement, pos) {
         var newNode = this.insertHtml(pos, Ext.getDom(el), this.markup(o));
         return returnElement ? Ext.get(newNode, true) : newNode;
-    }
+    },
 
+    /**
+     * Creates a new Ext.Template from the DOM object spec.
+     * @param {Object} o The DOM object spec (and children)
+     * @return {Ext.Template} The new template
+     */
+    createTemplate: function(o) {
+        var html = this.markup(o);
+        return new Ext.Template(html);
+    }
 }, function() {
     Ext.ns('Ext.core');
     Ext.core.DomHelper = Ext.DomHelper = new this;

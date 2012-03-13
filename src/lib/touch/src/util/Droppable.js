@@ -3,7 +3,7 @@
  */
 Ext.define('Ext.util.Droppable', {
     mixins: {
-        observable: 'Ext.util.Observable'
+        observable: 'Ext.mixin.Observable'
     },
 
     config: {

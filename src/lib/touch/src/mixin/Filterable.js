@@ -145,7 +145,7 @@ Ext.define('Ext.mixin.Filterable', {
                 }
                 else {
                     newFilters.push(filter);
-                    if (!filter.getRoot) {
+                    if (!filter.getRoot()) {
                         filter.setRoot(filterRoot);
                     }
                     continue;

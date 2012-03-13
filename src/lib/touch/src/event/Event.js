@@ -1,4 +1,8 @@
+// Using @mixins to include all members of Ext.event.Touch
+// into here to keep documentation simpler
 /**
+ * @mixins Ext.event.Touch
+ *
  * Just as {@link Ext.dom.Element} wraps around a native DOM node, {@link Ext.event.Event} wraps the browser's native
  * event-object normalizing cross-browser differences such as mechanisms to stop event-propagation along with a method
  * to prevent default actions from taking place.

@@ -17,6 +17,9 @@ Ext.define('Ext.util.Format', {
     trimRe: /^[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+|[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+$/g,
     formatRe: /\{(\d+)\}/g,
     escapeRegexRe: /([-.*+?^${}()|[\]\/\\])/g,
+    dashesRe: /-/g,
+    iso8601TestRe: /\d\dT\d\d/,
+    iso8601SplitRe: /[- :T\.Z\+]/,
 
     /**
      * Truncate a string and add an ellipsis ('...') to the end if it exceeds the specified length
@@ -158,25 +161,32 @@ var s = Ext.util.Format.format('&lt;div class="{0}">{1}&lt;/div>', cls, text);
      * @param {String} format (optional) Any valid date format string (defaults to 'm/d/Y')
      * @return {String} The formatted date string
      */
-    date: function(v, format) {
-        var date = v;
-        if (!v) {
+    date: function(value, format) {
+        var date = value;
+        if (!value) {
             return "";
         }
-        if (!Ext.isDate(v)) {
-            date = new Date(Date.parse(v));
+        if (!Ext.isDate(value)) {
+            date = new Date(Date.parse(value));
             if (isNaN(date)) {
-                // Dates with the format "2012-01-20" fail, but "2012/01/20" work in some browsers. We'll try and
-                // get around that.
-                v = new Date(Date.parse(v.replace(/-/g, "/")));
-                if (isNaN(v)) {
-                    Ext.Logger.error("Cannot parse the passed value into a valid date");
+                // Dates with ISO 8601 format are not well supported by mobile devices, this can work around the issue.
+                if (this.iso8601TestRe.test(value)) {
+                    date = value.split(this.iso8601SplitRe);
+                    date = new Date(date[0], date[1]-1, date[2], date[3], date[4], date[5]);
+                }
+                if (isNaN(date)) {
+                    // Dates with the format "2012-01-20" fail, but "2012/01/20" work in some browsers. We'll try and
+                    // get around that.
+                    date = new Date(Date.parse(value.replace(this.dashesRe, "/")));
+                    //<debug>
+                    if (isNaN(date)) {
+                        Ext.Logger.error("Cannot parse the passed value " + value + " into a valid date");
+                    }
+                    //</debug>
                 }
             }
-            else {
-                v = date;
-            }
+            value = date;
         }
-        return Ext.Date.format(v, format || Ext.util.Format.defaultDateFormat);
+        return Ext.Date.format(value, format || Ext.util.Format.defaultDateFormat);
     }
 });

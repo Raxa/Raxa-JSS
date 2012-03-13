@@ -28,13 +28,15 @@ Ext.apply(Ext.data.SortTypes, {
 
 Ext.define('Employee', {
     extend: 'Ext.data.Model',
-    fields: [{
-        name: 'person',
-        sortType: 'asPerson'
-    }, {
-        name: 'salary',
-        type: 'float' // sortType set to asFloat
-    }]
+    config: {
+        fields: [{
+            name: 'person',
+            sortType: 'asPerson'
+        }, {
+            name: 'salary',
+            type: 'float' // sortType set to asFloat
+        }]
+    }
 });
  * </code></pre>
  * </p>

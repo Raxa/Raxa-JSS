@@ -1,6 +1,6 @@
 /**
  * A simple event recogniser which knows when you drag.
- * 
+ *
  * @private
  */
 Ext.define('Ext.event.recognizer.Drag', {
@@ -22,7 +22,7 @@ Ext.define('Ext.event.recognizer.Drag', {
      * Fired once when a drag has started.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
 
     /**
@@ -31,16 +31,16 @@ Ext.define('Ext.event.recognizer.Drag', {
      * Fires continuously when there is dragging (the touch must move for this to be fired).
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
-    
+
     /**
      * @member Ext.dom.Element
      * @event dragend
      * Fires when a drag has ended.
      * @param {Ext.event.Event} event The {@link Ext.event.Event} event encapsulating the DOM event.
      * @param {HTMLElement} node The target of the event.
-     * @param {Object} options The options object passed to Ext.util.Observable.addListener.
+     * @param {Object} options The options object passed to Ext.mixin.Observable.addListener.
      */
 
     onTouchStart: function(e) {

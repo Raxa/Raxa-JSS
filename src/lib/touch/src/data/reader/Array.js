@@ -12,11 +12,13 @@
 <pre><code>
 Employee = Ext.define('Employee', {
     extend: 'Ext.data.Model',
-    fields: [
-        'id',
-        {name: 'name', mapping: 1},         // "mapping" only needed if an "id" field is present which
-        {name: 'occupation', mapping: 2}    // precludes using the ordinal position as the index.
-    ]
+    config: {
+        fields: [
+            'id',
+            {name: 'name', mapping: 1},         // "mapping" only needed if an "id" field is present which
+            {name: 'occupation', mapping: 2}    // precludes using the ordinal position as the index.
+        ]
+    }
 });
 
 var myReader = new Ext.data.reader.Array({
@@ -45,32 +47,26 @@ Ext.define('Ext.data.reader.Array', {
         successProperty: undefined
     },
 
-    getResponseData: function(data) {
-        return data;
-    },
-
     /**
      * @private
-     * Most of the work is done for us by JsonReader, but we need to overwrite the field accessors to just
-     * reference the correct position in the array.
+     * Returns an accessor expression for the passed Field from an Array using either the Field's mapping, or
+     * its ordinal position in the fields collsction as the index.
+     * This is used by buildExtractors to create optimized on extractor function which converts raw data into model instances.
      */
-    buildFieldExtractors: function() {
-        var fields = this.getFields(),
-            i = 0,
-            ln = fields.length,
-            extractorFunctions = [],
-            map;
+    createFieldAccessExpression: function(field, fieldVarName, dataName) {
+        var me     = this,
+            mapping = field.getMapping(),
+            index  = (mapping == null) ? me.getModel().getFields().indexOf(field) : mapping,
+            result;
 
-        for (; i < ln; i++) {
-            map = fields[i].getMapping();
-            extractorFunctions.push(function(index) {
-                return function(data) {
-                    return data[index];
-                };
-            }(map !== null ? map : i));
+        if (typeof index === 'function') {
+            result = fieldVarName + '.getMapping()(' + dataName + ', this)';
+        } else {
+            if (isNaN(index)) {
+                index = '"' + index + '"';
+            }
+            result = dataName + "[" + index + "]";
         }
-
-        this.fieldCount = ln;
-        this.extractorFunctions = extractorFunctions;
+        return result;
     }
 });

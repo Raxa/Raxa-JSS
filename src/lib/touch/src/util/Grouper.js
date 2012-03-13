@@ -21,6 +21,7 @@ Ext.define('Ext.util.Grouper', {
         sortProperty: null,
 
         /**
+         * @cfg
          * Grouper has a custom sorterFn that cannot be overriden by the user. If a property has been defined
          * on this grouper, we use the default sorterFn, else we sort based on the returned group string.
          * @param item1

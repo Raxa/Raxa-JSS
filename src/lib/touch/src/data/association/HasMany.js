@@ -8,21 +8,25 @@
 <pre><code>
 Ext.define('Product', {
     extend: 'Ext.data.Model',
-    fields: [
-        {name: 'id',      type: 'int'},
-        {name: 'user_id', type: 'int'},
-        {name: 'name',    type: 'string'}
-    ]
+    config: {
+        fields: [
+            {name: 'id',      type: 'int'},
+            {name: 'user_id', type: 'int'},
+            {name: 'name',    type: 'string'}
+        ]
+    }
 });
 
 Ext.define('User', {
     extend: 'Ext.data.Model',
-    fields: [
-        {name: 'id',   type: 'int'},
-        {name: 'name', type: 'string'}
-    ],
-    // we can use the hasMany shortcut on the model to create a hasMany association
-    hasMany: {model: 'Product', name: 'products'}
+    config: {
+        fields: [
+            {name: 'id',   type: 'int'},
+            {name: 'name', type: 'string'}
+        ],
+        // we can use the hasMany shortcut on the model to create a hasMany association
+        hasMany: {model: 'Product', name: 'products'}
+    }
 });
 </pre></code>
 *
@@ -215,7 +219,12 @@ Ext.define('Ext.data.association.HasMany', {
 
     applyForeignKey: function(foreignKey) {
         if (!foreignKey) {
-            foreignKey = this.getOwnerName().toLowerCase() + '_id';
+            var inverse = this.getInverseAssociation();
+            if (inverse) {
+                foreignKey = inverse.getForeignKey();
+            } else {
+                foreignKey = this.getOwnerName().toLowerCase() + '_id';
+            }
         }
         return foreignKey;
     },
@@ -258,6 +267,7 @@ Ext.define('Ext.data.association.HasMany', {
      */
     applyStore: function(storeConfig) {
         var me = this,
+            association     = me,
             associatedModel = me.getAssociatedModel(),
             storeName       = me.getStoreName(),
             foreignKey      = me.getForeignKey(),
@@ -286,7 +296,7 @@ Ext.define('Ext.data.association.HasMany', {
                 }
 
                 modelDefaults[foreignKey] = me.get(primaryKey);
-                
+
                 config = Ext.apply({}, storeConfig, {
                     model        : associatedModel,
                     filters      : [filter],
@@ -296,7 +306,9 @@ Ext.define('Ext.data.association.HasMany', {
 
                 me[storeName] = Ext.create('Ext.data.Store', config);
                 if (autoLoad) {
-                    me[storeName].load();
+                    me[storeName].load(function(records, operation) {
+                        association.updateInverseInstances(me);
+                    });
                 }
             }
 
@@ -317,22 +329,42 @@ Ext.define('Ext.data.association.HasMany', {
      */
     read: function(record, reader, associationData) {
         var store = record[this.getName()](),
-            records = reader.read(associationData).getRecords(),
-            inverse;
+            records = reader.read(associationData).getRecords();
 
         store.add(records);
+        this.updateInverseInstances(record);
+    },
 
-        //now that we've added the related records to the hasMany association, set the inverse belongsTo
-        //association on each of them if it exists
-        inverse = this.getAssociatedModel().associations.findBy(function(assoc) {
-            return assoc.getType() === 'belongsTo' && assoc.getAssociatedName() === record.$className;
-        });
+    updateInverseInstances: function(record) {
+        var store = record[this.getName()](),
+            inverse = this.getInverseAssociation();
 
         //if the inverse association was found, set it now on each record we've just created
         if (inverse) {
-            store.data.each(function(associatedRecord) {
+            store.each(function(associatedRecord) {
                 associatedRecord[inverse.getInstanceName()] = record;
             });
         }
+    },
+
+    getInverseAssociation: function() {
+        var ownerName = this.getOwnerModel().modelName;
+
+        //now that we've added the related records to the hasMany association, set the inverse belongsTo
+        //association on each of them if it exists
+        return this.getAssociatedModel().associations.findBy(function(assoc) {
+            return assoc.getType().toLowerCase() === 'belongsto' && assoc.getAssociatedModel().modelName === ownerName;
+        });
     }
+
+    // <deprecated product=touch since=2.0>
+}, function() {
+    /**
+     * @member Ext.data.association.HasMany
+     * @cfg {Object} storeConfig
+     * @inheritdoc Ext.data.association.HasMany#store
+     * @deprecated 2.0.0
+     */
+    Ext.deprecateProperty(this, 'storeConfig', 'store');
+    // </deprecated>
 });

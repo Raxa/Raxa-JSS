@@ -44,6 +44,14 @@ Ext.define('Ext.ComponentManager', {
      * @param {Object} component The item to register
      */
     register: function(component) {
+        var id = component.getId();
+
+        // <debug>
+        if (this.map[id]) {
+            Ext.Logger.warn('Registering a component with a id (`' + id + '`) which has already been used. Please ensure the existing component has been destroyed (`Ext.Component#destroy()`.');
+        }
+        // </debug>
+
         this.map[component.getId()] = component;
     },
 

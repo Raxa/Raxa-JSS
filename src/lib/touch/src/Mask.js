@@ -5,6 +5,7 @@
  *
  * ## Example
  *
+ *     @example miniphone
  *     // Create our container
  *     var container = Ext.create('Ext.Container', {
  *         html: 'My container!'
@@ -14,7 +15,7 @@
  *     Ext.Viewport.add(container);
  *
  *     // Mask the container
- *     container.setMasked(true;)
+ *     container.setMasked(true);
  */
 Ext.define('Ext.Mask', {
     extend: 'Ext.Component',
@@ -30,21 +31,25 @@ Ext.define('Ext.Mask', {
         transparent: false,
 
         /**
+         * @cfg
          * @hide
          */
         top: 0,
 
         /**
+         * @cfg
          * @hide
          */
         left: 0,
 
         /**
+         * @cfg
          * @hide
          */
         right: 0,
 
         /**
+         * @cfg
          * @hide
          */
         bottom: 0

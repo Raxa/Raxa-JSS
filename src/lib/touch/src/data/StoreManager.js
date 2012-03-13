@@ -34,10 +34,6 @@ Ext.define('Ext.data.StoreManager', {
     uses: ['Ext.data.ArrayStore'],
 
     /**
-     * @cfg {Object} listeners @hide
-     */
-
-    /**
      * Registers one or more Stores with the StoreManager. You do not normally need to register stores manually. Any
      * store initialized with a {@link Ext.data.Store#storeId} will be auto-registered.
      * @param {Ext.data.Store...} stores Any number of Store instances

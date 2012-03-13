@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 Ext.define('Ext.scroll.indicator.ScrollPosition', {
     extend: 'Ext.scroll.indicator.Abstract',
 

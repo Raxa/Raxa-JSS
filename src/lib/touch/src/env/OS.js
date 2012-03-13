@@ -33,7 +33,8 @@ Ext.define('Ext.env.OS', {
         },
         prefixes: {
             ios: 'i(?:Pad|Phone|Pod)(?:.*)CPU(?: iPhone)? OS ',
-            android: 'Android ',
+            android: '(Android |HTC_|Silk/)', // Some HTC devices ship with an OSX userAgent by default,
+                                        // so we need to add a direct check for HTC_
             blackberry: 'BlackBerry(?:.*)Version\/',
             rimTablet: 'RIM Tablet OS ',
             webos: '(?:webOS|hpwOS)\/',
@@ -108,7 +109,15 @@ Ext.define('Ext.env.OS', {
 
                 if (match) {
                     name = names[i];
-                    version = new Ext.Version(match[match.length - 1]);
+
+                    // This is here because some HTC android devices show an OSX Snow Leopard userAgent by default.
+                    // And the Kindle Fire doesn't have any indicator of Android as the OS in its User Agent
+                    if (match[1] && (match[1] == "HTC_" || match[1] == "Silk/")) {
+                        version = new Ext.Version("2.3");
+                    } else {
+                        version = new Ext.Version(match[match.length - 1]);
+                    }
+
                     break;
                 }
             }
@@ -119,10 +128,8 @@ Ext.define('Ext.env.OS', {
             version = new Ext.Version('');
         }
 
-        Ext.apply(this, {
-            name: name,
-            version: version
-        });
+        this.name = name;
+        this.version = version;
 
         if (platform) {
             this.setFlag(platform);
@@ -150,14 +157,8 @@ Ext.define('Ext.env.OS', {
 
 }, function() {
 
-    /**
-     * @class Ext.is
-     * @private
-     * Used to detect if the current browser supports a certain feature, and the type of the current browser.
-     *
-     * @deprecated 2.0.0 Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
-     */
     var navigation = Ext.global.navigator,
+        userAgent = navigation.userAgent,
         osEnv, osName, deviceType;
 
     //<deprecated product=touch since=2.0>
@@ -179,21 +180,29 @@ Ext.define('Ext.env.OS', {
     });
     //</deprecated>
 
-    Ext.os = osEnv = new this(navigation.userAgent, navigation.platform);
+    Ext.os = osEnv = new this(userAgent, navigation.platform);
 
     osName = osEnv.name;
 
-    var search = window.location.search.match(/deviceType=(Tablet|Phone)/);
+    var search = window.location.search.match(/deviceType=(Tablet|Phone)/),
+        nativeDeviceType = window.deviceType;
 
     // Override deviceType by adding a get variable of deviceType. NEEDED FOR DOCS APP.
     // E.g: example/kitchen-sink.html?deviceType=Phone
     if (search && search[1]) {
         deviceType = search[1];
-    } else {
+    }
+    else if (nativeDeviceType === 'iPhone') {
+        deviceType = 'Phone';
+    }
+    else if (nativeDeviceType === 'iPad') {
+        deviceType = 'Tablet';
+    }
+    else {
         if (!osEnv.is.Android && !osEnv.is.iOS && /Windows|Linux|MacOS/.test(osName)) {
             deviceType = 'Desktop';
         }
-        else if (osEnv.is.iPad || osEnv.is.Android3) {
+        else if (osEnv.is.iPad || osEnv.is.Android3 || (osEnv.is.Android4 && userAgent.search(/mobile/i) == -1)) {
             deviceType = 'Tablet';
         }
         else {
@@ -219,4 +228,10 @@ Ext.define('Ext.env.OS', {
     }
     //</deprecated>
 
+    /**
+     * @class Ext.is
+     * Used to detect if the current browser supports a certain feature, and the type of the current browser.
+     * @deprecated 2.0.0
+     * Please refer to the {@link Ext.env.Browser}, {@link Ext.env.OS} and {@link Ext.feature.has} classes instead.
+     */
 });

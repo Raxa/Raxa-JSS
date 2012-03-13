@@ -5,7 +5,7 @@
  *
  * ## Example
  *
- *     @example
+ *     @example miniphone
  *     Ext.Viewport.add({
  *         masked: {
  *            xtype: 'loadmask'
@@ -14,7 +14,7 @@
  *
  * You can customize the loading {@link #message} and whether or not you want to show the {@link #indicator}:
  *
- *     @example
+ *     @example miniphone
  *     Ext.Viewport.add({
  *         masked: {
  *            xtype: 'loadmask',
@@ -186,10 +186,10 @@ Ext.define('Ext.LoadMask', {
                  * @cfg {Ext.data.Store} store
                  * Optional Store to which the mask is bound. The mask is displayed when a load request is issued, and
                  * hidden on either load sucess, or load fail.
-                 * @deprecated 2.0.0 You can no longer bind a store to a {@link Ext.LoadMask}
+                 * @removed 2.0.0 You can no longer bind a store to a {@link Ext.LoadMask}
                  */
                 if (config.hasOwnProperty('store')) {
-                    Ext.Logger.deprecate("'store' config is deprecated. You can no longer bind a store to a Ext.LoadMask", this);
+                    Ext.Logger.deprecate("'store' config has been removed. You can no longer bind a store to a Ext.LoadMask", this);
                     delete config.store;
                 }
             }
@@ -200,7 +200,7 @@ Ext.define('Ext.LoadMask', {
         /**
          * Changes the data store bound to this LoadMask.
          * @param {Ext.data.Store} store The store to bind to this LoadMask
-         * @deprecated 2.0.0 You can no longer bind a store to a {@link Ext.LoadMask}.
+         * @removed 2.0.0 You can no longer bind a store to a {@link Ext.LoadMask}.
          */
         bindStore: function() {
             Ext.Logger.deprecate("You can no longer bind a store to a Ext.LoadMask", this);

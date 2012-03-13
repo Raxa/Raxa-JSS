@@ -95,6 +95,8 @@ $form-fieldset-radius: .4em !default;
  */
 $form-slider-size: .8em !default;
 
+$form-spinner-button-width: 3em !default;
+
 // Private utility vars & mixins
 
 $form-thumb-space: ( $form-thumb-size - $form-toggle-size ) / 2;
@@ -108,9 +110,13 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
 
 @mixin checkmark($color: #000){
   @extend .x-checkmark-base;
-  border-color: $color;
+  background-color: $color;
 }
 
+@mixin selectmark($color: #000){
+  @extend .x-selectmark-base;
+  background-color: $color;
+}
 /**
  * Includes default form styles.
  *
@@ -136,7 +142,7 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     @include label;
     @include bevel-text('light');
     padding: $form-spacing;
-    display: none;
+    display: none !important;
     @include ellipsis;
 
     span {
@@ -149,10 +155,6 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
   .x-field {
     min-height: $form-field-height;
 
-    .x-component-outer {
-      -webkit-box-flex: 1;
-    }
-
     .x-field-input {
       position: relative;
     }
@@ -164,12 +166,19 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
 
     &.x-field-labeled {
       .x-form-label {
-        display: block;
+        display: block !important;
       }
     }
 
     &:last-child {
       border-bottom: 0;
+    }
+  }
+
+  .x-label-align-left,
+  .x-label-align-right {
+    .x-component-outer {
+      @include box-flex(1);
     }
   }
 
@@ -185,14 +194,14 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
         @if $include-border-radius { @include border-bottom-left-radius($form-fieldset-radius); }
       }
     }
+
+    .x-form-label {
+
+    }
   }
 
   .x-label-align-right {
     @include box-direction(reverse);
-
-    .x-field-input {
-      @include box-direction(normal);
-    }
 
     &:first-child {
       .x-form-label {
@@ -207,14 +216,16 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
         @if $include-border-radius { @include border-bottom-right-radius($form-fieldset-radius); }
       }
     }
+    .x-form-label {
+
+    }
   }
 
   .x-label-align-top,
   .x-label-align-bottom {
     @include box-orient(vertical);
-
     .x-form-label {
-      width: 100% !important;
+
     }
   }
 
@@ -227,11 +238,6 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
   }
 
   .x-label-align-bottom {
-    @include box-direction(reverse);
-
-    .x-field-input {
-      @include box-direction(normal);
-    }
 
     &:last-child {
       .x-form-label {
@@ -284,20 +290,16 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
 
   // Ext.field.Checkbox
   .x-checkmark-base {
-    @include insertion(.75em, 1.25em, 50%, auto);
-    -webkit-transform: rotate(45deg) skew(5deg);
-    -webkit-transform-origin: 50% 50%;
+    @include insertion(1.4em, 1.4em, 50%, auto);
     right: ($form-spacing + .5em);
-    border: .35em solid;
-    border-top: none;
-    border-left: none;
-    margin-top: -.75em;
+    -webkit-mask-size: 1.4em;
+    -webkit-mask-image: theme_image($theme-name, "pictos/check2.png");
+    margin-top: -.7em;
   }
 
   .x-field .x-input-radio,
   .x-field .x-input-checkbox {
     position: relative;
-
     &:after {
       @include checkmark($form-light);
     }
@@ -321,15 +323,17 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
       @include display-box;
 
       > * {
-        -webkit-box-flex: 1;
         width: auto;
       }
     }
 
     .x-field-input {
+      -webkit-box-flex: 1;
+
       .x-input-el {
+        -webkit-text-fill-color: #000;
         padding: 0;
-        width: 25px;
+        width: 100%;
         text-align: center;
       }
 
@@ -342,6 +346,10 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
 
     &.x-item-disabled {
+      .x-input-el {
+       -webkit-text-fill-color: #B3B3B3;
+      }
+
       .x-spinner-button {
         @include toolbar-button(lighten($form-light, 10), matte);
         color: #aaa !important;
@@ -349,6 +357,7 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
 
   .x-spinner-button {
+    width: $form-spinner-button-width;
     padding: .65em 0;
     font-weight: bold;
     @include toolbar-button($form-light);
@@ -383,18 +392,20 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
       display: block;
     }
 
-    .x-list-item {
-      padding-right: 2.6em;
-    }
-
     .x-item-selected {
-      &:before {
-        @include checkmark(lighten(#000, 15%));
-        margin-top: -.85em;
+      .x-list-label {
+        margin-right: 2.6em;
       }
 
-      &:after {
-        @include checkmark($form-light);
+      .x-list-item-label {
+        &:before {
+          @include checkmark(rgba(0,0,0,.3));
+          margin-top: -.8em;
+        }
+
+        &:after {
+          @include checkmark($form-light);
+        }
       }
     }
   }
@@ -416,13 +427,18 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     }
   }
 
-  .x-field-search {
-    .x-field-input {
-      background-image: -webkit-gradient(linear,0% 0%,0% 100%,from(rgba($toolbar-input-bg,.6))), theme_image($theme-name, "pictos/search.png");
-      -webkit-background-size: .83em .83em, .83em .83em;
-      background-repeat: no-repeat;
-      background-position: .5em 50%;
+    .x-field-search {
+        .x-field-input {
+            position: relative;
 
+            &:before {
+                @include insertion(.86em, .86em, 50%, .5em);
+                -webkit-mask-image: theme_image($theme-name, "pictos/search.png");
+                -webkit-mask-size: .86em;
+                background-color: #ccc;
+                -webkit-mask-repeat: no-repeat;
+                margin-top: -0.43em;
+      }
       .x-form-field {
         margin-left: $toolbar-search-left-padding - 0.67em;
       }
@@ -430,30 +446,21 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
   }
 
   //clear icon
-  $form-clear-size: 1.1em;
+  $form-clear-size: 2.2em;
 
   .x-field-input {
-    @include display-box;
-    @include box-orient(horizontal);
-    @include box-align(center);
-    @include box-pack(center);
-
-    .x-input-el {
-      @include box-flex(1);
-    }
-
     .x-clear-icon {
       display: none;
       background: theme_image($theme-name, "clear_icon.png") no-repeat;
       background-position: center center;
-      background-size: 95% 95%;
+      background-size: 55% 55%;
       width: $form-clear-size;
       height: $form-clear-size;
       margin: .5em;
-
-      & .x-desktop {
-        background-size: 100% 100%;
-      }
+      margin-top: -($form-clear-size/2);
+      position: absolute;
+      top: 50%;
+      right: -.5em;
     }
   }
 
@@ -461,16 +468,18 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     .x-clear-icon {
       display: block;
     }
-  }
 
-  .x-field-textarea {
     .x-field-input {
-      @include box-align(start);
+      padding-right: $form-clear-size;
     }
   }
 
   .x-android .x-input-el {
     -webkit-text-fill-color: #000;
+  }
+
+  .x-android .x-empty .x-input-el {
+    -webkit-text-fill-color: #A9A9A9;
   }
 
   //disabled fields
@@ -507,13 +516,13 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     .x-field {
       border-bottom: 1px solid $form-light;
 
-      &.x-form-fieldset-item-first {
+      &:first-child {
         @if $include-border-radius {
           @include border-top-radius($form-fieldset-radius);
         }
       }
 
-      &.x-form-fieldset-item-last {
+      &:last-child {
         border-bottom: 0;
 
         @if $include-border-radius {
@@ -539,52 +548,41 @@ $form-scrollable-fields: '.x-field-slider, .x-field-toggle';
     text-align: center;
   }
 
+  // Ext.field.Select
+  .x-selectmark-base {
+    @include insertion(1em, 1em, 50%, auto);
+    right: ($form-spacing + .1em);
+    -webkit-mask-size: 1em;
+    -webkit-mask-image: theme_image($theme-name, "pictos/arrow_down.png");
+    margin-top: -.5em;
+  }
+
   // Create the dropdown arrow
   // for select fields
   .x-field-select {
     position: relative;
 
-    &.x-label-align-top .x-component-outer:after {
-      top: auto;
-      bottom: 0;
-    }
-
     .x-component-outer {
+      &:after {
+        @include selectmark($form-light);
+        z-index: 2;
+      }
+
       &:before,
       &:after {
         pointer-events: none;
         position: absolute;
         display: block;
-        right: 0;
-      }
-
-      // Tip
-      &:after {
-        @include insertion(0,0,0,auto);
-        margin: 1em;
-        border: .4em solid transparent;
-        border-top-color: $form-light;
-        z-index: 2;
       }
 
       &:before {
         @include insertion(4em,auto,0,auto);
+        right: 0;
         bottom: 0;
         @if $include-border-radius { @include border-right-radius($form-fieldset-radius); }
         @if $include-highlights { background: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba($form-field-bg-color, 0)), color-stop(.5, rgba($form-field-bg-color, 1))); }
         z-index: 1;
       }
-    }
-
-    .x-form-field {
-      white-space: nowrap;
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis
-    }
-
-    .x-form-field-container {
-      margin-right: 40px;
     }
   }
 }

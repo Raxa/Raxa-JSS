@@ -3,16 +3,20 @@
  * field, most browsers will show a specialized virtual keyboard for web address input. Aside from that, the url field
  * is just a normal text field. Here's an example of how to use it in a form:
  *
+ *     @example
  *     Ext.create('Ext.form.Panel', {
- *         tbar: {
- *             text: 'Add Bookmark'
- *         },
- *
+ *         fullscreen: true,
  *         items: [
  *             {
- *                 xtype: 'urlfield',
- *                 label: 'Url',
- *                 name: 'url'
+ *                 xtype: 'fieldset',
+ *                 title: 'Add Bookmark',
+ *                 items: [
+ *                     {
+ *                         xtype: 'urlfield',
+ *                         label: 'Url',
+ *                         name: 'url'
+ *                     }
+ *                 ]
  *             }
  *         ]
  *     });

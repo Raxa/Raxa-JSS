@@ -7,11 +7,13 @@
  *
  *     Ext.define('User', {
  *         extend: 'Ext.data.Model',
- *         fields: ['id', 'name', 'email'],
+ *         config: {
+ *             fields: ['id', 'name', 'email'],
  *
- *         proxy: {
- *             type: 'rest',
- *             url : '/users'
+ *             proxy: {
+ *                 type: 'rest',
+ *                 url : '/users'
+ *             }
  *         }
  *     });
  *
@@ -140,17 +142,19 @@ Ext.define('Ext.data.proxy.Rest', {
             operation = request.getOperation(),
             records   = operation.getRecords() || [],
             record    = records[0],
+            model     = me.getModel(),
+            idProperty= model.getIdProperty(),
             format    = me.getFormat(),
             url       = me.getUrl(request),
             params    = request.getParams() || {},
-            id        = (record && !record.phantom) ? record.getId() : params.id;
+            id        = (record && !record.phantom) ? record.getId() : params[idProperty];
 
         if (me.getAppendId() && id) {
             if (!url.match(/\/$/)) {
                 url += '/';
             }
             url += id;
-            delete params.id;
+            delete params[idProperty];
         }
 
         if (format) {

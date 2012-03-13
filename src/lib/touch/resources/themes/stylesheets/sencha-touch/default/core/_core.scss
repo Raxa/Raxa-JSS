@@ -42,6 +42,10 @@ body.x-android.x-phone {
   font-size: 116%;
 }
 
+body.x-android.x-phone.x-silk {
+  font-size: 130%;
+}
+
 body.x-ios.x-phone {
   font-size: 114%;
 }
@@ -180,6 +184,6 @@ input, textarea {
   z-index: 5;
 }
 
-.x-fullscreen {
+.x-layout-card-item {
   background: $page-bg-color;
 }

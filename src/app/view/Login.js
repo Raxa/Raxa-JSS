@@ -29,10 +29,9 @@ Ext.define('RaxaEmr.view.Login', {
                                     placeHolder: 'Host URL',
                                     name: 'hostField',
                                     listeners: {
-                                        change: {
-                                            fn: function() {
-                                                alert('changed');
-                                            }
+                                        blur: function(field, event, options) {
+                                            host = field.getValue();
+                                            localStorage.setItem("host", host);
                                         }
                                     },
                                     width: 450,
