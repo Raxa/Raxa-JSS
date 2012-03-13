@@ -1,4 +1,11 @@
-describe("Registration: Bmi", function() {
+describe("Bmi", function() {
+    
+    var mainController = null;
+    beforeEach(function(){
+        if (!mainController) {
+            mainController = Application.getController('Main');
+        }
+    });
 
     /////////////////////////////////
     // UI Verifications
@@ -84,4 +91,7 @@ describe("Registration: Bmi", function() {
         expect(false).toBeTruthy();    
     });
 
+    it("Verify test hook equals 3", function() {
+        expect(mainController.testFunction()).toEqual(3);
+    });      
 });
