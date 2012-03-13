@@ -26,7 +26,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 	
 	// TODO: Remove this. Just a test to validate that Jasmine hooks are working
 	testFunction: function() {
-	    return 3;
+	    return true;
 	}
 });
 
