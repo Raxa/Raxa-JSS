@@ -1,10 +1,11 @@
 Ext.define('RaxaEmr.Registration.view.Search', {
-	extend: 'Ext.Container',
+	extend: 'Ext.form.Panel',
 	xtype: 'searchpage',
+    id: 'searchPatientsForm',
 
 	config: {
 		title: 'Search',
-		iconCls: 'star',
+		iconCls: 'search',
         styleHtmlContent: true,
 
 		// List takes a store and a template
@@ -21,26 +22,31 @@ Ext.define('RaxaEmr.Registration.view.Search', {
 			{
 				xtype: 'textfield',
 				label: 'First Name:',
+                name: 'firstName',
 				clearIcon: true
 			},
 			{
 				xtype: 'textfield',
 				label: 'Last Name:',
+                name: 'lastName',
 				clearIcon: true
 			},
 			{
 				xtype: 'textfield',
 				label: 'Father/Husband First Name:',
+                name: 'guardianFirstName',
 				clearIcon: true
 			},
 			{
 				xtype: 'textfield',
 				label: 'Father/Husband Last Name:',
+                name: 'guardianLastName',
 				clearIcon: true
 			},
 			{
 				xtype: 'datepickerfield',
 				label: 'Date of Birth:',
+                name: 'dateOfBirth',
 				value: new Date(),
 				picker: {
 					yearFrom: 1930
@@ -60,10 +66,7 @@ Ext.define('RaxaEmr.Registration.view.Search', {
 			{
 				xtype: 'button',
 				text: 'Search',
-				handler: function() {
-					// Call search
-					// Display search results
-				}
+                action: 'searchPatients'
             }]
 		}]
 	}
