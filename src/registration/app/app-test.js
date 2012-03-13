@@ -13,6 +13,7 @@ Ext.onReady(function() {
 		name: 'RaxaEmr.Registration',
 
 		controllers: ['Main'],
+        models: ['Patient'],
 
 		launch: function() {
 			console.log('app-test start launch');
