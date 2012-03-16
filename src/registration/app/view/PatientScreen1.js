@@ -1,5 +1,6 @@
 Ext.define('RaxaEmr.Registration.view.PatientScreen1', {
-	extend: 'Ext.Container',
+	extend: 'Ext.form.Panel',
+	id: 'createPatientForm',
 
 	config: {
 		title: 'Patient Profile Information',
@@ -16,27 +17,32 @@ Ext.define('RaxaEmr.Registration.view.PatientScreen1', {
 			items: [{
 				xtype: 'textfield',
 				label: 'First Name',
+				name: 'firstName',
 				required: true
 			},
 			{
 				xtype: 'textfield',
 				label: 'Last Name',
+				name: 'lastName',
 				required: true
 			},
 			{
 				xtype: 'textfield',
 				label: 'Father/Husband First Name',
+				name: 'guardianFirstName',
 				required: true
 			},
 			{
 				xtype: 'textfield',
 				label: 'Father/Husband Last Name:',
+				name: 'guardianLastName',
 				required: true,
 				clearIcon: true
 			},
 			{
 				xtype: 'selectfield',
 				label: 'Sex',
+				name: 'gender',
 				options: [{
 					text: 'Male',
 					value: 'male'
@@ -53,6 +59,7 @@ Ext.define('RaxaEmr.Registration.view.PatientScreen1', {
 			{
 				xtype: 'selectfield',
 				label: 'Education',
+				name: 'education',
 				options: [{
 					text: 'Not educated',
 					value: 'notEducated'
@@ -77,6 +84,7 @@ Ext.define('RaxaEmr.Registration.view.PatientScreen1', {
 			{
 				xtype: 'datepickerfield',
 				label: 'Date of Birth:',
+				name: 'dateOfBirth',
 				value: new Date(),
 				picker: {
 					yearFrom: 1930
@@ -84,18 +92,37 @@ Ext.define('RaxaEmr.Registration.view.PatientScreen1', {
 				clearIcon: true
 			},
 			{
-						xtype: 'selectfield',
-						name: 'caste',
-						label: 'Caste',
-						placeHolder: 'Select Caste',
-						displayField: 'desc',
-						options:[
-							{desc: 'First', value: 'first'},
-							{desc: 'Second', value: 'second'},
-							{desc: 'Third', value: 'third'},
-							{desc: 'Fourth', value: 'fourth'},
-							{desc: 'Fifth', value: 'fifth'}
-						]
+				xtype: 'selectfield',
+				name: 'caste',
+				label: 'Caste',
+				placeHolder: 'Select Caste',
+				displayField: 'desc',
+				options: [{
+					desc: 'First',
+					value: 'first'
+				},
+				{
+					desc: 'Second',
+					value: 'second'
+				},
+				{
+					desc: 'Third',
+					value: 'third'
+				},
+				{
+					desc: 'Fourth',
+					value: 'fourth'
+				},
+				{
+					desc: 'Fifth',
+					value: 'fifth'
+				}]
+			},
+			{
+				// TODO: temporary submit button
+				xtype: 'button',
+				text: '(Temp Button) create Patient',
+				action: 'createPatient'
 			}]
 		}]
 	}

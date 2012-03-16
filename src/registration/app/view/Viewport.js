@@ -4,9 +4,7 @@ Ext.define('RaxaEmr.Registration.view.Viewport', {
 		fullscreen: true,
 		tabBarPosition: 'bottom',
 
-		items: [{
-			xtype: 'homepanel' // view/Home.js
-		},
+		items: [
 		{
 			xtype: 'registerpage' // view/Register.js
 		},

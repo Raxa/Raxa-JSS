@@ -13,7 +13,7 @@ Ext.define('RaxaEmr.Registration.view.Register', {
 			xclass: 'RaxaEmr.Registration.view.PatientScreen2'
 		},
 		{
-			html: 'Confirmation Screen'
+            html: 'Confirmation Screen'
 		}]
 	}
 });
