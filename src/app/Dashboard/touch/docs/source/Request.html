@@ -1,0 +1,47 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.data.Request"></div>/**
+ * @author Ed Spencer
+ * @class Ext.data.Request
+ * @extends Object
+ * 
+ * <p>Simple class that represents a Request that will be made by any {@link Ext.data.ServerProxy} subclass.
+ * All this class does is standardize the representation of a Request as used by any ServerProxy subclass,
+ * it does not contain any actual logic or perform the request itself.</p>
+ * 
+ * @constructor
+ * @param {Object} config Optional config object
+ */
+Ext.data.Request = Ext.extend(Object, {
+    <div id="cfg-Ext.data.Request-action"></div>/**
+     * @cfg {String} action The name of the action this Request represents. Usually one of 'create', 'read', 'update' or 'destroy'
+     */
+    action: undefined,
+    
+    <div id="cfg-Ext.data.Request-params"></div>/**
+     * @cfg {Object} params HTTP request params. The Proxy and its Writer have access to and can modify this object.
+     */
+    params: undefined,
+    
+    <div id="cfg-Ext.data.Request-method"></div>/**
+     * @cfg {String} method The HTTP method to use on this Request (defaults to 'GET'). Should be one of 'GET', 'POST', 'PUT' or 'DELETE'
+     */
+    method: 'GET',
+    
+    <div id="cfg-Ext.data.Request-url"></div>/**
+     * @cfg {String} url The url to access on this Request
+     */
+    url: undefined,
+
+    constructor: function(config) {
+        Ext.apply(this, config);
+    }
+});</pre>    
+</body>
+</html>

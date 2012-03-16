@@ -1,0 +1,59 @@
+@import '../global';
+
+/**
+ * @var {color} $sheet-bg-color
+ * Background-color for action sheets and message boxes.
+ *
+ * @member Ext.Sheet
+ * @xtype actionsheet
+ */
+$sheet-bg-color: transparentize(darken($base-color, 40%), .1) !default;
+
+/**
+ * @var {color} $sheet-bg-gradient
+ * Background gradient style for action sheets and message boxes.
+ *
+ * @member Ext.Sheet
+ * @xtype actionsheet
+ */
+$sheet-bg-gradient: $base-gradient !default;
+
+/**
+ * @var {measurement} $sheet-button-spacing
+ * Vertical spacing between sheet buttons.
+ *
+ * @member Ext.Sheet
+ * @xtype actionsheet
+ */
+$sheet-button-spacing: .5em !default;
+
+/**
+ * @var {measurement} $sheet-padding
+ * Overall padding in a sheet.
+ *
+ * @member Ext.Sheet
+ * @xtype actionsheet
+ */
+$sheet-padding: .7em !default;
+
+/**
+ * Includes default sheet styles (also required for message box).
+ *
+ * @member Ext.Sheet
+ * @xtype actionsheet
+ */
+@mixin sencha-sheet {
+  .x-sheet {
+    padding: $sheet-padding;
+    border-top: 1px solid darken($base-color, 30%);
+    @include background-gradient($sheet-bg-color, $sheet-bg-gradient);
+
+    .x-sheet-body .x-button {
+      margin-bottom: $sheet-button-spacing;
+    }
+  }
+
+  .x-sheet-body {
+    position: relative;
+  }
+}

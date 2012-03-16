@@ -1,0 +1,44 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.data.ProxyMgr"></div>/**
+ * @author Ed Spencer
+ * @class Ext.data.ProxyMgr
+ * @extends Ext.AbstractManager
+ * @singleton
+ * @ignore
+ */
+Ext.data.ProxyMgr = new Ext.AbstractManager({
+    create: function(config) {
+        if (config == undefined || typeof config == 'string') {
+            config = {
+                type: config
+            };
+        }
+
+        if (!(config instanceof Ext.data.Proxy)) {
+            Ext.applyIf(config, {
+                type : this.defaultProxyType,
+                model: this.model
+            });
+
+            var type = config[this.typeName] || config.type,
+                Constructor = this.types[type];
+
+            if (Constructor == undefined) {
+                throw new Error(Ext.util.Format.format("The '{0}' type has not been registered with this manager", type));
+            }
+
+            return new Constructor(config);
+        } else {
+            return config;
+        }
+    }
+});</pre>    
+</body>
+</html>

@@ -1,0 +1,16 @@
+Ext.regModel('Dashboard', {
+    fields: [
+        {name: 'reg', type: 'string'},
+        {name: 'Lab', type: 'string'},
+        {name: 'opd', type: 'string'},
+        {name: 'test',type: 'string'}
+    ]
+});
+
+var myStore = new Ext.data.Store({
+    model: 'Dashboard',
+    autoLoad: true,
+    data : [
+        {name: 'Registration', Lab: 'Laboratory', opd: 'OPD', test: 'Test'},  
+    ] 	
+});

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Basic Layout</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+        <script type="text/javascript" src="../../../sencha-touch.js"></script>
+        <script type="text/javascript">
+            Ext.setup({
+                onReady: function(){
+                    new Ext.Panel({
+                        fullscreen: true,
+                        style: "background-color: red",
+                        html: "",
+                        items :[{
+                                        xtype: "container",
+                                        width: "30",
+                                        height: "30",
+                                        style: "background-color: lightyellow"
+                                    },
+                                    {
+                                        xtype: "container",
+                                        width: "30",
+                                        height: "30",
+                                        style: "background-color: black"
+                                    }],
+                        dockedItems: [{
+                                xtype: "container",
+                                height: "10",
+                                style: "background-color: blue"
+                            },
+                            {
+                                xtype: "panel",
+                                dock: "bottom",
+                                height: "20",
+                                style: "background-color: green",
+                                dockedItems :[{
+                                        xtype: "container",
+                                        dock: "Left",
+                                        width: "30",
+                                        style: "background-color: yellow"
+                                    },
+                                    {
+                                        xtype: "container",
+                                        dock: "right",
+                                        width: "30",
+                                        style: "background-color: lightblue"
+                                    }]
+
+                            }]
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

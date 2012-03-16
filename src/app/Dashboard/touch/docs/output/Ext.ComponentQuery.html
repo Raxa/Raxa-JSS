@@ -1,0 +1,51 @@
+<div xmlns:ext="http://www.extjs.com" class="body-wrap"><h1>Class <a href="source/ComponentQuery.html#cls-Ext.ComponentQuery">Ext.ComponentQuery</a></h1><table cellspacing="0"><tr><td class="label">Package:</td><td class="hd-info">Ext</td></tr><tr><td class="label">Defined In:</td><td class="hd-info"><a href="source/ComponentQuery.html#cls-Ext.ComponentQuery">ComponentQuery.js</a></td></tr><tr><td class="label">Class:</td><td class="hd-info"><a href="source/ComponentQuery.html#cls-Ext.ComponentQuery">ComponentQuery</a></td></tr><tr><td class="label">Extends:</td><td class="hd-info">Object</td></tr></table><div class="description">Provides searching of Components within Ext.ComponentMgr (globally) or a specific
+Ext.Container on the document with a similar syntax to a CSS selector.
+Xtypes can be retrieved by their name with an optional . prefix
+<ul>
+    <li>component or .component</li>
+    <li>gridpanel or .gridpanel</li>
+</ul>
+An itemId or id must be prefixed with a #.
+<ul>
+    <li>#myContainer</li>
+</ul>
+Attributes must be wrapped in brackets
+<ul>
+    <li>component[autoScroll]</li>
+    <li>panel[title="Test"]</li>
+</ul>
+Member expressions from candidate Components may be tested. If the expression returns a <i>truthy</i> value,
+the candidate Component will be included in the query:<pre><code><b>var</b> disabledFields = myFormPanel.query(<em>"{isDisabled()}"</em>);</code></pre>
+Pseudo classes may be used to filter results in the same way as in <a href="output/Ext.DomQuery.html" ext:cls="Ext.DomQuery">DomQuery</a>:<code><pre>
+<i>// Function receives array and returns a filtered array.</i>
+Ext.ComponentQuery.pseudos.invalid = <b>function</b>(items) {
+    <b>var</b> i = 0, l = items.length, c, result = [];
+    <b>for</b> (; i < l; i++) {
+        <b>if</b> (!(c = items[i]).isValid()) {
+            result.push(c);
+        }
+    }
+    <b>return</b> result;
+};
+
+<b>var</b> invalidFields = myFormPanel.query(<em>'field:invalid'</em>);
+<b>if</b> (invalidFields.length) {
+    invalidFields[0].getEl().scrollIntoView(myFormPanel.body);
+    <b>for</b> (<b>var</b> i = 0, l = invalidFields.length; i < l; i++) {
+        invalidFields[i].getEl().frame(<em>"red"</em>);
+    }
+}
+</pre></code>
+Queries return an array of components.
+Here are some example queries.
+<pre><code><i>// retrieve all Ext.Panel<em>'s on the document by xtype</i>
+    <b>var</b> panelsArray = Ext.ComponentQuery.query('</em>.panel<em>');
+
+    <i>// retrieve all Ext.Panels within the container <b>with</b> an id myCt</i>
+    <b>var</b> panelsWithinmyCt = Ext.ComponentQuery.query('</em>#myCt .panel<em>');
+
+    <i>// retrieve all direct children which are Ext.Panels within myCt</i>
+    <b>var</b> directChildPanel = Ext.ComponentQuery.query('</em>#myCt > .panel<em>');
+
+    <i>// retrieve all gridpanels and listviews</i>
+    <b>var</b> gridsAndLists = Ext.ComponentQuery.query('</em>gridpanel, listview<em>');</code></pre><br><br><i>This class is a singleton and cannot be created directly.</i></div><div class="hr"></div><a id="Ext.ComponentQuery-props"></a><h2>Public Properties</h2><div class="no-members">This class has no public properties.</div><a id="Ext.ComponentQuery-methods"></a><h2>Public Methods</h2><div class="no-members">This class has no public methods.</div><a id="Ext.ComponentQuery-events"></a><h2>Public Events</h2><div class="no-members">This class has no public events.</div></div>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>4915</title>
+        <link rel="stylesheet" href="/sencha-touch-1.1.0/resources/css/sencha-touch.css"/>
+        <script src="/sencha-touch-1.1.0/sencha-touch-debug.js"></script>
+        <script>
+        Ext.is.Phone = true;
+        Ext.setup({
+        
+        onReady: function() {     
+                var MyFormPanel = Ext.extend(Ext.form.FormPanel, {
+                    
+                    initComponent: function() {
+                        this.addEvents('apply');
+                        MyFormPanel.superclass.initComponent.apply(this, arguments);
+                    },
+                    hidden: true,
+                    centered: true,
+                    overlay: true,
+                    floating: true,
+                    minLength: 2,
+                    modal: true,
+                    width: '90%',
+                    hideOnMaskTap : false,
+                    remove: function() {
+                        this.reset();
+                    },
+                    constructor: function(config) {
+                        config = config || {};
+                        Ext.applyIf(config, {
+                            align: 'center',
+                            items: [{
+                                xtype: 'toolbar',
+                                title: 'Filter by'
+                            },{
+                                xtype: 'fieldset',
+                                defaults: {
+                                    padding: '0 10% 0 10%',
+                                    //width: '100%'
+                                },
+                                items: [{
+                                    id: 'airline-filter',
+                                    label: 'Airline:',
+                                    name: 'MarketingAirlineFilter'
+                                },{
+                                    id: 'numstops-filter',
+                                    label: 'Number of Stop:',
+                                    name : 'NumberOfStopsFilter',
+                                    xtype: 'selectfield',
+                                    width: '100%',
+                                    options: [{
+                                        text: 'Non-stop',
+                                        value: 0
+                                    },{
+                                        text: 'One stop',
+                                        value: 1
+                                    },{
+                                        text: 'Two Stops',
+                                        value: 2
+                                    }]
+                                }]
+                            },{
+                                xtype: 'spacer',
+                                height: 20
+                            },{
+                                padding: '0 4% 0 4%',
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'justify',
+                                    align: 'center'
+                                },
+                                defaults: {
+                                    width: '32%',
+                                    xtype: 'button'
+                                },
+                                items: [{
+                                    text: 'Cancel',
+                                    handler: function() {
+                                        this.hide();
+                                    },
+                                    scope: this
+                                },{
+                                    text: 'Reset Filter',
+                                    handler: function() {
+                                        this.reset();
+                                    },
+                                    scope: this
+                                },{
+                                    text: 'Apply',
+                                    handler: function() {
+                                        console.log(fp);
+                                        this.submit();
+                                    },
+                                    scope: this
+                                }]
+                            }],
+                            listeners: {
+                                activate: function()    {
+                                    console.log('activate');
+                                },
+                                show: function()    {
+                                    console.log('shhow');
+                                    this.up('#flight-content').getActiveItem().mask();
+                                },
+                                hide: function()    {
+                                    this.up('#flight-content').getActiveItem().show();	
+                                }
+                            }
+                        });
+                        MyFormPanel.superclass.constructor.call(this, config);
+                    }
+                });
+                
+                var fp = new MyFormPanel();
+                var mp = new Ext.Panel({
+                    fullscreen: true,
+                    items:[{
+                        xtype: 'button',
+                        text: 'show form',
+                        handler: function() {
+                            fp.show();
+                        }
+                    }]
+                });
+            } 
+        });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
