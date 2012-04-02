@@ -66,7 +66,7 @@ Ext.define('RaxaEmr.Registration.view.Search', {
 			{
 				xtype: 'button',
 				text: 'Search',
-                action: 'searchPatients'
+              			action: 'searchPatients'
             }]
 		}]
 	}

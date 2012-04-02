@@ -8,8 +8,12 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 			// gives getCreatePatientForm()
 			createPatientForm: '#createPatientForm',
 			// gives getSearchPatientsForm()
-            searchPatientsForm: '#searchPatientsForm'
-		}
+		         searchPatientsForm: '#searchPatientsForm'
+				
+		},
+		
+		
+		
 	},
 
 	init: function() {
@@ -87,6 +91,19 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         console.log(rec);
         wasPatientFound = (rec === null) ? "No patient found" : "Patient found";
         alert("Searching for patient with first name = '" + query + "'..." +  wasPatientFound);
+	},
+	
+//	submitBMI: function() {
+//        console.log("Adding BMI to patient");
+//
+//	},
+
+	calculateBMI: function() {
+        console.log("Adding BMI to patient");
+	//BMI Funcation will be implimented here	
+	//BMI = ( Weight in Pounds / ( Height in inches x Height in inches ) ) x 703
 	}
+	
+	
 });
 
