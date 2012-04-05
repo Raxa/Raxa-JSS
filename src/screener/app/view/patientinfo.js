@@ -63,7 +63,12 @@ minWidth:400,
 				name: 'district',
 				label: 'District',
 							},
-
+	{
+				// TODO: show patient file
+				xtype: 'button',
+				text: 'View Patient File',
+				action: 'viewPatientFile'
+			}
 			]
 		}]
 	}
