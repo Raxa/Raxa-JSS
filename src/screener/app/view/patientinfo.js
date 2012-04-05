@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.Screener.view.patientinfo', {
 	id: 'PatientInfoForm',
 
 	config: {
-		title: 'Patients Information',
+		title: 'Patients Summary',
 		styleHtmlContent: true,
 		xtype: 'patientScreen1',
 		Autoscroll: 'true',
@@ -13,7 +13,7 @@ Ext.define('RaxaEmr.Screener.view.patientinfo', {
 		// List takes a store and a template
 		items: [{
 			xtype: 'fieldset',
-			title: 'Patient Information',
+			title: 'Patient Summary',
 			align: 'center',
 			centered: true,
 			items: [{
@@ -32,38 +32,38 @@ minWidth:400,
 			},
 			{
 				xtype: 'field',
-				label: 'Father/Husband First Name',
-				name: 'guardianFirstName',
-				
-			},
-			{
-				xtype: 'field',
-				label: 'Father/Husband Last Name:',
-				name: 'guardianLastName',
-			
-			},
-			{
-				xtype: 'field',
 				label: 'Sex',
 				name: 'gender',
-							},
+			},
+		
 			{
 				xtype: 'field',
-				label: 'Education',
-				name: 'education',
+				label: 'Age',
+				name: 'age',
 			
 			},
 			{
 				xtype: 'field',
-				label: 'Date of Birth:',
-				name: 'dateOfBirth',
+				label: 'BMI',
+				name: 'bmi',
 				
 			},
 			{
 				xtype: 'field',
-				name: 'caste',
-				label: 'Caste',
+				name: 'id#',
+				label: 'ID#',
 							},
+{
+				xtype: 'field',
+				name: 'village',
+				label: 'Village',
+							},
+{
+				xtype: 'field',
+				name: 'district',
+				label: 'District',
+							},
+
 			]
 		}]
 	}
