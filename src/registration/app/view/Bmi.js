@@ -17,47 +17,47 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
 			items: [{
 				xtype: 'textfield',
 				name: 'patient id ',
-				allowBlank: false,
+//				allowBlank: false,
 				blankText: 'Empty is not allowed',
-				regex: /^[1-9]{1}[0-9]{1,2}(.[0-9]{1,2})?$/,
-				regexText: 'illegal height input',
+//				regex: /^[1-9]{1}[0-9]{1,2}(.[0-9]{1,2})?$/,
+//				regexText: 'illegal patient input',
 				label: 'patientid',
 				placeHolder: 'patientid ',
 				fieldLabel: 'patient id',
 				clearIcon: true
 				},
 				{
-				xtype: 'textfield',
-				name: 'height',
+				xtype: 'numberfield',
+				name: 'height(Feets)',
+				id:  'heightFeetId',
+				allowNegative : false,
 				allowBlank: false,
 				blankText: 'Empty is not allowed',
-				regex: /^[1-9]{1}[0-9]{1,2}(.[0-9]{1,2})?$/,
-				regexText: 'illegal height input',
 				label: 'Height',
 				placeHolder: 'Feets',
-				fieldLabel: 'height',
+				fieldLabel: 'heightfeet',
 				clearIcon: true
 				},
 				{
-				xtype: 'textfield',
+				xtype: 'numberfield',
 				name: 'height1',
+				id: 'heightInchesId',
+				allowNegative : false,
 				allowBlank: false,
 				blankText: 'Empty is not allowed',
-				regex: /^[1-9]{1}[0-9]{1,2}(.[0-9]{1,2})?$/,
-				regexText: 'illegal height input',
-				label: 'Height',
+				label: 'Height(Inches)',
 				placeHolder: 'Inches',
-				fieldLabel: 'height1',
+				fieldLabel: 'heightinches',
 				clearIcon: true
 			},
 			{
-				xtype: 'textfield',
+				xtype: 'numberfield',
 				name: 'weight',
+				id: 'weightId',
+				allowNegative : false,
 				allowBlank: false,
 				blankText: 'Empty is not allowed',
-				regex: /^[1-9][0-9]{0,2}(.[0-9]{1,2})?$/,
-				regexText: 'illegal weight input',
-				label: 'Weight:',
+				label: 'Weight(Kg)',
 				placeHolder: 'kilograms',
 				fieldLabel: 'weight',
 				clearIcon: true
@@ -67,13 +67,17 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
 				items: [{
 					xtype: 'button',
 					text: 'Calculate BMI',
-					action: 'calculatebmi',					
+			        action:'calculatebmi',
+					
 					},
 					{
-					xtype: 'textfield',
-					name: 'BMI',
+					xtype: 'numberfield',
+					name: 'BMITextField',
+					id: 'BMITextFieldId',
 					label: 'BMI Value',
-					readOnly: true,
+					allowNegative : false,
+			//		readOnly: true,
+					align: 'centre',
 					placeHolder: 'Press above to Calculate'
 					}]
 			},		
@@ -89,15 +93,28 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
 			{
 				        xtype: 'sliderfield',
             				align: 'center',
+            				id: 'bmiSlider',
             				value: 30,
             				minValue: 0,
             				maxValue: 60,
+					readOnly: true,
+
             				
-        		},		
+        		},
+        		{
+					xtype: 'textfield',
+					name: 'BmiStatus',
+					id: 'BmiStatusId',
+					readOnly: true,
+					draggable : false
+	
+			},
+        				
 			{
 					xtype: 'button',
 					text: 'Submit',
-					action: 'submitbmi'
+					action: 'submitbmi',
+					
 	
 			}]
 		}]

@@ -11,9 +11,12 @@ Ext.define('RaxaEmr.Registration.view.Viewport', {
 		{
 			xtype: 'searchpage' // view/Search.js
 		},
-        {
-            xtype: 'bmipage' // view/Bmi.js
-        }
+        	{
+            		xtype: 'bmipage' // view/Bmi.js
+        	},
+        	{
+        		xtype: 'RestWebServiceTestPage'
+      		}
     ]
 	}
 });
