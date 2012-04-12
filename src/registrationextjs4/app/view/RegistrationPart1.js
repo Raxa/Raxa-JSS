@@ -175,7 +175,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         text: 'Next',
                         handler: function () {
                             var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(2);
+                            l.setActiveItem(2);//going to registration part-2 page
                         }
                     }, {
                         xtype: 'button',
