@@ -14,9 +14,6 @@ Ext.define('RaxaEmr.Registration.view.Viewport', {
         	{
             		xtype: 'bmipage' // view/Bmi.js
         	},
-        	{
-        		xtype: 'RestWebServiceTestPage'
-      		}
     ]
 	}
 });
