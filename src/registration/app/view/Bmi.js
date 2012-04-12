@@ -1,63 +1,98 @@
 Ext.define('RaxaEmr.Registration.view.Bmi', {
 	extend: 'Ext.Container',
 	xtype: 'bmipage',
-	id: 'bmiCalculator',
 
 	config: {
-		title: 'Calculate BMI',
+		title: 'BMI Value',
 		iconCls: 'user',
 		styleHtmlContent: true,
 
 		items: [{
 			id: 'BMIInput',
 			xtype: 'fieldset',
-			title: 'BMI Value',
+			title: '<center>BMI Value<centre>',
 			align: 'center',
 			centered: true,
-			items: [{
-				xtype: 'textfield',
-				name: 'height',
+			items: [
+				{
+				xtype: 'numberfield',
+				name: 'height(cms)',
+				id:  'heightCmId',
+				allowNegative : false,
 				allowBlank: false,
 				blankText: 'Empty is not allowed',
-				regex: /^[1-9]{1}[0-9]{1,2}(.[0-9]{1,2})?$/,
-				regexText: 'illegal height input',
-				label: 'Height',
-				placeHolder: 'centimeters',
-				fieldLabel: 'height',
+				label: 'Height(cms)',
+				placeHolder: 'Height (in cms)',
+				fieldLabel: 'heightCms',
 				clearIcon: true
-			},
-			{
-				xtype: 'textfield',
+				},
+				
+				{
+				xtype: 'numberfield',
 				name: 'weight',
+				id: 'weightId',
+				allowNegative : false,
 				allowBlank: false,
 				blankText: 'Empty is not allowed',
-				regex: /^[1-9][0-9]{0,2}(.[0-9]{1,2})?$/,
-				regexText: 'illegal weight input',
-				label: 'Weight:',
-				placeHolder: 'kilograms',
+				label: 'Weight(Kg)',
+				placeHolder: 'Weight(in Kg)',
 				fieldLabel: 'weight',
 				clearIcon: true
-			},
-			{
+				},
+				{
 				id: 'BMIResult',
 				items: [{
 					xtype: 'button',
 					text: 'Calculate BMI',
-					handler: function() {
-						// Calculate Bmi
-					}
-					//				ui: 'forward',
-				},
-				{
-					xtype: 'textfield',
-					name: 'BMI',
+			   		action:'CalculateBmiAction',
+					
+					},
+					{
+					xtype: 'numberfield',
+					name: 'BMITextField',
+					id: 'BMITextFieldId',
 					label: 'BMI Value',
+					allowNegative : false,
+					align: 'centre',
+					placeHolder: 'Press above to Calculate'
+					}]
+			},		
+			{
+ 					xtype: 'label',
+    					html: '<div align="center"><b>BMI Index</div>',
+    			},
+			{
+ 					xtype: 'label',
+    					html: '<div align="center">0 5 10 15 20 25 30 35 40 45 50 55 60</div>',
+    			
+			},
+			{
+				        xtype: 'sliderfield',
+            				align: 'center',
+            				id: 'bmiSlider',
+            				value: 30,
+            				minValue: 0,
+            				maxValue: 60,
 					readOnly: true,
-					placeHolder: ''
-				}]
 
+            				
+        		},
+        		{
+					xtype: 'textfield',
+					name: 'BmiStatus',
+					id: 'BmiStatusId',
+					readOnly: true,
+					draggable : false
+	
+			},
+        				
+			{
+					xtype: 'button',
+					text: 'Submit',
+					action: 'submitbmi',
+					
+	
 			}]
 		}]
 	}
 });
-

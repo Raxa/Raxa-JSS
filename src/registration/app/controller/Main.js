@@ -4,6 +4,13 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 	extend: 'Ext.app.Controller',
 
 	config: {
+
+		 control: {
+         		'button[action=CalculateBmiAction]': {
+	                				tap: 'CalculateBmiMethod'
+            					       }
+       			  },
+
 		refs: {
 			// gives getCreatePatientForm()
 			createPatientForm: '#createPatientForm',
@@ -11,7 +18,48 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
             searchPatientsForm: '#searchPatientsForm'
 		}
 	},
+	
+	//function to calculate bmi (from Bmi.js)
+	CalculateBmiMethod: function(){
+	var weight_kg = parseInt(Ext.getCmp('weightId').getValue());		//Get Weight value from Form
+	var height_cm=parseInt(Ext.getCmp('heightCmId').getValue());		//Get Height(cm) value from Form
+	var height_m= height_cm/100 ;						//Convert cm in to m
+	var bmi = (weight_kg)/(height_m*height_m); 				//BMI Calculation
+	var bmi_rounded=Math.round(bmi*100)/100; 			        //Rouded till 2 digits
+	Ext.getCmp('BMITextFieldId').setPlaceHolder(bmi_rounded);  		//Bmi displayed to user
+	Ext.getCmp('bmiSlider').setValue(bmi);					//Slider set to calculated Bmi
 
+	// Bmi status from WHO Standards
+	var WHO_BMI_UNDERWEIGHT = 18.5;
+	var WHO_BMI_NORMAL = 25;
+	var WHO_BMI_OVERWEIGHT = 30;
+	
+	if (bmi<WHO_BMI_UNDERWEIGHT)
+		{
+			this.updateBmiDisplay('red','Underweight');			
+		}
+	if (bmi>=WHO_BMI_UNDERWEIGHT && bmi<WHO_BMI_NORMAL)
+		{
+			this.updateBmiDisplay('green','Normal');	
+		}
+	if (bmi>=WHO_BMI_NORMAL && bmi<WHO_BMI_OVERWEIGHT)
+		{
+			this.updateBmiDisplay('blue','Overweight');
+		}
+	if (bmi>=WHO_BMI_OVERWEIGHT)
+		{
+			this.updateBmiDisplay('red','Obese');
+		}
+
+	},
+	
+	updateBmiDisplay: function(color, bmiStatusText)
+		{
+		var updatedHtml = '<div align="center" style="color:'+color+'"><b>BMI Status: '+bmiStatusText +'</div>';
+	
+		Ext.getCmp('BmiStatusId').setHtml(updatedHtml);
+		},
+	
 	init: function() {
 		console.log('Main controller init');
 		this.initializePatientStore();
