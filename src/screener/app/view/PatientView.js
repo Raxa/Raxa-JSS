@@ -5,7 +5,7 @@
  * a doctor.
  */
 
-Ext.define("Screener.view.PatientView", {
+Ext.define("RaxaEMR.Screener.view.PatientView", {
 	extend: 'Ext.Container',
 	xtype: 'patientList',
 	config: {
@@ -20,7 +20,7 @@ Ext.define("Screener.view.PatientView", {
 		        	id: 'patientList',
 
 		        	itemTpl: '{lastname}, {firstname}',
-		        	store: Ext.create('Screener.store.Patients',{
+		        	store: Ext.create('RaxaEMR.Screener.store.Patients',{
 		        		storeId: 'patientStore'
 
 		        	}),
@@ -47,7 +47,7 @@ Ext.define("Screener.view.PatientView", {
 		        	id: 'doctorList',
 
 		        	itemTpl: '({numpatients})Dr. {firstname} {lastname}',
-		        	store: Ext.create('Screener.store.Doctors', {
+		        	store: Ext.create('RaxaEMR.Screener.store.Doctors', {
 		        		storeId: 'doctorStore'
 		        	}),
 		        	items:[{
