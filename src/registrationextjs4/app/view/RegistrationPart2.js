@@ -1,4 +1,4 @@
-Ext.define('Registration.view.RegistrationPart2', {
+Ext.define('RaxaEmr.Registration.view.RegistrationPart2', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.registrationpart2',
     border: 0,
