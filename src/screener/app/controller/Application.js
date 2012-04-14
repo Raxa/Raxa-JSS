@@ -15,7 +15,8 @@ Ext.define("Screener.controller.Application", {
 			navBar: '#navBar',
 			patientView: 'patientView',
 			doctorView: 'doctorView',
-			newPatient: 'newPatient',
+                pharmacyView: 'pharmacyView',
+		newPatient: 'newPatient',
 			sortPanel: 'sortPanel',
 			patientList: '#patientList',
 			doctorList: '#doctorList',
@@ -26,6 +27,7 @@ Ext.define("Screener.controller.Application", {
 			formid: '#formid',
 			addPatientButton: '#addPatientButton',
 			showPatientsButton: '#showPatientsButton',
+                 showPharmacyButton: '#showPharmacyButton',
 			showDoctorsButton: '#showDoctorsButton',
 			savePatientButton: '#savePatientButton', 
 			assignButton: '#assignButton',
@@ -50,6 +52,9 @@ Ext.define("Screener.controller.Application", {
 			},
 			showDoctorsButton: {
 				tap: 'showDoctors'
+			},
+               showPharmacyButton: {
+				tap: 'showPharmacy'
 			},
 			assignButton: {
 				tap: 'assignPatient'
@@ -150,6 +155,14 @@ Ext.define("Screener.controller.Application", {
 		}
 		this.getExpandDoctorList().deselectAll();		
 		this.getView().push(this.doctorView);
+	},
+//function to show screen with pharmacy list
+	showPharmacy: function() {
+		if(!this.pharmacyView){ 
+			this.pharmacyView = Ext.create('Screener.view.PharmacyView');
+		}
+		
+		this.getView().push(this.pharmacyView);
 	},
 
 	//keeping track of which patient/doctor is currently selected

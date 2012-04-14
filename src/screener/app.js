@@ -30,7 +30,7 @@ Ext.application({
     models: ['Patient', 'Doctor'],
 
     //here we declare the visual components
-    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort'],
+    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'Pharmacyform'],
     
     //here we declare our controller that will perform actions
     controllers: ['Application'],
