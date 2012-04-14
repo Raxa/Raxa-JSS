@@ -1,11 +1,11 @@
 /*
- * This store loads the doctors from file 'doctors.json'
+ * This store loads the drugs from file 'drugs.json'
  * Note: there is no writer attached, so changes will
  * only occur in local cache
  */
 Ext.define('Screener.store.Drugs', {
 	extend: 'Ext.data.Store',
-	xtype: 'drugStore',
+	
     config: {
     	model: 'Screener.model.Drug',
     	proxy: {

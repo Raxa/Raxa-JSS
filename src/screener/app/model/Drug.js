@@ -1,8 +1,6 @@
 /*
- * This class defines a Patient, with strings for
- * first and last name, and ID for FIFO
- * doctorid links a patient to a doctor's current
- * waiting list (-1 if unassigned)
+ * This class defines a Drug, with strings for
+ * Strength,drugname and duration,with quantity
  */
 Ext.define('Screener.model.Drug', {
 	extend: 'Ext.data.Model',
