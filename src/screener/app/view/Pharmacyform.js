@@ -2,19 +2,19 @@
 
 Ext.define("Screener.view.Pharmacyform", {
 	
-      xtype:'pharmacyform',
+      xtype: 'pharmacyform',
 extend: 'Ext.form.Panel',
-requires: ['Ext.tab.Panel','Ext.form.FieldSet','Ext.form.Panel'],
+requires: ['Ext.tab.Panel','Ext.form.FieldSet'],
 	
 config:{
      styleHtmlContent: true,
-		
+		xtype:'orderform',
 		autoscroll: true,
 
 
       items:[{
               xtype: 'fieldset',
-              title: 'order',
+              title: 'Pharmacy Order',
 		
 	 items: [
         {
@@ -45,7 +45,19 @@ config:{
 					text: 'C',
 					value: 'c'
 				}]
-			}
+			},
+			{xtype: 'combobox',
+fieldLabel: 'Combobox',
+
+store: Ext.create('Screener.store.Drugs',{
+		        		storeId: 'drugorder'
+
+		        	}),
+					displayField: 'drugname',
+valueField: 'drugname',
+queryMode: 'local',
+typeAhead: true
+    }
 
   
           ]
