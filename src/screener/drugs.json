@@ -1,0 +1,6 @@
+[
+    { drugname: "Paracetamol", strength: "Aragon", qty: '5', duration:"once a week"},
+    { drugname: "Paracetamol2", strength: "Aragon2", qty: '5', duration:"once a week"},
+    { drugname: "Paracetamol3", strength: "Aragon3", qty: '5', duration:"once a week"},
+    { drugname: "Paracetamol4", strength: "Aragon4", qty: '5', duration:"once a week"},
+]
