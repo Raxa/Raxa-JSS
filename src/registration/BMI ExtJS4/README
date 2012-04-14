@@ -1,0 +1,15 @@
+BMI Calculator UI Elements
+
+This UI is made solely in ExtJS. Calculations can be verified from another javascript UI.
+
+It has the following components:-
+•	Enter Weight in Kgs
+•	Enter Height in cms
+•	Calculate BMI Button
+•	BMI Value Textbox (Read only textbox)
+•	Draggable and Resizeable Window
+
+NOTE: Apart from this, I have added a relatively small javascript, (with temporary textboxes, button and a chart), which seems informative (segregation of Indices) and the chart is a nice addition to the app/site. It can be omitted from the page at any time.  Right now, it is commented out.
+This can be integrated with ExtJS Charts in the future.
+
+
