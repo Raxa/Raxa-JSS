@@ -8,7 +8,43 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 			// gives getCreatePatientForm()
 			createPatientForm: '#createPatientForm',
 			// gives getSearchPatientsForm()
-            searchPatientsForm: '#searchPatientsForm'
+            searchPatientsForm: '#searchPatientsForm',
+			confirmPatientForm: '#confirmPatientForm',
+			firstname: '#firstnameregister',
+			firstnameconfirm: '#firstname',
+			lastname: '#lastnameregister',
+			lastnameconfirm: '#lastname',
+			guardianfirstname: '#guardianfirstnameregister',
+			guardianfirstnameconfirm: '#guardianfirstname',
+			guardianlastname: '#guardianlastnameregister',
+			guardianlastnameconfirm: '#guardianlastname',
+			gender: '#genderregister',
+			genderconfirm: '#gender',
+			education: '#educationregister',
+			educationconfirm: '#education',
+			dob: '#dobregister',
+			dobconfirm: '#dob',
+			caste: '#casteregister',
+			casteconfirm: '#caste',
+			block: '#blockregister',
+			blockconfirm: '#block',
+			street: '#streetregister',
+			streetconfirm: '#street',
+			town: '#townregister',
+			townconfirm: '#town',
+			postoffice: '#postofficeregister',
+			postofficeconfirm: '#postoffice',
+			tehsil: '#tehsilregister',
+			tehsilconfirm: '#tehsil',
+			district: '#districtregister',
+			districtconfirm: '#district',
+			contactviaphone: '#contactviaphoneregister',
+			contactviaphoneconfirm: '#contactviaphone',
+			primaryphone: '#primaryphoneregister',
+			primaryphoneconfirm: '#primaryphone',
+			secondaryphone: '#secondaryphoneregister',
+			secondaryphoneconfirm: '#secondaryphone'
+			
 		}
 	},
 
@@ -23,6 +59,12 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 			},
 			'button[action=searchPatients]': {
 				tap: 'searchPatients'
+			},
+			'button[action=confirmPatient]': {
+				tap: 'confirmPatient'
+			},
+			'button[handler=backtoEdit]': {
+				tap: 'backtoEdit'
 			}
 		});
 	},
@@ -65,8 +107,59 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
      * Takes input from Registration Form and creates a patient in LocalStorage
      */
 	createPatient: function() {
-        console.log("createPatient");
+        	console.log("createPatient");
+		var viewer = Ext.getCmp('viewer');
+		var results = Ext.getCmp('viewer').getComponent(1);
+		this.getFirstnameconfirm().setValue(this.getFirstname().getValue());
+		this.getLastnameconfirm().setValue(this.getLastname().getValue());
+		this.getGuardianfirstnameconfirm().setValue(this.getGuardianfirstname().getValue());
+		this.getGuardianlastnameconfirm().setValue(this.getGuardianlastname().getValue());
+		this.getGenderconfirm().setValue(this.getGender().getValue());
+		this.getEducationconfirm().setValue(this.getEducation().getValue());
+		this.getDobconfirm().setValue(this.getDob().getValue());
+		this.getCasteconfirm().setValue(this.getCaste().getValue());
+		this.getBlockconfirm().setValue(this.getBlock().getValue());
+		this.getStreetconfirm().setValue(this.getStreet().getValue());
+		this.getTownconfirm().setValue(this.getTown().getValue());
+		this.getPostofficeconfirm().setValue(this.getPostoffice().getValue());
+		this.getTehsilconfirm().setValue(this.getTehsil().getValue());
+		this.getDistrictconfirm().setValue(this.getDistrict().getValue());
+		this.getContactviaphoneconfirm().setValue(this.getContactviaphone().getValue());
+		this.getPrimaryphoneconfirm().setValue(this.getPrimaryphone().getValue());
+		this.getSecondaryphoneconfirm().setValue(this.getSecondaryphone().getValue());
+		viewer.animateActiveItem(results,{type:'slide',direction:'left'});
+	},
+	
+	confirmPatient: function() {
+		console.log('confirmPatient');
 		this.addPatientToStore();
+		var viewer = Ext.getCmp('viewer');
+		var target = viewer.getComponent(0);
+		this.getFirstname().setValue('');
+		this.getLastname().setValue('');
+		this.getGuardianfirstname().setValue('');
+		this.getGuardianlastname().setValue('');
+		this.getGender().setValue('');
+		this.getEducation().setValue('');
+		this.getDob().setValue('');
+		this.getCaste().setValue('');
+		this.getBlock().setValue('');
+		this.getStreet().setValue('');
+		this.getTown().setValue('');
+		this.getPostoffice().setValue('');
+		this.getTehsil().setValue('');
+		this.getDistrict().setValue('');
+		this.getContactviaphone().setValue('');
+		this.getPrimaryphone().setValue('');
+		this.getSecondaryphone().setValue('');
+		viewer.animateActiveItem(target,{type:'slide',direction:'left'});
+	},
+	
+	backtoEdit: function() {
+		console.log('back pressed');
+		var viewer = Ext.getCmp('viewer');
+		var target = viewer.getComponent(0);
+		viewer.animateActiveItem(target,{type:'slide',direction:'right'});
 	},
 
     /*
@@ -89,4 +182,3 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         alert("Searching for patient with first name = '" + query + "'..." +  wasPatientFound);
 	}
 });
-
