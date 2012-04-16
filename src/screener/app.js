@@ -23,12 +23,12 @@ Ext.application({
     requires: [
         'Screener.store.Patients',
         'Screener.store.Doctors',
-'Screener.store.Drugs',
+
         'Ext.navigation.View'
     ],
     
     //we will use a Patient and Doctor class
-    models: ['Patient', 'Doctor','Drug'],
+    models: ['Patient', 'Doctor'],
 
     //here we declare the visual components
     views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'Pharmacyform'],
@@ -37,7 +37,7 @@ Ext.application({
     controllers: ['Application'],
 
     //the stores will hold our data in a local cache
-    stores: ['Patients', 'Doctors','Drugs'],
+    stores: ['Patients', 'Doctors'],
     
     //entry point
     launch: function() {

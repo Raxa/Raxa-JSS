@@ -7,6 +7,7 @@ Ext.define('RaxaEmr.Registration.view.PatientScreen1', {
 		styleHtmlContent: true,
 		xtype: 'patientScreen1',
 		autoscroll: true,
+		layout:'vbox',
 
 		// List takes a store and a template
 		items: [{
@@ -124,7 +125,8 @@ Ext.define('RaxaEmr.Registration.view.PatientScreen1', {
 				text: '(Temp Button) create Patient',
 				action: 'createPatient'
 			}]
-		}]
-	}
-});
+	}]
+
+	
+	}});
 

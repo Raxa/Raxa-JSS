@@ -1,16 +1,16 @@
 /*
  * This screen shows a list of patients on the left side,
- * with a button to sort them. The right side shows available
- * doctors, with an assign button on top to give a patient to
- * a doctor.
+ * with a button to sort them. The right side shows a drug order    *  form
  */
 
 Ext.define("Screener.view.PharmacyView", {
 	extend: 'Ext.Container',
+	id: 'pharmacyView',
 
 requires : [ 'Screener.view.Pharmacyform' ],
       
 	xtype: 'pharmacylist',
+
 	config: {
 		fullscreen: true,
 		layout: 'hbox',
@@ -39,13 +39,14 @@ requires : [ 'Screener.view.Pharmacyform' ],
 		        			align: 'left'
 		        		}]
 		        	}],
-		        	flex:1,
+		        	flex:1
 
 		        },
 
 
              {xtype : 'pharmacyform',
-             flex:2
+		
+             flex:1
 
 
              }
