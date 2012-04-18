@@ -15,10 +15,6 @@ Ext.define("Screener.view.PharmacyView", {
         //our patient list is built on the Patients store, and has a title and sort button
         {
             xtype: 'patientListView',
-            store: Ext.create('Screener.store.Patients', {
-                storeId: 'patientStore'
-            }),
-            itemTpl: '{lastname}, {firstname}',
             flex: 1
         }, {
             xtype: 'pharmacyForm',

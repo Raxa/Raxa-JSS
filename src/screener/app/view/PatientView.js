@@ -6,7 +6,6 @@
  */
 Ext.define("Screener.view.PatientView", {
     extend: 'Ext.Container',
-    xtype: 'patientList',
     config: {
         fullscreen: true,
         layout: 'hbox',
@@ -15,11 +14,6 @@ Ext.define("Screener.view.PatientView", {
         //our patient list is built on the Patients store, and has a title and sort button
         {
             xtype: 'patientListView',
-            id: 'patientList',
-            store: Ext.create('Screener.store.Patients', {
-                storeId: 'patientStore'
-            }),
-            itemTpl: '{lastname}, {firstname}',
             flex: 1
         },
         //our doctor list is built on the Doctors store, and has a title and assign button
