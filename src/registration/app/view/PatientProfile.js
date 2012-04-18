@@ -210,34 +210,7 @@ Ext.define('RaxaEmr.view.Login', {
         },
         {
             html: '<div class="logoText">Jan Swasthya Sahyog</div>'
-
         }
-        //        {
-        //            xtype: 'fieldset',
-        //            title: 'Please login',
-        //            align: 'center',
-        //            centered: true,
-        //            style: 'width: 50%;',
-        //            labelWidth: '35%',
-        //            items: [
-        //            {
-        //                xtype: 'textfield',
-        //                label: 'Username',
-        //                clearIcon: true
-        //            },
-        //            {
-        //                xtype: 'passwordfield',
-        //                label: 'Password',
-        //                clearIcon: true
-        //            }
-        //            ]
-        //        },
-        //        {
-        //            xtype: 'button',
-        //            text: 'SIGN IN',
-        //            centered: true,
-        //            style: 'margin-top: 180px;'
-        //        }
         ]
       
     }
