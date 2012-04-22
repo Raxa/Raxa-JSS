@@ -221,9 +221,7 @@ Ext.define('RaxaEmr.Registration.view.PatientConfirm', {
 						{
 							xtype: 'button',
 							text: 'Confirm',
-							//action: 'createPatient'
 							action: 'confirmPatient'
-							
 						}]
 					}]
 			}]

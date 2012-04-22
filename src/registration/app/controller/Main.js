@@ -10,40 +10,40 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 			// gives getSearchPatientsForm()
             searchPatientsForm: '#searchPatientsForm',
 			confirmPatientForm: '#confirmPatientForm',
-			firstname: '#firstnameregister',
-			firstnameconfirm: '#firstname',
-			lastname: '#lastnameregister',
-			lastnameconfirm: '#lastname',
-			guardianfirstname: '#guardianfirstnameregister',
-			guardianfirstnameconfirm: '#guardianfirstname',
-			guardianlastname: '#guardianlastnameregister',
-			guardianlastnameconfirm: '#guardianlastname',
+			firstName: '#firstnameregister',
+			firstNameConfirm: '#firstname',
+			lastName: '#lastnameregister',
+			lastNameConfirm: '#lastname',
+			guardianFirstName: '#guardianfirstnameregister',
+			guardianFirstNameConfirm: '#guardianfirstname',
+			guardianLastName: '#guardianlastnameregister',
+			guardianLastNameConfirm: '#guardianlastname',
 			gender: '#genderregister',
-			genderconfirm: '#gender',
+			genderConfirm: '#gender',
 			education: '#educationregister',
-			educationconfirm: '#education',
+			educationConfirm: '#education',
 			dob: '#dobregister',
-			dobconfirm: '#dob',
+			dobConfirm: '#dob',
 			caste: '#casteregister',
-			casteconfirm: '#caste',
+			casteConfirm: '#caste',
 			block: '#blockregister',
-			blockconfirm: '#block',
+			blockConfirm: '#block',
 			street: '#streetregister',
-			streetconfirm: '#street',
+			streetConfirm: '#street',
 			town: '#townregister',
-			townconfirm: '#town',
-			postoffice: '#postofficeregister',
-			postofficeconfirm: '#postoffice',
+			townConfirm: '#town',
+			postOffice: '#postofficeregister',
+			postOfficeConfirm: '#postoffice',
 			tehsil: '#tehsilregister',
-			tehsilconfirm: '#tehsil',
+			tehsilConfirm: '#tehsil',
 			district: '#districtregister',
-			districtconfirm: '#district',
-			contactviaphone: '#contactviaphoneregister',
-			contactviaphoneconfirm: '#contactviaphone',
-			primaryphone: '#primaryphoneregister',
-			primaryphoneconfirm: '#primaryphone',
-			secondaryphone: '#secondaryphoneregister',
-			secondaryphoneconfirm: '#secondaryphone'
+			districtConfirm: '#district',
+			contactViaPhone: '#contactviaphoneregister',
+			contactViaPhoneConfirm: '#contactviaphone',
+			primaryPhone: '#primaryphoneregister',
+			primaryPhoneConfirm: '#primaryphone',
+			secondaryPhone: '#secondaryphoneregister',
+			secondaryPhoneConfirm: '#secondaryphone'
 			
 		}
 	},
@@ -110,23 +110,23 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         	console.log("createPatient");
 		var viewer = Ext.getCmp('viewer');
 		var results = Ext.getCmp('viewer').getComponent(1);
-		this.getFirstnameconfirm().setValue(this.getFirstname().getValue());
-		this.getLastnameconfirm().setValue(this.getLastname().getValue());
-		this.getGuardianfirstnameconfirm().setValue(this.getGuardianfirstname().getValue());
-		this.getGuardianlastnameconfirm().setValue(this.getGuardianlastname().getValue());
-		this.getGenderconfirm().setValue(this.getGender().getValue());
-		this.getEducationconfirm().setValue(this.getEducation().getValue());
-		this.getDobconfirm().setValue(this.getDob().getValue());
-		this.getCasteconfirm().setValue(this.getCaste().getValue());
-		this.getBlockconfirm().setValue(this.getBlock().getValue());
-		this.getStreetconfirm().setValue(this.getStreet().getValue());
-		this.getTownconfirm().setValue(this.getTown().getValue());
-		this.getPostofficeconfirm().setValue(this.getPostoffice().getValue());
-		this.getTehsilconfirm().setValue(this.getTehsil().getValue());
-		this.getDistrictconfirm().setValue(this.getDistrict().getValue());
-		this.getContactviaphoneconfirm().setValue(this.getContactviaphone().getValue());
-		this.getPrimaryphoneconfirm().setValue(this.getPrimaryphone().getValue());
-		this.getSecondaryphoneconfirm().setValue(this.getSecondaryphone().getValue());
+		this.getFirstNameConfirm().setValue(this.getFirstName().getValue());
+		this.getLastNameConfirm().setValue(this.getLastName().getValue());
+		this.getGuardianFirstNameConfirm().setValue(this.getGuardianFirstName().getValue());
+		this.getGuardianLastNameConfirm().setValue(this.getGuardianLastName().getValue());
+		this.getGenderConfirm().setValue(this.getGender().getValue());
+		this.getEducationConfirm().setValue(this.getEducation().getValue());
+		this.getDobConfirm().setValue(this.getDob().getValue());
+		this.getCasteConfirm().setValue(this.getCaste().getValue());
+		this.getBlockConfirm().setValue(this.getBlock().getValue());
+		this.getStreetConfirm().setValue(this.getStreet().getValue());
+		this.getTownConfirm().setValue(this.getTown().getValue());
+		this.getPostOfficeConfirm().setValue(this.getPostOffice().getValue());
+		this.getTehsilConfirm().setValue(this.getTehsil().getValue());
+		this.getDistrictConfirm().setValue(this.getDistrict().getValue());
+		this.getContactViaPhoneConfirm().setValue(this.getContactViaPhone().getValue());
+		this.getPrimaryPhoneConfirm().setValue(this.getPrimaryPhone().getValue());
+		this.getSecondaryPhoneConfirm().setValue(this.getSecondaryPhone().getValue());
 		viewer.animateActiveItem(results,{type:'slide',direction:'left'});
 	},
 	
@@ -135,10 +135,10 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 		this.addPatientToStore();
 		var viewer = Ext.getCmp('viewer');
 		var target = viewer.getComponent(0);
-		this.getFirstname().setValue('');
-		this.getLastname().setValue('');
-		this.getGuardianfirstname().setValue('');
-		this.getGuardianlastname().setValue('');
+		this.getFirstName().setValue('');
+		this.getLastName().setValue('');
+		this.getGuardianFirstName().setValue('');
+		this.getGuardianLastName().setValue('');
 		this.getGender().setValue('');
 		this.getEducation().setValue('');
 		this.getDob().setValue('');
@@ -146,12 +146,12 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 		this.getBlock().setValue('');
 		this.getStreet().setValue('');
 		this.getTown().setValue('');
-		this.getPostoffice().setValue('');
+		this.getPostOffice().setValue('');
 		this.getTehsil().setValue('');
 		this.getDistrict().setValue('');
-		this.getContactviaphone().setValue('');
-		this.getPrimaryphone().setValue('');
-		this.getSecondaryphone().setValue('');
+		this.getContactViaPhone().setValue('');
+		this.getPrimaryPhone().setValue('');
+		this.getSecondaryPhone().setValue('');
 		viewer.animateActiveItem(target,{type:'slide',direction:'left'});
 	},
 	
