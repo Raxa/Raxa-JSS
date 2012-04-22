@@ -6,40 +6,30 @@
  * pool.
  * 
  */
-
-
 //this is for debugging only - when production rolls around, we need to put all dependencies in a single .js file
 //<debug>
 Ext.Loader.setPath({
     'Ext': '../lib/touch/src'
 });
-
-Ext.Loader.setConfig({ enabled: true });
+Ext.Loader.setConfig({
+    enabled: true
+});
 //</debug>
-
 Ext.application({
     name: 'Screener',
-
-    requires: [
-        'Screener.store.Patients',
-        'Screener.store.Doctors',
-        'Ext.navigation.View'
-    ],
-    
+    requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Ext.navigation.View'],
     //we will use a Patient and Doctor class
     models: ['Patient', 'Doctor'],
-
     //here we declare the visual components
-    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort'],
-    
+    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore','PatientListView','LabOrderView','LabOrderForm','LabStore'],
     //here we declare our controller that will perform actions
     controllers: ['Application'],
-
     //the stores will hold our data in a local cache
     stores: ['Patients', 'Doctors'],
-    
     //entry point
-    launch: function() {
-    	Ext.Viewport.add({xclass: 'Screener.view.Main'});
+    launch: function () {
+        Ext.Viewport.add({
+            xclass: 'Screener.view.Main'
+        });
     }
 });
