@@ -21,7 +21,7 @@ Ext.application({
     //we will use a Patient and Doctor class
     models: ['Patient', 'Doctor'],
     //here we declare the visual components
-    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView'],
+    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore','PatientListView','LabOrderView','LabOrderForm','LabStore'],
     //here we declare our controller that will perform actions
     controllers: ['Application'],
     //the stores will hold our data in a local cache

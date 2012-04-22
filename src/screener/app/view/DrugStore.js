@@ -3,11 +3,11 @@
  * frequency and duration
  */
 Ext.define("Screener.view.DrugStore", {
-    xtype: 'drugstore',
+    xtype: 'drugStore',
     extend: 'Ext.form.Panel',
     requires: ['Ext.tab.Panel', 'Ext.form.FieldSet'],
     config: {
-        styleHtmlContent: true,
+       
         layout: 'vbox',
         items: [{
             xtype: 'fieldset',

@@ -44,6 +44,14 @@ Ext.define("Screener.view.TopMenu", {
 		        	ui:'round',
 		        	height: 80,
 		        	width: 300
+		        },
+		        {
+		        	xtype: 'button',
+		        	id: 'showLabButton',
+		        	text: 'Lab Order',
+		        	ui:'round',
+		        	height: 80,
+		        	width: 300
 		        }
 
 		        ]

@@ -18,9 +18,9 @@ Ext.define("Screener.view.PharmacyForm", {
                 docked: 'top',
                 title: 'Pharmacy Orders'
             }, {
-                xtype: 'drugstore',
+                xtype: 'drugStore',
                 width: '350px',
-                height: '200px'
+                height: '250px'
             }, {
                 items: [{
                     layout: 'vbox',

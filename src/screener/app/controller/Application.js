@@ -2,7 +2,7 @@
  * This class listens for the user input and makes changes to the doctor/patient
  * lists as necessary.
  */
-var form_num;
+var form_num, lab_num;
 Ext.define("Screener.controller.Application", {
     requires: ['Screener.view.NewPatient', 'Screener.store.Doctors', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
     extend: 'Ext.app.Controller',
@@ -14,7 +14,9 @@ Ext.define("Screener.controller.Application", {
             navBar: '#navBar',
             patientView: 'patientView',
             doctorView: 'doctorView',
+            labOrderForm: 'labOrderForm',
             pharmacyView: 'pharmacyView',
+            labOrderView: 'labOrderView',
             pharmacyForm: 'pharmacyForm',
             newPatient: 'newPatient',
             sortPanel: 'sortPanel',
@@ -28,12 +30,14 @@ Ext.define("Screener.controller.Application", {
             addPatientButton: '#addPatientButton',
             showPatientsButton: '#showPatientsButton',
             showPharmacyButton: '#showPharmacyButton',
+            showLabButton: '#showLabButton',
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
             assignButton: '#assignButton',
             sortButton: '#sortButton',
             drugSubmitButton: '#drugSubmitButton',
             addDrugFormButton: '#addDrugFormButton',
+            addLabOrderButton: '#addLabOrderButton',
             removeDrugFormButton: '#removeDrugFormButton',
             sortByNameButton: '#sortByNameButton',
             sortByFIFOButton: '#sortByFIFOButton',
@@ -44,6 +48,9 @@ Ext.define("Screener.controller.Application", {
         control: {
             addDrugFormButton: {
                 tap: 'addDrugForm'
+            },
+            addLabOrderButton: {
+                tap: 'addLabOrder'
             },
             addPatientButton: {
                 tap: 'addPatient'
@@ -59,6 +66,9 @@ Ext.define("Screener.controller.Application", {
             },
             showPharmacyButton: {
                 tap: 'showPharmacy'
+            },
+            showLabButton: {
+                tap: 'showLab'
             },
             assignButton: {
                 tap: 'assignPatient'
@@ -114,16 +124,17 @@ Ext.define("Screener.controller.Application", {
         this.totalPatients = Ext.getStore('patientStore').getCount();
         Ext.getStore('patientStore').each(this.addToDoctor);
         form_num = 0;
+        lab_num = 0;
     },
     //add new drug order form 
     addDrugForm: function () {
         form_num++;
         var endOfForm = 5;
         this.getPharmacyForm().insert(endOfForm, {
-            xtype: 'drugstore',
+            xtype: 'drugStore',
             id: 'form' + form_num,
             width: '350px',
-            height: '200px'
+            height: '250px'
         });
     },
     removeDrugForm: function () {
@@ -135,6 +146,16 @@ Ext.define("Screener.controller.Application", {
             form_num--;
         }
     },
+    addLabOrder: function () {
+     lab_num++;
+     var endOfForm = 6;
+     this.getLabOrderForm().insert(endOfForm, {
+         xtype: 'labStore',
+         id: 'lab' + lab_num,
+         width: '350px',
+         height: '70px'
+     });
+ },
     //opens form for new patient
     addPatient: function () {
         if (!this.newPatient) {
@@ -180,8 +201,15 @@ Ext.define("Screener.controller.Application", {
     showPharmacy: function () {
         if (!this.pharmacyView) {
             this.pharmacyView = Ext.create('Screener.view.PharmacyView');
+            form_num = 0;
         }
         this.getView().push(this.pharmacyView);
+    },
+    showLab: function () {
+        if (!this.LabOrderView) {
+            this.labOrderView = Ext.create('Screener.view.LabOrderView');
+        }
+        this.getView().push(this.labOrderView);
     },
     //keeping track of which patient/doctor is currently selected
     //if both are selected, enable the ASSIGN button
