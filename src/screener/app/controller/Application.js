@@ -147,15 +147,15 @@ Ext.define("Screener.controller.Application", {
         }
     },
     addLabOrder: function () {
-     lab_num++;
-     var endOfForm = 6;
-     this.getLabOrderForm().insert(endOfForm, {
-         xtype: 'labStore',
-         id: 'lab' + lab_num,
-         width: '350px',
-         height: '70px'
-     });
- },
+        lab_num++;
+        var endOfForm = 6;
+        this.getLabOrderForm().insert(endOfForm, {
+            xtype: 'labStore',
+            id: 'lab' + lab_num,
+            width: '350px',
+            height: '70px'
+        });
+    },
     //opens form for new patient
     addPatient: function () {
         if (!this.newPatient) {
@@ -204,12 +204,28 @@ Ext.define("Screener.controller.Application", {
             form_num = 0;
         }
         this.getView().push(this.pharmacyView);
+         while(form_num>0)
+        { 
+        	Ext.getCmp('form' + form_num).remove({
+                autoDestroy: true
+            });
+            Ext.getCmp('form' + form_num).hide();
+            form_num--;
+        }
     },
     showLab: function () {
-        if (!this.LabOrderView) {
+        if (!this.labOrderView) {
             this.labOrderView = Ext.create('Screener.view.LabOrderView');
         }
         this.getView().push(this.labOrderView);
+        while(lab_num>0)
+        { 
+        	Ext.getCmp('lab' + lab_num).remove({
+                autoDestroy: true
+            });
+            Ext.getCmp('lab' + lab_num).hide();
+            lab_num--;
+        }
     },
     //keeping track of which patient/doctor is currently selected
     //if both are selected, enable the ASSIGN button
