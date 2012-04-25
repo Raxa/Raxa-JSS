@@ -18,3 +18,5 @@
     font-family: Arial, sans-serif;
     font-size: x-large;
 }
+
+.pharmacyLogo {-webkit-mask-box-image: url(../img/pharmacyLogo.png)}
