@@ -11,7 +11,8 @@ Ext.define('RaxaEMR.Screener.model.Patient', {
 		         { name: 'id', type: 'int' },
 		         { name: 'lastname', type: 'string' },
 		         { name: 'firstname', type: 'string' },
-		         { name: 'doctorid', type: 'int'}
+		         { name: 'doctorid', type: 'int'},
+		         { name: 'BMI', type: 'float'},
 		         ]
 	},
 
