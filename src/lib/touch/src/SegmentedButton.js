@@ -29,7 +29,7 @@
  *             }
  *         }
  *     });
- *     Ext.Viewport.add(segmentedButton);
+ *     Ext.Viewport.add({ xtype: 'container', padding: 10, items: [segmentedButton] });
  *
  */
 Ext.define('Ext.SegmentedButton', {
@@ -38,7 +38,10 @@ Ext.define('Ext.SegmentedButton', {
     requires: ['Ext.Button'],
 
     config: {
-        // @inherited
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'segmentedbutton',
 
         /**
@@ -72,13 +75,19 @@ Ext.define('Ext.SegmentedButton', {
          */
         pressedButtons: [],
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         layout: {
             type : 'hbox',
             align: 'stretch'
         },
 
-        // @inherited
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         defaultType: 'button'
     },
 

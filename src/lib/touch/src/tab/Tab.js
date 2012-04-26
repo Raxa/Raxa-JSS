@@ -12,7 +12,10 @@ Ext.define('Ext.tab.Tab', {
     isTab: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'tab',
 
         /**
@@ -79,22 +82,18 @@ Ext.define('Ext.tab.Tab', {
      * @param {Ext.tab.Tab} this
      */
 
-     // @inherit
     updateTitle: function(title) {
         this.setText(title);
     },
 
-    // @inherit
     hideIconElement: function() {
         this.iconElement.dom.style.setProperty('visibility', 'hidden', '!important');
     },
 
-    // @inherit
     showIconElement: function() {
         this.iconElement.dom.style.setProperty('visibility', 'visible', '!important');
     },
 
-    // @inherit
     updateActive: function(active, oldActive) {
         var activeCls = this.getActiveCls();
         if (active && !oldActive) {

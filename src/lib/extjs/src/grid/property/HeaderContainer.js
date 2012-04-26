@@ -1,21 +1,6 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
- * @class Ext.grid.property.HeaderContainer
- * @extends Ext.grid.header.Container
- * A custom HeaderContainer for the {@link Ext.grid.property.Grid}.  Generally it should not need to be used directly.
+ * A custom HeaderContainer for the {@link Ext.grid.property.Grid}.
+ * Generally it should not need to be used directly.
  */
 Ext.define('Ext.grid.property.HeaderContainer', {
 
@@ -26,11 +11,21 @@ Ext.define('Ext.grid.property.HeaderContainer', {
     nameWidth: 115,
 
     // private - strings used for locale support
+    //<locale>
     nameText : 'Name',
+    //</locale>
+    //<locale>
     valueText : 'Value',
+    //</locale>
+    //<locale>
     dateFormat : 'm/j/Y',
+    //</locale>
+    //<locale>
     trueText: 'true',
+    //</locale>
+    //<locale>
     falseText: 'false',
+    //</locale>
 
     // private
     nameColumnCls: Ext.baseCSSPrefix + 'grid-property-name',
@@ -49,7 +44,7 @@ Ext.define('Ext.grid.property.HeaderContainer', {
             items: [{
                 header: me.nameText,
                 width: grid.nameColumnWidth || me.nameWidth,
-                sortable: true,
+                sortable: grid.sortableColumns,
                 dataIndex: grid.nameField,
                 renderer: Ext.Function.bind(me.renderProp, me),
                 itemId: grid.nameField,
@@ -59,6 +54,7 @@ Ext.define('Ext.grid.property.HeaderContainer', {
                 header: me.valueText,
                 renderer: Ext.Function.bind(me.renderCell, me),
                 getEditor: Ext.Function.bind(me.getCellEditor, me),
+                sortable: grid.sortableColumns,
                 flex: 1,
                 fixed: true,
                 dataIndex: grid.valueField,

@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.chart.Navigation
  *
@@ -47,6 +33,8 @@ Ext.define('Ext.chart.Navigation', {
     setZoom: function(zoomConfig) {
         var me = this,
             axes = me.axes,
+            axesItems = axes.items,
+            i, ln, axis,
             bbox = me.chartBBox,
             xScale = 1 / bbox.width,
             yScale = 1 / bbox.height,
@@ -55,21 +43,23 @@ Ext.define('Ext.chart.Navigation', {
                 y : zoomConfig.y * yScale,
                 width : zoomConfig.width * xScale,
                 height : zoomConfig.height * yScale
-            };
-        axes.each(function(axis) {
-            var ends = axis.calcEnds();
+            },
+            ends, from, to;
+        for (i = 0, ln = axesItems.length; i < ln; i++) {
+            axis = axesItems[i];
+            ends = axis.calcEnds();
             if (axis.position == 'bottom' || axis.position == 'top') {
-                var from = (ends.to - ends.from) * zoomer.x + ends.from,
-                    to = (ends.to - ends.from) * zoomer.width + from;
+                from = (ends.to - ends.from) * zoomer.x + ends.from;
+                to = (ends.to - ends.from) * zoomer.width + from;
                 axis.minimum = from;
                 axis.maximum = to;
             } else {
-                var to = (ends.to - ends.from) * (1 - zoomer.y) + ends.from,
-                    from = to - (ends.to - ends.from) * zoomer.height;
+                to = (ends.to - ends.from) * (1 - zoomer.y) + ends.from;
+                from = to - (ends.to - ends.from) * zoomer.height;
                 axis.minimum = from;
                 axis.maximum = to;
             }
-        });
+        }
         me.redraw(false);
     },
 
@@ -80,9 +70,10 @@ Ext.define('Ext.chart.Navigation', {
      *     myChart.restoreZoom();
      */
     restoreZoom: function() {
-        this.store = this.substore = this.originalStore;
-        this.redraw(true);
+        if (this.originalStore) {
+            this.store = this.substore = this.originalStore;
+            this.redraw(true);
+        }
     }
 
 });
-

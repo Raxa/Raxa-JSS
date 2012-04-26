@@ -326,7 +326,7 @@ Ext.define('Ext.event.publisher.Dom', {
         if (hasAllSubscribers && !hasDispatched) {
             event.setDelegatedTarget(event.browserEvent.target);
             hasDispatched = true;
-            this.dispatch(this.ALL_SELECTOR, eventName, args);
+            this.dispatch(this.SELECTOR_ALL, eventName, args);
             if (event.isStopped) {
                 return hasDispatched;
             }

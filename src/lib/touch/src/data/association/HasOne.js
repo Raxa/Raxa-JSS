@@ -1,6 +1,5 @@
 /**
- * @class Ext.data.association.HasOne
- * @extends Ext.data.association.Association
+ * @aside guide models
  *
  * Represents a one to one association with another model. The owner model is expected to have
  * a foreign key which references the primary key of the associated model:

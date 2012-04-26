@@ -1,7 +1,13 @@
 Installing Sencha Touch
 -----------------------
 
-*Using Sencha Touch 2 beta 2. Docs and examples are ignored from commit to reduce codebase size. These can be viewed online.*
+*Using Sencha Touch 2.0.1. Docs and examples are ignored from commit to reduce codebase size. These can be viewed online.*
+*Using ExtJS 4.1. Docs and examples are ignored from commit to reduce codebase size. These can be viewed online.*
+
+*All different builds of Sencha Touch 2 and ExtJS 4, so that developers are able to choose  based on the action that they are doing.
+More documentation regarding these can be found [here](http://docs.sencha.com/touch/2-0/#!/guide/building)*
+
+In production we are going to minify and obfuscate the files, so please do not deal with them now when committing.
 
 Download the Sencha Touch SDK from [here](http://www.sencha.com/products/touch/download/) and place (or symlink) the unzipped directory, renamed to <code>touch</code>, into the <code>lib</code> folder.
 

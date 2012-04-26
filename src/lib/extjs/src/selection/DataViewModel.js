@@ -1,20 +1,5 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
- * @class Ext.selection.DataViewModel
- * @ignore
+ * @private
  */
 Ext.define('Ext.selection.DataViewModel', {
     extend: 'Ext.selection.Model',
@@ -77,10 +62,10 @@ Ext.define('Ext.selection.DataViewModel', {
             };
 
         me.view = view;
-        me.bind(view.getStore());
+        me.bindStore(view.getStore());
 
-        view.on(view.triggerEvent, me.onItemClick, me);
-        view.on(view.triggerCtEvent, me.onContainerClick, me);
+        eventListeners[view.triggerEvent] = me.onItemClick;
+        eventListeners[view.triggerCtEvent] = me.onContainerClick;
 
         view.on(eventListeners);
 
@@ -103,14 +88,17 @@ Ext.define('Ext.selection.DataViewModel', {
         var me = this;
 
         if (!view.rendered) {
-            view.on('render', Ext.Function.bind(me.initKeyNav, me, [view], 0), me, {single: true});
+            view.on({
+                render: Ext.Function.bind(me.initKeyNav, me, [view]),
+                single: true
+            });
             return;
         }
 
         view.el.set({
             tabIndex: -1
         });
-        me.keyNav = Ext.create('Ext.util.KeyNav', view.el, {
+        me.keyNav = new Ext.util.KeyNav(view.el, {
             down: Ext.pass(me.onNavKey, [1], me),
             right: Ext.pass(me.onNavKey, [1], me),
             left: Ext.pass(me.onNavKey, [-1], me),
@@ -151,10 +139,12 @@ Ext.define('Ext.selection.DataViewModel', {
         if ((suppressEvent || me.fireEvent('before' + eventName, me, record)) !== false &&
                 commitFn() !== false) {
 
-            if (isSelected) {
-                view.onItemSelect(record);
-            } else {
-                view.onItemDeselect(record);
+            if (view) {
+                if (isSelected) {
+                    view.onItemSelect(record);
+                } else {
+                    view.onItemDeselect(record);
+                }
             }
 
             if (!suppressEvent) {
@@ -168,4 +158,3 @@ Ext.define('Ext.selection.DataViewModel', {
         this.callParent();
     }
 });
-

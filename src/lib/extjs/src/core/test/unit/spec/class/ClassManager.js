@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 describe("Ext.ClassManager", function() {
     var manager = Ext.ClassManager,
         cls, emptyFn = function(){};
@@ -336,17 +322,6 @@ describe("Ext.ClassManager", function() {
                 expect(manager.getByAlias('superclass')).toBe(parentClass);
             });
         });
-
-        describe("onClassExtended", function() {
-            it("should store an internal reference", function() {
-                expect(parentClass.prototype.$onExtended).toBeDefined();
-                expect(subClass.prototype.$onExtended).toBeDefined();
-            });
-
-            it("should invoke the internal reference", function() {
-                expect(subClass.onClassExtendedCalled).toBe(true);
-            });
-        });
     });
 
     describe("instantiate", function() {
@@ -450,7 +425,7 @@ describe("Ext.ClassManager", function() {
         });
 
         describe("alternate", function() {
-            it("should create the alternate", function() {
+            it("should create the alternate with a string for alternateClassName property", function() {
                 Ext.define('Something.Cool', {
                     alternateClassName: 'Something.CoolAsWell',
 
@@ -465,7 +440,7 @@ describe("Ext.ClassManager", function() {
                 expect(Something.CoolAsWell).toBe(Something.Cool);
             });
 
-            it("should create the alternate", function() {
+            it("should create the alternate with an array for alternateClassName property", function() {
                 Ext.define('Something.Cool', {
                     alternateClassName: ['Something.CoolAsWell', 'Something.AlsoCool']
                 });
@@ -475,7 +450,7 @@ describe("Ext.ClassManager", function() {
             });
         });
     });
-    
+
     describe("createNamespaces", function() {
         var w = window;
 
@@ -578,4 +553,3 @@ describe("Ext.ClassManager", function() {
         });
     });
 });
-

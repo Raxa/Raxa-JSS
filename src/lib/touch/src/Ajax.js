@@ -1,4 +1,6 @@
 /**
+ * @aside guide ajax
+ *
  * A singleton instance of an {@link Ext.data.Connection}. This class
  * is used to communicate with your server side code. It can be used as follows:
  *
@@ -20,7 +22,7 @@
  * Any options specified in the request method for the Ajax request will override any
  * defaults set on the Ext.Ajax class. In the code sample below, the timeout for the
  * request will be 60 seconds.
- *  
+ *
  *     Ext.Ajax.timeout = 120000; // 120 seconds
  *     Ext.Ajax.request({
  *         url: 'page.aspx',
@@ -31,8 +33,6 @@
  * The main reason for creating a separate {@link Ext.data.Connection} is for a
  * series of requests that share common settings that are different to all other
  * requests in the application.
- * 
- * @aside guide ajax
  */
 Ext.define('Ext.Ajax', {
     extend: 'Ext.data.Connection',

@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 describe("Ext.Element.insertion", function() {
     var proto = Ext.Element.prototype,
         el, testEl,
@@ -176,18 +162,6 @@ describe("Ext.Element.insertion", function() {
                     expect(nodes.length).toEqual(3);
 
                     child1.insertSibling({
-                        id: 'sibling1'
-                    }, 'after');
-
-                    nodes = Ext.getDom(el).childNodes;
-                    expect(nodes.length).toEqual(4);
-                });
-                
-                it("should move the element next to the el", function() {
-                    var nodes = Ext.getDom(el).childNodes;
-                    expect(nodes.length).toEqual(3);
-
-                    child3.insertSibling({
                         id: 'sibling1'
                     }, 'after');
 
@@ -366,4 +340,3 @@ describe("Ext.Element.insertion", function() {
         });
     });
 }, "/src/dom/Element.insertion.js");
-

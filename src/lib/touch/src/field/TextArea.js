@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * Creates an HTML textarea field on the page. This is useful whenever you need the user to enter large amounts of text
  * (i.e. more than a few words). Typically, text entry on mobile devices is not a pleasant experience for the user so
  * it's good to limit your use of text areas to only those occasions when freeform text is required or alternative
@@ -49,13 +51,22 @@ Ext.define('Ext.field.TextArea', {
     alternateClassName: 'Ext.form.TextArea',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'textarea',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         autoCapitalize: false,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         component: {
             xtype: 'textareainput'
         },

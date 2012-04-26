@@ -27,6 +27,10 @@ Ext.define('Ext.Evented', {
                     }
                 }
 
+                // The old value might have been changed at this point
+                // (after the apply call chain) so it should be read again
+                oldValue = this[internalName];
+
                 if (value !== oldValue) {
                     if (initialized) {
                         this.fireAction(changeEventName, [this, value, oldValue], this.doSet, this, {

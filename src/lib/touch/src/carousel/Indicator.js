@@ -8,7 +8,10 @@ Ext.define('Ext.carousel.Indicator', {
     alternateClassName: 'Ext.Carousel.Indicator',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'carousel-indicator',
 
         direction: 'horizontal'

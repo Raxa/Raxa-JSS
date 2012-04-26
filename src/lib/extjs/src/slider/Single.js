@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * Slider which supports vertical or horizontal orientation, keyboard adjustments, configurable snapping, axis clicking
  * and animation. Can be added as an item to any container.
@@ -49,16 +35,16 @@ Ext.define('Ext.slider.Single', {
      * @param {Boolean} [animate] Turn on or off animation
      */
     setValue: function(value, animate) {
-        var args = Ext.toArray(arguments),
+        var args = arguments,
             len  = args.length;
 
         // this is to maintain backwards compatiblity for sliders with only one thunb. Usually you must pass the thumb
         // index to setValue, but if we only have one thumb we inject the index here first if given the multi-slider
         // signature without the required index. The index will always be 0 for a single slider
-        if (len == 1 || (len <= 3 && typeof arguments[1] != 'number')) {
+        if (len == 1 || (len <= 3 && typeof args[1] != 'number')) {
+            args = Ext.toArray(args);
             args.unshift(0);
         }
-
         return this.callParent(args);
     },
 
@@ -68,4 +54,3 @@ Ext.define('Ext.slider.Single', {
         return this.thumbs[0];
     }
 });
-

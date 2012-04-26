@@ -1,5 +1,6 @@
 /**
  * @docauthor Evan Trimboli <evan@sencha.com>
+ * @aside guide stores
  *
  * Contains a collection of all stores that are created that have an identifier. An identifier can be assigned by
  * setting the {@link Ext.data.Store#storeId storeId} property. When a store is in the StoreManager, it can be

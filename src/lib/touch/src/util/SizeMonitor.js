@@ -76,6 +76,10 @@ Ext.define('Ext.util.SizeMonitor', {
         }
     },
 
+    updateElement: function(element) {
+        element.on('destroy', 'destroy', this);
+    },
+
     refreshPosition: function(name) {
         var detector = this.detectors[name],
             position = this.position[name],
