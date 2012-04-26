@@ -281,6 +281,13 @@ Ext.define('Ext.plugin.ListPaging', {
 
         if (!this.getLoadMoreCmpAdded()) {
             list.add(cmp);
+
+            /**
+             * @event loadmorecmpadded  Fired when the Load More component is added to the list. Fires on the List.
+             * @param {Ext.plugin.ListPaging} this The list paging plugin
+             * @param {Ext.List} list The list
+             */
+            list.fireEvent('loadmorecmpadded', this, list);
             this.setLoadMoreCmpAdded(true);
         }
 

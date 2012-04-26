@@ -1,11 +1,17 @@
 /**
- * @author Jacky Nguyen <jacky@sencha.com>
  * @class Ext.Base
+ *
+ * @author Jacky Nguyen <jacky@sencha.com>
+ * @aside guide class_system
+ * @aside video class-system
  *
  * The root of all classes created with {@link Ext#define}.
  *
- * Ext.Base is the building block of all Ext classes. All classes in Ext inherit from Ext.Base.
- * All prototype and static members of this class are inherited by all other classes.
+ * Ext.Base is the building block of all Ext classes. All classes in Ext inherit from Ext.Base. All prototype and static
+ * members of this class are inherited by all other classes.
+ *
+ * See the [Class System Guide](#!/guide/class_system) for more.
+ *
  */
 (function(flexSetter) {
 
@@ -483,7 +489,11 @@ var noArgs = [],
                 for (name in members) { // hasOwnProperty is checked in the next loop...
                     if (name == 'statics') {
                         statics = members[name];
-                    } else {
+                    }
+                    else if (name == 'config') {
+                        me.addConfig(members[name], true);
+                    }
+                    else {
                         names.push(name);
                     }
                 }
@@ -1085,7 +1095,7 @@ var noArgs = [],
 
         /**
          * Returns the initial configuration passed to constructor.
-         * 
+         *
          * @param {String} [name] When supplied, value for particular configuration
          * option is returned, otherwise the full config object is returned.
          * @return {Object/Mixed}

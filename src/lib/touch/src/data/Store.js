@@ -1,6 +1,6 @@
 /**
  * @author Ed Spencer
- * @class Ext.data.Store
+ * @aside guide stores
  *
  * The Store class encapsulates a client side cache of {@link Ext.data.Model Model} objects. Stores load
  * data via a {@link Ext.data.proxy.Proxy Proxy}, and also provide functions for {@link #sort sorting},
@@ -184,12 +184,9 @@
  * Stores are backed up by an ecosystem of classes that enables their operation. To gain a full understanding of these
  * pieces and how they fit together, see:
  *
- * <ul style="list-style-type: disc; padding-left: 25px">
- *     <li>{@link Ext.data.proxy.Proxy Proxy} - overview of what Proxies are and how they are used</li>
- *     <li>{@link Ext.data.Model Model} - the core class in the data package</li>
- *     <li>{@link Ext.data.reader.Reader Reader} - used by any subclass of {@link Ext.data.proxy.Server ServerProxy} to read a response</li>
- * </ul>
- *
+ *  - {@link Ext.data.proxy.Proxy Proxy} - overview of what Proxies are and how they are used
+ *  - {@link Ext.data.Model Model} - the core class in the data package
+ *  - {@link Ext.data.reader.Reader Reader} - used by any subclass of {@link Ext.data.proxy.Server ServerProxy} to read a response
  */
 Ext.define('Ext.data.Store', {
     alias: 'store.store',
@@ -408,6 +405,7 @@ Ext.define('Ext.data.Store', {
          * @cfg {Object[]} sorters
          * Array of {@link Ext.util.Sorter Sorters} for this store. This configuration is handled by the
          * {@link Ext.mixin.Sortable Sortable} mixin of the {@link Ext.util.Collection data} collection.
+         * See also the {@link #sort} method.
          * @accessor
          */
         sorters: null,
@@ -1863,33 +1861,39 @@ Ext.define('Ext.data.Store', {
         }
 
         if (successful) {
-            if (operation.getAddRecords() !== true) {
-                me.data.each(function(record) {
-                    record.unjoin(me);
-                });
-                me.data.clear();
-
-                // This means we have to fire a clear event though
-                me.fireEvent('clear', this);
-            }
-
-            if (records && records.length) {
-                // Now lets add the records without firing an addrecords event
-                me.suspendEvents();
-                me.add(records);
-                me.resumeEvents();
-            }
-
-            // And finally fire a refresh event so any bound view can fully refresh itself
-            me.fireEvent('refresh', this, this.data);
+            this.fireAction('datarefresh', [this, this.data, operation], 'doDataRefresh');
         }
 
         me.loaded = true;
         me.loading = false;
-        me.fireEvent('load', this, records, successful);
+        me.fireEvent('load', this, records, successful, operation);
 
         //this is a callback that would have been passed to the 'read' function and is optional
         Ext.callback(operation.getCallback(), operation.getScope() || me, [records, operation, successful]);
+    },
+
+    doDataRefresh: function(store, data, operation) {
+        var records = operation.getRecords(),
+            me = this;
+
+        if (operation.getAddRecords() !== true) {
+            data.each(function(record) {
+                record.unjoin(me);
+            });
+            data.clear();
+
+            // This means we have to fire a clear event though
+            me.fireEvent('clear', this);
+        }
+
+        if (records && records.length) {
+            // Now lets add the records without firing an addrecords event
+            me.suspendEvents();
+            me.add(records);
+            me.resumeEvents();
+        }
+
+        this.fireEvent('refresh', this, this.data);
     },
 
     /**

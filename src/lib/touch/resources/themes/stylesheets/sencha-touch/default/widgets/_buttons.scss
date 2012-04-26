@@ -59,7 +59,7 @@ $include-button-highlights: $include-highlights !default;
     @include display-box;
     @include box-align(center);
     @include toolbar-button(#ccc, $button-gradient);
-    min-height: $button-height !important;
+    min-height: $button-height; // Why was this !important? Breaks small uis - DK
     padding: .3em .6em;
     position: relative;
     overflow: hidden;

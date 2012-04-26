@@ -1,6 +1,9 @@
 /**
- * @author Jacky Nguyen <jacky@sencha.com>
  * @class  Ext.ClassManager
+ *
+ * @author Jacky Nguyen <jacky@sencha.com>
+ * @aside guide class_system
+ * @aside video class-system
  *
  * Ext.ClassManager manages all classes and handles mapping from string class name to
  * actual class objects throughout the whole framework. It is not generally accessed directly, rather through
@@ -231,8 +234,7 @@
             alternateToName: {},
             aliasToName: {},
             nameToAliases: {},
-            nameToAlternates: {},
-            overridesByName: {}
+            nameToAlternates: {}
         },
 
         /** @private */
@@ -304,22 +306,30 @@
         triggerCreated: function(className) {
             var listeners = this.createdListeners,
                 nameListeners = this.nameCreatedListeners,
-                i, ln, listener;
+                alternateNames = this.maps.nameToAlternates[className],
+                names = [className],
+                i, ln, j, subLn, listener, name;
 
             for (i = 0,ln = listeners.length; i < ln; i++) {
                 listener = listeners[i];
                 listener.fn.call(listener.scope, className);
             }
 
-            listeners = nameListeners[className];
+            if (alternateNames) {
+                names.push.apply(names, alternateNames);
+            }
 
-            if (listeners) {
-                for (i = 0,ln = listeners.length; i < ln; i++) {
-                    listener = listeners[i];
-                    listener.fn.call(listener.scope, className);
+            for (i = 0,ln = names.length; i < ln; i++) {
+                name = names[i];
+                listeners = nameListeners[name];
+
+                if (listeners) {
+                    for (j = 0,subLn = listeners.length; j < subLn; j++) {
+                        listener = listeners[j];
+                        listener.fn.call(listener.scope, name);
+                    }
+                    delete nameListeners[name];
                 }
-
-                delete nameListeners[className];
             }
         },
 
@@ -639,24 +649,6 @@
         /**
          * @private
          */
-        applyOverrides: function (name) {
-            var me = this,
-                overridesByName = me.maps.overridesByName,
-                overrides = overridesByName[name],
-                length = overrides && overrides.length || 0,
-                createOverride = me.createOverride,
-                i;
-
-            delete overridesByName[name];
-
-            for (i = 0; i < length; ++i) {
-                createOverride.apply(me, overrides[i]);
-            }
-        },
-
-        /**
-         * @private
-         */
         create: function(className, data, createdFn) {
             //<debug error>
             if (typeof className != 'string') {
@@ -671,8 +663,7 @@
                     registeredPostprocessors = Manager.postprocessors,
                     index = 0,
                     postprocessors = [],
-                    postprocessor, process, i, ln, j, subLn, postprocessorProperties, postprocessorProperty,
-                    alternateNames;
+                    postprocessor, process, i, ln, j, subLn, postprocessorProperties, postprocessorProperty;
 
                 delete data.postprocessors;
 
@@ -722,75 +713,28 @@
                 };
 
                 process.call(Manager, className, this, data);
-
-                //TODO: Take this out, hook into classCreated instead
-                Manager.applyOverrides(className);
-                alternateNames = Manager.maps.nameToAlternates[className];
-
-                for (i = 0, ln = alternateNames && alternateNames.length || 0; i < ln; ++i) {
-                    Manager.applyOverrides(alternateNames[i]);
-                }
             });
         },
 
-        createOverride: function (overrideName, data, createdFn) {
-            var me = this,
-                className = data.override,
-                cls = me.get(className),
-                overrideBody, overridesByName, overrides;
+        createOverride: function(className, data) {
+            var overriddenClassName = data.override;
 
-            if (cls) {
-                // We use a "faux class" here because it has all the mechanics we need to
-                // work with the loader via uses/requires and loader history (for build).
-                // This way we don't have to refactor any of the class-loader relationship.
+            delete data.override;
 
-                // hoist any 'requires' or 'uses' from the body onto the faux class:
-                overrideBody = Ext.apply({}, data);
-                delete overrideBody.requires;
-                delete overrideBody.uses;
-                delete overrideBody.override;
+            this.existCache[className] = true;
 
-                me.create(overrideName, {
-                        //<debug error>
-                        constructor: function () {
-                            throw new Error("Cannot create instance of override '" + overrideName + "'");
-                        },
-                        //</debug>
-                        requires: data.requires,
-                        uses: data.uses,
-                        override: className
-                    }, function () {
-                        this.active = true;
-                        if (cls.override) { // if (normal class)
-                            cls.override(overrideBody);
-                        } else { // else (singleton)
-                            cls.self.override(overrideBody);
-                        }
+            // Override the target class right after it's created
+            this.onCreated(function() {
+                this.get(overriddenClassName).override(data);
 
-                        if (createdFn) {
-                            // called once the override is applied and with the context of the
-                            // overridden class (the override itself is a meaningless, name-only
-                            // thing).
-                            createdFn.call(cls);
-                        }
-                    });
-            } else {
-                // The class is not loaded and may never load, but in case it does we add
-                // the override arguments to an internal map keyed by the className. When
-                // (or if) the class loads, we will call this method again with those same
-                // arguments to complete the override.
-                overridesByName = me.maps.overridesByName;
-                overrides = overridesByName[className] || (overridesByName[className] = []);
-                overrides.push(Array.prototype.slice.call(arguments, 0));
+                // This push the overridding file itself into Ext.Loader.history
+                // Hence if the target class never exists, the overriding file will
+                // never be included in the build
+                this.triggerCreated(className);
+            }, this, overriddenClassName);
 
-                // place an inactive stub in the namespace (appeases the Loader and could
-                // be useful diagnostically)
-                me.setNamespace(overrideName, {
-                    override: className
-                });
-            }
+            return this;
         },
-
         /**
          * Instantiate a class by its alias; usually invoked by the convenient shorthand {@link Ext#createByAlias Ext.createByAlias}
          * If {@link Ext.Loader} is {@link Ext.Loader#setConfig enabled} and the class has not been defined yet, it will
@@ -1365,7 +1309,7 @@
          * @method define
          */
         define: function (className, data, createdFn) {
-            if (data.override) {
+            if ('override' in data) {
                 return Manager.createOverride.apply(Manager, arguments);
             }
 

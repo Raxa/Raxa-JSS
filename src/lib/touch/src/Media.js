@@ -228,7 +228,10 @@ Ext.define('Ext.Media', {
         //http://developer.apple.com/library/safari/#documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/ControllingMediaWithJavaScript/ControllingMediaWithJavaScript.html
 
         dom.src = newUrl;
-        dom.load();
+
+        if ('load' in dom) {
+            dom.load();
+        }
 
         if (this.getPlaying()) {
             this.play();

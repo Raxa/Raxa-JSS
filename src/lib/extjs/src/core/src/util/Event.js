@@ -1,20 +1,21 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 Ext.require('Ext.util.DelayedTask', function() {
 
+    /**
+     * Represents single event type that an Observable object listens to.
+     * All actual listeners are tracked inside here.  When the event fires,
+     * it calls all the registered listener functions.
+     *
+     * @private
+     */
     Ext.util.Event = Ext.extend(Object, (function() {
+        function createTargeted(handler, listener, o, scope){
+            return function(){
+                if (o.target === arguments[0]){
+                    handler.apply(scope, arguments);
+                }
+            };
+        }
+
         function createBuffered(handler, listener, o, scope) {
             listener.task = new Ext.util.DelayedTask();
             return function() {
@@ -35,12 +36,23 @@ Ext.require('Ext.util.DelayedTask', function() {
 
         function createSingle(handler, listener, o, scope) {
             return function() {
-                listener.ev.removeListener(listener.fn, scope);
+                var event = listener.ev;
+
+                if (event.removeListener(listener.fn, scope) && event.observable) {
+                    // Removing from a regular Observable-owned, named event (not an anonymous
+                    // event such as Ext's readyEvent): Decrement the listeners count
+                    event.observable.hasListeners[event.name]--;
+                }
+
                 return handler.apply(scope, arguments);
             };
         }
 
         return {
+            /**
+             * @property {Boolean} isEvent
+             * `true` in this class to identify an object as an instantiated Event, or subclass thereof.
+             */
             isEvent: true,
 
             constructor: function(observable, name) {
@@ -90,6 +102,9 @@ Ext.require('Ext.util.DelayedTask', function() {
                 // because the event removal that the single listener does destroys the listener's DelayedTask(s)
                 if (o.single) {
                     handler = createSingle(handler, listener, o, scope);
+                }
+                if (o.target) {
+                    handler = createTargeted(handler, listener, o, scope);
                 }
                 if (o.delay) {
                     handler = createDelayed(handler, listener, o, scope);
@@ -196,6 +211,5 @@ Ext.require('Ext.util.DelayedTask', function() {
                 return true;
             }
         };
-    })());
+    }()));
 });
-

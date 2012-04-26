@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * Specialized {@link Ext.field.Slider} with a single thumb which only supports two {@link #value values}.
  *
  * ## Examples
@@ -56,7 +58,10 @@ Ext.define('Ext.field.Toggle', {
     requires: ['Ext.slider.Toggle'],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: 'x-toggle-field'
     },
 
@@ -102,5 +107,9 @@ Ext.define('Ext.field.Toggle', {
         this.setValue((value == 1) ? 0 : 1);
 
         return this;
+    },
+
+    getValue: function() {
+        return this.callParent()[0];
     }
 });

@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * A menu item that contains a togglable checkbox by default, but that can also be a part of a radio group.
  *
@@ -26,7 +12,7 @@ If you are unsure which license is appropriate for your use, please contact the 
  *             text: 'select all'
  *         },{
  *             xtype: 'menucheckitem',
- *             text: 'select specific',
+ *             text: 'select specific'
  *         },{
  *             iconCls: 'add16',
  *             text: 'icon item'
@@ -38,6 +24,11 @@ If you are unsure which license is appropriate for your use, please contact the 
 Ext.define('Ext.menu.CheckItem', {
     extend: 'Ext.menu.Item',
     alias: 'widget.menucheckitem',
+    
+    /**
+     * @cfg {Boolean} [checked=false]
+     * True to render the menuitem initially checked.
+     */
 
     /**
      * @cfg {String} checkedCls
@@ -60,17 +51,26 @@ Ext.define('Ext.menu.CheckItem', {
     groupCls: Ext.baseCSSPrefix + 'menu-group-icon',
 
     /**
-     * @cfg {Boolean} hideOnClick
+     * @cfg {Boolean} [hideOnClick=false]
      * Whether to not to hide the owning menu when this item is clicked.
      * Defaults to `false` for checkbox items, and to `true` for radio group items.
      */
     hideOnClick: false,
+    
+    /**
+     * @cfg {Boolean} [checkChangeDisabled=false]
+     * True to prevent the checked item from being toggled. Any submenu will still be accessible.
+     */
+    checkChangeDisabled: false,
 
     afterRender: function() {
         var me = this;
-        this.callParent();
+        me.callParent();
         me.checked = !me.checked;
         me.setChecked(!me.checked, true);
+        if (me.checkChangeDisabled) {
+            me.disableCheckChange();
+        }
     },
 
     initComponent: function() {
@@ -112,10 +112,11 @@ Ext.define('Ext.menu.CheckItem', {
      * will still be accessible
      */
     disableCheckChange: function() {
-        var me = this;
+        var me = this,
+            iconEl = me.iconEl;
 
-        if (me.iconEl) {
-            me.iconEl.addCls(me.disabledCls);
+        if (iconEl) {
+            iconEl.addCls(me.disabledCls);
         }
         me.checkChangeDisabled = true;
     },
@@ -124,9 +125,12 @@ Ext.define('Ext.menu.CheckItem', {
      * Reenables the checkbox functionality of this menu item after having been disabled by {@link #disableCheckChange}
      */
     enableCheckChange: function() {
-        var me = this;
-
-        me.iconEl.removeCls(me.disabledCls);
+        var me = this,
+            iconEl = me.iconEl;
+            
+        if (iconEl) {
+            iconEl.removeCls(me.disabledCls);
+        }
         me.checkChangeDisabled = false;
     },
 
@@ -146,7 +150,7 @@ Ext.define('Ext.menu.CheckItem', {
     /**
      * Sets the checked state of the item
      * @param {Boolean} checked True to check, false to uncheck
-     * @param {Boolean} suppressEvents (optional) True to prevent firing the checkchange events. Defaults to `false`.
+     * @param {Boolean} [suppressEvents=false] True to prevent firing the checkchange events.
      */
     setChecked: function(checked, suppressEvents) {
         var me = this;
@@ -163,4 +167,3 @@ Ext.define('Ext.menu.CheckItem', {
         }
     }
 });
-

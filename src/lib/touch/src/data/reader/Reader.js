@@ -586,7 +586,15 @@ Ext.define('Ext.data.reader.Reader', {
             id = null;
 
             node = root[i];
-            data = me.extractRecordData(node);
+
+            // When you use a Memory proxy, and you set data: [] to contain record instances
+            // this node will already be a record. In this case we should not try to extract
+            // the record data from the object, but just use the record data attribute.
+            if (node.isModel) {
+                data = node.data;
+            } else {
+                data = me.extractRecordData(node);
+            }
 
             if (data._clientId !== undefined) {
                 clientId = data._clientId;
@@ -740,7 +748,7 @@ Ext.define('Ext.data.reader.Reader', {
             total  : 0,
             count  : 0,
             records: [],
-            success: true
+            success: false
         })
     });
 

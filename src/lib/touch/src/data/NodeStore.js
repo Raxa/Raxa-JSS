@@ -166,7 +166,7 @@ Ext.define('Ext.data.NodeStore', {
     },
 
     updateNode: function(node, oldNode) {
-        if (oldNode) {
+        if (oldNode && !oldNode.isDestroyed) {
             oldNode.un({
                 append  : 'onNodeAppend',
                 insert  : 'onNodeInsert',

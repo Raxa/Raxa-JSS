@@ -1,21 +1,6 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @author Ed Spencer
  * @class Ext.data.reader.Array
- * @extends Ext.data.reader.Json
  * 
  * <p>Data reader class to create an Array of {@link Ext.data.Model} objects from an Array.
  * Each element of that Array represents a row of data fields. The
@@ -54,30 +39,30 @@ Ext.define('Ext.data.reader.Array', {
     alternateClassName: 'Ext.data.ArrayReader',
     alias : 'reader.array',
 
+    // For Array Reader, methods in the base which use these properties must not see the defaults
+    totalProperty: undefined,
+    successProperty: undefined,
+
     /**
      * @private
-     * Most of the work is done for us by JsonReader, but we need to overwrite the field accessors to just
-     * reference the correct position in the array.
+     * Returns an accessor expression for the passed Field from an Array using either the Field's mapping, or
+     * its ordinal position in the fields collsction as the index.
+     * This is used by buildExtractors to create optimized on extractor function which converts raw data into model instances.
      */
-    buildExtractors: function() {
-        this.callParent(arguments);
-        
-        var fields = this.model.prototype.fields.items,
-            i = 0,
-            length = fields.length,
-            extractorFunctions = [],
-            map;
-        
-        for (; i < length; i++) {
-            map = fields[i].mapping;
-            extractorFunctions.push(function(index) {
-                return function(data) {
-                    return data[index];
-                };
-            }(map !== null ? map : i));
+    createFieldAccessExpression: function(field, fieldVarName, dataName) {
+            // In the absence of a mapping property, use the original ordinal position
+            // at which the Model inserted the field into its collection.
+        var index  = (field.mapping == null) ? field.originalIndex : field.mapping,
+            result;
+
+        if (typeof index === 'function') {
+            result = fieldVarName + '.mapping(' + dataName + ', this)';
+        } else {
+            if (isNaN(index)) {
+                index = '"' + index + '"';
+            }
+            result = dataName + "[" + index + "]";
         }
-        
-        this.extractorFunctions = extractorFunctions;
+        return result;
     }
 });
-

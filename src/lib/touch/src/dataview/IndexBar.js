@@ -1,9 +1,10 @@
 /**
+ * @aside video list
+ * @aside guide list
+ *
  * IndexBar is a component used to display a list of data (primarily an alphabet) which can then be used to quickly
  * navigate through a list (see {@link Ext.List}) of data. When a user taps on an item in the {@link Ext.IndexBar},
  * it will fire the {@link #index} event.
- *
- * ## Example:
  *
  * Here is an example of the usage in a {@link Ext.List}:
  *

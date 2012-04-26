@@ -1,6 +1,6 @@
 /**
- * @extends Object
  * @author Ed Spencer
+ * @aside guide models
  *
  * Fields are used to define what a Model is. They aren't instantiated directly - instead, when we create a class that
  * extends {@link Ext.data.Model}, it will automatically create a Field instance for each field configured in a {@link
@@ -98,7 +98,7 @@ Ext.define('Ext.data.Field', {
     alias: 'data.field',
 
     isField: true,
-    
+
     config: {
         /**
          * @cfg {String} name
@@ -300,9 +300,9 @@ Ext.define('Ext.data.Field', {
         /**
          * @cfg {Boolean} persist
          *
-         * False to exclude this field from the {@link Ext.data.Model#modified} fields in a model. This will also exclude
-         * the field from being written using a {@link Ext.data.writer.Writer}. This option is useful when model fields are
-         * used to keep state on the client but do not need to be persisted to the server. Defaults to true.
+         * False to exclude this field from being synchronized with the server or localstorage.
+         * This option is useful when model fields are used to keep state on the client but do
+         * not need to be persisted to the server. Defaults to true.
          */
         persist: true,
 

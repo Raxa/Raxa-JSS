@@ -36,6 +36,8 @@
  *     });
  *
  *     newEmployee.quitJob(); // Will log 'Ed Spencer has quit!'
+ *
+ *  @aside guide events
  */
 Ext.define('Ext.mixin.Observable', {
 
@@ -68,9 +70,15 @@ Ext.define('Ext.mixin.Observable', {
     config: {
         /**
          * @cfg {Object} listeners
+         *
          * A config object containing one or more event handlers to be added to this object during initialization. This
          * should be a valid listeners config object as specified in the {@link #addListener} example for attaching
          * multiple handlers at once.
+         *
+         * See the [Event guide](#!/guide/events) for more
+         *
+         * **Note** it is bad practice to specify a listeners config when you are defining a class using Ext.define.
+         * Instead, only specify listeners when you are instantiating your class with Ext.create.
          * @accessor
          */
         listeners: null,
@@ -449,13 +457,14 @@ Ext.define('Ext.mixin.Observable', {
     },
 
     /**
-     * Appends an event handler to this object.
+     * Appends an event handler to this object. You can review the available handlers by looking at the 'events'
+     * section of the documentation for the component you are working with.
      *
      * ## Combining Options
      *
      * Using the options argument, it is possible to combine different types of listeners:
      *
-     * A delayed, one-time listener.
+     * A delayed, one-time listener:
      *
      *     container.on('tap', this.handleTap, this, {
      *         single: true,
@@ -480,6 +489,8 @@ Ext.define('Ext.mixin.Observable', {
      *         tap  : { fn: this.onTap, scope: this, single: true },
      *         swipe: { fn: button.onSwipe, scope: button }
      *     });
+     *
+     * See the [Events Guide](#!/guide/events) for more.
      *
      * @param {String} eventName The name of the event to listen for. May also be an object who's property names are
      * event names.

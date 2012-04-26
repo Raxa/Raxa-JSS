@@ -1,5 +1,6 @@
 /**
  * @author Ed Spencer
+ * @aside guide proxies
  *
  * In-memory proxy. This proxy simply uses a local variable for data storage/retrieval, so its contents are lost on
  * every page refresh.

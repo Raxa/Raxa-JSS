@@ -109,7 +109,10 @@ Ext.define('Ext.picker.Picker', {
      */
 
     config: {
-        // @inherited
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'picker',
 
         /**
@@ -165,7 +168,10 @@ Ext.define('Ext.picker.Picker', {
          */
         height: 220,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         layout: {
             type : 'hbox',
             align: 'stretch'
@@ -177,13 +183,22 @@ Ext.define('Ext.picker.Picker', {
          */
         centered: false,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         left : 0,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         right: 0,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         bottom: 0,
 
         // @private

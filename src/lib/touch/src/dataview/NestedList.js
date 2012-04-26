@@ -96,7 +96,10 @@ Ext.define('Ext.dataview.NestedList', {
     ],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'nested-list',
 
         /**
@@ -431,9 +434,10 @@ Ext.define('Ext.dataview.NestedList', {
         this.fireEvent('beforeload', [this, Array.prototype.slice.call(arguments)]);
     },
 
-    onStoreLoad: function() {
+    onStoreLoad: function(store) {
         this.setMasked(false);
         this.fireEvent('load', [this, Array.prototype.slice.call(arguments)]);
+        this.goToNode(store.getRoot());
     },
 
     /**
@@ -478,15 +482,8 @@ Ext.define('Ext.dataview.NestedList', {
         if (store) {
             store = Ext.data.StoreManager.lookup(store);
 
-            if (store && Ext.isObject(store) && store.isStore) {
-                store.on({
-                    scope: this,
-                    load: 'onStoreLoad',
-                    beforeload: 'onStoreBeforeLoad'
-                });
-            }
-            //<debug warn>
-            else if (!store)  {
+            // <debug>
+            if (!store)  {
                 Ext.Logger.warn("The specified Store cannot be found", this);
             }
             //</debug>
@@ -495,24 +492,28 @@ Ext.define('Ext.dataview.NestedList', {
         return store;
     },
 
+    storeListeners: {
+        rootchange: 'onStoreRootChange',
+        load: 'onStoreLoad',
+        beforeload: 'onStoreBeforeLoad'
+    },
+
     updateStore: function(newStore, oldStore) {
-        var me = this;
+        var me = this,
+            listeners = this.storeListeners;
+
+        listeners.scope = me;
+
         if (oldStore && Ext.isObject(oldStore) && oldStore.isStore) {
             if (oldStore.autoDestroy) {
                 oldStore.destroy();
             }
-            oldStore.un({
-                rootchange: 'onStoreRootChange',
-                scope: this
-            });
+            oldStore.un(listeners);
         }
 
         if (newStore) {
             me.goToNode(newStore.getRoot());
-            newStore.on({
-                rootchange: 'onStoreRootChange',
-                scope: this
-            });
+            newStore.on(listeners);
         }
     },
 

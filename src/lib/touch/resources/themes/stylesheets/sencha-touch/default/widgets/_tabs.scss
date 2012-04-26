@@ -29,13 +29,13 @@ $include-bottom-tabs: true !default;
  * @var {color} $tabs-light
  * Base color for "light" UI tabs.
  */
-$tabs-light: lighten(desaturate($base-color, 10%), 5%) !default;
+$tabs-light: desaturate($base-color, 10%) !default;
 
 /**
  * @var {color} $tabs-light-active
  * Active color for "light" UI tabs.
  */
-$tabs-light-active: saturate($active-color, 20%) !default;
+$tabs-light-active: lighten(saturate($active-color, 20%), 20%) !default;
 
 /**
  * @var {color} $tabs-dark
@@ -104,6 +104,7 @@ $tabs-top-height: $global-row-height - .8em;
   @if $include-tabbar-uis {
     @include sencha-tabbar-ui('light', $tabs-light, $tabs-bar-gradient, $tabs-light-active);
     @include sencha-tabbar-ui('dark', $tabs-dark, $tabs-bar-gradient, $tabs-dark-active-color);
+    @include sencha-tabbar-ui('neutral', $neutral-color, $tabs-bar-gradient, darken($neutral-color, 40));
   }
 
   // Rules for all tabs
@@ -123,7 +124,8 @@ $tabs-top-height: $global-row-height - .8em;
 
 @mixin sencha-top-tabs {
   .x-tabbar.x-docked-top {
-    border-bottom: .1em solid;
+    border-bottom-width: .1em;
+    border-bottom-style: solid;
     height: $global-row-height;
     padding: 0 .8em;
 
@@ -145,7 +147,8 @@ $tabs-top-height: $global-row-height - .8em;
 
 @mixin sencha-bottom-tabs {
   .x-tabbar.x-docked-bottom {
-    border-top: .1em solid;
+    border-top-width: .1em;
+    border-top-style: solid;
     height: 3em;
     padding: 0;
 
@@ -214,7 +217,8 @@ $tabs-top-height: $global-row-height - .8em;
 @mixin sencha-tabbar-ui($ui-label, $bar-color, $bar-gradient, $tab-active-color) {
   .x-tabbar-#{$ui-label} {
     @include background-gradient($bar-color, $bar-gradient);
-    border-color: darken($bar-color, 5%);
+    border-top-color: darken($bar-color, 5%);
+    border-bottom-color: darken($bar-color, 15%);
 
     .x-tab {
       @include color-by-background($bar-color, 40%);

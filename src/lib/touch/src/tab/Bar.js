@@ -14,7 +14,10 @@ Ext.define('Ext.tab.Bar', {
     requires: ['Ext.tab.Tab'],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'tabbar',
 
         // @private

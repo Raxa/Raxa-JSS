@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * The radio field is an enhanced version of the native browser radio controls and is a good way of allowing your user
  * to choose one option out of a selection of several (for example, choosing a favorite color):
  *
@@ -45,10 +47,16 @@ Ext.define('Ext.field.Radio', {
     isRadio: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'radio',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         component: {
             type: 'radio',
             cls: Ext.baseCSSPrefix + 'input-radio'
@@ -62,6 +70,28 @@ Ext.define('Ext.field.Radio', {
     setValue: function(value) {
         this._value = value;
         return this;
+    },
+
+    // @private
+    onMaskTap: function(component, e) {
+        var me = this,
+            dom = component.input.dom;
+
+        if (me.getDisabled()) {
+            return false;
+        }
+
+        //calling getchecked will sync the new checked value
+        if (me.getChecked()) {
+            me.fireEvent('check', me, e);
+        }
+        else {
+            dom.checked = true;
+            me.fireEvent('uncheck', me, e);
+        }
+
+        //return false so the mask does not disappear
+        return false;
     },
 
     /**

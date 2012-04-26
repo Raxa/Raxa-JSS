@@ -1,4 +1,6 @@
 /**
+ * @aside guide layouts
+ *
  * Factory class which returns an instance of the provided layout.
  */
 Ext.define('Ext.layout.Layout', {

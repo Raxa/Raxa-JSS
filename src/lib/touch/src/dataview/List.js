@@ -1,14 +1,15 @@
 /**
+ * @aside guide list
+ * @aside video list
+ *
  * List is a custom styled DataView which allows Grouping, Indexing, Icons, and a Disclosure.
- *
- * ## Example:
- *
- * Here is an example of the usage in a {@link Ext.List}:
  *
  *     @example miniphone preview
  *     Ext.define('Contact', {
- *        extend: 'Ext.data.Model',
- *        fields: ['firstName', 'lastName']
+ *         extend: 'Ext.data.Model',
+ *         config: {
+ *             fields: ['firstName', 'lastName']
+ *         }
  *     });
  *
  *     var store = Ext.create('Ext.data.Store', {
@@ -22,20 +23,20 @@
  *        },
  *
  *        data: [
- *            {firstName: 'Tommy',   lastName: 'Maintz'},
- *            {firstName: 'Rob',     lastName: 'Dougan'},
- *            {firstName: 'Ed',      lastName: 'Spencer'},
- *            {firstName: 'Jamie',   lastName: 'Avins'},
- *            {firstName: 'Aaron',   lastName: 'Conran'},
- *            {firstName: 'Dave',    lastName: 'Kaneda'},
- *            {firstName: 'Jacky',   lastName: 'Nguyen'},
- *            {firstName: 'Abraham', lastName: 'Elias'},
- *            {firstName: 'Jay',     lastName: 'Robinson'},
- *            {firstName: 'Nigel',   lastName: 'White'},
- *            {firstName: 'Don',     lastName: 'Griffin'},
- *            {firstName: 'Nico',    lastName: 'Ferrero'},
- *            {firstName: 'Nicolas', lastName: 'Belmonte'},
- *            {firstName: 'Jason',   lastName: 'Johnston'}
+ *            { firstName: 'Tommy',   lastName: 'Maintz'  },
+ *            { firstName: 'Rob',     lastName: 'Dougan'  },
+ *            { firstName: 'Ed',      lastName: 'Spencer' },
+ *            { firstName: 'Jamie',   lastName: 'Avins'   },
+ *            { firstName: 'Aaron',   lastName: 'Conran'  },
+ *            { firstName: 'Dave',    lastName: 'Kaneda'  },
+ *            { firstName: 'Jacky',   lastName: 'Nguyen'  },
+ *            { firstName: 'Abraham', lastName: 'Elias'   },
+ *            { firstName: 'Jay',     lastName: 'Robinson'},
+ *            { firstName: 'Nigel',   lastName: 'White'   },
+ *            { firstName: 'Don',     lastName: 'Griffin' },
+ *            { firstName: 'Nico',    lastName: 'Ferrero' },
+ *            { firstName: 'Nicolas', lastName: 'Belmonte'},
+ *            { firstName: 'Jason',   lastName: 'Johnston'}
  *        ]
  *     });
  *
@@ -45,7 +46,6 @@
  *        store: store,
  *        grouped: true
  *     });
- *
 */
 Ext.define('Ext.dataview.List', {
     alternateClassName: 'Ext.List',
@@ -94,7 +94,10 @@ Ext.define('Ext.dataview.List', {
          */
         preventSelectionOnDisclose: true,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'list',
 
         /**
@@ -123,6 +126,14 @@ Ext.define('Ext.dataview.List', {
          * @accessor
          */
         onItemDisclosure: null,
+
+        /**
+         * @cfg {String} disclosureProperty
+         * A property to check on each record to display the disclosure on a per record basis.  This
+         * property must be false to prevent the disclosure from being displayed on the item.
+         * @accessor
+         */
+        disclosureProperty: 'disclosure',
 
         /**
          * @cfg {String} ui

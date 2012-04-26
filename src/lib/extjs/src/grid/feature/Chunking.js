@@ -1,42 +1,24 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
- * @class Ext.grid.feature.Chunking
- * @extends Ext.grid.feature.Feature
+ *
  */
 Ext.define('Ext.grid.feature.Chunking', {
     extend: 'Ext.grid.feature.Feature',
     alias: 'feature.chunking',
-    
+
     chunkSize: 20,
     rowHeight: Ext.isIE ? 27 : 26,
     visibleChunk: 0,
     hasFeatureEvent: false,
     attachEvents: function() {
-        var grid = this.view.up('gridpanel'),
-            scroller = grid.down('gridscroller[dock=right]');
-        scroller.el.on('scroll', this.onBodyScroll, this, {buffer: 300});
-        //this.view.on('bodyscroll', this.onBodyScroll, this, {buffer: 300});
+        this.view.el.on('scroll', this.onBodyScroll, this, {buffer: 300});
     },
-    
+
     onBodyScroll: function(e, t) {
         var view = this.view,
             top  = t.scrollTop,
             nextChunk = Math.floor(top / this.rowHeight / this.chunkSize);
         if (nextChunk !== this.visibleChunk) {
-        
+
             this.visibleChunk = nextChunk;
             view.refresh();
             view.el.dom.scrollTop = top;
@@ -44,7 +26,7 @@ Ext.define('Ext.grid.feature.Chunking', {
             view.el.dom.scrollTop = top;
         }
     },
-    
+
     collectData: function(records, preppedRecords, startIndex, fullWidth, orig) {
         var o = {
             fullWidth: orig.fullWidth,
@@ -78,11 +60,10 @@ Ext.define('Ext.grid.feature.Chunking', {
                 chunkHeight: chunkLength * this.rowHeight
             });
         }
-        
-        
+
         return o;
     },
-    
+
     getTableFragments: function() {
         return {
             openTableWrap: function() {
@@ -94,4 +75,3 @@ Ext.define('Ext.grid.feature.Chunking', {
         };
     }
 });
-

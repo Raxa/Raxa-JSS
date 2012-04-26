@@ -1,5 +1,6 @@
 /**
  * @author Ed Spencer
+ * @aside guide proxies
  *
  * The JsonP proxy is useful when you need to load data from a domain other than the one your application is running on. If
  * your application is running on http://domainA.com it cannot use {@link Ext.data.proxy.Ajax Ajax} to load its data
@@ -168,15 +169,17 @@ Ext.define('Ext.data.proxy.JsonP', {
      * @protected
      */
     doRequest: function(operation, callback, scope) {
+        // <debug>
+        var action = operation.getAction();
+        if (action !== 'read') {
+            Ext.Logger.error('JsonP proxies can only be used to read data.');
+        }
+        // </debug>
+
         //generate the unique IDs for this request
         var me      = this,
-            writer  = me.getWriter(),
             request = me.buildRequest(operation),
             params  = request.getParams();
-
-        if (operation.allowWrite()) {
-            request = writer.write(request);
-        }
 
         // apply JsonP proxy-specific attributes to the Request
         request.setConfig({
@@ -262,13 +265,6 @@ Ext.define('Ext.data.proxy.JsonP', {
             }
         }
 
-        //if there are any records present, append them to the url also
-        records = request.getRecords();
-
-        if (Ext.isArray(records) && records.length > 0) {
-            url = Ext.urlAppend(url, Ext.String.format("{0}={1}", me.getRecordParam(), me.encodeRecords(records)));
-        }
-
         return url;
     },
 
@@ -286,23 +282,5 @@ Ext.define('Ext.data.proxy.JsonP', {
         if (lastRequest) {
             Ext.data.JsonP.abort(lastRequest.getJsonP());
         }
-    },
-
-    /**
-     * Encodes an array of records into a string suitable to be appended to the script src url. This is broken out into
-     * its own function so that it can be easily overridden.
-     * @param {Ext.data.Model[]} records The records array
-     * @return {String} The encoded records string
-     */
-    encodeRecords: function(records) {
-        var encoded = "",
-            i = 0,
-            len = records.length;
-
-        for (; i < len; i++) {
-            encoded += Ext.Object.toQueryString(records[i].getData());
-        }
-
-        return encoded;
     }
 });

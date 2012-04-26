@@ -1,4 +1,6 @@
 /**
+ * @aside guide layouts
+ *
  * AbstractBox is a superclass for the two box layouts:
  *
  * * {@link Ext.layout.HBox hbox}

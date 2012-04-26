@@ -152,7 +152,10 @@ Ext.define('Ext.form.Panel', {
      */
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'form',
 
         /**
@@ -197,7 +200,10 @@ Ext.define('Ext.form.Panel', {
          */
         method: 'post',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         scrollable: {
             translationMethod: 'scrollposition'
         }

@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * Represents a 2D point with x and y properties, useful for comparison and instantiation
  * from an event:
@@ -101,8 +87,7 @@ Ext.define('Ext.util.Point', {
     /**
      * @method
      * Alias for {@link #translateBy}
-     * @alias Ext.util.Region#translateBy
+     * @inheritdoc Ext.util.Region#translateBy
      */
     this.prototype.translate = Ext.util.Region.prototype.translateBy;
 });
-

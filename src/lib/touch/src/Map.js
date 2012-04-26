@@ -16,7 +16,7 @@
 Ext.define('Ext.Map', {
     extend: 'Ext.Component',
     xtype : 'map',
-    requires: ['Ext.util.GeoLocation'],
+    requires: ['Ext.util.Geolocation'],
 
     isMap: true,
 
@@ -60,9 +60,9 @@ Ext.define('Ext.Map', {
         baseCls: Ext.baseCSSPrefix + 'map',
 
         /**
-         * @cfg {Boolean/Ext.util.GeoLocation} useCurrentLocation
+         * @cfg {Boolean/Ext.util.Geolocation} useCurrentLocation
          * Pass in true to center the map based on the geolocation coordinates or pass a
-         * {@link Ext.util.GeoLocation GeoLocation} config to have more control over your GeoLocation options
+         * {@link Ext.util.Geolocation GeoLocation} config to have more control over your GeoLocation options
          * @accessor
          */
         useCurrentLocation: false,
@@ -75,7 +75,7 @@ Ext.define('Ext.Map', {
         map: null,
 
         /**
-         * @cfg {Ext.util.GeoLocation} geo
+         * @cfg {Ext.util.Geolocation} geo
          * Geolocation provider for the map.
          * @accessor
          */
@@ -142,7 +142,7 @@ Ext.define('Ext.Map', {
     },
 
     applyGeo: function(config) {
-        return Ext.factory(config, Ext.util.GeoLocation, this.getGeo());
+        return Ext.factory(config, Ext.util.Geolocation, this.getGeo());
     },
 
     updateGeo: function(newGeo, oldGeo) {

@@ -88,7 +88,10 @@ Ext.define('Ext.Audio', {
     xtype : 'audio',
 
     config: {
-        // @inherited
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'audio'
 
         /**

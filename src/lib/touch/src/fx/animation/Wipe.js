@@ -6,7 +6,10 @@ Ext.define('Ext.fx.animation.Wipe', {
     alternateClassName: 'Ext.fx.animation.WipeIn',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         easing: 'ease-out',
 
         /**

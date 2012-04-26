@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.chart.Highlight
  * A mixin providing highlight functionality for Ext.chart.series.Series.
@@ -31,20 +17,16 @@ Ext.define('Ext.chart.Highlight', {
      */
     highlight: false,
 
-    highlightCfg : null,
+    highlightCfg : {
+        fill: '#fdd',
+        "stroke-width": 5,
+        stroke: '#f55'
+    },
 
     constructor: function(config) {
         if (config.highlight) {
             if (config.highlight !== true) { //is an object
-                this.highlightCfg = Ext.apply({}, config.highlight);
-            }
-            else {
-                this.highlightCfg = {
-                    fill: '#fdd',
-                    radius: 20,
-                    lineWidth: 5,
-                    stroke: '#f55'
-                };
+                this.highlightCfg = Ext.merge(this.highlightCfg, config.highlight);
             }
         }
     },
@@ -60,7 +42,7 @@ Ext.define('Ext.chart.Highlight', {
         
         var me = this,
             sprite = item.sprite,
-            opts = me.highlightCfg,
+            opts = Ext.merge({}, me.highlightCfg, me.highlight),
             surface = me.chart.surface,
             animate = me.chart.animate,
             p, from, to, pi;
@@ -106,7 +88,7 @@ Ext.define('Ext.chart.Highlight', {
             sprite._endStyle = to;
         }
         if (animate) {
-            sprite._anim = Ext.create('Ext.fx.Anim', {
+            sprite._anim = new Ext.fx.Anim({
                 target: sprite,
                 from: sprite._from,
                 to: sprite._to,
@@ -128,11 +110,10 @@ Ext.define('Ext.chart.Highlight', {
         var me = this,
             items = me.items,
             len = items.length,
-            opts = me.highlightCfg,
+            opts = Ext.merge({}, me.highlightCfg, me.highlight),
             animate = me.chart.animate,
             i = 0,
             obj, p, sprite;
-
         for (; i < len; i++) {
             if (!items[i]) {
                 continue;
@@ -155,7 +136,7 @@ Ext.define('Ext.chart.Highlight', {
                 if (animate) {
                     //sprite._to = obj;
                     sprite._endStyle = obj;
-                    sprite._anim = Ext.create('Ext.fx.Anim', {
+                    sprite._anim = new Ext.fx.Anim({
                         target: sprite,
                         to: obj,
                         duration: 150

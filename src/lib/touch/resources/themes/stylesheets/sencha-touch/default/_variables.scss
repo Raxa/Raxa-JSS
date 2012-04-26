@@ -98,6 +98,12 @@ $confirm-color: #92cf00 !default; // Green
 $active-color: darken(saturate($base-color, 55%), 10%) !default;
 
 /**
+ * @var {color} $neutral-color
+ * Color used for the neautral `ui` for Toolbars and Tabbars.
+ */
+$neutral-color: #e0e0e0;
+
+/**
  * @var {color} $page-bg-color
  * Background color for fullscreen components.
  */

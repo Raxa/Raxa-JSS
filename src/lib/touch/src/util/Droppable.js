@@ -7,7 +7,10 @@ Ext.define('Ext.util.Droppable', {
     },
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'droppable'
     },
 

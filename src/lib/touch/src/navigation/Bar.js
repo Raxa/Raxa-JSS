@@ -17,10 +17,16 @@ Ext.define('Ext.navigation.Bar', {
     isToolbar: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'toolbar',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'navigation-bar',
 
         /**
@@ -196,7 +202,6 @@ Ext.define('Ext.navigation.Bar', {
             }
             animations = animations.concat(me.pushTitleAnimated(titleText));
             me.activeAnimations = animations;
-            Ext.Animator.run(animations);
         }
         else {
             if (hasPrevious) {
@@ -227,7 +232,6 @@ Ext.define('Ext.navigation.Bar', {
             animations = animations.concat(me.popBackButtonAnimated(backButtonText));
             animations = animations.concat(me.popTitleAnimated(titleText));
             me.activeAnimations = animations;
-            Ext.Animator.run(animations);
         }
         else {
             me.popBackButton(backButtonText);
@@ -371,6 +375,7 @@ Ext.define('Ext.navigation.Bar', {
         this.refreshNavigationBarProxy();
 
         var properties = this.getNavigationBarProxyProperties();
+
         if (backButton && backButton.rendered) {
             backButton.setWidth(properties.backButton.width);
         }
@@ -495,7 +500,7 @@ Ext.define('Ext.navigation.Bar', {
     /**
      * Helper method used to animate elements.
      * You pass it an element, objects for the from and to positions an option onEnd callback called when the animation is over.
-     * Normally this method is passed configurations returned from the methods such as {@link #getTitleAnimationProperties(true)} etc.
+     * Normally this method is passed configurations returned from the methods such as {@link #getTitleAnimationProperties}(true) etc.
      * It is called from the {@link #pushBackButtonAnimated}, {@link #pushTitleAnimated}, {@link #popBackButtonAnimated} and {@link #popTitleAnimated}
      * methods.
      *
@@ -580,6 +585,9 @@ Ext.define('Ext.navigation.Bar', {
 
         animation = new Ext.fx.Animation(config);
         animation.on('animationend', fn, this);
+
+        Ext.Animator.run(animation);
+
         return animation;
     },
 
@@ -874,7 +882,7 @@ Ext.define('Ext.navigation.Bar', {
         proxy.backButton = proxy.down('button[ui=back]');
 
         //add the proxy to the body
-        Ext.getBody().appendChild(proxy.element);
+        this.element.appendChild(proxy.element);
     },
 
     /**
@@ -909,18 +917,16 @@ Ext.define('Ext.navigation.Bar', {
             backButtonStack = me.backButtonStack,
             title = backButtonStack[backButtonStack.length - 1],
             oldTitle = me.getBackButtonText(),
-            proxyElement, proxyBackButton;
+            proxyBackButton;
 
         if (!proxy) {
             me.createNavigationBarProxy();
             proxy = me.proxy;
         }
-
-        proxyElement = proxy.element;
         proxyBackButton = proxy.backButton;
 
-        proxyElement.setWidth(element.getWidth());
-        proxyElement.setHeight(element.getHeight());
+        proxy.setWidth(element.getWidth());
+        proxy.setHeight(element.getHeight());
 
         proxy.setTitle(title);
 
@@ -948,7 +954,7 @@ Ext.define('Ext.navigation.Bar', {
 
     /**
      * We override the hidden method because we don't want to remove it from the view using display:none. Instead we just position it off
-     * the scren, much like the navigation bar proxy. This means that all animations, pushing, popping etc. all still work when if you hide/show
+     * the screen, much like the navigation bar proxy. This means that all animations, pushing, popping etc. all still work when if you hide/show
      * this bar at any time.
      * @private
      */
@@ -994,5 +1000,10 @@ Ext.define('Ext.navigation.Bar', {
         }
 
         return ghost;
+    },
+
+    destroy: function() {
+        Ext.destroy(this.proxy);
+        delete this.proxy;
     }
 });

@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * Hidden fields allow you to easily inject additional data into a {@link Ext.form.Panel form} without displaying
  * additional fields on the screen. This is often useful for sending dynamic or previously collected data back to the
  * server in the same request as the normal form submission. For example, here is how we might set up a form to send
@@ -43,13 +45,19 @@ Ext.define('Ext.field.Hidden', {
     xtype: 'hiddenfield',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         component: {
             xtype: 'input',
             type : 'hidden'
         },
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'hidden',
 
         /**

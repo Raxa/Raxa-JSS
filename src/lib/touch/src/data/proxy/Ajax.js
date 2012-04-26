@@ -1,5 +1,6 @@
 /**
  * @author Ed Spencer
+ * @aside guide proxies
  *
  * AjaxProxy is one of the most widely-used ways of getting data into your application. It uses AJAX
  * requests to load data from the server, usually to be placed into a {@link Ext.data.Store Store}.

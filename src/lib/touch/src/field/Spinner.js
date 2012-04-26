@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * Wraps an HTML5 number field. Example usage:
  *
  *     @example miniphone
@@ -9,7 +11,7 @@
  *         increment: 2,
  *         cycle: true
  *     });
- *     Ext.Viewport.add(spinner);
+ *     Ext.Viewport.add({ xtype: 'container', items: [spinner] });
  *
  */
 Ext.define('Ext.field.Spinner', {
@@ -56,7 +58,10 @@ Ext.define('Ext.field.Spinner', {
      */
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'spinner',
 
         /**
@@ -109,7 +114,16 @@ Ext.define('Ext.field.Spinner', {
          */
         tabIndex: -1,
 
-        // @inherit
+        /**
+         * @cfg {Boolean} groupButtons
+         * True if you want to group the buttons to the right of the fields. False if you want the buttons to be at either side of the field.
+         */
+        groupButtons: true,
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         component: {
             disabled: true
         }
@@ -140,21 +154,36 @@ Ext.define('Ext.field.Spinner', {
                 html: '-'
             });
 
-            innerElement.insertFirst(this.spinDownButton);
-
             this.spinUpButton = Ext.Element.create({
                 cls : cls + '-button ' + cls + '-button-up',
                 html: '+'
             });
-
-            innerElement.appendChild(this.spinUpButton);
 
             this.downRepeater = this.createRepeater(this.spinDownButton, this.onSpinDown);
             this.upRepeater = this.createRepeater(this.spinUpButton,     this.onSpinUp);
         }
     },
 
-    // @inherit
+    updateGroupButtons: function(newGroupButtons, oldGroupButtons) {
+        var me = this,
+            innerElement = me.innerElement,
+            cls = me.getBaseCls() + '-grouped-buttons';
+
+        me.getComponent();
+
+        if (newGroupButtons != oldGroupButtons) {
+            if (newGroupButtons) {
+                this.addCls(cls);
+                innerElement.appendChild(me.spinDownButton);
+                innerElement.appendChild(me.spinUpButton);
+            } else {
+                this.removeCls(cls);
+                innerElement.insertFirst(me.spinDownButton);
+                innerElement.appendChild(me.spinUpButton);
+            }
+        }
+    },
+
     applyValue: function(value) {
         value = parseFloat(value);
         if (isNaN(value) || value === null) {

@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.chart.Callout
  * A mixin providing callout functionality for Ext.chart.series.Series.
@@ -51,14 +37,17 @@ Ext.define('Ext.chart.Callout', {
             i,
             count,
             j,
-            p;
+            p,
+            item,
+            label,
+            storeItem,
+            display;
             
         for (i = 0, count = 0; i < len; i++) {
             for (j = 0; j < ratio; j++) {
-                var item = items[count],
-                    label = group[count],
-                    storeItem = store.getAt(i),
-                    display;
+                item = items[count];
+                label = group[count];
+                storeItem = store.getAt(i);
                 
                 display = config.filter(storeItem);
                 
@@ -122,7 +111,7 @@ Ext.define('Ext.chart.Callout', {
         styles));
 
         if (config.items) {
-            calloutObj.panel = Ext.create('widget.panel', {
+            calloutObj.panel = new Ext.Panel({
                 style: "position: absolute;",    
                 width: width,
                 height: height,
@@ -149,4 +138,3 @@ Ext.define('Ext.chart.Callout', {
         }
     }
 });
-

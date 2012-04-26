@@ -1,20 +1,4 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
- * @class Ext.view.DragZone
- * @extends Ext.dd.DragZone
  * @private
  */
 Ext.define('Ext.view.DragZone', {
@@ -75,20 +59,16 @@ Ext.define('Ext.view.DragZone', {
 
     getDragData: function(e) {
         var view = this.view,
-            item = e.getTarget(view.getItemSelector()),
-            record, selectionModel, records;
+            item = e.getTarget(view.getItemSelector());
 
         if (item) {
-            record = view.getRecord(item);
-            selectionModel = view.getSelectionModel();
-            records = selectionModel.getSelection();
             return {
-                copy: this.view.copy || (this.view.allowCopy && e.ctrlKey),
+                copy: view.copy || (view.allowCopy && e.ctrlKey),
                 event: new Ext.EventObjectImpl(e),
                 view: view,
                 ddel: this.ddel,
                 item: item,
-                records: records,
+                records: view.getSelectionModel().getSelection(),
                 fromPosition: Ext.fly(item).getXY()
             };
         }

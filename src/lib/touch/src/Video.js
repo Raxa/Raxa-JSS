@@ -54,7 +54,10 @@ Ext.define('Ext.Video', {
          */
         posterUrl: null,
 
-        // @inherited
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'video'
     },
 

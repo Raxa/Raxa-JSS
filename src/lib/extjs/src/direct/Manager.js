@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * Ext.Direct aims to streamline communication between the client and server by providing a single interface that
  * reduces the amount of common code typically required to validate data and handle returned data packets (reading data,
@@ -98,8 +84,8 @@ Ext.define('Ext.direct.Manager', {
              */
             'exception'
         );
-        me.transactions = Ext.create('Ext.util.MixedCollection');
-        me.providers = Ext.create('Ext.util.MixedCollection');
+        me.transactions = new Ext.util.MixedCollection();
+        me.providers = new Ext.util.MixedCollection();
 
         me.mixins.observable.constructor.call(me);
     },
@@ -226,7 +212,7 @@ Ext.define('Ext.direct.Manager', {
      * @return {Ext.direct.Transaction}
      */
     getTransaction: function(transaction){
-        return transaction.isTransaction ? transaction : this.transactions.get(transaction);
+        return Ext.isObject(transaction) ? transaction : this.transactions.get(transaction);
     },
 
     onProviderData : function(provider, event){
@@ -246,9 +232,32 @@ Ext.define('Ext.direct.Manager', {
             me.fireEvent('exception', event);
         }
         me.fireEvent('event', event, provider);
+    },
+    
+    /**
+     * Parses a direct function. It may be passed in a string format, for example:
+     * "MyApp.Person.read".
+     * @protected
+     * @param {String/Function} fn The direct function
+     * @return {Function} The function to use in the direct call. Null if not found
+     */
+    parseMethod: function(fn){
+        if (Ext.isString(fn)) {
+            var parts = fn.split('.'),
+                i = 0,
+                len = parts.length,
+                current = window;
+                
+            while (current && i < len) {
+                current = current[parts[i]];
+                ++i;
+            }
+            fn = Ext.isFunction(current) ? current : null;
+        }
+        return fn || null;
     }
+    
 }, function(){
     // Backwards compatibility
     Ext.Direct = Ext.direct.Manager;
 });
-
