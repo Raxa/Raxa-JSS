@@ -7,10 +7,10 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 	requires: ['RaxaEMR.Screener.view.NewPatient', 'RaxaEMR.Screener.store.Doctors'],
 	extend: 'Ext.app.Controller',
 	config: {
-		
+				
 		//here we name the elements we need from the page
 		refs: {
-			view: 'mainView',
+			mainView: 'mainView',
 			topmenu: 'topmenu',
 			navBar: '#navBar',
 			patientView: 'patientView',
@@ -18,6 +18,7 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 			newPatient: 'newPatient',
 			sortPanel: 'sortPanel',
 			patientList: '#patientList',
+			patientListTitle: '#patientListTitle',
 			doctorList: '#doctorList',
 			expandDoctorList: '#expandDoctorList',
 			currentPatients: '#currentPatients',			
@@ -30,11 +31,19 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 			savePatientButton: '#savePatientButton', 
 			assignButton: '#assignButton',
 			sortButton: '#sortButton',
-			sortByNameButton: '#sortByNameButton',
+			sortByBMIButton: '#sortByBMIButton',
 			sortByFIFOButton: '#sortByFIFOButton',
 			removePatientButton: '#removePatientButton',
 			removeAllPatientsButton: '#removeAllPatientsButton',
 		},
+
+		//when someone types in an url like /screener/#PatientView we go directly to the corresponding view
+		routes: {
+			'TopMenu': 'showTopMenu',
+			'PatientView': 'showPatients',
+			'DoctorView': 'showDoctors',
+		},
+		
 		
 		//now we define all our listening methods
 		control: {
@@ -57,14 +66,14 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 			sortButton: {
 				tap: 'showSort'
 			},
-			sortByNameButton: {
-				tap: 'sortByName'
+			sortByBMIButton: {
+				tap: 'sortByBMI'
 			},			
 			sortByFIFOButton: {
 				tap: 'sortByFIFO'
 			},			
 			patientList: {
-				itemtap: 'setCurrentPatient'
+				itemtap: 'setCurrentPatient',
 			},
 			doctorList: {
 				itemtap: 'setCurrentDoctor'
@@ -81,14 +90,38 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 			removeAllPatientsButton: {
 				tap: 'removeAllPatients'
 			},
-			view: {
+			mainView: {
 				init: 'init',
 			},
 		},
 
-
 	},
 
+	//entry point
+    launch: function(){
+    	var panel = Ext.create('Ext.Panel', {
+    		id : 'mainView',
+			layout : 'card',
+			fullscreen: true,
+			items : [
+			{
+				xclass: 'RaxaEMR.Screener.view.TopMenu',
+			}, {
+				xclass: 'RaxaEMR.Screener.view.PatientView'
+			}, {
+				xclass: 'RaxaEMR.Screener.view.DoctorView'
+			}
+			]
+		});
+
+		Ext.Viewport.add(panel);
+		panel.setActiveItem(0);
+		//setting number of patients in waiting list after we have loaded everything
+		Ext.getCmp('patientListTitle').setTitle('Patients Waiting:'+Ext.getStore('patientStore').getCount());
+
+    },
+	
+	
 	//adds the patient to the doctor using 'hasmany' association
 	addToDoctor: function(patient){
 		doctorid = patient.get('doctorid');
@@ -101,12 +134,26 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 		}
 	},
 	
+	//updating the patient list title whenever number of patients changes
+	updatePatientListTitle: function(){
+		Ext.getCmp('patientListTitle').setTitle('Patients Waiting:'+Ext.getStore('patientStore').getCount());
+	},
+	
+	
 	//called on startup
 	init: function(){
 		this.totalPatients = Ext.getStore('patientStore').getCount();
 		Ext.getStore('patientStore').each(this.addToDoctor);
+				
+		//adding listener so patient waiting list title is updated
+		Ext.getStore('patientStore').addAfterListener('removerecords', this.updatePatientListTitle);
+		Ext.getStore('patientStore').addAfterListener('addrecords', this.updatePatientListTitle);
 	},
 	
+	showTopMenu: function(){
+		Ext.getCmp('mainView').setActiveItem(0);
+	},
+
 	//opens form for new patient
 	addPatient: function() {
 		if(!this.newPatient){
@@ -127,6 +174,7 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 		patient.set('lastname', formp.lastname);
 		patient.set('id', formp.id);
 		patient.set('doctorid', -1);
+		patient.set('BMI', formp.BMI);
 		Ext.getStore('patientStore').add(patient);
 		this.totalPatients++;
 		this.getNewPatient().reset();
@@ -136,20 +184,16 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 	
 	//function to show screen with patient list
 	showPatients: function() {
-		if(!this.patientView){ 
-			this.patientView = Ext.create('RaxaEMR.Screener.view.PatientView');
-		}
+		window.location.hash = 'PatientView';
+		Ext.getCmp('mainView').setActiveItem(1);
 		this.getDoctorList().deselectAll();
-		this.getView().push(this.patientView);
 	},
 	
 	//function to show screen with doctor list
 	showDoctors: function() {
-		if(!this.doctorView){ 
-			this.doctorView = Ext.create('RaxaEMR.Screener.view.DoctorView');
-		}
+		window.location.hash = 'DoctorView';
+		Ext.getCmp('mainView').setActiveItem(2);
 		this.getExpandDoctorList().deselectAll();		
-		this.getView().push(this.doctorView);
 	},
 
 	//keeping track of which patient/doctor is currently selected
@@ -178,8 +222,8 @@ Ext.define("RaxaEMR.Screener.controller.Application", {
 		this.getSortPanel().show();		
 	},
 
-	sortByName: function(){
-		Ext.getStore('patientStore').sort('lastname');
+	sortByBMI: function(){
+		Ext.getStore('patientStore').sort('BMI');
 		this.getSortPanel().hide();		
 	},
 	

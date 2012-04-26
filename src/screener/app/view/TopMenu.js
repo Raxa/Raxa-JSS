@@ -10,35 +10,37 @@ Ext.define("RaxaEMR.Screener.view.TopMenu", {
 	config: {
 		fullscreen: true,
 		layout: 'vbox',
-		centered: true,
-		items: [
+		items: [{
+			centered: true,
+			items: [
+	
+			        {
+			        	xtype: 'button',
+			        	id: 'addPatientButton',
+			        	text: 'Add New Patient',
+			        	ui:'round',
+			        	height: 80,
+			        	width: 300
+			        },
+			        {
+			        	xtype: 'button',
+			        	id: 'showPatientsButton',
+			        	text: 'Show Unassigned Patients',
+			        	ui:'round',
+			        	height: 80,
+			        	width: 300
+			        },
+			        {
+			        	xtype: 'button',
+			        	id: 'showDoctorsButton',
+		    	    	text: 'Show Doctors',
+		        		ui:'round',
+		        		height: 80,
+		        		width: 300
+		        	}
 
-		        {
-		        	xtype: 'button',
-		        	id: 'addPatientButton',
-		        	text: 'Add New Patient',
-		        	ui:'round',
-		        	height: 80,
-		        	width: 300
-		        },
-		        {
-		        	xtype: 'button',
-		        	id: 'showPatientsButton',
-		        	text: 'Show Unassigned Patients',
-		        	ui:'round',
-		        	height: 80,
-		        	width: 300
-		        },
-		        {
-		        	xtype: 'button',
-		        	id: 'showDoctorsButton',
-		        	text: 'Show Doctors',
-		        	ui:'round',
-		        	height: 80,
-		        	width: 300
-		        }
-
-		        ]
+		        	]
+		}]
 	}
 });
 

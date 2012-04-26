@@ -15,7 +15,7 @@ Ext.define("RaxaEMR.Screener.view.NewPatient", {
 		hidden: true,
 		// Set the width and height of the panel
 		width: Ext.os.is.Phone ? 260 : 400,
-		height: 200,
+		height: 250,
 
 				items: [
 				        {
@@ -33,6 +33,12 @@ Ext.define("RaxaEMR.Screener.view.NewPatient", {
 				        	id: 'formid',
 				            name: 'id',
 				            label: 'FIFO ID',
+				        },
+				        {
+				        	xtype: 'numberfield',
+				        	id: 'BMI',
+				        	name: 'BMI',
+				        	label: 'BMI',
 				        },
 				        {
 				        	xtype: 'button',
