@@ -320,7 +320,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      * @return {Ext.direct.Transaction} The transaction, null if not found
      */
     getTransaction: function(options) {
-        return options && options.getTid() ? Ext.direct.Manager.getTransaction(options.getTid()) : null;
+        return options && options.getTid ? Ext.direct.Manager.getTransaction(options.getTid()) : null;
     },
 
     /**

@@ -6,7 +6,10 @@ Ext.define('Ext.dataview.ListItemHeader', {
     xtype : 'listitemheader',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'list-header',
         docked: 'top'
     }

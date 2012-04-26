@@ -142,7 +142,7 @@ Ext.define('Ext.data.writer.Writer', {
             }
             if (!isPhantom) {
                 // always include the id for non phantoms
-                data[record.idProperty] = record.getId();
+                data[record.getIdProperty()] = record.getId();
             }
         }
         return data;

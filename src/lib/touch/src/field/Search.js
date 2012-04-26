@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * The Search field creates an HTML5 search input and is usually created inside a form. Because it creates an HTML
  * search input type, the visual styling of this input is slightly different to normal text input contrls (the corners
  * are rounded), though the virtual keyboard displayed by the operating system is the standard keyboard control.
@@ -42,12 +44,18 @@ Ext.define('Ext.field.Search', {
     alternateClassName: 'Ext.form.Search',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         component: {
 	        type: 'search'
 	    },
 
-	    // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
 	    ui: 'search'
     }
 });

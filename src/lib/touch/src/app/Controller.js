@@ -1,6 +1,12 @@
 /**
  * @author Ed Spencer
  *
+ * @aside guide controllers
+ * @aside guide apps_intro
+ * @aside guide history_support
+ * @aside video mvc-part-1
+ * @aside video mvc-part-2
+ *
  * Controllers are responsible for responding to events that occur within your app. If your app contains a Logout
  * {@link Ext.Button button} that your user can tap on, a Controller would listen to the Button's tap event and take
  * the appropriate action. It allows the View classes to handle the display of data and the Model classes to handle the
@@ -201,9 +207,6 @@
  *
  * See <a href="#!/guide/controllers">the Controllers guide</a> for advanced Controller usage including before filters
  * and customizing for different devices.
- * 
- * @aside guide controllers
- * @aside guide apps_intro
  */
 Ext.define('Ext.app.Controller', {
     mixins: {
@@ -324,7 +327,7 @@ Ext.define('Ext.app.Controller', {
          * @accessor
          */
         application: {},
-        
+
         /**
          * @cfg {Array} stores The set of stores to load for this Application. Each store is expected to
          * exist inside the *app/store* directory and define a class following the convention
@@ -490,7 +493,7 @@ Ext.define('Ext.app.Controller', {
 
         return routes;
     },
-    
+
     /**
      * @private
      * As a convenience developers can locally qualify store names (e.g. 'MyStore' vs
@@ -517,10 +520,10 @@ Ext.define('Ext.app.Controller', {
     applyViews: function(views) {
         return this.getFullyQualified(views, 'view');
     },
-    
+
     /**
      * @private
-     * Returns the fully qualified name for any class name variant. This is used to find the FQ name for the model, 
+     * Returns the fully qualified name for any class name variant. This is used to find the FQ name for the model,
      * view, controller, store and profiles listed in a Controller or Application.
      * @param {String[]} items The array of strings to get the FQ name for
      * @param {String} namespace If the name happens to be an application class, add it to this namespace
@@ -697,7 +700,7 @@ Ext.define('Ext.app.Controller', {
     },
 
     /**
-     * Returns a reference to a Model. 
+     * Returns a reference to a Model.
      * @deprecated 2.0.0 Considered bad practice - please just use the Model name instead
      * (e.g. MyApp.model.User vs this.getModel('User')).
      */
@@ -714,7 +717,7 @@ Ext.define('Ext.app.Controller', {
     },
 
     /**
-     * Returns a reference to another Controller. 
+     * Returns a reference to another Controller.
      * @deprecated 2.0.0 Considered bad practice - if you need to do this
      * please use this.getApplication().getController() instead
      */

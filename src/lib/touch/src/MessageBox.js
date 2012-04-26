@@ -9,8 +9,6 @@
  * some user feedback from the MessageBox, you must use a callback function (see the `fn` configuration option parameter
  * for the {@link #method-show show} method for more details).
  *
- * ## Example
- *
  *     @example preview
  *     Ext.Msg.alert('Title', 'The quick brown fox jumped over the lazy dog.', Ext.emptyFn);
  *
@@ -26,10 +24,16 @@ Ext.define('Ext.MessageBox', {
     ],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'dark',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'msgbox',
 
         /**
@@ -39,14 +43,20 @@ Ext.define('Ext.MessageBox', {
          */
         iconCls: null,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         showAnimation: {
             type: 'popIn',
             duration: 250,
             easing: 'ease-out'
         },
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         hideAnimation: {
             type: 'popOut',
             duration: 250,
@@ -109,7 +119,10 @@ Ext.define('Ext.MessageBox', {
          */
         prompt: null,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         layout: {
             type: 'vbox',
             pack: 'center'
@@ -142,7 +155,6 @@ Ext.define('Ext.MessageBox', {
         ]
     },
 
-    // @inherit
     constructor: function(config) {
         config = config || {};
 
@@ -166,6 +178,16 @@ Ext.define('Ext.MessageBox', {
 
             delete config.multiline;
             delete config.multiLine;
+        }
+
+        this.defaultAllowedConfig = {};
+        var allowedConfigs = ['ui', 'showAnimation', 'hideAnimation', 'title', 'message', 'prompt', 'iconCls', 'buttons', 'defaultTextHeight'],
+            ln = allowedConfigs.length,
+            i, allowedConfig;
+
+        for (i = 0; i < ln; i++) {
+            allowedConfig = allowedConfigs[i];
+            this.defaultAllowedConfig[allowedConfig] = this.defaultConfig[allowedConfig];
         }
 
         this.callParent([config]);
@@ -505,14 +527,7 @@ Ext.define('Ext.MessageBox', {
             delete config.multiLine;
         }
 
-        config = Ext.apply({
-            iconCls: null,
-            title: null,
-            buttons: null,
-            message: null,
-            prompt: null,
-            cls: null
-        }, config);
+        config = Ext.merge({}, this.defaultAllowedConfig, config);
 
         this.setConfig(config);
 
@@ -553,9 +568,9 @@ Ext.define('Ext.MessageBox', {
             message     : message,
             buttons     : Ext.MessageBox.OK,
             promptConfig: false,
-            fn          : function(buttonId) {
+            fn          : function() {
                 if (fn) {
-                    fn.call(scope, buttonId);
+                    fn.apply(scope, arguments);
                 }
             },
             scope: scope
@@ -591,9 +606,9 @@ Ext.define('Ext.MessageBox', {
             buttons     : Ext.MessageBox.YESNO,
             promptConfig: false,
             scope       : scope,
-            fn: function(button) {
+            fn: function() {
                 if (fn) {
-                    fn.call(scope, button);
+                    fn.apply(scope, arguments);
                 }
             }
         });
@@ -607,17 +622,17 @@ Ext.define('Ext.MessageBox', {
      *
      * Example usage:
      *
-     *         Ext.Msg.prompt(
-     *             'Welcome!',
-     *             'What\'s your name going to be today?',
-     *             function(buttonId, value) {
-     *                 console.log(value)
-     *             },
-     *             null,
-     *             false,
-     *             null,
-     *             { autocapitalize : true, placeholder : 'First-name please...' }
-     *         );
+     *     Ext.Msg.prompt(
+     *         'Welcome!',
+     *         'What\'s your name going to be today?',
+     *         function (buttonId, value) {
+     *             console.log(value)
+     *         },
+     *         null,
+     *         false,
+     *         null,
+     *         { autoCapitalize : true, placeHolder : 'First-name please...' }
+     *     );
      *
      * @param {String} title The title bar text
      *
@@ -658,9 +673,9 @@ Ext.define('Ext.MessageBox', {
             prompt   : prompt || true,
             multiLine: multiLine,
             value    : value,
-            fn: function(button, inputValue) {
+            fn: function() {
                 if (fn) {
-                    fn.call(scope, button, inputValue);
+                    fn.apply(scope, arguments);
                 }
             }
         });
@@ -713,6 +728,12 @@ Ext.define('Ext.MessageBox', {
          * A global shared singleton instance of the {@link Ext.MessageBox} class.
          *
          * Allows for simple creation of various different alerts and notifications.
+         *
+         * To change any cofigurations on this singleton instance, you must change the
+         * defaultAllowedConfig object.  For example to remove all animations on Msg:
+         *
+         * Ext.Msg.defaultAllowedConfig.showAnimation = false;
+         * Ext.Msg.defaultAllowedConfig.hideAnimation = false;
          *
          * ## Examples
          *

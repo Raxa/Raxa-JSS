@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * A simple class that renders text directly into a toolbar.
  *
@@ -28,7 +14,7 @@ If you are unsure which license is appropriate for your use, please contact the 
  *
  * @constructor
  * Creates a new TextItem
- * @param {Object} text A text string, or a config object containing a <tt>text</tt> property
+ * @param {Object} text A text string, or a config object containing a #text property
  */
 Ext.define('Ext.toolbar.TextItem', {
     extend: 'Ext.toolbar.Item',
@@ -37,7 +23,8 @@ Ext.define('Ext.toolbar.TextItem', {
     alternateClassName: 'Ext.Toolbar.TextItem',
 
     /**
-     * @cfg {String} text The text to be used as innerHTML (html tags are accepted)
+     * @cfg {String} text
+     * The text to be used as innerHTML (html tags are accepted).
      */
     text: '',
 
@@ -45,11 +32,14 @@ Ext.define('Ext.toolbar.TextItem', {
     //
     baseCls: Ext.baseCSSPrefix + 'toolbar-text',
 
-    onRender : function() {
-        Ext.apply(this.renderData, {
-            text: this.text
+    beforeRender : function() {
+        var me = this;
+
+        me.callParent();
+
+        Ext.apply(me.renderData, {
+            text: me.text
         });
-        this.callParent(arguments);
     },
 
     /**

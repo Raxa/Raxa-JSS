@@ -1,4 +1,6 @@
 /**
+ * @aside guide stores
+ *
  * Small helper class to create an {@link Ext.data.Store} configured with an {@link Ext.data.proxy.Direct}
  * and {@link Ext.data.reader.Json} to make interacting with an {@link Ext.direct.Manager} server-side
  * {@link Ext.direct.Provider Provider} easier. To create a different proxy/reader combination create a basic

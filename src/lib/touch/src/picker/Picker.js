@@ -109,7 +109,10 @@ Ext.define('Ext.picker.Picker', {
      */
 
     config: {
-        // @inherited
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'picker',
 
         /**
@@ -165,7 +168,10 @@ Ext.define('Ext.picker.Picker', {
          */
         height: 220,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         layout: {
             type : 'hbox',
             align: 'stretch'
@@ -177,13 +183,22 @@ Ext.define('Ext.picker.Picker', {
          */
         centered: false,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         left : 0,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         right: 0,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         bottom: 0,
 
         // @private
@@ -429,7 +444,7 @@ Ext.define('Ext.picker.Picker', {
      */
     onDoneButtonTap: function() {
         var oldValue = this._value,
-            newValue = this.getValue();
+            newValue = this.getValue(true);
 
         if (newValue != oldValue) {
             this.fireEvent('change', this, newValue);
@@ -451,8 +466,8 @@ Ext.define('Ext.picker.Picker', {
      * @private
      * Called when a slot has been picked.
      */
-    onSlotPick: function(slot, value, node) {
-        this.fireEvent('pick', this, this.getValue(), slot);
+    onSlotPick: function(slot) {
+        this.fireEvent('pick', this, this.getValue(true), slot);
     },
 
     onShow: function() {
@@ -471,13 +486,13 @@ Ext.define('Ext.picker.Picker', {
         var me = this,
             slots = me.getInnerItems(),
             ln = slots.length,
-            key, slot, loopSlot, i;
+            key, slot, loopSlot, i, value;
 
         if (!values) {
             values = {};
             for (i = 0; i < ln; i++) {
-                //set the value to false so the slot will return null when getValue is set
-                values[slots[i].config.name] = false;
+                //set the value to false so the slot will return null when getValue is called
+                values[slots[i].config.name] = null;
             }
         }
 
@@ -500,8 +515,7 @@ Ext.define('Ext.picker.Picker', {
             }
         }
 
-        me._value = this.getValue();
-        me._values = me._value;
+        me._values = me._value = values;
 
         return me;
     },
@@ -514,20 +528,22 @@ Ext.define('Ext.picker.Picker', {
      * Returns the values of each of the pickers slots
      * @return {Object} The values of the pickers slots
      */
-    getValue: function() {
+    getValue: function(useDom) {
         var values = {},
             items = this.getItems().items,
             ln = items.length,
             item, i;
 
-        for (i = 0; i < ln; i++) {
-            item = items[i];
-            if (item && item.isSlot) {
-                values[item.getName()] = item.getValue();
+        if (useDom) {
+            for (i = 0; i < ln; i++) {
+                item = items[i];
+                if (item && item.isSlot) {
+                    values[item.getName()] = item.getValue(useDom);
+                }
             }
-        }
 
-        this._values = values;
+            this._values = values;
+        }
 
         return this._values;
     },
@@ -567,14 +583,6 @@ Ext.define('Ext.picker.Picker', {
      * @deprecated 2.0.0 Please use {@link #setActiveItem} instead
      */
     Ext.deprecateClassMethod(this, 'setCard', 'setActiveItem');
-
     //</deprecated>
-
-    Ext.define('x-textvalue', {
-        extend: 'Ext.data.Model',
-        config: {
-            fields: ['text', 'value']
-        }
-    });
 });
 

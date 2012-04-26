@@ -7,10 +7,16 @@ Ext.define('Ext.slider.Thumb', {
     xtype : 'thumb',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'thumb',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         draggable: {
             direction: 'horizontal'
         }

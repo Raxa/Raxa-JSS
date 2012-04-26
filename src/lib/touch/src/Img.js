@@ -68,7 +68,10 @@ Ext.define('Ext.Img', {
          */
         src: null,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'img',
 
         mode: 'background'

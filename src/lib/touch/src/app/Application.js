@@ -1,6 +1,11 @@
 /**
  * @author Ed Spencer
  *
+ * @aside guide apps_intro
+ * @aside guide first_app
+ * @aside video mvc-part-1
+ * @aside video mvc-part-2
+ *
  * Ext.app.Application defines the set of {@link Ext.data.Model Models}, {@link Ext.app.Controller Controllers},
  * {@link Ext.app.Profile Profiles}, {@link Ext.data.Store Stores} and {@link Ext.Component Views} that an application
  * consists of. It automatically loads all of those dependencies and can optionally specify a {@link #launch} function
@@ -164,9 +169,6 @@
  * If you are not already familiar with writing applications with Sencha Touch 2 we recommend reading the
  * <a href="#!/guide/apps_intro">intro to applications</a> guide, which lays out the core principles of writing apps
  * with Sencha Touch 2.
- *
- * @aside guide apps_intro
- * @aside guide first_app
  */
 Ext.define('Ext.app.Application', {
     extend: 'Ext.app.Controller',
@@ -181,8 +183,16 @@ Ext.define('Ext.app.Application', {
     config: {
         /**
          * @cfg {String/Object} icon Path to the .png image file to use when your app is added to the home screen on an
-         * iOS device. When passed in as a String, the same icon will be used for both phone and tablet devices. To set
-         * different icons for tablets and phones see the {@link #tabletIcon} and {@link #phoneIcon} configs.
+         * iOS device. When passed in as a String, the same icon will be used for both phone and tablet devices. When
+         * passed as an abject, you can specify different sizes like so:
+         *
+         *     icon: {
+         *        57: 'resources/icons/icon.png',
+         *        72: 'resources/icons/icon-72.png',
+         *        114: 'resources/icons/icon-114.png'
+         *     }
+         *
+         * To set different icons for tablets and phones see the {@link #tabletIcon} and {@link #phoneIcon} configs.
          */
 
         /**
@@ -321,7 +331,15 @@ Ext.define('Ext.app.Application', {
          * in favor of a more pleasing solution by the time you use it.
          * @accessor
          */
-        enableLoader: true
+        enableLoader: true,
+
+        /**
+         * @private
+         * @cfg {Boolean} requires An array of extra dependencies, to be required after this application's name config
+         * has been processed properly, but before anything else to ensure overrides get executed first
+         * @accessor
+         */
+        requires: []
     },
 
     /**
@@ -351,9 +369,15 @@ Ext.define('Ext.app.Application', {
         }
         // </deprecated>
 
-        if (this.getEnableLoader() !== false) {
-            Ext.require(this.getProfiles(), this.onProfilesLoaded, this);
-        }
+        //<debug>
+        Ext.Loader.setConfig({ enabled: true });
+        //</debug>
+
+        Ext.require(this.getRequires(), function() {
+            if (this.getEnableLoader() !== false) {
+                Ext.require(this.getProfiles(), this.onProfilesLoaded, this);
+            }
+        }, this);
     },
 
     /**
@@ -537,9 +561,9 @@ Ext.define('Ext.app.Application', {
 
             classes = classes.concat(controller.getModels().concat(controller.getViews()).concat(controllerStores));
         }
-        
+
         this.setStores(this.getStores().concat(stores));
-        
+
         Ext.require(classes, this.onDependenciesLoaded, this);
     },
 
@@ -553,7 +577,7 @@ Ext.define('Ext.app.Application', {
             profile = this.getCurrentProfile(),
             launcher = this.getLaunch(),
             controllers, name;
-        
+
         this.instantiateStores();
 
         //<deprecated product=touch since=2.0>
