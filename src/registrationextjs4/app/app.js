@@ -3,7 +3,7 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-    name: 'Registration',
+    name: 'RaxaEmr.Registration',
 
     autoCreateViewport: true,
 

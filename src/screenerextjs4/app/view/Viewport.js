@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Registration.view.Viewport', {
+Ext.define('RaxaEmr.Screener.view.Viewport', {
     extend: 'Ext.container.Viewport',
     layout: {
         align: 'stretch',
@@ -6,7 +6,7 @@ Ext.define('RaxaEmr.Registration.view.Viewport', {
         type: 'hbox'
     },
 
-    requires: ['RaxaEmr.Registration.view.Home', 'RaxaEmr.Registration.view.RegistrationPart1', 'RaxaEmr.Registration.view.RegistrationPart2', 'Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
+    requires: ['RaxaEmr.Screener.view.Home', 'RaxaEmr.Screener.view.NewPatientsForm', 'RaxaEmr.Screener.view.DocListPanel', 'RaxaEmr.Screener.view.MapDocPanel', 'Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
 
     initComponent: function () {
         this.items = {
@@ -67,9 +67,11 @@ Ext.define('RaxaEmr.Registration.view.Viewport', {
             items: [{
                 xtype: 'home'
             }, {
-                xtype: 'registrationpart1'
+                xtype: 'newpatientsform'
             }, {
-                xtype: 'registrationpart2'
+                xtype: 'mapdocpanel'
+            }, {
+                xtype: 'doclistpanel'
             }]
         };
         this.callParent();
