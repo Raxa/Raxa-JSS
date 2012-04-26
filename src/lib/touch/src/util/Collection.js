@@ -629,7 +629,7 @@ Ext.define('Ext.util.Collection', {
             me.map[key] = item;
         }
 
-        if (filtered && this.getAutoFilter() && filterable.isFiltered.call(me, item)) {
+        if (filtered && this.getAutoFilter() && this.mixins.filterable.isFiltered.call(me, item)) {
             return null;
         }
 

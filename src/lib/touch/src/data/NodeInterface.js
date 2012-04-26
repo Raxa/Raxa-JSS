@@ -87,24 +87,24 @@ Ext.define('Ext.data.NodeInterface', {
                 newFields = this.applyFields(modelClass, [
                     {name: 'parentId',   type: 'string',  defaultValue: null},
                     {name: 'index',      type: 'int',     defaultValue: 0},
-                    {name: 'depth',      type: 'int',     defaultValue: 0},
+                    {name: 'depth',      type: 'int',     defaultValue: 0,     persist: false},
                     {name: 'expanded',   type: 'bool',    defaultValue: false, persist: false},
-                    {name: 'expandable', type: 'bool',    defaultValue: true, persist: false},
+                    {name: 'expandable', type: 'bool',    defaultValue: true,  persist: false},
                     {name: 'checked',    type: 'auto',    defaultValue: null},
                     {name: 'leaf',       type: 'bool',    defaultValue: false, persist: false},
-                    {name: 'cls',        type: 'string',  defaultValue: null, persist: false},
-                    {name: 'iconCls',    type: 'string',  defaultValue: null, persist: false},
+                    {name: 'cls',        type: 'string',  defaultValue: null,  persist: false},
+                    {name: 'iconCls',    type: 'string',  defaultValue: null,  persist: false},
                     {name: 'root',       type: 'boolean', defaultValue: false, persist: false},
                     {name: 'isLast',     type: 'boolean', defaultValue: false, persist: false},
                     {name: 'isFirst',    type: 'boolean', defaultValue: false, persist: false},
-                    {name: 'allowDrop',  type: 'boolean', defaultValue: true, persist: false},
-                    {name: 'allowDrag',  type: 'boolean', defaultValue: true, persist: false},
+                    {name: 'allowDrop',  type: 'boolean', defaultValue: true,  persist: false},
+                    {name: 'allowDrag',  type: 'boolean', defaultValue: true,  persist: false},
                     {name: 'loaded',     type: 'boolean', defaultValue: false, persist: false},
                     {name: 'loading',    type: 'boolean', defaultValue: false, persist: false},
-                    {name: 'href',       type: 'string',  defaultValue: null, persist: false},
-                    {name: 'hrefTarget', type: 'string',  defaultValue: null, persist: false},
-                    {name: 'qtip',       type: 'string',  defaultValue: null, persist: false},
-                    {name: 'qtitle',     type: 'string',  defaultValue: null, persist: false}
+                    {name: 'href',       type: 'string',  defaultValue: null,  persist: false},
+                    {name: 'hrefTarget', type: 'string',  defaultValue: null,  persist: false},
+                    {name: 'qtip',       type: 'string',  defaultValue: null,  persist: false},
+                    {name: 'qtitle',     type: 'string',  defaultValue: null,  persist: false}
                 ]);
 
                 len = newFields.length;

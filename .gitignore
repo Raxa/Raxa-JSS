@@ -3,3 +3,8 @@ nbproject
 .project
 /src/lib/touch/docs
 /src/lib/touch/examples
+build.xml
+pom.xml
+META-INF
+WEB-INF
+/src/lib/extjs/resources/sass/.sass-cache/

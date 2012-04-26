@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * The Password field creates a password input and is usually created inside a form. Because it creates a password
  * field, when the user enters text it will show up as stars. Aside from that, the password field is just a normal text
  * field. Here's an example of how to use it in a form:
@@ -44,10 +46,16 @@ Ext.define('Ext.field.Password', {
     alternateClassName: 'Ext.form.Password',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         autoCapitalize: false,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         component: {
 	        type: 'password'
 	    }

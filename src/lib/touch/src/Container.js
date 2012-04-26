@@ -442,7 +442,9 @@ Ext.define('Ext.Container', {
             if (mask) {
                 container.insertBefore(mask, this);
                 mask.setZIndex(this.getZIndex() - 1);
-                mask.on('tap', 'hide', this, { single: true });
+                if (this.getHideOnMaskTap()) {
+                    mask.on('tap', 'hide', this, { single: true });
+                }
             }
         }
     },

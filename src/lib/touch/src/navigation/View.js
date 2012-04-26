@@ -55,7 +55,10 @@ Ext.define('Ext.navigation.View', {
     requires: ['Ext.navigation.Bar'],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'navigationview',
 
         /**

@@ -5,7 +5,10 @@ Ext.define('Ext.slider.Toggle', {
     extend: 'Ext.slider.Slider',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: 'x-toggle',
 
         /**

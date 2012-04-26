@@ -1,6 +1,6 @@
 /**
- * @extends Object
  * @author Ed Spencer
+ * @aside guide models
  *
  * This singleton contains a set of validation functions that can be used to validate any type of data. They are most
  * often used in {@link Ext.data.Model Models}, where they are automatically set up and executed.

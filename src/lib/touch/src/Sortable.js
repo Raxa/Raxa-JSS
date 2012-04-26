@@ -9,7 +9,10 @@ Ext.define('Ext.Sortable', {
     requires: ['Ext.util.Draggable'],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'sortable',
 
         /**

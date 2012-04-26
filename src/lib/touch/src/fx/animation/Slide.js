@@ -28,7 +28,10 @@ Ext.define('Ext.fx.animation.Slide', {
          */
         offset: 0,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         easing: 'auto',
 
         containerBox: 'auto',

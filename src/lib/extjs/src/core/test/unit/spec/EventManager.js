@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 describe("Ext.EventManager", function() {
     var element,
         elementWithId,
@@ -68,10 +54,6 @@ describe("Ext.EventManager", function() {
                 it("should return the element id", function() {
                     expect(result).toBe(id);
                 });
-                
-                it("should add element to Ext.cache", function() {
-                   expect(Ext.cache[id].el.dom).toBe(elementWithoutId);
-                });
             });
             
             describe("document and window", function() {
@@ -80,14 +62,7 @@ describe("Ext.EventManager", function() {
                     beforeEach(function() {
                         result = Ext.EventManager.getId(document);
                     });
-                    
-                    afterEach(function() {
-                        delete Ext.cache[Ext.documentId];
-                    });
-                    it("should add document Ext.Element to cache", function() {
-                        expect(Ext.cache[Ext.documentId].el.dom).toBe(document);
-                    });
-                    
+
                     it("should enable skipGarbageCollection flag", function() {
                         expect(Ext.cache[Ext.documentId].skipGarbageCollection).toBe(true);
                     });
@@ -101,13 +76,6 @@ describe("Ext.EventManager", function() {
                     var result;
                     beforeEach(function() {
                         result = Ext.EventManager.getId(window);
-                    });
-                    
-                    afterEach(function() {
-                        delete Ext.cache[Ext.windowId];
-                    });
-                    it("should add window Ext.Element to cache", function() {
-                        expect(Ext.cache[Ext.windowId].el.dom).toBe(window);
                     });
                     
                     it("should enable skipGarbageCollection flag", function() {
@@ -186,20 +154,8 @@ describe("Ext.EventManager", function() {
                     Ext.EventManager.addListener(element, eventName);
                     expect(Ext.EventManager.prepareListenerConfig).toHaveBeenCalledWith(element, eventName);
                 });
-                
-                it("should throw an error if the element doesn't exist", function() {
-                    expect(function() {
-                        Ext.EventManager.addListener(undefined, "click");
-                    }).toRaiseExtError();
-                });
             });
-            
-            it("should throw an error if the element doesn't exist", function() {
-                expect(function() {
-                    Ext.EventManager.addListener(undefined, "click");
-                }).toRaiseExtError();
-            });
-            
+             
             describe("event firing", function() {
                 var config;
    
@@ -671,4 +627,3 @@ describe("Ext.EventManager", function() {
         });
     });
 });
-

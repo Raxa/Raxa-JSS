@@ -1,4 +1,6 @@
 /**
+ * @aside guide dataview
+ *
  * DataView makes it easy to create lots of components dynamically, usually based off a {@link Ext.data.Store Store}.
  * It's great for rendering lots of data from your server backend or any other data source and is what powers
  * components like {@link Ext.List}.
@@ -113,8 +115,6 @@
  * The last thing we did is update our template to render the image, twitter username and message. All we need to do
  * now is add a little CSS to style the list the way we want it and we end up with a very basic twitter viewer. Click
  * the preview button on the example above to see it in action.
- *
- * @aside guide dataview
  */
 Ext.define('Ext.dataview.DataView', {
     extend: 'Ext.Container',
@@ -274,7 +274,10 @@ Ext.define('Ext.dataview.DataView', {
          */
         store: null,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'dataview',
 
         /**
@@ -339,7 +342,10 @@ Ext.define('Ext.dataview.DataView', {
          */
         deselectOnContainerClick: true,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         scrollable: true,
 
         /**

@@ -1,20 +1,4 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
- * @class Ext.chart.Mask
- *
  * Defines a mask for a chart's series.
  * The 'chart' member must be set prior to rendering.
  *
@@ -27,44 +11,59 @@ If you are unsure which license is appropriate for your use, please contact the 
  * `true`, `vertical` or `horizontal`. Then a possible configuration for the
  * listener could be:
  *
-        items: {
-            xtype: 'chart',
-            animate: true,
-            store: store1,
-            mask: 'horizontal',
-            listeners: {
-                select: {
-                    fn: function(me, selection) {
-                        me.setZoom(selection);
-                        me.mask.hide();
-                    }
-                }
-            },
-
+ *     items: {
+ *         xtype: 'chart',
+ *         animate: true,
+ *         store: store1,
+ *         mask: 'horizontal',
+ *         listeners: {
+ *             select: {
+ *                 fn: function(me, selection) {
+ *                     me.setZoom(selection);
+ *                     me.mask.hide();
+ *                 }
+ *             }
+ *         }
+ *     }
+ *
  * In this example we zoom the chart to that particular region. You can also get
  * a handle to a mask instance from the chart object. The `chart.mask` element is a
  * `Ext.Panel`.
  * 
  */
 Ext.define('Ext.chart.Mask', {
-    require: ['Ext.chart.MaskLayer'],
+    requires: [
+        'Ext.chart.MaskLayer'
+    ],
+    
+    /**
+     * @cfg {Boolean/String} mask
+     * Enables selecting a region on chart. True to enable any selection,
+     * 'horizontal' or 'vertical' to restrict the selection to X or Y axis.
+     *
+     * The mask in itself will do nothing but fire 'select' event.
+     * See {@link Ext.chart.Mask} for example.
+     */
+
     /**
      * Creates new Mask.
-     * @param {Object} config (optional) Config object.
+     * @param {Object} [config] Config object.
      */
     constructor: function(config) {
-        var me = this;
+        var me = this,
+            resizeHandler;
 
         me.addEvents('select');
 
         if (config) {
             Ext.apply(me, config);
         }
-        if (me.mask) {
+        if (me.enableMask) {
             me.on('afterrender', function() {
                 //create a mask layer component
-                var comp = Ext.create('Ext.chart.MaskLayer', {
-                    renderTo: me.el
+                var comp = new Ext.chart.MaskLayer({
+                    renderTo: me.el,
+                    hidden: true
                 });
                 comp.el.on({
                     'mousemove': function(e) {
@@ -75,7 +74,7 @@ Ext.define('Ext.chart.Mask', {
                     }
                 });
                 //create a resize handler for the component
-                var resizeHandler = Ext.create('Ext.resizer.Resizer', {
+                resizeHandler = new Ext.resizer.Resizer({
                     el: comp.el,
                     handles: 'all',
                     pinned: true

@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.state.Provider
  * <p>Abstract base class for state provider implementations. The provider is responsible
@@ -103,8 +89,10 @@ Ext.define('Ext.state.Provider', {
             matches = re.exec(unescape(value)),
             all,
             type,
-            value,
-            keyValue;
+            keyValue,
+            values,
+            vLen,
+            v;
             
         if(!matches || !matches[1]){
             return; // non state
@@ -124,18 +112,26 @@ Ext.define('Ext.state.Provider', {
             case 'a':
                 all = [];
                 if(value != ''){
-                    Ext.each(value.split('^'), function(val){
-                        all.push(me.decodeValue(val));
-                    }, me);
+                    values = value.split('^');
+                    vLen   = values.length;
+
+                    for (v = 0; v < vLen; v++) {
+                        value = values[v];
+                        all.push(me.decodeValue(value));
+                    }
                 }
                 return all;
            case 'o':
                 all = {};
                 if(value != ''){
-                    Ext.each(value.split('^'), function(val){
-                        keyValue = val.split('=');
+                    values = value.split('^');
+                    vLen   = values.length;
+
+                    for (v = 0; v < vLen; v++) {
+                        value = values[v];
+                        keyValue         = value.split('=');
                         all[keyValue[0]] = me.decodeValue(keyValue[1]);
-                    }, me);
+                    }
                 }
                 return all;
            default:

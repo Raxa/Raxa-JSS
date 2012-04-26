@@ -1,22 +1,7 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.Ajax
  * @singleton
  * @markdown
- * @extends Ext.data.Connection
 
 A singleton instance of an {@link Ext.data.Connection}. This class
 is used to communicate with your server side code. It can be used as follows:
@@ -57,26 +42,22 @@ Ext.define('Ext.Ajax', {
     singleton: true,
 
     /**
-     * @cfg {String} url @hide
-     */
-    /**
      * @cfg {Object} extraParams @hide
      */
     /**
      * @cfg {Object} defaultHeaders @hide
      */
     /**
-     * @cfg {String} method (Optional) @hide
+     * @cfg {String} method @hide
      */
     /**
-     * @cfg {Number} timeout (Optional) @hide
+     * @cfg {Number} timeout @hide
      */
     /**
-     * @cfg {Boolean} autoAbort (Optional) @hide
+     * @cfg {Boolean} autoAbort @hide
      */
-
     /**
-     * @cfg {Boolean} disableCaching (Optional) @hide
+     * @cfg {Boolean} disableCaching @hide
      */
 
     /**

@@ -1,4 +1,5 @@
 /**
+ * @aside guide ajax
  * @singleton
  *
  * This class is used to create JsonP requests. JsonP is a mechanism that allows for making requests for data cross

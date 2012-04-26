@@ -5,7 +5,6 @@ Ext.define('Ext.device.notification.Sencha', {
     extend: 'Ext.device.notification.Abstract',
     requires: ['Ext.device.Communicator'],
 
-    // @inherit
     show: function() {
         var config = this.callParent(arguments);
 
@@ -21,7 +20,6 @@ Ext.define('Ext.device.notification.Sencha', {
         });
     },
 
-    // @inherit
     vibrate: function() {
         Ext.device.Communicator.send({
             command: 'Notification#vibrate'

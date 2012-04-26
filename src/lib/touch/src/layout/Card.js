@@ -1,4 +1,5 @@
 /**
+ * @aside guide layouts
  *
  * Sometimes you want to show several screens worth of information but you've only got a small screen to work with.
  * TabPanels and Carousels both enable you to see one screen of many at a time, and underneath they both use a Card

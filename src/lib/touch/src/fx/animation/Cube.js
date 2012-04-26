@@ -7,7 +7,10 @@ Ext.define('Ext.fx.animation.Cube', {
     alias: 'animation.cube',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         before: {
 //            'transform-style': 'preserve-3d'
         },

@@ -191,7 +191,7 @@ Ext.EventManager.un = Ext.EventManager.removeListener;
  *
  * [getting_started]: #!/guide/getting_started
  */
-Ext.setVersion('touch', '2.0.0.rc2');
+Ext.setVersion('touch', '2.0.0');
 
 Ext.apply(Ext, {
     /**
@@ -534,7 +534,7 @@ function(el){
      *     });
      *
      * @param {String/Object} config.icon
-     * A icon configuration for this application. This will only apply to iOS applications which are saved to the homescreen.
+     * A icon configuration for this application. This will work on iOS and Android applications which are saved to the homescreen.
      *
      * You can either pass a string which will be applied to all different sizes:
      *
@@ -558,12 +558,14 @@ function(el){
      *         }
      *     });
      *
+     * Android devices will alway use the 57px version.
+     *
      * @param {String} config.icon.57 The icon to be used on non-retna display devices (iPhone 3GS and below).
      * @param {String} config.icon.77 The icon to be used on the iPad.
      * @param {String} config.icon.114 The icon to be used on retna display devices (iPhone 4 and above).
      *
      * @param {Boolean} glossOnIcon
-     * True to add a gloss effect to the icon.
+     * True to add a gloss effect to the icon. This is ignored on Android (it will *not* add gloss).
      *
      * @param {String} phoneStartupScreen
      * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on phones.
@@ -632,7 +634,9 @@ function(el){
      */
     setup: function(config) {
         var defaultSetupConfig = Ext.defaultSetupConfig,
-            onReady = config.onReady || Ext.emptyFn,
+            emptyFn = Ext.emptyFn,
+            onReady = config.onReady || emptyFn,
+            onUpdated = config.onUpdated || emptyFn,
             scope = config.scope,
             requires = Ext.Array.from(config.requires),
             extOnReady = Ext.onReady,
@@ -645,6 +649,7 @@ function(el){
 
         delete config.requires;
         delete config.onReady;
+        delete config.onUpdated;
         delete config.scope;
 
         Ext.require(['Ext.event.Dispatcher', 'Ext.MessageBox']);
@@ -666,6 +671,7 @@ function(el){
             Ext.onReady(onReady, scope);
         };
 
+        Ext.onUpdated = onUpdated;
         Ext.onReady = function(fn, scope) {
             var origin = onReady;
 
@@ -706,70 +712,71 @@ function(el){
             });
         });
 
-        /*
-         * Note: previously we only added these icon meta tags to iOS devices but as Android 2.1+ reads the same tags
-         * we now add them if they're defined
-         */
-        if (!document.body) {
-            var phoneIcon = config.phoneIcon,
-                tabletIcon = config.tabletIcon,
-                tabletStartupScreen = config.tabletStartupScreen,
-                statusBarStyle = config.statusBarStyle,
-                phoneStartupScreen = config.phoneStartupScreen,
-                isIpad = Ext.os.is.iPad,
-                retina = window.devicePixelRatio > 1 ? true : false;
+        function addMeta(name, content) {
+            var meta = document.createElement('meta');
+            meta.setAttribute('name', name);
+            meta.setAttribute('content', content);
+            Ext.getHead().append(meta);
+        }
 
-            // Inject meta viewport tag
-            document.write(
-                '<meta id="extViewportMeta" ' +
-                       'name="viewport" ' +
-                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">');
-            document.write('<meta name="apple-mobile-web-app-capable" content="yes">');
-            document.write('<meta name="apple-touch-fullscreen" content="yes">');
-
-            //status bar style
-            if (Ext.isString(statusBarStyle)) {
-                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + statusBarStyle + '">');
+        function addLink(rel, href, sizes) {
+            var link = document.createElement('link');
+            link.setAttribute('rel', rel);
+            link.setAttribute('href', href);
+            if (sizes) {
+                link.setAttribute('sizes', sizes);
             }
+            Ext.getHead().append(link);
+        }
 
-            //startup screens
-            if (tabletStartupScreen && isIpad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + tabletStartupScreen + '">');
-            }
+        var phoneIcon = config.phoneIcon,
+            tabletIcon = config.tabletIcon,
+            tabletStartupScreen = config.tabletStartupScreen,
+            statusBarStyle = config.statusBarStyle,
+            phoneStartupScreen = config.phoneStartupScreen,
+            isIpad = Ext.os.is.iPad,
+            retina = window.devicePixelRatio > 1;
 
-            if (phoneStartupScreen && !isIpad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + phoneStartupScreen + '">');
-            }
+        addMeta('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no');
+        addMeta('apple-mobile-web-app-capable', 'yes');
+        addMeta('apple-touch-fullscreen', 'yes');
 
-            // icon
-            if (Ext.isString(icon) || Ext.isString(phoneIcon) || Ext.isString(tabletIcon)) {
-                icon = {
-                    '57': phoneIcon || tabletIcon || icon,
-                    '72': tabletIcon || phoneIcon || icon,
-                    '114': phoneIcon || tabletIcon || icon
-                };
-            }
+        //status bar style
+        if (Ext.isString(statusBarStyle)) {
+            addMeta('apple-mobile-web-app-status-bar-style', 'statusBarStyle');
+        }
 
-            precomposed = (config.glossOnIcon === false) ? '-precomposed' : '';
+        //startup screens
+        if (tabletStartupScreen && isIpad) {
+            addLink('apple-touch-startup-image', tabletStartupScreen);
+        }
 
-            if (icon) {
-                var icon72 = icon['72'],
-                    icon57 = icon['57'],
-                    icon114 = icon['114'],
-                    iconString = '<link rel="apple-touch-icon' + precomposed;
+        if (phoneStartupScreen && !isIpad) {
+            addLink('apple-touch-startup-image', phoneStartupScreen);
+        }
 
-                // If we are on an iPad and we have a 72px icon defined, use it
-                if (isIpad && (icon72 || icon57 || icon114)) {
-                    document.write(iconString + '" sizes="72x72" href="' + (icon72 || icon114 || icon57) + '">');
-                } else {
-                    if (retina && (icon72 || icon114)) {
-                        // Other wise, check if we are a retina device and we have a 114 icon
-                        document.write(iconString + '" sizes="114x114" href="' + (icon114 || icon72) + '">');
-                    } else {
-                        // And resort to the default 57px icon
-                        document.write(iconString + '" href="' + icon57 + '">');
-                    }
-                }
+        // icon
+        if (Ext.isString(icon) || Ext.isString(phoneIcon) || Ext.isString(tabletIcon)) {
+            icon = {
+                '57': phoneIcon || tabletIcon || icon,
+                '72': tabletIcon || phoneIcon || icon,
+                '114': phoneIcon || tabletIcon || icon,
+                '144': tabletIcon || phoneIcon || icon
+            };
+        }
+
+        precomposed = (Ext.os.is.iOS && config.glossOnIcon === false) ? '-precomposed' : '';
+
+        if (icon) {
+            var iconString = 'apple-touch-icon' + precomposed,
+                iconPath;
+
+            // Add the default icon
+            addLink(iconString, icon['57'] || icon['72'] || icon['114'] || icon['144']);
+
+            // Loop through each icon size and add it
+            for (iconPath in icon) {
+                addLink(iconString, icon[iconPath], iconPath + 'x' + iconPath);
             }
         }
     },
@@ -914,7 +921,7 @@ function(el){
      */
     application: function(config) {
         var appName = config.name,
-            onReady, scope;
+            onReady, scope, requires;
 
         if (!config) {
             config = {};
@@ -924,13 +931,14 @@ function(el){
             Ext.Loader.setPath(appName, config.appFolder || 'app');
         }
 
-        config.requires = Ext.Array.from(config.requires);
-        config.requires.push('Ext.app.Application');
+        requires = Ext.Array.from(config.requires);
+        config.requires = ['Ext.app.Application'];
 
         onReady = config.onReady;
         scope = config.scope;
 
         config.onReady = function() {
+            config.requires = requires;
             new Ext.app.Application(config);
 
             if (onReady) {
@@ -1479,6 +1487,8 @@ Ext.deprecateMethod(Ext, 'regLayout', null, "Ext.regLayout() has been removed");
 //</deprecated>
 
 /**
+ * @aside guide environment_package
+ *
  * Provides useful information about the current browser. Should not be manually instantiated unless for unit-testing;
  * access the global instance stored in Ext.browser instead. Example:
  *
@@ -1778,6 +1788,8 @@ Ext.define('Ext.env.Browser', {
 });
 
 /**
+ * @aside guide environment_package
+ *
  * Provide useful information about the current operating system environment. Access the global instance stored in
  * Ext.os. Example:
  *
@@ -1838,7 +1850,7 @@ Ext.define('Ext.env.OS', {
      *
      * Note that only {@link Ext.Version#getMajor major component} and {@link Ext.Version#getShortVersion simplified}
      * value of the version are available via direct property checking. Supported values are: iOS, iPad, iPhone, iPod,
-     * Android, WebOS, BlackBerry, Bada, MacOSX, Windows, Linux and Other
+     * Android, WebOS, BlackBerry, Bada, MacOS, Windows, Linux and Other
      * @param {String} value The OS name to check
      * @return {Boolean}
      */
@@ -1847,7 +1859,7 @@ Ext.define('Ext.env.OS', {
     /**
      * @property {String} [name=null]
      * Read-only - the full name of the current operating system Possible values are: iOS, Android, WebOS, BlackBerry,
-     * MacOSX, Windows, Linux and Other
+     * MacOS, Windows, Linux and Other
      */
     name: null,
 
@@ -2016,6 +2028,8 @@ Ext.define('Ext.env.OS', {
 });
 
 /**
+ * @aside guide environment_package
+ *
  * A class to detect if the current browser supports various features.
  *
  * Please refer to the documentation of {@link Ext.feature.has} on how to use it.
@@ -2174,7 +2188,7 @@ Ext.define('Ext.env.Feature', {
          * True if the current device supports touch events (`touchstart`).
          */
         Touch: function() {
-            return this.isEventSupported('touchstart') && !(Ext.os && Ext.os.name.match(/Windows|MacOSX|Linux/));
+            return this.isEventSupported('touchstart') && !(Ext.os && Ext.os.name.match(/Windows|MacOS|Linux/));
         },
 
         /**
@@ -3397,7 +3411,8 @@ Ext.define('Ext.dom.Element', {
     },
 
     isPainted: function() {
-        return Boolean(this.dom.offsetParent);
+        var dom = this.dom;
+        return Boolean(dom && dom.offsetParent);
     },
 
     /**
@@ -3518,7 +3533,8 @@ Ext.define('Ext.dom.Element', {
          */
         fly: function(element, named) {
             var fly = null,
-                flyweights = Element._flyweights;
+                flyweights = Element._flyweights,
+                cachedElement;
 
             named = named || '_global';
 
@@ -3528,6 +3544,10 @@ Ext.define('Ext.dom.Element', {
                 fly = flyweights[named] || (flyweights[named] = new Element.Fly());
                 fly.dom = element;
                 fly.isSynchronized = false;
+                cachedElement = Ext.cache[element.id];
+                if (cachedElement && cachedElement.isElement) {
+                    cachedElement.isSynchronized = false;
+                }
             }
 
             return fly;

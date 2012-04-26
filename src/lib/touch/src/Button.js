@@ -12,7 +12,7 @@
  *     var button = Ext.create('Ext.Button', {
  *         text: 'Button'
  *     });
- *     Ext.Viewport.add(button);
+ *     Ext.Viewport.add({ xtype: 'container', padding: 10, items: [button] });
  *
  * ## Icons
  *
@@ -24,7 +24,7 @@
  *         iconCls: 'refresh',
  *         iconMask: true
  *     });
- *     Ext.Viewport.add(button);
+ *     Ext.Viewport.add({ xtype: 'container', padding: 10, items: [button] });
  *
  * Note that the {@link #iconMask} configuration is required when you want to use any of the
  * bundled Pictos icons.
@@ -60,6 +60,7 @@
  *     @example
  *     Ext.create('Ext.Container', {
  *         fullscreen: true,
+ *         padding: 10,
  *         items: {
  *             xtype: 'button',
  *             text: 'My Button',
@@ -353,7 +354,10 @@ Ext.define('Ext.Button', {
          * If you want to just add text, please use the {@link #text} configuration
          */
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'button'
     },
 

@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * The Number field creates an HTML5 number input and is usually created inside a form. Because it creates an HTML
  * number input field, most browsers will show a specialized virtual keyboard for entering numbers. The Number field
  * only accepts numerical input and also provides additional spinner UI that increases or decreases the current value
@@ -73,12 +75,18 @@ Ext.define('Ext.field.Number', {
     alternateClassName: 'Ext.form.Number',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         component: {
             type: 'number'
         },
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'number'
     },
 
@@ -124,6 +132,8 @@ Ext.define('Ext.field.Number', {
     },
 
     doClearIconTap: function(me, e) {
-        me.setValue(0);
+        me.getComponent().setValue('');
+        me.getValue();
+        me.hideClearIcon();
     }
 });

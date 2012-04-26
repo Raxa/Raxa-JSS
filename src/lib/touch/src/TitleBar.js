@@ -94,10 +94,16 @@ Ext.define('Ext.TitleBar', {
     isToolbar: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'toolbar',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'navigation-bar',
 
         /**

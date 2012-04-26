@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.env.OS
  * Provides useful information about the current operating system environment.
@@ -78,25 +64,28 @@ Ext.define('Ext.env.OS', {
 
     /**
      * @property {String} name
-     * Read-only - the full name of the current operating system
-     * Possible values are: iOS, Android, WebOS, BlackBerry, MacOSX, Windows, Linux and Other
+     * The full name of the current operating system.
+     * Possible values are: iOS, Android, WebOS, BlackBerry, MacOSX, Windows, Linux and Other.
+     * @readonly
      */
     name: null,
 
     /**
      * @property {Ext.Version} version
-     * Read-only, refer to {@link Ext.Version}
+     * Refer to {@link Ext.Version}.
+     * @readonly
      */
     version: null,
 
     constructor: function() {
         var userAgent = Ext.global.navigator.userAgent,
-            platform = Ext.global.navigator.platform,
+            platform  = Ext.global.navigator.platform,
             selfClass = this.statics(),
-            osMatch = userAgent.match(new RegExp('((?:' + Ext.Object.getValues(selfClass.osPrefixes).join(')|(?:') + '))([^\\s;]+)')),
-            name = 'other',
-            version = '',
-            actualVersionMatch;
+            osMatch   = userAgent.match(new RegExp('((?:' + Ext.Object.getValues(selfClass.osPrefixes).join(')|(?:') + '))([^\\s;]+)')),
+            name      = 'other',
+            version   = '',
+            actualVersionMatch,
+            key, osName;
 
         if (osMatch) {
             name = selfClass.osNames[Ext.Object.getKey(selfClass.osPrefixes, osMatch[1])];
@@ -131,9 +120,12 @@ Ext.define('Ext.env.OS', {
         this.is[this.name + (this.version.getMajor() || '')] = true;
         this.is[this.name + this.version.getShortVersion()] = true;
 
-        Ext.Object.each(selfClass.osNames, function(key, name) {
-            this.is[name] = (this.name === name);
-        }, this);
+        for (key in selfClass.osNames) {
+            if (selfClass.osNames.hasOwnProperty(key)) {
+                osName = selfClass.osNames[key];
+                this.is[osName] = (this.name === osName);
+            }
+        }
 
         return this;
     }
@@ -147,4 +139,3 @@ Ext.define('Ext.env.OS', {
     Ext.os = new Ext.env.OS();
 
 });
-

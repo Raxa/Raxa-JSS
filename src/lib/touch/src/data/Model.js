@@ -1,5 +1,6 @@
 /**
  * @author Ed Spencer
+ * @aside guide models
  *
  * A Model represents some object that your application manages. For example, one might define a Model for Users,
  * Products, Cars, or any other real-world object that we want to model in the system. Models are registered via the
@@ -615,17 +616,12 @@ Ext.define('Ext.data.Model', {
     handleInlineAssociationData: function(data) {
         var associations = this.associations.items,
             ln = associations.length,
-            rawData = this.raw,
             i, association, associationData, reader, proxy, associationKey;
 
         for (i = 0; i < ln; i++) {
             association = associations[i];
             associationKey = association.getAssociationKey();
             associationData = data[associationKey];
-
-            if (!associationData) {
-                associationData = rawData[associationKey];
-            }
 
             if (associationData) {
                 reader = association.getReader();
@@ -1231,7 +1227,7 @@ Ext.define('Ext.data.Model', {
                             ids.push(id);
 
                             associationData[associationName][j] = associatedRecord.getData();
-                            Ext.apply(associationData[associationName][j], this.prepareAssociatedData(associatedRecord, ids, type));
+                            Ext.apply(associationData[associationName][j], this.prepareAssociatedData(associatedRecord, ids, associationType));
                         }
                     }
                 }
@@ -1242,7 +1238,7 @@ Ext.define('Ext.data.Model', {
                     if (Ext.Array.indexOf(ids, id) === -1) {
                         ids.push(id);
                         associationData[associationName] = associatedRecord.getData();
-                        Ext.apply(associationData[associationName], this.prepareAssociatedData(associatedRecord, ids, type));
+                        Ext.apply(associationData[associationName], this.prepareAssociatedData(associatedRecord, ids, associationType));
                     }
                 }
             }
@@ -1352,7 +1348,7 @@ Ext.define('Ext.data.Model', {
         var me = this;
         me.notifyStores('afterErase', me);
         Ext.data.Model.cache.remove(me);
-        me.data = me._data = me.raw = me.stores = me.modified = null;
+        me.raw = me.stores = me.modified = null;
         me.callParent(arguments);
     },
 

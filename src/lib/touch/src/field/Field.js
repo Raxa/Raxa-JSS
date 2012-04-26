@@ -1,21 +1,21 @@
 /**
+ * @aside guide forms
+ *
  * Field is the base class for all form fields used in Sencha Touch. It provides a lot of shared functionality to all
  * field subclasses (for example labels, simple validation, {@link #clearIcon clearing} and tab index management), but
  * is rarely used directly. Instead, it is much more common to use one of the field subclasses:
  *
-<pre>
-xtype            Class
----------------------------------------
-textfield        {@link Ext.field.Text}
-numberfield      {@link Ext.field.Number}
-textareafield    {@link Ext.field.TextArea}
-hiddenfield      {@link Ext.field.Hidden}
-radiofield       {@link Ext.field.Radio}
-checkboxfield    {@link Ext.field.Checkbox}
-selectfield      {@link Ext.field.Select}
-togglefield      {@link Ext.field.Toggle}
-fieldset         {@link Ext.form.FieldSet}
-</pre>
+ *     xtype            Class
+ *     ---------------------------------------
+ *     textfield        {@link Ext.field.Text}
+ *     numberfield      {@link Ext.field.Number}
+ *     textareafield    {@link Ext.field.TextArea}
+ *     hiddenfield      {@link Ext.field.Hidden}
+ *     radiofield       {@link Ext.field.Radio}
+ *     checkboxfield    {@link Ext.field.Checkbox}
+ *     selectfield      {@link Ext.field.Select}
+ *     togglefield      {@link Ext.field.Toggle}
+ *     fieldset         {@link Ext.form.FieldSet}
  *
  * Fields are normally used within the context of a form and/or fieldset. See the {@link Ext.form.Panel FormPanel}
  * and {@link Ext.form.FieldSet FieldSet} docs for examples on how to put those together, or the list of links above
@@ -43,7 +43,10 @@ Ext.define('Ext.field.Field', {
     isFormField: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'field',
 
         /**

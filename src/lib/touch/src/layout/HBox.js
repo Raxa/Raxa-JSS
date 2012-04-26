@@ -1,12 +1,14 @@
 /**
- * The HBox (short for horizontal box) layout makes it easy to position items horizontally in a 
- * {@link Ext.Container Container}. It can size items based on a fixed width or a fraction of the total width 
+ * @aside guide layouts
+ *
+ * The HBox (short for horizontal box) layout makes it easy to position items horizontally in a
+ * {@link Ext.Container Container}. It can size items based on a fixed width or a fraction of the total width
  * available.
- * 
+ *
  * For example, an email client might have a list of messages pinned to the left, taking say one third of the available
  * width, and a message viewing panel in the rest of the screen. We can achieve this with hbox layout's *flex* config:
- * 
- *     @example 
+ *
+ *     @example
  *     Ext.create('Ext.Container', {
  *         fullscreen: true,
  *         layout: 'hbox',
@@ -23,15 +25,15 @@
  *             }
  *         ]
  *     });
- * 
- * This will give us two boxes - one that's one third of the available width, the other being two thirds of the 
+ *
+ * This will give us two boxes - one that's one third of the available width, the other being two thirds of the
  * available width:
- * 
+ *
  * {@img ../guides/layouts/hbox.jpg}
- * 
- * We can also specify fixed widths for child items, or mix fixed widths and flexes. For example, here we have 3 items 
+ *
+ * We can also specify fixed widths for child items, or mix fixed widths and flexes. For example, here we have 3 items
  * - one on each side with flex: 1, and one in the center with a fixed width of 100px:
- * 
+ *
  *     @example
  *     Ext.create('Ext.Container', {
  *         fullscreen: true,
@@ -53,11 +55,11 @@
  *             }
  *         ]
  *     });
- * 
+ *
  * Which gives us an effect like this:
- * 
+ *
  * {@img ../guides/layouts/hboxfixed.jpg}
- * 
+ *
  * For a more detailed overview of what layouts are and the types of layouts shipped with Sencha Touch 2, check out the
  * [Layout Guide](#!/guide/layouts).
  */

@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * The slider is a way to allow the user to select a value from a given numerical range. You might use it for choosing
  * a percentage, combine two of them to get min and max values, or use three of them to specify the hex values for a
  * color. Each slider contains a single 'thumb' that can be dragged along the slider's length to change the value.
@@ -67,18 +69,22 @@ Ext.define('Ext.field.Slider', {
     /**
      * @event change
      * Fires when an option selection has changed.
-     * @param {Ext.field.Select} me
+     * @param {Ext.field.Slider} me
      * @param {Ext.slider.Thumb} thumb
      * @param {Number} newValue the new value of this thumb
      * @param {Number} oldValue the old value of this thumb
      */
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'slider-field',
 
         /**
-         * @inherit
+         * @cfg
+         * @inheritdoc
          */
         tabIndex: -1
     },
@@ -156,7 +162,6 @@ Ext.define('Ext.field.Slider', {
         return this.getValue();
     },
 
-    // @inherit
     reset: function() {
         var config = this.config,
             initialValue = (this.config.hasOwnProperty('values')) ? config.values : config.value;

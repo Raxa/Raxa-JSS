@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * Adds a separator bar to a menu, used to divide logical groups of menu items. Generally you will
  * add one of these by using "-" in your call to add() or in your items config rather than creating one directly.
@@ -28,9 +14,9 @@ If you are unsure which license is appropriate for your use, please contact the 
  *         },{
  *             xtype: 'menuseparator'
  *         },{
- *            text: 'seperator above',
+ *            text: 'separator above'
  *         },{
- *            text: 'regular item',
+ *            text: 'regular item'
  *         }]
  *     });
  */
@@ -39,88 +25,102 @@ Ext.define('Ext.menu.Separator', {
     alias: 'widget.menuseparator',
 
     /**
-     * @cfg {String} activeCls @hide
+     * @cfg {String} activeCls
+     * @private
      */
 
     /**
-     * @cfg {Boolean} canActivate @hide
+     * @cfg {Boolean} canActivate
+     * @private
      */
     canActivate: false,
 
     /**
-     * @cfg {Boolean} clickHideDelay @hide
+     * @cfg {Boolean} clickHideDelay
+     * @private
      */
 
     /**
-     * @cfg {Boolean} destroyMenu @hide
+     * @cfg {Boolean} destroyMenu
+     * @private
      */
 
     /**
-     * @cfg {Boolean} disabledCls @hide
+     * @cfg {Boolean} disabledCls
+     * @private
      */
 
     focusable: false,
 
     /**
-     * @cfg {String} href @hide
+     * @cfg {String} href
+     * @private
      */
 
     /**
-     * @cfg {String} hrefTarget @hide
+     * @cfg {String} hrefTarget
+     * @private
      */
 
     /**
-     * @cfg {Boolean} hideOnClick @hide
+     * @cfg {Boolean} hideOnClick
+     * @private
      */
     hideOnClick: false,
 
     /**
-     * @cfg {String} icon @hide
+     * @cfg {String} icon
+     * @private
      */
 
     /**
-     * @cfg {String} iconCls @hide
+     * @cfg {String} iconCls
+     * @private
      */
 
     /**
-     * @cfg {Object} menu @hide
+     * @cfg {Object} menu
+     * @private
      */
 
     /**
-     * @cfg {String} menuAlign @hide
+     * @cfg {String} menuAlign
+     * @private
      */
 
     /**
-     * @cfg {Number} menuExpandDelay @hide
+     * @cfg {Number} menuExpandDelay
+     * @private
      */
 
     /**
-     * @cfg {Number} menuHideDelay @hide
+     * @cfg {Number} menuHideDelay
+     * @private
      */
 
     /**
-     * @cfg {Boolean} plain @hide
+     * @cfg {Boolean} plain
+     * @private
      */
     plain: true,
 
     /**
      * @cfg {String} separatorCls
      * The CSS class used by the separator item to show the incised line.
-     * Defaults to `Ext.baseCSSPrefix + 'menu-item-separator'`.
      */
     separatorCls: Ext.baseCSSPrefix + 'menu-item-separator',
 
     /**
-     * @cfg {String} text @hide
+     * @cfg {String} text
+     * @private
      */
     text: '&#160;',
 
-    onRender: function(ct, pos) {
-        var me = this,
-            sepCls = me.separatorCls;
+    beforeRender: function(ct, pos) {
+        var me = this;
 
-        me.cls += ' ' + sepCls;
+        me.callParent();
 
-        me.callParent(arguments);
+        me.addCls(me.separatorCls);
     }
 });

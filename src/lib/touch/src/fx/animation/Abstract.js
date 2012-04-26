@@ -16,6 +16,10 @@ Ext.define('Ext.fx.animation.Abstract', {
 
         element: null,
 
+        /**
+         * @cfg
+         * Before configuration.
+         */
         before: null,
 
         from: {},
@@ -28,6 +32,10 @@ Ext.define('Ext.fx.animation.Abstract', {
 
         duration:  300,
 
+        /**
+         * @cfg
+         * Easing type.
+         */
         easing: 'linear',
 
         iteration: 1,

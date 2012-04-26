@@ -36,25 +36,43 @@ Ext.define('Ext.ActionSheet', {
     requires: ['Ext.Button'],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'sheet-action',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         left: 0,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         right: 0,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         bottom: 0,
 
         // @hide
         centered: false,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         height: 'auto',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         defaultType: 'button'
     }
 });

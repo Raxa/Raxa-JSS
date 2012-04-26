@@ -1,20 +1,5 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.layout.component.Draw
- * @extends Ext.layout.component.Component
  * @private
  *
  */
@@ -30,9 +15,65 @@ Ext.define('Ext.layout.component.Draw', {
     /* End Definitions */
 
     type: 'draw',
+    
+    measureContentWidth : function (ownerContext) {
+        var target = ownerContext.target,
+            surface = target.surface,
+            paddingInfo = ownerContext.getPaddingInfo(),
+            bbox = ownerContext.surfaceBBox || (ownerContext.surfaceBBox = surface.items.getBBox());
+        if (!target.viewBox) {
+            if (target.autoSize) {
+                return bbox.width + paddingInfo.width;
+            } else {
+                return bbox.x + bbox.width + paddingInfo.width;
+            }
+        } else {
+            if (ownerContext.heightModel.shrinkWrap) {
+                return paddingInfo.width;
+            } else {
+                return bbox.width / bbox.height * (ownerContext.getProp('contentHeight') - paddingInfo.height) + paddingInfo.width;
+            }
+        }
+    },
+    
+    measureContentHeight : function (ownerContext) {
+        var target = ownerContext.target,
+            surface = target.surface,
+            paddingInfo = ownerContext.getPaddingInfo(),
+            bbox = ownerContext.surfaceBBox || (ownerContext.surfaceBBox = surface.items.getBBox());
+        if (!ownerContext.target.viewBox) {
+            if (target.autoSize) {
+                return bbox.height + paddingInfo.height;
+            } else {
+                return bbox.y + bbox.height + paddingInfo.height;
+            }
+        } else {
+            if (ownerContext.widthModel.shrinkWrap) {
+                return paddingInfo.height;
+            } else {
+                return bbox.height / bbox.width * (ownerContext.getProp('contentWidth') - paddingInfo.width) + paddingInfo.height;
+            }
+        }
+    },
 
-    onLayout : function(width, height) {
-        this.owner.surface.setSize(width, height);
+    publishInnerWidth: function (ownerContext, width) {
+        ownerContext.setContentWidth(width - ownerContext.getFrameInfo().width, true);
+    },
+    
+    publishInnerHeight: function (ownerContext, height) {
+        ownerContext.setContentHeight(height - ownerContext.getFrameInfo().height, true);
+    },
+    
+    finishedLayout: function (ownerContext) {
+        // TODO: Is there a better way doing this?
+        var props = ownerContext.props,
+            paddingInfo = ownerContext.getPaddingInfo();
+
+        // We don't want the cost of getProps, so we just use the props data... this is ok
+        // because all the props have been calculated by this time
+        this.owner.setSurfaceSize(props.contentWidth - paddingInfo.width, props.contentHeight - paddingInfo.height);
+        
+        // calls afterComponentLayout, so we want the surface to be sized before that:
         this.callParent(arguments);
     }
 });

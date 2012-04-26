@@ -70,7 +70,9 @@ Ext.define('Ext.event.publisher.TouchGesture', {
             if (recognizers.hasOwnProperty(i)) {
                 recognizer = recognizers[i];
 
-                this.registerRecognizer(recognizer);
+                if (recognizer) {
+                    this.registerRecognizer(recognizer);
+                }
             }
         }
 

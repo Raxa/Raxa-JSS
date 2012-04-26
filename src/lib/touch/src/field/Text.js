@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * The text field is the basis for most of the input fields in Sencha Touch. It provides a baseline of shared
  * functionality such as input validation, standard events, state management and look and feel. Typically we create
  * text fields inside a form, like this:
@@ -130,10 +132,16 @@ Ext.define('Ext.field.Text', {
      */
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'text',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         clearIcon: true,
 
         /**
@@ -316,7 +324,6 @@ Ext.define('Ext.field.Text', {
         }
     },
 
-    // @inherit
     doSetDisabled: function(disabled) {
         var me = this;
 
@@ -444,7 +451,6 @@ Ext.define('Ext.field.Text', {
         return this;
     },
 
-    // @inherit
     reset: function() {
         this.getComponent().reset();
 
@@ -454,7 +460,6 @@ Ext.define('Ext.field.Text', {
         this[this._value ? 'showClearIcon' : 'hideClearIcon']();
     },
 
-    // @inherit
     isDirty: function() {
         var component = this.getComponent();
         if (component) {

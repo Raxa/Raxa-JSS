@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * Simple Select field wrapper. Example usage:
  *
  *     @example
@@ -45,7 +47,10 @@ Ext.define('Ext.field.Select', {
      */
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'select',
 
         /**
@@ -133,7 +138,8 @@ Ext.define('Ext.field.Select', {
         defaultTabletPickerConfig: null,
 
         /**
-         * @inherit
+         * @cfg
+         * @inheritdoc
          */
         name: 'picker'
     },

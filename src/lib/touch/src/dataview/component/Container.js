@@ -256,14 +256,15 @@ Ext.define('Ext.dataview.component.Container', {
     },
 
     getDataItemConfig: function(xtype, record, itemConfig) {
-        var dataview = this.dataview;
-        return {
-            xtype: xtype,
-            record: record,
-            dataview: dataview,
-            itemCls: dataview.getItemCls(),
-            defaults: itemConfig
-        };
+        var dataview = this.dataview,
+            dataItemConfig = {
+                xtype: xtype,
+                record: record,
+                dataview: dataview,
+                itemCls: dataview.getItemCls(),
+                defaults: itemConfig
+            };
+        return Ext.merge(dataItemConfig, itemConfig);
     },
 
     doRemoveItemCls: function(cls) {
