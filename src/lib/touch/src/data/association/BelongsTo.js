@@ -1,7 +1,6 @@
 /**
  * @author Ed Spencer
- * @class Ext.data.association.BelongsTo
- * @extends Ext.data.association.Association
+ * @aside guide models
  *
  * Represents a many to one association with another model. The owner model is expected to have
  * a foreign key which references the primary key of the associated model:
@@ -110,7 +109,7 @@
  *         config: {
  *             fields: [ // ...
  *             ],
- * 
+ *
  *             associations: [
  *                 { type: 'belongsTo', model: 'Category', primaryKey: 'unique_id', foreignKey: 'cat_id' }
  *             ]

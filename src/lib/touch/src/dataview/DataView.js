@@ -1,4 +1,6 @@
 /**
+ * @aside guide dataview
+ *
  * DataView makes it easy to create lots of components dynamically, usually based off a {@link Ext.data.Store Store}.
  * It's great for rendering lots of data from your server backend or any other data source and is what powers
  * components like {@link Ext.List}.
@@ -96,7 +98,7 @@
  *
  *                 reader: {
  *                     type: 'json',
- *                     root: 'results'
+ *                     rootProperty: 'results'
  *                 }
  *             }
  *         },
@@ -113,8 +115,6 @@
  * The last thing we did is update our template to render the image, twitter username and message. All we need to do
  * now is add a little CSS to style the list the way we want it and we end up with a very basic twitter viewer. Click
  * the preview button on the example above to see it in action.
- *
- * @aside guide dataview
  */
 Ext.define('Ext.dataview.DataView', {
     extend: 'Ext.Container',
@@ -274,7 +274,10 @@ Ext.define('Ext.dataview.DataView', {
          */
         store: null,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'dataview',
 
         /**
@@ -339,7 +342,10 @@ Ext.define('Ext.dataview.DataView', {
          */
         deselectOnContainerClick: true,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         scrollable: true,
 
         /**
@@ -515,6 +521,7 @@ Ext.define('Ext.dataview.DataView', {
      * (either an array if your params are numeric (i.e. {0}) or an object (i.e. {foo: 'bar'}))
      */
     prepareData: function(data, index, record) {
+        data.xindex = index + 1;
         return data;
     },
 
@@ -651,7 +658,7 @@ Ext.define('Ext.dataview.DataView', {
 
     // invoked by the selection model to maintain visual UI cues
     doItemSelect: function(me, record) {
-        if (me.container) {
+        if (me.container && !me.isDestroyed) {
             var item = me.container.getViewItems()[me.getStore().indexOf(record)];
             if (Ext.isElement(item)) {
                 item = Ext.get(item);
@@ -666,7 +673,7 @@ Ext.define('Ext.dataview.DataView', {
     // invoked by the selection model to maintain visual UI cues
     onItemDeselect: function(record, suppressEvent) {
         var me = this;
-        if (me.container) {
+        if (me.container && !me.isDestroyed) {
             if (suppressEvent) {
                 me.doItemDeselect(me, record);
             }
@@ -950,6 +957,9 @@ Ext.define('Ext.dataview.DataView', {
         if (oldIndex !== newIndex) {
             container.moveItemsToCache(oldIndex, oldIndex);
             container.moveItemsFromCache([record]);
+            if (me.isSelected(record)) {
+                me.doItemSelect(me, record);
+            }
         }
         else {
             // Bypassing setter because sometimes we pass the same record (different data)

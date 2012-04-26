@@ -76,7 +76,7 @@ Ext.define('Ext.util.Collection', {
 
     updateAutoFilter: function(autoFilter, oldAutoFilter) {
         if (oldAutoFilter === false && autoFilter && this.all.length) {
-            this.runFilters();
+            this.filter();
         }
     },
 
@@ -116,7 +116,7 @@ Ext.define('Ext.util.Collection', {
         // to filter right after this happens.
         this.mixins.filterable.addFilters.call(this, filters);
         if (this.items.length && this.getAutoFilter()) {
-            this.runFilters();
+            this.filter();
         }
         return this;
     },
@@ -156,11 +156,6 @@ Ext.define('Ext.util.Collection', {
         if (this.sorted && this.getAutoSort()) {
             this.sort();
         }
-    },
-
-    runFilters: function() {
-        this.items = this.mixins.filterable.filter.call(this, this.items);
-        this.updateAfterFilter();
     },
 
     updateAfterFilter: function() {
@@ -629,7 +624,7 @@ Ext.define('Ext.util.Collection', {
             me.map[key] = item;
         }
 
-        if (filtered && this.getAutoFilter() && filterable.isFiltered.call(me, item)) {
+        if (filtered && this.getAutoFilter() && this.mixins.filterable.isFiltered.call(me, item)) {
             return null;
         }
 
@@ -764,7 +759,7 @@ Ext.define('Ext.util.Collection', {
         var me = this,
             items = me.items,
             keys = me.keys,
-            all = this.all,
+            all = me.all,
             item, key;
 
         if (index < me.length && index >= 0) {
@@ -778,6 +773,8 @@ Ext.define('Ext.util.Collection', {
             Ext.Array.erase(items, index, 1);
             Ext.Array.erase(keys, index, 1);
             Ext.Array.remove(all, item);
+
+            delete me.indices[key];
 
             me.length--;
 
@@ -922,6 +919,8 @@ Ext.define('Ext.util.Collection', {
         me.items.length = 0;
         me.keys.length = 0;
         me.all.length = 0;
+        me.dirtyIndices = true;
+        me.indices = {};
         me.map = {};
     },
 

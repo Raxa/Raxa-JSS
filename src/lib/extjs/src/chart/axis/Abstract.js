@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.chart.axis.Abstract
  * Base class for all axis classes.
@@ -24,6 +10,20 @@ Ext.define('Ext.chart.axis.Abstract', {
     requires: ['Ext.chart.Chart'],
 
     /* End Definitions */
+    
+    /**
+     * @cfg {Ext.chart.Label} label
+     * The config for chart label.
+     */
+
+    /**
+     * @cfg {String[]} fields
+     * The fields of model to bind to this axis.
+     * 
+     * For example if you have a data set of lap times per car, each having the fields:
+     * 'carName', 'agvSpeed', 'maxSpeed'. Then you might want to show the data on chart
+     * with `['carName']` on Name axis and `['avgSpeed', 'maxSpeed']` on Speed axis.
+     */
 
     /**
      * Creates new Axis.
@@ -40,7 +40,7 @@ Ext.define('Ext.chart.axis.Abstract', {
         config.label = Ext.apply(config['axisLabel' + pos + 'Style'] || {}, config.label || {});
         config.axisTitleStyle = Ext.apply(config['axisTitle' + pos + 'Style'] || {}, config.labelTitle || {});
         Ext.apply(me, config);
-        me.fields = [].concat(me.fields);
+        me.fields = Ext.Array.from(me.fields);
         this.callParent();
         me.labels = [];
         me.getId();
@@ -71,4 +71,3 @@ Ext.define('Ext.chart.axis.Abstract', {
     drawAxis: Ext.emptyFn,
     addDisplayAndLabels: Ext.emptyFn
 });
-

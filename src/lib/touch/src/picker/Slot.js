@@ -18,7 +18,7 @@
  * See the {@link Ext.picker.Picker} documentation on how to use slots.
  */
 Ext.define('Ext.picker.Slot', {
-    extend: 'Ext.DataView',
+    extend: 'Ext.dataview.DataView',
     xtype : 'pickerslot',
     alternateClassName: 'Ext.Picker.Slot',
     requires: [
@@ -77,7 +77,7 @@ Ext.define('Ext.picker.Slot', {
         /**
          * @cfg {Number} flex
          * @accessor
-         * @hide
+         * @private
          */
         flex: 1,
 
@@ -223,7 +223,7 @@ Ext.define('Ext.picker.Slot', {
 
     updateData: function(data) {
         this.setStore(Ext.create('Ext.data.Store', {
-            model: 'x-textvalue',
+            fields: ['text', 'value'],
             data : data
         }));
     },
@@ -280,14 +280,7 @@ Ext.define('Ext.picker.Slot', {
             scrollable = this.getScrollable(),
             scroller = scrollable.getScroller(),
             titleHeight = 0,
-            barY, elY, barHeight, padding, paddingBottom;
-
-        barY = bar.getY();
-        elY = element.getY();
-
-        if (showTitle && title) {
-            elY += title.element.getHeight();
-        }
+            barHeight, padding;
 
         barHeight = bar.getHeight();
 
@@ -296,7 +289,6 @@ Ext.define('Ext.picker.Slot', {
         }
 
         padding = Math.ceil((element.getHeight() - titleHeight - barHeight) / 2);
-        this.slotPadding = padding;
 
         innerElement.setStyle({
             padding: padding + 'px 0 ' + (padding) + 'px'
@@ -315,7 +307,7 @@ Ext.define('Ext.picker.Slot', {
         me.selectedNode = item;
         me.scrollToItem(item, true);
 
-        me.fireEvent('slotpick', me, me.getValue(), me.selectedNode);
+        me.fireEvent('slotpick', me, me.getValue(true), me.selectedNode);
     },
 
     // @private
@@ -323,7 +315,6 @@ Ext.define('Ext.picker.Slot', {
         var y = item.getY(),
             parentEl = item.parent(),
             parentY = parentEl.getY(),
-            // padding = this.slotPadding,
             scrollView = this.getScrollable(),
             scroller = scrollView.getScroller(),
             difference;
@@ -352,7 +343,7 @@ Ext.define('Ext.picker.Slot', {
      * Returns the vlaue of this slot
      * @private
      */
-    getValue: function() {
+    getValue: function(useDom) {
         var store = this.getStore(),
             record, value;
 
@@ -360,7 +351,7 @@ Ext.define('Ext.picker.Slot', {
             return;
         }
 
-        if (!this.rendered) {
+        if (!this.rendered || !useDom) {
             return this._value;
         }
 
@@ -372,7 +363,7 @@ Ext.define('Ext.picker.Slot', {
         record = store.getAt(this.selectedIndex);
 
         value = record ? record.get(this.getValueField()) : null;
-        this._value = value;
+//        this._value = value;
 
         return value;
     },

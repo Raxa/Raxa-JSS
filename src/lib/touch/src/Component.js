@@ -302,7 +302,6 @@ Ext.define('Ext.Component', {
          *
          * You can also update the flex of a component dynamically using the {@link Ext.layout.AbstractBox#setItemFlex}
          * method.
-         * @accessor
          */
 
         /**
@@ -781,7 +780,7 @@ Ext.define('Ext.Component', {
      * Fires whenever this Component actually becomes visible (painted) on the screen. This is useful when you need to
      * perform 'read' operations on the DOM element, i.e: calculating natural sizes and positioning. If you just need
      * perform post-initialization tasks that don't rely on the fact that the element must be rendered and visible on
-     * the screen, listen to {@link #initialize}
+     * the screen, listen to {@link #event-initialize}
      *
      * Note: This event is not available to be used with event delegation. Instead 'painted' only fires if you explicily
      * add at least one listener to it, due to performance reason.
@@ -848,6 +847,12 @@ Ext.define('Ext.Component', {
      * @event orientationchange
      * Fires when orientation changes.
      * @removed 2.0.0 This event is now only available on the Viewport's {@link Ext.Viewport#orientationchange}
+     */
+
+    /**
+     * @event initialize
+     * Fires when the component has been initialized
+     * @param {Ext.Component} this The component instance
      */
 
     /**
@@ -931,7 +936,7 @@ Ext.define('Ext.Component', {
          * Force the component to take up 100% width and height available, by adding it to {@link Ext.Viewport}.
          * @cfg {Boolean} fullscreen
          */
-        if ('fullscreen' in me.config) {
+        if (me.config.fullscreen) {
             me.fireEvent('fullscreen', me);
         }
 
@@ -1278,7 +1283,9 @@ Ext.define('Ext.Component', {
      * All cls methods directly report to the {@link #cls} configuration, so anytime it changes, {@link #updateCls} will be called
      */
     updateCls: function(newCls, oldCls) {
-        this.element.replaceCls(oldCls, newCls);
+        if (oldCls != newCls && this.element) {
+            this.element.replaceCls(oldCls, newCls);
+        }
     },
 
     /**
@@ -1454,22 +1461,24 @@ Ext.define('Ext.Component', {
     doSetCentered: Ext.emptyFn,
 
     applyDocked: function(docked) {
-        if (docked) {
-            if (!this.dockPositions[docked]) {
-                //<debug error>
-                Ext.Logger.error("Invalid docking position of '" + docked + "', must be either 'top', 'right', 'bottom', " +
-                    "'left' or `null` (for no docking)", this);
-                //</debug>
-                return;
-            }
+        if (!docked) {
+            return null;
+        }
 
-            if (this.isFloating()) {
-                this.resetFloating();
-            }
+        if (!this.dockPositions[docked]) {
+            //<debug error>
+            Ext.Logger.error("Invalid docking position of '" + docked + "', must be either 'top', 'right', 'bottom', " +
+                "'left' or `null` (for no docking)", this);
+            //</debug>
+            return;
+        }
 
-            if (this.isCentered()) {
-                this.setCentered(false);
-            }
+        if (this.isFloating()) {
+            this.resetFloating();
+        }
+
+        if (this.isCentered()) {
+            this.setCentered(false);
         }
 
         return docked;
@@ -1656,6 +1665,7 @@ Ext.define('Ext.Component', {
 
     /**
      * Hides this Component
+     * @param {Object/Boolean} animation (optional)
      */
     hide: function(animation) {
         if (!this.getHidden()) {
@@ -1680,19 +1690,19 @@ Ext.define('Ext.Component', {
 
     /**
      * Shows this component
+     * @param {Object/Boolean} animation (optional)
      */
     show: function(animation) {
         var hidden = this.getHidden();
         if (hidden || hidden === null) {
-            if (animation === undefined || (animation && !animation.isComponent)) {
+            if (animation === true) {
+                animation = 'fadeIn';
+            }
+            else if (animation === undefined || (animation && animation.isComponent)) {
                 animation = this.getShowAnimation();
             }
 
             if (animation) {
-                if (animation === true) {
-                    animation = 'fadeIn';
-                }
-
                 this.onBefore({
                     hiddenchange: 'animateFn',
                     scope: this,
@@ -1708,7 +1718,7 @@ Ext.define('Ext.Component', {
     },
 
     animateFn: function(animation, component, newState, oldState, options, controller) {
-        if (animation) {
+        if (animation && (!newState || (newState && this.isPainted()))) {
             var anim = new Ext.fx.Animation(animation);
 
             anim.setElement(component.element);
@@ -1987,34 +1997,31 @@ alert(t.getXTypes());  // alerts 'component/field/textfield'
     },
 
     /**
-     * Shows this component along side a specified component.
+     * Shows this component by another component. If you specify no alignment, it will automatically
+     * position this component relative to the reference component.
      *
-     * If you specify no alignment, it will automatically position the specified component relative to this component.
+     * For example, say we are aligning a Panel next to a Button, the alignment string would look like this:
      *
-     * The following are all of the supported alignment positions:
+     *     [panel-vertical (t/b/c)][panel-horizontal (l/r/c)]-[button-vertical (t/b/c)][button-horizontal (l/r/c)]
      *
-     *     Value  Description
-     *     -----  -----------------------------
-     *     tl     The top left corner
-     *     t      The center of the top edge
-     *     tr     The top right corner
-     *     l      The center of the left edge
-     *     c      In the center of the element
-     *     r      The center of the right edge
-     *     bl     The bottom left corner
-     *     b      The center of the bottom edge
-     *     br     The bottom right corner
+     * where t = top, b = bottom, c = center, l = left, r = right.
      *
-     * ## Example
+     * ## Examples
      *
-     *     // show `comp` by `otherComp` using the default positioning ("tc-bc", non-constrained)
-     *     comp.showBy(otherComp);
+     *  - `tl-tr` means top-left corner of the Panel to the top-right corner of the Button
+     *  - `tc-bc` means top-center of the Panel to the bottom-center of the Button
      *
-     *     // align the top left corner of `comp` with the top right corner of `otherComp` (constrained to viewport)
-     *     comp.showBy(otherComp, "tr?");
+     * You can put a '?' at the end of the alignment string to constrain the floating element to the
+     * {@link Ext.Viewport Viewport}
      *
-     *     // align the bottom right corner of `comp` with the center left edge of `otherComp`
-     *     comp.showBy(otherComp, "br-l?");
+     *     // show `panel` by `button` using the default positioning (auto fit)
+     *     panel.showBy(button);
+     *
+     *     // align the top left corner of `panel` with the top right corner of `button` (constrained to viewport)
+     *     panel.showBy(button, "tl-tr?");
+     *
+     *     // align the bottom right corner of `panel` with the center left edge of `button` (not constrained by viewport)
+     *     panel.showBy(button, "br-cl");
      *
      * @param {Ext.Component} component The target component to show this component by
      * @param {String} alignment (Optional) The specific alignment.
@@ -2227,7 +2234,6 @@ var owningTabPanel = grid.up('tabpanel');
         return result;
     },
 
-    //@inherit
     getBubbleTarget: function() {
         return this.getParent();
     },
@@ -2243,6 +2249,8 @@ var owningTabPanel = grid.up('tabpanel');
             referenceList = this.referenceList,
             i, ln, reference;
 
+        Ext.destroy(this.getTranslatable(), this.getPlugins());
+
         // Remove this component itself from the container if it's currently contained
         if (parent) {
             parent.remove(this, false);
@@ -2255,9 +2263,9 @@ var owningTabPanel = grid.up('tabpanel');
             delete this[reference];
         }
 
+        Ext.destroy(this.innerHtmlElement);
         this.setRecord(null);
 
-        Ext.destroy(this.innerHtmlElement, this.getTranslatable());
         Ext.ComponentManager.unregister(this);
 
         this.callParent();

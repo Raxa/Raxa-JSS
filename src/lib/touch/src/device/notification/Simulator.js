@@ -8,8 +8,7 @@ Ext.define('Ext.device.notification.Simulator', {
     // @private
     msg: null,
 
-	// @inherit
-    show: function() {
+	show: function() {
         var config = this.callParent(arguments),
             buttons = [],
             ln = config.buttons.length,
@@ -47,7 +46,6 @@ Ext.define('Ext.device.notification.Simulator', {
         });
     },
 
-    // @inherit
     vibrate: function() {
         //nice animation to fake vibration
         var animation = [

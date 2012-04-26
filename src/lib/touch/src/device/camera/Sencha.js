@@ -9,7 +9,6 @@ Ext.define('Ext.device.camera.Sencha', {
         'Ext.device.Communicator'
     ],
 
-    // @inherit
     capture: function(options) {
         var sources = this.source,
             destinations = this.destination,

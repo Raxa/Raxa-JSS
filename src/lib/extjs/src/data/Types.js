@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * @class Ext.data.Types
  * <p>This is a static class containing the system-supplied data types which may be given to a {@link Ext.data.Field Field}.<p/>
@@ -81,9 +67,6 @@ Ext.define('Ext.data.Types', {
          * This data type means that no conversion is applied to the raw data before it is placed into a Record.
          */
         AUTO: {
-            convert: function(v) {
-                return v;
-            },
             sortType: st.none,
             type: 'auto'
         },
@@ -205,4 +188,3 @@ Ext.define('Ext.data.Types', {
         NUMBER: this.FLOAT
     });
 });
-

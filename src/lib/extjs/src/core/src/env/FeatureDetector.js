@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * Provides useful information about the current browser features.
  * Don't instantiate directly, but use the {@link Ext#features} property instead.
@@ -45,7 +31,7 @@ Ext.define('Ext.env.FeatureDetector', {
                 var element = this.getTestElement(),
                     ret = false;
 
-                element.innerHTML = "<!--[if vml]><br><br><![endif]-->";
+                element.innerHTML = "<!--[if vml]><br/><br/><![endif]-->";
                 ret = (element.childNodes.length === 2);
                 element.innerHTML = "";
 
@@ -199,9 +185,13 @@ Ext.define('Ext.env.FeatureDetector', {
     },
 
     registerTests: function(tests, isDefault) {
-        Ext.Object.each(tests, function(name, fn) {
-            this.registerTest(name, fn, isDefault);
-        }, this);
+        var key;
+
+        for (key in tests) {
+            if (tests.hasOwnProperty(key)) {
+                this.registerTest(key, tests[key], isDefault);
+            }
+        }
 
         return this;
     },
@@ -282,4 +272,3 @@ Ext.define('Ext.env.FeatureDetector', {
     Ext.features = new Ext.env.FeatureDetector();
 
 });
-

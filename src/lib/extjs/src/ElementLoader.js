@@ -1,17 +1,3 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
  * A class used to load remote content to an Element. Sample usage:
  *
@@ -23,7 +9,7 @@ If you are unsure which license is appropriate for your use, please contact the 
  *         }
  *     });
  *
- * In general this class will not be instanced directly, rather the {@link Ext.Element#load} method
+ * In general this class will not be instanced directly, rather the {@link Ext.Element#method-load} method
  * will be used.
  */
 Ext.define('Ext.ElementLoader', {
@@ -72,7 +58,7 @@ Ext.define('Ext.ElementLoader', {
     /**
      * @cfg {Boolean/Object} autoLoad
      * True to have the loader make a request as soon as it is created.
-     * This argument can also be a set of options that will be passed to {@link #load} is called.
+     * This argument can also be a set of options that will be passed to {@link #method-load} is called.
      */
     autoLoad: false,
 
@@ -136,13 +122,18 @@ Ext.define('Ext.ElementLoader', {
 
     /**
      * @cfg {Function} renderer
-     * A custom function to render the content to the element. The passed parameters are:
+     * A custom function to render the content to the element. The function should
+     * return false if the renderer could not be applied. The passed parameters are:
      *
      * - The loader
      * - The response
      * - The active request
      */
 
+    /**
+     * @property {Boolean} isLoader
+     * `true` in this class to identify an object as an instantiated ElementLoader, or subclass thereof.
+     */
     isLoader: true,
 
     constructor: function(config) {
@@ -339,7 +330,7 @@ Ext.define('Ext.ElementLoader', {
 
 
         if (success) {
-            success = renderer.call(me, me, response, active);
+            success = renderer.call(me, me, response, active) !== false;
         }
 
         if (success) {
@@ -374,7 +365,7 @@ Ext.define('Ext.ElementLoader', {
     /**
      * Automatically refreshes the content over a specified period.
      * @param {Number} interval The interval to refresh in ms.
-     * @param {Object} options (optional) The options to pass to the load method. See {@link #load}
+     * @param {Object} options (optional) The options to pass to the load method. See {@link #method-load}
      */
     startAutoRefresh: function(interval, options){
         var me = this;
@@ -411,4 +402,3 @@ Ext.define('Ext.ElementLoader', {
         me.clearListeners();
     }
 });
-

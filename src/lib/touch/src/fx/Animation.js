@@ -11,8 +11,8 @@ Ext.define('Ext.fx.Animation', {
         'Ext.fx.animation.FadeOut',
         'Ext.fx.animation.Flip',
         'Ext.fx.animation.Pop',
-        'Ext.fx.animation.PopOut',
-        'Ext.fx.animation.Cube'
+        'Ext.fx.animation.PopOut'
+//        'Ext.fx.animation.Cube'
     ],
 
     constructor: function(config) {

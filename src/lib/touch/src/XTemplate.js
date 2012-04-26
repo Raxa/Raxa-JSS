@@ -125,7 +125,7 @@
  *                 '<p>teenager</p>',
  *             '<tpl elseif="age &gt;= 2">',
  *                 '<p>kid</p>',
- *             '<tpl else">',
+ *             '<tpl else>',
  *                 '<p>baby</p>',
  *             '</tpl>',
  *         '</tpl></p>'

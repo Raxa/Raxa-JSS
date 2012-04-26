@@ -60,15 +60,15 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
         for (i = 0; i < length; i++) {
             record = records[i];
+            // <debug>
+            if (!this.getModel().getIdentifier().isUnique) {
+                Ext.Logger.warn('Your identifier generation strategy for the model does not ensure unique id\'s. Please use the UUID strategy, or implement your own identifier strategy with the flag isUnique.');
 
-            if (record.phantom) {
-                record.phantom = false;
-                id = this.getNextId();
-            } else {
-                id = record.getId();
             }
+            // </debug>
+            id = record.getId();
 
-            this.setRecord(record, id);
+            this.setRecord(record);
             ids.push(id);
         }
 
@@ -274,6 +274,8 @@ Ext.define('Ext.data.proxy.WebStorage', {
         //iPad bug requires that we remove the item before setting it
         obj.removeItem(key);
         obj.setItem(key, Ext.encode(data));
+
+        record.commit();
     },
 
     /**
@@ -336,10 +338,6 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
         if (length == 1 && ids[0] === "") {
             ids = [];
-        } else {
-            for (i = 0; i < length; i++) {
-                ids[i] = parseInt(ids[i], 10);
-            }
         }
 
         return ids;
@@ -363,29 +361,6 @@ Ext.define('Ext.data.proxy.WebStorage', {
         } else {
             obj.setItem(id, str);
         }
-    },
-
-    /**
-     * @private
-     * Returns the next numerical ID that can be used when realizing a model instance (see getRecordCounterKey).
-     * Increments the counter.
-     * @return {Number} The id
-     */
-    getNextId: function() {
-        var obj  = this.getStorageObject(),
-            key  = this.getRecordCounterKey(),
-            last = obj.getItem(key),
-            ids, id;
-
-        if (last === null) {
-            ids = this.getIds();
-            last = ids[ids.length - 1] || 0;
-        }
-
-        id = parseInt(last, 10) + 1;
-        obj.setItem(key, id);
-
-        return id;
     },
 
     /**

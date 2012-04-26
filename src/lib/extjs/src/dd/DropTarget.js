@@ -1,20 +1,4 @@
-/*
-
-This file is part of Ext JS 4
-
-Copyright (c) 2011 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-Commercial Usage
-Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
-
-If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
-
-*/
 /**
- * @class Ext.dd.DropTarget
- * @extends Ext.dd.DDTarget
  * A simple class that provides the basic implementation needed to make any element a drop target that can have
  * draggable items dropped onto it.  The drop has no effect until an implementation of notifyDrop is provided.
  */
@@ -50,12 +34,12 @@ Ext.define('Ext.dd.DropTarget', {
      * The CSS class applied to the drop target element while the drag source is over it.
      */
     /**
-     * @cfg {String} [dropAllowed="x-dd-drop-ok"]
+     * @cfg {String} dropAllowed
      * The CSS class returned to the drag source when drop is allowed.
      */
     dropAllowed : Ext.baseCSSPrefix + 'dd-drop-ok',
     /**
-     * @cfg {String} [dropNotAllowed="x-dd-drop-nodrop"]
+     * @cfg {String} dropNotAllowed
      * The CSS class returned to the drag source when drop is not allowed.
      */
     dropNotAllowed : Ext.baseCSSPrefix + 'dd-drop-nodrop',
@@ -132,4 +116,3 @@ Ext.define('Ext.dd.DropTarget', {
         }
     }
 });
-

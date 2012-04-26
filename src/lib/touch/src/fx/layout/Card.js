@@ -9,7 +9,7 @@ Ext.define('Ext.fx.layout.Card', {
         'Ext.fx.layout.card.Fade',
         'Ext.fx.layout.card.Flip',
         'Ext.fx.layout.card.Pop',
-        'Ext.fx.layout.card.Cube',
+//        'Ext.fx.layout.card.Cube',
         'Ext.fx.layout.card.Scroll'
     ],
 

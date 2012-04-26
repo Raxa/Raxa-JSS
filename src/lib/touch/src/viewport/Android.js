@@ -97,7 +97,7 @@ Ext.define('Ext.viewport.Android', {
     },
 
     applyAutoMaximize: function(autoMaximize) {
-        this.callParent(arguments);
+        autoMaximize = this.callParent(arguments);
 
         this.on('add', 'fixSize', this, { single: true });
         if (!autoMaximize) {

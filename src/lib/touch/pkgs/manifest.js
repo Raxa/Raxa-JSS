@@ -12,6 +12,8 @@ Licensees holding valid commercial licenses may use this file in accordance with
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
 
 */
+//<debug>
+
 this.ExtBootstrapData = {
     "nameToAliasesMap":{
         "Ext.AbstractComponent":[],
@@ -393,7 +395,7 @@ this.ExtBootstrapData = {
         "Ext.util.Draggable":[],
         "Ext.util.Filter":[],
         "Ext.util.Format":[],
-        "Ext.util.GeoLocation":[],
+        "Ext.util.Geolocation":[],
         "Ext.util.Grouper":[],
         "Ext.util.HashMap":[],
         "Ext.util.LineSegment":[],
@@ -502,7 +504,8 @@ this.ExtBootstrapData = {
         "Ext.util.ScrollView":"Ext.scroll.View",
         "Ext.TabBar":"Ext.tab.Bar",
         "Ext.TabPanel":"Ext.tab.Panel",
-        "Ext.Tab":"Ext.tab.Tab"
+        "Ext.Tab":"Ext.tab.Tab",
+        "Ext.util.GeoLocation":"Ext.util.Geolocation"
     }
 };
 
@@ -553,5 +556,7 @@ this.ExtBootstrapData = {
         this.ExtBootstrapData = null;
     }
 })();
+
+//</debug>
 
 

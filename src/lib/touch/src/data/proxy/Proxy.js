@@ -1,5 +1,6 @@
 /**
  * @author Ed Spencer
+ * @aside guide proxies
  *
  * Proxies are used by {@link Ext.data.Store Stores} to handle the loading and saving of {@link Ext.data.Model Model}
  * data. Usually developers will not need to create or interact with proxies directly.
@@ -38,13 +39,9 @@ Ext.define('Ext.data.proxy.Proxy', {
 
     requires: [
         'Ext.data.reader.Json',
-        'Ext.data.writer.Json'
-    ],
-
-    uses: [
+        'Ext.data.writer.Json',
         'Ext.data.Batch',
-        'Ext.data.Operation',
-        'Ext.data.Model'
+        'Ext.data.Operation'
     ],
 
     config: {

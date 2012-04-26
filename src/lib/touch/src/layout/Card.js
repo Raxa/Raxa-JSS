@@ -1,4 +1,6 @@
 /**
+ * @aside guide layouts
+ * @aside video layouts
  *
  * Sometimes you want to show several screens worth of information but you've only got a small screen to work with.
  * TabPanels and Carousels both enable you to see one screen of many at a time, and underneath they both use a Card
@@ -101,6 +103,20 @@ Ext.define('Ext.layout.Card', {
         }
 
         this.callParent(arguments);
+    },
+
+    getInnerItemsContainer: function() {
+        var innerItemsContainer = this.innerItemsContainer;
+
+        if (!innerItemsContainer) {
+            this.innerItemsContainer = innerItemsContainer = Ext.Element.create({
+                className: this.cls + '-container'
+            });
+
+            this.container.innerElement.append(innerItemsContainer);
+        }
+
+        return innerItemsContainer;
     },
 
     /**
