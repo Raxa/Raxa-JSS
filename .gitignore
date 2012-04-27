@@ -8,3 +8,5 @@ WEB-INF
 META-INF
 build.xml
 pom.xml
+/build/
+/dist/
