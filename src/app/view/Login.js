@@ -71,7 +71,6 @@ Ext.define('RaxaEmr.view.Login', {
         },{
             xtype: 'button',
             text: 'SIGN IN',
-            id: 'signInButton',
             ui: 'decline-round',
             centered: true,
             width: 350,
