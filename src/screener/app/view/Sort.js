@@ -18,8 +18,8 @@ Ext.define("RaxaEMR.Screener.view.Sort", {
 	            			items: [
 	            			        {
 	            			        	xtype: 'button',
-	            			        	id: 'sortByBMIButton',
-	            			        	text: 'Sort by BMI',
+	            			        	id: 'sortByNameButton',
+	            			        	text: 'Sort by Name',
 	            			        	ui:'round',
 
 	            			        },

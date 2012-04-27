@@ -19,7 +19,7 @@ Ext.define("RaxaEMR.Screener.view.PatientView", {
 		        	xtype: 'list', 
 		        	id: 'patientList',
 
-		        	itemTpl: 'BMI:{BMI} {lastname}, {firstname}',
+		        	itemTpl: '{lastname}, {firstname}',
 		        	store: Ext.create('RaxaEMR.Screener.store.Patients',{
 		        		storeId: 'patientStore'
 
@@ -28,8 +28,7 @@ Ext.define("RaxaEMR.Screener.view.PatientView", {
 		        	items:[{
 		        		xtype: 'titlebar',
 		        		docked: 'top',
-		        		id: 'patientListTitle',
-		        		title: 'Patients Waiting:',
+		        		title: 'Patients',
 		        		items:[{
 		        			xtype: 'button',
 		        			text: 'Sort',

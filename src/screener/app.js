@@ -38,4 +38,8 @@ Ext.application({
     //the stores will hold our data in a local cache
     stores: ['Patients', 'Doctors'],
     
+    //entry point
+    launch: function() {
+    	Ext.Viewport.add({xclass: 'RaxaEMR.Screener.view.Main'});
+    }
 });
