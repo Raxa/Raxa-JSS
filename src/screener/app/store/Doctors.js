@@ -3,11 +3,11 @@
  * Note: there is no writer attached, so changes will
  * only occur in local cache
  */
-Ext.define('Screener.store.Doctors', {
+Ext.define('RaxaEMR.Screener.store.Doctors', {
 	extend: 'Ext.data.Store',
 	xtype: 'doctorStore',
     config: {
-    	model: 'Screener.model.Doctor',
+    	model: 'RaxaEMR.Screener.model.Doctor',
     	proxy: {
     		type: 'ajax',
     		url : 'doctors.json',

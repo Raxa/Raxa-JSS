@@ -2,7 +2,7 @@
  * This class defines our main view with navigation.View
  * to allow for easy switching between screens, a back button, etc.
  */
-Ext.define("Screener.view.Main", {
+Ext.define("RaxaEMR.Screener.view.Main", {
 	requires: 'Ext.navigation.View',
 	extend: 'Ext.navigation.View',
 	xtype: 'mainView',

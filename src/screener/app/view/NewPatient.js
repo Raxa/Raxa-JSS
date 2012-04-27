@@ -3,7 +3,7 @@
  * pressed. This is a form that gets user name and shows
  * FIFO id for queueing
  */
-Ext.define("Screener.view.NewPatient", {
+Ext.define("RaxaEMR.Screener.view.NewPatient", {
 	requires: [ 'Ext.field.Text',
 	             'Ext.field.Number'],
 	extend: 'Ext.form.Panel',

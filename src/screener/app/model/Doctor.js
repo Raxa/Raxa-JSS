@@ -5,8 +5,8 @@
  * using the hasMany property.
  */
 
-Ext.define('Screener.model.Doctor', {
-	requires: ['Screener.model.Patient'],
+Ext.define('RaxaEMR.Screener.model.Doctor', {
+	requires: ['RaxaEMR.Screener.model.Patient'],
 	extend: 'Ext.data.Model',
 	config: {
 		fields: [
@@ -15,7 +15,7 @@ Ext.define('Screener.model.Doctor', {
 		         { name: 'firstname', type: 'string' },
 		         { name: 'numpatients', type: 'int' },
 		         ],
-		hasMany: {model: 'Screener.model.Patient', name: 'patients'}
+		hasMany: {model: 'RaxaEMR.Screener.model.Patient', name: 'patients'}
 	},
 
 	//increments the number of patients

@@ -3,7 +3,7 @@
  * to sort by name or FIFO id
  */
 
-Ext.define("Screener.view.Sort", {
+Ext.define("RaxaEMR.Screener.view.Sort", {
 	requires: [ 'Ext.field.Text',
 	            'Ext.field.Number'],
 	            extend: 'Ext.Panel',
