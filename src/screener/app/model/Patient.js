@@ -4,7 +4,7 @@
  * doctorid links a patient to a doctor's current
  * waiting list (-1 if unassigned)
  */
-Ext.define('Screener.model.Patient', {
+Ext.define('RaxaEMR.Screener.model.Patient', {
 	extend: 'Ext.data.Model',
 	config: {
 		fields: [

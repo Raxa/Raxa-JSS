@@ -4,7 +4,7 @@
  * Show Patients,
  * Show Doctors
  */
-Ext.define("Screener.view.TopMenu", {
+Ext.define("RaxaEMR.Screener.view.TopMenu", {
 	extend: 'Ext.Container',
 	xtype: 'topmenu',
 	config: {

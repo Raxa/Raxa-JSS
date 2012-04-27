@@ -18,11 +18,11 @@ Ext.Loader.setConfig({ enabled: true });
 //</debug>
 
 Ext.application({
-    name: 'Screener',
+    name: 'RaxaEMR.Screener',
 
     requires: [
-        'Screener.store.Patients',
-        'Screener.store.Doctors',
+        'RaxaEMR.Screener.store.Patients',
+        'RaxaEMR.Screener.store.Doctors',
         'Ext.navigation.View'
     ],
     
@@ -40,6 +40,6 @@ Ext.application({
     
     //entry point
     launch: function() {
-    	Ext.Viewport.add({xclass: 'Screener.view.Main'});
+    	Ext.Viewport.add({xclass: 'RaxaEMR.Screener.view.Main'});
     }
 });

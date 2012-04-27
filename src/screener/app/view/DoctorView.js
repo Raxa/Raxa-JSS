@@ -5,8 +5,8 @@
  * the doctor's waiting list.
  */
 
-Ext.define("Screener.view.DoctorView", {
-	requires: [ 'Screener.store.Doctors', 'Ext.dataview.List', 'Ext.Panel'],
+Ext.define("RaxaEMR.Screener.view.DoctorView", {
+	requires: [ 'RaxaEMR.Screener.store.Doctors', 'Ext.dataview.List', 'Ext.Panel'],
 	extend: 'Ext.Container',
 	xtype: 'doctorList',
 	config: {

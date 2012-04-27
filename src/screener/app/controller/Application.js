@@ -3,8 +3,8 @@
  * lists as necessary.
  */
 
-Ext.define("Screener.controller.Application", {
-	requires: ['Screener.view.NewPatient', 'Screener.store.Doctors'],
+Ext.define("RaxaEMR.Screener.controller.Application", {
+	requires: ['RaxaEMR.Screener.view.NewPatient', 'RaxaEMR.Screener.store.Doctors'],
 	extend: 'Ext.app.Controller',
 	config: {
 		
@@ -110,7 +110,7 @@ Ext.define("Screener.controller.Application", {
 	//opens form for new patient
 	addPatient: function() {
 		if(!this.newPatient){
-			this.newPatient = Ext.create('Screener.view.NewPatient');
+			this.newPatient = Ext.create('RaxaEMR.Screener.view.NewPatient');
 			Ext.Viewport.add(this.newPatient);
 		}
 		//set new FIFO id so patients come and go in the queue!
@@ -122,7 +122,7 @@ Ext.define("Screener.controller.Application", {
 	savePatient: function() {
 		formp = this.getNewPatient().saveForm();
 		if(formp.firstname && formp.lastname && formp.id){
-		var patient = Ext.create('starter.model.Patient');
+		var patient = Ext.create('RaxaEMR.Screener.model.Patient');
 		patient.set('firstname', formp.firstname);
 		patient.set('lastname', formp.lastname);
 		patient.set('id', formp.id);
@@ -137,7 +137,7 @@ Ext.define("Screener.controller.Application", {
 	//function to show screen with patient list
 	showPatients: function() {
 		if(!this.patientView){ 
-			this.patientView = Ext.create('Screener.view.PatientView');
+			this.patientView = Ext.create('RaxaEMR.Screener.view.PatientView');
 		}
 		this.getDoctorList().deselectAll();
 		this.getView().push(this.patientView);
@@ -146,7 +146,7 @@ Ext.define("Screener.controller.Application", {
 	//function to show screen with doctor list
 	showDoctors: function() {
 		if(!this.doctorView){ 
-			this.doctorView = Ext.create('Screener.view.DoctorView');
+			this.doctorView = Ext.create('RaxaEMR.Screener.view.DoctorView');
 		}
 		this.getExpandDoctorList().deselectAll();		
 		this.getView().push(this.doctorView);
@@ -172,7 +172,7 @@ Ext.define("Screener.controller.Application", {
 	//shows panel, allows us to choose what we want to sort by
 	showSort: function(){
 		if(!this.sortView){
-			this.sortView = Ext.create('Screener.view.Sort');
+			this.sortView = Ext.create('RaxaEMR.Screener.view.Sort');
 			Ext.Viewport.add(this.sortView);
 		}
 		this.getSortPanel().show();		
