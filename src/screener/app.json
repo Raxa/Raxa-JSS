@@ -32,14 +32,14 @@
      *      }
      */
     "js": [
-        {
-            "path": "../lib/touch/sencha-touch.js"
-        },
-        {
-            "path": "app.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
-        }
+    {
+        "path": "../lib/touch/sencha-touch.js"
+    },
+    {
+        "path": "app.js",
+        "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
+        "update": "delta"
+    }
     ],
 
     /**
@@ -56,10 +56,10 @@
      *      }
      */
     "css": [
-        {
-            "path": "../lib/touch/resources/css/sencha-touch.css",
-            "update": "delta"
-        },
+    {
+        "path": "../lib/touch/resources/css/sencha-touch.css",
+        "update": "delta"
+    },
 
     ],
 
@@ -71,13 +71,13 @@
          * List of items in the CACHE MANIFEST section
          */
         "cache": [
-            "index.html"
+        "index.html"
         ],
         /**
          * List of items in the NETWORK section
          */
         "network": [
-            "*"
+        "*"
         ],
         /**
          * List of items in the FALLBACK section
@@ -89,14 +89,14 @@
      * Extra resources to be copied along when build
      */
     "resources": [
-        //here is where we might add images
+    //here is where we might add images
     ],
 
     /**
      * File / directory name matchers to ignore when copying to the builds, must be valid regular expressions
      */
     "ignore": [
-        "\.svn$"
+    "\.svn$"
     ],
 
     /**

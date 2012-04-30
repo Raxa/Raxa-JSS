@@ -6,8 +6,6 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
         title: 'BMI Value',
         iconCls: 'user',
         styleHtmlContent: true,
-
-
         items: [{
             id: 'BMIInput',
             xtype: 'fieldset',
@@ -24,9 +22,7 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
                 placeHolder: 'Height (in cms)',
                 fieldLabel: 'heightCms',
                 clearIcon: true
-            },
-
-            {
+            }, {
                 xtype: 'numberfield',
                 name: 'weight',
                 id: 'weightId',
@@ -42,8 +38,7 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
                 items: [{
                     xtype: 'button',
                     text: 'Calculate BMI',
-                    action: 'CalculateBmiAction',
-
+                    action: 'CalculateBmiAction'
                 }, {
                     xtype: 'numberfield',
                     name: 'BMITextField',
@@ -55,11 +50,10 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
                 }]
             }, {
                 xtype: 'label',
-                html: '<div align="center"><b>BMI Index</div>',
+                html: '<div align="center"><b>BMI Index</div>'
             }, {
                 xtype: 'label',
-                html: '<div align="center">0 5 10 15 20 25 30 35 40 45 50 55 60</div>',
-
+                html: '<div align="center">0 5 10 15 20 25 30 35 40 45 50 55 60</div>'
             }, {
                 xtype: 'sliderfield',
                 align: 'center',
@@ -67,9 +61,7 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
                 value: 30,
                 minValue: 0,
                 maxValue: 60,
-                readOnly: true,
-
-
+                readOnly: true
             }, {
                 xtype: 'textfield',
                 name: 'BmiStatus',
@@ -77,14 +69,10 @@ Ext.define('RaxaEmr.Registration.view.Bmi', {
                 readOnly: true,
                 draggable: false
 
-            },
-
-            {
+            }, {
                 xtype: 'button',
                 text: 'Submit',
-                action: 'submitbmi',
-
-
+                action: 'submitbmi'
             }]
         }]
     }

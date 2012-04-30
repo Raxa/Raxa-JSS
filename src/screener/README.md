@@ -1,5 +1,4 @@
-Raxa JSS Hospital Screener
-using Sencha Touch 2.0.1 MVC
+Raxa JSS Hospital Screener using Sencha Touch 2.0.1 MVC
 
 This application is a client-side hospital screening system that
 manages patients and doctors. The user is able to add more patients, 
