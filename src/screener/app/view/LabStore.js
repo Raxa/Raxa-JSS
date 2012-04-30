@@ -4,11 +4,11 @@
  */
 Ext.define("Screener.view.LabStore", {
     xtype: 'labStore',
-    
+
     extend: 'Ext.form.Panel',
-    
+
     requires: ['Ext.tab.Panel', 'Ext.form.FieldSet'],
-    
+
     config: {
         autoscroll: true,
         layout: 'vbox',

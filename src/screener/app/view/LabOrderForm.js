@@ -5,11 +5,11 @@
  */
 Ext.define("Screener.view.LabOrderForm", {
     xtype: 'labOrderForm',
-    
+
     extend: 'Ext.form.Panel',
-    
+
     requires: ['Ext.tab.Panel', 'Ext.form.FieldSet'],
-    
+
     config: {
         styleHtmlContent: false,
         xtype: 'orderform',
@@ -19,11 +19,11 @@ Ext.define("Screener.view.LabOrderForm", {
             xtype: 'titlebar',
             docked: 'top',
             title: 'Lab Investigation Orders'
-        },{
+        }, {
             xtype: 'labStore',
             width: '350px',
             height: '70px'
-        },{
+        }, {
             xtype: 'fieldset',
             width: '200px',
             items: [{
@@ -33,17 +33,17 @@ Ext.define("Screener.view.LabOrderForm", {
                 label: 'Urgent',
                 value: '0'
             }]
-        },{
+        }, {
             xtype: 'button',
             ui: 'round',
             text: 'add additional test',
             id: 'addLabOrderButton',
             height: '40px',
             width: '200px'
-        },{
+        }, {
             xtype: 'spacer',
             height: 10
-        },{
+        }, {
             xtype: 'button',
             ui: 'confirm',
             text: 'Submit',

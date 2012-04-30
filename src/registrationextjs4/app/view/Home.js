@@ -59,7 +59,7 @@ Ext.define('Registration.view.Home', {
                     text: 'Register New Patient',
                     handler: function () {
                         var l = Ext.getCmp('mainregarea').getLayout();
-                        l.setActiveItem(1);//going to registration part-1 page
+                        l.setActiveItem(1); //going to registration part-1 page
                     }
                 }, {
                     xtype: 'button',

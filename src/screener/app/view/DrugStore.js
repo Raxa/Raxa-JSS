@@ -5,13 +5,13 @@
  */
 Ext.define("Screener.view.DrugStore", {
     xtype: 'drugStore',
-    
+
     extend: 'Ext.form.Panel',
-    
+
     requires: ['Ext.tab.Panel', 'Ext.form.FieldSet'],
-    
+
     config: {
-       
+
         layout: 'vbox',
         items: [{
             xtype: 'fieldset',
@@ -114,8 +114,7 @@ Ext.define("Screener.view.DrugStore", {
                     text: 'fetch from database',
                     value: 'db'
                 }]
-            }
-            ]
+            }]
         }]
     }
 });

@@ -2,7 +2,6 @@
  * This screen shows a list of patients on the left side,
  * with a button to sort them. The right side shows a drug order    *  form
  */
-
 Ext.define("Screener.view.PharmacyView", {
     extend: 'Ext.Container',
     id: 'pharmacyView',
@@ -17,7 +16,7 @@ Ext.define("Screener.view.PharmacyView", {
         {
             xtype: 'patientListView',
             flex: 1
-        },{
+        }, {
             xtype: 'pharmacyForm',
             flex: 1
         }]

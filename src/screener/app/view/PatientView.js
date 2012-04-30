@@ -15,7 +15,7 @@ Ext.define("Screener.view.PatientView", {
         {
             xtype: 'patientListView',
             flex: 1
-        },{
+        }, {
             //our doctor list is built on the Doctors store, and has a title and assign button
             xtype: 'list',
             id: 'doctorList',

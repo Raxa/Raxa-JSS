@@ -4,7 +4,6 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
     extend: 'Ext.app.Controller',
 
     config: {
-
         control: {
             'button[action=CalculateBmiAction]': {
                 tap: 'CalculateBmiMethod'
@@ -111,7 +110,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         this.addPatientToStore();
     },
 
-    /*
+    /**
      * Takes input from Search Form and returns one exact match
      * TODO: Make search a lot more flexible, to return multiple matches,
      * and imperfect matches
@@ -124,7 +123,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         console.log(values);
         console.log('First name: ' + values.firstName);
         var query = values.firstName;
-        /*var rec = patientStore.findRecord('firstName', query);*/
+        // var rec = patientStore.findRecord('firstName', query);
         var rec = patientStore.findRecord('firstName', query);
         console.log(rec);
         wasPatientFound = (rec === null) ? "No patient found" : "Patient found";
