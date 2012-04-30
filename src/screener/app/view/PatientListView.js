@@ -3,9 +3,9 @@
  */
 Ext.define("Screener.view.PatientListView", {
     xtype: 'patientListView',
-    
+
     extend: 'Ext.Container',
-    
+
     config: {
         layout: 'hbox',
         title: 'Patient Assignments',

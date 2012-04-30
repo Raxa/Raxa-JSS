@@ -4,11 +4,11 @@
  */
 Ext.define("Screener.view.LabOrderView", {
     extend: 'Ext.Container',
-    
+
     id: 'labOrderView',
-    
+
     requires: ['Screener.view.LabOrderForm'],
-    
+
     config: {
         fullscreen: true,
         layout: 'hbox',
@@ -18,7 +18,7 @@ Ext.define("Screener.view.LabOrderView", {
         {
             xtype: 'patientListView',
             flex: 1
-        },{
+        }, {
             xtype: 'labOrderForm',
             flex: 1
         }]
