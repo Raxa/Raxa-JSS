@@ -80,7 +80,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                         text: 'Cancel',
                         handler: function () {
                             var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(0);//going to home page
+                            l.setActiveItem(0); //going to home page
                         }
                     }]
                 }]

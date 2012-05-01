@@ -9,12 +9,12 @@ Ext.define('RaxaEmr.view.Login', {
             docked: 'top',
             items: [{
                 xtype: 'spacer'
-            },{
+            }, {
                 iconCls: 'settings',
-                iconMask: true, 
+                iconMask: true,
                 ui: 'plain',
-                handler: function(){
-                    if(!this.overlay){
+                handler: function () {
+                    if (!this.overlay) {
                         this.overlay = Ext.Viewport.add({
                             xtype: 'panel',
                             modal: true,
@@ -24,19 +24,19 @@ Ext.define('RaxaEmr.view.Login', {
                             style: 'right: -5px;top: 45px',
                             items: [{
                                 xtype: 'fieldset',
-                                items:[{
+                                items: [{
                                     xtype: 'textfield',
                                     placeHolder: 'Host URL',
                                     name: 'hostField',
                                     listeners: {
-                                        blur: function(field, event, options) {
+                                        blur: function (field, event, options) {
                                             host = field.getValue();
                                             localStorage.setItem("host", host);
                                         }
                                     },
                                     width: 450,
                                     style: 'background-color: white;',
-                                    value: host 
+                                    value: host
                                 }]
                             }]
                         });
@@ -44,16 +44,16 @@ Ext.define('RaxaEmr.view.Login', {
                     this.overlay.show();
                 }
             }]
-        },{
+        }, {
             id: 'logoPanel',
             centered: true,
             style: 'margin-top: -350px',
             items: [{
                 html: '<div style="text-align:center;"><img src="resources/img/logo.png" width="143" height="143"/></div>'
-            },{
+            }, {
                 html: '<div class="logoText">Jan Swasthya Sahyog</div>'
             }]
-        },{
+        }, {
             xtype: 'fieldset',
             title: 'Please login',
             align: 'center',
@@ -63,12 +63,12 @@ Ext.define('RaxaEmr.view.Login', {
                 xtype: 'textfield',
                 label: 'Username',
                 clearIcon: true
-            },{
+            }, {
                 xtype: 'passwordfield',
                 label: 'Password',
                 clearIcon: true
             }]
-        },{
+        }, {
             xtype: 'button',
             text: 'SIGN IN',
             ui: 'decline-round',

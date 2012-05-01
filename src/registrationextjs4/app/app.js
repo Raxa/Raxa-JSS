@@ -4,7 +4,5 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Registration',
-
-    autoCreateViewport: true,
-
+    autoCreateViewport: true
 });
