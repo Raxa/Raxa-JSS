@@ -30,13 +30,13 @@ Ext.define('RaxaEmr.view.Login', {
                                     name: 'hostField',
                                     listeners: {
                                         blur: function (field, event, options) {
-                                            host = field.getValue();
-                                            localStorage.setItem("host", host);
+                                            HOST = field.getValue();
+                                            localStorage.setItem("host", HOST);
                                         }
                                     },
                                     width: 450,
                                     style: 'background-color: white;',
-                                    value: host
+                                    value: HOST
                                 }]
                             }]
                         });

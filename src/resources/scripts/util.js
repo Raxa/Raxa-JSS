@@ -1,6 +1,10 @@
 /* 
  * This class provides util methods that are shared by the core, apps and modules
  */
+if (localStorage.getItem("host") == null) {
+    var HOST = 'http://raxaemr.jelastic.servint.net/openmrs';
+} else HOST = localStorage.getItem("host");
+
 var Util = {
     /**
      * Returns all the headers required for Basic Authenticated REST calls
@@ -20,12 +24,12 @@ var Util = {
      */
     logoutUser: function () {
         Ext.Ajax.request({
-            url: host + '/ws/rest/v1/session',
+            url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
             method: 'DELETE',
             success: function () {
-            // do nothing
+                // do nothing
             }
         });
     },
@@ -38,7 +42,7 @@ var Util = {
         Util.logoutUser(); // Delete existing logged in sessions
         // Check login and save to localStorage if valid
         Ext.Ajax.request({
-            url: host + '/ws/rest/v1/session',
+            url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
             headers: {
