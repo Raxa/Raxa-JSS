@@ -3,26 +3,56 @@
  */
 var Util = {
     /**
-     * Returns the Basic Authentication header that is a Base64 encoded string of user:pass
-     * @return Authorization: Basic xxxx
+     * Returns all the headers required for Basic Authenticated REST calls
+     * @return headers object that includes Authorization, Accept and Content-Type
      */
-    getBasicAuthHeader: function (username, password) {
-        return "Authorization: Basic " + window.btoa(username + ":" + password);
+    getBasicAuthHeaders: function () {
+        var headers = {
+            "Authorization": localStorage.getItem("basicAuthHeader"),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+        return headers;
     },
 
     /**
-     * Returns the Accept type header for JSON as a string
-     * @return Accept: application/json
+     * Logout the current user. Ends the current session
      */
-    getJsonAcceptType: function () {
-        return "Accept: application/json";
+    logoutUser: function () {
+        Ext.Ajax.request({
+            url: host + '/ws/rest/v1/session',
+            withCredentials: true,
+            useDefaultXhrHeader: false,
+            method: 'DELETE',
+            success: function () {
+            // do nothing
+            }
+        });
     },
 
     /**
-     * Returns the Content-Type type for JSON header as a string
-     * @return Content-Type: application/json
+     * Saves the Basic Authentication header to Localstorage
+     * Verifies if username + password is valid on server and saves as Base64 encoded string of user:pass
      */
-    getJsonContentType: function () {
-        return "Content-Type: application/json";
+    saveBasicAuthHeader: function (username, password) {
+        Util.logoutUser(); // Delete existing logged in sessions
+        // Check login and save to localStorage if valid
+        Ext.Ajax.request({
+            url: host + '/ws/rest/v1/session',
+            withCredentials: true,
+            useDefaultXhrHeader: false,
+            headers: {
+                "Accept": "application/json",
+                "Authorization": "Basic " + window.btoa(username + ":" + password)
+            },
+            success: function (response) {
+                var authenticated = Ext.decode(response.responseText).authenticated;
+                if (authenticated) {
+                    localStorage.setItem("basicAuthHeader", "Basic " + window.btoa(username + ":" + password));
+                } else {
+                    localStorage.removeItem("basicAuthHeader");
+                }
+            }
+        });
     }
 }
