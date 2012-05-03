@@ -6,8 +6,14 @@ http://docs.sencha.com/ext-js/4-0/#!/guide/testing
 <html>
     <head>
         <title id="page-title">RaxaEMR Behavior-Driven Tests</title>
-        <!-- Jasmine includes -->
+
+        <!-- Jasmine resources -->
         <link rel="stylesheet" type="text/css" href="lib/jasmine-1.1.0/jasmine.css">
+        
+        <!-- Sencha/ExtJS -->
+        <script type="text/javascript" src="../src/lib/touch/sencha-touch-all-debug.js"></script>
+        
+        <!-- Jasmine sources -->
         <script type="text/javascript" src="lib/jasmine-1.1.0/jasmine.js"></script>
         <script type="text/javascript" src="lib/jasmine-1.1.0/jasmine-html.js"></script>
 
@@ -21,11 +27,6 @@ http://docs.sencha.com/ext-js/4-0/#!/guide/testing
     <body>
         <h1 style="text-align: center">RaxaEMR uses Jasmine for Behavior-Driven Testing</h1>
         <h3 style="text-align: center">The following page shows the report of all the BDD tests that have been executed</h3>
-        Core Tests:
-        <script type="text/javascript">
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().execute();
-        </script>
         Module Tests (Follow test page):
         <ul>
             <li><a href="../src/registration/run-tests.html">Registration</a></li>
@@ -33,5 +34,12 @@ http://docs.sencha.com/ext-js/4-0/#!/guide/testing
             <li>Screener-Triage</li>
             <li>Outpatient</li>
         </ul>
+        Core Tests:
+        <script type="text/javascript">
+            Ext.onReady(function() {
+                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                jasmine.getEnv().execute();
+            });
+        </script>
     </body>
 </html>
