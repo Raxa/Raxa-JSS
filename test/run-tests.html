@@ -19,9 +19,12 @@ http://docs.sencha.com/ext-js/4-0/#!/guide/testing
 
         <!-- Source files -->
         <script type="text/javascript" src="../src/resources/scripts/util.js"></script>
+        <script type="text/javascript" src="../src/resources/scripts/startup.js"></script>
 
         <!-- Spec files -->
-        <script type="text/javascript" src="../test/specs/app/util-specs.js"></script>
+        <script type="text/javascript" src="../test/specs/app/utilSpecs.js"></script>
+        <script type="text/javascript" src="../test/specs/app/startupSpecs.js"></script>
+        <script type="text/javascript" src="../test/specs/app/sessionSpecs.js"></script>
     </head>
 
     <body>
@@ -36,10 +39,26 @@ http://docs.sencha.com/ext-js/4-0/#!/guide/testing
         </ul>
         Core Tests:
         <script type="text/javascript">
-            Ext.onReady(function() {
-                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-                jasmine.getEnv().execute();
+            Ext.Loader.setConfig({
+                enabled: true
             });
+            Ext.require('Ext.app.Application');
+            var testApp = null;
+            Ext.onReady(function() {
+                testApp = Ext.create('Ext.app.Application', {
+                    name: 'RaxaEmr',
+                    appFolder: '../src/app',
+                    controllers: ['Session'],
+                    views: ['Dashboard', 'Login'],
+
+                    launch: function() {
+                        //include the tests in the test.html head
+                        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                        jasmine.getEnv().execute();
+                    }
+                })
+            });
+            
         </script>
     </body>
 </html>
