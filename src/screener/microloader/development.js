@@ -26,7 +26,7 @@ If you are unsure which license is appropriate for your use, please contact the 
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'app.json', false);
+    xhr.open('GET', 'data/app.json', false);
     xhr.send(null);
 
     var options = eval("(" + xhr.responseText + ")"),
