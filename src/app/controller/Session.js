@@ -68,8 +68,16 @@ Ext.define('RaxaEmr.controller.Session', {
                 xclass: 'RaxaEmr.view.Dashboard'
             }]
         });
+
+		
+	//passing username & password to saveBasicAuthHeader which saves Authentication
+	//header as Base64 encoded string of user:pass in localStore
+	Util.saveBasicAuthHeader(username,password);
+
         //populating views with all the modules, sending a callback function
         Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
+		
+     
     },
 
     //once Util.populateViews() is done with AJAX GET calls, it calls this function
