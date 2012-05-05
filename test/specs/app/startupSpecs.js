@@ -48,3 +48,41 @@ describe("Create View Request", function () {
     });
 
 });
+
+describe("POST views on Server", function(){
+	xit("returns Server Response", function() {
+
+    	var views = new Array();
+    	views = []
+        views[0]=[];
+        views[0][0] = 'Home Page';
+        views[0][1] = 'http://raxatest.com/registration/home';
+ 
+ /*
+   spyOn(Ext.Ajax,'request').andCallFake(function (request) {
+		
+		method: 'POST';
+				
+		var response = {"status" : "201"};	
+		
+		if(request.jsonData.name!=undefined) //  && (jsonDecode.description!=null) )
+		{
+	             response.status= '201' ;
+	             var actual = response.status;
+	             console.log(actual);
+		}
+		else
+		{
+	      	    response.status= '300' ;
+	      	
+		}
+	      request.success.call(request.scope, response);
+        
+        });  
+*/
+	var expected = 	waitsFor(Startup.postPrivilege(views));
+	expect(expected).toBeDefined(); 
+	
+});
+
+});

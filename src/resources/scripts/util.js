@@ -5,6 +5,9 @@ if (localStorage.getItem("host") == null) {
     var HOST = 'http://raxaemr.jelastic.servint.net/openmrs';
 } else HOST = localStorage.getItem("host");
 
+var username = 'admin';
+var password =  'Hello123';
+
 var Util = {
     /**
      * Returns all the headers required for Basic Authenticated REST calls
