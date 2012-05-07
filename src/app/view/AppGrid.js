@@ -2,7 +2,7 @@
  * This view contains a grid of buttons that allow the user to choose a module
  * The module icons are located at src/resources/img/*.png
  */
-Ext.define('RaxaEmr.view.Dashboard', {
+Ext.define('RaxaEmr.view.AppGrid', {
     extend: 'Ext.Container',
     id: 'appGrid',
     config: {

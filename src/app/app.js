@@ -9,8 +9,8 @@ Ext.application({
     tabletIcon: 'resources/img/icon_s.png',
     tabletStartupScreen: 'resources/img/icon.png',
     
-    models: ['Session'], // List of Models for dynamic loading
-    views: ['Login','Dashboard'], // List of Views for dynamic loading
+    models: ['Session', 'Privilege'], // List of Models for dynamic loading
+    views: ['Login','AppGrid'], // List of Views for dynamic loading
     controllers: ['Session'], // List of Controllers for dynamic loading
     store: ['SessionStore'] // List of Stores for dynamic loading
 });

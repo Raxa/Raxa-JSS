@@ -61,10 +61,12 @@ Ext.define('RaxaEmr.view.Login', {
             width: 350,
             items: [{
                 xtype: 'textfield',
+                id: 'userName',
                 label: 'Username',
                 clearIcon: true
             }, {
                 xtype: 'passwordfield',
+                id: 'password',
                 label: 'Password',
                 clearIcon: true
             }]
