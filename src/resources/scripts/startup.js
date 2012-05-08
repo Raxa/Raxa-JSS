@@ -55,7 +55,7 @@ var Startup = {
             success: function (response) {
                 Startup.getViewRequestHandler(response, views, module);
                 if (getCallsLeft === 0) {
-                    callback(views);
+                Startup.postPrivilege(views,callback);
                 }
             },
             failure: function (response) {
@@ -63,7 +63,7 @@ var Startup = {
                 console.log(module + ' does not have app/app.js file');
                 getCallsLeft--;
                 if (getCallsLeft === 0) {
-                    callback(views);
+                  Startup.postPrivilege(views,callback);
                 }
             }
         });
@@ -102,5 +102,46 @@ var Startup = {
             //create AJAX get request for each app/app.js file
             Startup.createViewGetRequest(currModuleAddr, modules[i], views, callback);
         }
-    }
+    },
+    /**
+    * POST the passed views to the REST services on HOST using AJAX Request
+    * @param views: 2-d array for storing view names+URLs
+    * @param callback: function to be called after AJAX GETs are finished, 
+    */
+   postPrivilege: function (views, callback) {
+       //Counts the successful POST AJAX Calls
+       postSuccessCount = 0;
+
+       //create POST call for all views repeatedly
+       for (i = 0; i < views.length; i++) {
+           //Copies names & URL to json Object
+           var jsonPriviledge = {
+               "name": views[i][0],
+               "description": views[i][1]
+           };
+
+           //Ajax Request to POST json Object containing name+URL
+           Ext.Ajax.request({
+               url: HOST + '/ws/rest/v1/privilege',
+               method: 'POST',
+               disableCaching: false,
+               jsonData: jsonPriviledge,
+               headers: Util.getBasicAuthHeaders(),
+
+               failure: function (response) {
+                   console.log('Privilege POST failed with response status ' + response.status);
+               },
+
+               success: function (response) {
+                   postSuccessCount++;
+                   //if all POST calls are successful, callback method is called
+                   if (postSuccessCount == (views.length - 1)) {
+                       console.log('All ' + postSuccessCount + ' views POST successful');
+                       callback(views);
+                   }
+               },
+
+           });
+       }
+   },
 }
