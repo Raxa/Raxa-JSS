@@ -98,7 +98,7 @@ Ext.define('RaxaEmr.controller.Session', {
     },
 
     /**
-     * Called when login is successful for the given user, populates AppGrid with the
+     * Called when login is successful for the given user, populates AppGrid with the user's modules
      */
     loginSuccess: function () {
         var privileges = localStorage.getItem("privileges");

@@ -8,9 +8,6 @@ if (localStorage.getItem("host") == null) {
 var username = 'admin';
 var password =  'Hello123';
 
-//convention for naming a module: if touch module is 'OPD' then extjs module is 'OPD' + EXTJSSUFFIX
-var EXTJSSUFFIX = 'extjs4';
-
 var Util = {
     /**
      * Returns all the headers required for Basic Authenticated REST calls
