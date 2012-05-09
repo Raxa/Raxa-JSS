@@ -2,7 +2,7 @@ Ext.define('RaxaEmr.controller.Session', {
     extend: 'Ext.app.Controller',
     config: {
         before: {
-            showDashboard: 'doLogin'
+            showDashboard: 'loginSuccess'
         },
 
         routes: {
@@ -39,7 +39,7 @@ Ext.define('RaxaEmr.controller.Session', {
         window.location.hash = 'Login';
         Ext.getCmp('mainView').setActiveItem(0);
     },
-    
+
     /**
      * For a given userInfo containing the uuid for a user, stores their associated
      * privileges in localStorage
@@ -69,9 +69,43 @@ Ext.define('RaxaEmr.controller.Session', {
                 }
             });
         } else {
-        	//showing modal alert
-        	Ext.Msg.alert("Invalid user name");
+            // showing modal alert and stop loading mask
+            Ext.Msg.alert("Invalid user name");
+            this.launchAfterAJAX();
         }
+    },
+
+    // doLogin functions populates the views in the background while transferring
+    // the view to dashboard
+    doLogin: function() {
+        var name = Ext.getCmp('userName').getValue();
+        if (name === "") {
+            return;
+        }
+
+        //passing username & password to saveBasicAuthHeader which saves Authentication
+        //header as Base64 encoded string of user:pass in localStore
+        Util.saveBasicAuthHeader(username, password);
+
+        //splash loading screen, mask on 'mainview'
+        Ext.getCmp('mainView').setMasked({
+            xtype: 'loadmask',
+            message: 'Loading'
+        });
+
+        // check for user name validity and privileges
+        this.getUserPrivileges(name);
+
+        //populating views with all the modules, sending a callback function
+        Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
+    },
+
+    // Add the dashboard components to the appGrid view
+    loginSuccess: function () {
+        //TODO: GET modules as privileges from server
+        var currentApps = ['Registration', 'Inpatient', 'Screener', 'Pharmacy', 'Outpatient', 'Laboratory', 'Radiology', 'Billing', 'CHW'];
+        Ext.getCmp('appGrid').addModules(currentApps);
+        this.showDashboard();
     },
 
     /**
@@ -94,34 +128,12 @@ Ext.define('RaxaEmr.controller.Session', {
         });
     },
 
-    /**
-     * Called when login is successful for the given user, populates AppGrid with given modules,
-     */
-    loginSuccess: function () {
-        //TODO: GET modules as privileges from server
-        var currentApps = ['Registration', 'Inpatient', 'Screener', 'Pharmacy', 'Outpatient', 'Laboratory', 'Radiology', 'Billing', 'CHW'];
-        Ext.getCmp('appGrid').addModules(currentApps);
-        this.showDashboard();
-    },
-
-    doLogin: function () {
-    	var name = Ext.getCmp('userName').getValue();
-    	if(name!==""){
-            this.getUserPrivileges(name);
-    	}
-    },
-
     doLogout: function () {
         //called whenever any Button with action=logout is tapped
     },
 
     //on entry point for application, give control to Util.getViews()
     launch: function () {
-        //splash loading screen
-        Ext.Viewport.setMasked({
-            xtype: 'loadmask',
-            message: 'Loading'
-        });
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,
@@ -132,16 +144,6 @@ Ext.define('RaxaEmr.controller.Session', {
                 xclass: 'RaxaEmr.view.AppGrid'
             }]
         });
-
-		
-	//passing username & password to saveBasicAuthHeader which saves Authentication
-	//header as Base64 encoded string of user:pass in localStore
-	Util.saveBasicAuthHeader(username,password);
-
-        //populating views with all the modules, sending a callback function
-        Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
-		
-     
     },
 
     //once Util.populateViews() is done with AJAX GET calls, it calls this function
@@ -149,10 +151,7 @@ Ext.define('RaxaEmr.controller.Session', {
     //views is the 2-d array of view urls (see Util.populateViews() for more info)
     launchAfterAJAX: function (views) {
         //remove loading mask
-        Ext.Viewport.setMasked(false);
-
-        Ext.Viewport.add(Ext.getCmp('mainView'));
-        Ext.getCmp('mainView').setActiveItem(0);
+        Ext.getCmp('mainView').setMasked(false);
     }
 
 });
