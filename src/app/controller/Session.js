@@ -83,8 +83,9 @@ Ext.define('RaxaEmr.controller.Session', {
             return;
         }
 
-        // check for user name validity and privileges
-        this.getUserPrivileges(name);
+        //passing username & password to saveBasicAuthHeader which saves Authentication
+        //header as Base64 encoded string of user:pass in localStore
+        Util.saveBasicAuthHeader(username, password);
 
         //splash loading screen, mask on 'mainview'
         Ext.getCmp('mainView').setMasked({
@@ -92,13 +93,11 @@ Ext.define('RaxaEmr.controller.Session', {
             message: 'Loading'
         });
 
-        //passing username & password to saveBasicAuthHeader which saves Authentication
-        //header as Base64 encoded string of user:pass in localStore
-        Util.saveBasicAuthHeader(username, password);
+        // check for user name validity and privileges
+        this.getUserPrivileges(name);
 
         //populating views with all the modules, sending a callback function
         Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
-        //this.loginSuccess();
     },
 
     // Add the dashboard components to the appGrid view
@@ -145,8 +144,6 @@ Ext.define('RaxaEmr.controller.Session', {
                 xclass: 'RaxaEmr.view.AppGrid'
             }]
         });
-
-        //Ext.Viewport.add(Ext.getCmp('mainView'));
     },
 
     //once Util.populateViews() is done with AJAX GET calls, it calls this function
