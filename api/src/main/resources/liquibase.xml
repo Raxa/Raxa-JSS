@@ -10,15 +10,30 @@
 			<not><tableExists tableName="raxacore_patient_list"/></not>
 		</preConditions>
 		<comment>
-			Create the schema for raxacore_patient_list table
+			Schema for raxacore_patient_list table
 		</comment>
 		<createTable tableName="raxacore_patient_list">
-			<column name="patient_list_id" type="int"/>
+			<column name="patient_list_id" type="char(38)"/>
 			<column name="name" type="varchar(255)"/>
 			<column name="description" type="varchar(2000)">
 			<column name="search_query" type="varchar(1000)">
 			<column name="uuid" type="int">
 				<constraints unique="true" nullable="false"/>
+			</column>
+			<column name="creator" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="date_created" type="DATETIME">
+				<constraints nullable="false"/>
+			</column>
+			<column defaultValueBoolean="false" name="voided" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
+			<column name="voided_by" type="int"/>
+			<column name="date_voided" type="DATETIME"/>
+			<column name="void_reason" type="varchar(255)"/>
+			<column name="changed_by" type="int"/>
+			<column name="date_changed" type="DATETIME"/>
 			</column>
 		</createTable>
     </changeSet>
