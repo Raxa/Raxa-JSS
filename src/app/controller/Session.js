@@ -39,7 +39,7 @@ Ext.define('RaxaEmr.controller.Session', {
         window.location.hash = 'Login';
         Ext.getCmp('mainView').setActiveItem(0);
     },
-    
+
     /**
      * For a given userInfo containing the uuid for a user, stores their associated
      * privileges in localStorage
@@ -49,9 +49,11 @@ Ext.define('RaxaEmr.controller.Session', {
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
             Ext.Ajax.request({
-            	scope:this,
+                scope: this,
                 url: userInfoJson.results[0].links[0].uri + '?v=full',
                 method: 'GET',
+                withCredentials: true,
+                useDefaultXhrHeader: false,
                 headers: Util.getBasicAuthHeaders(),
                 success: function (response) {
                     var privilegesJson = Ext.decode(response.responseText);
@@ -64,13 +66,12 @@ Ext.define('RaxaEmr.controller.Session', {
                         };
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
-                    console.log(localStorage.getItem("privileges"));
                     this.loginSuccess();
                 }
             });
         } else {
-        	//showing modal alert
-        	Ext.Msg.alert("Invalid user name");
+            //showing modal alert
+            Ext.Msg.alert("Invalid user name");
         }
     },
 
@@ -86,7 +87,9 @@ Ext.define('RaxaEmr.controller.Session', {
      */
     getUserPrivileges: function (username) {
         Ext.Ajax.request({
-        	scope: this,
+            scope: this,
+            withCredentials: true,
+            useDefaultXhrHeader: false,
             url: HOST + '/ws/rest/v1/user?q=' + username,
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
@@ -95,20 +98,39 @@ Ext.define('RaxaEmr.controller.Session', {
     },
 
     /**
-     * Called when login is successful for the given user, populates AppGrid with given modules,
+     * Called when login is successful for the given user, populates AppGrid with the
      */
     loginSuccess: function () {
-        //TODO: GET modules as privileges from server
-        var currentApps = ['Registration', 'Inpatient', 'Screener', 'Pharmacy', 'Outpatient', 'Laboratory', 'Radiology', 'Billing', 'CHW'];
-        Ext.getCmp('appGrid').addModules(currentApps);
-        this.showDashboard();
+        var privileges = localStorage.getItem("privileges");
+        var allModules = Util.getModules();
+        var userModules = [];
+        //starting at index=1 here, don't need app button for 'login'
+        for(i=1;i<allModules.length;i++){
+        	//checking if user is allows to view the module
+            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+            	userModules[userModules.length] = allModules[i];
+            }
+        }
+        Ext.getCmp('appGrid').addModules(userModules);
+        //if only 1 app available, send to that page
+        if(userModules.length === 1){
+            window.location = userModules[0];
+        }
+        //if no apps available, alert the user
+        else if(userModules.length === 0){
+        	Ext.Msg.alert("No Privileges Found", "Contact your system administrator")
+        }
+        //otherwise show the AppGrid
+        else{
+            this.showDashboard();
+        }
     },
 
     doLogin: function () {
-    	var name = Ext.getCmp('userName').getValue();
-    	if(name!==""){
+        var name = Ext.getCmp('userName').getValue();
+        if (name !== "") {
             this.getUserPrivileges(name);
-    	}
+        }
     },
 
     doLogout: function () {
@@ -122,6 +144,23 @@ Ext.define('RaxaEmr.controller.Session', {
             xtype: 'loadmask',
             message: 'Loading'
         });
+        
+        
+        //passing username & password to saveBasicAuthHeader which saves Authentication
+        //header as Base64 encoded string of user:pass in localStore
+        Util.saveBasicAuthHeader(username,password);
+
+        //populating views with all the modules, sending a callback function
+        Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
+        
+    },
+
+    //once Util.populateViews() is done with AJAX GET calls, it calls this function
+    //to start graphics, etc
+    //views is the 2-d array of view urls (see Util.populateViews() for more info)
+    launchAfterAJAX: function (views) {
+        //remove loading mask
+        Ext.Viewport.setMasked(false);
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,
@@ -132,24 +171,6 @@ Ext.define('RaxaEmr.controller.Session', {
                 xclass: 'RaxaEmr.view.AppGrid'
             }]
         });
-
-		
-	//passing username & password to saveBasicAuthHeader which saves Authentication
-	//header as Base64 encoded string of user:pass in localStore
-	Util.saveBasicAuthHeader(username,password);
-
-        //populating views with all the modules, sending a callback function
-        Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
-		
-     
-    },
-
-    //once Util.populateViews() is done with AJAX GET calls, it calls this function
-    //to start graphics, etc
-    //views is the 2-d array of view urls (see Util.populateViews() for more info)
-    launchAfterAJAX: function (views) {
-        //remove loading mask
-        Ext.Viewport.setMasked(false);
 
         Ext.Viewport.add(Ext.getCmp('mainView'));
         Ext.getCmp('mainView').setActiveItem(0);

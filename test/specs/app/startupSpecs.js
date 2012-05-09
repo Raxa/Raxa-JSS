@@ -19,7 +19,7 @@ describe("Get View Request Handler", function () {
         views = [];
         Startup.getViewRequestHandler(getRequests[0], views, 'testModule1');
         var actual = views[2][0];
-        var expected = 'testModule1' + ' view3'
+        var expected = 'RaxaEmrView testModule1' + ' view3'
         expect(actual).toEqual(expected);
     });
 

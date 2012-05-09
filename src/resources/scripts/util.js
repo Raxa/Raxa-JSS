@@ -2,11 +2,14 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.servint.net/openmrs';
+    var HOST = 'http://raxaemr.jelastic.dogado.eu';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
 var password =  'Hello123';
+
+//convention for naming a module: if touch module is 'OPD' then extjs module is 'OPD' + EXTJSSUFFIX
+var EXTJSSUFFIX = 'extjs4';
 
 var Util = {
     /**
@@ -68,7 +71,7 @@ var Util = {
      * @return [ 'login', 'screener', ....]
      */
     getModules: function () {
+    	//always keep login at first position as its app path is different
         return ['login', 'screener', 'registration', 'registrationextjs4'];
     }
-
 }

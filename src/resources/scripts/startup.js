@@ -27,8 +27,13 @@ var Startup = {
             for (j = 0; j < viewStrings.length; j++) {
                 currIndex = views.length;
                 views[currIndex] = [];
-                views[currIndex][0] = module + ' ' + viewStrings[j];
-                views[currIndex][1] = module + '/#' + viewStrings[j];
+                views[currIndex][0] = 'RaxaEmrView '+module + ' ' + viewStrings[j];
+                if(module == 'login'){
+                    views[currIndex][1] = '#' + viewStrings[j];
+                }
+                else{
+                    views[currIndex][1] = module+'/#' + viewStrings[j];
+                }
             }
         }
         // if no views are defined in current app.js, return error string
@@ -55,7 +60,7 @@ var Startup = {
             success: function (response) {
                 Startup.getViewRequestHandler(response, views, module);
                 if (getCallsLeft === 0) {
-                Startup.postPrivilege(views,callback);
+                    Startup.postPrivilege(views,callback);
                 }
             },
             failure: function (response) {
@@ -63,7 +68,7 @@ var Startup = {
                 console.log(module + ' does not have app/app.js file');
                 getCallsLeft--;
                 if (getCallsLeft === 0) {
-                  Startup.postPrivilege(views,callback);
+                    Startup.postPrivilege(views,callback);
                 }
             }
         });
@@ -85,18 +90,18 @@ var Startup = {
         getCallsLeft = modules.length;
         //adding url for home page (relative URL is blank)
         views[0] = [];
-        views[0][0] = 'home Page';
+        views[0][0] = 'RaxaEmrView home Page';
         views[0][1] = '';
         currModuleAddr = '';
         for (i = 0; i < modules.length; i++) {
             if (i === 0) {
-                currModuleAddr = '../src'
+                currModuleAddr = '.'
             } else {
                 currModuleAddr = modules[i];
                 //adding url for bare app i.e. screener/index.html
                 currIndex = views.length;
                 views[currIndex] = [];
-                views[currIndex][0] = modules[i];
+                views[currIndex][0] = 'RaxaEmrView '+modules[i];
                 views[currIndex][1] = modules[i];
             }
             //create AJAX get request for each app/app.js file
