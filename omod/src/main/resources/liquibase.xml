@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+ 
+    <!--
+    	See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+    	documentation on this file.
+    
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+ 
+ 	<!-- Uncomment this and edit the values below to use this file
+ 	
+	<changeSet id="mymoduleid-2010-05-25-15:50" author="bwolfe">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="mymoduleid_myobject"/></not>
+		</preConditions>
+		<comment>
+			Creating the mymoduleid_myobject table
+		</comment>
+		<createTable tableName="mymoduleid_myobject">
+			<column name="mymoduleid_myobject_id" type="int">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="patient_list_id" type="int"/>
+			<column name="name" type="varchar(255)"/>
+			<column name="description" type="varchar(2000)">
+			<column name="search_query" type="varchar(1000)">
+			<column name="uuid" type="int">
+				<constraints unique="true" nullable="false"/>
+			</column>
+		</createTable>
+    </changeSet>
+    
+    -->
+ 
+</databaseChangeLog>
