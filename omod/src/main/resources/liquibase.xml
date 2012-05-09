@@ -15,17 +15,14 @@
  
  	<!-- Uncomment this and edit the values below to use this file
  	
-	<changeSet id="mymoduleid-2010-05-25-15:50" author="bwolfe">
+	<changeSet id="raxacore_patient_list" author="tarang">
 		<preConditions onFail="MARK_RAN">
-			<not><tableExists tableName="mymoduleid_myobject"/></not>
+			<not><tableExists tableName="raxacore_patient_list"/></not>
 		</preConditions>
 		<comment>
-			Creating the mymoduleid_myobject table
+			Create the schema for raxacore_patient_list table
 		</comment>
-		<createTable tableName="mymoduleid_myobject">
-			<column name="mymoduleid_myobject_id" type="int">
-				<constraints primaryKey="true" nullable="false"/>
-			</column>
+		<createTable tableName="raxacore_patient_list">
 			<column name="patient_list_id" type="int"/>
 			<column name="name" type="varchar(255)"/>
 			<column name="description" type="varchar(2000)">
