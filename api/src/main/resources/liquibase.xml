@@ -17,7 +17,7 @@
 			<column name="name" type="varchar(255)"/>
 			<column name="description" type="varchar(2000)">
 			<column name="search_query" type="varchar(1000)">
-			<column name="uuid" type="int">
+			<column name="uuid" type="char(38)">
 				<constraints unique="true" nullable="false"/>
 			</column>
 			<column name="creator" type="int">
