@@ -42,7 +42,7 @@ Ext.define('RaxaEmr.view.AppGrid', {
                     //TODO: add in various icons for the modules
                     //icon: 'resources/img/' + args[j] + 'Logo.png',
                     icon: 'resources/img/moduleLogo.png',
-                    width: '200px',
+                    width: '250px',
                     height: '80px',
                     text: args[j],
                     listeners: {
@@ -54,7 +54,7 @@ Ext.define('RaxaEmr.view.AppGrid', {
             });
             appRows[Math.floor(j / numRows)].add(cell);
         }
-        for (var i = 0; i < args.length / 3; i++) {
+        for (var i = 0; i < numRows; i++) {
             modulesPanel.add(appRows[i]);
         }
         this.add(modulesPanel);

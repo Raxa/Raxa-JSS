@@ -24,6 +24,7 @@ describe("Session", function () {
     });
 
     it("adds modules to the dashboard at login", function () {
+        localStorage.setItem("privileges", "RaxaEmrView screener, RaxaEmrView registration")
         mainController.loginSuccess();
         expect(Ext.getCmp('modulesPanel')).toBeDefined();
     });
@@ -34,19 +35,30 @@ describe("Session", function () {
         };
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
-                responseText: "{\"privileges\":[{\"name\":\"test Privilege\",\"description\":\"test.com/privilege\"}]}"
+                responseText: "{\"privileges\":[{\"name\":\"RaxaEmrView screener\",\"description\":\"screener\"}," +
+                		"{\"name\":\"RaxaEmrView registration\",\"description\":\"registration\"}]}"
             };
-            window.loginSuccess = function () {};
             request.success.call(request.scope, response);
         });
         Ext.getCmp('userName').setValue("testUser");
-        mainController.getPrivilegesHelper(userInfo);
-        var expected = {
-            name: "test Privilege",
-            description: "test.com/privilege"
-        }
-        var actual = Ext.decode(localStorage.getItem("privileges"))[0];
+        mainController.storeUserPrivileges(userInfo);
+        var expected = [{
+            name: "RaxaEmrView screener",
+            description: "screener"
+        },{
+        	name: "RaxaEmrView registration",
+        	description: "registration"
+        }];
+        var actual = Ext.decode(localStorage.getItem("privileges"));
         expect(actual).toEqual(expected);
     });
 
+    it("only adds modules to the app grid the user is allowed to view", function() {
+    	localStorage.setItem("privileges", "RaxaEmrView screener, RaxaEmrView registration");
+        mainController.loginSuccess();
+        expect(Ext.getCmp('screener')).toBeDefined();
+        expect(Ext.getCmp('registration')).toBeDefined();
+        expect(Ext.getCmp('registrationextjs4')).not.toBeDefined();
+    });
+    
 });
