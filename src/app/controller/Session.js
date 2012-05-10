@@ -49,9 +49,11 @@ Ext.define('RaxaEmr.controller.Session', {
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
             Ext.Ajax.request({
-            	scope:this,
+                scope: this,
                 url: userInfoJson.results[0].links[0].uri + '?v=full',
                 method: 'GET',
+                withCredentials: true,
+                useDefaultXhrHeader: false,
                 headers: Util.getBasicAuthHeaders(),
                 success: function (response) {
                     var privilegesJson = Ext.decode(response.responseText);
@@ -64,7 +66,6 @@ Ext.define('RaxaEmr.controller.Session', {
                         };
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
-                    console.log(localStorage.getItem("privileges"));
                     this.loginSuccess();
                 }
             });
@@ -100,14 +101,6 @@ Ext.define('RaxaEmr.controller.Session', {
         Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
     },
 
-    // Add the dashboard components to the appGrid view
-    loginSuccess: function () {
-        //TODO: GET modules as privileges from server
-        var currentApps = ['Registration', 'Inpatient', 'Screener', 'Pharmacy', 'Outpatient', 'Laboratory', 'Radiology', 'Billing', 'CHW'];
-        Ext.getCmp('appGrid').addModules(currentApps);
-        this.showDashboard();
-    },
-
     /**
      * Stores the privilege name+url in localStorage for the given userInfo uuid
      * Privileges are stored in the form of a Json string corresponding to:
@@ -120,12 +113,43 @@ Ext.define('RaxaEmr.controller.Session', {
      */
     getUserPrivileges: function (username) {
         Ext.Ajax.request({
-        	scope: this,
+            scope: this,
+            withCredentials: true,
+            useDefaultXhrHeader: false,
             url: HOST + '/ws/rest/v1/user?q=' + username,
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
             success: this.storeUserPrivileges
         });
+    },
+
+    /**
+     * Called when login is successful for the given user, populates AppGrid with the user's modules
+     */
+    loginSuccess: function () {
+        var privileges = localStorage.getItem("privileges");
+        var allModules = Util.getModules();
+        var userModules = [];
+        //starting at index=1 here, don't need app button for 'login'
+        for(i=1;i<allModules.length;i++){
+        	//checking if user is allows to view the module
+            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+            	userModules[userModules.length] = allModules[i];
+            }
+        }
+        Ext.getCmp('appGrid').addModules(userModules);
+        //if only 1 app available, send to that page
+        if(userModules.length === 1){
+            window.location = userModules[0];
+        }
+        //if no apps available, alert the user
+        else if(userModules.length === 0){
+        	Ext.Msg.alert("No Privileges Found", "Contact your system administrator")
+        }
+        //otherwise show the AppGrid
+        else{
+            this.showDashboard();
+        }
     },
 
     doLogout: function () {
