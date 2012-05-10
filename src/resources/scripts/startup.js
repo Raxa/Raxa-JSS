@@ -8,10 +8,10 @@ var Startup = {
      * Helper function to add to xml response, when we get an app.js file,
      * look for all the views declared
      * When all GET calls received, returns control to RaxaEmr.controller.Session
-     * @param {} i: index of the current xml request
-     * @param {} views: storing all the views as a string
-     * @param {} modules: all the raxa modules
-     * @return {} the function to call when we receive the app.js file
+     * @param getRequest: receives ajax request
+     * @param views: storing all the views as a string
+     * @param module: the raxa module
+     * @return the function to call when we receive the app.js file
      */
     getViewRequestHandler: function (getRequest, views, module) {
         //we return an error code (for Jasmine testing)
