@@ -41,7 +41,6 @@
     <changeSet id="2012-5-10_add_constraints_to_raxacore_patient_list" author="johnstoecker">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="raxacore_patient_list"/>
-        </not>
         </preConditions>
         <comment>
             Adding constraints for auditing PatientList--making sure
