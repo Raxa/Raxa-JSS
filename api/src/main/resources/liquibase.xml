@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+  	
+	<changeSet id="raxacore_patient_list" author="tarang">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="raxacore_patient_list"/></not>
+		</preConditions>
+		<comment>
+			Schema for raxacore_patient_list table
+		</comment>
+		<createTable tableName="raxacore_patient_list">
+			<column name="patient_list_id" type="int"/>
+			<column name="name" type="varchar(255)"/>
+			<column name="description" type="varchar(2000)">
+			<column name="search_query" type="varchar(1000)">
+			<column name="uuid" type="char(38)">
+				<constraints unique="true" nullable="false"/>
+			</column>
+			<column name="creator" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="date_created" type="DATETIME">
+				<constraints nullable="false"/>
+			</column>
+			<column defaultValueBoolean="false" name="voided" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
+			<column name="voided_by" type="int"/>
+			<column name="date_voided" type="DATETIME"/>
+			<column name="void_reason" type="varchar(255)"/>
+			<column name="changed_by" type="int"/>
+			<column name="date_changed" type="DATETIME"/>
+			</column>
+		</createTable>
+    </changeSet>
+    
+ 
+</databaseChangeLog>
