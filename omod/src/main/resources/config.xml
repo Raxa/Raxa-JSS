@@ -3,49 +3,39 @@
 
 <module configVersion="1.2">
 	
-	<!-- Base Module Properties -->
+    <!-- Base Module Properties -->
     <id>@MODULE_ID@</id>
     <name>@MODULE_NAME@</name>
     <version>@MODULE_VERSION@</version>
     <package>@MODULE_PACKAGE@</package>
-    <author>Saptarshi Purkayastha</author>
+    <author>Raxa</author>
     <description>
         Provides core RaxaEMR services
     </description>
     <activator>@MODULE_PACKAGE@.Activator</activator>
 
     <updateURL>https://modules.raxa.org/modules/download/raxacore/update.rdf</updateURL>
-	<!-- /Base Module Properties -->
+    <!-- /Base Module Properties -->
 	
     <require_version>${openMRSVersion}</require_version>
-	
-	<!-- Extensions -->
-    <extension>
-        <point>org.openmrs.admin.list</point>
-        <class>org.openmrs.module.webservices.rest.web.AdminSection</class>
-    </extension>
-	
-	<!-- AOP -->
-	
-	<!-- Required Privileges -->
-
-	<!-- Required Global Properties -->
     
-
-	<!-- DWR -->
+    <!-- Extensions -->
 	
-	<!-- Servlets -->
+    <!-- AOP -->
+    <!-- Required Privileges -->
+    <!-- Required Global Properties -->
+    <!-- DWR -->
+    <!-- Servlets -->
+    <!-- Filters -->
 	
-	<!-- Filters -->
-	
-	<!-- Internationalization -->
-	<!-- All message codes should start with moduleId.* -->
+    <!-- Internationalization -->
+    <!-- All message codes should start with moduleId.* -->
     <messages>
         <lang>en</lang>
         <file>messages.properties</file>
     </messages>
 
-        <!-- Hibernate files -->
+    <!-- Hibernate files -->
     <mappingFiles>
         ${omodHbmConfig}
     </mappingFiles>
