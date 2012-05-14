@@ -1,6 +1,6 @@
 /**
  * This class listens for the user input and makes changes to the doctor/patient
- * lists as necessary.
+ * lists as necessary. This is the controller for screener. Added patient summary
  */
 var form_num, lab_num;
 
