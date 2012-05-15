@@ -1,10 +1,14 @@
 package org.raxa.module.raxacore.db.hibernate;
 
+import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openmrs.EncounterType;
+import org.openmrs.User;
+import org.openmrs.api.context.Context;
+import org.openmrs.test.BaseContextSensitiveTest;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.raxa.module.raxacore.PatientList;
 import org.raxa.module.raxacore.db.PatientListDAO;
@@ -18,129 +22,108 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
     @Before
     public void setUp() throws Exception {
         executeDataSet(MODULE_TEST_DATA_XML);
-    }
-
-    /**
-     * Test of setSessionFactory method, of class HibernatePatientListDAO.
-     */
-    @Test
-    public void testSetSessionFactory() {
-        System.out.println("setSessionFactory");
-        /*
-         SessionFactory sessionFactory = null;
-         HibernatePatientListDAO instance = new HibernatePatientListDAO();
-         instance.setSessionFactory(sessionFactory);
-         */// TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        dao = (HibernatePatientListDAO) applicationContext.getBean("org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO");
     }
 
     /**
      * Test of savePatientList method, of class HibernatePatientListDAO.
      */
     @Test
-    @Ignore
     public void testSavePatientList() {
-        System.out.println("savePatientList");
-        PatientList patientList = new PatientList();
-
-        HibernatePatientListDAO instance = new HibernatePatientListDAO();
-        PatientList expResult = null;
-        PatientList result = instance.savePatientList(patientList);
-        //assertEquals(expResult, result);
-        //fail("The test case is a prototype.");
+        PatientList pList = new PatientList();
+        //NOTE: never set Id, will be generated automatically (when saving)
+        pList.setName("TestList3");
+        pList.setDescription("Third Test List");
+        pList.setCreator(Context.getUserContext().getAuthenticatedUser());
+        pList.setDateCreated(new java.util.Date());
+        pList.setUuid("68547121-1b70-465c-99ee-c9dfd95e7d30");
+        pList.setRetired(Boolean.FALSE);
+        pList.setSearchQuery("test Query");
+        dao.savePatientList(pList);
+        List<PatientList> result = dao.getPatientListByName("TestList3");
+        String name = result.get(0).getName();
+        assertEquals(name, "TestList3");
     }
 
     /**
      * Test of deletePatientList method, of class HibernatePatientListDAO.
      */
     @Test
-    @Ignore
     public void testDeletePatientList() {
-        System.out.println("deletePatientList");
-        PatientList patientList = null;
-        //dao.deletePatientList(patientList);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        PatientList pList = new PatientList();
+        pList.setId(2);
+        pList.setName("TestList2");
+        pList.setDescription("Second Test List");
+        pList.setCreator(Context.getUserContext().getAuthenticatedUser());
+        pList.setDateCreated(new java.util.Date());
+        pList.setUuid("68547121-1b70-465e-99ee-c9dfd95e7d30");
+        pList.setRetired(Boolean.FALSE);
+        pList.setSearchQuery("");
+        dao.deletePatientList(pList);
+        PatientList result = dao.getPatientList(2);
+        assertEquals(null, result);
     }
 
     /**
      * Test of getPatientList method, of class HibernatePatientListDAO.
      */
     @Test
-    @Ignore
     public void testGetPatientList() {
         System.out.println("getPatientList");
+        System.out.println(dao);
         Integer patientListId = 1;
-        //HibernatePatientListDAO instance = new HibernatePatientListDAO();
-        //PatientList expResult = null;
         PatientList result = dao.getPatientList(patientListId);
-        System.out.println("the name is:" + result.getName());
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        String name = result.getName();
+        assertEquals("TestList1", name);
     }
 
     /**
-     * Test of getPatientListByEncounterType method, of class
-     * HibernatePatientListDAO.
+     * Test of getPatientListByEncounterType method, of class HibernatePatientListDAO.
      */
     @Test
-    @Ignore
     public void testGetPatientListByEncounterType() {
         System.out.println("getPatientListByEncounterType");
-        EncounterType encounterType = null;
-        //HibernatePatientListDAO instance = new HibernatePatientListDAO();
-        //List expResult = null;
-        //List result = instance.getPatientListByEncounterType(encounterType);
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        EncounterType encounterType = new EncounterType();
+        encounterType.setName("Registration");
+        encounterType.setUuid("58547121-1b70-465e-99ee-c9dfd95e7d30");
+        encounterType.setDescription("Patient has been registered");
+        encounterType.setRetired(Boolean.FALSE);
+        String name = dao.getPatientListByEncounterType(encounterType).get(0).getName();
+        assertEquals("TestList1", name);
     }
 
     /**
      * Test of getPatientListByUuid method, of class HibernatePatientListDAO.
      */
     @Test
-    @Ignore
     public void testGetPatientListByUuid() {
         System.out.println("getPatientListByUuid");
-        String uuid = "68547121-1b70-465d-99ee-c9dfd95e7d30";
-        PatientList result = dao.getPatientListByUuid(uuid);
-        System.out.println(result);
-        //System.out.println("the uuid is:" + result.getUuid());
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        String uuid = "68547121-1b70-465e-99ee-c9dfd95e7d30";
+        String result = dao.getPatientListByUuid(uuid).getName();
+        assertEquals("TestList2", result);
     }
 
     /**
      * Test of getPatientListByName method, of class HibernatePatientListDAO.
      */
     @Test
-    @Ignore
     public void testGetPatientListByName() {
         System.out.println("getPatientListByName");
         String name = "TestList1";
-        //HibernatePatientListDAO instance = new HibernatePatientListDAO();
-        //PatientList expResult = null;
-        PatientList result = dao.getPatientListByName(name);
-        System.out.println(result.getName());
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        String result = dao.getPatientListByName(name).get(0).getName();
+        assertEquals(name, result);
     }
 
     /**
      * Test of updatePatientList method, of class HibernatePatientListDAO.
      */
     @Test
-    @Ignore
     public void testUpdatePatientList() {
         System.out.println("updatePatientList");
-        PatientList patientList = null;
-        //PatientList result = dao.updatePatientList(patientList);
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        PatientList patientList = dao.getPatientList(1);
+        patientList.setName("NewNameList");
+        dao.updatePatientList(patientList);
+        String name = dao.getPatientList(1).getName();
+        assertEquals(name, "NewNameList");
     }
 }

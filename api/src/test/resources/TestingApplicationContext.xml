@@ -21,4 +21,7 @@
             <ref bean="mappingJarResources"/>
         </property>
     </bean>
+    <bean id="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO" class="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 </beans>

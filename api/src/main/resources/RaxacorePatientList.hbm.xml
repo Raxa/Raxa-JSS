@@ -17,7 +17,7 @@
         <property name="dateCreated"    type="java.util.Date"       column="date_created" not-null="true" length="19"/>
         <property name="retired"        type="java.lang.Boolean"    column="retired" length="1" not-null="true"/>
         <many-to-one name="retiredBy"   class="org.openmrs.User"    column="retired_by"/>
-        <property name="dateRetired"     type="java.util.Date"       column="date_retired"/>
+        <property name="dateRetired"    type="java.util.Date"       column="date_retired"/>
         <property name="retireReason"   type="java.lang.String"     column="retire_reason" length="255"/>
         <many-to-one name="changedBy"   class="org.openmrs.User"    column="changed_by"/>
         <property name="dateChanged"    type="java.util.Date"       column="date_changed" length="19"/>

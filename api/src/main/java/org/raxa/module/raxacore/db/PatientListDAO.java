@@ -57,10 +57,10 @@ public interface PatientListDAO {
 	 * Find {@link PatientList} matching a name
 	 * 
 	 * @param name
-	 * @return {@link PatientList}
+	 * @return List of PatientLists
 	 * @should get a patient list by name
 	 */
-	public PatientList getPatientListByName(String name);
+	public List<PatientList> getPatientListByName(String name);
 	
 	/**
 	 * Update PatientList

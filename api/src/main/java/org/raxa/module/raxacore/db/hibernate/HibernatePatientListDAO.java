@@ -38,7 +38,6 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	/*
 	 * Blank constructor
 	 */
-
 	/**
 	 * @see org.raxa.module.db.PatientListDAO#savePatientList(org.raxa.module.raxacore.PatientList)
 	 */
@@ -70,28 +69,18 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	@Override
 	public List<PatientList> getPatientListByEncounterType(EncounterType encounterType) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
-		//criteria.add(Restrictions.eq("uuid", uuid));
+        //getting all the PatientLists that contain the encounterType's name. the % is for wildcards
+		criteria.add(Restrictions.like("searchQuery", "%" + encounterType.getName() + "%"));
 		List<PatientList> patients = new ArrayList<PatientList>();
 		patients.addAll(criteria.list());
-		for (int i = 0; i < patients.size(); i++) {
-
-		}
-		
 		return patients;
-		
-		/*
-		 * 1. For all PatientLists:
-		 * 2. Get patients in list
-		 * 3. If list.length>0, check list[0]'s encountertypes
-		 * 4. If one of those encountertypes===this encounterType, add to return List<PatientList>
-		 */
 	}
 	
 	/**
 	 * @see org.raxa.module.db.PatientListDAO#getPatientListByUuid(String)
 	 */
 	@Override
-	public PatientList getPatientListByUuid(String uuid) {
+	public PatientList getPatientListByUuid(String uuid) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
 		criteria.add(Restrictions.eq("uuid", uuid));
 		criteria.add(Restrictions.eq("retired", false));
@@ -102,11 +91,14 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	 * @see org.raxa.module.db.PatientListDAO#getPatientListByName(String)
 	 */
 	@Override
-	public PatientList getPatientListByName(String name) {
+	public List<PatientList> getPatientListByName(String name) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
-		criteria.add(Restrictions.eq("name", name));
-		criteria.add(Restrictions.eq("retired", false));
-		return (PatientList) criteria.uniqueResult();
+		criteria.add(Restrictions.like("name", name));
+		criteria.add(Restrictions.like("retired", false));
+		List<PatientList> patients = new ArrayList<PatientList>();
+		patients.addAll(criteria.list());
+		return patients;
+		
 	}
 	
 	/**
