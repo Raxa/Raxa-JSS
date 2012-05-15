@@ -16,6 +16,7 @@ public interface PatientListDAO {
 	 * 
 	 * @param PatientList to be saved
 	 * @throws DAOException
+	 * @should save a patient list
 	 */
 	public PatientList savePatientList(PatientList patientList) throws DAOException;
 	
@@ -32,12 +33,14 @@ public interface PatientListDAO {
 	 * @param patientListId patientList id
 	 * @return patientList with given internal identifier
 	 * @throws DAOException
+	 * @should get a patient list
 	 */
 	public PatientList getPatientList(Integer patientListId) throws DAOException;
 	
 	/**
 	 * Find {@link PatientList} matching an EncounterType
 	 * @param encounterType 
+	 * @should get a patient list by EncounterType
 	 */
 	public List<PatientList> getPatientListByEncounterType(EncounterType encounterType);
 	
@@ -46,6 +49,7 @@ public interface PatientListDAO {
 	 * 
 	 * @param uuid
 	 * @return {@link PatientList}
+	 * @should get a patient list by uuid
 	 */
 	public PatientList getPatientListByUuid(String uuid);
 	
@@ -54,20 +58,14 @@ public interface PatientListDAO {
 	 * 
 	 * @param name
 	 * @return {@link PatientList}
+	 * @should get a patient list by name
 	 */
 	public PatientList getPatientListByName(String name);
 	
 	/**
-	 * Get a list of {@link Patient} by PatientList
-	 * 
-	 * @param patientList
-	 * @return list of {@link Patient}
-	 */
-	List<Patient> getPatientsInList(PatientList patientList);
-	
-	/**
 	 * Update PatientList
 	 * @return {@link PatientList}
+	 * @should update a PatientList
 	 */
 	PatientList updatePatientList(PatientList patientList) throws DAOException;
 	

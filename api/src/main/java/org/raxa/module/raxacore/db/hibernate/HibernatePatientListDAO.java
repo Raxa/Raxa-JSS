@@ -18,101 +18,103 @@ import org.raxa.module.raxacore.PatientList;
 import org.raxa.module.raxacore.db.PatientListDAO;
 
 public class HibernatePatientListDAO implements PatientListDAO {
+	
+	protected final Log log = LogFactory.getLog(getClass());
+	
+	/**
+	 * Hibernate session factory
+	 */
+	private SessionFactory sessionFactory;
+	
+	/**
+	 * Set session factory
+	 *
+	 * @param sessionFactory
+	 */
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	/*
+	 * Blank constructor
+	 */
 
-    protected final Log log = LogFactory.getLog(getClass());
-    /**
-     * Hibernate session factory
-     */
-    private SessionFactory sessionFactory;
+	/**
+	 * @see org.raxa.module.db.PatientListDAO#savePatientList(org.raxa.module.raxacore.PatientList)
+	 */
+	@Override
+	public PatientList savePatientList(PatientList patientList) throws DAOException {
+		sessionFactory.getCurrentSession().saveOrUpdate(patientList);
+		return patientList;
+	}
+	
+	/**
+	 * @see org.raxa.module.db.PatientListDAO#deletePatientList(org.raxa.module.raxacore.PatientList)
+	 */
+	@Override
+	public void deletePatientList(PatientList patientList) throws DAOException {
+		sessionFactory.getCurrentSession().delete(patientList);
+	}
+	
+	/**
+	 * @see org.raxa.module.db.PatientListDAO#getPatientList(Integer)
+	 */
+	@Override
+	public PatientList getPatientList(Integer patientListId) throws DAOException {
+		return (PatientList) sessionFactory.getCurrentSession().get(PatientList.class, patientListId);
+	}
+	
+	/**
+	 * @see org.raxa.module.db.PatientListDAO#getPatientListByEncounterType(EncounterType)
+	 */
+	@Override
+	public List<PatientList> getPatientListByEncounterType(EncounterType encounterType) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
+		//criteria.add(Restrictions.eq("uuid", uuid));
+		List<PatientList> patients = new ArrayList<PatientList>();
+		patients.addAll(criteria.list());
+		for (int i = 0; i < patients.size(); i++) {
 
-    /**
-     * Set session factory
-     *
-     * @param sessionFactory
-     */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#savePatientList(org.raxa.module.raxacore.PatientList)
-     */
-    @Override
-    public PatientList savePatientList(PatientList patientList) throws DAOException {
-        sessionFactory.getCurrentSession().saveOrUpdate(patientList);
-        return patientList;
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#deletePatientList(org.raxa.module.raxacore.PatientList)
-     */
-    @Override
-    public void deletePatientList(PatientList patientList) throws DAOException {
-        sessionFactory.getCurrentSession().delete(patientList);
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#getPatientList(Integer)
-     */
-    @Override
-    public PatientList getPatientList(Integer patientListId) throws DAOException {
-        return (PatientList) sessionFactory.getCurrentSession().get(PatientList.class, patientListId);
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#getPatientListByEncounterType(EncounterType)
-     */
-    @Override
-    public List<PatientList> getPatientListByEncounterType(EncounterType encounterType) {
-        
-        /*
-         * 1. For all PatientLists:
-         * 2. Get patients in list
-         * 3. If list.length>0, check list[0]'s encountertypes
-         * 4. If one of those encountertypes===this encounterType, add to return List<PatientList>
-         */
-        return null;
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#getPatientListByUuid(String)
-     */
-    @Override
-    public PatientList getPatientListByUuid(String uuid) {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
-        criteria.add(Restrictions.eq("uuid", uuid));
-        criteria.add(Restrictions.eq("retired", false));
-        return (PatientList) criteria.uniqueResult();
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#getPatientListByName(String)
-     */
-    @Override
-    public PatientList getPatientListByName(String name) {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
-        criteria.add(Restrictions.eq("name", name));
-        criteria.add(Restrictions.eq("retired", false));
-        return (PatientList) criteria.uniqueResult();
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#getPatientsInList(org.raxa.module.raxacore.PatientList)
-     */
-    @Override
-    public List<Patient> getPatientsInList(PatientList patientList) {
-        Query query = sessionFactory.getCurrentSession().createQuery(patientList.getSearchQuery());
-        List<Patient> patients = new ArrayList<Patient>();
-        patients.addAll(query.list());
-        return patients;
-    }
-
-    /**
-     * @see org.raxa.module.db.PatientListDAO#updatePatientList(Integer)
-     */
-    @Override
-    public PatientList updatePatientList(PatientList patientList) throws DAOException {
-        sessionFactory.getCurrentSession().update(patientList);
-        return patientList;
-    }
+		}
+		
+		return patients;
+		
+		/*
+		 * 1. For all PatientLists:
+		 * 2. Get patients in list
+		 * 3. If list.length>0, check list[0]'s encountertypes
+		 * 4. If one of those encountertypes===this encounterType, add to return List<PatientList>
+		 */
+	}
+	
+	/**
+	 * @see org.raxa.module.db.PatientListDAO#getPatientListByUuid(String)
+	 */
+	@Override
+	public PatientList getPatientListByUuid(String uuid) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
+		criteria.add(Restrictions.eq("uuid", uuid));
+		criteria.add(Restrictions.eq("retired", false));
+		return (PatientList) criteria.uniqueResult();
+	}
+	
+	/**
+	 * @see org.raxa.module.db.PatientListDAO#getPatientListByName(String)
+	 */
+	@Override
+	public PatientList getPatientListByName(String name) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
+		criteria.add(Restrictions.eq("name", name));
+		criteria.add(Restrictions.eq("retired", false));
+		return (PatientList) criteria.uniqueResult();
+	}
+	
+	/**
+	 * @see org.raxa.module.db.PatientListDAO#updatePatientList(Integer)
+	 */
+	@Override
+	public PatientList updatePatientList(PatientList patientList) throws DAOException {
+		sessionFactory.getCurrentSession().update(patientList);
+		return patientList;
+	}
 }
