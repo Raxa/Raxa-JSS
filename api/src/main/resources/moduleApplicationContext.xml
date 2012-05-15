@@ -26,8 +26,8 @@
   		    http://www.springframework.org/schema/mvc
         	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	
-    <bean id="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO" class="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO">
-		<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
-	</bean>
+    <bean id="hibernatePatientListDAO" class="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 	
 </beans>
