@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <raxacore_patient_list patient_list_id="1" name="TestList1" description="First Test List"  search_query="" date_created="2012-01-01 00:00:00.0" creator="1" retired="false"  uuid="68547121-1b70-465d-99ee-c9dfd95e7d30"/>
+    <raxacore_patient_list patient_list_id="2" name="TestList2" description="Second Test List"  search_query="" date_created="2012-01-01 00:00:00.0" creator="1" retired="false"  uuid="68547121-1b70-465e-99ee-c9dfd95e7d30"/>
+</dataset>
