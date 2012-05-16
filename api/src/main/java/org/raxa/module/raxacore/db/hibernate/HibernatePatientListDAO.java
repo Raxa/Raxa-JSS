@@ -1,6 +1,3 @@
-/*
- * Accesses raxacore_patient_list from PatientList
- */
 package org.raxa.module.raxacore.db.hibernate;
 
 import java.util.ArrayList;
@@ -8,15 +5,16 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.EncounterType;
-import org.openmrs.Patient;
 import org.openmrs.api.db.DAOException;
 import org.raxa.module.raxacore.PatientList;
 import org.raxa.module.raxacore.db.PatientListDAO;
 
+/**
+ * Accesses raxacore_patient_list from PatientList
+ */
 public class HibernatePatientListDAO implements PatientListDAO {
 	
 	protected final Log log = LogFactory.getLog(getClass());
@@ -69,7 +67,7 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	@Override
 	public List<PatientList> getPatientListByEncounterType(EncounterType encounterType) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
-		//getting all the PatientLists that contain the encounterType's name. the % is for wildcards
+		//getting all the PatientLists that contain the encounterType's uuid. the % is for wildcards
 		//TODO: add in validator to check if the encountertype uuid exists 
 		criteria.add(Restrictions.like("searchQuery", "%" + encounterType.getUuid() + "%"));
 		List<PatientList> patients = new ArrayList<PatientList>();
