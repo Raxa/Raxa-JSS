@@ -69,8 +69,9 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	@Override
 	public List<PatientList> getPatientListByEncounterType(EncounterType encounterType) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
-        //getting all the PatientLists that contain the encounterType's name. the % is for wildcards
-		criteria.add(Restrictions.like("searchQuery", "%" + encounterType.getName() + "%"));
+		//getting all the PatientLists that contain the encounterType's name. the % is for wildcards
+		//TODO: add in validator to check if the encountertype uuid exists 
+		criteria.add(Restrictions.like("searchQuery", "%" + encounterType.getUuid() + "%"));
 		List<PatientList> patients = new ArrayList<PatientList>();
 		patients.addAll(criteria.list());
 		return patients;
