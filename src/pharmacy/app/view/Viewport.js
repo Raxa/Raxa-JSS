@@ -2,150 +2,87 @@ Ext.define('pharmacy.view.Viewport', {
     extend: 'Ext.container.Viewport',
     alias: 'widget.adddrug',
     store: 'Users',
-    layout: {
-        align: 'center',
-        pack: 'center',
-        type: 'hbox',
-        title: 'ADD/MODIFY DRUGS'
+//    layout: {
+//        align: 'center',
+//        pack: 'center',
+//        type: 'hbox',
+//        title: 'ADD/MODIFY DRUGS'
         
-    },
-    requires: [ 'Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
+//    },
+//    requires: [ 'Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
 
 
 
     initComponent: function () {
         this.items = {
-            dockedItems: [{
-                xtype: 'toolbar',
-                height: 40,
-                dock: 'top',
-                items: [{
-                    xtype: 'tbspacer',
-                    width: 320
-                },  {
-                    xtype: 'tbtext',
-                    text: 'ADD/MODIFY DRUGS'
-                    
-               
-                }]
-            }, ],
-            width: 800,
-            id: 'mainregarea',
-            activeItem: 0,
-            layout: {
-                type: 'card'
-            },
-            margin: '2 0 2 0',
-            region: 'center',
-            items: [{
                 xtype: 'form',
-                border: 0,
+                title: 'ADD/MODIFY DRUGS',
+                width: '300',
                 layout: {
                     align: 'center',
                     pack: 'center',
                     type: 'vbox'
                 },
-                bodyPadding: 10,
-                items: [ {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    triggerAction: 'all',
-                    selectOnTab: true,
-                    
-                    lazyRender: true,
-                    listClass: 'x-combo-list-small',
+                
+                items: [
+                {
+                    xtype: 'textfield',
+                    name : 'drug',
                     emptyText: 'Drug Name',
-                   labelAlign: 'top',
-                    width: 300,
-                }, {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    selectOnTab: true,
-                    lazyRender: true,
-                    emptyText: 'MIMS Reference',
-                    labelAlign: 'top',
-                    width: 300,
-                    hideTrigger: true
-                }, {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    triggerAction: 'all',
-                    selectOnTab: true,
-                    store: [
-                        ['vikas', 'vikas'],
-                        ['anshu', 'anshu'],
-                        ['nathan', 'nathan'],
-                        ['mohit', 'mohit'],
-                        ['daniel', 'daniel'],
-                        ['akash', 'akash'],
-                        ['ankit', 'ankit'],
-                        ['suraj', 'suraj'],
-                        ['subodh', 'subodh'],
-                        ['ashwini', 'ashwini']
-                    ],
-                    lazyRender: true,
-                    listClass: 'x-combo-list-small',
+                    width: '200',
+                },
+                {
+                    xtype: 'textfield',
+                    name : 'mims',
+                    emptyText: 'MIMS reference',
+                    width: '200'
+                },
+                {
+                    xtype: 'textfield',
+                    name : 'form',
                     emptyText: 'Form',
-                    labelAlign: 'top',
-                    width: 300,
-                }, {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    selectOnTab: true,
-                    lazyRender: true,
-                    emptyText: 'Pack size',
-                    labelAlign: 'top',
-                    width: 300,
-                    hideTrigger: true
-                }, {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    selectOnTab: true,
-                    lazyRender: true,
-                    labelAlign: 'top',
+                    width: '200'
+                },
+                {
+                    xtype: 'textfield',
+                    name : 'pack',
+                    emptyText: 'Pack Size',
+                    width: '200'
+                },
+                {
+                    xtype: 'textfield',
+                    name : 'di',
                     emptyText: 'Dispencing Instruction',
-                    width: 300,
-                    hideTrigger: true
-                }, {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    triggerAction: 'all',
-                    selectOnTab: true,
-                    store: [
-                        ['vikas', 'vikas'],
-                        ['anshu', 'anshu'],
-                        ['nathan', 'nathan'],
-                        ['mohit', 'mohit'],
-                        ['daniel', 'daniel'],
-                        ['akash', 'akash'],
-                        ['ankit', 'ankit'],
-                        ['suraj', 'suraj'],
-                        ['subodh', 'subodh'],
-                        ['ashwini', 'ashwini']
-                    ],
-                    lazyRender: true,
-                    listClass: 'x-combo-list-small',
-                    emptyText: 'Side Treatment',
-                    labelAlign: 'top',
-                    width: 300,
-                }, {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    selectOnTab: true,
-                    lazyRender: true,
+                    width: '200'
+                },
+                {
+                    xtype: 'textfield',
+                    name : 'streat',
+                    emptyText: 'Side Treatement',
+                    width: '200',
+                },
+                {
+                    xtype: 'textfield',
+                    name : 'dosage',
                     emptyText: 'Standard Dosage',
-                    labelAlign: 'top',
-                    width: 300,
-                    hideTrigger: true
+                    width: '200',
                 }, {
-                xtype: 'button',    
-                text: 'ADD/MODIFY Drugs',
-                action: 'addmod'
-            },
+                    xtype: 'button',    
+                    text: 'ADD/MODIFY Drugs',
+                    action: 'addmod',
+                   
+                   handler: function() {
+                        this.up('form').getForm();
+                   },
+                    scope: this,
+                },
+                    
+                ]
+            }
             
-        ]
-            }]
-        };
+            
+        
+        
         
 
         this.callParent();
