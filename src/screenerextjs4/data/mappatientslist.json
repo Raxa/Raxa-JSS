@@ -1,0 +1,31 @@
+{
+    'success': true,
+    'results': [{
+        'patientname': 'Nandu',
+        'waitingtime': '2',
+    }, {
+        'patientname': 'Meenu',
+        'waitingtime': '5',
+    }, {
+        'patientname': 'Kaku',
+        'waitingtime': '1',
+    }, {
+        'patientname': 'Reenu',
+        'waitingtime': '7',
+    }, {
+        'patientname': 'Asha',
+        'waitingtime': '9',
+    }, {
+        'patientname': 'Pawan',
+        'waitingtime': '10',
+    }, {
+        'patientname': 'Reenu',
+        'waitingtime': '7',
+    }, {
+        'patientname': 'Asha',
+        'waitingtime': '9',
+    }, {
+        'patientname': 'Pawan',
+        'waitingtime': '10',
+    }]
+}
