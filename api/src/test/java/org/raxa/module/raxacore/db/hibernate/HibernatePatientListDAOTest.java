@@ -83,10 +83,9 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testGetPatientListByEncounterType() {
-		System.out.println("getPatientListByEncounterType");
 		EncounterType encounterType = new EncounterType();
 		encounterType.setName("Registration");
-		encounterType.setUuid("18547121-1b70-465d-99ee-c9dfd95e7d30");
+		encounterType.setUuid("61ae96f4-6afe-4351-b6f8-cd4fc383cce1");
 		encounterType.setDescription("Patient has been registered");
 		encounterType.setRetired(Boolean.FALSE);
 		String name = dao.getPatientListByEncounterType(encounterType).get(0).getName();
@@ -98,7 +97,6 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testGetPatientListByUuid() {
-		System.out.println("getPatientListByUuid");
 		String uuid = "68547121-1b70-465e-99ee-c9dfd95e7d30";
 		String result = dao.getPatientListByUuid(uuid).getName();
 		assertEquals("TestList2", result);
@@ -109,7 +107,6 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testGetPatientListByName() {
-		System.out.println("getPatientListByName");
 		String name = "TestList1";
 		String result = dao.getPatientListByName(name).get(0).getName();
 		assertEquals(name, result);
@@ -120,7 +117,6 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testUpdatePatientList() {
-		System.out.println("updatePatientList");
 		PatientList patientList = dao.getPatientList(1);
 		patientList.setName("NewNameList");
 		dao.updatePatientList(patientList);

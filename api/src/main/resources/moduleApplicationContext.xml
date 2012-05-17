@@ -26,8 +26,51 @@
   		    http://www.springframework.org/schema/mvc
         	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	
-    <bean id="hibernatePatientListDAO" class="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO">
+    <bean id="sessionFactory" class="org.openmrs.api.db.hibernate.HibernateSessionFactoryBean">
+        <property name="configLocations">
+            <list>
+                <value>classpath:hibernate.cfg.xml</value>
+                <value>classpath:test-hibernate.cfg.xml</value>
+            </list>
+        </property>
+        <property name="mappingJarLocations">
+            <ref bean="mappingJarResources"/>
+        </property>
+    </bean>
+
+
+    <bean id="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO" class="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-	
+
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>raxa.org.module.raxacore.PatientListService</value>
+                <bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+                    <property name="transactionManager">
+                        <ref bean="transactionManager"/>
+                    </property>
+                    <property name="target">
+                        <bean class="org.raxa.module.raxacore.impl.PatientListServiceImpl"> 
+                            <property name="patientListDAO"> 
+                                <bean class="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory"/>
+                                    </property>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="preInterceptors">
+                        <ref bean="serviceInterceptors" />
+                    </property>
+                    <property name="transactionAttributeSource">
+                        <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
 </beans>
