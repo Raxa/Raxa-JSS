@@ -13,6 +13,7 @@ package org.raxa.module.raxacore;
  * specific language governing permissions and limitations under the License.
  */
 import java.util.List;
+import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Patient;
 import org.openmrs.annotation.Authorized;
@@ -86,6 +87,15 @@ public interface PatientListService extends OpenmrsService {
 	 */
 	@Authorized(value = { "View Patient Lists", PrivilegeConstants.VIEW_PATIENTS }, requireAll = true)
 	public List<Patient> getPatientsInList(PatientList patientList);
+	
+	/**
+	 * Gets all the encounters in PatientList
+	 * 
+	 * @param patientList
+	 * @return list of Encounters
+	 */
+	@Authorized(value = { "View Patient Lists", PrivilegeConstants.VIEW_ENCOUNTERS }, requireAll = true)
+	public List<Encounter> getEncountersInPatientList(PatientList patientList);
 	
 	/**
 	 * Updates PatientList
