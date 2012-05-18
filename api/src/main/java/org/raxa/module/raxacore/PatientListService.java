@@ -18,10 +18,8 @@ import org.openmrs.EncounterType;
 import org.openmrs.Patient;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.OpenmrsService;
-import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.util.PrivilegeConstants;
 import org.raxa.module.raxacore.db.PatientListDAO;
-
 /*
  * Interface for interacting with the PatientList
  */
