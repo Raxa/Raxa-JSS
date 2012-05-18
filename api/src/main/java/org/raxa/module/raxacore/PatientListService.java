@@ -23,6 +23,7 @@ import org.openmrs.annotation.Authorized;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.util.PrivilegeConstants;
 import org.raxa.module.raxacore.db.PatientListDAO;
+
 /*
  * Interface for interacting with the PatientList
  */
@@ -87,7 +88,7 @@ public interface PatientListService extends OpenmrsService {
 	 * @return list of Patients
 	 */
 	@Authorized(value = { "View Patient Lists", PrivilegeConstants.VIEW_PATIENTS }, requireAll = true)
-	public List<Patient> getPatientsInList(PatientList patientList);
+	public List<Patient> getPatientsInPatientList(PatientList patientList);
 	
 	/**
 	 * Gets all the encounters in PatientList

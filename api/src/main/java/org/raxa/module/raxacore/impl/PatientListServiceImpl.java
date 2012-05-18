@@ -133,7 +133,7 @@ public class PatientListServiceImpl implements PatientListService {
 	 * @see org.raxa.module.raxacore.PatientListService#getPatientsInList
 	 */
 	@Override
-	public List<Patient> getPatientsInList(PatientList patientList) {
+	public List<Patient> getPatientsInPatientList(PatientList patientList) {
 		List<Encounter> encounters = getEncountersInPatientList(patientList);
 		List<Patient> patients = new ArrayList<Patient>();
 		for (Integer j = 0; j < encounters.size(); j++) {

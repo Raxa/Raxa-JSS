@@ -217,10 +217,10 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test of getPatientsInList method, of class PatientListServiceImpl.
+	 * Test of getPatientsInPatientList method, of class PatientListServiceImpl.
 	 */
 	@Test
-	public void testGetPatientsInList() {
+	public void testGetPatientsInPatientList() {
 		PatientList p = new PatientList();
 		p.setCreator(new User());
 		p.setName("GetPatientsTestList");
@@ -228,7 +228,7 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 		        + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00");
 		List<Patient> pList = null;
 		try {
-			pList = s.getPatientsInList(p);
+			pList = s.getPatientsInPatientList(p);
 			//if we don't throw exception fail - no privileges required!
 			fail("No privileges required for getPatientsInList");
 		}
@@ -237,14 +237,14 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 			Context.getUserContext().addProxyPrivilege("View Patient Lists");
 			Context.getUserContext().addProxyPrivilege("View Encounters");
 			Context.getUserContext().addProxyPrivilege("View Encounter Types");
-			pList = s.getPatientsInList(p);
+			pList = s.getPatientsInPatientList(p);
 		}
 		//testing encounterType
 		assertEquals(pList.size() > 0, Boolean.TRUE);
 		//setting start + end dates same time, should return nothing
 		p.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
 		        + "&startDate=2012-01-02T00:00:0&endDate=2012-01-01T00:00:00");
-		pList = s.getPatientsInList(p);
+		pList = s.getPatientsInPatientList(p);
 		assertEquals(pList.size(), 0);
 		//removing proxy privileges for next test
 		Context.getUserContext().removeProxyPrivilege("View Patients");
