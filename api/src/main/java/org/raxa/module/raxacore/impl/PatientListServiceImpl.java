@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Patient;
@@ -33,6 +35,8 @@ import org.raxa.module.raxacore.db.PatientListDAO;
 public class PatientListServiceImpl implements PatientListService {
 	
 	private PatientListDAO dao;
+	
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	/**
 	 * @see org.raxa.module.raxacore.PatientListService#setPatientListDAO
@@ -98,6 +102,7 @@ public class PatientListServiceImpl implements PatientListService {
 			}
 			catch (ParseException ex) {}
 		}
+		log.error("Error parsing string " + str + " into Date");
 		return null;
 	}
 	
