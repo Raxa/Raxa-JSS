@@ -21,6 +21,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: 'Reffered by Doctor / Subcenter',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -28,6 +29,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                     }, {
                         xtype: 'textfield',
                         fieldLabel: 'Patient Registry',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -35,6 +37,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                     }, {
                         xtype: 'textfield',
                         fieldLabel: 'Accompanying Person (Name)',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -42,6 +45,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                     }, {
                         xtype: 'textfield',
                         fieldLabel: 'Relationship to Patient',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -49,6 +53,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                     }, {
                         xtype: 'textareafield',
                         fieldLabel: 'Current Complaint',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -56,6 +61,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                     }, {
                         xtype: 'textareafield',
                         fieldLabel: 'Remarks',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,

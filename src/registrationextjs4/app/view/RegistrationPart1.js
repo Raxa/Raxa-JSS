@@ -35,26 +35,33 @@ Ext.define('Registration.view.RegistrationPart1', {
                             hideLabel: 'true'
                         },
                         items: [{
+                            xtype: 'textfield',
                             name: 'firstName',
                             fieldLabel: 'First Name',
                             flex: 1,
+                            regex: /^[a-zA-Z]+$/,
                             emptyText: 'First Name',
                             allowBlank: false
                         }, {
+                            xtype: 'textfield',
                             name: 'middleName',
                             fieldLabel: 'Middle Name',
                             flex: 1,
+                            regex: /^[a-zA-Z]+$/,
                             margins: '0 0 0 6',
                             emptyText: 'Middle Name',
                         }, {
+                            xtype: 'textfield',
                             name: 'lastName',
                             fieldLabel: 'Last Name',
                             flex: 1,
+                            regex: /^[a-zA-Z]+$/,
                             margins: '0 0 0 6',
                             emptyText: 'Last Name',
                             allowBlank: false
                         }]
                     }, {
+
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Father/Husband',
                         layout: 'hbox',
@@ -68,21 +75,27 @@ Ext.define('Registration.view.RegistrationPart1', {
                             hideLabel: 'true'
                         },
                         items: [{
+                            xtype: 'textfield',
                             name: 'firstName',
                             fieldLabel: 'First Name',
                             flex: 1,
+                            regex: /^[a-zA-Z]+$/,
                             emptyText: 'First Name',
                             allowBlank: false
                         }, {
+                            xtype: 'textfield',
                             name: 'middleName',
                             fieldLabel: 'Middle Name',
                             flex: 1,
+                            regex: /^[a-zA-Z]+$/,
                             margins: '0 0 0 6',
                             emptyText: 'Middle Name',
                         }, {
+                            xtype: 'textfield',
                             name: 'lastName',
                             fieldLabel: 'Last Name',
                             flex: 1,
+                            regex: /^[a-zA-Z]+$/,
                             margins: '0 0 0 6',
                             emptyText: 'Last Name',
                             allowBlank: false
@@ -90,6 +103,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                     }, {
                         xtype: 'textfield',
                         fieldLabel: 'Village',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -98,6 +112,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                     }, {
                         xtype: 'textfield',
                         fieldLabel: 'Occupation',
+                        regex: /^[a-zA-Z]+$/,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -105,6 +120,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                         allowBlank: false
                     }, {
                         xtype: 'numberfield',
+                        maxLength: 10,
+                        minLength: 10,
                         fieldLabel: 'Mobile/Phone Number',
                         labelAlign: 'right',
                         labelPad: 20,
@@ -123,6 +140,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         allowBlank: false
                     }, {
                         xtype: 'numberfield',
+                        maxLength: 3,
                         fieldLabel: 'Weight',
                         labelAlign: 'right',
                         labelPad: 20,
