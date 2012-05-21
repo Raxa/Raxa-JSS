@@ -69,6 +69,6 @@ var Util = {
      */
     getModules: function () {
     	//always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4'];
+        return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     }
 }

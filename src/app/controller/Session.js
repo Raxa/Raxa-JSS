@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.controller.Session', {
     config: {
         before: {
             showDashboard: 'loginSuccess'
-        },
+       },
 
         routes: {
             'Login': 'showLogin',
