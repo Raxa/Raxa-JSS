@@ -11,7 +11,7 @@ Ext.define('RaxaEmr.view.AppGrid', {
     initialize: function (args) {
         this.callParent();
     },
-
+    
     //addModules takes in a string array of the modules for the current user, populates dashboard icon grid
     addModules: function (args) {
         //must destroy our panel if we ever call again (if the user logs out for example)
@@ -36,24 +36,20 @@ Ext.define('RaxaEmr.view.AppGrid', {
         for (var j = 0; j < args.length; j++) {
             var cell = Ext.create('Ext.Panel', {
                 items: [{
-                    layout: 'vbox',
-                    xtype: 'button',
-                    id: args[j],
-                    //TODO: add in various icons for the modules
-                    //icon: 'resources/img/' + args[j] + 'Logo.png',
-                    icon: 'resources/img/moduleLogo.png',
-                    width: '250px',
-                    height: '80px',
-                    text: args[j],
-                    listeners: {
-                        tap: function () {
-                            window.location = this.id;
+                        layout: 'vbox',
+                        xtype: 'button',
+                        id: args[j],
+                        html: '<div style="text-align:center;"><img src="resources/img/' +args[j] + '.png" width="180" height="180"/></div>',
+                   
+                        listeners: {
+                            tap: function () {
+                                window.location = this.id;
+                            }
                         }
-                    }
-                }]
+                    }]
             });
             appRows[Math.floor(j / numRows)].add(cell);
-        }
+        }     
         for (var i = 0; i < numRows; i++) {
             modulesPanel.add(appRows[i]);
         }
