@@ -102,9 +102,11 @@ public class PatientListServiceImpl implements PatientListService {
 				Date date = new SimpleDateFormat(supportedFormats[i]).parse(str);
 				return date;
 			}
-			catch (ParseException ex) {}
+			catch (Exception ex) {
+                log.error(ex.getMessage()+ " Error parsing string " + str + " into Date");
+            }
 		}
-		log.error("Error parsing string " + str + " into Date");
+        log.error("Date string is malformed");
 		return null;
 	}
 	
