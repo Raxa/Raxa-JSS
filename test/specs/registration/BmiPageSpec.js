@@ -52,6 +52,31 @@ describe("Bmi", function () {
         expect(mainController.calculateBmi(weight, height).status).toEqual(statusError);
     });
 
+    it("Displays error if entered height & weight is zero", function () {
+        var height = 0;
+        var weight = 0;
+        var expectedStatus = 'Height & Weight cant be zero. Please check the entered values';
+        var returnedtatus = mainController.calculateBmi(weight, height).status;
+        expect(returnedtatus).toEqual(expectedStatus);
+    });
+
+    it("Displays error if entered weight is zero", function () {
+        var height = 166;
+        var weight = 0;
+        var expectedStatus = 'Weight cant be zero. Please check the entered value';
+        var returnedtatus = mainController.calculateBmi(weight, height).status;
+        expect(returnedtatus).toEqual(expectedStatus);
+    });
+
+    it("Displays error if entered height is zero", function () {
+        var height = 0;
+        var weight = 45;
+        var expectedStatus = 'Height cant be zero. Please check the entered value';
+        var returnedtatus = mainController.calculateBmi(weight, height).status;
+        expect(returnedtatus).toEqual(expectedStatus);
+    });
+
+
     it("Can input a value into the weight box", function () {
         // expect(false).toBeTruthy();
     });

@@ -27,45 +27,70 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
 
     //function to calculate bmi 
     calculateBmi: function (weight_kg, height_cm) {
-        var height_m = height_cm / 100; //Convert cm in to m
-        var bmi = (weight_kg) / (height_m * height_m); //BMI Calculation
-        var bmi_rounded = Math.round(bmi * 100) / 100; //Rouded till 2 digits
-        // Bmi status from WHO Standards
-        var WHO_BMI_UNDERWEIGHT = 18.5;
-        var WHO_BMI_NORMAL = 25;
-        var WHO_BMI_OVERWEIGHT = 30;
-        var color = '';
-        var status = '';
-
-        if (bmi < WHO_BMI_UNDERWEIGHT) {
+        console.log('calculateBmi');
+        if (weight_kg == 0 || height_cm == 0) {
             color = 'red';
-            status = 'Underweight';
-        }
-        if (bmi >= WHO_BMI_UNDERWEIGHT && bmi < WHO_BMI_NORMAL) {
-            color = 'green';
-            status = 'Normal';
-        }
-        if (bmi >= WHO_BMI_NORMAL && bmi < WHO_BMI_OVERWEIGHT) {
-            color = 'blue';
-            status = 'Overweight';
-        }
-        if (bmi >= WHO_BMI_OVERWEIGHT) {
-            color = 'red';
-            status = 'Obese';
-        }
-
-        if (bmi_rounded > 60.00 || bmi_rounded < 0.00) {
-            color = 'red';
-            status = 'Height & weight combination is illegal. Please check the values';
             bmi_rounded = 'Illegal';
             bmi = 'Illegal';
+            if (weight_kg == 0 && height_cm == 0) {
+                status = 'Height & Weight cant be zero. Please check the entered values';
+            } else {
+                if (weight_kg == 0) {
+                    status = 'Weight cant be zero. Please check the entered value';
+                }
+                if (height_cm == 0) {
+                    status = 'Height cant be zero. Please check the entered value';
+                }
+            }
+
+            return {
+                color: color,
+                status: status,
+                bmi_rounded: bmi_rounded,
+                bmi: bmi
+            }
+        } else {
+            var height_m = height_cm / 100; //Convert cm in to m
+            var bmi = (weight_kg) / (height_m * height_m); //BMI Calculation
+            var bmi_rounded = Math.round(bmi * 100) / 100; //Rouded till 2 digits
+            // Bmi status from WHO Standards
+            var WHO_BMI_UNDERWEIGHT = 18.5;
+            var WHO_BMI_NORMAL = 25;
+            var WHO_BMI_OVERWEIGHT = 30;
+            var color = '';
+            var status = '';
+
+            if (bmi < WHO_BMI_UNDERWEIGHT) {
+                color = 'red';
+                status = 'Underweight';
+            }
+            if (bmi >= WHO_BMI_UNDERWEIGHT && bmi < WHO_BMI_NORMAL) {
+                color = 'green';
+                status = 'Normal';
+            }
+            if (bmi >= WHO_BMI_NORMAL && bmi < WHO_BMI_OVERWEIGHT) {
+                color = 'blue';
+                status = 'Overweight';
+            }
+            if (bmi >= WHO_BMI_OVERWEIGHT) {
+                color = 'red';
+                status = 'Obese';
+            }
+
+            if (bmi_rounded > 60.00 || bmi_rounded < 0.00) {
+                color = 'red';
+                status = 'Height & weight combination is illegal. Please check the values';
+                bmi_rounded = 'Illegal';
+                bmi = 'Illegal';
+            }
+            return {
+                color: color,
+                status: status,
+                bmi_rounded: bmi_rounded,
+                bmi: bmi
+            };
+
         }
-        return {
-            color: color,
-            status: status,
-            bmi_rounded: bmi_rounded,
-            bmi: bmi
-        };
     },
 
     updateBmiDisplay: function (color, bmiStatusText, bmi_rounded, bmi) {
