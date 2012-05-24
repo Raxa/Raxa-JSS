@@ -296,7 +296,6 @@ Ext.define("Screener.controller.Application", {
     },
     //helper function to remove a single patient
     removeAPatient: function (patient) {
-        //Ext.Msg.alert('Title',"Function called successully!!!")
         patient.set('doctorid', -1);
         Ext.getStore('patientStore').add(patient);
     },
