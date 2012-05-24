@@ -51,3 +51,40 @@ describe("Get JSON Content-Type", function () {
     });
 });
 
+describe("Get deviceId (4 digit randomly generated number)", function () {
+    it("Get deviceId (4 digit), when deviceId is not present in localStorage", function () {
+
+        //deleting deviceId key here to ensure no deviceId is stored before
+        localStorage.removeItem("deviceId");
+        var deviceId = Util.getDeviceId();
+        expect((deviceId >= 1000 && deviceId < 10000)).toEqual(true);
+    });
+
+    it("Get device id same as that in localStorage (if already stored)", function () {
+
+        var storedDeviceId = '1234';
+
+        //setting a new deviceId key equal to 1234
+        localStorage.setItem("deviceId", storedDeviceId);
+        var deviceId = Util.getDeviceId();
+        expect(deviceId).toEqual(storedDeviceId);
+    });
+
+    it("checks the randomness of deviceId randomness for 20 randomly generated numbers", function () {
+
+        //duplicate is set to true if any two (out of twenty) randomly generate numbers are equal	
+        var duplicate = false;
+        var deviceId = new Array(20);
+        for (var i = 0; i < 20; i++) {
+            //deleting deviceId key here to ensure no deviceId is stored before and ensure random number
+            localStorage.removeItem("deviceId");
+            deviceId[i] = Util.getDeviceId();
+            for (j = 0; j < i; j++) {
+                if (deviceId[j] == deviceId[i]) {
+                    duplicate = true;
+                }
+            }
+        }
+        expect(duplicate).toEqual(false);
+    });
+});
