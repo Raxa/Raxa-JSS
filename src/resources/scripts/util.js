@@ -87,7 +87,7 @@ var Util = {
             var randomNumber = [];
             for (var i = 0; i < 6; i++) {
                 //generates random digit from 0 to 10
-                randomNumber[i] = (Math.floor(Math.random() * 10)).toString();
+                randomNumber[i] = (Math.floor(Math.random() * 10));
             }
             deviceId = randomNumber.join('');
             localStorage.setItem("deviceId", deviceId);

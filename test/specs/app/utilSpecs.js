@@ -57,9 +57,10 @@ describe("Get deviceId (6 digit randomly generated number)", function () {
         //deleting deviceId key here to ensure no deviceId is stored before
         localStorage.removeItem("deviceId");
         var deviceId = Util.getDeviceId();
-        expect((deviceId >= 100000 && deviceId < 1000000)).toEqual(true);
+        expect(deviceId.length).toEqual(6);
     });
 
+	//This test is to be removed if we impliment uuid from phonegap library (RAXAJSS-138)
     it("Get device id same as that in localStorage (if already stored)", function () {
 
         var storedDeviceId = '123456';
