@@ -23,6 +23,24 @@
 	
     <!-- AOP -->
     <!-- Required Privileges -->
+    
+    <privilege>
+        <name>Add Patient Lists</name>
+        <description>Ability to create patient lists</description>
+    </privilege>
+    <privilege>
+        <name>Delete Patient Lists</name>
+        <description>Ability to delete patient lists</description>
+    </privilege>
+    <privilege>
+        <name>Edit Patient Lists</name>
+        <description>Ability to edit patient lists</description>
+    </privilege>
+    <privilege>
+        <name>View Patient Lists</name>
+        <description>Ability to view patient lists</description>
+    </privilege>
+    
     <!-- Required Global Properties -->
     <!-- DWR -->
     <!-- Servlets -->
@@ -39,5 +57,7 @@
     <mappingFiles>
         ${omodHbmConfig}
     </mappingFiles>
+    
+    
 	
 </module>

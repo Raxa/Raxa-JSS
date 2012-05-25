@@ -1,5 +1,20 @@
 package org.raxa.module.raxacore.db.hibernate;
 
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -80,10 +95,9 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testGetPatientListByEncounterType() {
-		System.out.println("getPatientListByEncounterType");
 		EncounterType encounterType = new EncounterType();
 		encounterType.setName("Registration");
-		encounterType.setUuid("18547121-1b70-465d-99ee-c9dfd95e7d30");
+		encounterType.setUuid("61ae96f4-6afe-4351-b6f8-cd4fc383cce1");
 		encounterType.setDescription("Patient has been registered");
 		encounterType.setRetired(Boolean.FALSE);
 		String name = dao.getPatientListByEncounterType(encounterType).get(0).getName();
@@ -95,7 +109,6 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testGetPatientListByUuid() {
-		System.out.println("getPatientListByUuid");
 		String uuid = "68547121-1b70-465e-99ee-c9dfd95e7d30";
 		String result = dao.getPatientListByUuid(uuid).getName();
 		assertEquals("TestList2", result);
@@ -106,7 +119,6 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testGetPatientListByName() {
-		System.out.println("getPatientListByName");
 		String name = "TestList1";
 		String result = dao.getPatientListByName(name).get(0).getName();
 		assertEquals(name, result);
@@ -117,7 +129,6 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 	 */
 	@Test
 	public void testUpdatePatientList() {
-		System.out.println("updatePatientList");
 		PatientList patientList = dao.getPatientList(1);
 		patientList.setName("NewNameList");
 		dao.updatePatientList(patientList);
