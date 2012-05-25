@@ -51,20 +51,20 @@ describe("Get JSON Content-Type", function () {
     });
 });
 
-describe("Get deviceId (4 digit randomly generated number)", function () {
-    it("Get deviceId (4 digit), when deviceId is not present in localStorage", function () {
+describe("Get deviceId (6 digit randomly generated number)", function () {
+    it("Get deviceId (6 digit), when deviceId is not present in localStorage", function () {
 
         //deleting deviceId key here to ensure no deviceId is stored before
         localStorage.removeItem("deviceId");
         var deviceId = Util.getDeviceId();
-        expect((deviceId >= 1000 && deviceId < 10000)).toEqual(true);
+        expect((deviceId >= 100000 && deviceId < 1000000)).toEqual(true);
     });
 
     it("Get device id same as that in localStorage (if already stored)", function () {
 
-        var storedDeviceId = '1234';
+        var storedDeviceId = '123456';
 
-        //setting a new deviceId key equal to 1234
+        //setting a new deviceId key equal to 123456
         localStorage.setItem("deviceId", storedDeviceId);
         var deviceId = Util.getDeviceId();
         expect(deviceId).toEqual(storedDeviceId);

@@ -39,7 +39,7 @@ var Util = {
 
     /**
      * Saves the Basic Authentication header to Localstorage
-     * Verifies if username + password is valid on server and saves as Base64 encoded string of user:pass
+     * Verifies if username + password is valid on server and saves as Base4 encoded string of user:pass
      */
     saveBasicAuthHeader: function (username, password) {
         Util.logoutUser(); // Delete existing logged in sessions
@@ -75,7 +75,7 @@ var Util = {
     },
 
     /**
-     *Generate four digit randomly generated Device Id  
+     *Generate six digit randomly generated Device Id  
      *Checks if any key with name "deviceId" is previously stored in localStorage, returns it if availaible
      *@return deviceId
      *
@@ -85,18 +85,18 @@ var Util = {
         //Checks if localStorage already has deviceId stored in it        
         if (localStorage.getItem("deviceId") == null) {
             var randomNumber = [];
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 6; i++) {
                 //generates random digit from 0 to 10
                 randomNumber[i] = (Math.floor(Math.random() * 10)).toString();
             }
             deviceId = randomNumber.join('');
             localStorage.setItem("deviceId", deviceId);
-            console.log('4-digit randomly generated Device Id: ' + deviceId + ' & is stored in localStorage');
+            console.log('6-digit randomly generated Device Id: ' + deviceId + ' & is stored in localStorage');
 
         } else {
             // gets the value of deviceId if available in localStorage 
             deviceId = localStorage.getItem("deviceId");
-            console.log('4-digit randomly generated Device Id that was stored in localStorage:' + deviceId);
+            console.log('6-digit randomly generated Device Id that was stored in localStorage:' + deviceId);
         }
         return deviceId;
     }
