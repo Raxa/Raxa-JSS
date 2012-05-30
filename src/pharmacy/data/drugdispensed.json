@@ -1,0 +1,26 @@
+{
+    "success": true,
+    "total" : 2,
+    "drug": [{
+        "drugname" : "adfjsflkssdhk.asjhbdfkaA",
+        "dosage" : "Blfj",
+        "disp" : "kdfnHNFKSJBNJBSJBFVJSB",
+        "instock" : "dfnkD",
+        "labels" : "ksdfnasnfSFNAFE",
+        "inhand" : "SDFNKNFKKSNFKASNFKDNSKFNKASDSBSBF"
+    },{
+        "drugname" : "a",
+        "dosage" : "b",
+        "disp" : "c",
+        "instock" : "d",
+        "labels" : "e",
+        "inhand" : "f"
+    },{
+        "drugname" : "x",
+        "dosage" : "y",
+        "disp" : "z",
+        "instock" : "w",
+        "labels" : "m",
+        "inhand" : "n"
+    }]
+}
