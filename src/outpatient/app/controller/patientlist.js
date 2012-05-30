@@ -101,7 +101,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
                 for (i = 0; i < regexps.length; i++) {
                     var search = regexps[i];
-                    var didMatch = record.get('firstName').match(search);
+                    var didMatch = record.get('firstName').match(search) || record.get('lastName').match(search) || record.get('id').match(search);
                     matched.push(didMatch);
                 }
 
