@@ -15,23 +15,22 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
         control: {
             main: {
-                push: 'onMainPush',
-                pop: 'onMainPop'
+                push: 'onMainPush'
             },
             contacts: {
                 itemtap: 'onContactSelect'
             },
             name: {
-                tap: 'sortbyname'
+                tap: 'sortByName'
             },
             docname: {
-                tap: 'sortbydocname'
+                tap: 'sortByDocName'
             },
             urgency: {
-                tap: 'sortbyurgency'
+                tap: 'sortByUrgency'
             },
             lastvisit: {
-                tap: 'sortbylastvisit'
+                tap: 'sortByLastVisit'
             },
             searchfield: {
                 clearicontap: 'onSearchClearIconTap',
@@ -57,24 +56,24 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.showContact.setRecord(record);
         this.getMain().push(this.showContact);
     },
-    sortbyname: function () {
+    sortByName: function () {
         store = this.getContact().getStore();
         store.setSorters("firstName");
         store.load();
     },
 
-    sortbydocname: function () {
+    sortByDocName: function () {
         store = this.getContact().getStore();
         store.setSorters("nameofdoc");
         store.load();
     },
 
-    sortbyurgency: function () {
+    sortByUrgency: function () {
         store = this.getContact().getStore();
         store.setSorters("urgency");
         store.load();
     },
-    sortbylastvisit: function () {
+    sortByLastVisit: function () {
         store = this.getContact().getStore();
         store.setSorters("lastvisit");
         store.load();
@@ -82,15 +81,15 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
     onSearchKeyUp: function (field) {
 
-        var value = field.getValue(),
-            store = this.getContact().getStore();
+        var value = field.getValue();
+        var store = this.getContact().getStore();
 
         store.clearFilter();
 
         if (value) {
-            var searches = value.split(' '),
-                regexps = [],
-                i;
+            var searches = value.split(' ');
+            var regexps = [];
+            var i;
 
             for (i = 0; i < searches.length; i++) {
                 if (!searches[i]) continue;
@@ -101,8 +100,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 var matched = [];
 
                 for (i = 0; i < regexps.length; i++) {
-                    var search = regexps[i],
-                        didMatch = record.get('firstName').match(search);
+                    var search = regexps[i];
+                    var didMatch = record.get('firstName').match(search);
                     matched.push(didMatch);
                 }
 
