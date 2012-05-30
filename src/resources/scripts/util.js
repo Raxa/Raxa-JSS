@@ -10,6 +10,14 @@ var password = 'Hello123';
 
 var Util = {
     /**
+     *Returns the value of TimeoutLimit for login timeout 
+     *@return timeoutLimit for timeout in login 
+     */
+    getTimeoutLimit: function() {
+        return 5000;
+    },
+    
+    /**
      * Returns all the headers required for Basic Authenticated REST calls
      * @return headers object that includes Authorization, Accept and Content-Type
      */
