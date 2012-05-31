@@ -7,6 +7,7 @@
 
 Ext.define('Topbar.view.TopToolbar', {
     extend: 'Ext.Toolbar',
+	alias: 'widget.topbar',
 
     config: {
         docked: 'top',
