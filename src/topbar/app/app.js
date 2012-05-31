@@ -21,7 +21,7 @@ Ext.application({
 
     launch: function() {
 
-        Ext.create('Topbar.view.TopToolbar', {fullscreen: false});
+        Ext.create('Topbar.view.TopToolbar', {fullscreen: true});
     }
 
 });
