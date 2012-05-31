@@ -1,7 +1,8 @@
 /*
  * File: app.js
  * Author: Karan Singh (staticbit@gmail.com)
- * Date: 30-May-2012
+ * Date: 31-May-2012
+ * Last Update Time: 01:23 PM IST
  */
 
 Ext.Loader.setConfig({
@@ -13,14 +14,14 @@ Ext.application({
         'TopToolbar',
         'LogoutConfirmPanel'
     ],
-    name: 'MyApp',
+    name: 'Topbar',
     controllers: [
         'LogoutController'
     ],
 
     launch: function() {
 
-        Ext.create('MyApp.view.TopToolbar', {fullscreen: true});
+        Ext.create('Topbar.view.TopToolbar', {fullscreen: false});
     }
 
 });

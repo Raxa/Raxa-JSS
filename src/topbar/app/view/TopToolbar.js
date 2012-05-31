@@ -1,10 +1,11 @@
 /*
  * File: app/view/TopToolbar.js
  * Author: Karan Singh (staticbit@gmail.com)
- * Date: 30-May-2012
+ * Date: 31-May-2012
+ * Last Update Time: 01:23 PM IST
  */
 
-Ext.define('MyApp.view.TopToolbar', {
+Ext.define('Topbar.view.TopToolbar', {
     extend: 'Ext.Toolbar',
 
     config: {

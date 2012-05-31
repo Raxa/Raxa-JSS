@@ -2,10 +2,10 @@
  * File: app/view/LogoutConfirmPanel.js
  * Author: Karan Singh (staticbit@gmail.com)
  * Date: 31-May-2012
- * Last Update Time: 12:40 PM IST
+ * Last Update Time: 01:23 PM IST
  */
 
-Ext.define('MyApp.view.LogoutConfirmPanel', {
+Ext.define('Topbar.view.LogoutConfirmPanel', {
     extend: 'Ext.Panel',
     alias: 'widget.LogoutConfirmPanelAlias',
 
