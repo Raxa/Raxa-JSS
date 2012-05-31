@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<!-- File: app.html -->
+<!-- Author: Karan Singh (staticbit@gmail.com) -->
+<!-- Date: 30-May-2012 -->
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Raxa EMR TopBar</title>
+    <link rel="stylesheet" href="../lib/touch/resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../lib/touch/sencha-touch-all-debug.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="../resources/scripts/util.js"></script>
+    <script type="text/javascript">
+        if (!Ext.browser.is.WebKit) {
+            alert("The current browser is unsupported.\n\nSupported browsers:\n" +
+                "Google Chrome\n" +
+                "Apple Safari\n" +
+                "Mobile Safari (iOS)\n" +
+                "Android Browser\n" +
+                "BlackBerry Browser"
+            );
+        }
+    </script>
+</head>
+<body></body>
+</html>
