@@ -9,6 +9,7 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         refs: {
+            password: '#password',
             signInButton: '#signInButton',
             Registration: '#Registration',
             Screener: '#Screener',
@@ -22,6 +23,9 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         control: {
+            password:{
+                action: 'doLogin'
+            },
             signInButton: {
                 tap: 'doLogin'
             }
@@ -57,6 +61,7 @@ Ext.define('RaxaEmr.controller.Session', {
     storeUserPrivileges: function (userInfo) {
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
+            Ext.Ajax.setTimeout(Util.getTimeoutLimit());
             Ext.Ajax.request({
                 scope: this,
                 url: userInfoJson.results[0].links[0].uri + '?v=full',
@@ -76,6 +81,10 @@ Ext.define('RaxaEmr.controller.Session', {
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
                     this.loginSuccess();
+                },
+                failure: function(){
+                    Ext.getCmp('mainView').setMasked(false);
+                    Ext.Msg.alert("connection error");
                 }
             });
         } else {
@@ -121,6 +130,7 @@ Ext.define('RaxaEmr.controller.Session', {
      * @param username: user with associated privileges
      */
     getUserPrivileges: function (username) {
+        Ext.Ajax.setTimeout(Util.getTimeoutLimit()); 
         Ext.Ajax.request({
             scope: this,
             withCredentials: true,
@@ -128,7 +138,11 @@ Ext.define('RaxaEmr.controller.Session', {
             url: HOST + '/ws/rest/v1/user?q=' + username,
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
-            success: this.storeUserPrivileges
+            success: this.storeUserPrivileges,
+            failure: function(){
+                Ext.getCmp('mainView').setMasked(false);
+                Ext.Msg.alert("connection error");
+            }
         });
     },
 
