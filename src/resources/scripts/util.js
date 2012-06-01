@@ -7,8 +7,16 @@ if (localStorage.getItem("host") == null) {
 
 var username = 'admin';
 var password = 'Hello123';
-
+var timeoutLimit = 5000;
 var Util = {
+    /**
+     *Returns the value of TimeoutLimit for login timeout 
+     *@return timeoutLimit for timeout in login 
+     */
+    getTimeoutLimit: function() {
+        return timeoutLimit;
+    },
+    
     /**
      * Returns all the headers required for Basic Authenticated REST calls
      * @return headers object that includes Authorization, Accept and Content-Type

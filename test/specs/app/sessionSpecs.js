@@ -61,4 +61,23 @@ describe("Session", function () {
         expect(Ext.getCmp('registrationextjs4')).not.toBeDefined();
     });
     
+    it(" shows connection error when timeout in getUserPrivilege", function() {
+        var testName = "testUser";
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request){
+            var expected = Util.getTimeoutLimit();
+            expect(Ext.Ajax.getTimeout()).toEqual(expected);
+        });
+        mainController.getUserPrivileges(testName);
+    });// this test checks the value of timeout is same as defined in getUserPrivileges
+    
+    it(" shows connection error when timeout in storeUserPrivilege", function() {
+        var userInfo = {
+            responseText: "{\"results\":[{\"links\":[{\"uri\":\"http://test.com\"}]}]}"
+        }; 
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request){
+            var expected = Util.getTimeoutLimit();
+            expect(Ext.Ajax.getTimeout()).toEqual(expected);
+        });
+        mainController.storeUserPrivileges(userInfo);
+    });// this test checks the value of timeout is same as defined in storeUserPrivileges
 });
