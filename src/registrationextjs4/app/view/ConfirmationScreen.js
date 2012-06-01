@@ -6,7 +6,6 @@ Ext.define('Registration.view.ConfirmationScreen', {
     layout: {
         type: 'auto'
     },
-    requires: ['Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
     initComponent: function () {
         this.items = {
             border: 0,
