@@ -1,4 +1,9 @@
-Ext.define('RaxaEmr.Pharmacy.model.drugmodel', {
+Ext.define('RaxaEmr.Pharmacy2.model.drugmodel', {
     extend: 'Ext.data.Model',
-    fields: ['name', 'tablets','days']
+    modelId: 'modelId',
+    fields: ['drugname', 'tablets', 'days'],
+    proxy: {
+        type: 'localstorage',
+        id: 'grouped'
+    }
 });

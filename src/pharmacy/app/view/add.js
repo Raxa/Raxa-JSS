@@ -1,32 +1,57 @@
-Ext.define('RaxaEmr.Pharmacy.view.add', {
-    extend: 'Ext.container.Viewport',
-    alias: 'widget.Add',
-    
-    height: 100,
-    width: 180,
-    autoShow: true,
+var states = Ext.create('Ext.data.Store', {
+    fields: ['type'],
+    readOnly: true,
+    data : [
+        {"type": '1A'},
+        {"type": '1B'},
+        {"type": '1C'},
+        {"type": '1D'},
+        {"type": '2B'},
+        {"type": '2C'},
+        {"type": '3D'}
+    ]
+});
+
+Ext.define('RaxaEmr.Pharmacy2.view.add', {
+    extend: 'Ext.window.Window',
+    alias : 'widget.addgroup',
+
+    title : 'Create New Group',
     layout: 'fit',
-    title: 'User Assign',
-    
-    items: [{
-        xtype: 'form',
-        items: [{
-            xtype: 'textfield',
-            name: 'name',
-            fieldLabel: 'Drug'
-        },{
-            xtype: 'textfield',
-            name: 'group',
-            fieldLabel: 'Group'
-        }]
-    },{
-        xtype: 'button',
-        text: 'Save',
-        action: 'save'
-    },{
-        xtype: 'button',
-        text: 'Cancel',
-        scope: this,
-        handler: this.close
-    }]
+    autoShow: true,
+    resizable: false,
+    initComponent: function() {
+        this.items = [
+        {
+            xtype: 'form',
+            items: [
+            {
+                xtype: 'textfield',
+                name : 'groupname',
+                fieldLabel: 'Group Name'
+            },
+            {
+                xtype: 'combobox',
+                name: 'regimen',
+                editable: false,
+                emptyText: 'Regimen',
+                fieldLabel: 'Regimen',
+                store: states,
+                displayField: 'type'
+            }
+            ]
+        }
+        ];
+        this.buttons = [
+        {
+            text: 'Save',
+            action: 'save'
+        },
+        {
+            text: 'Cancel',
+            scope:  this,
+            handler: this.close
+        }];
+        this.callParent(arguments);
+    }
 });
