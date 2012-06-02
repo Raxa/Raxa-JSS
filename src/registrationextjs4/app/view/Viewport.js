@@ -6,7 +6,7 @@ Ext.define('Registration.view.Viewport', {
         type: 'hbox'
     },
 
-    requires: ['Registration.view.Home', 'Registration.view.RegistrationPart1', 'Registration.view.RegistrationPart2', 'Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
+    requires: ['Registration.view.Home', 'Registration.view.RegistrationPart1', 'Registration.view.RegistrationPart2', 'Registration.view.ConfirmationScreen', 'Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
 
     initComponent: function () {
         this.items = {
@@ -70,7 +70,10 @@ Ext.define('Registration.view.Viewport', {
                 xtype: 'registrationpart1'
             }, {
                 xtype: 'registrationpart2'
-            }]
+            }, {
+                xtype: 'confirmationScreen'
+            }
+            ]
         };
         this.callParent();
     }

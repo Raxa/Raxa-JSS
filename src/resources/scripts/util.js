@@ -6,9 +6,17 @@ if (localStorage.getItem("host") == null) {
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
-var password =  'Hello123';
-
+var password = 'Hello123';
+var timeoutLimit = 5000;
 var Util = {
+    /**
+     *Returns the value of TimeoutLimit for login timeout 
+     *@return timeoutLimit for timeout in login 
+     */
+    getTimeoutLimit: function() {
+        return timeoutLimit;
+    },
+    
     /**
      * Returns all the headers required for Basic Authenticated REST calls
      * @return headers object that includes Authorization, Accept and Content-Type
@@ -21,7 +29,7 @@ var Util = {
         }
         return headers;
     },
-    
+
     /**
      * Logout the current user. Ends the current session
      */
@@ -36,10 +44,10 @@ var Util = {
             }
         });
     },
-    
+
     /**
      * Saves the Basic Authentication header to Localstorage
-     * Verifies if username + password is valid on server and saves as Base64 encoded string of user:pass
+     * Verifies if username + password is valid on server and saves as Base4 encoded string of user:pass
      */
     saveBasicAuthHeader: function (username, password) {
         Util.logoutUser(); // Delete existing logged in sessions
@@ -68,7 +76,36 @@ var Util = {
      * @return [ 'login', 'screener', ....]
      */
     getModules: function () {
-    	//always keep login at first position as its app path is different
+        //always keep login at first position as its app path is different
         return ['login', 'screener', 'registration', 'registrationextjs4'];
+        //TO DO:Add the line below instead the above one 
+        //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+    },
+
+    /**
+     *Generate six digit randomly generated Device Id  
+     *Checks if any key with name "deviceId" is previously stored in localStorage, returns it if availaible
+     *@return deviceId
+     *
+     */
+    getDeviceId: function () {
+        var deviceId;
+        //Checks if localStorage already has deviceId stored in it        
+        if (localStorage.getItem("deviceId") == null) {
+            var randomNumber = [];
+            for (var i = 0; i < 6; i++) {
+                //generates random digit from 0 to 10
+                randomNumber[i] = (Math.floor(Math.random() * 10));
+            }
+            deviceId = randomNumber.join('');
+            localStorage.setItem("deviceId", deviceId);
+            console.log('6-digit randomly generated Device Id: ' + deviceId + ' & is stored in localStorage');
+
+        } else {
+            // gets the value of deviceId if available in localStorage 
+            deviceId = localStorage.getItem("deviceId");
+            console.log('6-digit randomly generated Device Id that was stored in localStorage:' + deviceId);
+        }
+        return deviceId;
     }
 }

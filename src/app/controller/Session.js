@@ -1,9 +1,7 @@
 Ext.define('RaxaEmr.controller.Session', {
     extend: 'Ext.app.Controller',
     config: {
-        before: {
-            showDashboard: 'loginSuccess'
-        },
+ 
 
         routes: {
             'Login': 'showLogin',
@@ -11,6 +9,7 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         refs: {
+            password: '#password',
             signInButton: '#signInButton',
             Registration: '#Registration',
             Screener: '#Screener',
@@ -24,6 +23,9 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         control: {
+            password:{
+                action: 'doLogin'
+            },
             signInButton: {
                 tap: 'doLogin'
             }
@@ -31,6 +33,17 @@ Ext.define('RaxaEmr.controller.Session', {
     },
 
     showDashboard: function () {
+        var privileges = localStorage.getItem("privileges");
+        var allModules = Util.getModules();
+        var userModules = [];
+        //starting at index=1 here, don't need app button for 'login'
+        for(i=1;i<allModules.length;i++){
+        	//checking if user is allows to view the module
+            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+            	userModules[userModules.length] = allModules[i];
+            }
+        }
+        Ext.getCmp('appGrid').addModules(userModules);
         window.location.hash = 'Dashboard';
         Ext.getCmp('mainView').setActiveItem(1);
     },
@@ -48,6 +61,7 @@ Ext.define('RaxaEmr.controller.Session', {
     storeUserPrivileges: function (userInfo) {
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
+            Ext.Ajax.setTimeout(Util.getTimeoutLimit());
             Ext.Ajax.request({
                 scope: this,
                 url: userInfoJson.results[0].links[0].uri + '?v=full',
@@ -67,6 +81,10 @@ Ext.define('RaxaEmr.controller.Session', {
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
                     this.loginSuccess();
+                },
+                failure: function(){
+                    Ext.getCmp('mainView').setMasked(false);
+                    Ext.Msg.alert("connection error");
                 }
             });
         } else {
@@ -112,6 +130,7 @@ Ext.define('RaxaEmr.controller.Session', {
      * @param username: user with associated privileges
      */
     getUserPrivileges: function (username) {
+        Ext.Ajax.setTimeout(Util.getTimeoutLimit()); 
         Ext.Ajax.request({
             scope: this,
             withCredentials: true,
@@ -119,7 +138,11 @@ Ext.define('RaxaEmr.controller.Session', {
             url: HOST + '/ws/rest/v1/user?q=' + username,
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
-            success: this.storeUserPrivileges
+            success: this.storeUserPrivileges,
+            failure: function(){
+                Ext.getCmp('mainView').setMasked(false);
+                Ext.Msg.alert("connection error");
+            }
         });
     },
 

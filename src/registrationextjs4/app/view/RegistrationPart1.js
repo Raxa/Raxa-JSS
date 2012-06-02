@@ -17,13 +17,34 @@ Ext.define('Registration.view.RegistrationPart1', {
                 items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'New Patient Registration (Part 1)',
+                    title: 'New Patient Registration (Patient Profile Info)',
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
                     items: [{
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Self',
+                        fieldLabel: 'Old Patient Registration Number',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            name: 'Old Patient Identifier',
+                            id: 'oldPatientIdentifier',
+                            fieldLabel: 'Old Patient Identifier',
+                            flex: 1,
+                            emptyText: 'Old Patient Identifier',
+                            allowBlank: true
+                        }]
+                    }, {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Patient Name',
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -36,27 +57,21 @@ Ext.define('Registration.view.RegistrationPart1', {
                         },
                         items: [{
                             name: 'firstName',
-                            fieldLabel: 'First Name',
+                            id: 'patientFirstName',
+                            emptyText: 'Patient\'s First Name',
                             flex: 1,
-                            emptyText: 'First Name',
                             allowBlank: false
                         }, {
-                            name: 'middleName',
-                            fieldLabel: 'Middle Name',
-                            flex: 1,
-                            margins: '0 0 0 6',
-                            emptyText: 'Middle Name',
-                        }, {
                             name: 'lastName',
-                            fieldLabel: 'Last Name',
+                            emptyText: 'Patient\'s Last Name',
+                            id: 'patientLastName',
                             flex: 1,
                             margins: '0 0 0 6',
-                            emptyText: 'Last Name',
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Father/Husband',
+                        fieldLabel: 'Father/Husband\'s name',
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -69,83 +84,60 @@ Ext.define('Registration.view.RegistrationPart1', {
                         },
                         items: [{
                             name: 'firstName',
-                            fieldLabel: 'First Name',
+                            emptyText: 'Father/Husband\'sFirst Name',
+                            id: 'relativeFirstName',
                             flex: 1,
-                            emptyText: 'First Name',
+
                             allowBlank: false
                         }, {
-                            name: 'middleName',
-                            fieldLabel: 'Middle Name',
-                            flex: 1,
-                            margins: '0 0 0 6',
-                            emptyText: 'Middle Name',
-                        }, {
                             name: 'lastName',
-                            fieldLabel: 'Last Name',
+                            emptyText: 'Last Name',
+                            id: 'relativeLastName',
                             flex: 1,
                             margins: '0 0 0 6',
-                            emptyText: 'Last Name',
+
                             allowBlank: false
                         }]
                     }, {
-                        xtype: 'textfield',
-                        fieldLabel: 'Village',
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Age (Enter DOB or Current Age)',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
-                        anchor: '75%',
-                        allowBlank: false
-                    }, {
-                        xtype: 'textfield',
-                        fieldLabel: 'Occupation',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '75%',
-                        allowBlank: false
-                    }, {
-                        xtype: 'numberfield',
-                        fieldLabel: 'Mobile/Phone Number',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        hideTrigger: true,
-                        anchor: '75%',
-                        allowBlank: false
-                    }, {
-                        xtype: 'numberfield',
-                        fieldLabel: 'Family Card Number',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        hideTrigger: true,
-                        anchor: '75%',
-                        allowBlank: false
-                    }, {
-                        xtype: 'numberfield',
-                        fieldLabel: 'Weight',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        hideTrigger: true,
-                        anchor: '75%',
-                        allowBlank: false
-                    }, {
-                        xtype: 'numberfield',
-                        fieldLabel: 'Height',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        hideTrigger: true,
-                        anchor: '75%',
-                        allowBlank: false
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            xtype: 'datefield',
+                            fieldLabel: 'DOB',
+                            emptyText: 'MM/DD/YYYY',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 250,
+                            anchor: '75%',
+                            allowBlank: true
+                        }, {
+                            name: 'Age',
+                            fieldLabel: 'Current Patient Age',
+                            id: 'patientAge',
+                            flex: 1,
+                            margins: '0 0 0 36',
+                            emptyText: 'Patient\'s Current Age',
+                            allowBlank: true
+                        },
+
+                        ]
                     }, {
                         xtype: 'radiogroup',
                         fieldLabel: 'Sex',
+                        id: 'sexRadioGroup',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
-                        anchor: '65%',
                         allowBlank: false,
                         items: [{
                             xtype: 'radiofield',
@@ -161,13 +153,99 @@ Ext.define('Registration.view.RegistrationPart1', {
                             boxLabel: 'Other'
                         }]
                     }, {
-                        xtype: 'datefield',
-                        fieldLabel: 'DOB',
+                        xtype: 'radiogroup',
+                        fieldLabel: 'Education Details',
+                        id: 'EducationRadioGroup',
+                        layout: 'vbox',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
-                        anchor: '75%',
-                        allowBlank: false
+                        allowBlank: false,
+                        items: [{
+                            xtype: 'radiofield',
+                            name: 'education',
+                            boxLabel: 'Uneducated'
+                        }, {
+                            xtype: 'radiofield',
+                            name: 'education',
+                            boxLabel: '5th Pass or Less'
+                        }, {
+                            xtype: 'radiofield',
+                            name: 'education',
+                            boxLabel: '6th - 9th Class'
+                        }, {
+                            xtype: 'radiofield',
+                            name: 'education',
+                            boxLabel: '10th and below'
+                        }, {
+                            xtype: 'radiofield',
+                            name: 'education',
+                            boxLabel: 'Graduate and above'
+                        }]
+                    }, {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Caste',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            xtype: 'combo',
+                            name: 'caste',
+                            label: 'Caste',
+                            layout: 'hbox',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['caste'],
+                                data: [
+                                    ['First'],
+                                    ['Second'],
+                                    ['Third'],
+                                    ['Fourth'],
+                                    ['Not Mentioned', 'Not Mentioned']
+                                ]
+                            }),
+                            displayField: 'caste'
+                        }]
+                    }, {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Occupation',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            xtype: 'combo',
+                            name: 'occupation',
+                            id: 'occupation',
+                            layout: 'hbox',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['occupation'],
+                                data: [
+                                    ['Unemployed'],
+                                    ['Student'],
+                                    ['Agriculture Related'],
+                                    ['Bank Related'],
+                                    ['Medical Related'],
+                                    ['Engineering Related'],
+                                    ['Not Mentioned']
+                                ]
+                            }),
+                            displayField: 'occupation'
+
+
+                        }]
                     }, {
                         xtype: 'button',
                         margin: '10 50 0 270',
@@ -182,6 +260,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         margin: '10 0 0 0',
                         width: 60,
                         text: 'Reset'
+
                     }]
                 }]
             }]
