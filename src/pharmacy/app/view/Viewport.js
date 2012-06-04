@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     extend: 'Ext.container.Viewport',
-    alias: 'widget.adddrug',
+    alias: 'widget.addDrug',
     config: {
         items: [{
             xtype: 'drugDet',

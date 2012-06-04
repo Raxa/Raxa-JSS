@@ -1,6 +1,6 @@
-Ext.define('RaxaEmr.Pharmacy.store.Users', {
+Ext.define('RaxaEmr.Pharmacy.store.Drugs', {
     extend: 'Ext.data.Store',
-    model: 'RaxaEmr.Pharmacy.model.User',
+    model: 'RaxaEmr.Pharmacy.model.Drug',
     autoLoad: true,
 
     proxy: {
@@ -8,7 +8,7 @@ Ext.define('RaxaEmr.Pharmacy.store.Users', {
         id: 'id',
         reader: {
             type: 'json',
-            root: 'users',
+            root: 'drugs',
             successProperty: 'success'
         },
         writer: {

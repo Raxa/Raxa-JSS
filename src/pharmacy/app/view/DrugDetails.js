@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetails', {
     alias: 'widget.drugDet',
     config: {
         name: 'loginForm',
-        store: Ext.create('RaxaEmr.Pharmacy.store.Users', {
+        store: Ext.create('RaxaEmr.Pharmacy.store.Drugs', {
             storeId: 'drugStore'
         }),
         title: 'ADD/MODIFY DRUGS',
@@ -30,7 +30,7 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetails', {
                     var Form = this.up('form').getForm();
                     cmp.getEl().on('click', function (view, record) {
                         Ext.getStore('drugStore').load(function (records, operation, success) {});
-                        Record = Ext.create('RaxaEmr.Pharmacy.model.User');
+                        Record = Ext.create('RaxaEmr.Pharmacy.model.Drug');
                         Form.loadRecord(Record);
                     });
                 },
@@ -44,8 +44,7 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetails', {
             }
         }, {
             xtype: 'textfield',
-            name: 'mims',
-            id: 'mimsId',
+            name: 'mimsReference',
             emptyText: 'MIMS reference',
             width: '200'
         }, {
@@ -53,27 +52,23 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetails', {
             name: 'form',
             store: Ext.getStore('drugStore'),
             queryMode: 'remote',
-            id: 'formId',
             emptyText: 'Form',
             displayField: 'form',
             width: '200'
         }, {
             xtype: 'textfield',
-            name: 'pack',
-            id: 'packId',
+            name: 'packSize',
             emptyText: 'Pack Size',
             width: '200'
         }, {
             xtype: 'textfield',
-            name: 'di',
-            id: 'diId',
+            name: 'dispencingInstruct',
             emptyText: 'Dispencing Instruction',
             width: '200'
         }, {
             xtype: 'combobox',
-            name: 'streat',
-            id: 'streatId',
-            displayField: 'streat',
+            name: 'sideTreatment',
+            displayField: 'sideTreatment',
             store: Ext.getStore('drugStore'),
             queryMode: 'local',
             emptyText: 'Side Treatement',
@@ -81,14 +76,13 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetails', {
         }, {
             xtype: 'textfield',
             name: 'dosage',
-            id: 'dosageId',
             emptyText: 'Standard Dosage',
             width: '200'
         }],
         buttons: [{
             text: 'ADD/MODIFY Drugs',
-            action: 'addmod',
-            id: 'addmod'
+            action: 'addModify',
+            id: 'addModify'
         }, ]
     }
 })

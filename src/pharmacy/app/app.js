@@ -3,19 +3,11 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-    name: 'RaxaEmr.Pharmacy',
-
-        
-    models: ['User'],
+    name: 'RaxaEmr.Pharmacy',    
+    models: ['Drug'],
     views: ['Viewport','DrugDetails'],
-    controllers: ['Users'],
-    store: ['Users'],
-
+    controllers: ['Drugs'],
+    store: ['Drugs'],
    autoCreateViewport: true
-
-
     }
-    
-
-        
 );

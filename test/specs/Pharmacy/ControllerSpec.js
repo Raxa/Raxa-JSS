@@ -6,7 +6,7 @@ describe("Controller", function () {
 
         if (!mainController) {
 
-            mainController = Application.getController("Users");
+            mainController = Application.getController("Drugs");
         }
         if (!mainView) {
             mainView = Ext.create('Ext.Container', {
@@ -29,18 +29,18 @@ describe("Controller", function () {
     });
     it("saves in localstorage", function () {
         var Form = Ext.getCmp('formPanel');
-        Record = Ext.create('RaxaEmr.Pharmacy.model.User');
+        Record = Ext.create('RaxaEmr.Pharmacy.model.Drug');
         Form.loadRecord(Record);
-        var drug = Ext.create('RaxaEmr.Pharmacy.model.User');
+        var drug = Ext.create('RaxaEmr.Pharmacy.model.Drug');
         drug.set('drug', 'testdrug');
-        drug.set('mims', 'testdrug');
+        drug.set('mimsReference', 'testdrug');
         drug.set('form', 'testdrug');
-        drug.set('pack', 'testdrug');
-        drug.set('di', 'testdrug');
-        drug.set('streat', 'testdrug');
+        drug.set('packSize', 'testdrug');
+        drug.set('dispencingInstruct', 'testdrug');
+        drug.set('sideTreatment', 'testdrug');
         drug.set('dosage', 'testdrug');
         mainController.launch(Form, drug.data)
-        var find = Ext.getStore('drugStore').find('drug', 'lol', 0, false, false, true);
+        var find = Ext.getStore('drugStore').find('drug', 'testdrug', 0, false, false, true);
         expect(find).toBeGreaterThan(-1);
 
     });
