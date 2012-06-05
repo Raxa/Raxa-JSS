@@ -135,4 +135,23 @@ public class HibernatePatientListDAOTest extends BaseModuleContextSensitiveTest 
 		String name = dao.getPatientList(1).getName();
 		assertEquals(name, "NewNameList");
 	}
+	
+	/**
+	 * Test of getAllPatientList method, of class HibernatePatientListDAO.
+	 */
+	@Test
+	public void testGetAllPatientList_shouldReturnUnretiredPatientList() {
+		List<PatientList> allPatientList = dao.getAllPatientList(false);
+		assertEquals(allPatientList.size(), 2);
+	}
+	
+	/**
+	 * Test of getAllPatientList method, of class HibernatePatientListDAO.
+	 */
+	@Test
+	public void testGetAllPatientList_shouldReturnAllPatientListIncludingRetired() {
+		List<PatientList> allPatientList = dao.getAllPatientList(true);
+		assertEquals(allPatientList.size(), 3);
+	}
+	
 }

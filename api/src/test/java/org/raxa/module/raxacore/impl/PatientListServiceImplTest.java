@@ -438,4 +438,22 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 		PatientList result = s.getPatientList(2);
 		assertEquals(null, result);
 	}
+	
+	/**
+	 * Test of getAllPatientList method, of class PatientListService.
+	 */
+	@Test
+	public void testGetAllPatientList_shouldReturnUnretiredPatientList() {
+		List<PatientList> allPatientList = s.getAllPatientList(false);
+		assertEquals(allPatientList.size(), 2);
+	}
+	
+	/**
+	 * Test of getAllPatientList method, of class HibernatePatientListDAO.
+	 */
+	@Test
+	public void testGetAllPatientList_shouldReturnAllPatientListIncludingRetired() {
+		List<PatientList> allPatientList = s.getAllPatientList(true);
+		assertEquals(allPatientList.size(), 3);
+	}
 }

@@ -88,6 +88,14 @@ public class PatientListServiceImpl implements PatientListService {
 	}
 	
 	/**
+	 * @see org.raxa.module.raxacore.PatientListService#getAllPatientList
+	 */
+	@Override
+	public List<PatientList> getAllPatientList(boolean includeRetired) {
+		return dao.getAllPatientList(includeRetired);
+	}
+	
+	/**
 	 * Parses a string into a date
 	 *
 	 * @param str String to be parsed (must be iso format)
@@ -103,10 +111,10 @@ public class PatientListServiceImpl implements PatientListService {
 				return date;
 			}
 			catch (Exception ex) {
-                log.error(ex.getMessage()+ " Error parsing string " + str + " into Date");
-            }
+				log.error(ex.getMessage() + " Error parsing string " + str + " into Date");
+			}
 		}
-        log.error("Date string is malformed");
+		log.error("Date string is malformed");
 		return null;
 	}
 	
@@ -213,4 +221,5 @@ public class PatientListServiceImpl implements PatientListService {
 	public void onShutdown() {
 		log.info("Stopping patient list service");
 	}
+	
 }

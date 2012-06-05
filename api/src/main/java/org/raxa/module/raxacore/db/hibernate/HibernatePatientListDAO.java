@@ -111,6 +111,18 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	}
 	
 	/**
+	 * @see org.raxa.module.db.PatientListDAO#getAllPatientList()
+	 */
+	@Override
+	public List<PatientList> getAllPatientList(boolean includeRetired) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
+		if (includeRetired == false) {
+			criteria.add(Restrictions.eq("retired", false));
+		}
+		return criteria.list();
+	}
+	
+	/**
 	 * @see org.raxa.module.db.PatientListDAO#updatePatientList(Integer)
 	 */
 	@Override
