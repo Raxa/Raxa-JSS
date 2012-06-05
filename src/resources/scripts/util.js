@@ -8,6 +8,7 @@ if (localStorage.getItem("host") == null) {
 var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 5000;
+var updateUITime = 2000;
 var Util = {
     /**
      *Returns the value of TimeoutLimit for login timeout 
@@ -30,6 +31,13 @@ var Util = {
         return headers;
     },
 
+    /**
+     * Returns time for updating all most of the UI components
+     * @return time for updating UI components
+     */
+    getUpdateUITime: function () {
+        return updateUITime;
+    },
     /**
      * Logout the current user. Ends the current session
      */
