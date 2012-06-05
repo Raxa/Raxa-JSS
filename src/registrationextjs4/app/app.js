@@ -1,13 +1,13 @@
 Ext.Loader.setConfig({
-	enabled: true
+    enabled: true
 });
 
 Ext.application({
-	name: 'Registration',
-	views: ['BMICalc', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen'],
-	controllers: ['BMI'],
+    name: 'Registration',
+    views: ['BMICalc', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen'],
+    controllers: ['BMI'],
 
-	launch: function () {
-		Ext.create('Registration.view.Viewport');
-	}
+    launch: function () {
+        Ext.create('Registration.view.Viewport');
+    }
 });
