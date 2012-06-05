@@ -92,7 +92,7 @@ Ext.define('Registration.controller.BMI', {
                 status = 'Very Severely Obese';
             }
 
-            if (bmi_rounded > 60.00 || bmi_rounded < 0.00) {
+            if (bmi_rounded < 0.00) {
                 status = 'Height & Weight combination is Illegal! Please check the Values';
                 bmi_rounded = 'Illegal';
                 bmi = 'Illegal';
