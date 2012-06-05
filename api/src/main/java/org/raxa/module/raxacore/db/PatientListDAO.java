@@ -77,6 +77,14 @@ public interface PatientListDAO {
 	public List<PatientList> getPatientListByName(String name);
 	
 	/**
+	 * Get all {@link PatientList}
+	 * 
+	 * @return List of PatientLists
+	 * @should get all patient lists
+	 */
+	public List<PatientList> getAllPatientList(boolean includeRetired);
+	
+	/**
 	 * Update PatientList
 	 * @return {@link PatientList}
 	 * @should update a PatientList

@@ -79,6 +79,14 @@ public interface PatientListService extends OpenmrsService {
 	public List<PatientList> getPatientListByEncounterType(EncounterType encounterType);
 	
 	/**
+	 * Gets all PatientLists
+	 *
+	 * @return list of PatientLists
+	 */
+	@Authorized( { "View Patient Lists" })
+	public List<PatientList> getAllPatientList(boolean includeRetired);
+	
+	/**
 	 * Gets all patients in PatientList
 	 *
 	 * @param patientList
