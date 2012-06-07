@@ -1,0 +1,124 @@
+[{
+    "uuid": "6a8d146d-ac54-4ab3-a10c-3513f3dac88e",
+    "name": "Screener List",
+    "description": "Patients who have been registered but not screened",
+    "searchQuery": "?encounterType=6a8d146d-ac54-4ab3-a22b-3513f3dac88e",
+    "id": 1,
+    "Patients": [{
+        "uuid": "b0763e6d-95e7-11e1-beba-4dc2e8449b3e",
+        "display": "Mr.JohnDPatient",
+        "gender": "M",
+        "age": 37,
+        "id": 1,
+        "encounters": [{
+            "uuid": "6a8d146d-ac54-4ab3-a02b-3513f3dac88e",
+            "display": "ADULTINITIAL05/05/2012",
+            "encounterType": "6a8d146d-ac54-4ab3-a22b-3513f3dac88e",
+            "encounterDatetime": "2012-05-05T00: 00: 00.000+0400",
+            "id": 1,
+            "obs": [{
+                "uuid": "7d74f925-231q-4b15-8873-815ebc401e45",
+                "display": "HEIGHT(CM)=17.0",
+                "links": "tok21-block-tok",
+                "id": 1
+            }, {
+                "uuid": "2283b156-fef7-4887-bea8-957c37a80656",
+                "display": "WEIGHT(KG)=67.0",
+                "links": "tok22-block-tok",
+                "id": 2
+            }, {
+                "uuid": "2283b155-fef7-4887-bea8-957c37a80345",
+                "display": "BMI(KG/M^2)=19.3",
+                "links": "tok23-block-tok",
+                "id": 3
+            }]
+        }]
+    }, {
+        "uuid": "b0766e6d-95e7-11e1-beba-4dc2e8449b3e",
+        "display": "Mrs.AnnaHPatient",
+        "gender": "F",
+        "age": 33,
+        "id": 2,
+        "encounters": [{
+            "uuid": "6a8d147d-ac54-4ab3-a02b-3513f3dac88e",
+            "display": "ADULTINITIAL05/05/2012",
+            "encounterType": "",
+            "encounterDatetime": "2012-05-12T00: 00: 00.000+0437",
+            "id": 1,
+            "obs": [{
+                "uuid": "7d74f875-780b-4e15-8673-815ebc401c05",
+                "display": "HEIGHT(CM)=107.0",
+                "links": "tok1-block-tok",
+                "id": 1
+            }, {
+                "uuid": "12383b156-fef7-4887-bea8-957c37a80796",
+                "display": "WEIGHT(KG)=35.0",
+                "links": "tok2-block-tok",
+                "id": 2
+            }, {
+                "uuid": "2283b155-fif0-4887-bea8-957c37a80276",
+                "display": "BMI(KG/M^2)=23.0",
+                "links": "tok6-block-tok",
+                "id": 3
+            }]
+        }]
+    }, {
+        "uuid": "b0764e6d-95e7-11e1-beba-4dc2e8449b3e",
+        "display": "Mrs.AlisaSPatient",
+        "gender": "F",
+        "age": 29,
+        "id": 3,
+        "encounters": [{
+            "uuid": "6a8d147d-ac54-4ab3-a02b-3513f3dac88e",
+            "display": "ADULTINITIAL05/05/2012",
+            "encounterType": "",
+            "encounterDatetime": "2012-05-12T00: 00: 00.000+0437",
+            "id": 1,
+            "obs": [{
+                "uuid": "7d74f925-780b-4b15-8873-815ebc401c05",
+                "display": "HEIGHT(CM)=177.0",
+                "links": "tok6-block-tok",
+                "id": 1
+            }, {
+                "uuid": "2283b156-fef7-4887-bea8-957c37a80796",
+                "display": "WEIGHT(KG)=67.0",
+                "links": "tok6-block-tok",
+                "id": 2
+            }, {
+                "uuid": "2283b155-fef7-4887-bea8-957c37a80296",
+                "display": "BMI(KG/M^2)=21.5",
+                "links": "tok6-block-tok",
+                "id": 3
+            }]
+        }]
+    }, {
+        "uuid": "b0765e6d-95e7-11e1-beba-4dc2e8449b3e",
+        "display": "Mr.ShaunMPatient",
+        "gender": "M",
+        "age": 34,
+        "id": 4,
+        "encounters": [{
+            "uuid": "6a8d148d-ac54-4ab3-a02b-3513f3dac88e",
+            "display": "ADULTINITIAL05/05/2012",
+            "encounterType": "",
+            "encounterDatetime": "2012-06-02T00:00:00.000+0411",
+            "id": 1,
+            "obs": [{
+                "uuid": "7d74f925-780b-4b15-8873-815ebc401c05",
+                "display": "HEIGHT(CM)=151.0",
+                "links": "tok6-block-tok",
+                "id": 1
+            }, {
+                "uuid": "2283b157-fef7-4887-bea8-957c37a80796",
+                "display": "WEIGHT(KG)=45.0",
+                "links": "tok6-block-tok",
+                "id": 2
+            }, {
+                "uuid": "2283b155-fef7-4887-bea8-957c37a80496",
+                "display": "BMI(KG/M^2)=24.53",
+                "links": "tok6-block-tok",
+                "id": 3
+            }]
+        }]
+    }]
+}]
