@@ -1,0 +1,41 @@
+[{
+    "id": 0,
+    "lastname": "Clemens",
+    "firstname": "Samuel",
+    "doctorid": -1
+}, {
+    "id": 1,
+    "lastname": "Flava",
+    "firstname": "Flave",
+    "doctorid": -1
+}, {
+    "id": 2,
+    "lastname": "Bertha",
+    "firstname": "Big",
+    "doctorid": 0
+}, {
+    "id": 3,
+    "lastname": "Rosewell",
+    "firstname": "Sun",
+    "doctorid": -1
+}, {
+    "id": 4,
+    "lastname": "Baxter",
+    "firstname": "Evan",
+    "doctorid": 0
+}, {
+    "id": 5,
+    "lastname": "Argo",
+    "firstname": "Naut",
+    "doctorid": -1
+}, {
+    "id": 6,
+    "lastname": "Finch",
+    "firstname": "Atticus",
+    "doctorid": -1
+}, {
+    "id": 7,
+    "lastname": "Junior",
+    "firstname": "Carl",
+    "doctorid": 2
+}]
