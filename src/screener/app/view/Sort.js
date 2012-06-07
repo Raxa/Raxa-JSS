@@ -23,7 +23,12 @@ Ext.define("Screener.view.Sort", {
             id: 'sortByFIFOButton',
             text: 'Sort by FIFO',
             ui: 'round'
-        }, ]
+        }, {
+            xtype: 'button',
+            id: 'sortByBMIButton',
+            text: 'Sort By BMI',
+            ui: 'round'
+        }]
     },
     saveForm: function () {
         return this.getValues();
