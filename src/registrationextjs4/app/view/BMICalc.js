@@ -35,7 +35,6 @@ Ext.define('Registration.view.BMICalc', {
                             fieldLabel: 'Height',
                             id: 'heightIDcm',
                             emptyText: 'Enter Height in cm',
-                            //							value: '150',
                             labelPad: 20,
                             labelWidth: 70,
                             labelAlign: 'right',
@@ -49,7 +48,6 @@ Ext.define('Registration.view.BMICalc', {
                             fieldLabel: 'Weight',
                             id: 'weightIDkg',
                             emptyText: 'Enter Weight in Kg',
-                            //							value: '50',
                             labelPad: 20,
                             labelWidth: 70,
                             labelAlign: 'right',
@@ -72,8 +70,16 @@ Ext.define('Registration.view.BMICalc', {
                         labelStyle: 'font-size:200%',
                         labelWidth: 70
                     }, {
-                        xtype: 'label',
-                        html: '<div align="center"><b>BMI Index</div>'
+                        xtype: 'fieldcontainer',
+                        maintainFlex: true,
+                        layout: {
+                            pack: 'center',
+                            type: 'hbox'
+                        },
+                        items: [{
+                            xtype: 'label',
+                            text: 'BMI Index'
+                        }]
                     }, {
                         xtype: 'panel',
                         height: 40,
@@ -89,9 +95,8 @@ Ext.define('Registration.view.BMICalc', {
                             id: 'BMISliderID',
                             disabledCls: 'x-form-readonly',
                             readOnly: true,
-                            value: 22.22,
                             minValue: 1,
-                            maxValue: 60
+                            maxValue: BMI_MAX
                         }
                     }, {
                         xtype: 'fieldcontainer',

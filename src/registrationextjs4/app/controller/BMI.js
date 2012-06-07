@@ -57,14 +57,6 @@ Ext.define('Registration.controller.BMI', {
             var height_m = height_cm / 100; //Convert cm in to m
             var bmi = (weight_kg) / (height_m * height_m); //BMI Calculation
             var bmi_rounded = Math.round(bmi * 100) / 100; //Rounded till 2 digits
-            // Bmi status from WHO Standards
-            var WHO_BMI_VSUNDERWEIGHT = 15;
-            var WHO_BMI_SUNDERWEIGHT = 16;
-            var WHO_BMI_UNDERWEIGHT = 18.5;
-            var WHO_BMI_NORMAL = 25;
-            var WHO_BMI_OVERWEIGHT = 30;
-            var WHO_BMI_OBESE = 35;
-            var WHO_BMI_SOBESE = 40;
             var status = '';
 
             if (bmi < WHO_BMI_VSUNDERWEIGHT) {
@@ -92,7 +84,7 @@ Ext.define('Registration.controller.BMI', {
                 status = 'Very Severely Obese';
             }
 
-            if (bmi_rounded < 0.00) {
+            if (bmi_rounded > BMI_MAX || bmi_rounded < 0.00) {
                 status = 'Height & Weight combination is Illegal! Please check the Values';
                 bmi_rounded = 'Illegal';
                 bmi = 'Illegal';

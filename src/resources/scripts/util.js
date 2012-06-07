@@ -8,15 +8,26 @@ if (localStorage.getItem("host") == null) {
 var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 5000;
+
+//BMI Variables
+var WHO_BMI_VSUNDERWEIGHT = 15;
+var WHO_BMI_SUNDERWEIGHT = 16;
+var WHO_BMI_UNDERWEIGHT = 18.5;
+var WHO_BMI_NORMAL = 25;
+var WHO_BMI_OVERWEIGHT = 30;
+var WHO_BMI_OBESE = 35;
+var WHO_BMI_SOBESE = 40;
+var BMI_MAX = 60.0;
+
 var Util = {
     /**
      *Returns the value of TimeoutLimit for login timeout 
      *@return timeoutLimit for timeout in login 
      */
-    getTimeoutLimit: function() {
+    getTimeoutLimit: function () {
         return timeoutLimit;
     },
-    
+
     /**
      * Returns all the headers required for Basic Authenticated REST calls
      * @return headers object that includes Authorization, Accept and Content-Type
