@@ -58,17 +58,18 @@ Ext.define('Registration.view.BMICalc', {
                             text: 'Kg'
                         }]
                     }, {
-                        xtype: 'textfield',
-                        height: 40,
+                        xtype: 'numberfield',
                         width: 140,
-                        fieldStyle: 'font-size:150%',
                         fieldLabel: 'BMI',
-                        emptyText: 'Wait',
+                        emptyText: 'BMI Value',
                         id: 'BMITextFieldID',
                         readOnly: true,
                         labelAlign: 'right',
-                        labelStyle: 'font-size:200%',
-                        labelWidth: 70
+                        labelWidth: 70,
+                        hideTrigger: true,
+                        keyNavEnabled: false,
+                        mouseWheelEnabled: false,
+						nanText: 'Invalid Input'
                     }, {
                         xtype: 'fieldcontainer',
                         maintainFlex: true,
