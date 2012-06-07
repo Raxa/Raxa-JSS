@@ -41,7 +41,26 @@ Ext.define('Registration.view.SearchPart1', {
                             fieldLabel: 'Old Patient Identifier',
                             flex: 1,
                             emptyText: 'Old Patient Identifier',
-                            allowBlank: true
+                        }]
+                    },{
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Patient Registration Number',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        labelAlign: 'left',
+                        labelPad: 20,
+                        labelWidth: 180,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            name: 'Patient Identifier',
+                            id: 'PatientIdentifierSearch',
+                            fieldLabel: 'Patient Identifier',
+                            flex: 1,
+                            emptyText: 'Patient Identifier',
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -61,14 +80,12 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'patientFirstNameSearch',
                             emptyText: 'Patient\'s First Name',
                             flex: 1,
-                            allowBlank: false
                         }, {
                             name: 'lastName',
                             emptyText: 'Patient\'s Last Name',
                             id: 'PatientLastNameSearch',
                             flex: 1,
                             margins: '0 0 0 6',
-                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -87,18 +104,14 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'firstName',
                             emptyText: 'Father/Husband\'sFirst Name',
                             id: 'relativeFirstNameSearch',
-                            flex: 1,
-
-                            allowBlank: false
+                            flex: 1
                         }, {
                             name: 'lastName',
                             emptyText: 'Last Name',
                             id: 'relativeLastSearch',
                             flex: 1,
                             margins: '0 0 0 6',
-
-                            allowBlank: false
-                        }]
+                            }]
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Date of Birth',
@@ -119,8 +132,7 @@ Ext.define('Registration.view.SearchPart1', {
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
-                            anchor: '75%',
-                            allowBlank: true
+                            anchor: '75%'
                         }
                         ]
                     },{
@@ -178,7 +190,7 @@ Ext.define('Registration.view.SearchPart1', {
                         text: 'Search',
                         handler: function () {
                             var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(5); //going to Search part-2 page
+                            l.setActiveItem(5); //going to Search part-2 page (showing result list)
                         }
                     }, {
                         xtype: 'button',
@@ -192,4 +204,4 @@ Ext.define('Registration.view.SearchPart1', {
         };
         this.callParent();
     }
-});
+});f
