@@ -3,8 +3,9 @@ Ext.define('Screener.store.DoctorList', {
     config: {
         model: 'Screener.model.DoctorList',
         proxy: {
-            type: 'ajax',
-            url: 'data/doctorList.json',
+            type: 'rest',
+            url: HOST +'/ws/rest/v1/provider',
+            headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json',
                 rootProperty: 'results'
