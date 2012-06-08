@@ -17,7 +17,7 @@ Ext.define('Screener.model.PatientList', {
             name: 'id',
             type: 'int'
         }, {
-            name: 'Patients',
+            name: 'patients',
             model: 'Screener.model.Patients'
         }]
     }

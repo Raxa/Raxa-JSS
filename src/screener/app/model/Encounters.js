@@ -18,8 +18,8 @@ Ext.define('Screener.model.Encounters', {
             name: 'id',
             type: 'int'
         }, {
-            name: 'Obs',
-            model: 'Screener.model.Obs'
+            name: 'obs',
+            model: 'Screener.model.Observation'
         }]
     }
 

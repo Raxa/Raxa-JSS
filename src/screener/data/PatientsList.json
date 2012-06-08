@@ -4,7 +4,7 @@
     "description": "Patients who have been registered but not screened",
     "searchQuery": "?encounterType=6a8d146d-ac54-4ab3-a22b-3513f3dac88e",
     "id": 1,
-    "Patients": [{
+    "patients": [{
         "uuid": "b0763e6d-95e7-11e1-beba-4dc2e8449b3e",
         "display": "Mr.JohnDPatient",
         "gender": "M",

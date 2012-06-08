@@ -1,4 +1,4 @@
-Ext.define('Screener.model.Obs', {
+Ext.define('Screener.model.Observation', {
     extend: 'Ext.data.Model',
     config: {
         field: [{
