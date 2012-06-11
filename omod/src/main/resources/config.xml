@@ -59,7 +59,4 @@
     <mappingFiles>
         ${omodHbmConfig}
     </mappingFiles>
-    
-    
-	
 </module>

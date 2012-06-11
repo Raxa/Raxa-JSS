@@ -15,7 +15,9 @@
             Schema for raxacore_patient_list table
         </comment>
         <createTable tableName="raxacore_patient_list">
-            <column name="patient_list_id" type="int"/>
+            <column name="patient_list_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
             <column name="name" type="varchar(255)"/>
             <column name="description" type="varchar(2000)"/>
             <column name="search_query" type="varchar(1000)"/>

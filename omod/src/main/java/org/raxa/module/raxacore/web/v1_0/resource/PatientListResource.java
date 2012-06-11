@@ -11,15 +11,17 @@
  */
 package org.raxa.module.raxacore.web.v1_0.resource;
 
+import java.util.List;
+import org.openmrs.Patient;
 import org.openmrs.annotation.Handler;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
+import org.openmrs.module.webservices.rest.web.annotation.PropertyGetter;
 import org.openmrs.module.webservices.rest.web.annotation.Resource;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
-import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
 import org.openmrs.module.webservices.rest.web.resource.impl.MetadataDelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
@@ -35,6 +37,11 @@ import org.raxa.module.raxacore.PatientListService;
 @Handler(supports = PatientList.class, order = 0)
 public class PatientListResource extends MetadataDelegatingCrudResource<PatientList> {
 	
+	@PropertyGetter("patients")
+	public List<Patient> getPatients(PatientList patientList) {
+		return getPatientListService().getPatientsInPatientList(patientList);
+	}
+	
 	private PatientListService getPatientListService() {
 		return Context.getService(PatientListService.class);
 	}
@@ -47,20 +54,24 @@ public class PatientListResource extends MetadataDelegatingCrudResource<PatientL
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
 		if (rep instanceof DefaultRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("uuid");
+			description.addProperty("display", findMethod("getDisplayString"));
 			description.addProperty("name");
 			description.addProperty("description");
-			description.addProperty("display", findMethod("getDisplayString"));
 			description.addProperty("searchQuery");
+			//description.addProperty("patients", Representation.REF);
 			description.addProperty("retired");
 			description.addSelfLink();
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			return description;
 		} else if (rep instanceof FullRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("uuid");
+			description.addProperty("display", findMethod("getDisplayString"));
 			description.addProperty("name");
 			description.addProperty("description");
-			description.addProperty("display", findMethod("getDisplayString"));
 			description.addProperty("searchQuery");
+			//description.addProperty("patients", Representation.DEFAULT);
 			description.addProperty("retired");
 			description.addProperty("auditInfo", findMethod("getAuditInfo"));
 			description.addSelfLink();
@@ -97,7 +108,7 @@ public class PatientListResource extends MetadataDelegatingCrudResource<PatientL
 	
 	@Override
 	public PatientList getByUniqueId(String uuid) {
-		return Context.getService(PatientListService.class).getPatientListByUuid(uuid);
+		return getPatientListService().getPatientListByUuid(uuid);
 	}
 	
 	@Override
@@ -113,7 +124,7 @@ public class PatientListResource extends MetadataDelegatingCrudResource<PatientL
 	
 	@Override
 	public PatientList save(PatientList patientList) {
-		return Context.getService(PatientListService.class).savePatientList(patientList);
+		return getPatientListService().savePatientList(patientList);
 	}
 	
 	@Override
@@ -126,4 +137,13 @@ public class PatientListResource extends MetadataDelegatingCrudResource<PatientL
 		return new NeedsPaging<PatientList>(getPatientListService().getPatientListByName(query), context);
 	}
 	
+	@Override
+	public String getDisplayString(PatientList delegate) {
+		return delegate.getName() + " - " + delegate.getDescription();
+	}
+	
+	@Override
+	public String getResourceVersion() {
+		return "1.0";
+	}
 }

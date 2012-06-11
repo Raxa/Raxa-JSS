@@ -111,7 +111,7 @@ public class PatientListServiceImpl implements PatientListService {
 				return date;
 			}
 			catch (Exception ex) {
-				log.error(ex.getMessage() + " Error parsing string " + str + " into Date");
+				//log.error(ex.getMessage() + " Error parsing string " + str + " into Date");
 			}
 		}
 		log.error("Date string is malformed");
