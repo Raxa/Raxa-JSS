@@ -12,6 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script initiates the registration module
  */
 Ext.Loader.setConfig({
     enabled: true
@@ -19,7 +21,7 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Registration',
-    views: ['BMICalc', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen'],
+    views: ['BMICalculator', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen'],
     controllers: ['BMI'],
 
     launch: function () {

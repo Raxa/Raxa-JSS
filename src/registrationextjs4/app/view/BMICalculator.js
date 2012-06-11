@@ -12,10 +12,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script defines the view BMICalculator of the registration module
  */
-Ext.define('Registration.view.BMICalc', {
+Ext.define('Registration.view.BMICalculator', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.bmiCalculate',
+    alias: 'widget.bmicalculator',
     border: 0,
     padding: 10,
     autoScroll: true,
@@ -153,7 +155,7 @@ Ext.define('Registration.view.BMICalc', {
                         text: 'Submit',
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.HOME.value); //Going Back to Home Page - BMI Value to be Posted Here
+                            l.setActiveItem(REG_PAGES.HOME.value); //Going Back to Home Page - BMI to be Posted Here
                         }
                     }]
                 }]

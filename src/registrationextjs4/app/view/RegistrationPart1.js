@@ -12,6 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script defines the view RegistrationPart1 of the registration module
  */
 Ext.define('Registration.view.RegistrationPart1', {
     extend: 'Ext.panel.Panel',
@@ -267,7 +269,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         width: 60,
                         text: 'Next',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
+                            var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.REG_2.value); //Going to Registration Part-2 Page
                         }
                     }, {

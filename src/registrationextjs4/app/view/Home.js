@@ -12,6 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script defines the view Home of the registration module
  */
 Ext.define('Registration.view.Home', {
     extend: 'Ext.panel.Panel',
@@ -73,7 +75,7 @@ Ext.define('Registration.view.Home', {
                     width: 300,
                     text: 'Register New Patient',
                     handler: function () {
-                        var l = Ext.getCmp('mainregarea').getLayout();
+                        var l = Ext.getCmp('mainRegArea').getLayout();
                         l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
                     }
                 }, {

@@ -12,16 +12,18 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script defines the controller BMI of the registration module
  */
 Ext.define('Registration.controller.BMI', {
     extend: 'Ext.app.Controller',
-    views: ['BMICalc', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen', 'Viewport'],
+    views: ['BMICalculator', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen', 'Viewport'],
     controllers: ['BMI'],
     init: function () {
         console.log('BMI controller init');
-        //On init, check for change of numberfields in the field container heightWeightID in the view with alias bmiCalculate
+        //On init, check for change of numberfields in the field container heightWeightID in the view with alias bmicalculator
         this.control({
-            'bmiCalculate #heightWeightID numberfield': {
+            'bmicalculator #heightWeightID numberfield': {
                 change: {
                     fn: this.getBMIData,
                     buffer: 100
@@ -31,11 +33,11 @@ Ext.define('Registration.controller.BMI', {
         })
     },
 
-    //Get values from view bmiCalculate and call neccessary methods to calculate bmi & display on screen
+    //Get values from view bmicalculator and call neccessary methods to calculate bmi & display on screen
     getBMIData: function () {
         console.log('getBMIData() called');
-        var height_cm = parseInt(Ext.getCmp('heightIDcm').getValue()); //Get height value from view bmiCalculate
-        var weight_kg = parseInt(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view bmiCalculate
+        var height_cm = parseInt(Ext.getCmp('heightIDcm').getValue()); //Get height value from view bmicalculator
+        var weight_kg = parseInt(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view bmicalculator
         var bmiInfo = this.calculateBMI(height_cm, weight_kg); //Calculate bmi
         this.updateBMIDisplay(bmiInfo.status, bmiInfo.bmi); //Update the value displayed
         Ext.getCmp('bmiSliderID').setDisabled(true); //Disable the bmiSlider
@@ -98,11 +100,6 @@ Ext.define('Registration.controller.BMI', {
             if (bmi >= WHO_BMI_SOBESE) {
                 status = 'Very Severely Obese';
             }
-            //If bmi is illegal
-            if (bmi > BMI_MAX || bmi < 0.00) {
-                status = 'Height & Weight combination is Illegal! Please Check the Values';
-                bmi = 'Illegal';
-            }
             return {
                 status: status,
                 bmi: bmi
@@ -112,6 +109,7 @@ Ext.define('Registration.controller.BMI', {
 
     //Updates the bmi status message and also updates the bmi value displayed in the numberfield and slider
     updateBMIDisplay: function (bmiStatusText, bmi) {
+        console.log('updateBMIDisplay() called');
         Ext.getCmp('bmiStatusID').setValue(bmiStatusText); //update bmi status
         Ext.getCmp('bmiNumberfieldID').setValue(bmi); //update bmi numberfield
         Ext.getCmp('bmiSliderID').setValue(bmi); //update bmi slider

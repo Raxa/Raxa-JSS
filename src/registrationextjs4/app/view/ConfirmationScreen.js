@@ -12,6 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script defines the view ConfirmationScreen of the registration module
  */
 Ext.define('Registration.view.ConfirmationScreen', {
     extend: 'Ext.panel.Panel',
@@ -340,7 +342,7 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         width: 120,
                         text: 'Submit and Confirm',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
+                            var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.BMI_CALC.value); //Going to BMI Page
                         }
                     }, {
@@ -349,7 +351,7 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         width: 60,
                         text: 'Cancel',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
+                            var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
                         }
                     }]
