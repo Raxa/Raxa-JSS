@@ -202,7 +202,7 @@ Ext.define("Screener.controller.Application", {
         this.getDoctorList().deselectAll();
         this.getView().push(this.patientView);
         this.updatePatientsWaitingTitle();
-        setInterval(this.updatePatientsWaitingTitle, Util.getUpdateUITime());
+        setInterval(this.updatePatientsWaitingTitle, Util.UITIME);
     },
     //function to show screen with doctor list
     showDoctors: function () {
