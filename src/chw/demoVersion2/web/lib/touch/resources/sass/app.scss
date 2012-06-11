@@ -1,0 +1,30 @@
+// 1. Variable overrides, example:
+// $base-color: #00ced1;
+$base-color: #005D5E;
+$base_gradient: "matte";
+ 
+// 2. Include Sencha Touch styles
+@import 'sencha-touch/default/all';
+@include sencha-panel;
+@include sencha-buttons;
+@include sencha-sheet;
+@include sencha-picker;
+@include sencha-toolbar-forms;
+@include sencha-tabs;
+@include sencha-toolbar;
+@include sencha-carousel;
+@include sencha-indexbar;
+@include sencha-list;
+@include sencha-layout;
+@include sencha-form;
+@include sencha-loading-spinner;
+@include sencha-button-ui('aqua', #005D5E, 'glossy');
+ 
+// 3. Define custom styles (can use SASS/Compass), example:
+// .mybox {
+//     @include border-radius(4px);
+// }
+
+body {
+	font-family: "Gudea";
+}

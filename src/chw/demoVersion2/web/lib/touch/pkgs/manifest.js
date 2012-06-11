@@ -1,0 +1,562 @@
+/*
+
+This file is part of Sencha Touch 2
+
+Copyright (c) 2012 Sencha Inc
+
+Contact:  http://www.sencha.com/contact
+
+Commercial Usage
+Licensees holding valid commercial licenses may use this file in accordance with the Commercial Software License Agreement provided with the Software or, alternatively, in accordance with the terms contained in a written agreement between you and Sencha.
+
+If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
+
+*/
+//<debug>
+
+this.ExtBootstrapData = {
+    "nameToAliasesMap":{
+        "Ext.AbstractComponent":[],
+        "Ext.AbstractManager":[],
+        "Ext.ActionSheet":["widget.actionsheet"
+        ],
+        "Ext.Ajax":[],
+        "Ext.Anim":[],
+        "Ext.Audio":["widget.audio"
+        ],
+        "Ext.Button":["widget.button"
+        ],
+        "Ext.Component":["widget.component"
+        ],
+        "Ext.ComponentManager":[],
+        "Ext.ComponentQuery":[],
+        "Ext.Container":["widget.container"
+        ],
+        "Ext.Decorator":[],
+        "Ext.Evented":[],
+        "Ext.Img":["widget.image",
+            "widget.img"
+        ],
+        "Ext.ItemCollection":[],
+        "Ext.Label":["widget.label"
+        ],
+        "Ext.LoadMask":["widget.loadmask"
+        ],
+        "Ext.Map":["widget.map"
+        ],
+        "Ext.Mask":["widget.mask"
+        ],
+        "Ext.Media":["widget.media"
+        ],
+        "Ext.MessageBox":[],
+        "Ext.Panel":["widget.panel"
+        ],
+        "Ext.SegmentedButton":["widget.segmentedbutton"
+        ],
+        "Ext.Sheet":["widget.sheet"
+        ],
+        "Ext.Spacer":["widget.spacer"
+        ],
+        "Ext.Template":[],
+        "Ext.Title":["widget.title"
+        ],
+        "Ext.TitleBar":["widget.titlebar"
+        ],
+        "Ext.Toolbar":["widget.toolbar"
+        ],
+        "Ext.Video":["widget.video"
+        ],
+        "Ext.XTemplate":[],
+        "Ext.XTemplateCompiler":[],
+        "Ext.XTemplateParser":[],
+        "Ext.app.Action":[],
+        "Ext.app.Application":[],
+        "Ext.app.Controller":[],
+        "Ext.app.History":[],
+        "Ext.app.Profile":[],
+        "Ext.app.Route":[],
+        "Ext.app.Router":[],
+        "Ext.behavior.Behavior":[],
+        "Ext.behavior.Draggable":[],
+        "Ext.behavior.Scrollable":[],
+        "Ext.behavior.Translatable":[],
+        "Ext.carousel.Carousel":["widget.carousel"
+        ],
+        "Ext.carousel.Indicator":["widget.carouselindicator"
+        ],
+        "Ext.carousel.Infinite":[],
+        "Ext.carousel.Item":[],
+        "Ext.data.ArrayStore":["store.array"
+        ],
+        "Ext.data.Batch":[],
+        "Ext.data.Connection":[],
+        "Ext.data.DirectStore":["store.direct"
+        ],
+        "Ext.data.Error":[],
+        "Ext.data.Errors":[],
+        "Ext.data.Field":["data.field"
+        ],
+        "Ext.data.JsonP":[],
+        "Ext.data.JsonStore":["store.json"
+        ],
+        "Ext.data.Model":[],
+        "Ext.data.ModelManager":[],
+        "Ext.data.NodeInterface":[],
+        "Ext.data.NodeStore":["store.node"
+        ],
+        "Ext.data.Operation":[],
+        "Ext.data.Request":[],
+        "Ext.data.ResultSet":[],
+        "Ext.data.SortTypes":[],
+        "Ext.data.Store":["store.store"
+        ],
+        "Ext.data.StoreManager":[],
+        "Ext.data.TreeStore":["store.tree"
+        ],
+        "Ext.data.Types":[],
+        "Ext.data.Validations":[],
+        "Ext.data.association.Association":[],
+        "Ext.data.association.BelongsTo":["association.belongsto"
+        ],
+        "Ext.data.association.HasMany":["association.hasmany"
+        ],
+        "Ext.data.association.HasOne":["association.hasone"
+        ],
+        "Ext.data.identifier.Sequential":["data.identifier.sequential"
+        ],
+        "Ext.data.identifier.Simple":["data.identifier.simple"
+        ],
+        "Ext.data.identifier.Uuid":["data.identifier.uuid"
+        ],
+        "Ext.data.proxy.Ajax":["proxy.ajax"
+        ],
+        "Ext.data.proxy.Client":[],
+        "Ext.data.proxy.Direct":["proxy.direct"
+        ],
+        "Ext.data.proxy.JsonP":["proxy.jsonp",
+            "proxy.scripttag"
+        ],
+        "Ext.data.proxy.LocalStorage":["proxy.localstorage"
+        ],
+        "Ext.data.proxy.Memory":["proxy.memory"
+        ],
+        "Ext.data.proxy.Proxy":["proxy.proxy"
+        ],
+        "Ext.data.proxy.Rest":["proxy.rest"
+        ],
+        "Ext.data.proxy.Server":["proxy.server"
+        ],
+        "Ext.data.proxy.SessionStorage":["proxy.sessionstorage"
+        ],
+        "Ext.data.proxy.WebStorage":[],
+        "Ext.data.reader.Array":["reader.array"
+        ],
+        "Ext.data.reader.Json":["reader.json"
+        ],
+        "Ext.data.reader.Reader":[],
+        "Ext.data.reader.Xml":["reader.xml"
+        ],
+        "Ext.data.writer.Json":["writer.json"
+        ],
+        "Ext.data.writer.Writer":["writer.base"
+        ],
+        "Ext.data.writer.Xml":["writer.xml"
+        ],
+        "Ext.dataview.DataView":["widget.dataview"
+        ],
+        "Ext.dataview.IndexBar":[],
+        "Ext.dataview.List":["widget.list"
+        ],
+        "Ext.dataview.ListItemHeader":["widget.listitemheader"
+        ],
+        "Ext.dataview.NestedList":["widget.nestedlist"
+        ],
+        "Ext.dataview.component.Container":[],
+        "Ext.dataview.component.DataItem":["widget.dataitem"
+        ],
+        "Ext.dataview.element.Container":[],
+        "Ext.dataview.element.List":[],
+        "Ext.direct.Event":["direct.event"
+        ],
+        "Ext.direct.ExceptionEvent":["direct.exception"
+        ],
+        "Ext.direct.JsonProvider":["direct.jsonprovider"
+        ],
+        "Ext.direct.Manager":[],
+        "Ext.direct.PollingProvider":["direct.pollingprovider"
+        ],
+        "Ext.direct.Provider":["direct.provider"
+        ],
+        "Ext.direct.RemotingEvent":["direct.rpc"
+        ],
+        "Ext.direct.RemotingMethod":[],
+        "Ext.direct.RemotingProvider":["direct.remotingprovider"
+        ],
+        "Ext.direct.Transaction":["direct.transaction"
+        ],
+        "Ext.dom.CompositeElement":[],
+        "Ext.dom.CompositeElementLite":[],
+        "Ext.dom.Element":["widget.element"
+        ],
+        "Ext.dom.Helper":[],
+        "Ext.dom.Query":[],
+        "Ext.env.Browser":[],
+        "Ext.env.Feature":[],
+        "Ext.env.OS":[],
+        "Ext.event.Controller":[],
+        "Ext.event.Dispatcher":[],
+        "Ext.event.Dom":[],
+        "Ext.event.Event":[],
+        "Ext.event.ListenerStack":[],
+        "Ext.event.Touch":[],
+        "Ext.event.publisher.ComponentDelegation":[],
+        "Ext.event.publisher.ComponentPaint":[],
+        "Ext.event.publisher.ComponentSize":[],
+        "Ext.event.publisher.Dom":[],
+        "Ext.event.publisher.Publisher":[],
+        "Ext.event.publisher.TouchGesture":[],
+        "Ext.event.recognizer.DoubleTap":[],
+        "Ext.event.recognizer.Drag":[],
+        "Ext.event.recognizer.HorizontalSwipe":[],
+        "Ext.event.recognizer.LongPress":[],
+        "Ext.event.recognizer.MultiTouch":[],
+        "Ext.event.recognizer.Pinch":[],
+        "Ext.event.recognizer.Recognizer":[],
+        "Ext.event.recognizer.Rotate":[],
+        "Ext.event.recognizer.SingleTouch":[],
+        "Ext.event.recognizer.Tap":[],
+        "Ext.event.recognizer.Touch":[],
+        "Ext.field.Checkbox":["widget.checkboxfield"
+        ],
+        "Ext.field.DatePicker":["widget.datepickerfield"
+        ],
+        "Ext.field.Email":["widget.emailfield"
+        ],
+        "Ext.field.Field":["widget.field"
+        ],
+        "Ext.field.Hidden":["widget.hiddenfield"
+        ],
+        "Ext.field.Input":["widget.input"
+        ],
+        "Ext.field.Number":["widget.numberfield"
+        ],
+        "Ext.field.Password":["widget.passwordfield"
+        ],
+        "Ext.field.Radio":["widget.radiofield"
+        ],
+        "Ext.field.Search":["widget.searchfield"
+        ],
+        "Ext.field.Select":["widget.selectfield"
+        ],
+        "Ext.field.Slider":["widget.sliderfield"
+        ],
+        "Ext.field.Spinner":["widget.spinnerfield"
+        ],
+        "Ext.field.Text":["widget.textfield"
+        ],
+        "Ext.field.TextArea":["widget.textareafield"
+        ],
+        "Ext.field.TextAreaInput":["widget.textareainput"
+        ],
+        "Ext.field.Toggle":["widget.togglefield"
+        ],
+        "Ext.field.Url":["widget.urlfield"
+        ],
+        "Ext.form.FieldSet":["widget.fieldset"
+        ],
+        "Ext.form.Panel":["widget.formpanel"
+        ],
+        "Ext.fx.Animation":[],
+        "Ext.fx.Easing":[],
+        "Ext.fx.Runner":[],
+        "Ext.fx.State":[],
+        "Ext.fx.animation.Abstract":[],
+        "Ext.fx.animation.Cube":["animation.cube"
+        ],
+        "Ext.fx.animation.Fade":["animation.fade",
+            "animation.fadeIn"
+        ],
+        "Ext.fx.animation.FadeOut":["animation.fadeOut"
+        ],
+        "Ext.fx.animation.Flip":["animation.flip"
+        ],
+        "Ext.fx.animation.Pop":["animation.pop",
+            "animation.popIn"
+        ],
+        "Ext.fx.animation.PopOut":["animation.popOut"
+        ],
+        "Ext.fx.animation.Slide":["animation.slide",
+            "animation.slideIn"
+        ],
+        "Ext.fx.animation.SlideOut":["animation.slideOut"
+        ],
+        "Ext.fx.easing.Abstract":[],
+        "Ext.fx.easing.Bounce":[],
+        "Ext.fx.easing.BoundMomentum":[],
+        "Ext.fx.easing.EaseIn":["easing.ease-in"
+        ],
+        "Ext.fx.easing.EaseOut":["easing.ease-out"
+        ],
+        "Ext.fx.easing.Linear":["easing.linear"
+        ],
+        "Ext.fx.easing.Momentum":[],
+        "Ext.fx.layout.Card":[],
+        "Ext.fx.layout.card.Abstract":[],
+        "Ext.fx.layout.card.Cover":["fx.layout.card.cover"
+        ],
+        "Ext.fx.layout.card.Cube":["fx.layout.card.cube"
+        ],
+        "Ext.fx.layout.card.Fade":["fx.layout.card.fade"
+        ],
+        "Ext.fx.layout.card.Flip":["fx.layout.card.flip"
+        ],
+        "Ext.fx.layout.card.Pop":["fx.layout.card.pop"
+        ],
+        "Ext.fx.layout.card.Reveal":["fx.layout.card.reveal"
+        ],
+        "Ext.fx.layout.card.Scroll":["fx.layout.card.scroll"
+        ],
+        "Ext.fx.layout.card.Slide":["fx.layout.card.slide"
+        ],
+        "Ext.fx.layout.card.Style":[],
+        "Ext.fx.runner.Css":[],
+        "Ext.fx.runner.CssTransition":[],
+        "Ext.layout.AbstractBox":[],
+        "Ext.layout.Card":["layout.card"
+        ],
+        "Ext.layout.Default":["layout.auto",
+            "layout.default"
+        ],
+        "Ext.layout.Fit":["layout.fit"
+        ],
+        "Ext.layout.HBox":["layout.hbox"
+        ],
+        "Ext.layout.Layout":[],
+        "Ext.layout.VBox":["layout.vbox"
+        ],
+        "Ext.log.Base":[],
+        "Ext.log.Logger":[],
+        "Ext.log.filter.Filter":[],
+        "Ext.log.filter.Priority":[],
+        "Ext.log.formatter.Default":[],
+        "Ext.log.formatter.Formatter":[],
+        "Ext.log.formatter.Identity":[],
+        "Ext.log.writer.Console":[],
+        "Ext.log.writer.DocumentTitle":[],
+        "Ext.log.writer.Remote":[],
+        "Ext.log.writer.Writer":[],
+        "Ext.mixin.Filterable":[],
+        "Ext.mixin.Identifiable":[],
+        "Ext.mixin.Mixin":[],
+        "Ext.mixin.Observable":[],
+        "Ext.mixin.Selectable":[],
+        "Ext.mixin.Sortable":[],
+        "Ext.mixin.Traversable":[],
+        "Ext.navigation.Bar":[],
+        "Ext.navigation.View":["widget.navigationview"
+        ],
+        "Ext.picker.Date":["widget.datepicker"
+        ],
+        "Ext.picker.Picker":["widget.picker"
+        ],
+        "Ext.picker.Slot":["widget.pickerslot"
+        ],
+        "Ext.plugin.ListPaging":["plugin.listpaging"
+        ],
+        "Ext.plugin.PullRefresh":["plugin.pullrefresh"
+        ],
+        "Ext.scroll.Indicator":[],
+        "Ext.scroll.Scroller":[],
+        "Ext.scroll.View":[],
+        "Ext.scroll.indicator.Abstract":[],
+        "Ext.scroll.indicator.CssTransform":[],
+        "Ext.scroll.indicator.Default":[],
+        "Ext.scroll.indicator.ScrollPosition":[],
+        "Ext.slider.Slider":["widget.slider"
+        ],
+        "Ext.slider.Thumb":["widget.thumb"
+        ],
+        "Ext.slider.Toggle":[],
+        "Ext.tab.Bar":["widget.tabbar"
+        ],
+        "Ext.tab.Panel":["widget.tabpanel"
+        ],
+        "Ext.tab.Tab":["widget.tab"
+        ],
+        "Ext.table.Cell":["widget.tablecell"
+        ],
+        "Ext.table.Row":["widget.tablerow"
+        ],
+        "Ext.table.Table":["widget.table"
+        ],
+        "Ext.util.AbstractMixedCollection":[],
+        "Ext.util.Collection":[],
+        "Ext.util.DelayedTask":[],
+        "Ext.util.Draggable":[],
+        "Ext.util.Filter":[],
+        "Ext.util.Format":[],
+        "Ext.util.Geolocation":[],
+        "Ext.util.Grouper":[],
+        "Ext.util.HashMap":[],
+        "Ext.util.LineSegment":[],
+        "Ext.util.MixedCollection":[],
+        "Ext.util.Point":[],
+        "Ext.util.Region":[],
+        "Ext.util.SizeMonitor":[],
+        "Ext.util.Sortable":[],
+        "Ext.util.Sorter":[],
+        "Ext.util.TapRepeater":[],
+        "Ext.util.Translatable":[],
+        "Ext.util.translatable.Abstract":[],
+        "Ext.util.translatable.CssTransform":[],
+        "Ext.util.translatable.ScrollPosition":[],
+        "Ext.viewport.Android":[],
+        "Ext.viewport.Default":["widget.viewport"
+        ],
+        "Ext.viewport.Ios":[],
+        "Ext.viewport.Viewport":[]
+    },
+    "alternateToNameMap":{
+        "Ext.lib.Component":"Ext.Component",
+        "Ext.ComponentMgr":"Ext.ComponentManager",
+        "Ext.lib.Container":"Ext.Container",
+        "Ext.EventedBase":"Ext.Evented",
+        "Ext.lib.Panel":"Ext.Panel",
+        "Ext.Carousel":"Ext.carousel.Carousel",
+        "Ext.Carousel.Indicator":"Ext.carousel.Indicator",
+        "Ext.util.JSONP":"Ext.data.JsonP",
+        "Ext.data.Record":"Ext.data.Model",
+        "Ext.ModelMgr":"Ext.data.ModelManager",
+        "Ext.ModelManager":"Ext.data.ModelManager",
+        "Ext.data.Node":"Ext.data.NodeInterface",
+        "Ext.StoreMgr":"Ext.data.StoreManager",
+        "Ext.data.StoreMgr":"Ext.data.StoreManager",
+        "Ext.StoreManager":"Ext.data.StoreManager",
+        "Ext.data.validations":"Ext.data.Validations",
+        "Ext.data.Association":"Ext.data.association.Association",
+        "Ext.data.BelongsToAssociation":"Ext.data.association.BelongsTo",
+        "Ext.data.HasManyAssociation":"Ext.data.association.HasMany",
+        "Ext.data.HasOneAssociation":"Ext.data.association.HasOne",
+        "Ext.data.HttpProxy":"Ext.data.proxy.Ajax",
+        "Ext.data.AjaxProxy":"Ext.data.proxy.Ajax",
+        "Ext.proxy.ClientProxy":"Ext.data.proxy.Client",
+        "Ext.data.DirectProxy":"Ext.data.proxy.Direct",
+        "Ext.data.ScriptTagProxy":"Ext.data.proxy.JsonP",
+        "Ext.data.LocalStorageProxy":"Ext.data.proxy.LocalStorage",
+        "Ext.data.MemoryProxy":"Ext.data.proxy.Memory",
+        "Ext.data.DataProxy":"Ext.data.proxy.Proxy",
+        "Ext.data.Proxy":"Ext.data.proxy.Proxy",
+        "Ext.data.RestProxy":"Ext.data.proxy.Rest",
+        "Ext.data.ServerProxy":"Ext.data.proxy.Server",
+        "Ext.data.SessionStorageProxy":"Ext.data.proxy.SessionStorage",
+        "Ext.data.WebStorageProxy":"Ext.data.proxy.WebStorage",
+        "Ext.data.ArrayReader":"Ext.data.reader.Array",
+        "Ext.data.JsonReader":"Ext.data.reader.Json",
+        "Ext.data.Reader":"Ext.data.reader.Reader",
+        "Ext.data.DataReader":"Ext.data.reader.Reader",
+        "Ext.data.XmlReader":"Ext.data.reader.Xml",
+        "Ext.data.JsonWriter":"Ext.data.writer.Json",
+        "Ext.data.DataWriter":"Ext.data.writer.Writer",
+        "Ext.data.Writer":"Ext.data.writer.Writer",
+        "Ext.data.XmlWriter":"Ext.data.writer.Xml",
+        "Ext.DataView":"Ext.dataview.DataView",
+        "Ext.IndexBar":"Ext.dataview.IndexBar",
+        "Ext.List":"Ext.dataview.List",
+        "Ext.NestedList":"Ext.dataview.NestedList",
+        "Ext.Direct":"Ext.direct.Manager",
+        "Ext.Direct.Transaction":"Ext.direct.Transaction",
+        "Ext.CompositeElement":"Ext.dom.CompositeElementLite",
+        "Ext.CompositeElementLite":"Ext.dom.CompositeElementLite",
+        "Ext.Element":"Ext.dom.Element",
+        "Ext.EventObject":"Ext.event.Event",
+        "Ext.form.Checkbox":"Ext.field.Checkbox",
+        "Ext.form.DatePicker":"Ext.field.DatePicker",
+        "Ext.form.Email":"Ext.field.Email",
+        "Ext.form.Field":"Ext.field.Field",
+        "Ext.form.Hidden":"Ext.field.Hidden",
+        "Ext.form.Number":"Ext.field.Number",
+        "Ext.form.Password":"Ext.field.Password",
+        "Ext.form.Radio":"Ext.field.Radio",
+        "Ext.form.Search":"Ext.field.Search",
+        "Ext.form.Select":"Ext.field.Select",
+        "Ext.form.Slider":"Ext.field.Slider",
+        "Ext.form.Spinner":"Ext.field.Spinner",
+        "Ext.form.Text":"Ext.field.Text",
+        "Ext.form.TextArea":"Ext.field.TextArea",
+        "Ext.form.Toggle":"Ext.field.Toggle",
+        "Ext.form.Url":"Ext.field.Url",
+        "Ext.form.FormPanel":"Ext.form.Panel",
+        "Ext.fx.animation.FadeIn":"Ext.fx.animation.Fade",
+        "Ext.fx.animation.PopIn":"Ext.fx.animation.Pop",
+        "Ext.fx.animation.SlideIn":"Ext.fx.animation.Slide",
+        "Ext.layout.CardLayout":"Ext.layout.Card",
+        "Ext.layout.AutoContainerLayout":"Ext.layout.Default",
+        "Ext.layout.ContainerLayout":"Ext.layout.Default",
+        "Ext.layout.FitLayout":"Ext.layout.Fit",
+        "Ext.layout.HBoxLayout":"Ext.layout.HBox",
+        "Ext.layout.VBoxLayout":"Ext.layout.VBox",
+        "Ext.util.Observable":"Ext.mixin.Observable",
+        "Ext.NavigationView":"Ext.navigation.View",
+        "Ext.DatePicker":"Ext.picker.Date",
+        "Ext.Picker":"Ext.picker.Picker",
+        "Ext.Picker.Slot":"Ext.picker.Slot",
+        "Ext.util.Indicator":"Ext.scroll.Indicator",
+        "Ext.util.ScrollView":"Ext.scroll.View",
+        "Ext.TabBar":"Ext.tab.Bar",
+        "Ext.TabPanel":"Ext.tab.Panel",
+        "Ext.Tab":"Ext.tab.Tab",
+        "Ext.util.GeoLocation":"Ext.util.Geolocation"
+    }
+};
+
+(function() {
+    var scripts = document.getElementsByTagName('script'),
+        currentScript = scripts[scripts.length - 1],
+        src = currentScript.src,
+        path = src.substring(0, src.lastIndexOf('/') + 1),
+        Loader = Ext.Loader,
+        ClassManager = Ext.ClassManager,
+        data = this.ExtBootstrapData,
+        nameToAliasesMap = data.nameToAliasesMap,
+        alternateToNameMap = data.alternateToNameMap,
+        i, ln, name, aliases;
+
+    if (nameToAliasesMap) {
+        for (name in nameToAliasesMap) {
+            if (nameToAliasesMap.hasOwnProperty(name)) {
+                aliases = nameToAliasesMap[name];
+
+                if (aliases.length > 0) {
+                    for (i = 0,ln = aliases.length; i < ln; i++) {
+                        ClassManager.setAlias(name, aliases[i]);
+                    }
+                }
+                else {
+                    ClassManager.setAlias(name, null);
+                }
+            }
+        }
+    }
+
+    if (alternateToNameMap) {
+        Ext.merge(ClassManager.maps.alternateToName, alternateToNameMap);
+    }
+
+    Loader.setConfig({
+        enabled: true,
+        disableCaching: !/[?&](cache|breakpoint)/i.test(location.search),
+        paths: {
+            'Ext': path + 'src'
+        }
+    });
+
+    try {
+        delete this.ExtBootstrapData;
+    } catch (e) {
+        this.ExtBootstrapData = null;
+    }
+})();
+
+//</debug>
+
+
