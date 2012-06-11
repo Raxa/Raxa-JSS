@@ -110,7 +110,7 @@ var Util = {
     },
 
     //Function to help share Models between ExtJS and Sencha Touch 2.
-    var platformizeModelConfig = function (extJsModelConfig) {
+    platformizeModelConfig : function (extJsModelConfig) {
             if (Ext.versions.extjs) {
                 return extJsModelConfig; // nothing to change, we are on ext
             } else if (Ext.versions.touch) {
@@ -124,5 +124,5 @@ var Util = {
             } else {
                 Ext.Error.raise('Could not recognize Library');
             }
-        };
+        }
 }
