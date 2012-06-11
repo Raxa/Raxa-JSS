@@ -1,3 +1,18 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 Ext.define('Registration.view.RegistrationPart2', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.registrationpart2',
@@ -127,9 +142,8 @@ Ext.define('Registration.view.RegistrationPart2', {
                         text: 'Back',
                         handler: function () {
                             var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(1); //going to registration part-1 page
+                            l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
                         }
-
                     }, {
                         xtype: 'button',
                         margin: '30 0 0 30',
@@ -137,11 +151,8 @@ Ext.define('Registration.view.RegistrationPart2', {
                         text: 'Continue',
                         handler: function () {
                             var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(3); //going to confirmation page
+                            l.setActiveItem(REG_PAGES.CONFIRM.value); //Going to Confirmation Page
                         }
-
-
-
                     }, {
                         xtype: 'button',
                         margin: '30 0 0 30',
@@ -149,7 +160,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                         text: 'Cancel',
                         handler: function () {
                             var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(0); //going to home page
+                            l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
                         }
                     }]
                 }]

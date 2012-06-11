@@ -17,7 +17,20 @@ var WHO_BMI_NORMAL = 25;
 var WHO_BMI_OVERWEIGHT = 30;
 var WHO_BMI_OBESE = 35;
 var WHO_BMI_SOBESE = 40;
-var BMI_MAX = 60.0;
+var BMI_MAX = 100.0;
+var BMI_HEIGHT_MAX = 300;
+var BMI_HEIGHT_MIN = 0;
+var BMI_WEIGHT_MAX = 800;
+var BMI_WEIGHT_MIN = 0;
+
+// Registration Page Numbers
+var REG_PAGES = {
+    HOME : {value: 0, name: "home"}, 
+    REG_1: {value: 1, name: "registrationpart1"}, 
+    REG_2 : {value: 2, name: "registrationpart2"},
+    CONFIRM : {value: 3, name: "confirmationScreen"},
+    BMI_CALC : {value: 4, name: "BMICalculate"}
+    };
 
 var Util = {
     /**

@@ -1,6 +1,21 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 Ext.define('Registration.view.BMICalc', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.BMICalculate',
+    alias: 'widget.bmiCalculate',
     border: 0,
     padding: 10,
     autoScroll: true,
@@ -23,7 +38,7 @@ Ext.define('Registration.view.BMICalc', {
                         text: 'BMI Value'
                     }, {
                         xtype: 'form',
-                        id: 'HtWtID',
+                        id: 'heightWeightID',
                         border: 0,
                         layout: {
                             align: 'stretch',
@@ -31,7 +46,7 @@ Ext.define('Registration.view.BMICalc', {
                         },
                         bodyPadding: 10,
                         items: [{
-                            xtype: 'textfield',
+                            xtype: 'numberfield',
                             fieldLabel: 'Height',
                             id: 'heightIDcm',
                             emptyText: 'Enter Height in cm',
@@ -39,12 +54,16 @@ Ext.define('Registration.view.BMICalc', {
                             labelWidth: 70,
                             labelAlign: 'right',
                             anchor: '95%',
-                            margin: '0 10 0 0'
+                            margin: '0 10 0 0',
+                            hideTrigger: true,
+                            keyNavEnabled: false,
+                            mouseWheelEnabled: false,
+                            nanText: 'Invalid Input'
                         }, {
                             xtype: 'label',
                             text: 'cm'
                         }, {
-                            xtype: 'textfield',
+                            xtype: 'numberfield',
                             fieldLabel: 'Weight',
                             id: 'weightIDkg',
                             emptyText: 'Enter Weight in Kg',
@@ -52,7 +71,11 @@ Ext.define('Registration.view.BMICalc', {
                             labelWidth: 70,
                             labelAlign: 'right',
                             anchor: '95%',
-                            margin: '0 10 0 0'
+                            margin: '0 10 0 0',
+                            hideTrigger: true,
+                            keyNavEnabled: false,
+                            mouseWheelEnabled: false,
+                            nanText: 'Invalid Input'
                         }, {
                             xtype: 'label',
                             text: 'Kg'
@@ -62,14 +85,14 @@ Ext.define('Registration.view.BMICalc', {
                         width: 140,
                         fieldLabel: 'BMI',
                         emptyText: 'BMI Value',
-                        id: 'BMITextFieldID',
+                        id: 'bmiNumberfieldID',
                         readOnly: true,
                         labelAlign: 'right',
                         labelWidth: 70,
                         hideTrigger: true,
                         keyNavEnabled: false,
                         mouseWheelEnabled: false,
-						nanText: 'Invalid Input'
+                        nanText: 'Invalid Input'
                     }, {
                         xtype: 'fieldcontainer',
                         maintainFlex: true,
@@ -93,7 +116,7 @@ Ext.define('Registration.view.BMICalc', {
                         },
                         items: {
                             xtype: 'slider',
-                            id: 'BMISliderID',
+                            id: 'bmiSliderID',
                             disabledCls: 'x-form-readonly',
                             readOnly: true,
                             minValue: 1,
@@ -113,8 +136,8 @@ Ext.define('Registration.view.BMICalc', {
                             hideLabel: 'true'
                         },
                         items: {
-                            name: 'BmiStatus',
-                            id: 'BMIStatusID',
+                            name: 'bmiStatus',
+                            id: 'bmiStatusID',
                             fieldLabel: 'BMI Status',
                             readOnly: true,
                             flex: 1,
@@ -125,12 +148,12 @@ Ext.define('Registration.view.BMICalc', {
                         xtype: 'button',
                         margin: '30 0 0 30',
                         width: 60,
-                        action: 'BMISubmit',
+                        action: 'bmiSubmit',
                         id: 'submitBMI',
                         text: 'Submit',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(0); //going to confirmation page
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.HOME.value); //Going Back to Home Page - BMI Value to be Posted Here
                         }
                     }]
                 }]
