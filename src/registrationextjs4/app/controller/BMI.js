@@ -35,7 +35,6 @@ Ext.define('Registration.controller.BMI', {
 
     //Get values from view bmicalculator and call neccessary methods to calculate bmi & display on screen
     getBMIData: function () {
-        console.log('getBMIData() called');
         var height_cm = parseInt(Ext.getCmp('heightIDcm').getValue()); //Get height value from view bmicalculator
         var weight_kg = parseInt(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view bmicalculator
         var bmiInfo = this.calculateBMI(height_cm, weight_kg); //Calculate bmi
@@ -45,7 +44,6 @@ Ext.define('Registration.controller.BMI', {
 
     //Function to Calculate bmi 
     calculateBMI: function (height_cm, weight_kg) {
-        console.log('calculateBMI() called');
         var bmiErrorHeight = 0; //Variable to check for height error
         var bmiErrorWeight = 0; //Varibale to check for weight error
         if (height_cm <= BMI_HEIGHT_MIN || height_cm > BMI_HEIGHT_MAX) {
@@ -109,7 +107,6 @@ Ext.define('Registration.controller.BMI', {
 
     //Updates the bmi status message and also updates the bmi value displayed in the numberfield and slider
     updateBMIDisplay: function (bmiStatusText, bmi) {
-        console.log('updateBMIDisplay() called');
         Ext.getCmp('bmiStatusID').setValue(bmiStatusText); //update bmi status
         Ext.getCmp('bmiNumberfieldID').setValue(bmi); //update bmi numberfield
         Ext.getCmp('bmiSliderID').setValue(bmi); //update bmi slider
