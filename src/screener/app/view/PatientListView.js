@@ -14,7 +14,7 @@ Ext.define("Screener.view.PatientListView", {
         {
             xtype: 'list',
             id: 'patientList',
-            itemTpl: '{lastname}, {firstname}',
+            itemTpl: '{display}',
             store: Ext.create('Screener.store.Patients', {
                 storeId: 'patientStore'
             }),
