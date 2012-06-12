@@ -21,6 +21,7 @@ Ext.define("Screener.view.PatientListView", {
             items: [{
                 xtype: 'titlebar',
                 docked: 'top',
+                id: 'patientsWaiting',
                 title: 'Patients',
                 items: [{
                     xtype: 'button',

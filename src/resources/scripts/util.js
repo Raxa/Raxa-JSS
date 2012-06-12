@@ -8,15 +8,16 @@ if (localStorage.getItem("host") == null) {
 var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 5000;
+var UITIME = 2000;
 var Util = {
     /**
      *Returns the value of TimeoutLimit for login timeout 
      *@return timeoutLimit for timeout in login 
      */
-    getTimeoutLimit: function() {
+    getTimeoutLimit: function () {
         return timeoutLimit;
     },
-    
+
     /**
      * Returns all the headers required for Basic Authenticated REST calls
      * @return headers object that includes Authorization, Accept and Content-Type
@@ -29,7 +30,6 @@ var Util = {
         }
         return headers;
     },
-
     /**
      * Logout the current user. Ends the current session
      */
@@ -107,5 +107,22 @@ var Util = {
             console.log('6-digit randomly generated Device Id that was stored in localStorage:' + deviceId);
         }
         return deviceId;
-    }
+    },
+
+    //Function to help share Models between ExtJS and Sencha Touch 2.
+    platformizeModelConfig : function (extJsModelConfig) {
+            if (Ext.versions.extjs) {
+                return extJsModelConfig; // nothing to change, we are on ext
+            } else if (Ext.versions.touch) {
+                // transform to Sencha Touch 2 data model
+                var config = {
+                    extend: extJsModelConfig.extend,
+                    config: extJsModelConfig
+                };
+                delete config.config.extend;
+                return config;
+            } else {
+                Ext.Error.raise('Could not recognize Library');
+            }
+        }
 }
