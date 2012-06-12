@@ -85,8 +85,6 @@ describe("Session", function () {
 	it("The entry in properties file does match the label", function() {
 			var displayed = Ext.getCmp('userName').getLabel();
 			var expected = Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label');
-            console.log(displayed);
-			console.log(expected);
 			expect(displayed).toEqual(expected);
         });
     });// this test checks the label of userName is same that in properties file
