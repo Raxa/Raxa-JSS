@@ -9,6 +9,7 @@ Ext.define('Screener.store.Patients', {
         proxy: {
             type: 'ajax',
             // this is a currently a placeholder. It will call all patients name 'john'
+            // TODO: After backend work is done use patient list here
             url: HOST + '/ws/rest/v1/patient?q=john',
             headers: Util.getBasicAuthHeaders(),
             reader: {
