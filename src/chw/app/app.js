@@ -19,14 +19,14 @@ Ext.Loader.setConfig({
 
 Ext.application({
 
-    name: 'demoVersion2',
+    name: 'motechScheduleTracking',
     controllers: ['basic'],
     views: ['loginScreen', 'optionsScreen', 'connectionSettings', 'patientOptions', 'settingsScreen' /*, 'optionsPanel'*/ ],
     models: ['registerModel', 'enrollModel', 'encounterModel'],
     stores: ['registerList', 'enrollList', 'encounterList'],
 
     launch: function () {
-        Ext.create('demoVersion2.view.loginScreen');
+        Ext.create('motechScheduleTracking.view.loginScreen');
     }
 
 });

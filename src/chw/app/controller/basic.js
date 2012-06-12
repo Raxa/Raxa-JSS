@@ -20,7 +20,7 @@ var down_url = "";
 
 
 // current functionality: move between screens
-Ext.define('demoVersion2.controller.basic', {
+Ext.define('motechScheduleTracking.controller.basic', {
 
     extend: 'Ext.app.Controller',
     // requires: '',
@@ -180,34 +180,34 @@ Ext.define('demoVersion2.controller.basic', {
 
             // log into application
             {
-                xclass: 'demoVersion2.view.loginScreen'
+                xclass: 'motechScheduleTracking.view.loginScreen'
             },
 
             // confirm or adjust connection settings
             {
-                xclass: 'demoVersion2.view.connectionSettings'
+                xclass: 'motechScheduleTracking.view.connectionSettings'
             },
 
             // select actions based on button layou
             {
-                xclass: 'demoVersion2.view.optionsScreen'
+                xclass: 'motechScheduleTracking.view.optionsScreen'
             },
             // select actions based on nested tab layout
-            // { xclass : 'demoVersion2.view.optionsPanel'},
+            // { xclass : 'motechScheduleTracking.view.optionsPanel'},
 
             // select form to fill in and submit
             {
-                xclass: 'demoVersion2.view.patientOptions'
+                xclass: 'motechScheduleTracking.view.patientOptions'
             },
 
             // confirm or adjust settings
             {
-                xclass: 'demoVersion2.view.settingsScreen'
+                xclass: 'motechScheduleTracking.view.settingsScreen'
             },
 
             // confirm or adjust study selection
             {
-                xclass: 'demoVersion2.view.studyScreen'
+                xclass: 'motechScheduleTracking.view.studyScreen'
             }
 
             ]
@@ -337,7 +337,7 @@ Ext.define('demoVersion2.controller.basic', {
 
                             } else {
 
-                                var temp = Ext.create('demoVersion2.model.registerModel');
+                                var temp = Ext.create('motechScheduleTracking.model.registerModel');
 
                                 temp.set('mid_reg', values.mid_reg);
                                 temp.set('first', values.first);
@@ -349,7 +349,7 @@ Ext.define('demoVersion2.controller.basic', {
 
                                 console.log(temp);
 
-                                var store = Ext.create('demoVersion2.store.registerList');
+                                var store = Ext.create('motechScheduleTracking.store.registerList');
 
                                 store.add(temp);
                                 store.sync();
@@ -378,7 +378,7 @@ Ext.define('demoVersion2.controller.basic', {
 
                             } else {
 
-                                var temp = Ext.create('demoVersion2.model.enrollModel');
+                                var temp = Ext.create('motechScheduleTracking.model.enrollModel');
 
                                 temp.set('mid_enr', values.mid_enr);
                                 temp.set('phone_enr', values.phone_enr);
@@ -388,7 +388,7 @@ Ext.define('demoVersion2.controller.basic', {
 
                                 console.log(temp);
 
-                                var store = Ext.create('demoVersion2.store.enrollList');
+                                var store = Ext.create('motechScheduleTracking.store.enrollList');
 
                                 store.add(temp);
                                 store.sync();
@@ -413,7 +413,7 @@ Ext.define('demoVersion2.controller.basic', {
 
                             } else {
 
-                                var temp = Ext.create('demoVersion2.model.encounterModel');
+                                var temp = Ext.create('motechScheduleTracking.model.encounterModel');
 
                                 temp.set('mid_enc', values.mid_enc);
                                 temp.set('date', values.date);
@@ -424,7 +424,7 @@ Ext.define('demoVersion2.controller.basic', {
 
                                 console.log(temp);
 
-                                var store = Ext.create('demoVersion2.store.encounterList');
+                                var store = Ext.create('motechScheduleTracking.store.encounterList');
 
                                 store.add(temp);
                                 store.sync();
