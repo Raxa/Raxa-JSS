@@ -4,7 +4,8 @@ describe("Session", function () {
     var mainView = null;
     beforeEach(function () {
         if (!mainController) {
-            mainController = testApp.getController('Session');
+            
+			mainController = testApp.getController('Session');
         }
 
         //creating blank main view for testing
@@ -80,4 +81,12 @@ describe("Session", function () {
         });
         mainController.storeUserPrivileges(userInfo);
     });// this test checks the value of timeout is same as defined in storeUserPrivileges
-});
+
+	it("The entry in properties file does match the label", function() {
+			var displayed = Ext.getCmp('userName').getLabel();
+			var expected = Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label');
+            console.log(displayed);
+			console.log(expected);
+			expect(displayed).toEqual(expected);
+        });
+    });// this test checks the label of userName is same that in properties file
