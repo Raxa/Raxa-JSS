@@ -14,13 +14,14 @@ Ext.define("Screener.view.PatientListView", {
         {
             xtype: 'list',
             id: 'patientList',
-            itemTpl: '{lastname}, {firstname}',
+            itemTpl: '{lastname}, {firstname} <br>BMI: {bmi}',
             store: Ext.create('Screener.store.Patients', {
                 storeId: 'patientStore'
             }),
             items: [{
                 xtype: 'titlebar',
                 docked: 'top',
+                id: 'patientsWaiting',
                 title: 'Patients',
                 items: [{
                     xtype: 'button',

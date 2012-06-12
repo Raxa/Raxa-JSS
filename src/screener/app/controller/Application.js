@@ -57,6 +57,7 @@ Ext.define("Screener.controller.Application", {
             removeDrugFormButton: '#removeDrugFormButton',
             sortByNameButton: '#sortByNameButton',
             sortByFIFOButton: '#sortByFIFOButton',
+            sortByBMIButton: '#sortByBMIButton',
             removePatientButton: '#removePatientButton',
             removeAllPatientsButton: '#removeAllPatientsButton'
         },
@@ -98,6 +99,9 @@ Ext.define("Screener.controller.Application", {
             sortByFIFOButton: {
                 tap: 'sortByFIFO'
             },
+            sortByBMIButton: {
+                tap: 'sortByBMI'
+            },
             patientList: {
                 itemtap: 'setCurrentPatient'
             },
@@ -134,6 +138,9 @@ Ext.define("Screener.controller.Application", {
             Ext.getStore('doctorStore').getAt(doctorid).addPatient();
             Ext.getStore('patientStore').remove(patient);
         }
+    },
+    updatePatientsWaitingTitle: function () {
+        Ext.getCmp('patientsWaiting').setTitle(Ext.getStore('patientStore').getCount() + ' Patients Waiting');
     },
     //called on startup
     init: function () {
@@ -186,16 +193,21 @@ Ext.define("Screener.controller.Application", {
     //adds patient to the patient list store
     savePatient: function () {
         formp = this.getNewPatient().saveForm();
-        if (formp.firstname && formp.lastname && formp.id) {
-            var patient = Ext.create('starter.model.Patient');
+        if (formp.firstname && formp.lastname && formp.id && formp.bmi) {
+            var patient = Ext.create('Screener.model.Patient');
             patient.set('firstname', formp.firstname);
             patient.set('lastname', formp.lastname);
             patient.set('id', formp.id);
             patient.set('doctorid', -1);
+            patient.set('bmi', formp.bmi);
             Ext.getStore('patientStore').add(patient);
             this.totalPatients++;
             this.getNewPatient().reset();
             this.getNewPatient().hide();
+            if (!this.patientView) {
+                this.patientView = Ext.create('Screener.view.PatientView');
+            }
+            this.updatePatientsWaitingTitle();
         }
     },
     //function to show screen with patient list
@@ -205,6 +217,8 @@ Ext.define("Screener.controller.Application", {
         }
         this.getDoctorList().deselectAll();
         this.getView().push(this.patientView);
+        this.updatePatientsWaitingTitle();
+        setInterval(this.updatePatientsWaitingTitle, Util.UITIME);
     },
     //function to show screen with doctor list
     showDoctors: function () {
@@ -272,6 +286,10 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').sort('id');
         this.getSortPanel().hide();
     },
+    sortByBMI: function () {
+        Ext.getStore('patientStore').sort('bmi');
+        this.getSortPanel().hide();
+    },
     //if patient and doctor are both selected, removes patient from list, increases numpatients for doctor,
     //and adds patient to the patients() store in the doctor
     assignPatient: function () {
@@ -283,6 +301,7 @@ Ext.define("Screener.controller.Application", {
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
+        this.updatePatientsWaitingTitle();
     },
     //opens the current doctor's waiting list
     expandCurrentDoctor: function (list, index, target, record) {
@@ -306,7 +325,7 @@ Ext.define("Screener.controller.Application", {
                 Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(objectRef.currentPatientIndex);
                 objectRef.getRemovePatientButton().disable();
             } else {
-                
+
             }
         });
     },
@@ -326,7 +345,7 @@ Ext.define("Screener.controller.Application", {
                 }
                 Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', 0);
             } else {
-                
+
             }
         });
     }
