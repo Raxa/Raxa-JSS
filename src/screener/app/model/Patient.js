@@ -14,6 +14,8 @@ Ext.define('Screener.model.Patient', {
             name: 'lastname',
             type: 'string'
         }, {
+            name: 'bmi'
+        }, {
             name: 'firstname',
             type: 'string'
         }, {
