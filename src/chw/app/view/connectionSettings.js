@@ -42,7 +42,6 @@ Ext.define('motechScheduleTracking.view.connectionSettings', {
                 }]
             }, {
                 xtype: 'fieldset',
-                // title: ' ',
                 items: [{
                     xtype: 'textfield',
                     label: 'Download',
@@ -65,13 +64,7 @@ Ext.define('motechScheduleTracking.view.connectionSettings', {
                 },
                 items: [{
                     xtype: 'container',
-                    // centered: true,
                     layout: 'hbox',
-                    /*layout : {
-                                  pack : 'justify',
-                                  align : 'center'
-                                },*/
-                    // ui: 'aqua',
                     padding: '10px',
                     width: "100%",
                     items: [{

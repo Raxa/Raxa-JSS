@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 // global variables
 var user = "";
 var up_url = "";
@@ -21,9 +22,8 @@ var down_url = "";
 
 // current functionality: move between screens
 Ext.define('motechScheduleTracking.controller.basic', {
-
+    
     extend: 'Ext.app.Controller',
-    // requires: '',
     controllers: ['basic'],
     views: ['loginScreen', 'optionsScreen', 'connectionSettings', 'patientOptions', 'settingsScreen' /*, 'optionsPanel'*/ ],
     models: ['registerModel', 'enrollModel', 'encounterModel'],
@@ -192,9 +192,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
             {
                 xclass: 'motechScheduleTracking.view.optionsScreen'
             },
-            // select actions based on nested tab layout
-            // { xclass : 'motechScheduleTracking.view.optionsPanel'},
-
+            
             // select form to fill in and submit
             {
                 xclass: 'motechScheduleTracking.view.patientOptions'
@@ -226,8 +224,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
             user = Ext.getCmp('username').getValue();
             var pass = Ext.getCmp('password').getValue();
 
-            // console.log(user);
-            // console.log(pass);
             if (user == '' || pass == '') {
 
                 Ext.Msg.alert("Error", "Please fill in all fields")
@@ -265,8 +261,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
             if (down_url == "") {
                 down_url = 'http://motech.rcg.usm.maine.edu/motech-platform-server/formupload'
             }
-
-            // console.log(up_url+down_url)
 
             //continue to the next page 
             Ext.getCmp('viewPort').setActiveItem(2);
@@ -325,8 +319,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
 
                             // register patient
                             var values = Ext.getCmp('registerForm').getValues();
-                            // console.log(values.mid_reg);
-                            // console.log(values);
+
                             if (values.first == "" || values.gender == "empty" || values.indemo == "empty" || values.last == "" || values.mid_reg == "" || values.phone_reg == "") {
 
                                 Ext.Msg.alert("Error", "Please fill in all fields")
@@ -354,10 +347,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
                                 store.add(temp);
                                 store.sync();
 
-                                /*store.on("write", function () {
-                                        console.log("write")
-                                    }, this)*/
-
                                 Ext.getCmp('registerForm').reset();
                                 Ext.getCmp('viewPort').setActiveItem(2);
 
@@ -372,7 +361,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
 
                                 Ext.Msg.alert("Error", "Please fill in all fields")
 
-                            } else if (!isNaN(values.phone_enr) || !isNaN(values.mid_enr)) {
+                            } else if (isNaN(values.phone_enr) || isNaN(values.mid_enr)) {
 
                                 Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID and Phone Number")
 
@@ -407,7 +396,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
 
                                 Ext.Msg.alert("Error", "Please fill in all fields")
 
-                            } else if (!isNaN(values.mid_enc)) {
+                            } else if (isNaN(values.mid_enc)) {
 
                                 Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID")
 
@@ -418,9 +407,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
                                 temp.set('mid_enc', values.mid_enc);
                                 temp.set('date', values.date);
                                 temp.set('concept', values.concept);
-
-                                /*Ext.getStore('encounterList').add(temp);
-                                    Ext.getStore('encounterList').sync();*/
 
                                 console.log(temp);
 

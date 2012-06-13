@@ -45,7 +45,6 @@ Ext.define('motechScheduleTracking.view.loginScreen', {
             }, {
                 xtype: 'fieldset',
                 id: 'loginForm',
-                // title: ' ',
                 items: [{
                     xtype: 'textfield',
                     label: 'Username',
@@ -66,13 +65,7 @@ Ext.define('motechScheduleTracking.view.loginScreen', {
                 },
                 items: [{
                     xtype: 'container',
-                    // centered: true,
                     layout: 'hbox',
-                    /*layout : {
-                                  pack : 'justify',
-                                  align : 'center'
-                                },*/
-                    // ui: 'aqua',
                     padding: '10px',
                     width: "100%",
                     items: [{

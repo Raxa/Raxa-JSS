@@ -17,10 +17,8 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
     extend: 'Ext.tab.Panel',
     requires: ['Ext.form.Panel', 'Ext.form.FieldSet', 'Ext.field.Number', 'Ext.field.Spinner', 'Ext.field.Password', 'Ext.field.Email', 'Ext.field.Url', 'Ext.field.DatePicker', 'Ext.field.Select', 'Ext.field.Hidden', 'Ext.field.Radio', 'Ext.field.Slider', 'Ext.field.Toggle', 'Ext.field.Search', 'Ext.MessageBox'],
     config: {
-        //layout : 'fit',
         activeItem: 0,
         tabBar: {
-            // ui : 'neutral',
             layout: {
                 pack: 'center'
             }
@@ -32,7 +30,6 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
             iconCls: 'refresh',
             items: [{
                 xtype: 'fieldset',
-                // title : 'Patient Info',
                 instructions: 'Only numbers for MoTeCH ID and Phone Number. ',
                 defaults: {
                     labelWidth: '35%'
@@ -115,13 +112,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     },
                     items: [{
                         xtype: 'container',
-                        // centered: true,
                         layout: 'hbox',
-                        /*layout : {
-                                          pack : 'justify',
-                                          align : 'center'
-                                        },*/
-                        // ui: 'aqua',
                         padding: '10px',
                         width: "100%",
                         items: [{
@@ -157,8 +148,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                 xtype: 'fieldset',
                 defaults: {
                     labelWidth: '35%'
-                    // labelAlign : 'top'
-                },
+                    },
                 items: [{
                     xtype: 'textfield',
                     name: 'mid_enr',
@@ -183,13 +173,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     },
                     items: [{
                         xtype: 'container',
-                        // centered: true,
                         layout: 'hbox',
-                        /*layout : {
-                                          pack : 'justify',
-                                          align : 'center'
-                                        },*/
-                        // ui: 'aqua',
                         padding: '10px',
                         width: "100%",
                         items: [{
@@ -202,14 +186,9 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                             id: 'enrollOkay',
                             flex: '3',
                             handler: function () {
-                                // Ext.Msg.confirm('','Are you sure?')
                                 console.log('hi')
                             }
-                            /*handler : function () {
-                                                    console.log('hi');
-                                                    Ext.Msg.confirm('Confirmation', 'Are you sure?')
-                                                }*/
-                        }, {
+                            }, {
                             xtype: 'label',
                             flex: '1'
                         }, {
@@ -232,8 +211,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
             items: [{
                 xtype: 'fieldset',
                 defaults: {
-                    labelWidth: '35%'
-                    // labelAlign : 'top'
+                    labelWidth: '35%'   
                 },
                 items: [{
                     xtype: 'textfield',
@@ -282,13 +260,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     },
                     items: [{
                         xtype: 'container',
-                        // centered: true,
                         layout: 'hbox',
-                        /*layout : {
-                                          pack : 'justify',
-                                          align : 'center'
-                                        },*/
-                        // ui: 'aqua',
                         padding: '10px',
                         width: "100%",
                         items: [{

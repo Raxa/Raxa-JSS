@@ -67,13 +67,7 @@ Ext.define('motechScheduleTracking.view.studyScreen', {
                         },
                         items: [{
                             xtype: 'container',
-                            // centered: true,
                             layout: 'hbox',
-                            /*layout : {
-                                                  pack : 'justify',
-                                                  align : 'center'
-                                                },*/
-                            // ui: 'aqua',
                             padding: '10px',
                             width: "100%",
                             items: [
