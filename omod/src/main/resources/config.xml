@@ -57,6 +57,6 @@
 
     <!-- Hibernate files -->
     <mappingFiles>
-        ${omodHbmConfig}
+        RaxacorePatientList.hbm.xml
     </mappingFiles>
 </module>
