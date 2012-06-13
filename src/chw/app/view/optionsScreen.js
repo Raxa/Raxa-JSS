@@ -58,7 +58,7 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                         xtype: 'button',
                         //text : 'text',
                         flex: '3',
-                        icon: 'lib/touch/resources/themes/images/default/pictos/team.png',
+                        icon: '../lib/touch/resources/themes/images/default/pictos/team.png',
                         //height : 100,
                         //width : 100,
                         // padding : '0'
@@ -70,7 +70,7 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                         xtype: 'button',
                         // text : 'text',
                         flex: '3',
-                        icon: 'lib/touch/resources/themes/images/default/pictos/folder_black.png',
+                        icon: '../lib/touch/resources/themes/images/default/pictos/folder_black.png',
                         id: 'selectForms'
                     }]
                 }, {
@@ -103,7 +103,7 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                         xtype: 'button',
                         // text : 'text',
                         flex: '3',
-                        icon: 'lib/touch/resources/themes/images/default/pictos/doc_down.png',
+                        icon: '../lib/touch/resources/themes/images/default/pictos/doc_down.png',
                         // height : 100,
                         // width : 100,
                         // padding : '0'
@@ -115,7 +115,7 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                         xtype: 'button',
                         // text : 'text',
                         flex: '3',
-                        icon: 'lib/touch/resources/themes/images/default/pictos/doc_up.png',
+                        icon: '../lib/touch/resources/themes/images/default/pictos/doc_up.png',
                         id: 'uploadButton'
                     }]
                 }, {
@@ -146,7 +146,7 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                     items: [{
                         xtype: 'button',
                         // text : 'text',
-                        icon: 'lib/touch/resources/themes/images/default/pictos/settings.png',
+                        icon: '../lib/touch/resources/themes/images/default/pictos/settings.png',
                         flex: '3',
                         id: 'settingsButton'
                     }, {
@@ -155,7 +155,7 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                     }, {
                         xtype: 'button',
                         // text : 'text',
-                        icon: 'lib/touch/resources/themes/images/default/pictos/delete_black1.png',
+                        icon: '../lib/touch/resources/themes/images/default/pictos/delete_black1.png',
                         flex: '3',
                         id: 'logoutButton'
                     }]
