@@ -20,7 +20,7 @@ Ext.define('motechScheduleTracking.view.studyScreen', {
             xtype: 'titlebar',
             docked: 'top',
             title: 'MoTeCH mForms 0.80'
-        }, {
+        },{
             xtype: 'container',
             centered: true,
             width: '100%',
@@ -37,7 +37,7 @@ Ext.define('motechScheduleTracking.view.studyScreen', {
                     xtype: 'label',
                     html: 'Select Study <br>'
                 }]
-            }, {
+            },{
                 xtype: 'container',
                 layout: {
                     type: 'vbox',
@@ -58,7 +58,7 @@ Ext.define('motechScheduleTracking.view.studyScreen', {
                             text: 'DemoGroup',
                             value: 'demogroup'
                         }]
-                    }, {
+                    },{
                         xtype: 'container',
                         layout: {
                             type: 'vbox',
@@ -78,24 +78,20 @@ Ext.define('motechScheduleTracking.view.studyScreen', {
                                 ui: 'aqua',
                                 id: 'studyOkay',
                                 flex: '3'
-                            }, {
+                            },{
                                 xtype: 'label',
                                 flex: '1'
-                            }, {
+                            },{
                                 xtype: 'button',
                                 text: 'Cancel',
                                 ui: 'aqua',
                                 id: 'studyCancel',
                                 flex: '3'
-                            },
-
-                            ]
+                            }]
                         }]
                     }]
 
-                },
-
-                ]
+                }]
             }]
         }]
     }

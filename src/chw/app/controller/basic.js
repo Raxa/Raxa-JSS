@@ -18,11 +18,16 @@
 var user = "";
 var up_url = "";
 var down_url = "";
-
-
+var PAGES = {
+    LOGIN_SCREEN : 0,
+    CONNECTION_SETTINGS : 1,
+    OPTIONS_PANEL : 2,
+    PATIENT_OPTIONS : 3,
+    SETTINGS_SCREEN : 4,
+    STUDY_SCREEN : 5   
+}
 // current functionality: move between screens
-Ext.define('motechScheduleTracking.controller.basic', {
-    
+Ext.define('motechScheduleTracking.controller.basic', { 
     extend: 'Ext.app.Controller',
     controllers: ['basic'],
     views: ['loginScreen', 'optionsScreen', 'connectionSettings', 'patientOptions', 'settingsScreen' /*, 'optionsPanel'*/ ],
@@ -55,7 +60,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
             encounterForm: '#encounterForm'
         },
         control: {
-
             // control for buttons in loginScreen
             loginOkay: {
                 tap: function () {
@@ -67,7 +71,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
                     this.doLogin(false);
                 }
             },
-
             // control for buttons in connectionSettings
             connectionOkay: {
                 tap: function () {
@@ -79,7 +82,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
                     this.doConnect(false);
                 }
             },
-
             // control for buttons in optionsScreen 
             selectStudy: {
                 tap: function () {
@@ -111,7 +113,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
                     this.doLogout('start')
                 }
             },
-
             // control for buttons in patientOptions
             registerOkay: {
                 tap: function () {
@@ -143,7 +144,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
                     this.doForms('encounter', false)
                 }
             },
-
             // control for buttons in settingsScreen
             settingsConnection: {
                 tap: function () {
@@ -155,7 +155,6 @@ Ext.define('motechScheduleTracking.controller.basic', {
                     this.doSettings('cancel')
                 }
             },
-
             // control for buttons in studyScreen
             studyOkay: {
                 tap: function () {
@@ -172,271 +171,173 @@ Ext.define('motechScheduleTracking.controller.basic', {
 
     launch: function () {
         Ext.create('Ext.Container', {
-
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
             items: [
-
             // log into application
             {
                 xclass: 'motechScheduleTracking.view.loginScreen'
             },
-
             // confirm or adjust connection settings
             {
                 xclass: 'motechScheduleTracking.view.connectionSettings'
             },
-
             // select actions based on button layou
             {
                 xclass: 'motechScheduleTracking.view.optionsScreen'
-            },
-            
+            },            
             // select form to fill in and submit
             {
                 xclass: 'motechScheduleTracking.view.patientOptions'
             },
-
             // confirm or adjust settings
             {
                 xclass: 'motechScheduleTracking.view.settingsScreen'
             },
-
             // confirm or adjust study selection
             {
                 xclass: 'motechScheduleTracking.view.studyScreen'
-            }
-
-            ]
+            }]
         });
     },
-
     /* BUTTON LOGIC */
-
     // when clicking the login button
     doLogin: function (arg) {
-
         if (arg) {
             // check login credentials
-
             // store items
             user = Ext.getCmp('username').getValue();
             var pass = Ext.getCmp('password').getValue();
-
             if (user == '' || pass == '') {
-
                 Ext.Msg.alert("Error", "Please fill in all fields")
-
             } else {
-
+                // clear form fields
                 Ext.getCmp('username').reset();
                 Ext.getCmp('password').reset();
-
                 // continue to next page
-                Ext.getCmp('viewPort').setActiveItem(1);
-
+                Ext.getCmp('viewPort').setActiveItem(PAGES.CONNECTION_SETTINGS);
             }
-
         } else {
             // exit the program
-            Ext.getCmp('viewPort').setActiveItem(0)
+            Ext.getCmp('viewPort').setActiveItem(PAGES.LOGIN_SCREEN)
         }
-
-
     },
-
     // when completing the connection settings
     doConnect: function (arg) {
-
         if (arg) {
             // check connections
             up_url = Ext.getCmp('up_url').getValue();
             down_url = Ext.getCmp('down_url').getValue();
-
             if (up_url == "") {
                 up_url = "http://motech.rcg.usm.maine.edu/motech-platform-server/formupload"
             }
-
             if (down_url == "") {
                 down_url = 'http://motech.rcg.usm.maine.edu/motech-platform-server/formupload'
             }
-
             //continue to the next page 
-            Ext.getCmp('viewPort').setActiveItem(2);
-
+            Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
         } else {
             // exit the program
             // BUG : if you navigate here through settings, you don't want to just exit the program
             // You want to just return to the previous page
-            Ext.getCmp('viewPort').setActiveItem(0)
+            Ext.getCmp('viewPort').setActiveItem(PAGES.LOGIN_SCREEN)
         }
-
     },
-
     // when selecting a study
     doStudy: function (arg) {
-
-        if (arg == 'start') {
-
+        if (arg === 'start') {
             // go to studyScreen
-            Ext.getCmp('viewPort').setActiveItem(5)
-
-        } else if (arg == 'okay') {
-
+            Ext.getCmp('viewPort').setActiveItem(PAGES.STUDY_SCREEN)
+        } else if (arg === 'okay') {
             // display confirmational message
             Ext.Msg.confirm('Confirm', 'Are you sure you want to change to $study?', function () {
-
                 // go back to optionsScreen
-                Ext.getCmp('viewPort').setActiveItem(2);
-
+                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
                 // store study value in memory
             });
-
-        } else if (arg == 'cancel') {
-
+        } else if (arg === 'cancel') {
             // go back to optionsScreen
-            Ext.getCmp('viewPort').setActiveItem(2)
+            Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL)
         }
-
     },
-
     // when selecting a form
     doForms: function (step, value) {
-
-
         if (value) {
-            if (step == 'start') {
+            if (step === 'start') {
                 // continue to the next page
-                Ext.getCmp('viewPort').setActiveItem(3);
+                Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_OPTIONS);
             } else {
-
                 Ext.Msg.confirm('Confirm', 'Are you sure you want to proceed?', function (buttonId) {
-
                     if (buttonId === 'yes') {
-
-                        if (step == 'register') {
-
+                        if (step === 'register') {
                             // register patient
                             var values = Ext.getCmp('registerForm').getValues();
-
-                            if (values.first == "" || values.gender == "empty" || values.indemo == "empty" || values.last == "" || values.mid_reg == "" || values.phone_reg == "") {
-
+                            if (values.first === "" || values.gender === "empty" || values.indemo === "empty" || values.last === "" || values.mid_reg === "" || values.phone_reg === "") {
                                 Ext.Msg.alert("Error", "Please fill in all fields")
-
-                            } else if (!isNaN(values.phone_reg) || !isNaN(values.mid_reg)) {
-
+                            } else if (isNaN(values.phone_reg) || isNaN(values.mid_reg)) {
                                 Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID and Phone Number")
-
                             } else {
-
-                                var temp = Ext.create('motechScheduleTracking.model.registerModel');
-
-                                temp.set('mid_reg', values.mid_reg);
-                                temp.set('first', values.first);
-                                temp.set('last', values.last);
-                                temp.set('gender', values.gender);
-                                temp.set('bday', values.bday);
-                                temp.set('phone_reg', values.phone_reg);
-                                temp.set('indemo', values.indemo);
-
-                                console.log(temp);
-
-                                var store = Ext.create('motechScheduleTracking.store.registerList');
-
-                                store.add(temp);
-                                store.sync();
-
+                                var regMod = Ext.create('motechScheduleTracking.model.registerModel');
+                                regMod.set('mid_reg', values.mid_reg);
+                                regMod.set('first', values.first);
+                                regMod.set('last', values.last);
+                                regMod.set('gender', values.gender);
+                                regMod.set('bday', values.bday);
+                                regMod.set('phone_reg', values.phone_reg);
+                                regMod.set('indemo', values.indemo);
+                                var regList = Ext.create('motechScheduleTracking.store.registerList');
+                                regList.add(regMod);
+                                regList.sync();
                                 Ext.getCmp('registerForm').reset();
-                                Ext.getCmp('viewPort').setActiveItem(2);
-
+                                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
                             }
-
-                        } else if (step == 'enroll') {
-
+                        } else if (step === 'enroll') {
                             // enroll patient
                             var values = Ext.getCmp('enrollForm').getValues();
-
-                            if (values.mid_enr == '' || values.phone_enr == '') {
-
+                            if (values.mid_enr === '' || values.phone_enr === '') {
                                 Ext.Msg.alert("Error", "Please fill in all fields")
-
                             } else if (isNaN(values.phone_enr) || isNaN(values.mid_enr)) {
-
                                 Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID and Phone Number")
-
                             } else {
-
-                                var temp = Ext.create('motechScheduleTracking.model.enrollModel');
-
-                                temp.set('mid_enr', values.mid_enr);
-                                temp.set('phone_enr', values.phone_enr);
-
-                                /*Ext.getStore('enrollList').add(temp);
-                                    Ext.getStore('enrollList').sync();*/
-
-                                console.log(temp);
-
-                                var store = Ext.create('motechScheduleTracking.store.enrollList');
-
-                                store.add(temp);
-                                store.sync();
-
+                                var enrMod = Ext.create('motechScheduleTracking.model.enrollModel');
+                                enrMod.set('mid_enr', values.mid_enr);
+                                enrMod.set('phone_enr', values.phone_enr);                               
+                                var enrList = Ext.create('motechScheduleTracking.store.enrollList');
+                                enrList.add(enrMod);
+                                enrList.sync();
                                 Ext.getCmp('enrollForm').reset();
-                                Ext.getCmp('viewPort').setActiveItem(2);
-
+                                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
                             }
-
-                        } else if (step == 'encounter') {
-
+                        } else if (step === 'encounter') {
                             // register encounter
                             var values = Ext.getCmp('encounterForm').getValues();
-
-                            if (values.mid_enc == '' || values.date == '' || values.concept == 'empty') {
-
+                            if (values.mid_enc === '' || values.date === '' || values.concept === 'empty') {
                                 Ext.Msg.alert("Error", "Please fill in all fields")
-
                             } else if (isNaN(values.mid_enc)) {
-
                                 Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID")
-
                             } else {
-
-                                var temp = Ext.create('motechScheduleTracking.model.encounterModel');
-
-                                temp.set('mid_enc', values.mid_enc);
-                                temp.set('date', values.date);
-                                temp.set('concept', values.concept);
-
-                                console.log(temp);
-
-                                var store = Ext.create('motechScheduleTracking.store.encounterList');
-
-                                store.add(temp);
-                                store.sync();
-
+                                var encMod = Ext.create('motechScheduleTracking.model.encounterModel');
+                                encMod.set('mid_enc', values.mid_enc);
+                                encMod.set('date', values.date);
+                                encMod.set('concept', values.concept);
+                                var encList = Ext.create('motechScheduleTracking.store.encounterList');
+                                encList.add(encMod);
+                                encList.sync();
                                 Ext.getCmp('encounterForm').reset();
-                                Ext.getCmp('viewPort').setActiveItem(2);
-
+                                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
                             }
-
                         }
-
                     }
-
                 })
-
             }
         } else {
             // return to options screen 
-            Ext.getCmp('viewPort').setActiveItem(2);
+            Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
         }
-
     },
-
     // when downloading information
     doDownload: function (arg) {
-
         // shows actionsheet with download options
         if (!this.actions) {
             this.actions = Ext.Viewport.add({
@@ -448,14 +349,14 @@ Ext.define('motechScheduleTracking.controller.basic', {
                         Ext.Msg.confirm('Confirm', 'Are you sure you want to download all studies?');
                         this.actions.hide();
                     }
-                }, {
+                },{
                     text: 'Download forms',
                     scope: this,
                     handler: function () {
                         Ext.Msg.confirm('Confirm', 'Are you sure you want to download the forms in $study?');
                         this.actions.hide();
                     }
-                }, {
+                },{
                     text: 'Cancel',
                     scope: this,
                     ui: 'decline',
@@ -465,54 +366,37 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 }]
             })
         }
-
         this.actions.show();
     },
-
     // when uploading information
     doUpload: function (arg) {
-
         Ext.Msg.confirm('Confirm', 'Are you sure you want to upload your data?', function () {
             // upload the data
-            Ext.getCmp('viewPort').setActiveItem(2);
+            Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
         })
         // check if connection is strong enough
         // need function to allow uploading of data
     },
-
     // when dealing with settings
     doSettings: function (args) {
-
-        if (args == 'start') {
-
+        if (args === 'start') {
             // go to settingsScreen
-            Ext.getCmp('viewPort').setActiveItem(4);
-
-        } else if (args == 'connection') {
-
+            Ext.getCmp('viewPort').setActiveItem(PAGES.SETTINGS_SCREEN);
+        } else if (args === 'connection') {
             // go to connectionSettings
-            Ext.getCmp('viewPort').setActiveItem(1);
-
-        } else if (args == 'cancel') {
-
+            Ext.getCmp('viewPort').setActiveItem(PAGES.CONNECTION_SETTINGS);
+        } else if (args === 'cancel') {
             // return to optionsScreen
-            Ext.getCmp('viewPort').setActiveItem(2)
-
+            Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL)
         }
-
     },
-
     // when logging out
     doLogout: function (arg) {
-
         Ext.Msg.confirm('Confirm', 'Are you sure you want to logout?', function () {
-
             // make sure everything is uploaded
             // delete information stored
             // close application
-            Ext.getCmp('viewPort').setActiveItem(0)
+            Ext.getCmp('viewPort').setActiveItem(PAGES.LOGIN_SCREEN)
         })
-
-
     }
 });

@@ -15,7 +15,6 @@
  */
 Ext.define('motechScheduleTracking.view.patientOptions', {
     extend: 'Ext.tab.Panel',
-    requires: ['Ext.form.Panel', 'Ext.form.FieldSet', 'Ext.field.Number', 'Ext.field.Spinner', 'Ext.field.Password', 'Ext.field.Email', 'Ext.field.Url', 'Ext.field.DatePicker', 'Ext.field.Select', 'Ext.field.Hidden', 'Ext.field.Radio', 'Ext.field.Slider', 'Ext.field.Toggle', 'Ext.field.Search', 'Ext.MessageBox'],
     config: {
         activeItem: 0,
         tabBar: {
@@ -41,21 +40,21 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     placeHolder: '2468',
                     required: true,
                     clearIcon: true
-                }, {
+                },{
                     xtype: 'textfield',
                     name: 'first',
                     label: 'First Name',
                     placeHolder: 'Harry',
                     required: true,
                     clearIcon: true
-                }, {
+                },{
                     xtype: 'textfield',
                     name: 'last',
                     label: 'Last Name',
                     placeHolder: 'Potter',
                     required: true,
                     clearIcon: true
-                }, {
+                },{
                     xtype: 'selectfield',
                     name: 'gender',
                     label: 'Gender',
@@ -63,14 +62,14 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     options: [{
                         text: '',
                         value: 'empty'
-                    }, {
+                    },{
                         text: 'Male',
                         value: 'male'
-                    }, {
+                    },{
                         text: 'Female',
                         value: 'female'
                     }]
-                }, {
+                },{
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
                     name: 'bday',
@@ -80,15 +79,14 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     picker: {
                         yearFrom: 1900
                     }
-                }, {
+                },{
                     xtype: 'textfield',
                     name: 'phone_reg',
                     label: 'Phone Number',
                     placeHolder: '1234567890',
                     required: true,
                     clearIcon: true
-
-                }, {
+                },{
                     xtype: 'selectfield',
                     name: 'indemo',
                     label: 'In demo?',
@@ -96,14 +94,14 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     options: [{
                         text: '',
                         value: 'empty'
-                    }, {
+                    },{
                         text: 'Yes',
                         value: 'yes'
-                    }, {
+                    },{
                         text: 'No',
                         value: 'no'
                     }]
-                }, {
+                },{
                     xtype: 'container',
                     layout: {
                         type: 'vbox',
@@ -118,29 +116,29 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                         items: [{
                             xtype: 'label',
                             flex: '4'
-                        }, {
+                        },{
                             xtype: 'button',
                             text: 'Okay',
                             ui: 'aqua',
                             id: 'registerOkay',
                             flex: '3'
-                        }, {
+                        },{
                             xtype: 'label',
                             flex: '1'
-                        }, {
+                        },{
                             xtype: 'button',
                             text: 'Cancel',
                             ui: 'aqua',
                             id: 'registerCancel',
                             flex: '3'
-                        }, {
+                        },{
                             xtype: 'label',
                             flex: '4'
                         }]
                     }]
                 }]
-            }, ]
-        }, {
+            }]
+        },{
             title: 'Enroll',
             id: 'enrollForm',
             xtype: 'formpanel',
@@ -156,15 +154,14 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     placeHolder: '2468',
                     required: true,
                     clearIcon: true
-                }, {
+                },{
                     xtype: 'textfield',
                     name: 'phone_enr',
                     label: 'Phone Number',
                     placeHolder: '1234567890',
                     required: true,
                     clearIcon: true
-
-                }, {
+                },{
                     xtype: 'container',
                     layout: {
                         type: 'vbox',
@@ -179,7 +176,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                         items: [{
                             xtype: 'label',
                             flex: '4'
-                        }, {
+                        },{
                             xtype: 'button',
                             text: 'Okay',
                             ui: 'aqua',
@@ -188,23 +185,23 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                             handler: function () {
                                 console.log('hi')
                             }
-                            }, {
+                        },{
                             xtype: 'label',
                             flex: '1'
-                        }, {
+                        },{
                             xtype: 'button',
                             text: 'Cancel',
                             ui: 'aqua',
                             id: 'enrollCancel',
                             flex: '3'
-                        }, {
+                        },{
                             xtype: 'label',
                             flex: '4'
                         }]
                     }]
                 }]
             }]
-        }, {
+        },{
             title: 'Encounter',
             id: 'encounterForm',
             xtype: 'formpanel',
@@ -220,7 +217,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     placeHolder: '2468',
                     required: true,
                     clearIcon: true
-                }, {
+                },{
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
                     name: 'date',
@@ -230,7 +227,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     picker: {
                         yearFrom: 2000
                     }
-                }, {
+                },{
                     xtype: 'selectfield',
                     name: 'concept',
                     label: 'Concept',
@@ -238,20 +235,20 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     options: [{
                         text: '',
                         value: 'empty'
-                    }, {
+                    },{
                         text: 'Demo Concept #1',
                         value: 'democoncept1'
-                    }, {
+                    },{
                         text: 'Demo Concept #2',
                         value: 'democoncept2'
-                    }, {
+                    },{
                         text: 'Demo Concept #3',
                         value: 'democoncept3'
-                    }, {
+                    },{
                         text: 'Demo Concept #4',
                         value: 'democoncept4'
-                    }, ]
-                }, {
+                    }]
+                },{
                     xtype: 'container',
                     layout: {
                         type: 'vbox',
@@ -266,28 +263,28 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                         items: [{
                             xtype: 'label',
                             flex: '4'
-                        }, {
+                        },{
                             xtype: 'button',
                             text: 'Okay',
                             ui: 'aqua',
                             id: 'encounterOkay',
                             flex: '3'
-                        }, {
+                        },{
                             xtype: 'label',
                             flex: '1'
-                        }, {
+                        },{
                             xtype: 'button',
                             text: 'Cancel',
                             ui: 'aqua',
                             id: 'encounterCancel',
                             flex: '3'
-                        }, {
+                        },{
                             xtype: 'label',
                             flex: '4'
                         }]
                     }]
                 }]
             }]
-        }, ]
+        }]
     }
 })

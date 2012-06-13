@@ -38,7 +38,7 @@ Ext.define('motechScheduleTracking.view.connectionSettings', {
                 padding: '30px',
                 items: [{
                     xtype: 'label',
-                    html: '<strong>Connection Settings</strong><br>'
+                    html: 'Connection Settings<br>'
                 }]
             }, {
                 xtype: 'fieldset',

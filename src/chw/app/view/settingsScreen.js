@@ -37,7 +37,7 @@ Ext.define('motechScheduleTracking.view.settingsScreen', {
                     xtype: 'label',
                     html: 'Settings<br>'
                 }]
-            }, {
+            },{
                 xtype: 'container',
                 layout: {
                     type: 'vbox',
@@ -49,7 +49,7 @@ Ext.define('motechScheduleTracking.view.settingsScreen', {
                     text: 'Connection',
                     id: 'settingsConnection',
                     width: '100%'
-                }, {
+                },{
                     xtype: 'button',
                     text: 'Cancel',
                     id: 'settingsCancel',

@@ -15,17 +15,14 @@
  */
 Ext.define('motechScheduleTracking.view.loginScreen', {
     extend: 'Ext.Panel',
-
     config: {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
             title: 'MoTeCH mForms 0.80'
-        }, {
+        },{
             xtype: 'formpanel'
-        },
-
-        {
+        },{
             xtype: 'container',
             centered: true,
             width: '100%',
@@ -40,9 +37,9 @@ Ext.define('motechScheduleTracking.view.loginScreen', {
                 padding: '30px',
                 items: [{
                     xtype: 'label',
-                    html: '<strong>Login Please</strong><br>'
+                    html: 'Login Please<br>'
                 }]
-            }, {
+            },{
                 xtype: 'fieldset',
                 id: 'loginForm',
                 items: [{
@@ -50,13 +47,13 @@ Ext.define('motechScheduleTracking.view.loginScreen', {
                     label: 'Username',
                     id: 'username',
                     flex: 2
-                }, {
+                },{
                     xtype: 'passwordfield',
                     label: 'Password',
                     id: 'password',
                     flex: 2
-                }, ]
-            }, {
+                }]
+            },{
                 xtype: 'container',
                 layout: {
                     type: 'vbox',
@@ -71,34 +68,27 @@ Ext.define('motechScheduleTracking.view.loginScreen', {
                     items: [{
                         xtype: 'label',
                         flex: '4'
-                    }, {
+                    },{
                         xtype: 'button',
                         text: 'Okay',
                         ui: 'aqua',
                         id: 'loginOkay',
                         flex: '3'
-                    }, {
+                    },{
                         xtype: 'label',
                         flex: '1'
-                    }, {
+                    },{
                         xtype: 'button',
                         text: 'Cancel',
                         ui: 'aqua',
                         id: 'loginCancel',
                         flex: '3'
-                    }, {
+                    },{
                         xtype: 'label',
                         flex: '4'
                     }]
                 }]
-            }
-
-
-            ]
-        }
-
-
-        ]
+            }]
+        }]
     }
-
 });
