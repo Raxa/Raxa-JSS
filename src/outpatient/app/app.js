@@ -1,3 +1,7 @@
+Ext.Loader.setPath({
+    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid'
+});
+
 Ext.Loader.setConfig({
     enabled: true
 });
@@ -5,8 +9,8 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'RaxaEmr.Outpatient',
 
-    models: ['patientlist'],
-    stores: ['patientlist'],
+    models: ['patientlist', 'Grid'],
+    stores: ['patientlist', 'Grid'],
     views: ['Viewport'],
     controllers: ['patientlist'],
 
