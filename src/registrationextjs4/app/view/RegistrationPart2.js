@@ -153,7 +153,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                         text: 'Continue',
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.CONFIRM.value); //Going to Confirmation Page
+                            l.setActiveItem(REG_PAGES.REG_CONFIRM.value); //Going to Registration Display Page
                         }
                     }, {
                         xtype: 'button',

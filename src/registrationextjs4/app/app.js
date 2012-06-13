@@ -21,7 +21,8 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Registration',
-    views: ['BMICalculator', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen'],
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
+    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     controllers: ['BMI'],
 
     launch: function () {

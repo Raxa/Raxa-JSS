@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- * This script defines the view BMICalculator of the registration module
+ * This script defines the view RegistrationBMI of the registration module
  */
-Ext.define('Registration.view.BMICalculator', {
+Ext.define('Registration.view.RegistrationBMI', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.bmicalculator',
+    alias: 'widget.registrationbmi',
     border: 0,
     padding: 10,
     autoScroll: true,

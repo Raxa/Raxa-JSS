@@ -17,13 +17,13 @@
  */
 Ext.define('Registration.controller.BMI', {
     extend: 'Ext.app.Controller',
-    views: ['BMICalculator', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'ConfirmationScreen', 'Viewport'],
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
+    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     controllers: ['BMI'],
     init: function () {
-        console.log('BMI controller init');
-        //On init, check for change of numberfields in the field container heightWeightID in the view with alias bmicalculator
+        //On init, check for change of numberfields in the field container heightWeightID in the view registrationbmi
         this.control({
-            'bmicalculator #heightWeightID numberfield': {
+            'registrationbmi #heightWeightID numberfield': {
                 change: {
                     fn: this.getBMIData,
                     buffer: 100
@@ -33,10 +33,10 @@ Ext.define('Registration.controller.BMI', {
         })
     },
 
-    //Get values from view bmicalculator and call neccessary methods to calculate bmi & display on screen
+    //Get values from view registrationbmi and call neccessary methods to calculate bmi & display on screen
     getBMIData: function () {
-        var height_cm = parseInt(Ext.getCmp('heightIDcm').getValue()); //Get height value from view bmicalculator
-        var weight_kg = parseInt(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view bmicalculator
+        var height_cm = parseInt(Ext.getCmp('heightIDcm').getValue()); //Get height value from view registrationbmi
+        var weight_kg = parseInt(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view registrationbmi
         var bmiInfo = this.calculateBMI(height_cm, weight_kg); //Calculate bmi
         this.updateBMIDisplay(bmiInfo.status, bmiInfo.bmi); //Update the value displayed
         Ext.getCmp('bmiSliderID').setDisabled(true); //Disable the bmiSlider

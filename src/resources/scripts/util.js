@@ -23,7 +23,7 @@ var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 5000;
 
-//BMI WHO Variables
+//BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
 var WHO_BMI_SUNDERWEIGHT = 16;
 var WHO_BMI_UNDERWEIGHT = 18.5;
@@ -37,7 +37,7 @@ var BMI_HEIGHT_MIN = 0;
 var BMI_WEIGHT_MAX = 800;
 var BMI_WEIGHT_MIN = 0;
 
-// Registration Page Numbers
+// Enum for Registration Module Page Numbers
 var REG_PAGES = {
     HOME: {
         value: 0,
@@ -51,16 +51,29 @@ var REG_PAGES = {
         value: 2,
         name: "registrationpart2"
     },
-    CONFIRM: {
+    REG_CONFIRM: {
         value: 3,
-        name: "confirmationScreen"
+        name: "registrationconfirm"
     },
-    BMI_CALC: {
+    REG_BMI: {
         value: 4,
-        name: "BMICalculate"
+        name: "registrationbmi"
+    },
+    SEARCH_1: {
+        value: 5,
+        name: "searchpart1"
+    },
+    SEARCH_2: {
+        value: 6,
+        name: "searchpart2"
+    },
+    SEARCH_CONFIRM: {
+        value: 7,
+        name: "searchconfirm"
     }
 };
 
+var UITIME = 2000;
 var Util = {
     /**
      *Returns the value of TimeoutLimit for login timeout 
@@ -82,7 +95,6 @@ var Util = {
         }
         return headers;
     },
-
     /**
      * Logout the current user. Ends the current session
      */
@@ -160,5 +172,22 @@ var Util = {
             console.log('6-digit randomly generated Device Id that was stored in localStorage:' + deviceId);
         }
         return deviceId;
+    },
+
+    //Function to help share Models between ExtJS and Sencha Touch 2.
+    platformizeModelConfig: function (extJsModelConfig) {
+        if (Ext.versions.extjs) {
+            return extJsModelConfig; // nothing to change, we are on ext
+        } else if (Ext.versions.touch) {
+            // transform to Sencha Touch 2 data model
+            var config = {
+                extend: extJsModelConfig.extend,
+                config: extJsModelConfig
+            };
+            delete config.config.extend;
+            return config;
+        } else {
+            Ext.Error.raise('Could not recognize Library');
+        }
     }
 }

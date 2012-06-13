@@ -46,29 +46,6 @@ Ext.define('Registration.view.Home', {
                     width: 130,
                     src: '../resources/img/logo.png'
                 }, {
-                    xtype: 'combobox',
-                    typeAhead: true,
-                    triggerAction: 'all',
-                    selectOnTab: true,
-                    store: [
-                        ['vikas', 'vikas'],
-                        ['anshu', 'anshu'],
-                        ['nathan', 'nathan'],
-                        ['mohit', 'mohit'],
-                        ['daniel', 'daniel'],
-                        ['akash', 'akash'],
-                        ['ankit', 'ankit'],
-                        ['suraj', 'suraj'],
-                        ['subodh', 'subodh'],
-                        ['ashwini', 'ashwini']
-                    ],
-                    lazyRender: true,
-                    listClass: 'x-combo-list-small',
-                    fieldLabel: 'Search Patient',
-                    labelAlign: 'top',
-                    width: 300,
-                    hideTrigger: true
-                }, {
                     xtype: 'button',
                     height: 35,
                     margin: '10 0 13 0',
@@ -81,8 +58,13 @@ Ext.define('Registration.view.Home', {
                 }, {
                     xtype: 'button',
                     height: 35,
+                    margin: '10 0 13 0',
                     width: 300,
-                    text: 'Emergency'
+                    text: 'Search Registered Patient',
+                    handler: function () {
+                        var l = Ext.getCmp('mainRegArea').getLayout();
+                        l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
+                    }
                 }]
             }]
         };

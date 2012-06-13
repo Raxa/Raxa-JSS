@@ -36,25 +36,14 @@ Ext.define('Registration.view.Viewport', {
                 }, {
                     xtype: 'tbfill'
                 }, {
-                    xtype: 'button',
-                    width: 60,
-                    text: 'Help'
-                }, {
-                    xtype: 'tbseparator'
-                }, {
-                    xtype: 'button',
-                    text: 'Preferences'
-                }, {
-                    xtype: 'tbseparator'
-                }, {
                     xtype: 'tbtext',
-                    text: 'Vikas Singh'
+                    text: 'You are logged in as ' + username
                 }, {
                     xtype: 'tbseparator'
                 }, {
                     xtype: 'button',
                     width: 60,
-                    text: 'Sign Out'
+                    text: 'Log Out',
                 }]
             }, {
                 dock: 'bottom',
@@ -72,22 +61,28 @@ Ext.define('Registration.view.Viewport', {
             }],
             width: 800,
             id: 'mainRegArea',
-            activeItem: 0,
+            activeItem: REG_PAGES.HOME.value,
             layout: {
                 type: 'card'
             },
             margin: '2 0 2 0',
             region: 'center',
             items: [{
-                xtype: 'home'
+                xtype: REG_PAGES.HOME.name
             }, {
-                xtype: 'registrationpart1'
+                xtype: REG_PAGES.REG_1.name
             }, {
-                xtype: 'registrationpart2'
+                xtype: REG_PAGES.REG_2.name
             }, {
-                xtype: 'confirmationScreen'
+                xtype: REG_PAGES.REG_CONFIRM.name
             }, {
-                xtype: 'bmicalculator'
+                xtype: REG_PAGES.REG_BMI.name
+            }, {
+                xtype: REG_PAGES.SEARCH_1.name
+            }, {
+                xtype: REG_PAGES.SEARCH_2.name
+            }, {
+                xtype: REG_PAGES.SEARCH_CONFIRM.name
             }]
         };
         this.callParent();
