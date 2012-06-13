@@ -1,8 +1,26 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * This script defines the view ConfirmationScreen of the registration module
+ */
 Ext.define('Registration.view.ConfirmationScreen', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.confirmationScreen',
     border: 0,
     padding: 10,
+    autoScroll: true,
     layout: {
         type: 'auto'
     },
@@ -104,7 +122,7 @@ Ext.define('Registration.view.ConfirmationScreen', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    },   {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Sex',
                         layout: 'hbox',
@@ -125,7 +143,7 @@ Ext.define('Registration.view.ConfirmationScreen', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                     },  {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Education Details',
                         layout: 'hbox',
@@ -189,8 +207,8 @@ Ext.define('Registration.view.ConfirmationScreen', {
                             flex: 1,
                             allowBlank: false
                         }]
-                    },    {
-                        xtype: 'text',
+                    }, {
+                        xtype: 'textfield',
                         id: 'blockConfirm',
                         fieldLabel: 'Block/House/Door Number',
                         labelAlign: 'right',
@@ -280,7 +298,7 @@ Ext.define('Registration.view.ConfirmationScreen', {
                             hideLabel: 'true'
                         },
                         items: [{
-                            name: 'occuption',
+                            name: 'phone',
                             id: 'phoneConfirm',
                             emptyText: 'Yes/No (READ ONLY)',
                             flex: 1,
@@ -322,15 +340,19 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
-                        text: 'Submit and Confirm'
+                        text: 'Submit and Confirm',
+                        handler: function () {
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.BMI_CALC.value); //Going to BMI Page
+                        }
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
                         text: 'Cancel',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(0); //going to home page
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
                         }
                     }]
                 }]
