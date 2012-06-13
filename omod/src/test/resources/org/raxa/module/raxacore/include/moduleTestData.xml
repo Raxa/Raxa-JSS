@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <raxacore_patient_list patient_list_id="1" name="TestList1" description="First Test List"  search_query="?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1&amp;startDate=2012-01-01T00:00:00.0&amp;endDate=2012-01-02T00:00:00.0" date_created="2012-01-01 00:00:00.0" creator="1" retired="false"  uuid="68547121-1b70-465d-99ee-c9dfd95e7d30"/>
+    <raxacore_patient_list patient_list_id="2" name="TestList2" description="Second Test List"  search_query="?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1&amp;startDate=2008-08-01T00:00:00.0&amp;endDate=2008-08-01T00:00:00.0" date_created="2012-01-01 00:00:00.0" creator="1" retired="false"  uuid="68547121-1b70-465e-99ee-c9dfd95e7d30"/>
+    <raxacore_patient_list patient_list_id="3" name="TestList3" description="Third Test List"  search_query="?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1&amp;startDate=2012-01-01T00:00:00.0&amp;endDate=2012-01-02T00:00:00.0" date_created="2012-01-01 00:00:00.0" creator="1" retired="true" retired_by="1" retire_reason="test" date_retired="2012-01-01 00:00:00.0" uuid="68547121-1b70-465f-99ee-c9dfd95e7d30"/>
+    <encounter encounter_id="3" encounter_type="1" patient_id="8" location_id="1" form_id="1" encounter_datetime="2008-08-01 00:00:00.0" creator="1" date_created="2008-08-18 14:09:05.0" voided="false" uuid="6519d653-34gg-43ef-9c83-a3715b82d4ac"/>
+</dataset>

@@ -20,10 +20,12 @@ import org.openmrs.annotation.Authorized;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.util.PrivilegeConstants;
 import org.raxa.module.raxacore.db.PatientListDAO;
+import org.springframework.transaction.annotation.Transactional;
 
 /*
  * Interface for interacting with the PatientList
  */
+@Transactional
 public interface PatientListService extends OpenmrsService {
 	
 	/**

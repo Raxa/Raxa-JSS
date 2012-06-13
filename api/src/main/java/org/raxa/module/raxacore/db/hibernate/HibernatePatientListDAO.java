@@ -92,7 +92,6 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	public PatientList getPatientListByUuid(String uuid) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
 		criteria.add(Restrictions.eq("uuid", uuid));
-		criteria.add(Restrictions.eq("retired", false));
 		return (PatientList) criteria.uniqueResult();
 	}
 	

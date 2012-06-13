@@ -12,7 +12,6 @@ package org.raxa.module.raxacore.impl;
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,7 +110,7 @@ public class PatientListServiceImpl implements PatientListService {
 				return date;
 			}
 			catch (Exception ex) {
-				log.error(ex.getMessage() + " Error parsing string " + str + " into Date");
+				//log.error(ex.getMessage() + " Error parsing string " + str + " into Date");
 			}
 		}
 		log.error("Date string is malformed");
@@ -221,5 +220,4 @@ public class PatientListServiceImpl implements PatientListService {
 	public void onShutdown() {
 		log.info("Stopping patient list service");
 	}
-	
 }

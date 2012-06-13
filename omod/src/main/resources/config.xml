@@ -18,7 +18,9 @@
     <!-- /Base Module Properties -->
 	
     <require_version>${openMRSVersion}</require_version>
-    
+    <require_modules>
+        <require_module>org.openmrs.module.webservices.rest</require_module>
+    </require_modules>
     <!-- Extensions -->
 	
     <!-- AOP -->
@@ -55,9 +57,6 @@
 
     <!-- Hibernate files -->
     <mappingFiles>
-        ${omodHbmConfig}
+        RaxacorePatientList.hbm.xml
     </mappingFiles>
-    
-    
-	
 </module>
