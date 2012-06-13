@@ -34,11 +34,17 @@ import org.raxa.module.raxacore.PatientListService;
 
 /**
  * {@link Resource} for PatientList, supporting standard CRUD operations
+ * This resource is currently not used because of serialization issue in OpenMRS core (TRUNK-2205)
  */
 @Resource("patientlist")
 @Handler(supports = PatientList.class, order = 0)
 public class PatientListResource extends MetadataDelegatingCrudResource<PatientList> {
 	
+    /**
+     * Getter for the patients property on patient list resource
+     * @param patientList
+     * @return 
+     */
 	@PropertyGetter("patients")
 	public List<Patient> getPatients(PatientList patientList) {
 		return getPatientListService().getPatientsInPatientList(patientList);
@@ -108,37 +114,65 @@ public class PatientListResource extends MetadataDelegatingCrudResource<PatientL
 		return description;
 	}
 	
+        /**
+         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getByUniqueId()
+         */
 	@Override
 	public PatientList getByUniqueId(String uuid) {
 		return getPatientListService().getPatientListByUuid(uuid);
 	}
 	
+        /**
+         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#purge()
+         */
 	@Override
 	public void purge(PatientList t, RequestContext rc) throws ResponseException {
-		// TODO: CANNOT PURGE LIST. Needs to be implemented through the service
-		throw new ResourceDoesNotSupportOperationException();
+		getPatientListService().deletePatientList(t);
 	}
 	
+        /**
+         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#newDelegate() 
+         */
 	@Override
 	public PatientList newDelegate() {
 		return new PatientList();
 	}
 	
+        /*
+         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#save()
+         */
 	@Override
 	public PatientList save(PatientList patientList) {
 		return getPatientListService().savePatientList(patientList);
 	}
 	
+        /**
+         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#doGetAll()
+         * @param context
+         * @return
+         * @throws ResponseException 
+         */
 	@Override
 	protected NeedsPaging<PatientList> doGetAll(RequestContext context) throws ResponseException {
 		return new NeedsPaging<PatientList>(getPatientListService().getAllPatientList(false), context);
 	}
 	
+        /**
+         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#doSearch()
+         * @param query
+         * @param context
+         * @return 
+         */
 	@Override
 	protected NeedsPaging<PatientList> doSearch(String query, RequestContext context) {
 		return new NeedsPaging<PatientList>(getPatientListService().getPatientListByName(query), context);
 	}
 	
+        /**
+         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getDisplayString()
+         * @param delegate
+         * @return 
+         */
 	@Override
 	public String getDisplayString(PatientList delegate) {
 		if (delegate.getName() == null) {
