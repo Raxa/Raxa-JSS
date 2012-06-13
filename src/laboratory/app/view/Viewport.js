@@ -6,7 +6,7 @@ Ext.define('Laboratory.view.Viewport', {
         type: 'hbox'
     },
 
-    requires: ['Laboratory.view.Home'],
+    requires: ['Laboratory.view.Home', 'Laboratory.view.PaperEntry1', ],
 
     initComponent: function () {
         this.items = {
@@ -21,9 +21,9 @@ Ext.define('Laboratory.view.Viewport', {
                     src: '../resources/img/icon.png'
                 }, {
                     xtype: 'tbfill'
-                },  {
+                }, {
                     xtype: 'tbtext',
-                    text: 'Logged in as '+username
+                    text: 'Logged in as ' + username
                 }, {
                     xtype: 'tbseparator'
                 }, {
@@ -53,12 +53,12 @@ Ext.define('Laboratory.view.Viewport', {
             },
             margin: '2 0 2 0',
             region: 'center',
-            items: [
-            {
-                xtype: 'home'
-            }
-            ]
+            items: [{
+                xtype: 'Home'
+            }, {
+                xtype: 'PaperEntry1'
+            }]
         };
         this.callParent();
     }
-});
+});a

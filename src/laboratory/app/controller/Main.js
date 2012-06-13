@@ -3,6 +3,9 @@ Ext.define('Laboratory.controller.Main', {
     id: 'Main',
    
     init: function () {
-        console.log('lab controller loaded');        
+        console.log('lab controller loaded'); 
+        
+        var PAPER_ENTRY_1 = 1;
+               
      },    
 });

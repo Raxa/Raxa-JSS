@@ -1,6 +1,6 @@
 Ext.define('Laboratory.view.Home', {
     extend: 'Ext.container.Container',
-    alias: 'widget.home',
+    alias: 'widget.Home',
     autoScroll: true,
     activeItem: 0,
    
@@ -8,10 +8,7 @@ Ext.define('Laboratory.view.Home', {
          type: 'absolute'
            },
            
-    initComponent: function() { 
-        var me = this;
 
-        Ext.applyIf(me, {
             items: [
                 {
                     xtype: 'splitter'
@@ -46,7 +43,12 @@ Ext.define('Laboratory.view.Home', {
                     width: 200,
                     text: 'Paper Entry',
                     x: 240,
-                    y: 180
+                    y: 180,
+                    handler: function () {
+                        var l = Ext.getCmp('mainregarea').getLayout();
+                        //TO-DO Name view number in controller as PAPER_ENTRY_1 = 1
+                        l.setActiveItem(1);
+                    }
                 },
                 {
                     xtype: 'button',
@@ -147,7 +149,5 @@ Ext.define('Laboratory.view.Home', {
                     y: 190
                 }
             ]
-        });
-        me.callParent(arguments);
-    }
+       
 });
