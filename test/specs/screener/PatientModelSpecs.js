@@ -7,15 +7,12 @@ describe("Patients", function () {
         }
         expect(mainList).toBeTruthy();
         waitsFor(
-
             function () {
                 return !mainList.isLoading();
-            }, "load never completed", timeOut);
+            }, "store load not completed (timeout)", timeOut);
     });
 
-
-
-    it(" loads response when AJAX request called ", function () {
+    it(" reading from Patients store & comparing with REST result ", function () {
 
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
@@ -27,11 +24,10 @@ describe("Patients", function () {
                 +"{\"uuid\": \"5838ff26-cd81-4885-ac1b-83969e55eb6b\",\"display\": \"Mrs. Epsilon c Tau\","
                 +"\"links\":[{\"uri\": \"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/5838ff26-cd81-4885-ac1b-83969e55eb6b\",\"rel\": \"self\"}]}]}",
                 status: 200
-
             };
             request.success = 'true';
             // this callback is loading response(defined above) in store instead of loading a actual reponse from server
-            // callback(options,success,reponse){ }
+            // Callback method takes options, success and reponse as inputs
             request.callback(null, true, response);
         });
 
@@ -42,8 +38,5 @@ describe("Patients", function () {
         expect(mainList.getData().getAt(0).getData().uuid).toEqual("b0763e6d-95e7-11e1-beba-4dc2e8449b3e");
         expect(mainList.getData().getAt(1).getData().links[0].uri).toEqual("http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/3c0a2629-faa4-41f2-b573-a5afac346a54");
         expect(mainList.getData().getAt(2).getData().links[0].rel).toEqual("self");
-
-
-
     });
 });
