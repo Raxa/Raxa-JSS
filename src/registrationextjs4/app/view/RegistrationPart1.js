@@ -170,34 +170,35 @@ Ext.define('Registration.view.RegistrationPart1', {
                             boxLabel: 'Other'
                         }]
                     }, {
-                        xtype: 'radiogroup',
+                        xtype: 'fieldcontainer',
                         fieldLabel: 'Education Details',
                         id: 'EducationRadioGroup',
-                        layout: 'vbox',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
-                        allowBlank: false,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
                         items: [{
-                            xtype: 'radiofield',
+                            xtype: 'combo',
                             name: 'education',
-                            boxLabel: 'Uneducated'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: '5th Pass or Less'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: '6th - 9th Class'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: '10th and below'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: 'Graduate and above'
+                            label: 'Education Details',
+                            layout: 'hbox',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['education'],
+                                data: [
+                                    ['Uneducated'],
+                                    ['5th Pass or Less'],
+                                    ['6th - 9th Class'],
+                                    ['10th and above'],
+                                    ['Graduate and above']
+                                ]
+                            }),
+                            displayField: 'education'
                         }]
                     }, {
                         xtype: 'fieldcontainer',

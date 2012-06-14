@@ -36,8 +36,13 @@ Ext.define('Registration.view.RegistrationBMI', {
                     padding: 10,
                     title: 'BMI Calculator',
                     items: [{
-                        xtype: 'label',
-                        text: 'BMI Value'
+                        xtype: 'displayfield',
+                        fieldLabel: 'Patient Identifier',
+//                      TODO: Patient Identifier Comes Here
+                        value: 'Patient ID comes here',
+                        id: 'bmiPatientID',
+                        readOnly: true,
+                        labelAlign: 'right',
                     }, {
                         xtype: 'form',
                         id: 'heightWeightID',
