@@ -44,6 +44,9 @@ Ext.define('Registration.view.RegistrationBMI', {
                         readOnly: true,
                         labelAlign: 'right',
                     }, {
+                        xtype: 'label',
+                        text: 'BMI Value'
+                    }, {
                         xtype: 'form',
                         id: 'heightWeightID',
                         border: 0,
@@ -109,7 +112,7 @@ Ext.define('Registration.view.RegistrationBMI', {
                         },
                         items: [{
                             xtype: 'label',
-                            text: 'BMI Index'
+                            text: 'BMI Chart'
                         }]
                     }, {
                         xtype: 'panel',
