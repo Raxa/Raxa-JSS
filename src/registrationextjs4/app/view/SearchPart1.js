@@ -1,9 +1,26 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * This script defines the view SearchPart1 of the registration module
+ */
 Ext.define('Registration.view.SearchPart1', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.searchpart1',
     border: 0,
-    autoScroll: true,
     padding: 10,
+    autoScroll: true,
     layout: {
         type: 'auto'
     },
@@ -12,10 +29,9 @@ Ext.define('Registration.view.SearchPart1', {
             border: 0,
             items: [{
                 xtype: 'panel',
-                autoScroll : true, 
                 border: 0,
                 bodyPadding: 10,
-                 items: [{
+                items: [{
                     xtype: 'fieldset',
                     padding: 10,
                     title: 'New Patient Registration (Patient Profile Info)',
@@ -28,9 +44,9 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 180,
+                        labelWidth: 250,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -41,8 +57,9 @@ Ext.define('Registration.view.SearchPart1', {
                             fieldLabel: 'Old Patient Identifier',
                             flex: 1,
                             emptyText: 'Old Patient Identifier',
+                            allowBlank: true
                         }]
-                    },{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Patient Registration Number',
                         layout: 'hbox',
@@ -60,7 +77,7 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'PatientIdentifierSearch',
                             fieldLabel: 'Patient Identifier',
                             flex: 1,
-                            emptyText: 'Patient Identifier',
+                            emptyText: 'Patient Identifier'
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -77,8 +94,8 @@ Ext.define('Registration.view.SearchPart1', {
                         },
                         items: [{
                             name: 'firstName',
-                            id: 'patientFirstNameSearch',
                             emptyText: 'Patient\'s First Name',
+                            id: 'patientFirstNameSearch',
                             flex: 1,
                         }, {
                             name: 'lastName',
@@ -111,7 +128,7 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'relativeLastSearch',
                             flex: 1,
                             margins: '0 0 0 6',
-                            }]
+                        }]
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Date of Birth',
@@ -132,10 +149,10 @@ Ext.define('Registration.view.SearchPart1', {
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
-                            anchor: '75%'
-                        }
-                        ]
-                    },{
+                            anchor: '75%',
+                            allowBlank: true
+                        }]
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Town/Village/City',
                         layout: 'hbox',
@@ -150,16 +167,15 @@ Ext.define('Registration.view.SearchPart1', {
                         },
                         items: [{
                             xtype: 'textfield',
-                            name: 'townSearch', 
+                            name: 'townSearch',
                             fieldLabel: 'Town/Village/City',
                             emptyText: 'Town/Village/City',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
-                            anchor: '75%',                        
+                            anchor: '75%',
                         }]
-                    } ,
-                    {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Phone Number',
                         layout: 'hbox',
@@ -180,28 +196,27 @@ Ext.define('Registration.view.SearchPart1', {
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
-                            anchor: '75%',  
-                              }]
-                    } ,
-                     {
+                            anchor: '75%',
+                        }]
+                    }, {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 60,
                         text: 'Search',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(5); //going to Search part-2 page (showing result list)
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Page (Result List)
                         }
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
                         text: 'Reset'
-                    } 
-                 ]
+
+                    }]
                 }]
             }]
         };
         this.callParent();
     }
-});f
+});

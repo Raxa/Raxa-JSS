@@ -1,9 +1,26 @@
-Ext.define('Registration.view.SearchPatientScreen', {
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * This script defines the view RegistrationConfirm of the registration module
+ */
+Ext.define('Registration.view.RegistrationConfirm', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.searchPatientScreen',
-    autoScroll : true,
+    alias: 'widget.registrationconfirm',
     border: 0,
     padding: 10,
+    autoScroll: true,
     layout: {
         type: 'auto'
     },
@@ -14,10 +31,10 @@ Ext.define('Registration.view.SearchPatientScreen', {
                 xtype: 'panel',
                 border: 0,
                 bodyPadding: 10,
-                    items: [{
+                items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'Returning Patient Registration Page',
+                    title: 'New Patient Registration (Confirmation Screen)',
                     items: [{
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Old Patient Registration Number',
@@ -35,7 +52,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                             name: 'Old Patient Identifier',
                             fieldLabel: 'Old Patient Identifier',
                             flex: 1,
-                            id: 'oldPatientIdentifierSearchedPatient',
+                            id: 'oldPatientIdentifierConfirm',
                             readOnly: true,
                             emptyText: 'Old Patient Identifier as filled in form (READ ONLY)',
                             allowBlank: true
@@ -57,7 +74,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         },
                         items: [{
                             name: 'patientName',
-                            id: 'patientNameSearchedPatient',
+                            id: 'patientNameConfirm',
                             emptyText: 'Patient\'s Name as filled in form (READ ONLY)',
                             flex: 1,
                             readOnly: true,
@@ -77,8 +94,8 @@ Ext.define('Registration.view.SearchPatientScreen', {
                             hideLabel: 'true'
                         },
                         items: [{
-                            name: 'relativeNameSearchedPatient',
-                            id: 'relativeNameSearchedPatient',
+                            name: 'relativeNameConfirm',
+                            id: 'relativeNameConfirm',
                             emptyText: 'Father/Husband\'s Name (READ ONLY)',
                             flex: 1,
                             readOnly: true,
@@ -99,13 +116,13 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         },
                         items: [{
                             name: 'age',
-                            id: 'ageSearchedPatient',
+                            id: 'ageConfirm',
                             emptyText: 'Age (READ ONLY)',
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
-                    },   {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Sex',
                         layout: 'hbox',
@@ -120,13 +137,13 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         },
                         items: [{
                             name: 'sex',
-                            id: 'sexSearchedPatient',
+                            id: 'sexConfirm',
                             emptyText: 'Sex (READ ONLY)',
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
-                     },  {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Education Details',
                         layout: 'hbox',
@@ -141,7 +158,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         },
                         items: [{
                             name: 'age',
-                            id: 'educationSearchedPatient',
+                            id: 'educationConfirm',
                             emptyText: 'Education Details (READ ONLY)',
                             flex: 1,
                             readOnly: true,
@@ -162,7 +179,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         },
                         items: [{
                             name: 'caste',
-                            id: 'casteSearchedPatient',
+                            id: 'casteConfirm',
                             emptyText: 'Caste (READ ONLY)',
                             flex: 1,
                             readOnly: true,
@@ -183,16 +200,16 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         },
                         items: [{
                             name: 'occuption',
-                            id: 'occuptionSearchedPatient',
+                            id: 'occuptionConfirm',
                             emptyText: 'Occupation (READ ONLY)',
 
                             readOnly: true,
                             flex: 1,
                             allowBlank: false
                         }]
-                    },    {
-                        xtype: 'text',
-                        id: 'blockSearchedPatient',
+                    }, {
+                        xtype: 'textfield',
+                        id: 'blockConfirm',
                         fieldLabel: 'Block/House/Door Number',
                         labelAlign: 'right',
                         emptyText: 'Block/House/Door Number (READ ONLY)',
@@ -203,7 +220,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'stretSearchedPatient',
+                        id: 'stretConfirm',
                         fieldLabel: 'Street/Area/Locality/Mohala/Road',
                         labelAlign: 'right',
                         emptyText: 'Street/Area/Locality/Mohala/Road (READ ONLY)',
@@ -214,7 +231,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'townSearchedPatient',
+                        id: 'townConfirm',
                         fieldLabel: 'Town/Village/City',
                         labelAlign: 'right',
                         emptyText: 'Town/Village/City (READ ONLY)',
@@ -225,7 +242,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'postOfficeSearchedPatient',
+                        id: 'postOfficeConfirm',
                         fieldLabel: 'Post Office',
                         labelAlign: 'right',
                         emptyText: 'Post Office (READ ONLY)',
@@ -236,7 +253,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'pinSearchedPatient',
+                        id: 'pinConfirm',
                         fieldLabel: 'Pin Code',
                         labelAlign: 'right',
                         emptyText: 'Pin Code (READ ONLY)',
@@ -247,7 +264,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'tehsilSearchedPatient',
+                        id: 'tehsilConfirm',
                         fieldLabel: 'Tehsil/Taluka/Mandal/Thana',
                         labelAlign: 'right',
                         emptyText: 'Tehsil/Taluka/Mandal/Thana (READ ONLY)',
@@ -259,7 +276,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                     }, {
                         xtype: 'numberfield',
                         fieldLabel: 'District',
-                        id: 'districtSearchedPatient',
+                        id: 'districtConfirm',
                         emptyText: 'District (READ ONLY)',
 
                         readOnly: true,
@@ -281,8 +298,8 @@ Ext.define('Registration.view.SearchPatientScreen', {
                             hideLabel: 'true'
                         },
                         items: [{
-                            name: 'occuption',
-                            id: 'phoneSearchedPatient',
+                            name: 'phone',
+                            id: 'phoneConfirm',
                             emptyText: 'Yes/No (READ ONLY)',
                             flex: 1,
                             readOnly: true,
@@ -304,7 +321,7 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         items: [{
                             name: 'primaryContact',
                             emptyText: 'Primary Contact',
-                            id: 'patientPrimaryContactNumberSearchedPatient',
+                            id: 'patientPrimaryContactNumberConfirm',
 
                             readOnly: true,
                             flex: 1,
@@ -312,40 +329,32 @@ Ext.define('Registration.view.SearchPatientScreen', {
                         }, {
                             name: 'lastName',
                             emptyText: 'Secondary Contact',
-                            id: 'patientSecondaryContactNumberSearchedPatient',
+                            id: 'patientSecondaryContactNumberConfirm',
 
                             readOnly: true,
                             flex: 1,
                             margins: '0 0 0 6',
                             allowBlank: false
                         }]
-                    },
-                    {
+                    }, {
                         xtype: 'button',
-                        margin: '10 10 0 200',
+                        margin: '10 50 0 270',
                         width: 120,
-                        text: 'Cancel Search',
+                        text: 'Submit and Confirm',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(0); //going to home page
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.REG_BMI.value); //Going to BMI Page
                         }
-                    },
-                     {
+                    }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
-                        width: 160,
-                        text: 'Return to search results',
+                        width: 60,
+                        text: 'Cancel',
                         handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(5); //going result page
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
                         }
-                    },
-                    {
-                        xtype: 'button',
-                        margin: '10 0 0 10',
-                        width: 160,
-                        text: 'Continue to submit BMI'
-                    }, ]
+                    }]
                 }]
             }]
         };
