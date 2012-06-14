@@ -65,7 +65,8 @@ Ext.define('Registration.view.Home', {
                     xtype: 'button',
                     height: 35,
                     width: 300,
-                    text: 'Emergency'
+                    text: 'Emergency',
+                    action: 'test'
                 }]
             }]
         };

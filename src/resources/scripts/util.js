@@ -2,12 +2,14 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.dogado.eu';
+    var HOST = 'http://raxaemr.jelastic.tsukaeru.net';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 5000;
+     
+
 var Util = {
     /**
      *Returns the value of TimeoutLimit for login timeout 
@@ -15,6 +17,32 @@ var Util = {
      */
     getTimeoutLimit: function() {
         return timeoutLimit;
+    },
+    
+    /*function to return the uuid of a concept. the display parameter is used to check the required result in case the response
+     *has multiple records returned
+    */
+    getAttributeFromREST : function(resource,queryParameter,display) {
+    
+        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/'+resource+'?q='+queryParameter,  //'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
+                    if(JSON.parse(response.responseText).results[i].display == display){
+                        localStorage.setItem(queryParameter+"Uuid"+resource,JSON.parse(response.responseText).results[i].uuid)
+                    }
+                }
+                
+                
+            }
+        });
     },
     
     /**
@@ -40,7 +68,7 @@ var Util = {
             useDefaultXhrHeader: false,
             method: 'DELETE',
             success: function () {
-                // do nothing
+            // do nothing
             }
         });
     },
@@ -78,8 +106,8 @@ var Util = {
     getModules: function () {
         //always keep login at first position as its app path is different
         return ['login', 'screener', 'registration', 'registrationextjs4'];
-        //TO DO:Add the line below instead the above one 
-        //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+    //TO DO:Add the line below instead the above one 
+    //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
 
     /**
@@ -108,4 +136,10 @@ var Util = {
         }
         return deviceId;
     }
-}
+};
+
+
+var heightUuidConcept = Util.getAttributeFromREST('concept','height','HEIGHT (CM)');
+var weightUuidConcept = Util.getAttributeFromREST('concept','weight','WEIGHT (KG)');     
+var bmiUuidConcept = Util.getAttributeFromREST('concept','bmi','BODY MASS INDEX'); 
+var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee','Registration Fee');

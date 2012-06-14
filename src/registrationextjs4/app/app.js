@@ -4,5 +4,12 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Registration',
-    autoCreateViewport: true
+    views: ['ConfirmationScreen', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'Viewport'],
+    controllers: ['controls'],
+    stores: ['obsstore', 'encounterstore'],
+    models: ['obsmodel', 'encountersmodel'],
+    
+    launch: function() {
+        Ext.create('Registration.view.Viewport');
+    }
 });
