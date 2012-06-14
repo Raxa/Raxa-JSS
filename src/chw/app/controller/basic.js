@@ -65,8 +65,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 tap: function () {
                     this.doLogin(true);
                 }
-            },
-            loginCancel: {
+            },loginCancel: {
                 tap: function () {
                     this.doLogin(false);
                 }
@@ -76,8 +75,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 tap: function () {
                     this.doConnect(true);
                 }
-            },
-            connectionCancel: {
+            },connectionCancel: {
                 tap: function () {
                     this.doConnect(false);
                 }
@@ -87,28 +85,23 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 tap: function () {
                     this.doStudy('start')
                 }
-            },
-            selectForms: {
+            },selectForms: {
                 tap: function () {
                     this.doForms('start', true)
                 }
-            },
-            downloadButton: {
+            },downloadButton: {
                 tap: function () {
                     this.doDownload('start')
                 }
-            },
-            uploadButton: {
+            },uploadButton: {
                 tap: function () {
                     this.doUpload('start')
                 }
-            },
-            settingsButton: {
+            },settingsButton: {
                 tap: function () {
                     this.doSettings('start')
                 }
-            },
-            logoutButton: {
+            },logoutButton: {
                 tap: function () {
                     this.doLogout('start')
                 }
@@ -118,28 +111,23 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 tap: function () {
                     this.doForms('register', true)
                 }
-            },
-            registerCancel: {
+            },registerCancel: {
                 tap: function () {
                     this.doForms('register', false)
                 }
-            },
-            enrollOkay: {
+            },enrollOkay: {
                 tap: function () {
                     this.doForms('enroll', true)
                 }
-            },
-            enrollCancel: {
+            },enrollCancel: {
                 tap: function () {
                     this.doForms('enroll', false)
                 }
-            },
-            encounterOkay: {
+            },encounterOkay: {
                 tap: function () {
                     this.doForms('encounter', true)
                 }
-            },
-            encounterCancel: {
+            },encounterCancel: {
                 tap: function () {
                     this.doForms('encounter', false)
                 }
@@ -149,8 +137,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 tap: function () {
                     this.doSettings('connection')
                 }
-            },
-            settingsCancel: {
+            },settingsCancel: {
                 tap: function () {
                     this.doSettings('cancel')
                 }
@@ -160,8 +147,7 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 tap: function () {
                     this.doStudy('okay')
                 }
-            },
-            studyCancel: {
+            },studyCancel: {
                 tap: function () {
                     this.doStudy('cancel')
                 }
@@ -174,29 +160,23 @@ Ext.define('motechScheduleTracking.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            items: [
-            // log into application
-            {
+            items: [{
+                // log into application
                 xclass: 'motechScheduleTracking.view.loginScreen'
-            },
-            // confirm or adjust connection settings
-            {
+            },{
+                // confirm or adjust connection settings
                 xclass: 'motechScheduleTracking.view.connectionSettings'
-            },
-            // select actions based on button layou
-            {
+            },{
+                // select actions based on button layout
                 xclass: 'motechScheduleTracking.view.optionsScreen'
-            },            
-            // select form to fill in and submit
-            {
+            },{
+                // select form to fill in and submit
                 xclass: 'motechScheduleTracking.view.patientOptions'
-            },
-            // confirm or adjust settings
-            {
+            },{
+                // confirm or adjust settings
                 xclass: 'motechScheduleTracking.view.settingsScreen'
-            },
-            // confirm or adjust study selection
-            {
+            },{
+                // confirm or adjust study selection
                 xclass: 'motechScheduleTracking.view.studyScreen'
             }]
         });

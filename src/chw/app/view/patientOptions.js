@@ -27,6 +27,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
             xtype: 'formpanel',
             id: 'registerForm',
             iconCls: 'refresh',
+            scrollable : true,
             items: [{
                 xtype: 'fieldset',
                 instructions: 'Only numbers for MoTeCH ID and Phone Number. ',
@@ -55,21 +56,30 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     required: true,
                     clearIcon: true
                 },{
-                    xtype: 'selectfield',
-                    name: 'gender',
-                    label: 'Gender',
-                    required: true,
-                    options: [{
-                        text: '',
-                        value: 'empty'
+                    xtype : 'container',
+                    layout : {
+                        type : 'hbox',
+                        align: 'stretch',
+                        padding : 0
+                    },
+                    items : [{
+                        xtype: 'radiofield',
+                        name: 'radiogroup',
+                        value: 'female',
+                        label: 'Female',
+                        labelWidth : '70%',
+                        flex : 1,
+                        height : 50
                     },{
-                        text: 'Male',
-                        value: 'male'
-                    },{
-                        text: 'Female',
-                        value: 'female'
+                        xtype : 'radiofield',
+                        name : 'radiogroup',
+                        value : 'male',
+                        label : 'Male',
+                        labelWidth : '70%',
+                        flex : 1
                     }]
-                },{
+                },
+               {
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
                     name: 'bday',
@@ -87,19 +97,27 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                     required: true,
                     clearIcon: true
                 },{
-                    xtype: 'selectfield',
-                    name: 'indemo',
-                    label: 'In demo?',
-                    required: true,
-                    options: [{
-                        text: '',
-                        value: 'empty'
+                    xtype : 'container',
+                    layout : {
+                        type : 'hbox',
+                        align: 'stretch',
+                        padding : 0
+                    },
+                    items : [{
+                        xtype: 'radiofield',
+                        name: 'radiogroupy',
+                        value: 'yes',
+                        label: 'In demo',
+                        labelWidth : '70%',
+                        flex : 1,
+                        height : 50
                     },{
-                        text: 'Yes',
-                        value: 'yes'
-                    },{
-                        text: 'No',
-                        value: 'no'
+                        xtype : 'radiofield',
+                        name : 'radiogroupy',
+                        value : 'no',
+                        label : 'Not in demo',
+                        labelWidth : '70%',
+                        flex : 1
                     }]
                 },{
                     xtype: 'container',
@@ -181,10 +199,7 @@ Ext.define('motechScheduleTracking.view.patientOptions', {
                             text: 'Okay',
                             ui: 'aqua',
                             id: 'enrollOkay',
-                            flex: '3',
-                            handler: function () {
-                                console.log('hi')
-                            }
+                            flex: '3'
                         },{
                             xtype: 'label',
                             flex: '1'
