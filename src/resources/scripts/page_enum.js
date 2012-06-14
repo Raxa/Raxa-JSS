@@ -13,16 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This is the controller of Laboratory Module. All the functions should go here 
+ *  This files stores correnponding enum for Laboratory Pages
  */
-Ext.define('Laboratory.controller.Main', {
-    extend: 'Ext.app.Controller',
-    id: 'Main',
-    views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4'],
-
-    init: function () {
-        console.log('lab controller loaded');
-
-    }
-
-});
+var LAB_PAGES = {
+    HOME: {
+        value: 0,
+        name: "Home"
+    },
+    PAPER_ENTRY_LIST: {
+        value: 1,
+        name: "PaperEntry1"
+    },
+    PAPER_ENTRY_SEARCH: {
+        value: 2,
+        name: "PaperEntry2"
+    },
+    PAPER_ENTRY_SEARCH_RESULT: {
+        value: 3,
+        name: "PaperEntry3"
+    },
+    PAPER_ENTRY_ENTER_DATA: {
+        value: 4,
+        name: "PaperEntry4"
+    },
+}
