@@ -1,4 +1,18 @@
-/* 
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
@@ -8,6 +22,57 @@ if (localStorage.getItem("host") == null) {
 var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 5000;
+
+//BMI WHO Constants
+var WHO_BMI_VSUNDERWEIGHT = 15;
+var WHO_BMI_SUNDERWEIGHT = 16;
+var WHO_BMI_UNDERWEIGHT = 18.5;
+var WHO_BMI_NORMAL = 25;
+var WHO_BMI_OVERWEIGHT = 30;
+var WHO_BMI_OBESE = 35;
+var WHO_BMI_SOBESE = 40;
+var BMI_MAX = 60;
+var BMI_HEIGHT_MAX = 300;
+var BMI_HEIGHT_MIN = 0;
+var BMI_WEIGHT_MAX = 800;
+var BMI_WEIGHT_MIN = 0;
+
+// Enum for Registration Module Page Numbers
+var REG_PAGES = {
+    HOME: {
+        value: 0,
+        name: "home"
+    },
+    REG_1: {
+        value: 1,
+        name: "registrationpart1"
+    },
+    REG_2: {
+        value: 2,
+        name: "registrationpart2"
+    },
+    REG_CONFIRM: {
+        value: 3,
+        name: "registrationconfirm"
+    },
+    REG_BMI: {
+        value: 4,
+        name: "registrationbmi"
+    },
+    SEARCH_1: {
+        value: 5,
+        name: "searchpart1"
+    },
+    SEARCH_2: {
+        value: 6,
+        name: "searchpart2"
+    },
+    SEARCH_CONFIRM: {
+        value: 7,
+        name: "searchconfirm"
+    }
+};
+
 var UITIME = 2000;
 var Util = {
     /**
@@ -110,19 +175,19 @@ var Util = {
     },
 
     //Function to help share Models between ExtJS and Sencha Touch 2.
-    platformizeModelConfig : function (extJsModelConfig) {
-            if (Ext.versions.extjs) {
-                return extJsModelConfig; // nothing to change, we are on ext
-            } else if (Ext.versions.touch) {
-                // transform to Sencha Touch 2 data model
-                var config = {
-                    extend: extJsModelConfig.extend,
-                    config: extJsModelConfig
-                };
-                delete config.config.extend;
-                return config;
-            } else {
-                Ext.Error.raise('Could not recognize Library');
-            }
+    platformizeModelConfig: function (extJsModelConfig) {
+        if (Ext.versions.extjs) {
+            return extJsModelConfig; // nothing to change, we are on ext
+        } else if (Ext.versions.touch) {
+            // transform to Sencha Touch 2 data model
+            var config = {
+                extend: extJsModelConfig.extend,
+                config: extJsModelConfig
+            };
+            delete config.config.extend;
+            return config;
+        } else {
+            Ext.Error.raise('Could not recognize Library');
         }
+    }
 }
