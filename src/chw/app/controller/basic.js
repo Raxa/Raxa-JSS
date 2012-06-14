@@ -271,61 +271,94 @@ Ext.define('motechScheduleTracking.controller.basic', {
                 Ext.Msg.confirm('Confirm', 'Are you sure you want to proceed?', function (buttonId) {
                     if (buttonId === 'yes') {
                         if (step === 'register') {
-                            // register patient
-                            var values = Ext.getCmp('registerForm').getValues();
-                            if (values.first === "" || values.gender === "empty" || values.indemo === "empty" || values.last === "" || values.mid_reg === "" || values.phone_reg === "") {
-                                Ext.Msg.alert("Error", "Please fill in all fields")
-                            } else if (isNaN(values.phone_reg) || isNaN(values.mid_reg)) {
-                                Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID and Phone Number")
+                            // get values from form
+                            var regVal = Ext.getCmp('registerForm').getValues();
+                            // pass values into instance of model
+                            var regMod = Ext.create('motechScheduleTracking.model.registerModel', {
+                                mid_reg : regVal.mid_reg,
+                                first : regVal.first,
+                                last : regVal.last,
+                                gender : regVal.gender,
+                                bday : regVal.bday,
+                                phone_reg : regVal.phone_reg,
+                                indemo : regVal.indemo
+                            });
+                            // track errors and message
+                            var regErrs = regMod.validate();
+                            var regMsg = '';
+                            // generate error message if errors are present
+                            if (!regErrs.isValid()) {
+                                regErrs.each(function (err) {
+                                    regMsg += err.getMessage() + '<br/>';
+                                });
+                                Ext.Msg.alert('ERROR',regMsg)
                             } else {
-                                var regMod = Ext.create('motechScheduleTracking.model.registerModel');
-                                regMod.set('mid_reg', values.mid_reg);
-                                regMod.set('first', values.first);
-                                regMod.set('last', values.last);
-                                regMod.set('gender', values.gender);
-                                regMod.set('bday', values.bday);
-                                regMod.set('phone_reg', values.phone_reg);
-                                regMod.set('indemo', values.indemo);
+                                // create instance of store
                                 var regList = Ext.create('motechScheduleTracking.store.registerList');
+                                // add model to store
                                 regList.add(regMod);
                                 regList.sync();
+                                // reset form values
                                 Ext.getCmp('registerForm').reset();
+                                // return to options panel
                                 Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
                             }
                         } else if (step === 'enroll') {
-                            // enroll patient
-                            var values = Ext.getCmp('enrollForm').getValues();
-                            if (values.mid_enr === '' || values.phone_enr === '') {
-                                Ext.Msg.alert("Error", "Please fill in all fields")
-                            } else if (isNaN(values.phone_enr) || isNaN(values.mid_enr)) {
-                                Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID and Phone Number")
+                            // get values from form
+                            var enrVal = Ext.getCmp('enrollForm').getValues();
+                            // pass values into instance of model
+                            var enrMod = Ext.create('motechScheduleTracking.model.enrollModel', {
+                                mid_enr : enrVal.mid_enr,
+                                phone_enr : enrVal.phone_enr
+                            });
+                            // track errors and message
+                            var enrErrs = enrMod.validate();
+                            var enrMsg = '';
+                            // generate error message if errors are present
+                            if (!enrErrs.isValid()) {
+                                enrErrs.each(function (err) {
+                                    enrMsg += err.getMessage() + '<br/>';
+                                });
+                                Ext.Msg.alert('ERROR',enrMsg)
                             } else {
-                                var enrMod = Ext.create('motechScheduleTracking.model.enrollModel');
-                                enrMod.set('mid_enr', values.mid_enr);
-                                enrMod.set('phone_enr', values.phone_enr);                               
+                                // create instance of store
                                 var enrList = Ext.create('motechScheduleTracking.store.enrollList');
+                                // add model to store
                                 enrList.add(enrMod);
                                 enrList.sync();
+                                // reset form values
                                 Ext.getCmp('enrollForm').reset();
-                                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
+                                // return to options panel
+                                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL)
                             }
                         } else if (step === 'encounter') {
-                            // register encounter
-                            var values = Ext.getCmp('encounterForm').getValues();
-                            if (values.mid_enc === '' || values.date === '' || values.concept === 'empty') {
-                                Ext.Msg.alert("Error", "Please fill in all fields")
-                            } else if (isNaN(values.mid_enc)) {
-                                Ext.Msg.alert("Error", "Please use only numbers for MoTeCH ID")
+                            // get values from form
+                            var encVal = Ext.getCmp('encounterForm').getValues();
+                            // pass values into instance of model
+                            var encMod = Ext.create('motechScheduleTracking.model.encounterModel', {
+                                mid_enc : encVal.mid_enc,
+                                date : encVal.date,
+                                concept : encVal.concept
+                            });
+                            // track errors and message
+                            var encErrs = encMod.validate();
+                            var encMsg = '';
+                            // generate error message if errors are present
+                            if (!encErrs.isValid()) {
+                                encErrs.each(function (err) {
+                                    encMsg += err.getMessage() + '<br/>';
+                                });
+                                Ext.Msg.alert('ERROR',encMsg)
                             } else {
-                                var encMod = Ext.create('motechScheduleTracking.model.encounterModel');
-                                encMod.set('mid_enc', values.mid_enc);
-                                encMod.set('date', values.date);
-                                encMod.set('concept', values.concept);
+                                // create instance of store
                                 var encList = Ext.create('motechScheduleTracking.store.encounterList');
+                                // add model to store
                                 encList.add(encMod);
                                 encList.sync();
+                                // reset form values
                                 Ext.getCmp('encounterForm').reset();
-                                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL);
+                                // return to options panel
+                                Ext.getCmp('viewPort').setActiveItem(PAGES.OPTIONS_PANEL)
                             }
                         }
                     }
