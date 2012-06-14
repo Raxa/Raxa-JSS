@@ -1,3 +1,20 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * This script defines the view Viewport of the registration module
+ */
 Ext.define('Registration.view.Viewport', {
     extend: 'Ext.container.Viewport',
     layout: {
@@ -5,9 +22,6 @@ Ext.define('Registration.view.Viewport', {
         pack: 'center',
         type: 'hbox'
     },
-
-    requires: ['Registration.view.Home', 'Registration.view.RegistrationPart1', 'Registration.view.RegistrationPart2', 'Registration.view.ConfirmationScreen','Registration.view.SearchPart1','Registration.view.SearchPatientScreen', 'Registration.view.SearchPart2', 'Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
-
     initComponent: function () {
         this.items = {
             dockedItems: [{
@@ -23,13 +37,13 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'tbfill'
                 }, {
                     xtype: 'tbtext',
-                    text: 'You are logged in as '+ username
+                    text: 'You are logged in as ' + username
                 }, {
                     xtype: 'tbseparator'
                 }, {
                     xtype: 'button',
                     width: 60,
-                    text: 'Sign Out',                    
+                    text: 'Log Out',
                 }]
             }, {
                 dock: 'bottom',
@@ -46,27 +60,29 @@ Ext.define('Registration.view.Viewport', {
                 }]
             }],
             width: 800,
-            id: 'mainregarea',
-            activeItem: 0,
+            id: 'mainRegArea',
+            activeItem: REG_PAGES.HOME.value,
             layout: {
                 type: 'card'
             },
             margin: '2 0 2 0',
             region: 'center',
             items: [{
-                xtype: 'home'
+                xtype: REG_PAGES.HOME.name
             }, {
-                xtype: 'registrationpart1'
+                xtype: REG_PAGES.REG_1.name
             }, {
-                xtype: 'registrationpart2'
+                xtype: REG_PAGES.REG_2.name
             }, {
-                xtype: 'confirmationScreen'
+                xtype: REG_PAGES.REG_CONFIRM.name
             }, {
-            xtype: 'searchpart1'
-            }, { 
-            xtype: 'searchpart2'
+                xtype: REG_PAGES.REG_BMI.name
             }, {
-            xtype: 'searchPatientScreen'
+                xtype: REG_PAGES.SEARCH_1.name
+            }, {
+                xtype: REG_PAGES.SEARCH_2.name
+            }, {
+                xtype: REG_PAGES.SEARCH_CONFIRM.name
             }]
         };
         this.callParent();
