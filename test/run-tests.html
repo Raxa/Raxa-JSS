@@ -42,17 +42,26 @@ http://docs.sencha.com/ext-js/4-0/#!/guide/testing
         Core Tests:
         <script type="text/javascript">
             var testApp = null;
+
+			//loader
+			Ext.Loader.setConfig({
+				enabled: true,
+				paths: {
+					'Ext.i18n': '../src/lib/i18n'	
+				}
+			});			
+
+			//i18n
+			Ext.require('Ext.i18n.Bundle', function(){
+				Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+					bundle: 'RaxaEmr',
+					//Specify language here.
+					lang: 'en-US',
+					path: '../src/app/view',
+					noCache: true
+				});
+			});
 			
-//i18n
-Ext.require('Ext.i18n.Bundle', function(){
-    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
-        bundle: 'RaxaEmr',
-		//Specify language here.
-        lang: 'en-US',
-        path: '../src/app/view',
-        noCache: true
-    });
-});
             Ext.onReady(function() {
                 testApp = Ext.create('Ext.app.Application', {
                     name: 'RaxaEmr',

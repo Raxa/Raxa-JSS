@@ -3,11 +3,11 @@ Ext.define('RaxaEmr.view.Login', {
     config: {
         fullscreen: true,
         layout: 'vbox',
-        id: 'halo',		
+        id: 'halo',
         items: [{
             xtype: 'topbar',
-            docked: 'top',			
-			}, {
+            docked: 'top',
+        }, {
             xtype: 'toolbar',
             docked: 'top',
             items: [{

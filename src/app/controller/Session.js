@@ -157,7 +157,7 @@ Ext.define('RaxaEmr.controller.Session', {
             success: this.storeUserPrivileges,
             failure: function(){
                 Ext.getCmp('mainView').setMasked(false);
-                Ext.Msg.alert("connection error");
+                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.alert'));
             }
         });
     },
