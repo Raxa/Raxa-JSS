@@ -100,12 +100,12 @@ Ext.define('RaxaEmr.controller.Session', {
                 },
                 failure: function(){
                     Ext.getCmp('mainView').setMasked(false);
-                    Ext.Msg.alert("connection error");
+                    Ext.Msg.alert("RaxaEmr.controller.session.alert");
                 }
             });
         } else {
             // showing modal alert and stop loading mask
-            Ext.Msg.alert("Invalid user name");
+            Ext.Msg.alert("RaxaEmr.controller.session.usernamealert");
             this.launchAfterAJAX();
         }
     },
@@ -157,7 +157,7 @@ Ext.define('RaxaEmr.controller.Session', {
             success: this.storeUserPrivileges,
             failure: function(){
                 Ext.getCmp('mainView').setMasked(false);
-                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.alert'));
+                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
             }
         });
     },
