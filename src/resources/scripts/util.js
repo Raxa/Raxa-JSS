@@ -2,7 +2,7 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.dogado.eu';
+    var HOST = 'http://raxaemr.jelastic.tsukaeru.net';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
@@ -107,5 +107,10 @@ var Util = {
             console.log('6-digit randomly generated Device Id that was stored in localStorage:' + deviceId);
         }
         return deviceId;
+    },
+	 getPatientIdentifier : function(){
+        //dummy funtion to be used for creating partient
+        // TODO: writen a  ramdom no for patient identufier but it should be a unique id
+        return Math.floor(Math.random() * 1000000000);
     }
 }

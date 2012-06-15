@@ -20,19 +20,23 @@ Ext.define('Registration.view.RegistrationPart2', {
                     title: 'New Patient Registration (Patient Communication Info)',
                     items: [{
                         xtype: 'textfield',
+                        id: 'block',
                         fieldLabel: 'Block/House/Door Number',
                         emptyText: 'Block/House/Door Number',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
+                        allowBlank: false,
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
                         fieldLabel: 'Street/Area/Locality/Mohala/Road',
                         emptyText: 'Street/Area/Locality/Mohala/Road',
                         labelAlign: 'right',
+                        id: 'street',
                         labelPad: 20,
                         labelWidth: 250,
+                        allowBlank: false,
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
@@ -40,6 +44,8 @@ Ext.define('Registration.view.RegistrationPart2', {
                         emptyText: 'Town/Village/City',
                         labelAlign: 'right',
                         labelPad: 20,
+                        allowBlank: false,
+                        id: 'town',
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
@@ -48,6 +54,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                         emptyText: 'Post Office',
                         labelAlign: 'right',
                         labelPad: 20,
+                        id: 'postoffice',
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
@@ -55,6 +62,8 @@ Ext.define('Registration.view.RegistrationPart2', {
                         fieldLabel: 'Pin Code',
                         emptyText: 'Pin Code',
                         labelAlign: 'right',
+                        id: 'pincode',
+                        allowBlank: false,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
@@ -62,15 +71,16 @@ Ext.define('Registration.view.RegistrationPart2', {
                         xtype: 'textfield',
                         fieldLabel: 'Tehsil/Taluka/Mandal/Thana',
                         emptyText: 'Tehsil/Taluka/Mandal/Thana',
-
+                        id: 'tehsil',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
-                        xtype: 'numberfield',
+                        xtype: 'textfield',
                         fieldLabel: 'District',
                         emptyText: 'District',
+                        id: 'district',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -83,7 +93,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
-                        allowBlank: false,
+                        allowBlank: true,
                         items: [{
                             xtype: 'radiofield',
                             name: 'contact',
@@ -98,7 +108,7 @@ Ext.define('Registration.view.RegistrationPart2', {
                         fieldLabel: 'Contact Number',
                         layout: 'hbox',
                         combineErrors: true,
-                        defaultType: 'textfield',
+                        defaultType: 'numberfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -111,14 +121,14 @@ Ext.define('Registration.view.RegistrationPart2', {
                             emptyText: 'Primary Contact',
                             id: 'patientPrimaryContact',
                             flex: 1,
-                            allowBlank: false
+                            allowBlank: true
                         }, {
                             name: 'lastName',
                             emptyText: 'Secondary Contact',
                             id: 'patientSecondaryContact',
                             flex: 1,
                             margins: '0 0 0 6',
-                            allowBlank: false
+                            allowBlank: true
                         }]
                     }, {
                         xtype: 'button',
@@ -135,22 +145,13 @@ Ext.define('Registration.view.RegistrationPart2', {
                         margin: '30 0 0 30',
                         width: 60,
                         text: 'Continue',
-                        handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(3); //going to confirmation page
-                        }
-
-
-
+                        action: 'continue'
                     }, {
                         xtype: 'button',
                         margin: '30 0 0 30',
                         width: 60,
                         text: 'Cancel',
-                        handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(0); //going to home page
-                        }
+                        action: 'cancel'
                     }]
                 }]
             }]

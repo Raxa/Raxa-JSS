@@ -72,8 +72,7 @@ Ext.define('Registration.view.Viewport', {
                 xtype: 'registrationpart2'
             }, {
                 xtype: 'confirmationScreen'
-            }
-            ]
+            }]
         };
         this.callParent();
     }
