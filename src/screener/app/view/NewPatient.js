@@ -14,7 +14,7 @@ Ext.define("Screener.view.NewPatient", {
         hidden: true,
         // Set the width and height of the panel
         width: Ext.os.is.Phone ? 260 : 400,
-        height: 200,
+        height: 240,
 
         items: [{
             xtype: 'textfield',
@@ -24,6 +24,10 @@ Ext.define("Screener.view.NewPatient", {
             xtype: 'textfield',
             name: 'lastname',
             label: 'Last Name'
+        }, {
+            xtype: 'numberfield',
+            name: 'bmi',
+            label: 'BMI Value'
         }, {
             xtype: 'numberfield',
             id: 'formid',

@@ -23,6 +23,10 @@ Ext.define('Registration.controller.Main', {
             "registrationpart2 button[action=cancel]": {
                 click: this.cancel
             },
+            //clicking back button on registraion form 2 calls back()
+            "registrationpart2 button[action=back]": {
+                click: this.back
+            },
             //clicking cancel button on confirmation screen calls cancel()
             "confirmationScreen button[action=cancel]": {
                 click: this.cancel
@@ -36,10 +40,15 @@ Ext.define('Registration.controller.Main', {
     /* next function checks whether the fields are valid(like some of them which are reuired should not be empty)
      and then 2nd screen of form is shown otherwise it gives an alert "fields invlaid" */
     next: function () {
-        var l = Ext.getCmp('mainregarea').getLayout();
+        var l = Ext.getCmp('mainRegArea').getLayout();
         if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid() && Ext.getCmp('sexRadioGroup').isValid() && Ext.getCmp('EducationRadioGroup').isValid() && (Ext.getCmp('dob').isValid() || Ext.getCmp('patientAge').isValid())) {
-            l.setActiveItem(2)
+            l.setActiveItem(REG_PAGES.REG_2.value)
         } else alert("Fields invalid");
+    },
+
+    back: function () {
+        var l = Ext.getCmp('mainRegArea').getLayout();
+            l.setActiveItem(REG_PAGES.REG_1.value)
     },
 
     /*reset function reset all the components of both screen of form to empty fields*/
@@ -49,7 +58,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('relativeFirstName').reset()
         Ext.getCmp('relativeLastName').reset()
         Ext.getCmp('sexRadioGroup').reset()
-        Ext.getCmp('EducationRadioGroup').reset()
+        Ext.getCmp('education').reset()
         Ext.getCmp('dob').reset()
         Ext.getCmp('patientAge').reset()
         Ext.getCmp('caste').reset()
@@ -68,20 +77,16 @@ Ext.define('Registration.controller.Main', {
     },
     /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
     Continue: function () {
-        var l = Ext.getCmp('mainregarea').getLayout();
+        var l = Ext.getCmp('mainRegArea').getLayout();
         if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('pincode').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
-            l.setActiveItem(3);
+            l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
         } else alert("Fields invalid");
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
         Ext.getCmp('relativeNameConfirm').setValue(Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value);
         Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
         Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
-        //getChecked() return the a list(of radiobox checked) whose length should be greater then 0 if some field 
-        //is checked.
-        if (Ext.getCmp('EducationRadioGroup').getChecked().length > 0) {
-            Ext.getCmp('educationConfirm').setValue(Ext.getCmp('EducationRadioGroup').getChecked()[0].boxLabel);
-        }
+        Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
         Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
@@ -98,8 +103,8 @@ Ext.define('Registration.controller.Main', {
 
     /* this function return to home screen */
     cancel: function () {
-        var l = Ext.getCmp('mainregarea').getLayout();
-        l.setActiveItem(0); //going to home page
+        var l = Ext.getCmp('mainRegArea').getLayout();
+        l.setActiveItem(REG_PAGES.HOME.value); //going to home page
     },
 
     /* this function makes the post call for making the person */
@@ -158,10 +163,10 @@ Ext.define('Registration.controller.Main', {
                 attributeType : '76f7e5db-09dc-47b6-8f30-507ba628bdae'
             })
         }
-        if(Ext.getCmp('EducationRadioGroup').getChecked().length > 0){
+        if(Ext.getCmp('education').getValue() != null){
             jsonperson.data.attributes.push({
-                value : Ext.getCmp('EducationRadioGroup').getChecked()[0].boxLabel,
-                attributeType : '7cf3145d-3a31-44be-a56b-aa4aaa4e42dc'
+                value : Ext.getCmp('education').getValue(),
+                attributeType : '76f7e5db-09dc-47b6-8f30-507ba628bdae'
             })
         }
         if(Ext.getCmp('occupation').getValue() != null){
@@ -219,6 +224,9 @@ Ext.define('Registration.controller.Main', {
         }, this)
         //I made this funtion return this store because i needed this in jasmine unit test
         return store;
+		var l = Ext.getCmp('mainRegArea').getLayout();
+        l.setActiveItem(REG_PAGES.REG_BMI.value); //Going to BMI Page
+
     },
 
     /* this funtions makes a get call to get the patient identifiers type */

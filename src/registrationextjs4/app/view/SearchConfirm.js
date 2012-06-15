@@ -1,14 +1,29 @@
-//confirmation screen view
-Ext.define('Registration.view.ConfirmationScreen', {
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * This script defines the view SearchConfirm of the registration module
+ */
+Ext.define('Registration.view.SearchConfirm', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.confirmationScreen',
+    alias: 'widget.searchconfirm',
+    autoScroll: true,
     border: 0,
     padding: 10,
     layout: {
         type: 'auto'
     },
-    requires: ['Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
-    autoScroll: true,
     initComponent: function () {
         this.items = {
             border: 0,
@@ -19,7 +34,7 @@ Ext.define('Registration.view.ConfirmationScreen', {
                 items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'New Patient Registration (Confirmation Screen)',
+                    title: 'Returning Patient Registration Page',
                     items: [{
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Old Patient Registration Number',
@@ -37,13 +52,12 @@ Ext.define('Registration.view.ConfirmationScreen', {
                             name: 'Old Patient Identifier',
                             fieldLabel: 'Old Patient Identifier',
                             flex: 1,
-                            id: 'oldPatientIdentifierConfirm',
+                            id: 'oldPatientIdentifierSearchedPatient',
                             readOnly: true,
-                            emptyText: 'Old Patient Identifier as filled in form (READ ONLY)'
+                            emptyText: 'Old Patient Identifier as filled in form (READ ONLY)',
+                            allowBlank: true
                         }]
-                    },
- 
-                    {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Patient Name',
                         layout: 'hbox',
@@ -58,10 +72,11 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         },
                         items: [{
                             name: 'patientName',
-                            id: 'patientNameConfirm',
+                            id: 'patientNameSearchedPatient',
                             emptyText: 'Patient\'s Name as filled in form (READ ONLY)',
                             flex: 1,
-                            readOnly: true
+                            readOnly: true,
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -77,11 +92,12 @@ Ext.define('Registration.view.ConfirmationScreen', {
                             hideLabel: 'true'
                         },
                         items: [{
-                            name: 'relativeNameConfirm',
-                            id: 'relativeNameConfirm',
+                            name: 'relativeNameSearchedPatient',
+                            id: 'relativeNameSearchedPatient',
                             emptyText: 'Father/Husband\'s Name (READ ONLY)',
                             flex: 1,
-                            readOnly: true
+                            readOnly: true,
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -98,10 +114,11 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         },
                         items: [{
                             name: 'age',
-                            id: 'ageConfirm',
+                            id: 'ageSearchedPatient',
                             emptyText: 'Age (READ ONLY)',
                             flex: 1,
-                            readOnly: true
+                            readOnly: true,
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -118,10 +135,11 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         },
                         items: [{
                             name: 'sex',
-                            id: 'sexConfirm',
+                            id: 'sexSearchedPatient',
                             emptyText: 'Sex (READ ONLY)',
                             flex: 1,
-                            readOnly: true
+                            readOnly: true,
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -138,10 +156,11 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         },
                         items: [{
                             name: 'age',
-                            id: 'educationConfirm',
+                            id: 'educationSearchedPatient',
                             emptyText: 'Education Details (READ ONLY)',
                             flex: 1,
-                            readOnly: true
+                            readOnly: true,
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -158,10 +177,11 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         },
                         items: [{
                             name: 'caste',
-                            id: 'casteConfirm',
+                            id: 'casteSearchedPatient',
                             emptyText: 'Caste (READ ONLY)',
                             flex: 1,
-                            readOnly: true
+                            readOnly: true,
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -178,84 +198,85 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         },
                         items: [{
                             name: 'occuption',
-                            id: 'occupationConfirm',
+                            id: 'occuptionSearchedPatient',
                             emptyText: 'Occupation (READ ONLY)',
- 
+
                             readOnly: true,
-                            flex: 1
+                            flex: 1,
+                            allowBlank: false
                         }]
                     }, {
-                        xtype: 'textfield',
-                        id: 'blockConfirm',
+                        xtype: 'text',
+                        id: 'blockSearchedPatient',
                         fieldLabel: 'Block/House/Door Number',
                         labelAlign: 'right',
                         emptyText: 'Block/House/Door Number (READ ONLY)',
- 
+
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'stretConfirm',
+                        id: 'stretSearchedPatient',
                         fieldLabel: 'Street/Area/Locality/Mohala/Road',
                         labelAlign: 'right',
                         emptyText: 'Street/Area/Locality/Mohala/Road (READ ONLY)',
- 
+
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'townConfirm',
+                        id: 'townSearchedPatient',
                         fieldLabel: 'Town/Village/City',
                         labelAlign: 'right',
                         emptyText: 'Town/Village/City (READ ONLY)',
- 
+
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'postOfficeConfirm',
+                        id: 'postOfficeSearchedPatient',
                         fieldLabel: 'Post Office',
                         labelAlign: 'right',
                         emptyText: 'Post Office (READ ONLY)',
- 
+
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'pinConfirm',
+                        id: 'pinSearchedPatient',
                         fieldLabel: 'Pin Code',
                         labelAlign: 'right',
                         emptyText: 'Pin Code (READ ONLY)',
- 
+
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        id: 'tehsilConfirm',
+                        id: 'tehsilSearchedPatient',
                         fieldLabel: 'Tehsil/Taluka/Mandal/Thana',
                         labelAlign: 'right',
                         emptyText: 'Tehsil/Taluka/Mandal/Thana (READ ONLY)',
- 
+
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
-                        xtype: 'textfield',
+                        xtype: 'numberfield',
                         fieldLabel: 'District',
-                        id: 'districtConfirm',
+                        id: 'districtSearchedPatient',
                         emptyText: 'District (READ ONLY)',
- 
+
                         readOnly: true,
                         labelAlign: 'right',
                         labelPad: 20,
@@ -276,10 +297,11 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         },
                         items: [{
                             name: 'occuption',
-                            id: 'phoneConfirm',
+                            id: 'phoneSearchedPatient',
                             emptyText: 'Yes/No (READ ONLY)',
                             flex: 1,
-                            readOnly: true
+                            readOnly: true,
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -297,31 +319,48 @@ Ext.define('Registration.view.ConfirmationScreen', {
                         items: [{
                             name: 'primaryContact',
                             emptyText: 'Primary Contact',
-                            id: 'patientPrimaryContactNumberConfirm',
- 
+                            id: 'patientPrimaryContactNumberSearchedPatient',
+
                             readOnly: true,
-                            flex: 1
+                            flex: 1,
+                            allowBlank: false
                         }, {
                             name: 'lastName',
                             emptyText: 'Secondary Contact',
-                            id: 'patientSecondaryContactNumberConfirm',
- 
+                            id: 'patientSecondaryContactNumberSearchedPatient',
+
                             readOnly: true,
                             flex: 1,
-                            margins: '0 0 0 6'
+                            margins: '0 0 0 6',
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'button',
-                        margin: '10 50 0 270',
+                        margin: '10 10 0 200',
                         width: 120,
-                        text: 'Submit and Confirm',
-                        action: 'submit'
+                        text: 'Cancel Search',
+                        handler: function () {
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
+                        }
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
-                        width: 60,
-                        text: 'Cancel',
-                        action: 'cancel'
+                        width: 160,
+                        text: 'Return to Search Results',
+                        handler: function () {
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Screen (Result List)
+                        }
+                    }, {
+                        xtype: 'button',
+                        margin: '10 0 0 10',
+                        width: 160,
+                        text: 'Continue to Submit BMI',
+                        handler: function () {
+                            var l = Ext.getCmp('mainRegArea').getLayout();
+                            l.setActiveItem(REG_PAGES.HOME.value); //TODO: Change to Returning BMI here
+                        }
                     }]
                 }]
             }]
