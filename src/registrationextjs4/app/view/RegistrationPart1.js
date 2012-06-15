@@ -172,7 +172,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Education Details',
-                        id: 'EducationRadioGroup',
+                        id: 'EducationContainer',
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
