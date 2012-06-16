@@ -1,10 +1,9 @@
 Ext.define('Registration.controller.Main', {
     extend: 'Ext.app.Controller',
     id: 'main',
-    views: ['RegistrationPart1', 'RegistrationPart2', 'Home', 'Viewport', 'ConfirmationScreen'],
+    views: ['RegistrationPart1', 'RegistrationPart2', 'Home', 'Viewport', 'RegistrationConfirm', 'RegistrationBMI'],
     stores: ['Person', 'identifiersType', 'location', 'patient'],
     models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes'],
-    requires: ['Registration.store.Person'],
     init: function () {
         this.control({
             //clicking next button on registraion form 1 calls next()
@@ -28,11 +27,11 @@ Ext.define('Registration.controller.Main', {
                 click: this.back
             },
             //clicking cancel button on confirmation screen calls cancel()
-            "confirmationScreen button[action=cancel]": {
+            "registrationconfirm button[action=cancel]": {
                 click: this.cancel
             },
             //clicking submit button on confirmation screen calls submit()
-            "confirmationScreen button[action=submit]": {
+            "registrationconfirm button[action=submit]": {
                 click: this.submit
             }
         })
@@ -41,14 +40,14 @@ Ext.define('Registration.controller.Main', {
      and then 2nd screen of form is shown otherwise it gives an alert "fields invlaid" */
     next: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
-        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid() && Ext.getCmp('sexRadioGroup').isValid() && Ext.getCmp('EducationRadioGroup').isValid() && (Ext.getCmp('dob').isValid() || Ext.getCmp('patientAge').isValid())) {
+        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid() && Ext.getCmp('sexRadioGroup').isValid() && Ext.getCmp('education').isValid() && (Ext.getCmp('dob').isValid() || Ext.getCmp('patientAge').isValid())) {
             l.setActiveItem(REG_PAGES.REG_2.value)
         } else alert("Fields invalid");
     },
 
     back: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
-            l.setActiveItem(REG_PAGES.REG_1.value)
+        l.setActiveItem(REG_PAGES.REG_1.value)
     },
 
     /*reset function reset all the components of both screen of form to empty fields*/
@@ -109,7 +108,6 @@ Ext.define('Registration.controller.Main', {
 
     /* this function makes the post call for making the person */
     submit: function () {
-
         //creating the json object to be made
         var jsonperson = Ext.create('Registration.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
@@ -215,18 +213,16 @@ Ext.define('Registration.controller.Main', {
         }*/
         var store = Ext.create('Registration.store.Person');
         store.add(jsonperson);
-
         // this statement makes the post call to make the person
         store.sync();
         // this statement calls getifentifiers() as soon as the post call is successful
         store.on('write', function () {
             this.getidentifierstype(store.getAt(0).getData().uuid)
         }, this)
+        var l = Ext.getCmp('mainRegArea').getLayout();
+        l.setActiveItem(REG_PAGES.REG_BMI.value); //Going to BMI Page
         //I made this funtion return this store because i needed this in jasmine unit test
         return store;
-		var l = Ext.getCmp('mainRegArea').getLayout();
-        l.setActiveItem(REG_PAGES.REG_BMI.value); //Going to BMI Page
-
     },
 
     /* this funtions makes a get call to get the patient identifiers type */
@@ -261,6 +257,7 @@ Ext.define('Registration.controller.Main', {
                 preferred: true
             }]
         });
+        Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
         var PatientStore = Ext.create('Registration.store.patient')
         PatientStore.add(patient);
         //makes the post call for creating the patient

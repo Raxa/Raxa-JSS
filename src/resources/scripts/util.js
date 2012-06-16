@@ -178,7 +178,7 @@ var Util = {
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
-
+    },
     //Function to help share Models between ExtJS and Sencha Touch 2.
     platformizeModelConfig: function (extJsModelConfig) {
         if (Ext.versions.extjs) {
