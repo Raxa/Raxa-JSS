@@ -10,6 +10,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             docname: '#docname',
             urgency: '#urgency',
             lastvisit: '#lastvisit',
+            mainTabs: '#main-tabs',
+            submitHistory: '#submit-history',
             showContact: 'patientlist-show'
         },
 
@@ -31,6 +33,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             },
             lastvisit: {
                 tap: 'sortByLastVisit'
+            },
+            submitHistory: {
+                tap: 'submitHistoryAction'
             },
             searchfield: {
                 clearicontap: 'onSearchClearIconTap',
@@ -117,5 +122,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     onSearchClearIconTap: function () {
         store = this.getContact().getStore();
         store.clearFilter();
+    },
+
+    submitHistoryAction: function () {
+        Ext.getCmp('main-tabs').setActiveItem(1);
     }
 });
