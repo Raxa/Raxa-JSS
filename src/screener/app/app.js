@@ -18,10 +18,10 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Screener',
 
-    requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Ext.navigation.View'],
+    requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Ext.navigation.View','Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location'],
 
     //we will use a Patient and Doctor class
-    models: ['Patient', 'Doctor', 'Links', 'DoctorList'],
+    models: ['Patient', 'Doctor', 'Links', 'Person', 'Names', 'NewPatient', 'Identifiers'],
 
     //here we declare the visual components
     views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore'],
@@ -30,7 +30,7 @@ Ext.application({
     controllers: ['Application'],
 
     //the stores will hold our data in a local cache
-    stores: ['Patients', 'Doctors','DoctorList'],
+    stores: ['Patients', 'Doctors', 'NewPersons', 'IdentifierType', 'Location', 'NewPatients'],
 
     //entry point
     launch: function () {
