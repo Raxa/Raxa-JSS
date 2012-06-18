@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <title id="page-title">Module Tester</title>
@@ -11,6 +10,7 @@
         <script type="text/javascript" src="../../../src/resources/scripts/startup.js"></script>
         <!-- include specs here -->
         <script type="text/javascript" src="DoctorListSpec.js"></script>
+		<script type="text/javascript" src="PatientModelSpecs.js"></script>
         <!-- load application here -->
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -23,8 +23,8 @@
                     //fill in details for your module
                     name: 'Screener',
                     appFolder: '../../../src/screener/app',
-                        models: ['DoctorList'],
-                        stores: ['DoctorList'],
+                        models: ['DoctorList', 'Patient', 'Links'],
+                        stores: ['DoctorList', 'Patients'],
 
                     launch: function() {
                         //include the tests in the test.html head
