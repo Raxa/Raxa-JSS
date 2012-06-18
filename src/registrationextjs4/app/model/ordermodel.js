@@ -17,16 +17,11 @@
  */
 
 
-// model of an encounter
+// model of an order
 
-Ext.define('Registration.model.encountermodel', {
+Ext.define('Registration.model.ordermodel', {
     extend: 'Ext.data.Model',
-    
-    fields: ['encounterDatetime', 'patient', 'encounterType', 'location', 'form', 'provider', 'orders',
-    {//includes the obs model so that it can be stored at each time
-        name: 'obs',
-        model: 'Registration.model.obsmodel'
-    },{
+    fields: ['orderType', 'patient', 'concept', {
         name: 'id',
         persist: false
     }]

@@ -59,9 +59,6 @@ Ext.define('Registration.view.Home', {
                     xtype: 'button',
                     height: 35,
                     margin: '10 0 13 0',
-                    width: 300,
-                    text: 'Emergency',
-                    action: 'test',
                     text: 'Search Registered Patient',
                     handler: function () {
                         var l = Ext.getCmp('mainRegArea').getLayout();

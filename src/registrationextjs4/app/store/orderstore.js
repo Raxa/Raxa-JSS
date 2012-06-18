@@ -16,18 +16,23 @@
  * This script initiates the registration module
  */
 
+//the store for all orders in an encounter. 
 
-// model of an encounter
-
-Ext.define('Registration.model.encountermodel', {
-    extend: 'Ext.data.Model',
-    
-    fields: ['encounterDatetime', 'patient', 'encounterType', 'location', 'form', 'provider', 'orders',
-    {//includes the obs model so that it can be stored at each time
-        name: 'obs',
-        model: 'Registration.model.obsmodel'
-    },{
-        name: 'id',
-        persist: false
-    }]
-})
+Ext.define('Registration.store.orderstore', {
+    extend: 'Ext.data.Store',
+    model: 'Registration.model.ordermodel',
+    proxy: {
+        type: 'rest',
+        url : HOST + '/ws/rest/v1/order',
+        headers: Util.getBasicAuthHeaders(),
+        reader: {
+            type: 'json'
+        },
+        writer: {
+            type: 'json'
+        },
+        afterRequest:function(request,success){         //prints if request is successful
+            console.log(success);
+        }
+    }
+});

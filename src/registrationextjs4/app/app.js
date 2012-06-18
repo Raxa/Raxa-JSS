@@ -25,8 +25,8 @@ Ext.application({
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     controllers: ['controls','BMI'],
-    stores: ['obsstore', 'encounterstore'],
-    models: ['obsmodel', 'encountersmodel'],
+    stores: ['obsstore', 'encounterstore', 'orderstore', 'providerstore'],
+    models: ['obsmodel', 'encountermodel', 'ordermodel', 'providermodel'],
     
     launch: function() {
         Ext.create('Registration.view.Viewport');
