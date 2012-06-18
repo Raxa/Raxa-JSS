@@ -4,6 +4,7 @@
  * only occur in local cache
  */
 Ext.define('Screener.store.Doctors', {
+    requires: ['Screener.model.Doctor'],
     extend: 'Ext.data.Store',
     xtype: 'doctorStore',
     config: {
