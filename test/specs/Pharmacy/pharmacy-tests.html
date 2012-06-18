@@ -8,6 +8,7 @@
         <script type="text/javascript" src="../../lib/jasmine-1.1.0/jasmine-html.js"></script>
         <!-- include specs here -->
         <script type="text/javascript" src="ControllerSpec.js"></script>
+        <script type="text/javascript" src="controlSpec.js"></script>        
         <!-- load application here -->
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -21,9 +22,10 @@
                     name: 'RaxaEmr.Pharmacy',
                     appFolder: '../../../src/pharmacy/app',
                     controllers: [
-                        'Drugs'
+                        'Drugs','dispense'
                     ],
                     views: ['Viewport'],
+                    store: ['dispense'],
                     launch: function() {
                         //include the tests in the test.html head
                         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

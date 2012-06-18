@@ -12,7 +12,10 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
                 pack: 'center',
                 type: 'vbox'
             }
-        }]
+        },{
+        xtype: 'Dispense',
+        title: 'Drug Dispense in this package'
+    }]
     }
 
 });

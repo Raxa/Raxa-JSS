@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.Pharmacy.controller.Drugs', {
     extend: 'Ext.app.Controller',
-    views: ['DrugDetails'],
+    views: ['DrugDetails','dispense'],
     init: function () {
         this.control({
             'addDrug button[action=addModify]': {
