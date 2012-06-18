@@ -1,0 +1,1 @@
+This is the folder in which files related to the Voice project at the Raxa JSS EMR will sit. A fork of the Motech project is also here to kick this off.
