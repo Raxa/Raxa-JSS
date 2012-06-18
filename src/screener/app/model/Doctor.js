@@ -5,6 +5,23 @@
  * using the hasMany property.
  */
 Ext.define('Screener.model.Doctor', {
+    extend: 'Ext.data.Model',
+    config: {
+        fields: [{
+            name: 'id',
+            type: 'int'
+
+        }, {
+            name: 'uuid',
+            type: 'string'
+        }, {
+            name: 'display',
+            type: 'string'
+        }]
+    }
+});
+/*
+Ext.define('Screener.model.Doctor', {
     requires: ['Screener.model.Patient'],
     extend: 'Ext.data.Model',
     config: {
@@ -38,3 +55,21 @@ Ext.define('Screener.model.Doctor', {
         return this.numpatients;
     }
 });
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

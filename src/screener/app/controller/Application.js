@@ -4,7 +4,7 @@
  */
 var form_num, lab_num;
 Ext.define("Screener.controller.Application", {
-    requires: ['Screener.view.NewPatient', 'Screener.store.Doctors', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
+    requires: ['Screener.view.NewPatient', 'Screener.store.Doctors','Screener.store.Doctors', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
     extend: 'Ext.app.Controller',
     config: {
         //here we name the elements we need from the page
