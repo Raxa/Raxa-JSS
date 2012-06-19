@@ -1,0 +1,89 @@
+{
+    "1A-20": [{
+        'name': 'Amoxylin',
+        "tablets": 30,
+        "days": 4
+    },
+    {
+        'name': 'Penicillin',
+        "tablets": 100,
+        "days": 10
+    },
+    {
+        'name': 'D\'Cold',
+        "tablets": 320,
+        "days": 10
+    },
+
+    {
+        'name': 'Crocin',
+        "tablets": 90,
+        "days": 2
+    }],
+    
+    "1B-10": [{
+        'name': 'Amoxylin',
+        "tablets": 30,
+        "days": 422
+    },
+    {
+        'name': 'Penicillin',
+        "tablets": 100,
+        "days": 10
+    },
+    {
+        'name': 'D\'Cold',
+        "tablets": 320,
+        "days": 10
+    },
+
+    {
+        'name': 'Crocin',
+        "tablets": 90,
+        "days": 2
+    }],
+    
+    "1C-40": [{
+        'name': 'Amoxylin',
+        "tablets": 30,
+        "days": 4
+    },
+    {
+        'name': 'Penicillin',
+        "tablets": 100,
+        "days": 10
+    },
+    {
+        'name': 'D\'Cold',
+        "tablets": 320,
+        "days": 10
+    },
+
+    {
+        'name': 'Crocin',
+        "tablets": 90,
+        "days": 2
+    }],
+    
+    "1A-30": [{
+        'name': 'Amoxylin',
+        "tablets": 30,
+        "days": 4
+    },
+    {
+        'name': 'Penicillin',
+        "tablets": 100,
+        "days": 10
+    },
+    {
+        'name': 'D\'Cold',
+        "tablets": 320,
+        "days": 10
+    },
+
+    {
+        'name': 'Crocin',
+        "tablets": 90,
+        "days": 2
+    }]
+}
