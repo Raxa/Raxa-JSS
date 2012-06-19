@@ -32,15 +32,18 @@ Mailing Lists
 
 Downloading the App
 ===================
--Using Git 
+#####Using Git 
 1.[Sign up for a GitHub account](https://github.com/signup/free)
-2.Set up Git and SSH keys[http://help.github.com/set-up-git-redirect/]
+
+2.[Set up Git and SSH keys](http://help.github.com/set-up-git-redirect/)
+
 3.Create a fork of Raxa-JSS from [GitHub Project Page](https://github.com/Raxa/Raxa-JSS)
-3.To clone your fork use "git clone git@github.com:<Your GitHub username>/Raxa-JSS.git "
+
+4.To clone your fork use "git clone git@github.com:(Your GitHub username)/Raxa-JSS.git" in your terminal / Git Bash
 
 To commit code, go to [How to Commit Code](https://raxaemr.atlassian.net/wiki/display/RAXAJSS/Contributing+code+-+How+to+Commit+Code)
 
--Using direct download
+#####Using direct download
 [Compressed File](https://github.com/Raxa/Raxa-JSS/zipball/master)
 
 Demo App
@@ -55,27 +58,27 @@ To view the login screen, navigate to http://localhost/Raxa-JSS/src/
 
 The project tree is set up as follows:
 
-/src                        
-    /app                    -Login Module (Sencha Touch 2.0) for Raxa-JSS
-    /chw                    -Community Health Worker Module
-    /data                   -Stores the data shared with all other modules
-    /laboratory             -Laboratory module (using Sencha ExtJS 4.1)
-    /lib                    -Contains Library files (Sencha ExtJS & Sencha Touch)
-    /outpatient             -Outpatient module (using Sencha Touch 2.0)         
-    /patient-facing         -Files for the Patient Module will be stored here
-    /pharmacy               -Pharmacy module (using Sencha Touch 4.1)           
-    /registration           -Registration module (using Sencha Touch 2.0)       
-    /registrationextjs4     -Registration module (using Sencha ExtJS 4.1)       
-    /resources              -common resources shared with other modules    
-        /common             -common xtypes needed on all screens eg. topbar
-        /css                -stores cascading style sheet
-        /img                -stores images needed in all modules
-        /script             -stores scripts needed in various modules
-    /screener               -Screener module (using Sencha Touch 2.0)
-    /voice                  -Voice Module files to be added here
-/test                       -Test Module (using Jasmine 1.1.0)
-    /lib                    -Contains testing library (Jasmine 1.1.0)
-    /specs                  -Test specs of every module goes into corresponding folder
+     /src    
+        /app                 -Login Module (Sencha Touch 2.0) for Raxa-JSS EMR
+        /chw                 -Community Health Worker Module
+        /data                -Stores the data shared with all other modules
+        /laboratory          -Laboratory module (using Sencha ExtJS 4.1)
+        /lib                 -Contains Library files (Sencha ExtJS & Sencha Touch)
+        /outpatient          -Outpatient module (using Sencha Touch 2.0)         
+        /patient-facing      -Files for the Patient Module will be stored here
+        /pharmacy            -Pharmacy module (using Sencha Touch 4.1)           
+        /registration        -Registration module (using Sencha Touch 2.0)       
+        /registrationextjs4  -Registration module (using Sencha ExtJS 4.1)       
+        /resources           -common resources shared with other modules    
+           /common           -common xtypes needed on all screens eg. topbar
+           /css              -stores cascading style sheet
+           /img              -stores images needed in all modules
+           /script           -stores scripts needed in various modules
+        /screener            -Screener module (using Sencha Touch 2.0)
+        /voice               -Voice Module files to be added here
+     /test                   -Test Module (using Jasmine 1.1.0)
+        /lib                 -Contains testing library (Jasmine 1.1.0)
+        /specs               -Test specs of every module goes into corresponding folder
               
               
 Running tests
