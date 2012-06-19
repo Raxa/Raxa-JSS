@@ -24,7 +24,9 @@ permissions and limitations under the License.
 Mailing Lists
 =============
 [Contributors Mailing List](https://groups.google.com/group/raxa-jss-emr-contributors)
+
 [Developers Mailing List](https://groups.google.com/group/raxa-jss-emr-developers)
+
 [UI/UX Mailing List](https://groups.google.com/group/raxa-jss-emr-uiux)
 
 
