@@ -15,20 +15,23 @@
  * 
  * This script initiates the registration module
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
 
-Ext.application({
-    name: 'Registration',
-
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
-    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['controls','BMI'],
-    stores: ['obsstore', 'encounterstore', 'orderstore', 'providerstore'],
-    models: ['obsmodel', 'encountermodel', 'ordermodel', 'providermodel'],
-    
-    launch: function() {
-        Ext.create('Registration.view.Viewport');
+//the store for provider of an encounter.
+Ext.define('Registration.store.providerstore', {
+    extend: 'Ext.data.Store',
+    model: 'Registration.model.providermodel',
+    proxy: {
+        type: 'rest',
+        url : HOST + '/ws/rest/v1/provider',
+        headers: Util.getBasicAuthHeaders(),
+        reader: {
+            type: 'json'
+        },
+        writer: {
+            type: 'json'
+        },
+        afterRequest:function(request,success){         //prints if request is successful
+            console.log(success);
+        }
     }
 });

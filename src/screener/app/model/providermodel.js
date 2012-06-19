@@ -15,20 +15,16 @@
  * 
  * This script initiates the registration module
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
 
-Ext.application({
-    name: 'Registration',
 
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
-    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['controls','BMI'],
-    stores: ['obsstore', 'encounterstore', 'orderstore', 'providerstore'],
-    models: ['obsmodel', 'encountermodel', 'ordermodel', 'providermodel'],
-    
-    launch: function() {
-        Ext.create('Registration.view.Viewport');
+// model of a provider
+
+Ext.define('Screener.model.providermodel', {
+    extend: 'Ext.data.Model',
+    config:{
+        fields: ['name', 'location', {
+            name: 'id',
+            persist: false
+        }]
     }
-});
+})

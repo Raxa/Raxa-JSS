@@ -15,20 +15,25 @@
  * 
  * This script initiates the registration module
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
 
-Ext.application({
-    name: 'Registration',
 
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
-    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['controls','BMI'],
-    stores: ['obsstore', 'encounterstore', 'orderstore', 'providerstore'],
-    models: ['obsmodel', 'encountermodel', 'ordermodel', 'providermodel'],
-    
-    launch: function() {
-        Ext.create('Registration.view.Viewport');
+//the store for an encounter. Sends all filledd fields to the server
+
+Ext.define('Registration.store.encounterstore', {
+    extend: 'Ext.data.Store',
+    model: 'Registration.model.encountermodel',
+    proxy: {
+        type: 'rest',
+        url : HOST + '/ws/rest/v1/encounter',
+        headers: Util.getBasicAuthHeaders(),
+        reader: {
+            type: 'json'
+        },
+        writer: {
+            type: 'json'
+        },
+        afterRequest:function(request,success){         //prints if request is successful
+            Ext.Msg.alert('Encounter saved successfully.');
+        }
     }
 });

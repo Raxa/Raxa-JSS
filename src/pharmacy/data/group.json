@@ -1,0 +1,16 @@
+{
+    sucess: true,
+    "groups": [{ 
+        "name": '1A-30',
+        "type": "IA"
+    },{ 
+        "name": '1A-20',
+        "type": "IA"
+    },{ 
+        "name": '1B-10',
+        "type": "IB"
+    },{ 
+        "name": '1C-40',
+        "type": "IC"
+    }]
+}

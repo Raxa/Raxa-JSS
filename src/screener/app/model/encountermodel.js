@@ -15,20 +15,19 @@
  * 
  * This script initiates the registration module
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
 
-Ext.application({
-    name: 'Registration',
 
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
-    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['controls','BMI'],
-    stores: ['obsstore', 'encounterstore', 'orderstore', 'providerstore'],
-    models: ['obsmodel', 'encountermodel', 'ordermodel', 'providermodel'],
+// model of an encounter
+
+Ext.define('Registration.model.encountermodel', {
+    extend: 'Ext.data.Model',
     
-    launch: function() {
-        Ext.create('Registration.view.Viewport');
-    }
-});
+    fields: ['encounterDatetime', 'patient', 'encounterType', 'location', 'form', 'provider', 'orders',
+    {//includes the obs model so that it can be stored at each time
+        name: 'obs',
+        model: 'Registration.model.obsmodel'
+    },{
+        name: 'id',
+        persist: false
+    }]
+})

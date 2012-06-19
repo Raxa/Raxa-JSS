@@ -15,20 +15,26 @@
  * 
  * This script initiates the registration module
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
 
-Ext.application({
-    name: 'Registration',
+//the store for all orders in an encounter. 
 
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
-    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['controls','BMI'],
-    stores: ['obsstore', 'encounterstore', 'orderstore', 'providerstore'],
-    models: ['obsmodel', 'encountermodel', 'ordermodel', 'providermodel'],
-    
-    launch: function() {
-        Ext.create('Registration.view.Viewport');
+Ext.define('Screener.store.orderstore', {
+    extend: 'Ext.data.Store',
+    config:{
+        model: 'Screener.model.ordermodel',
+        proxy: {
+            type: 'rest',
+            url : HOST + '/ws/rest/v1/order',
+            headers: Util.getBasicAuthHeaders(),
+            reader: {
+                type: 'json'
+            },
+            writer: {
+                type: 'json'
+            },
+            afterRequest:function(request,success){         //prints if request is successful
+                console.log(success);
+            }
+        }
     }
 });
