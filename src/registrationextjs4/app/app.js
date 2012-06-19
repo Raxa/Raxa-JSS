@@ -21,11 +21,14 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Registration',
+
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['BMI'],
-
-    launch: function () {
+    controllers: ['controls','BMI'],
+    stores: ['obsstore', 'encounterstore'],
+    models: ['obsmodel', 'encountersmodel'],
+    
+    launch: function() {
         Ext.create('Registration.view.Viewport');
     }
 });
