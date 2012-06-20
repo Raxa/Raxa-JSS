@@ -101,7 +101,11 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Batch Approval',
         x: 20,
-        y: 180
+        y: 180,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.BATCH_APPROVAL.value);
+        }
     }, {
         xtype: 'button',
         height: 40,

@@ -36,4 +36,8 @@ var LAB_PAGES = {
         value: 4,
         name: "PaperEntry4"
     },
+    BATCH_APPROVAL: {
+    	  value: 5,
+    	  name: "BatchApproval"
+    }	
 }

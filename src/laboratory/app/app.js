@@ -22,7 +22,7 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Laboratory',
     controllers: ['Main'],
-    views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4'],
+    views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4','BatchApproval'],
 
     launch: function () {
         Ext.create('Laboratory.view.Viewport');
