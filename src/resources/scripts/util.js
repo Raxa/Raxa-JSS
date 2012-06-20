@@ -16,7 +16,7 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.dogado.eu';
+    var HOST = 'http://raxaemr.jelastic.tsukaeru.net';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
@@ -189,5 +189,36 @@ var Util = {
         } else {
             Ext.Error.raise('Could not recognize Library');
         }
+    },
+    
+    /*function to return the uuid of a concept. the display parameter is used to check the required result in case the response
+     *has multiple records returned
+    */
+    getAttributeFromREST : function(resource,queryParameter,display) {
+    
+        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/'+resource+'?q='+queryParameter,  //'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
+                    if(JSON.parse(response.responseText).results[i].display == display){
+                        localStorage.setItem(queryParameter+"Uuid"+resource,JSON.parse(response.responseText).results[i].uuid)
+                    }
+                }
+                
+                
+            }
+        });
     }
 }
+
+if(localStorage.heightUuidconcept == undefined){ var heightUuidConcept = Util.getAttributeFromREST('concept','height','HEIGHT (CM)');}
+if(localStorage.weightUuidconcept == undefined){ var weightUuidConcept = Util.getAttributeFromREST('concept','weight','WEIGHT (KG)');}
+if(localStorage.bmiUuidconcept == undefined){ var bmiUuidConcept = Util.getAttributeFromREST('concept','bmi','BODY MASS INDEX');}
+if(localStorage.regfeeUuidconcept == undefined){ var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee','Registration Fee');}
