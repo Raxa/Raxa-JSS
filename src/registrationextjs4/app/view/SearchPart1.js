@@ -77,7 +77,8 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'PatientIdentifierSearch',
                             fieldLabel: 'Patient Identifier',
                             flex: 1,
-                            emptyText: 'Patient Identifier'
+                            emptyText: 'Patient Identifier',
+                            allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -97,12 +98,13 @@ Ext.define('Registration.view.SearchPart1', {
                             emptyText: 'Patient\'s First Name',
                             id: 'patientFirstNameSearch',
                             flex: 1,
+                            allowBlank: false
                         }, {
                             name: 'lastName',
                             emptyText: 'Patient\'s Last Name',
-                            id: 'PatientLastNameSearch',
+                            id: 'patientLastNameSearch',
                             flex: 1,
-                            margins: '0 0 0 6',
+                            margins: '0 0 0 6'
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -145,6 +147,7 @@ Ext.define('Registration.view.SearchPart1', {
                         items: [{
                             xtype: 'datefield',
                             fieldLabel: 'DOB',
+                            id: 'DOBSearch',
                             emptyText: 'MM/DD/YYYY',
                             labelAlign: 'right',
                             labelPad: 20,
@@ -170,6 +173,7 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'townSearch',
                             fieldLabel: 'Town/Village/City',
                             emptyText: 'Town/Village/City',
+                            id: 'Town/Village/CitySearch',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
@@ -191,28 +195,26 @@ Ext.define('Registration.view.SearchPart1', {
                         items: [{
                             xtype: 'textfield',
                             name: 'phoneNumberSearch',
+                            id: 'phoneNumberSearch',
                             fieldLabel: 'Phone Number',
                             emptyText: 'Phone Number',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
-                            anchor: '75%',
+                            anchor: '75%'
                         }]
                     }, {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 60,
                         text: 'Search',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Page (Result List)
-                        }
+                        action: 'search'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
-                        text: 'Reset'
-
+                        text: 'Reset',
+                        action: 'reset'
                     }]
                 }]
             }]

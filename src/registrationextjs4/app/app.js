@@ -23,7 +23,7 @@ Ext.application({
     name: 'Registration',
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['Main', 'BMI'],
+    controllers: ['Main', 'BMI','Search'],
 
     launch: function () {
         Ext.create('Registration.view.Viewport');
