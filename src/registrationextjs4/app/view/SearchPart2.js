@@ -41,25 +41,34 @@ Ext.define('Registration.view.SearchPart2', {
                     },
                     items: [{
                         xtype: 'gridpanel',
+                        selType: 'rowmodel',
+                        id: 'patientGrid',
                         align: 'centre',
                         margin: '10 0 0 10',
                         forceFit: true,
+                        store: 'search',
                         hideHeaders: false,
                         columns: [{
                             xtype: 'rownumberer',
                             text: 'Sr. No',
+                            dataIndex: 'id'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'First Name'
+                            text: 'First Name',
+                            dataIndex: 'givenName'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Last Name'
+                            text: 'Last Name',
+                            dataIndex: 'familyName'
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Sex',
+                            dataIndex: 'gender'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'DOB'
+                            text: 'DOB',
+                            renderer: Ext.util.Format.dateRenderer('d.m.Y'),
+                            dataIndex: 'birthdate'
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Patient Id'
@@ -69,13 +78,12 @@ Ext.define('Registration.view.SearchPart2', {
                             forceFit: true
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Village'
+                            text: 'Village',
+                            dataIndex: 'cityVillage'
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Town'
-                        }
-
-                        ],
+                        }],
                         viewConfig: {
                             autoScroll: true,
                             emptyText: 'No Data Available',
@@ -86,19 +94,13 @@ Ext.define('Registration.view.SearchPart2', {
                         margin: '10 50 0 270',
                         width: 120,
                         text: 'View Details',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value); //Going to Search Confirm Screen
-                        }
+                        action: 'viewDetails'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 120,
                         text: 'Modify Search',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen
-                        }
+                        action: 'modifySearch'
                     }]
                 }]
             }]
