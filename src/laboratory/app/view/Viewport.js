@@ -80,6 +80,8 @@ Ext.define('Laboratory.view.Viewport', {
                 xtype: 'PaperEntry4'
             }, {
                 xtype: 'BatchApproval'
+            }, {
+                xtype: 'QueueStatus'
             }]
         };
         this.callParent();

@@ -39,5 +39,10 @@ var LAB_PAGES = {
     BATCH_APPROVAL: {
     	  value: 5,
     	  name: "BatchApproval"
+    },
+    QUEUE_STATUS: {
+    	  value: 6,
+    	  name: "QueueStatus"
     }	
+	
 }

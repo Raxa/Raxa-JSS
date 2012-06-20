@@ -41,7 +41,11 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Queue Status',
         x: 240,
-        y: 280
+        y: 280,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.QUEUE_STATUS.value);
+        }
     }, {
         xtype: 'button',
         height: 40,
@@ -85,7 +89,7 @@ Ext.define('Laboratory.view.Home', {
         xtype: 'button',
         height: 40,
         width: 200,
-        text: 'Repprts',
+        text: 'Reports',
         x: 20,
         y: 280
     }, {
