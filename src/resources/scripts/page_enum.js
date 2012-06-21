@@ -43,6 +43,27 @@ var LAB_PAGES = {
     QUEUE_STATUS: {
     	  value: 6,
     	  name: "QueueStatus"
-    }	
+    },
+    REPORT_DELIVERY_LIST: {
+    	  value: 7,
+    	  name: "ReportDelivery1"
+    },
+    REPORT_DELIVERY_SEARCH: {
+    	  value: 8,
+    	  name: "ReportDelivery2"
+    },
+    REPORT_DELIVERY_SEARCH_LIST: {
+    	  value: 9,
+    	  name: "ReportDelivery3"
+    },
+    REPORT_DELIVERY_TEST_DETAILS: {
+    	  value: 10,
+    	  name: "ReportDelivery4"
+    },
+    REPORT_DELIVERY_INVESTIGATION_TABLE: {
+    	  value: 11,
+    	  name: "ReportDelivery5"
+    },
+	
 	
 }

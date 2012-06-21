@@ -18,7 +18,7 @@
 Ext.define('Laboratory.controller.Main', {
     extend: 'Ext.app.Controller',
     id: 'Main',
-    views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4','BatchApproval','QueueStatus'],
+    views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4' , 'BatchApproval' , 'QueueStatus','ReportDelivery1','ReportDelivery2','ReportDelivery3','ReportDelivery4','ReportDelivery5'],
 
     init: function () {
         console.log('lab controller loaded');

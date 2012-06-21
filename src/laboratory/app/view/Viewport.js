@@ -82,6 +82,16 @@ Ext.define('Laboratory.view.Viewport', {
                 xtype: 'BatchApproval'
             }, {
                 xtype: 'QueueStatus'
+            }, {
+                xtype: 'ReportDelivery1'
+            }, {
+                xtype: 'ReportDelivery2'
+            }, {
+                xtype: 'ReportDelivery3'
+            }, {
+                xtype: 'ReportDelivery4'
+            }, {
+                xtype: 'ReportDelivery5'
             }]
         };
         this.callParent();

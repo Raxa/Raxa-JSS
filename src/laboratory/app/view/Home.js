@@ -70,7 +70,11 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Report Delivery/ Print Lab Report',
         x: 240,
-        y: 130
+        y: 130,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_LIST.value);
+        }        
     }, {
         xtype: 'button',
         height: 40,
