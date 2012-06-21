@@ -22,7 +22,7 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Laboratory',
     controllers: ['Main'],
-    views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4','BatchApproval','QueueStatus','ReportDelivery1','ReportDelivery1','ReportDelivery2','ReportDelivery3','ReportDelivery4','ReportDelivery5'],
+    views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4','BatchApproval','QueueStatus','ReportDelivery1','ReportDelivery1','ReportDelivery2','ReportDelivery3','ReportDelivery4','ReportDelivery5','SpecimenCollection1','SpecimenCollection2','SpecimenCollection3','SpecimenCollection4','SpecimenCollection5','SpecimenCollection6','SpecimenCollection7','SpecimenCollection8','SpecimenCollection9','SpecimenCollection10','SpecimenCollection11','SpecimenCollection12','SpecimenCollection13'],
 
     launch: function () {
         Ext.create('Laboratory.view.Viewport');
