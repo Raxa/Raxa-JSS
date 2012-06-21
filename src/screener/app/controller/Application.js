@@ -20,7 +20,8 @@
  */
 var form_num, lab_num;
 Ext.define("Screener.controller.Application", {
-    requires: ['Screener.view.NewPatient', 'Screener.store.Doctors', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
+    requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
+    models:['Screener.model.Person'],
     extend: 'Ext.app.Controller',
     config: {
         //here we name the elements we need from the page
@@ -70,13 +71,13 @@ Ext.define("Screener.controller.Application", {
                 tap: 'addLabOrder'
             },
             addPatientButton: {
-                tap: 'addPatient'
+                tap: 'addPerson'
             },
             showPatientsButton: {
                 tap: 'showPatients'
             },
             savePatientButton: {
-                tap: 'savePatient'
+                tap: 'savePerson'
             },
             showDoctorsButton: {
                 tap: 'showDoctors'
@@ -180,35 +181,71 @@ Ext.define("Screener.controller.Application", {
             height: '70px'
         });
     },
-    //opens form for new patient
-    addPatient: function () {
+    //opens form for creating new patient
+    addPerson: function () {
         if (!this.newPatient) {
             this.newPatient = Ext.create('Screener.view.NewPatient');
             Ext.Viewport.add(this.newPatient);
         }
         //set new FIFO id so patients come and go in the queue!
-        this.getFormid().setValue(this.totalPatients);
-        this.getNewPatient().show();
+        //this.getFormid().setValue(this.totalPatients);
+        this.newPatient.show();
     },
-    //adds patient to the patient list store
-    savePatient: function () {
-        formp = this.getNewPatient().saveForm();
-        if (formp.firstname && formp.lastname && formp.id && formp.bmi) {
-            var patient = Ext.create('Screener.model.Patient');
-            patient.set('firstname', formp.firstname);
-            patient.set('lastname', formp.lastname);
-            patient.set('id', formp.id);
-            patient.set('doctorid', -1);
-            patient.set('bmi', formp.bmi);
-            Ext.getStore('patientStore').add(patient);
-            this.totalPatients++;
-            this.getNewPatient().reset();
-            this.getNewPatient().hide();
-            if (!this.patientView) {
-                this.patientView = Ext.create('Screener.view.PatientView');
-            }
-            this.updatePatientsWaitingTitle();
+    //adds new person to the NewPersons store
+    savePerson: function () {
+        var formp = Ext.getCmp('newPatient').saveForm();
+       
+        if (formp.givenname && formp.familyname && formp.choice) {
+            var person = Ext.create('Screener.model.Person',{
+                gender: formp.choice,
+                names: [{
+                    givenName: formp.givenname,
+                    familyName: formp.familyname
+                }]
+            });
+            var store = Ext.create('Screener.store.NewPersons');
+            store.add(person);
+            store.sync();
+            store.on('write', function(){
+               this.getidentifierstype(store.getData().getAt(0).getData().uuid)
+            } ,this);
+            Ext.getCmp('newPatient').hide();
+            Ext.getCmp('newPatient').reset();
+            return store;
         }
+    },
+    // get IdentifierType using IdentifierType store 
+    getidentifierstype:function(personUuid){
+        var identifiers = Ext.create('Screener.store.IdentifierType')
+        identifiers.load();
+        identifiers.on('load',function(){
+            this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
+        },this);
+    },
+    // get Location using Location store
+    getlocation:function(personUuid,identifierType){
+        var locations = Ext.create('Screener.store.Location')
+        locations.load();
+        locations.on('load',function(){
+            this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
+        },this)
+    },
+    // creates a new patient using NewPatients store 
+    makePatient:function(personUuid,identifierType,location){
+        var patient = Ext.create('Screener.model.NewPatient',{
+            person : personUuid,
+            identifiers : [{
+                identifier : Util.getPatientIdentifier().toString(),
+                identifierType : identifierType,
+                location : location,
+                preferred : true
+            }]
+        });
+        var PatientStore = Ext.create('Screener.store.NewPatients')
+        PatientStore.add(patient);
+        PatientStore.sync();
+        PatientStore.on('write', function(){
+        } ,this)
     },
     //function to show screen with patient list
     showPatients: function () {
@@ -217,8 +254,6 @@ Ext.define("Screener.controller.Application", {
         }
         this.getDoctorList().deselectAll();
         this.getView().push(this.patientView);
-        this.updatePatientsWaitingTitle();
-        setInterval(this.updatePatientsWaitingTitle, Util.UITIME);
     },
     //function to show screen with doctor list
     showDoctors: function () {
@@ -301,7 +336,7 @@ Ext.define("Screener.controller.Application", {
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
-        this.updatePatientsWaitingTitle();
+        
     },
     //opens the current doctor's waiting list
     expandCurrentDoctor: function (list, index, target, record) {

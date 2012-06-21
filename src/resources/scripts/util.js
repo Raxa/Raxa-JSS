@@ -194,5 +194,11 @@ var Util = {
         } else {
             Ext.Error.raise('Could not recognize Library');
         }
+    },
+	getPatientIdentifier : function(){
+        //dummy funtion to be used for creating partient
+        // TODO: writen a  ramdom no for patient identufier but it should be a unique id
+        return Math.floor(Math.random() * 1000000000);
     }
+
 }
