@@ -9,22 +9,23 @@
         <script type="text/javascript" src="../../../src/resources/scripts/util.js"></script>
         <script type="text/javascript" src="../../../src/resources/scripts/startup.js"></script>
         <!-- include specs here -->
-        <script type="text/javascript" src="DoctorListSpec.js"></script>
-		<script type="text/javascript" src="PatientModelSpecs.js"></script>
+		<script type="text/javascript" src="ScreenerSpecs.js"></script>
         <!-- load application here -->
         <script type="text/javascript">
             Ext.Loader.setConfig({
                 enabled: true
             });
             Ext.require('Ext.app.Application');
-            var Application = null;
+            var App = null;
             Ext.onReady(function() {
-                Application = Ext.create('Ext.app.Application', {
+                App = Ext.create('Ext.app.Application', {
                     //fill in details for your module
                     name: 'Screener',
                     appFolder: '../../../src/screener/app',
-                        models: ['DoctorList', 'Patient', 'Links'],
-                        stores: ['DoctorList', 'Patients'],
+                        models: ['DoctorList', 'Patient', 'Links', 'Person', 'NewPatient'],
+                        stores: ['DoctorList', 'Patients', 'IdentifierType', 'Location'],
+                        views: ['NewPatient'],
+                        controllers: ['Application'],
 
                     launch: function() {
                         //include the tests in the test.html head
