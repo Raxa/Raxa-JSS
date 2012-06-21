@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 /**
  * This class listens for the user input and makes changes to the doctor/patient
  * lists as necessary.
@@ -30,6 +29,7 @@ Ext.define("Screener.controller.Application", {
             topmenu: 'topmenu',
             navBar: '#navBar',
             patientView: 'patientView',
+            patientSummary: 'patientSummary',
             doctorView: 'doctorView',
             labOrderForm: 'labOrderForm',
             pharmacyView: 'pharmacyView',
@@ -104,7 +104,8 @@ Ext.define("Screener.controller.Application", {
                 tap: 'sortByBMI'
             },
             patientList: {
-                itemtap: 'setCurrentPatient'
+                itemtap: 'setCurrentPatient',
+                itemtaphold: 'showPatientSummary'
             },
             doctorList: {
                 itemtap: 'setCurrentDoctor'
@@ -291,6 +292,16 @@ Ext.define("Screener.controller.Application", {
             lab_num--;
         }
     },
+    //opens form for patient summary
+    showPatientSummary: function () {
+        console.log('patient summary called');
+        if (!this.patientSummary) {
+            this.patientSummary = Ext.create('Screener.view.PatientSummary');
+        }
+        Ext.Viewport.add(this.patientSummary);
+        Ext.getCmp('patientSummary').setHidden(false);
+
+    },
     //keeping track of which patient/doctor is currently selected
     //if both are selected, enable the ASSIGN button
     setCurrentPatient: function (list, index, target, record) {
@@ -298,6 +309,7 @@ Ext.define("Screener.controller.Application", {
         if (this.getDoctorList().hasSelection()) {
             this.getAssignButton().enable();
         }
+
     },
     setCurrentDoctor: function (list, index, target, record) {
         this.currentDoctorIndex = index;
