@@ -29,7 +29,6 @@ Ext.define('Registration.view.SearchPart2', {
             border: 0,
             items: [{
                 xtype: 'panel',
-                autoScroll: true,
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -49,7 +48,7 @@ Ext.define('Registration.view.SearchPart2', {
                         store: 'search',
                         hideHeaders: false,
                         columns: [{
-                            xtype: 'rownumberer',
+                            xtype: 'gridcolumn',
                             text: 'Sr. No',
                             dataIndex: 'id'
                         }, {
@@ -74,7 +73,7 @@ Ext.define('Registration.view.SearchPart2', {
                             text: 'Patient Id'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Husband/Father\'s Name',
+                            text: 'Husband/Fathers Name',
                             forceFit: true
                         }, {
                             xtype: 'gridcolumn',
@@ -84,20 +83,36 @@ Ext.define('Registration.view.SearchPart2', {
                             xtype: 'gridcolumn',
                             text: 'Town'
                         }],
+                        // this was needed to see the patient profile as we click on one of the patient
+                        listeners: {
+                            cellClick: {
+                                fn: function () {
+                                    var temp = this.getSelectionModel().getSelection()[0].getData()
+                                    localStorage.setItem('searchUuid', temp.uuid)
+                                    Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
+                                    Ext.getCmp('ageSearchedPatient').setValue(temp.age)
+                                    Ext.getCmp('sexSearchedPatient').setValue(temp.gender)
+                                    Ext.getCmp('blockSearchedPatient').setValue(temp.address1)
+                                    Ext.getCmp('stretSearchedPatient').setValue(temp.address2)
+                                    Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
+                                    Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
+                                    /*  var i;
+                                    for(i=0;temp.attributes.length;i++){
+                                        if(temp.attributes[i].attributeType == casteuuid) Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
+                                        // TODO- make similars "if" conditions for other attributes
+                                    } */
+                                    var l = Ext.getCmp('mainRegArea').getLayout();
+                                    l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value);
+                                }
+                            }
+                        },
                         viewConfig: {
-                            autoScroll: true,
                             emptyText: 'No Data Available',
                             stripeRows: false
                         }
                     }, {
                         xtype: 'button',
                         margin: '10 50 0 270',
-                        width: 120,
-                        text: 'View Details',
-                        action: 'viewDetails'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
                         width: 120,
                         text: 'Modify Search',
                         action: 'modifySearch'
