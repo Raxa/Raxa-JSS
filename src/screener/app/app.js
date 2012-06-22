@@ -8,7 +8,7 @@
 //this is for debugging only - when production rolls around, we need to put all dependencies in a single .js file
 //<debug>
 Ext.Loader.setPath({
-    'Ext': '../lib/touch/src'
+    'Ext': '../../../lib/touch/src'
 });
 
 Ext.Loader.setConfig({
@@ -21,10 +21,10 @@ Ext.application({
     requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Ext.navigation.View'],
 
     //we will use a Patient and Doctor class
-    models: ['Patient', 'Doctor','DoctorList'],
+    models: ['Patient', 'Doctor', 'Links', 'DoctorList'],
 
     //here we declare the visual components
-    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore'],
+    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary'],
 
     //here we declare our controller that will perform actions
     controllers: ['Application'],
