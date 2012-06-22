@@ -29,7 +29,6 @@ Ext.define('Registration.view.SearchPart2', {
             border: 0,
             items: [{
                 xtype: 'panel',
-                autoScroll: true,
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -41,43 +40,72 @@ Ext.define('Registration.view.SearchPart2', {
                     },
                     items: [{
                         xtype: 'gridpanel',
+                        selType: 'rowmodel',
+                        id: 'patientGrid',
                         align: 'centre',
                         margin: '10 0 0 10',
                         forceFit: true,
+                        store: 'search',
                         hideHeaders: false,
                         columns: [{
-                            xtype: 'rownumberer',
+                            xtype: 'gridcolumn',
                             text: 'Sr. No',
+                            dataIndex: 'id'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'First Name'
+                            text: 'First Name',
+                            dataIndex: 'givenName'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Last Name'
+                            text: 'Last Name',
+                            dataIndex: 'familyName'
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Sex',
+                            dataIndex: 'gender'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'DOB'
+                            text: 'DOB',
+                            renderer: Ext.util.Format.dateRenderer('d.m.Y'),
+                            dataIndex: 'birthdate'
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Patient Id'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Husband/Father\'s Name',
+                            text: 'Husband/Fathers Name',
                             forceFit: true
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Village'
+                            text: 'Village',
+                            dataIndex: 'cityVillage'
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Town'
-                        }
-
-                        ],
+                        }],
+                        listeners: {
+                            cellClick : {
+                                fn : function(){
+                                    var temp = this.getSelectionModel().getSelection()[0].getData()
+                                    localStorage.setItem('searchUuid',temp.uuid)
+                                    Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " +temp.familyName)
+                                    Ext.getCmp('ageSearchedPatient').setValue(temp.age)
+                                    Ext.getCmp('sexSearchedPatient').setValue(temp.gender)
+                                    Ext.getCmp('blockSearchedPatient').setValue(temp.address1)
+                                    Ext.getCmp('stretSearchedPatient').setValue(temp.address2)
+                                    Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
+                                    Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
+                                  /*  var i;
+                                    for(i=0;temp.attributes.length;i++){
+                                        if(temp.attributes[i].attributeType == casteuuid) Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
+                                        // TODO- make similars "if" conditions for further attributes
+                                    } */
+                                    var l = Ext.getCmp('mainRegArea').getLayout();
+                                    l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value);
+                                }
+                            }
+                        },
                         viewConfig: {
-                            autoScroll: true,
                             emptyText: 'No Data Available',
                             stripeRows: false
                         }
@@ -86,19 +114,13 @@ Ext.define('Registration.view.SearchPart2', {
                         margin: '10 50 0 270',
                         width: 120,
                         text: 'View Details',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value); //Going to Search Confirm Screen
-                        }
+                        action: 'viewDetails'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 120,
                         text: 'Modify Search',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen
-                        }
+                        action: 'modifySearch'
                     }]
                 }]
             }]

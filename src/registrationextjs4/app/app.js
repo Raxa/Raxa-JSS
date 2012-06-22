@@ -23,8 +23,6 @@ Ext.application({
     name: 'Registration',
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    //stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore'],
-    //models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel'],
     controllers: ['Main', 'BMI','Search'],
 
     launch: function () {

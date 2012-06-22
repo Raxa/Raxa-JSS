@@ -36,7 +36,14 @@ Ext.define('Registration.controller.Main', {
                 click: this.submit
             },
             'registrationbmi button[action=bmiSubmit]': {
-                click: this.sendEncounterData
+                click: fn=function(){
+                    if(localStorage.choiceUuid == localStorage.adultreturnUuidencountertype){
+                        this.sendEncounterData(localStorage.choiceUuid,localStorage.searchUuid)
+                    }
+                    else{
+                        this.sendEncounterData(localStorage.choiceUuid,localStorage.newpatientID)
+                    }
+                }
             }
         })
     },
@@ -81,7 +88,6 @@ Ext.define('Registration.controller.Main', {
     /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
     Continue: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
-        console.log('here')
         if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('pincode').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
             l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
         } else alert("Fields invalid");
@@ -280,7 +286,7 @@ Ext.define('Registration.controller.Main', {
     // for now the function is called when the emergency button is pressed since the views were not completed
     
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
-    sendEncounterData: function(){
+    sendEncounterData: function(encounterType,patientUuid){
         
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
         function ISODateString(d){
@@ -298,8 +304,8 @@ Ext.define('Registration.controller.Main', {
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel',{
             encounterDatetime : ISODateString(currentDate),
-            patient: localStorage.newpatientID,//you will get the uuid from ticket 144...pass it here
-            encounterType: "e7ebaec1-d6b9-4f9f-aba4-3313efd835c5"//need to pass the type depending on the type of encounter
+            patient: patientUuid,//you will get the uuid from ticket 144...pass it here
+            encounterType: encounterType//need to pass the type depending on the type of encounter
         });
         // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
         var location ="Registration Desk";
@@ -352,7 +358,7 @@ Ext.define('Registration.controller.Main', {
         if(Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value != null){
             var jsonencounterheight = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.newpatientID,
+                person: patientUuid,
                 concept: localStorage.heightUuidconcept,
                 value: parseInt(Ext.getCmp('heightIDcm').getValue())
             });
@@ -361,7 +367,7 @@ Ext.define('Registration.controller.Main', {
         if(Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value != null){
             var jsonencounterweight = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.newpatientID,
+                person: patientUuid,
                 concept: localStorage.weightUuidconcept,
                 value: parseFloat(Ext.getCmp('weightIDkg').getValue())
             });
@@ -370,7 +376,7 @@ Ext.define('Registration.controller.Main', {
         if(Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value != null){
             var jsonencounterbmi = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.newpatientID,
+                person: patientUuid,
                 concept: localStorage.bmiUuidconcept,
                 value: parseFloat(Ext.getCmp('bmiNumberfieldID').getValue())
             });
@@ -380,7 +386,7 @@ Ext.define('Registration.controller.Main', {
         if(regfee != 0){
             var jsonencounterregfee = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.newpatientID,
+                person: patientUuid,
                 concept: localStorage.regfeeUuidconcept,
                 value: regfee
             });
@@ -389,6 +395,9 @@ Ext.define('Registration.controller.Main', {
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
         store.sync();
+        store.on('write', function () {
+            this.reset();
+        }, this)
         return store;
     }
 });

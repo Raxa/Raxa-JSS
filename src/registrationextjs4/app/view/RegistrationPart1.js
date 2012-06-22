@@ -43,7 +43,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                         fieldLabel: 'Old Patient Registration Number',
                         layout: 'hbox',
                         combineErrors: true,
-                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -52,12 +51,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                             hideLabel: 'true'
                         },
                         items: [{
+                            xtype: 'numberfield',
                             name: 'Old Patient Identifier',
                             id: 'oldPatientIdentifier',
                             fieldLabel: 'Old Patient Identifier',
                             flex: 1,
                             emptyText: 'Old Patient Identifier',
                             allowBlank: true
+
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -131,20 +132,22 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'datefield',
                             fieldLabel: 'DOB',
+                            id: 'dob',
                             emptyText: 'MM/DD/YYYY',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 250,
                             anchor: '75%',
-                            allowBlank: true
+                            allowBlank: false
                         }, {
                             name: 'Age',
+                            xtype: 'numberfield',
                             fieldLabel: 'Current Patient Age',
                             id: 'patientAge',
                             flex: 1,
                             margins: '0 0 0 36',
                             emptyText: 'Patient\'s Current Age',
-                            allowBlank: true
+                            allowBlank: false
                         },
 
                         ]
@@ -159,7 +162,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'radiofield',
                             name: 'sex',
-                            boxLabel: 'Male'
+                            boxLabel: 'Male',
+                            checked: true
                         }, {
                             xtype: 'radiofield',
                             name: 'sex',
@@ -172,7 +176,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Education Details',
-                        id: 'EducationContainer',
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -187,6 +190,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             xtype: 'combo',
                             name: 'education',
                             label: 'Education Details',
+                            id: 'education',
                             layout: 'hbox',
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
@@ -217,6 +221,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             xtype: 'combo',
                             name: 'caste',
                             label: 'Caste',
+                            id: 'caste',
                             layout: 'hbox',
                             store: new Ext.data.SimpleStore({
                                 fields: ['caste'],
@@ -269,16 +274,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                         margin: '10 50 0 270',
                         width: 60,
                         text: 'Next',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.REG_2.value); //Going to Registration Part-2 Page
-                        }
+                        action: 'next'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
-                        text: 'Reset'
-
+                        text: 'Reset',
+                        action: 'reset'
                     }]
                 }]
             }]
