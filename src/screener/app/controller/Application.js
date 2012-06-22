@@ -292,24 +292,21 @@ Ext.define("Screener.controller.Application", {
             lab_num--;
         }
     },
-    //opens form for patient summary
+    // opens form for patient summary
     showPatientSummary: function () {
-        console.log('patient summary called');
         if (!this.patientSummary) {
             this.patientSummary = Ext.create('Screener.view.PatientSummary');
         }
         Ext.Viewport.add(this.patientSummary);
         Ext.getCmp('patientSummary').setHidden(false);
-
     },
     //keeping track of which patient/doctor is currently selected
     //if both are selected, enable the ASSIGN button
     setCurrentPatient: function (list, index, target, record) {
         this.currentPatientIndex = index;
-        if (this.getDoctorList().hasSelection()) {
+        if (this.patientView && this.getDoctorList().hasSelection()) {
             this.getAssignButton().enable();
         }
-
     },
     setCurrentDoctor: function (list, index, target, record) {
         this.currentDoctorIndex = index;
@@ -371,9 +368,7 @@ Ext.define("Screener.controller.Application", {
                 Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', numPatients - 1);
                 Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(objectRef.currentPatientIndex);
                 objectRef.getRemovePatientButton().disable();
-            } else {
-
-            }
+            } else {}
         });
     },
     //helper function to remove a single patient
