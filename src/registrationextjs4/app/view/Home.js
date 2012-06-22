@@ -54,6 +54,7 @@ Ext.define('Registration.view.Home', {
                     handler: function () {
                         var l = Ext.getCmp('mainRegArea').getLayout();
                         l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
+                        localStorage.setItem('choiceUuid',localStorage.regUuidencountertype);
                     }
                 }, {
                     xtype: 'button',
@@ -64,6 +65,7 @@ Ext.define('Registration.view.Home', {
                     handler: function () {
                         var l = Ext.getCmp('mainRegArea').getLayout();
                         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
+                        localStorage.setItem('choiceUuid',localStorage.adultreturnUuidencountertype); 
                     }
                 }]
             }]
