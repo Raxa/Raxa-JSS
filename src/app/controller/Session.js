@@ -39,13 +39,13 @@ Ext.define('RaxaEmr.controller.Session', {
         //starting at index=1 here, don't need app button for 'login'
         for(i=1;i<allModules.length;i++){
         	//checking if user is allows to view the module
-            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+//            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
             	userModules[userModules.length] = allModules[i];
-            }
+//            }
         }
         Ext.getCmp('appGrid').addModules(userModules);
         window.location.hash = 'Dashboard';
-        Ext.getCmp('mainView').setActiveItem(1);
+        Ext.getCmp('mainView').setActiveItem(2);
     },
 
     showLogin: function () {
@@ -156,9 +156,9 @@ Ext.define('RaxaEmr.controller.Session', {
         //starting at index=1 here, don't need app button for 'login'
         for(i=1;i<allModules.length;i++){
         	//checking if user is allows to view the module
-            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+//            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
             	userModules[userModules.length] = allModules[i];
-            }
+//            }
         }
         Ext.getCmp('appGrid').addModules(userModules);
         //if only 1 app available, send to that page
@@ -181,7 +181,7 @@ Ext.define('RaxaEmr.controller.Session', {
 
     //on entry point for application, give control to Util.getViews()
     launch: function () {
-        Ext.create('Ext.Container', {
+        Ext.create('Ext.Container', {           
             id: 'mainView',
             fullscreen: true,
             layout: 'card',
@@ -189,7 +189,9 @@ Ext.define('RaxaEmr.controller.Session', {
                 xclass: 'RaxaEmr.view.Login'
             }, {
                 xclass: 'RaxaEmr.view.AppGrid'
-            }]
+            }
+            ,{xclass: 'RaxaEmr.view.Viewport'}
+        ]
         });
     },
 
