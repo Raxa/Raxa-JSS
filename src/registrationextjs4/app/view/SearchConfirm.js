@@ -206,7 +206,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             allowBlank: false
                         }]
                     }, {
-                        xtype: 'text',
+                        xtype: 'textfield',
                         id: 'blockSearchedPatient',
                         fieldLabel: 'Block/House/Door Number',
                         labelAlign: 'right',
@@ -296,7 +296,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             hideLabel: 'true'
                         },
                         items: [{
-                            name: 'occuption',
+                            name: 'phoneNo.',
                             id: 'phoneSearchedPatient',
                             emptyText: 'Yes/No (READ ONLY)',
                             flex: 1,

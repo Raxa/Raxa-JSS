@@ -11,6 +11,7 @@
 
         <!-- include specs here -->
         <script type="text/javascript" src="registrationSpec.js"></script>
+		<script type="text/javascript" src="searchSpec.js"></script>
         <!-- load application here -->
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -23,7 +24,7 @@
                     //fill in details for your module
                     name: 'Registration',
                     appFolder: '../../../src/registrationextjs4/app',
-                    controllers: ['Main'],
+                    controllers: ['Main', 'BMI','Search'],
                     launch: function() {
                         //include the tests in the test.html head
                         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
