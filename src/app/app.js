@@ -12,6 +12,5 @@ Ext.application({
     models: ['Session'], // List of Models for dynamic loading
     views: ['Login','AppGrid','Viewport','smartApp'], // List of Views for dynamic loading
     controllers: ['Session'], // List of Controllers for dynamic loading
-    store: ['SessionStore'], // List of Stores for dynamic loading
-    autoCreateViewport: true
+    store: ['SessionStore'] // List of Stores for dynamic loading
 });

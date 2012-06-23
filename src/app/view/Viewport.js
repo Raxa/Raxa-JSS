@@ -1,7 +1,6 @@
 Ext.define('RaxaEmr.view.Viewport', {
     extend: 'Ext.Carousel',
     xtype: 'smartDash',
-
     config: {
         title: 'Dashboard',
         iconCls: 'star',
@@ -10,7 +9,6 @@ Ext.define('RaxaEmr.view.Viewport', {
             xclass: 'RaxaEmr.view.AppGrid'
         }, {
             xclass: 'RaxaEmr.view.smartApp'
-        }
-]
+        }]
     }
 });
