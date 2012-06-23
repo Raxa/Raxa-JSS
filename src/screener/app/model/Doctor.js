@@ -10,7 +10,6 @@ Ext.define('Screener.model.Doctor', {
         fields: [{
             name: 'id',
             type: 'int'
-
         }, {
             name: 'uuid',
             type: 'string'
@@ -55,21 +54,4 @@ Ext.define('Screener.model.Doctor', {
         return this.numpatients;
     }
 });
-
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
