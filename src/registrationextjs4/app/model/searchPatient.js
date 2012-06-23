@@ -29,16 +29,17 @@ Ext.define('Registration.model.searchPatient', {
         type: 'string',
         mapping: 'identifiers.identifier'
     },*/
+    // Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 wherever attributes are required
     {
         name: 'attributes',
         model: 'Registration.model.attributes'
     }, {
         name: 'address1',
         type: 'string'
-    }, { //as right now this attribute don't work its commented
+    }, { 
         name: 'address2',
         type: 'string'
-    }, { //as right now this attribute don't work its commented
+    }, { 
         name: 'postalCode',
         type: 'string'
     }, {

@@ -97,6 +97,8 @@ Ext.define('Registration.view.SearchPart2', {
                                     Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
                                     Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
                                     /*  var i;
+                                     *  Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 
+                                     *  wherever attributes are required
                                     for(i=0;temp.attributes.length;i++){
                                         if(temp.attributes[i].attributeType == casteuuid) Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
                                         // TODO- make similars "if" conditions for other attributes
