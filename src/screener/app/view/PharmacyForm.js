@@ -6,7 +6,7 @@
 Ext.define("Screener.view.PharmacyForm", {
     xtype: 'pharmacyForm',
     extend: 'Ext.form.Panel',
-    requires: ['Ext.tab.Panel', 'Ext.form.FieldSet'],
+    requires: ['Ext.tab.Panel', 'Ext.form.FieldSet', 'Ext.MessageBox'],
     config: {
         styleHtmlContent: true,
         xtype: 'orderform',
@@ -53,7 +53,22 @@ Ext.define("Screener.view.PharmacyForm", {
                 id: 'drugSubmitButton',
                 height: '40px',
                 text: 'submit',
-                width: '200px'
+                width: '200px',
+                handler: function () {
+                	// changes the button text to 'Confirm' and 'Cancel'
+                	var MB = Ext.MessageBox;
+                	Ext.apply(MB, {
+	                	YES: { text: 'Confirm', itemId: 'yes', ui: 'action' },
+	                	NO: { text: 'Cancel', itemId: 'no' }
+	                });
+	                	Ext.apply(MB, {
+		                	YESNO: [MB.NO, MB.YES]
+		                });
+		            // on-click, launch MessageBox
+		            Ext.get('drugSubmitButton').on('click', function(e){
+		              Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
+	                });
+                }
             }]
         }]
     }
