@@ -17,7 +17,7 @@
 Ext.define('RaxaEmr.controller.Session', {
     extend: 'Ext.app.Controller',
     config: {
- 
+
 
         routes: {
             'Login': 'showLogin',
@@ -39,7 +39,7 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         control: {
-            password:{
+            password: {
                 action: 'doLogin'
             },
             signInButton: {
@@ -51,17 +51,23 @@ Ext.define('RaxaEmr.controller.Session', {
     showDashboard: function () {
         var privileges = localStorage.getItem("privileges");
         var allModules = Util.getModules();
+        var allApps = Util.getApps();
         var userModules = [];
         //starting at index=1 here, don't need app button for 'login'
-        for(i=1;i<allModules.length;i++){
-        	//checking if user is allows to view the module
-            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
-            	userModules[userModules.length] = allModules[i];
-            }
+        for (i = 1; i < allModules.length; i++) {
+            //checking if user is allows to view the module
+            /*below check is commented to start login work temporarily
+            it is commented because check was failing as privileges were deleted from role_privileges
+            in the database so as to make the view POSTs successful
+            */
+            //            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+            userModules[userModules.length] = allModules[i];
+        //            }
         }
         Ext.getCmp('appGrid').addModules(userModules);
+        Ext.getCmp('smartApp').addApps(allApps);
         window.location.hash = 'Dashboard';
-        Ext.getCmp('mainView').setActiveItem(1);
+        Ext.getCmp('mainView').setActiveItem(2);
     },
 
     showLogin: function () {
@@ -98,7 +104,7 @@ Ext.define('RaxaEmr.controller.Session', {
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
                     this.loginSuccess();
                 },
-                failure: function(){
+                failure: function () {
                     Ext.getCmp('mainView').setMasked(false);
                     Ext.Msg.alert("RaxaEmr.controller.session.alert");
                 }
@@ -112,7 +118,7 @@ Ext.define('RaxaEmr.controller.Session', {
 
     // doLogin functions populates the views in the background while transferring
     // the view to dashboard
-    doLogin: function() {
+    doLogin: function () {
         var name = Ext.getCmp('userName').getValue();
         if (name === "") {
             return;
@@ -146,7 +152,7 @@ Ext.define('RaxaEmr.controller.Session', {
      * @param username: user with associated privileges
      */
     getUserPrivileges: function (username) {
-        Ext.Ajax.setTimeout(Util.getTimeoutLimit()); 
+        Ext.Ajax.setTimeout(Util.getTimeoutLimit());
         Ext.Ajax.request({
             scope: this,
             withCredentials: true,
@@ -155,7 +161,7 @@ Ext.define('RaxaEmr.controller.Session', {
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
             success: this.storeUserPrivileges,
-            failure: function(){
+            failure: function () {
                 Ext.getCmp('mainView').setMasked(false);
                 Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
             }
@@ -169,30 +175,36 @@ Ext.define('RaxaEmr.controller.Session', {
         var privileges = localStorage.getItem("privileges");
         var allModules = Util.getModules();
         var userModules = [];
+        var allApps = Util.getApps();
         //starting at index=1 here, don't need app button for 'login'
-        for(i=1;i<allModules.length;i++){
-        	//checking if user is allows to view the module
-            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
-            	userModules[userModules.length] = allModules[i];
-            }
+        for (i = 1; i < allModules.length; i++) {
+            //checking if user is allows to view the module
+            /*below check is commented to start login work temporarily
+            it is commented because check was failing as privileges were deleted from role_privileges
+            in the database so as to make the view POSTs successful
+            */
+            //            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+            userModules[userModules.length] = allModules[i];
+        //            }
         }
         Ext.getCmp('appGrid').addModules(userModules);
+        Ext.getCmp('smartApp').addApps(allApps);
         //if only 1 app available, send to that page
-        if(userModules.length === 1){
+        if (userModules.length === 1) {
             window.location = userModules[0];
         }
         //if no apps available, alert the user
-        else if(userModules.length === 0){
-        	Ext.Msg.alert("No Privileges Found", "Contact your system administrator")
+        else if (userModules.length === 0) {
+            Ext.Msg.alert("No Privileges Found", "Contact your system administrator")
         }
         //otherwise show the AppGrid
-        else{
+        else {
             this.showDashboard();
         }
     },
 
     doLogout: function () {
-        //called whenever any Button with action=logout is tapped
+    //called whenever any Button with action=logout is tapped
     },
 
     //on entry point for application, give control to Util.getViews()
@@ -205,6 +217,8 @@ Ext.define('RaxaEmr.controller.Session', {
                 xclass: 'RaxaEmr.view.Login'
             }, {
                 xclass: 'RaxaEmr.view.AppGrid'
+            }, {
+                xclass: 'RaxaEmr.view.AppCarousel'
             }]
         });
     },
