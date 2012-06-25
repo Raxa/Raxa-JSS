@@ -1,10 +1,26 @@
 /**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+/**
  * This class listens for the user input and makes changes to the doctor/patient
  * lists as necessary.
  */
 var form_num, lab_num;
 Ext.define("Screener.controller.Application", {
-    requires: ['Screener.view.NewPatient', 'Screener.store.Doctors','Screener.store.Doctors', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
+    requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
+    models:['Screener.model.Person'],
     extend: 'Ext.app.Controller',
     config: {
         //here we name the elements we need from the page
@@ -13,6 +29,7 @@ Ext.define("Screener.controller.Application", {
             topmenu: 'topmenu',
             navBar: '#navBar',
             patientView: 'patientView',
+            patientSummary: 'patientSummary',
             doctorView: 'doctorView',
             labOrderForm: 'labOrderForm',
             pharmacyView: 'pharmacyView',
@@ -41,6 +58,7 @@ Ext.define("Screener.controller.Application", {
             removeDrugFormButton: '#removeDrugFormButton',
             sortByNameButton: '#sortByNameButton',
             sortByFIFOButton: '#sortByFIFOButton',
+            sortByBMIButton: '#sortByBMIButton',
             removePatientButton: '#removePatientButton',
             removeAllPatientsButton: '#removeAllPatientsButton'
         },
@@ -53,13 +71,13 @@ Ext.define("Screener.controller.Application", {
                 tap: 'addLabOrder'
             },
             addPatientButton: {
-                tap: 'addPatient'
+                tap: 'addPerson'
             },
             showPatientsButton: {
                 tap: 'showPatients'
             },
             savePatientButton: {
-                tap: 'savePatient'
+                tap: 'savePerson'
             },
             showDoctorsButton: {
                 tap: 'showDoctors'
@@ -82,8 +100,12 @@ Ext.define("Screener.controller.Application", {
             sortByFIFOButton: {
                 tap: 'sortByFIFO'
             },
+            sortByBMIButton: {
+                tap: 'sortByBMI'
+            },
             patientList: {
-                itemtap: 'setCurrentPatient'
+                itemtap: 'setCurrentPatient',
+                itemtaphold: 'showPatientSummary'
             },
             doctorList: {
                 itemtap: 'setCurrentDoctor'
@@ -118,6 +140,9 @@ Ext.define("Screener.controller.Application", {
             Ext.getStore('doctorStore').getAt(doctorid).addPatient();
             Ext.getStore('patientStore').remove(patient);
         }
+    },
+    updatePatientsWaitingTitle: function () {
+        Ext.getCmp('patientsWaiting').setTitle(Ext.getStore('patientStore').getCount() + ' Patients Waiting');
     },
     //called on startup
     init: function () {
@@ -157,30 +182,71 @@ Ext.define("Screener.controller.Application", {
             height: '70px'
         });
     },
-    //opens form for new patient
-    addPatient: function () {
+    //opens form for creating new patient
+    addPerson: function () {
         if (!this.newPatient) {
             this.newPatient = Ext.create('Screener.view.NewPatient');
             Ext.Viewport.add(this.newPatient);
         }
         //set new FIFO id so patients come and go in the queue!
-        this.getFormid().setValue(this.totalPatients);
-        this.getNewPatient().show();
+        //this.getFormid().setValue(this.totalPatients);
+        this.newPatient.show();
     },
-    //adds patient to the patient list store
-    savePatient: function () {
-        formp = this.getNewPatient().saveForm();
-        if (formp.firstname && formp.lastname && formp.id) {
-            var patient = Ext.create('starter.model.Patient');
-            patient.set('firstname', formp.firstname);
-            patient.set('lastname', formp.lastname);
-            patient.set('id', formp.id);
-            patient.set('doctorid', -1);
-            Ext.getStore('patientStore').add(patient);
-            this.totalPatients++;
-            this.getNewPatient().reset();
-            this.getNewPatient().hide();
+    //adds new person to the NewPersons store
+    savePerson: function () {
+        var formp = Ext.getCmp('newPatient').saveForm();
+       
+        if (formp.givenname && formp.familyname && formp.choice) {
+            var person = Ext.create('Screener.model.Person',{
+                gender: formp.choice,
+                names: [{
+                    givenName: formp.givenname,
+                    familyName: formp.familyname
+                }]
+            });
+            var store = Ext.create('Screener.store.NewPersons');
+            store.add(person);
+            store.sync();
+            store.on('write', function(){
+               this.getidentifierstype(store.getData().getAt(0).getData().uuid)
+            } ,this);
+            Ext.getCmp('newPatient').hide();
+            Ext.getCmp('newPatient').reset();
+            return store;
         }
+    },
+    // get IdentifierType using IdentifierType store 
+    getidentifierstype:function(personUuid){
+        var identifiers = Ext.create('Screener.store.IdentifierType')
+        identifiers.load();
+        identifiers.on('load',function(){
+            this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
+        },this);
+    },
+    // get Location using Location store
+    getlocation:function(personUuid,identifierType){
+        var locations = Ext.create('Screener.store.Location')
+        locations.load();
+        locations.on('load',function(){
+            this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
+        },this)
+    },
+    // creates a new patient using NewPatients store 
+    makePatient:function(personUuid,identifierType,location){
+        var patient = Ext.create('Screener.model.NewPatient',{
+            person : personUuid,
+            identifiers : [{
+                identifier : Util.getPatientIdentifier().toString(),
+                identifierType : identifierType,
+                location : location,
+                preferred : true
+            }]
+        });
+        var PatientStore = Ext.create('Screener.store.NewPatients')
+        PatientStore.add(patient);
+        PatientStore.sync();
+        PatientStore.on('write', function(){
+        } ,this)
     },
     //function to show screen with patient list
     showPatients: function () {
@@ -226,11 +292,19 @@ Ext.define("Screener.controller.Application", {
             lab_num--;
         }
     },
+    // opens form for patient summary
+    showPatientSummary: function () {
+        if (!this.patientSummary) {
+            this.patientSummary = Ext.create('Screener.view.PatientSummary');
+        }
+        Ext.Viewport.add(this.patientSummary);
+        Ext.getCmp('patientSummary').setHidden(false);
+    },
     //keeping track of which patient/doctor is currently selected
     //if both are selected, enable the ASSIGN button
     setCurrentPatient: function (list, index, target, record) {
         this.currentPatientIndex = index;
-        if (this.getDoctorList().hasSelection()) {
+        if (this.patientView && this.getDoctorList().hasSelection()) {
             this.getAssignButton().enable();
         }
     },
@@ -256,6 +330,10 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').sort('id');
         this.getSortPanel().hide();
     },
+    sortByBMI: function () {
+        Ext.getStore('patientStore').sort('bmi');
+        this.getSortPanel().hide();
+    },
     //if patient and doctor are both selected, removes patient from list, increases numpatients for doctor,
     //and adds patient to the patients() store in the doctor
     assignPatient: function () {
@@ -267,6 +345,7 @@ Ext.define("Screener.controller.Application", {
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
+        
     },
     //opens the current doctor's waiting list
     expandCurrentDoctor: function (list, index, target, record) {
@@ -289,9 +368,7 @@ Ext.define("Screener.controller.Application", {
                 Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', numPatients - 1);
                 Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(objectRef.currentPatientIndex);
                 objectRef.getRemovePatientButton().disable();
-            } else {
-                
-            }
+            } else {}
         });
     },
     //helper function to remove a single patient
@@ -310,7 +387,7 @@ Ext.define("Screener.controller.Application", {
                 }
                 Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', 0);
             } else {
-                
+
             }
         });
     }

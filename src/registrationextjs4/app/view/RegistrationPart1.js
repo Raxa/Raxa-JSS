@@ -1,12 +1,29 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * This script defines the view RegistrationPart1 of the registration module
+ */
 Ext.define('Registration.view.RegistrationPart1', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.registrationpart1',
     border: 0,
     padding: 10,
+    autoScroll: true,
     layout: {
         type: 'auto'
     },
-    requires: ['Ext.tab.*', 'Ext.grid.*', 'Ext.data.*', 'Ext.util.*', 'Ext.state.*', 'Ext.form.*', ],
     initComponent: function () {
         this.items = {
             border: 0,
@@ -26,7 +43,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                         fieldLabel: 'Old Patient Registration Number',
                         layout: 'hbox',
                         combineErrors: true,
-                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
@@ -35,12 +51,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                             hideLabel: 'true'
                         },
                         items: [{
+                            xtype: 'numberfield',
                             name: 'Old Patient Identifier',
                             id: 'oldPatientIdentifier',
                             fieldLabel: 'Old Patient Identifier',
                             flex: 1,
                             emptyText: 'Old Patient Identifier',
                             allowBlank: true
+
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -114,20 +132,22 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'datefield',
                             fieldLabel: 'DOB',
+                            id: 'dob',
                             emptyText: 'MM/DD/YYYY',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 250,
                             anchor: '75%',
-                            allowBlank: true
+                            allowBlank: false
                         }, {
                             name: 'Age',
+                            xtype: 'numberfield',
                             fieldLabel: 'Current Patient Age',
                             id: 'patientAge',
                             flex: 1,
                             margins: '0 0 0 36',
                             emptyText: 'Patient\'s Current Age',
-                            allowBlank: true
+                            allowBlank: false
                         },
 
                         ]
@@ -142,7 +162,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'radiofield',
                             name: 'sex',
-                            boxLabel: 'Male'
+                            boxLabel: 'Male',
+                            checked: true
                         }, {
                             xtype: 'radiofield',
                             name: 'sex',
@@ -153,34 +174,35 @@ Ext.define('Registration.view.RegistrationPart1', {
                             boxLabel: 'Other'
                         }]
                     }, {
-                        xtype: 'radiogroup',
+                        xtype: 'fieldcontainer',
                         fieldLabel: 'Education Details',
-                        id: 'EducationRadioGroup',
-                        layout: 'vbox',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
-                        allowBlank: false,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
                         items: [{
-                            xtype: 'radiofield',
+                            xtype: 'combo',
                             name: 'education',
-                            boxLabel: 'Uneducated'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: '5th Pass or Less'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: '6th - 9th Class'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: '10th and below'
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'education',
-                            boxLabel: 'Graduate and above'
+                            label: 'Education Details',
+                            id: 'education',
+                            layout: 'hbox',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['education'],
+                                data: [
+                                    ['Uneducated'],
+                                    ['5th Pass or Less'],
+                                    ['6th - 9th Class'],
+                                    ['10th and above'],
+                                    ['Graduate and above']
+                                ]
+                            }),
+                            displayField: 'education'
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -199,6 +221,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             xtype: 'combo',
                             name: 'caste',
                             label: 'Caste',
+                            id: 'caste',
                             layout: 'hbox',
                             store: new Ext.data.SimpleStore({
                                 fields: ['caste'],
@@ -251,16 +274,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                         margin: '10 50 0 270',
                         width: 60,
                         text: 'Next',
-                        handler: function () {
-                            var l = Ext.getCmp('mainregarea').getLayout();
-                            l.setActiveItem(2); //going to registration part-2 page
-                        }
+                        action: 'next'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
-                        text: 'Reset'
-
+                        text: 'Reset',
+                        action: 'reset'
                     }]
                 }]
             }]
