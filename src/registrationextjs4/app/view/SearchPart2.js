@@ -82,23 +82,26 @@ Ext.define('Registration.view.SearchPart2', {
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Town'
-                        }],
+                        }], 
+                        //was needed to see the patient profile as we click on one of the patient
                         listeners: {
-                            cellClick : {
-                                fn : function(){
+                            cellClick: {
+                                fn: function () {
                                     var temp = this.getSelectionModel().getSelection()[0].getData()
-                                    localStorage.setItem('searchUuid',temp.uuid)
-                                    Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " +temp.familyName)
+                                    localStorage.setItem('searchUuid', temp.uuid)
+                                    Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)
                                     Ext.getCmp('sexSearchedPatient').setValue(temp.gender)
                                     Ext.getCmp('blockSearchedPatient').setValue(temp.address1)
                                     Ext.getCmp('stretSearchedPatient').setValue(temp.address2)
                                     Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
                                     Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
-                                  /*  var i;
+                                    /*  var i;
+                                     *  Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 
+                                     *  wherever attributes are required
                                     for(i=0;temp.attributes.length;i++){
                                         if(temp.attributes[i].attributeType == casteuuid) Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
-                                        // TODO- make similars "if" conditions for further attributes
+                                        // TODO- make similars "if" conditions for other attributes
                                     } */
                                     var l = Ext.getCmp('mainRegArea').getLayout();
                                     l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value);
@@ -112,12 +115,6 @@ Ext.define('Registration.view.SearchPart2', {
                     }, {
                         xtype: 'button',
                         margin: '10 50 0 270',
-                        width: 120,
-                        text: 'View Details',
-                        action: 'viewDetails'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
                         width: 120,
                         text: 'Modify Search',
                         action: 'modifySearch'

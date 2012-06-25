@@ -1,4 +1,4 @@
-//model for search patient list
+/* model for search patient list */
 Ext.define('Registration.model.searchPatient', {
     extend: 'Ext.data.Model',
     fields: [{
@@ -23,20 +23,23 @@ Ext.define('Registration.model.searchPatient', {
         name: 'age',
         type: 'number',
         useNull: true
-    },/* {  //as the we dont get the identifiers of patients in search list for now i commented them
+    },
+    /* {  //as the we dont get the identifiers of patients in search list for now i commented them
         name: 'identifier',
         type: 'string',
         mapping: 'identifiers.identifier'
-    },*/ {
+    },*/
+    // Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 wherever attributes are required
+    {
         name: 'attributes',
         model: 'Registration.model.attributes'
-    }, {    
+    }, {
         name: 'address1',
         type: 'string'
-    },{    //as right now this attribute don't work its commented
+    }, { 
         name: 'address2',
         type: 'string'
-    },{    //as right now this attribute don't work its commented
+    }, { 
         name: 'postalCode',
         type: 'string'
     }, {

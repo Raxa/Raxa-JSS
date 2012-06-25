@@ -11,9 +11,6 @@ Ext.define('Registration.controller.Search', {
             "searchpart1 button[action=reset]": {
                 click: this.reset
             },
-            "searchpart2 button[action=viewDetails]": {
-                click: this.viewDetails
-            },
             "searchpart2 button[action=modifySearch]": {
                 click: this.modifySearch
             },
@@ -25,12 +22,14 @@ Ext.define('Registration.controller.Search', {
     //function making the rest call to get the patient with given search quiry
     search: function () {
         if (Ext.getCmp('patientFirstNameSearch').isValid() || Ext.getCmp('PatientIdentifierSearch').isValid()) {
+            // concatenating the identifier and patient name to make the url for get call
             var Url = HOST + '/ws/rest/v1/patient?q='; // Ext.getCmp('PatientIdentifierSearch').getValue() + "&&v=full";
             if (Ext.getCmp('PatientIdentifierSearch').isValid()) Url = Url + Ext.getCmp('PatientIdentifierSearch').getValue() + "&"
             if (Ext.getCmp('patientFirstNameSearch').isValid()) Url = Url + Ext.getCmp('patientFirstNameSearch').getValue() + "&"
             if (Ext.getCmp('patientLastNameSearch').isValid()) Url = Url + Ext.getCmp('patientLastNameSearch').getValue() + "&"
             Url = Url + "&v=full";
             store = Ext.create('Registration.store.search');
+            // setting up the proxy here because url is not fixed
             store.setProxy({
                 type: 'rest',
                 url: Url,
@@ -42,11 +41,16 @@ Ext.define('Registration.controller.Search', {
             })
             Ext.getCmp('patientGrid').view.store = store;
             store.load();
+            // this is required to load the page after the data is beging loaded successfully
             store.on('datachanged', function () {
                 var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Page (Result List)
+                l.setActiveItem(REG_PAGES.SEARCH_2.value);
                 Ext.getCmp('patientGrid').view.refresh();
             }, this)
+            // I return the store so as to use it in the jasmine test
+            return store;
+        } else {
+            alert("invalid fields")
         }
     },
 
@@ -63,11 +67,6 @@ Ext.define('Registration.controller.Search', {
         Ext.getCmp('phoneNumberSearch').reset()
     },
 
-    viewDetails: function () {
-        var l = Ext.getCmp('mainRegArea').getLayout();
-        l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value); //Going to Search Confirm Screen
-    },
-    
     modifySearch: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen

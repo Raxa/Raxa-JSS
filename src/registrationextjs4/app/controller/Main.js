@@ -382,13 +382,12 @@ Ext.define('Registration.controller.Main', {
             });
             jsonencounter.data.obs.push(jsonencounterbmi.data);
         }
-        var regfee = 250;
-        if(regfee != 0){
+        if(Ext.getCmp('registrationfeespaid').isValid() && Ext.getCmp('registrationfeespaid').value != null){
             var jsonencounterregfee = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
                 person: patientUuid,
                 concept: localStorage.regfeeUuidconcept,
-                value: regfee
+                value: Ext.getCmp('registrationfeespaid').value
             });
             jsonencounter.data.obs.push(jsonencounterregfee.data);
         }
