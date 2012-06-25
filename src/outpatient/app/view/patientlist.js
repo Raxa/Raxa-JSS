@@ -1,7 +1,6 @@
 Ext.define('RaxaEmr.Outpatient.view.patientlist', {
     extend: 'Ext.List',
     xtype: 'patientlist',
-
     id: 'contact',
 
     config: {
@@ -18,6 +17,7 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
                 allowDepress: false,
                 items: [{
                     xtype: 'button',
+                    ui: 'normal',
                     text: 'Today\'s List',
                     pressed: true,
                     width: 150,
