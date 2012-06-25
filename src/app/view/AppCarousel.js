@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.view.Viewport', {
+Ext.define('RaxaEmr.view.AppCarousel', {
     extend: 'Ext.Carousel',
     xtype: 'smartDash',
     config: {
