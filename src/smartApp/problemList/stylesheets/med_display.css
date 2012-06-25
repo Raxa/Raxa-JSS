@@ -1,0 +1,14 @@
+body {font-family: Calibri,Trebuchet,Verdana,Helvetica,Arial,sans-serif; margin: 0px;}
+#TheList {cursor: pointer; vertical-align: top; }
+#ExpandMeds {margin-top: -.35em;  text-decoration: none; ouine: none; width: .5em; display: inline-block;}
+#MedList{ margin: 0px; border: 0px; padding: 0px;}
+.medtable, #MedDetails {border-collapse: collapse; font-size: .8em; font-family: Garamond,"Times New Roman"}
+.medtable TD {padding:0.5em;}
+.medtable TR {cursor: pointer;}
+.medtable TR:nth-child(even) {background:none repeat scroll 0 0 #EEEEEE;}
+.medtable TR:nth-child(odd) {background:none repeat scroll 0 0 #CCCCCC;}
+.medtable TR.selected {background:none repeat scroll 0 0 #AAC0CC;}
+.ui-widget{ font-size:1em; }
+.ui-autocomplete { height: 228px; overflow-y: scroll; overflow-x: hidden; font-size: 10px;}
+.delete_problem  {font-size: .8em; font-weight: bold; color: #222222; text-decoration: none;}
+.delete_med {font-size: .8em; font-weight: bold; color: #222222; text-decoration: none;}
