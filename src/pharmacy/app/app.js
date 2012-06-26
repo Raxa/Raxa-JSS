@@ -4,8 +4,7 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'RaxaEmr.Pharmacy',
-    views: ['dispense', 'Viewport'],
-    stores: ['dispense'],
+    views: ['prescription', 'Viewport'],
     autoCreateViewport: true,
-    controllers: ['dispense']
+    controllers: ['prescription']
 });
