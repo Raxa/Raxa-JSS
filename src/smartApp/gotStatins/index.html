@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Got Statins?</title>
+  </head>
+  <body>
+
+  <h1 style="font-family: Arial, sans-serif;">Got Statins?</h1>
+  <a id="TheAnswer" style="font-weight: bold; font-size: 120pt; font-family: Arial, sans-serif; text-decoration: none; color: black;">
+  	... 
+  </a> 
+	<script  src='../smart/scripts/smart-api-client.js'></script>
+	<script>
+	  
+SMART.ready(function(){
+
+        SMART.MEDS_get().success(function(meds) {
+	
+	var medlist = meds.graph
+                    .where("?m rdf:type sp:Medication")
+                    .where("?m sp:drugName ?dn")
+                    .where("?dn dcterms:title ?drugname");	
+	var answer = false;
+	
+	for (var i = 0; i < medlist.length; i++) {
+	 console.log(medlist[i].drugname.value);
+	       if (is_a_statin(medlist[i].drugname.value))
+		   answer = true;
+          }
+
+	  document.getElementById("TheAnswer").innerHTML = answer ? "Yes." : "No.";
+
+	});
+		
+   var is_a_statin = function(drug) {
+      if (drug.match(/statin/i)) return true;
+      if (drug.match(/Advicor/i)) return true;
+      if (drug.match(/Altoprev/i)) return true;
+      if (drug.match(/Caduet/i)) return true;
+      if (drug.match(/Crestor/i)) return true;
+      if (drug.match(/Lescol/i)) return true;
+      if (drug.match(/Lipitor/i)) return true;
+      if (drug.match(/Mevacor/i)) return true;
+      if (drug.match(/Pravachol/i)) return true;
+      if (drug.match(/Simcor/i)) return true;
+      if (drug.match(/Vytorin/i)) return true;
+      if (drug.match(/Zocor/i)) return true;
+
+      return false;
+   }
+});		
+	</script>
+  </body>
+</html>
