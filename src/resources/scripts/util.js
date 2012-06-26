@@ -22,6 +22,7 @@ if (localStorage.getItem("host") == null) {
 var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 20000;
+var hospitalName = 'JSS Hospital'
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
@@ -81,6 +82,10 @@ var Util = {
      */
     getTimeoutLimit: function () {
         return timeoutLimit;
+    },
+    
+        getHospitalName: function () {
+        return hospitalName;
     },
 
     /**
@@ -142,7 +147,7 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4'];
+        return ['login', 'screener', 'registration', 'registrationextjs4','CHW'];
         //TO DO:Add the line below instead the above one 
         //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
