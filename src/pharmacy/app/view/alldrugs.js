@@ -6,7 +6,7 @@ Ext.define('RaxaEmr.Pharmacy.view.alldrugs',{
     height: 600,
     store: 'alldrugsstore',
     fields: ['drugname', 'tablets', 'days'],
-    
+     
     columns:[{
         header: 'Drug Name',
         dataIndex: 'drugname',

@@ -11,6 +11,6 @@ Ext.define('RaxaEmr.Pharmacy.store.groupstore', {
         writer: {
             type: 'json',
             writeAllFields: true
-        }
+        } 
     }
 });

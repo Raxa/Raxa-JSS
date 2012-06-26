@@ -7,7 +7,7 @@ Ext.define('RaxaEmr.Pharmacy.view.groupedDrugs', {
     title: 'Drug Group Selected: ',
     width: 807,
     fields: ['drugname', 'tablets', 'days'],
-    
+     
     columns: [{
         header: 'Drug Name',
         dataIndex: 'drugname',

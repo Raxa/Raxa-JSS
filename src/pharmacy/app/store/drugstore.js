@@ -10,6 +10,6 @@ Ext.define('RaxaEmr.Pharmacy.store.drugstore', {
         writer: {
             type: 'json',
             writeAllFields: true
-        }
+        } 
     }
 });

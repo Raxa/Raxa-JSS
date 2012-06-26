@@ -19,5 +19,5 @@ Ext.define('RaxaEmr.Pharmacy.view.Groups', {
         width: 400,
         hideable: false,
         sortable: false
-    }]
+    }] 
 });

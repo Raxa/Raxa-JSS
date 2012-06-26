@@ -14,7 +14,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
         },
         renderTo: Ext.getBody(),
         border: 1,
-        style: {
+        style: { 
             borderColor: '#000000',
             borderStyle: 'solid',
             borderWidth: '1px'

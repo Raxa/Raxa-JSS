@@ -7,4 +7,4 @@ Ext.define('RaxaEmr.Pharmacy.model.groupmodel', {
         model: 'RaxaEmr.Pharmacy.model.drugmodel',
         name: 'drugs'
     }
-});
+}); 

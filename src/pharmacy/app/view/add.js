@@ -2,7 +2,7 @@
 var states = Ext.create('Ext.data.Store', {
     fields: ['type'],
     readOnly: true,
-    data : [
+    data : [ 
         {"type": '1A'},
         {"type": '1B'},
         {"type": '1C'},

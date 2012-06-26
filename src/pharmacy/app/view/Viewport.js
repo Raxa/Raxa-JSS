@@ -5,7 +5,7 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     alias: 'widget.viewport',
     layout: 'card',
     activeItem: 0,
-    items:[{
+    items:[{ 
         layout: 'auto', 
         items:[{   
             xtype: 'button',

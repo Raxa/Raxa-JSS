@@ -14,5 +14,5 @@ Ext.define('RaxaEmr.Pharmacy.store.alldrugsstore',{
             successProperty: 'success'
         }
     },
-    autoLoad: true
+    autoLoad: true 
 });

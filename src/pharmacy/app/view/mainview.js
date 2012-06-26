@@ -9,7 +9,7 @@ Ext.define('RaxaEmr.Pharmacy.view.mainview', {
         pack: 'center',
         width: 807
     },
-    items:[{
+    items:[{ 
         id: 'mainarea2',
         layout: 'card',
         width: 810,

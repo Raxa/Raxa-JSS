@@ -8,7 +8,7 @@ Ext.application({
     views: ['dispense', 'Viewport', 'mainview', 'Groups', 'groupedDrugs', 'alldrugs', 'add', 'add2', 'prescription'],
     controllers: ['dispense', 'main', 'prescription'],
     models: ['dispense', 'alldrugsmodel', 'groupmodel', 'drugmodel',],
-    stores: ['dispense', 'alldrugsstore', 'groupstore', 'drugstore',],
+    stores: ['dispense', 'alldrugsstore', 'groupstore', 'drugstore',], 
     
     launch: function() {
         Ext.create('RaxaEmr.Pharmacy.view.Viewport');
