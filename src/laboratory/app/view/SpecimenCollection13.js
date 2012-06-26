@@ -21,10 +21,6 @@ Ext.define('Laboratory.view.SpecimenCollection13', {
     autoScroll: true,
     activeItem: 0,
 
-    layout: {
-        type: 'absolute'
-    },
-
     items: [{
         xtype: 'gridpanel',
         width: 500,
@@ -44,6 +40,16 @@ Ext.define('Laboratory.view.SpecimenCollection13', {
             text: 'Collection Date '
         }]
 
+    }, {
+        xtype: 'button',
+        height: 20,
+        text: 'OK',
+        x: 280,
+        y: 90,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
+        }
     }]
 
 });

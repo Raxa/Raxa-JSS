@@ -19,7 +19,16 @@ Ext.define("Screener.view.PatientView", {
             //our doctor list is built on the Doctors store, and has a title and assign button
             xtype: 'list',
             id: 'doctorList',
-            itemTpl: '({numpatients})Dr. {firstname} {lastname}',
+           itemTpl: new Ext.XTemplate(
+        '<div>({numpatients}){[this.splitter(values.display)]}</div>',
+    {
+         splitter: function(str){
+            var name = str.split("- ")[1]
+            return 'Dr.' + name
+        
+        }
+    }
+),
             store: Ext.create('Screener.store.Doctors', {
                 storeId: 'doctorStore'
             }),

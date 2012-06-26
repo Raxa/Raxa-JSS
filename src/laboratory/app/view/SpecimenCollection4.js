@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view provides option to search on patient 
+ *  This view provides option to search on provider
  */
 Ext.define('Laboratory.view.SpecimenCollection4', {
     extend: 'Ext.container.Container',
@@ -29,13 +29,13 @@ Ext.define('Laboratory.view.SpecimenCollection4', {
         xtype: 'textfield',
         width: 240,
         blankText: '',
-        emptyText: 'Enter the Patient Registration Number',
+        emptyText: 'Enter the Provider Registration Number',
         x: 10,
         y: 60
     }, {
         xtype: 'textfield',
         width: 140,
-        fieldLabel: 'Patient\'s Name',
+        fieldLabel: 'Provider\'s Name',
         labelAlign: 'top',
         labelWidth: 50,
         emptyText: 'First Name',
@@ -55,88 +55,29 @@ Ext.define('Laboratory.view.SpecimenCollection4', {
         width: 50,
         text: 'Find',
         x: 260,
-        y: 60
+        y: 60,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_PROVIDER_SEARCH_RESULT.value);
+        }
+    }, {
+        xtype: 'button',
+        height: 20,
+        width: 50,
+        text: 'Find',
+        x: 260,
+        y: 220,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_PROVIDER_SEARCH_RESULT.value);
+        }
     }, {
         xtype: 'image',
         height: 40,
         width: 40,
         src: '../resources/img/OR.png',
         x: 100,
-        y: 100
-    }, {
-        xtype: 'container'
-    }, {
-        xtype: 'button',
-        text: 'Continue',
-        x: 490,
-        y: 190
-    }, {
-        xtype: 'button',
-        text: 'Cancel',
-        x: 300,
-        y: 190
-    }, {
-        xtype: 'displayfield',
-        value: 'Patient',
-        fieldLabel: '',
-        x: 210,
-        y: 60
-    }, {
-        xtype: 'displayfield',
-        value: 'Patient',
-        fieldLabel: '',
-        x: 210,
-        y: 60
-    }, {
-        xtype: 'displayfield',
-        name: '',
-        value: 'PatientID',
-        fieldLabel: 'Name',
-        x: 410,
-        y: 60
-    }, {
-        xtype: 'displayfield',
-        name: '',
-        value: 'ProviderID',
-        fieldLabel: 'Name',
-        x: 410,
-        y: 90
-    }, {
-        xtype: 'displayfield',
-        value: 'Provider',
-        fieldLabel: '',
-        x: 210,
-        y: 90
-    }, {
-        xtype: 'displayfield',
-        value: 'Location',
-        fieldLabel: '',
-        x: 210,
-        y: 120
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'MyButton',
-        x: 280,
-        y: 60
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'Find Patient',
-        x: 280,
-        y: 60
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'Find Location',
-        x: 280,
-        y: 120
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'Find Provider',
-        x: 280,
-        y: 90
+        y: 100,
     }
 
     ]

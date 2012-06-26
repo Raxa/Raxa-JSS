@@ -46,7 +46,20 @@ Ext.define('Laboratory.view.LabOrderCreation6', {
         xtype: 'button',
         text: 'Add new Provider',
         x: 0,
-        y: 150
+        y: 150,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_ADD_PROVIDER_1.value);
+        }
+        },
+        {
+        xtype: 'button',
+        text: 'Continue',
+        x: 120,
+        y: 150,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_DETAILS.value);
+        }         
     }]
-
 });

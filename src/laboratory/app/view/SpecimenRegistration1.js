@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows list of lab orders for a patient 
+ *  This view is home page of Specimen Registration 
  */
 Ext.define('Laboratory.view.SpecimenRegistration1', {
     extend: 'Ext.container.Container',
@@ -25,119 +25,105 @@ Ext.define('Laboratory.view.SpecimenRegistration1', {
         type: 'absolute'
     },
     items: [{
+        xtype: 'displayfield',
+        value: 'Patient',
+        fieldLabel: '',
+        x: 220,
+        y: 30
+    }, {
+        xtype: 'displayfield',
+        value: 'Provider ID',
+        fieldLabel: 'Name',
+        x: 430,
+        y: 60
+    }, {
+        xtype: 'displayfield',
+        value: 'Patient ID',
+        fieldLabel: 'Name',
+        x: 430,
+        y: 30
+    }, {
+        xtype: 'displayfield',
+        value: 'Location',
+        fieldLabel: '',
+        x: 220,
+        y: 120
+    }, {
+        xtype: 'displayfield',
+        value: 'Provider',
+        fieldLabel: '',
+        x: 220,
+        y: 90
+    }, {
+        xtype: 'button',
+        text: 'Find Location',
+        x: 280,
+        y: 120,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_FILTER_LOCATION.value);
+        }
+    }, {
+        xtype: 'button',
+        text: 'Find Provider',
+        x: 280,
+        y: 90,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_PROVIDER.value);
+        }
+
+    }, {
+        xtype: 'button',
+        text: 'Find Patient',
+        x: 280,
+        y: 30,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_LAB_ORDER.value);
+        }
+
+    }, {
+        xtype: 'button',
+        text: 'Continue',
+        x: 440,
+        y: 160,
+
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_DETAILS.value);
+
+        },
+
+
+    }, {
+        xtype: 'button',
+        text: 'Cancel',
+        x: 280,
+        y: 160,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
+        }
+
+    }, {
         xtype: 'gridpanel',
-        height: 400,
-        width: 210,
-        autoScroll: true,
-        title: 'Lab Orders waiting results',
+        height: 420,
+        width: 200,
+        title: 'Lab Orders awaiting Specimen',
         columns: [{
             xtype: 'gridcolumn',
             dataIndex: 'string',
-            text: ''
+            text: 'String'
         }],
         viewConfig: {
 
-        },
-        features: [{
-            ftype: 'grouping'
-        }]
-    }, {
-        xtype: 'displayfield',
-        fieldLabel: 'Lab Order No.',
-        x: 230,
-        y: -1
-    }, {
-        xtype: 'displayfield',
-        fieldLabel: 'Patient',
-        labelAlign: 'top',
-        x: 240,
-        y: 40
-    }, {
-        xtype: 'displayfield',
-        fieldLabel: 'Provider',
-        labelAlign: 'top',
-        x: 440,
-        y: 40
-    }, {
-        xtype: 'displayfield',
-        width: 70,
-        fieldLabel: 'Name',
-        x: 240,
-        y: 70
-    }, {
-        xtype: 'displayfield',
-        fieldLabel: 'Name',
-        x: 440,
-        y: 70
-    }, {
-        xtype: 'displayfield',
-        fieldLabel: 'DOB',
-        x: 240,
-        y: 100
-    }, {
-        xtype: 'displayfield',
-        fieldLabel: 'Location',
-        x: 440,
-        y: 100
-    }, {
-        xtype: 'displayfield',
-        fieldLabel: 'Patient ID',
-        x: 240,
-        y: 130
-    }, {
-        xtype: 'panel',
-        height: 150,
-        width: 450,
-        autoScroll: true,
-        title: '',
-        x: 230,
-        y: 170,
-        items: [{
-            xtype: 'gridpanel',
-            autoScroll: true,
-            title: 'Lab order',
-            columnLines: true,
-            columns: [{
-                xtype: 'gridcolumn',
-                dataIndex: 'string',
-                text: 'Specimen Type'
-            }, {
-                xtype: 'gridcolumn',
-                text: 'Specimen Role'
-            }, {
-                xtype: 'gridcolumn',
-                text: 'Client specimen Id'
-            }, {
-                xtype: 'datecolumn',
-                text: 'Lab Speciment Id'
-            }, {
-                xtype: 'gridcolumn',
-                text: 'Reject Reason'
-            }],
-            viewConfig: {
-
-            }
-        }]
+        }
     }, {
         xtype: 'button',
-        text: 'Reset',
-        x: 500,
-        y: 360
-    }, {
-        xtype: 'button',
-        text: 'Save',
-        x: 570,
-        y: 360
-    }, {
-        xtype: 'button',
-        text: 'Print',
-        x: 430,
-        y: 360
-    }, {
-        xtype: 'button',
-        text: 'Create',
-        x: 240,
-        y: 360
+        text: 'Add Anonymous Patient',
+        x: 280,
+        y: 60
     }]
 
 });

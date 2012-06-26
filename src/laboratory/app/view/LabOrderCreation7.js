@@ -24,61 +24,49 @@ Ext.define('Laboratory.view.LabOrderCreation7', {
         type: 'absolute'
     },
     items: [{
-        xtype: 'fieldcontainer',
-        fieldLabel: 'Patient Name',
-        layout: 'hbox',
-        combineErrors: true,
-        defaultType: 'textfield',
-        labelAlign: 'right',
-        labelPad: 20,
-        labelWidth: 250,
-        defaults: {
-            hideLabel: 'true'
-        },
-        items: [{
-            name: 'firstName',
-            emptyText: 'Patient\'s First Name',
-            flex: 1,
-        }, {
-            name: 'lastName',
-            emptyText: 'Patient\'s Last Name',
-            id: 'patientLastName',
-            flex: 1,
-            margins: '0 0 0 6',
-        }]
+        xtype: 'textfield',
+        fieldLabel: 'Provider\'s Name',
+        labelWidth: 120,
+        emptyText: 'First Name'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '',
+        emptyText: 'Last Name',
+        x: 290,
+        y: 0
     }, {
         xtype: 'radiogroup',
+        width: 400,
         fieldLabel: 'Sex',
-        id: 'sexRadioGroup',
-        labelAlign: 'right',
-        labelPad: 20,
-        labelWidth: 250,
-        allowBlank: false,
+        x: 0,
+        y: 40,
         items: [{
             xtype: 'radiofield',
-            name: 'sex',
             boxLabel: 'Male'
         }, {
             xtype: 'radiofield',
-            name: 'sex',
             boxLabel: 'Female'
         }, {
             xtype: 'radiofield',
-            name: 'sex',
-            boxLabel: 'Other'
+            boxLabel: 'Others'
         }]
     }, {
         xtype: 'button',
-        margin: '10 50 0 270',
-        width: 60,
-        text: 'Cancel',
+        text: 'Save',
+        x: 200,
+        y: 90,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_ADD_PROVIDER_2.value);
+        }
     }, {
         xtype: 'button',
-        margin: '10 0 0 0',
-        width: 60,
-        text: 'Save'
-
+        text: 'Cancel',
+        x: 280,
+        y: 90,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        }
     }]
-
-
 });

@@ -72,27 +72,30 @@ Ext.define('Laboratory.view.LabOrderCreation1', {
         xtype: 'button',
         text: 'Find Location',
         x: 280,
-        y: 90
+        y: 90,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_FILTER_LOCATION.value);
+        }
     }, {
         xtype: 'button',
         text: 'Find Provider',
         x: 280,
-        y: 60
+        y: 60,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PROVIDER.value);
+        }
+
     }, {
         xtype: 'button',
         text: 'Find Patient',
         x: 280,
-        y: 30
-    }, {
-        xtype: 'button',
-        text: 'Continue',
-        x: 440,
-        y: 160
-    }, {
-        xtype: 'button',
-        text: 'Cancel',
-        x: 280,
-        y: 160
+        y: 30,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PATIENT.value);
+        }
     }]
 
 });

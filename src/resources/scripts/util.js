@@ -16,12 +16,13 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.dogado.eu';
+    var HOST = 'http://raxaemr.jelastic.tsukaeru.net';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
 var password = 'Hello123';
-var timeoutLimit = 5000;
+var timeoutLimit = 20000;
+var hospitalName = 'JSS Hospital'
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
@@ -81,6 +82,10 @@ var Util = {
      */
     getTimeoutLimit: function () {
         return timeoutLimit;
+    },
+    
+        getHospitalName: function () {
+        return hospitalName;
     },
 
     /**
@@ -142,11 +147,17 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4'];
+        return ['login', 'screener', 'registration', 'registrationextjs4','CHW'];
         //TO DO:Add the line below instead the above one 
         //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
 
+    getApps: function () {
+        //always keep login at first position as its app path is different
+        return ['gotStatins','problemList'];
+        //TO DO:Add the line below instead the above one 
+        //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+    },
     /**
      *Generate six digit randomly generated Device Id  
      *Checks if any key with name "deviceId" is previously stored in localStorage, returns it if availaible
@@ -174,6 +185,11 @@ var Util = {
         return deviceId;
     },
 
+	getPatientIdentifier : function(){
+        //dummy funtion to be used for creating partient
+        // TODO: writen a  ramdom no for patient identufier but it should be a unique id
+        return Math.floor(Math.random() * 1000000000);
+    },
     //Function to help share Models between ExtJS and Sencha Touch 2.
     platformizeModelConfig: function (extJsModelConfig) {
         if (Ext.versions.extjs) {
@@ -189,5 +205,11 @@ var Util = {
         } else {
             Ext.Error.raise('Could not recognize Library');
         }
+    },
+	getPatientIdentifier : function(){
+        //dummy funtion to be used for creating partient
+        // TODO: writen a  ramdom no for patient identufier but it should be a unique id
+        return Math.floor(Math.random() * 1000000000);
     }
+
 }
