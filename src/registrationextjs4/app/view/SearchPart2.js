@@ -82,8 +82,8 @@ Ext.define('Registration.view.SearchPart2', {
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Town'
-                        }],
-                        // this was needed to see the patient profile as we click on one of the patient
+                        }], 
+                        //was needed to see the patient profile as we click on one of the patient
                         listeners: {
                             cellClick: {
                                 fn: function () {
