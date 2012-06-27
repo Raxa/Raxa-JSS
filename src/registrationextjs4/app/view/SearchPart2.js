@@ -88,7 +88,7 @@ Ext.define('Registration.view.SearchPart2', {
                             cellClick: {
                                 fn: function () {
                                     var temp = this.getSelectionModel().getSelection()[0].getData()
-                                    localStorage.setItem('searchUuid', temp.uuid)
+                                    patientUuid = temp.uuid;
                                     Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)
                                     Ext.getCmp('sexSearchedPatient').setValue(temp.gender)

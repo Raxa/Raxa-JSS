@@ -16,13 +16,14 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.tsukaeru.net';
+    var HOST = 'http://raxajss.jelastic.servint.net';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 20000;
-var hospitalName = 'JSS Hospital'
+var hospitalName = 'JSS Hospital';
+var patientUuid;
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
@@ -210,6 +211,33 @@ var Util = {
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
+    },
+    
+    getAttributeFromREST : function(resource,queryParameter,display) {
+        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/'+resource+'?q='+queryParameter,  //'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
+                    if(JSON.parse(response.responseText).results[i].display == display){
+                        localStorage.setItem(queryParameter+"Uuid"+resource,JSON.parse(response.responseText).results[i].uuid)
+                    }
+                }
+                
+                
+            }
+        });
     }
-
 }
+
+if(localStorage.heightUuidconcept == undefined){ var heightUuidConcept = Util.getAttributeFromREST('concept','height','HEIGHT (CM)');}
+if(localStorage.weightUuidconcept == undefined){ var weightUuidConcept = Util.getAttributeFromREST('concept','weight','WEIGHT (KG)');}
+if(localStorage.bmiUuidconcept == undefined){ var bmiUuidConcept = Util.getAttributeFromREST('concept','bmi','BODY MASS INDEX');}
+if(localStorage.regfeeUuidconcept == undefined){ var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee','Registration Fee');}
+if(localStorage.basicUuidform == undefined){ var basicUuidform = Util.getAttributeFromREST('form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms');}
