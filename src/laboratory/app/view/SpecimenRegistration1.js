@@ -13,18 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows details of Lab order and allow user to set type of Report Delivery
+ *  This view shows list of lab orders for a patient 
  */
-Ext.define('Laboratory.view.ReportDelivery4', {
+Ext.define('Laboratory.view.SpecimenRegistration1', {
     extend: 'Ext.container.Container',
-    alias: 'widget.ReportDelivery4',
+    alias: 'widget.SpecimenRegistration1',
     autoScroll: true,
     activeItem: 0,
 
     layout: {
         type: 'absolute'
     },
-
     items: [{
         xtype: 'gridpanel',
         height: 400,
@@ -36,6 +35,9 @@ Ext.define('Laboratory.view.ReportDelivery4', {
             dataIndex: 'string',
             text: ''
         }],
+        viewConfig: {
+
+        },
         features: [{
             ftype: 'grouping'
         }]
@@ -83,56 +85,59 @@ Ext.define('Laboratory.view.ReportDelivery4', {
         x: 240,
         y: 130
     }, {
-        xtype: 'datefield',
-        width: 110,
-        fieldLabel: 'Set Delivery  Date',
-        labelAlign: 'top',
+        xtype: 'panel',
+        height: 150,
+        width: 450,
+        autoScroll: true,
+        title: '',
         x: 230,
-        y: 190
-    }, {
-        xtype: 'timefield',
-        width: 90,
-        fieldLabel: 'Time',
-        labelAlign: 'top',
-        x: 350,
-        y: 190
-    }, {
-        xtype: 'combobox',
-        width: 250,
-        fieldLabel: 'Types of Delivery',
-        labelWidth: 120,
-        name: 'types_of_delivery',
-        x: 450,
-        y: 210,
-        store: new Ext.data.SimpleStore({
-            fields: ['types_of_delivery'],
-            data: [
-                ['HLZ7 Electronic Delivery'],
-                ['Report given to Patient'],
-                ['Report given to Hospital'],
-                ['Report given to Hospital Staff'],
-                ['Given to Courier'],
-                ['Phone/Fax Delivery'],
-                ['Other']
-            ]
-        }),
-        displayField: 'types_of_delivery'
+        y: 170,
+        items: [{
+            xtype: 'gridpanel',
+            autoScroll: true,
+            title: 'Lab order',
+            columnLines: true,
+            columns: [{
+                xtype: 'gridcolumn',
+                dataIndex: 'string',
+                text: 'Specimen Type'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Specimen Role'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Client specimen Id'
+            }, {
+                xtype: 'datecolumn',
+                text: 'Lab Speciment Id'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Reject Reason'
+            }],
+            viewConfig: {
+
+            }
+        }]
     }, {
         xtype: 'button',
-        height: 20,
-        width: 70,
+        text: 'Reset',
+        x: 500,
+        y: 360
+    }, {
+        xtype: 'button',
         text: 'Save',
-        x: 600,
-        y: 300
+        x: 570,
+        y: 360
     }, {
         xtype: 'button',
-        width: 70,
         text: 'Print',
-        x: 600,
-        y: 140,
-        handler: function () {
-            var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_INVESTIGATION_TABLE.value);
-        }
+        x: 430,
+        y: 360
+    }, {
+        xtype: 'button',
+        text: 'Create',
+        x: 240,
+        y: 360
     }]
+
 });
