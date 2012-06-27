@@ -272,6 +272,7 @@ Ext.define('Registration.controller.Main', {
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
         localStorage.setItem('uuid',personUuid)
+        console.log(personUuid)
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
