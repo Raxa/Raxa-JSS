@@ -21,7 +21,7 @@ A large fraction of the Indian population is unable to read or write. The figure
 Usage
 -----
 
-This interface is being developed using [Sencha Touch 2][2]. Sencha Touch 2, a HTML5 mobile application framework.
+This interface is being developed using [Sencha Touch 2][2]. Sencha Touch 2, a HTML5/CSS3 mobile application framework.
 
 [1]: http://jssbilaspur.org/about/
 [2]: http://www.sencha.com/products/touch
