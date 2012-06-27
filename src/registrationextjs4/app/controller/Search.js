@@ -13,10 +13,12 @@ Ext.define('Registration.controller.Search', {
             },
             "searchpart2 button[action=modifySearch]": {
                 click: this.modifySearch
+            },
+            "searchconfirm button[action=bmipage]":{
+                click: this.gotoBMIpage
             }
         })
     },
-
     //function making the rest call to get the patient with given search quiry
     search: function () {
         if (Ext.getCmp('patientFirstNameSearch').isValid() || Ext.getCmp('PatientIdentifierSearch').isValid()) {
@@ -68,5 +70,23 @@ Ext.define('Registration.controller.Search', {
     modifySearch: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen
+    },
+    
+    gotoBMIpage: function() {
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/patient/'+localStorage.searchUuid,
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) { 
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                var string = JSON.parse(response.responseText).identifiers[0].display;
+                Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
+                var l = Ext.getCmp('mainRegArea').getLayout();
+                l.setActiveItem(REG_PAGES.REG_BMI.value); 
+            }
+        });
     }
-})
+});
