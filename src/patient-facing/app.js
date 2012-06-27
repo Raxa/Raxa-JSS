@@ -1,13 +1,11 @@
 Ext.application({
     name: 'Med-Table',
 
-    requires: [
-        'Ext.MessageBox'
-    ],
+    requires: ['Ext.MessageBox'],
 
-    views: ['Main','Schedule','CalendarDisplay','Menu','ExpandedMorning','Instructions','ExpandedAfternoon','ExpandedEvening','ExpandedNight'],
-    models:['Medicine','Instruction'],
-    stores:['MorningMedicines','AfternoonMedicines','EveningMedicines','NightMedicines','Instructions'],
+    views: ['Main', 'Schedule', 'CalendarDisplay', 'Menu', 'ExpandedMorning', 'Instructions', 'ExpandedAfternoon', 'ExpandedEvening', 'ExpandedNight'],
+    models: ['Medicine', 'Instruction'],
+    stores: ['MorningMedicines', 'AfternoonMedicines', 'EveningMedicines', 'NightMedicines', 'Instructions'],
     icon: {
         '57': 'resources/icons/Icon.png',
         '72': 'resources/icons/Icon~ipad.png',
@@ -26,7 +24,7 @@ Ext.application({
         '1496x2048': 'resources/startup/1496x2048.png'
     },
 
-    launch: function() {
+    launch: function () {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
@@ -34,15 +32,11 @@ Ext.application({
         Ext.Viewport.add(Ext.create('Med-Table.view.Main'));
     },
 
-    onUpdated: function() {
-        Ext.Msg.confirm(
-            "Application Update",
-            "This application has just successfully been updated to the latest version. Reload now?",
-            function(buttonId) {
-                if (buttonId === 'yes') {
-                    window.location.reload();
-                }
+    onUpdated: function () {
+        Ext.Msg.confirm("Application Update", "This application has just successfully been updated to the latest version. Reload now?", function (buttonId) {
+            if (buttonId === 'yes') {
+                window.location.reload();
             }
-        );
+        });
     }
 });
