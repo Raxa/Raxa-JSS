@@ -325,7 +325,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             margins: '0 0 0 6'
                         }]
-                    }, {
+                    }/*, {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
@@ -337,7 +337,59 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         width: 60,
                         text: 'Cancel',
                         action: 'cancel'
+                    }*/]
+                },{
+                    xtype: 'fieldset',
+                    padding: 10,
+                    title: 'New Registration',
+                    items:[{
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Registration Fees',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            xtype: 'numberfield',
+                            fieldLabel: 'Registration Fees Paid',
+                            id: 'registrationfeespaid',
+                            emptyText: 'Registration fees',
+                            defaultValue: 0,
+                            labelPad: 20,
+                            labelWidth: 70,
+                            labelAlign: 'right',
+                            anchor: '95%',
+                            margin: '0 10 0 0',
+                            hideTrigger: true,
+                            keyNavEnabled: false,
+                            mouseWheelEnabled: false,
+                            nanText: 'Invalid Input'
+                        }]  
                     }]
+                },{
+                    xtype: 'fieldset',
+                    padding: 10,
+                    border: false,
+                    items:[{
+                        xtype: 'button',
+                        margin: '10 50 0 270',
+                        width: 120,
+                        text: 'Submit and Confirm',
+                        action: 'submit'
+                    }, {
+                        xtype: 'button',
+                        margin: '10 0 0 0',
+                        width: 60,
+                        text: 'Cancel',
+                        action: 'cancel'
+                    }]  
+                    
                 }]
             }]
         };
