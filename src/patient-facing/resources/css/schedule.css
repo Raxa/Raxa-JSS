@@ -1,0 +1,29 @@
+/*Custom CSS for Schedule Screen*/
+
+.x-button.morningImageButton.x-button-normal
+{
+    background-image: url('../images/morning-01.png');
+    width: 250px;
+    height: 286px;
+}
+
+.x-button.afternoonImageButton.x-button-normal
+{
+    background-image: url('../images/day-01.png');
+    width: 250px;
+    height: 286px;
+}
+
+.x-button.eveningImageButton.x-button-normal
+{
+    background-image: url('../images/evening-01.png');
+    width: 250px;
+    height: 286px;
+}
+
+.x-button.nightImageButton.x-button-normal
+{
+    background-image: url('../images/night-01.png');
+    width: 250px;
+    height: 286px;
+}
