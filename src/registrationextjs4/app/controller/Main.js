@@ -1,4 +1,3 @@
-var choice, puuid ;
 Ext.define('Registration.controller.Main', {
     extend: 'Ext.app.Controller',
     id: 'main', 
@@ -44,12 +43,7 @@ Ext.define('Registration.controller.Main', {
                 click: this.searchPatient
             },
             'registrationbmi button[action=bmiSubmit]': {
-                click: fn=function(){
-                    if(choice == 1)
-                        this.sendEncounterData(patientUuid)
-                    else
-                        this.sendEncounterData(patientUuid)
-                }
+                click: this.sendEncounterData
             }
         })
     },
@@ -57,14 +51,13 @@ Ext.define('Registration.controller.Main', {
     registerPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
-        choice = 0;
-        console.log(Ext.getCmp('SearchPart2'))
     },
+    
+    
     
     searchPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
-        choice = 1;
     },
     /* next function checks whether the fields are valid(like some of them which are reuired should not be empty)
      and then 2nd screen of form is shown otherwise it gives an alert "fields invlaid" */
@@ -278,7 +271,7 @@ Ext.define('Registration.controller.Main', {
     /* this funtions makes a post call to creat the patient with three parameter which will sent as person, identifiertype 
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
-        patientUuid = personUuid;
+        localStorage.setItem('uuid',personUuid)
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
@@ -305,7 +298,7 @@ Ext.define('Registration.controller.Main', {
     // for now the function is called when the emergency button is pressed since the views were not completed
     
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
-    sendEncounterData: function(patientUuid){
+    sendEncounterData: function(){
         
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
         function ISODateString(d){
@@ -323,7 +316,7 @@ Ext.define('Registration.controller.Main', {
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel',{
             encounterDatetime : ISODateString(currentDate),
-            patient: patientUuid,//you will get the uuid from ticket 144...pass it here
+            patient: localStorage.uuid,//you will get the uuid from ticket 144...pass it here
             encounterType: localStorage.regUuidencountertype//need to pass the type depending on the type of encounter
         });
         // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
@@ -417,9 +410,5 @@ Ext.define('Registration.controller.Main', {
             this.reset();
         }, this)
         return store;
-    },
-    
-    setUuid: function(uuid){
-        puuid =  uuid;
     }
 });
