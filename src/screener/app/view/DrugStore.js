@@ -19,19 +19,7 @@ Ext.define("Screener.view.DrugStore", {
                 xtype: 'selectfield',
                 label: 'Drug',
                 name: 'drug',
-                options: [{
-                    text: 'Paracetamol',
-                    value: 'pa'
-                }, {
-                    text: 'Ciprofloxacin',
-                    value: 'ci'
-                }, {
-                    text: 'Celecoxib',
-                    value: 'ce'
-                }, {
-                    text: 'Fetch from database',
-                    value: 'db'
-                }]
+                store: Ext.create('Screener.store.druglist')
             }, {
                 xtype: 'selectfield',
                 label: 'Strength',
@@ -46,9 +34,6 @@ Ext.define("Screener.view.DrugStore", {
                 }, {
                     text: '800 mg',
                     value: '800'
-                }, {
-                    text: 'fetch from database',
-                    value: 'db'
                 }]
             }, {
                 xtype: 'selectfield',
@@ -57,25 +42,22 @@ Ext.define("Screener.view.DrugStore", {
                 name: 'quantity',
                 options: [{
                     text: '1',
-                    value: '1'
+                    value: 1
                 }, {
                     text: '2',
-                    value: '2'
+                    value: 2
                 }, {
                     text: '3',
-                    value: '3'
+                    value: 3
                 }, {
                     text: '4',
-                    value: '4'
+                    value: 4
                 }, {
                     text: '5',
-                    value: '5'
+                    value: 5
                 }, {
                     text: '10',
-                    value: '10'
-                }, {
-                    text: 'fetch from database',
-                    value: 'db'
+                    value: 10
                 }]
             }, {
                 xtype: 'selectfield',
@@ -93,9 +75,6 @@ Ext.define("Screener.view.DrugStore", {
                 }, {
                     text: 'as required',
                     value: 'req'
-                }, {
-                    text: 'fetch from database',
-                    value: 'db'
                 }]
             }, {
                 xtype: 'selectfield',
@@ -110,9 +89,6 @@ Ext.define("Screener.view.DrugStore", {
                 }, {
                     text: 'two months',
                     value: '2m'
-                }, {
-                    text: 'fetch from database',
-                    value: 'db'
                 }]
             }]
         }]

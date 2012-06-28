@@ -16,7 +16,7 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.tsukaeru.net';
+    var HOST = 'http://raxajss.jelastic.servint.net';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
