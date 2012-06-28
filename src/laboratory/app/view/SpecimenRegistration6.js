@@ -13,13 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view is first page (Basic Details) of adding new provider
+ *  This view allows to add new provider (basic page) 
  */
-Ext.define('Laboratory.view.SpecimenCollection8', {
+Ext.define('Laboratory.view.SpecimenRegistration6', {
     extend: 'Ext.container.Container',
-    alias: 'widget.SpecimenCollection8',
+    alias: 'widget.SpecimenRegistration6',
     autoScroll: true,
     activeItem: 0,
+
     layout: {
         type: 'absolute'
     },
@@ -57,7 +58,7 @@ Ext.define('Laboratory.view.SpecimenCollection8', {
         y: 90,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_ADD_PROVIDER_2.value);
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_ADD_PROVIDER_2.value);
         }
     }, {
         xtype: 'button',
@@ -69,4 +70,5 @@ Ext.define('Laboratory.view.SpecimenCollection8', {
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
         }
     }]
+
 });

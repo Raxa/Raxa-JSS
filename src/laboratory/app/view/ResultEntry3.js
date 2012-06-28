@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows search result on Lab Order
+ *  This view is first page of Report Delivery and contains the list of Lab Orders 
  */
-Ext.define('Laboratory.view.ReportDelivery3', {
+Ext.define('Laboratory.view.ResultEntry3', {
     extend: 'Ext.container.Container',
-    alias: 'widget.ReportDelivery3',
+    alias: 'widget.ResultEntry3',
     autoScroll: true,
     activeItem: 0,
 
@@ -27,44 +27,45 @@ Ext.define('Laboratory.view.ReportDelivery3', {
 
     items: [{
         xtype: 'gridpanel',
-        autoScroll: true,
-        title: 'Search Result Grid Panel',
+        title: 'Search Result',
         columns: [{
             xtype: 'gridcolumn',
             dataIndex: 'string',
-            text: 'Report Order Number'
+            text: 'SpecimenId'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Status'
+            text: 'Investigation'
         }, {
             xtype: 'datecolumn',
-            dataIndex: 'date',
             text: 'Date'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Provider Name'
+            text: 'Provider'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Id'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Name'
+            text: 'Patient'
         }],
+        viewConfig: {
+
+        }
     }, {
         xtype: 'button',
-        height: 20,
-        width: 70,
-        text: 'Check Entry',
-        x: 10,
-        y: 420,
+        text: 'Continue',
+        x: 250,
+        y: 170,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_TEST_DETAILS.value);
+            l.setActiveItem(LAB_PAGES.RESULT_ENTRY_INVESTIGATION_DETAILS.value);
         }
-    }, ]
+    }, {
+        xtype: 'button',
+        text: 'Cancel',
+        x: 140,
+        y: 170,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.RESULT_ENTRY_SPECIMEN_HOME.value);
+        }
+    }]
 
 });

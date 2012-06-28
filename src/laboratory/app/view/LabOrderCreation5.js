@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows result of search on Patient in tabular form
+ *  This view shows result of search on Provider in tabular form
  */
 Ext.define('Laboratory.view.LabOrderCreation5', {
     extend: 'Ext.container.Container',
@@ -28,7 +28,7 @@ Ext.define('Laboratory.view.LabOrderCreation5', {
     items: [{
         xtype: 'gridpanel',
         height: 200,
-        width: 700,
+
         title: 'Search Result for " "',
         columns: [{
             xtype: 'gridcolumn',
@@ -66,9 +66,9 @@ Ext.define('Laboratory.view.LabOrderCreation5', {
     }, {
         xtype: 'button',
         height: 20,
-        text: 'Add New Patient',
+        text: 'Add New Provider',
         x: 0,
-        y: 230
+        y: 230,
     }]
 
 });

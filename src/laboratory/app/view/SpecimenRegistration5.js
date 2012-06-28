@@ -13,58 +13,55 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows search result on Lab Order
+ *  This view shows result of search on provider
  */
-Ext.define('Laboratory.view.ReportDelivery3', {
+Ext.define('Laboratory.view.SpecimenRegistration5', {
     extend: 'Ext.container.Container',
-    alias: 'widget.ReportDelivery3',
+    alias: 'widget.SpecimenRegistration5',
     autoScroll: true,
     activeItem: 0,
 
     layout: {
         type: 'absolute'
     },
-
     items: [{
         xtype: 'gridpanel',
-        autoScroll: true,
-        title: 'Search Result Grid Panel',
+        title: 'Search Result',
         columns: [{
             xtype: 'gridcolumn',
             dataIndex: 'string',
-            text: 'Report Order Number'
+            text: 'First Name'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Status'
-        }, {
-            xtype: 'datecolumn',
-            dataIndex: 'date',
-            text: 'Date'
+            text: 'Last Name'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Provider Name'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Id'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Name'
+            text: 'Location'
         }],
+        viewConfig: {
+
+        }
     }, {
         xtype: 'button',
-        height: 20,
-        width: 70,
-        text: 'Check Entry',
-        x: 10,
-        y: 420,
+        text: 'Add new Provider',
+        x: 0,
+        y: 150,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_TEST_DETAILS.value);
-        }
-    }, ]
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_ADD_PROVIDER_1.value);
+
+        },
+    }, {
+        xtype: 'button',
+        text: 'Continue',
+        x: 100,
+        y: 150,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_DETAILS.value);
+
+        },
+
+    }]
 
 });

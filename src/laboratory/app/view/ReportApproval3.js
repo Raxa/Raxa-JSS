@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows search result on Lab Order
+ *  This view shows result of search on lab order, patient or provider
  */
-Ext.define('Laboratory.view.ReportDelivery3', {
+Ext.define('Laboratory.view.ReportApproval3', {
     extend: 'Ext.container.Container',
-    alias: 'widget.ReportDelivery3',
+    alias: 'widget.ReportApproval3',
     autoScroll: true,
     activeItem: 0,
 
@@ -26,45 +26,49 @@ Ext.define('Laboratory.view.ReportDelivery3', {
     },
 
     items: [{
+        xtype: 'button',
+        text: 'Continue',
+        x: 350,
+        y: 210,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_LAB_ORDER_SEARCH_RESULT.value);
+        }
+    }, {
+        xtype: 'button',
+        text: 'Back',
+        x: 190,
+        y: 210,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_PAGE.value);
+        }
+    }, {
         xtype: 'gridpanel',
-        autoScroll: true,
-        title: 'Search Result Grid Panel',
+        title: 'Search Result',
         columns: [{
             xtype: 'gridcolumn',
             dataIndex: 'string',
-            text: 'Report Order Number'
+            text: 'SpecimenId'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
             text: 'Status'
         }, {
             xtype: 'datecolumn',
-            dataIndex: 'date',
             text: 'Date'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
             text: 'Provider Name'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
             text: 'Patient Id'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Name'
+            text: 'Patient Id'
         }],
-    }, {
-        xtype: 'button',
-        height: 20,
-        width: 70,
-        text: 'Check Entry',
-        x: 10,
-        y: 420,
-        handler: function () {
-            var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_TEST_DETAILS.value);
+        viewConfig: {
+
         }
-    }, ]
+    }]
 
 });

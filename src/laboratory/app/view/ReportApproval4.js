@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows list of lab orders for a patient 
+ *  This view is allows all options to approve or reject a lab order 
  */
-Ext.define('Laboratory.view.LabOrderCreation10', {
+Ext.define('Laboratory.view.ReportApproval4', {
     extend: 'Ext.container.Container',
-    alias: 'widget.LabOrderCreation10',
+    alias: 'widget.ReportApproval4',
     autoScroll: true,
     activeItem: 0,
 
@@ -30,7 +30,7 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         height: 400,
         width: 210,
         autoScroll: true,
-        title: 'Lab Orders waiting results',
+        title: 'Today\'s Pending Approval',
         columns: [{
             xtype: 'gridcolumn',
             dataIndex: 'string',
@@ -46,7 +46,7 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         xtype: 'displayfield',
         fieldLabel: 'Lab Order No.',
         x: 230,
-        y: 0
+        y: -1
     }, {
         xtype: 'displayfield',
         fieldLabel: 'Patient',
@@ -95,22 +95,30 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         y: 170,
         items: [{
             xtype: 'gridpanel',
+            height: 205,
+            width: 501,
             autoScroll: true,
             title: 'Lab order',
             columnLines: true,
             columns: [{
                 xtype: 'gridcolumn',
                 dataIndex: 'string',
-                text: 'Lab Order Number'
+                text: 'Test'
             }, {
                 xtype: 'gridcolumn',
-                text: 'Investigation'
+                text: 'Result'
             }, {
                 xtype: 'gridcolumn',
-                text: 'Lab specimen Id'
+                text: 'Normal Range'
             }, {
                 xtype: 'datecolumn',
-                text: 'Speciment Collection Date'
+                text: 'Units'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Flags'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Status'
             }],
             viewConfig: {
 
@@ -118,22 +126,53 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         }]
     }, {
         xtype: 'button',
-        height: 20,
-        text: 'New Lab Order',
-        x: 530,
-        y: 340,
+        text: 'Save Only',
+        x: 570,
+        y: 360,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
-        }          
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
+        }
     }, {
         xtype: 'button',
         text: 'Cancel',
-        x: 300,
-        y: 340,
+        x: 240,
+        y: 360,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.HOME.value);
-        }   
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
+        }
+
+    }, {
+        xtype: 'button',
+        text: 'Reject',
+        x: 510,
+        y: 140,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
+        }
+
+    }, {
+        xtype: 'button',
+        text: 'Approve',
+        x: 430,
+        y: 140,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
+        }
+
+    }, {
+        xtype: 'button',
+        text: 'Clear All',
+        x: 590,
+        y: 140,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
+        }
+
     }]
+
 });

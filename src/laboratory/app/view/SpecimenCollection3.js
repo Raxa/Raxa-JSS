@@ -20,34 +20,45 @@ Ext.define('Laboratory.view.SpecimenCollection3', {
     alias: 'widget.SpecimenCollection3',
     autoScroll: true,
     activeItem: 0,
-
-    layout: {
-        type: 'absolute'
-    },
-
     items: [{
-        xtype: 'gridcolumn',
-        width: 128,
-        dataIndex: 'string',
-        text: 'Lab Order Number'
+        xtype: 'gridpanel',
+        autoScroll: true,
+        title: 'Lab order search result',
+        columns: [{
+            xtype: 'gridcolumn',
+            dataIndex: 'string',
+            text: 'Lab Order no.'
+        }, {
+            xtype: 'gridcolumn',
+            text: 'Investigation'
+        }, {
+            xtype: 'datecolumn',
+            text: 'Lab Order Creation Table'
+        }, {
+            xtype: 'gridcolumn',
+            text: 'Provider\'s First'
+        }, {
+            xtype: 'gridcolumn',
+            text: 'Provider\'s Last'
+        }, {
+            xtype: 'gridcolumn',
+            text: 'Patient \'s First'
+        }, {
+            xtype: 'gridcolumn',
+            text: 'Patient Last'
+        }],
+        viewConfig: {
+
+        }
     }, {
-        xtype: 'gridcolumn',
-        text: 'Investigation'
-    }, {
-        xtype: 'datecolumn',
-        text: 'MyDateColumn1'
-    }, {
-        xtype: 'gridcolumn',
-        text: 'Provider First'
-    }, {
-        xtype: 'gridcolumn',
-        text: 'Provider Last'
-    }, {
-        xtype: 'gridcolumn',
-        text: 'Patient First'
-    }, {
-        xtype: 'gridcolumn',
-        text: 'Provider Last'
+        xtype: 'button',
+        height: 20,
+        width: 70,
+        text: 'Continue',
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SPECIMEN_COLLECTION_CRITERIA.value);
+        }
     }]
 
 });

@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view displays various search options to search on lab orders & patient
+ *  This view provides option to search on lab order, patient & provider
  */
-Ext.define('Laboratory.view.LabOrderCreation2', {
+Ext.define('Laboratory.view.ReportApproval2', {
     extend: 'Ext.container.Container',
-    alias: 'widget.LabOrderCreation2',
+    alias: 'widget.ReportApproval2',
     autoScroll: true,
     activeItem: 0,
 
@@ -34,7 +34,7 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         xtype: 'textfield',
         width: 240,
         fieldLabel: '',
-        emptyText: 'Enter the Lab order no.',
+        emptyText: 'Enter the specimen no.',
         x: 10,
         y: 110
     }, {
@@ -80,9 +80,8 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         y: 110,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
-        }        
-        
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_LAB_ORDER_SEARCH_RESULT.value);
+        }
     }, {
         xtype: 'button',
         height: 20,
@@ -92,9 +91,8 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         y: 190,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
-        }        
-        
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_LAB_ORDER_SEARCH_RESULT.value);
+        }
     }, {
         xtype: 'button',
         height: 20,
@@ -104,8 +102,8 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         y: 420,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
-        }                
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_LAB_ORDER_SEARCH_RESULT.value);
+        }
     }, {
         xtype: 'datefield',
         width: 130,
@@ -150,5 +148,6 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         x: 100,
         y: 220
     }]
+
 
 });
