@@ -20,20 +20,20 @@ Ext.define('Med-Table.view.Schedule', {
                 xtype: 'audio',
                 id: 'audio5',
                 hidden: true,
-                url: 'resources/Audio/MedicineSchedule.mp3'
+                url: '../resources/Audio/MedicineSchedule.mp3'
             },
 
             {
                 xtype: 'button',
                 disabled: 'true',
-                text: '<img src="resources/images/sched_clicked.png">',
+                text: '<img src="../resources/images/sched_clicked.png">',
                 handler: function () {
                     Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.CalendarDisplay'))
                 },
                 padding: '5px'
             }, {
                 xtype: 'button',
-                text: '<img src="resources/images/instructions-small.png">',
+                text: '<img src="../resources/images/instructions-small.png">',
                 handler: function () {
                     audio.stop();
                     Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Instructions'))
@@ -41,7 +41,7 @@ Ext.define('Med-Table.view.Schedule', {
                 padding: '5px'
             }, {
                 xtype: 'button',
-                text: '<img src="resources/images/appoint-small.png">',
+                text: '<img src="../resources/images/appoint-small.png">',
                 handler: function () {
                     audio.stop();
                     Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Appointment'))
@@ -51,7 +51,7 @@ Ext.define('Med-Table.view.Schedule', {
                 xtype: 'spacer'
             }, {
                 xtype: 'button',
-                text: '<img src="resources/images/home-small.png">',
+                text: '<img src="../resources/images/home-small.png">',
                 handler: function () {
                     audio.stop();
                     Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Main'))
@@ -93,7 +93,7 @@ Ext.define('Med-Table.view.Schedule', {
                         xtype: "spacer"
                     }, {
                         xtype: 'button',
-                        text: '<img src="resources/images/morning-01.png">',
+                        text: '<img src="../resources/images/morning-01.png">',
                         padding: '0px',
                         //cls: 'morningImageButton',
                         handler: function () {
@@ -135,7 +135,7 @@ Ext.define('Med-Table.view.Schedule', {
                         xtype: "spacer"
                     }, {
                         xtype: 'button',
-                        text: '<img src="resources/images/day-01.png">',
+                        text: '<img src="../resources/images/day-01.png">',
                         padding: '0px',
 
                         //padding:'5px',
@@ -179,7 +179,7 @@ Ext.define('Med-Table.view.Schedule', {
                         xtype: "spacer"
                     }, {
                         xtype: 'button',
-                        text: '<img src="resources/images/evening-01.png">',
+                        text: '<img src="../resources/images/evening-01.png">',
                         padding: '0px',
 
                         //padding:'5px',
@@ -223,7 +223,7 @@ Ext.define('Med-Table.view.Schedule', {
                         xtype: "spacer"
                     }, {
                         xtype: 'button',
-                        text: '<img src="resources/images/night-01.png">',
+                        text: '<img src="../resources/images/night-01.png">',
                         padding: '0px',
 
                         //padding:'5px',

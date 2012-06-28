@@ -17,10 +17,10 @@ Ext.define('Med-Table.view.Main', {
             xtype: 'audio',
             id: 'audio1',
             hidden: true,
-            url: 'resources/Audio/Welcome.mp3'
+            url: '../resources/Audio/Welcome.mp3'
         }, {
             xtype: 'image',
-            src: 'resources/images/regcard.png',
+            src: '../resources/images/regcard.png',
             flex: 1,
             //height: 398,
             //width: 348,
@@ -132,7 +132,7 @@ Ext.define('Med-Table.view.Main', {
                 flex: 1,
                 items: [{
                     xtype: 'button',
-                    text: '<img src="resources/images/backspace1.png" height="60">',
+                    text: '<img src="../resources/images/backspace1.png" height="60">',
                     handler: function () {
                         var inp = Ext.getCmp('regno').getValue();
                         inp = inp.slice(0, -1);
@@ -150,7 +150,7 @@ Ext.define('Med-Table.view.Main', {
                     flex: 1
                 }, {
                     xtype: 'button',
-                    text: '<img src="resources/images/enter reg no.png" height="100px" width="100px">',
+                    text: '<img src="../resources/images/enter reg no.png" height="100px" width="100px">',
                     ui: 'confirm',
                     handler: function () {
                         if (!this.overlay) {
@@ -180,7 +180,7 @@ Ext.define('Med-Table.view.Main', {
                                     height: '60px'
                                 }, {
                                     xtype: 'image',
-                                    src: 'resources/images/boy.jpg',
+                                    src: '../resources/images/boy.jpg',
                                     height: '200px',
                                     margin: '10 0 10 125'
                                 }, {
@@ -191,7 +191,7 @@ Ext.define('Med-Table.view.Main', {
                                     height: '100px',
                                     items: [{
                                         xtype: 'button',
-                                        text: '<img src="resources/images/tick-01.png">',
+                                        text: '<img src="../resources/images/tick-01.png">',
                                         handler: function () {
                                             Ext.getCmp('confirmpanel').destroy(), audio.stop();
                                             Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Menu'))
@@ -200,7 +200,7 @@ Ext.define('Med-Table.view.Main', {
                                         left: '50px'
                                     }, {
                                         xtype: 'button',
-                                        text: '<img src="resources/images/cross-01.png">',
+                                        text: '<img src="../resources/images/cross-01.png">',
                                         handler: function (hideOnMaskTap) {
                                             //Ext.getCmp('confirmpanel').hide(),
                                             Ext.getCmp('confirmpanel').destroy(), audio.stop();

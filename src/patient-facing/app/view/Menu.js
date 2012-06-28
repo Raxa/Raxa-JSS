@@ -18,7 +18,7 @@ Ext.define('Med-Table.view.Menu', {
                 items: [
                     {
                         xtype: 'button',
-                        text : '<img src="resources/images/home-small.png">',
+                        text : '<img src="../resources/images/home-small.png">',
                         handler: function()
                         {
                             Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Home'))
@@ -30,7 +30,7 @@ Ext.define('Med-Table.view.Menu', {
                     },
                     {
                         xtype: 'button',
-                        text : '<img src="resources/images/reminder-small.png">',
+                        text : '<img src="../resources/images/reminder-small.png">',
                         handler: function()
                         {
                             Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Schedule'))
@@ -39,7 +39,7 @@ Ext.define('Med-Table.view.Menu', {
                     },
                     {
                         xtype: 'button',
-                        text : '<img src="resources/images/instructions-small.png">',
+                        text : '<img src="../resources/images/instructions-small.png">',
                         handler: function()
                         {
                             Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Instructions'))
@@ -48,7 +48,7 @@ Ext.define('Med-Table.view.Menu', {
                     },
                     {
                         xtype: 'button',
-                        text : '<img src="resources/images/appoint-small.png">',
+                        text : '<img src="../resources/images/appoint-small.png">',
                         handler: function()
                         {
                             Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Menu'))
@@ -65,7 +65,7 @@ Ext.define('Med-Table.view.Menu', {
             items: [{
                 xtype: 'button',
                 //cls: 'instructionImageButton',
-                text: '<img src="resources/images/medicine reminder_without drop shadow.png">',
+                text: '<img src="../resources/images/medicine reminder_without drop shadow.png">',
                 handler: function () {
                     audio.stop();
                     Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Schedule'))
@@ -77,12 +77,12 @@ Ext.define('Med-Table.view.Menu', {
                 xtype: 'audio',
                 id: 'audio2',
                 hidden: true,
-                url: 'resources/Audio/Menu.mp3'
+                url: '../resources/Audio/Menu.mp3'
             },
 
             {
                 xtype: 'button',
-                text: '<img src="resources/images/instructions-01.png">',
+                text: '<img src="../resources/images/instructions-01.png">',
                 handler: function () {
                     audio.stop();
                     Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Instructions'))
@@ -93,7 +93,7 @@ Ext.define('Med-Table.view.Menu', {
                 top: '50px'
             }, {
                 xtype: 'button',
-                text: '<img src="resources/images/next appointment-01.png">',
+                text: '<img src="../resources/images/next appointment-01.png">',
                 handler: function () {
                     audio.stop();
                     Ext.Viewport.setActiveItem(Ext.create('Med-Table.view.Appointment'))

@@ -4,11 +4,11 @@ Ext.define('Med-Table.store.EveningMedicines', {
         model: 'Med-Table.model.Medicine',
         data: [{
             name: 'tab5',
-            icon: 'resources/images/t5.gif',
+            icon: '../resources/images/t5.gif',
             dose: '1/2 Tablet'
         }, {
             name: 'tab6',
-            icon: 'resources/images/t6.gif',
+            icon: '../resources/images/t6.gif',
             dose: '1/2 Tablet'
         }]
     }
