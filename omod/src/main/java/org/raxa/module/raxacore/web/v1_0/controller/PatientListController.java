@@ -57,17 +57,27 @@ public class PatientListController extends BaseRestController {
 	
 	private static final String[] REF = { "uuid", "name", "description" };
 	
+	//<editor-fold defaultstate="collapsed" desc="getResourceVersion">
+	/**
+	 * Returns the Resource Version
+	 */
+	private String getResourceVersion() {
+		return "1.0";
+	}
+	
+	//</editor-fold>
+	
 	//<editor-fold defaultstate="collapsed" desc="POST - Without Params">
-        /**
-         * Create new patient list by POST'ing atleast name and description property
-         * in the request body.
-         * 
-         * @param post the body of the POST request
-         * @param request
-         * @param response
-         * @return 201 response status and PatientList object
-         * @throws ResponseException 
-         */
+	/**
+	 * Create new patient list by POST'ing atleast name and description property
+	 * in the request body.
+	 * 
+	 * @param post the body of the POST request
+	 * @param request
+	 * @param response
+	 * @return 201 response status and PatientList object
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@WSDoc("Save New PatientList")
 	@ResponseBody
@@ -86,20 +96,21 @@ public class PatientListController extends BaseRestController {
 		obj.add("description", created.getDescription());
 		return RestUtil.created(response, obj);
 	}
+	
 	//</editor-fold>
 	
 	//<editor-fold defaultstate="collapsed" desc="POST - Update List">
-        /**
-         * Updates the Patient List by making a POST call with uuid in URL
-         * and 
-         * 
-         * @param uuid the uuid for the patient list resource
-         * @param post
-         * @param request
-         * @param response
-         * @return 200 response status
-         * @throws ResponseException 
-         */
+	/**
+	 * Updates the Patient List by making a POST call with uuid in URL
+	 * and 
+	 * 
+	 * @param uuid the uuid for the patient list resource
+	 * @param post
+	 * @param request
+	 * @param response
+	 * @return 200 response status
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(value = "/{uuid}", method = RequestMethod.POST)
 	@WSDoc("Updates an existing patient list")
 	@ResponseBody
@@ -118,17 +129,18 @@ public class PatientListController extends BaseRestController {
 		obj.add("description", created.getDescription());
 		return RestUtil.noContent(response);
 	}
+	
 	//</editor-fold>
 	
 	//<editor-fold defaultstate="collapsed" desc="GET all">
-        /**
-         * Get all the unretired patient lists (as REF representation) in the system
-         * 
-         * @param request
-         * @param response
-         * @return
-         * @throws ResponseException 
-         */
+	/**
+	 * Get all the unretired patient lists (as REF representation) in the system
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	@WSDoc("Get All Unretired Patient Lists in the system")
 	@ResponseBody()
@@ -148,14 +160,14 @@ public class PatientListController extends BaseRestController {
 	//</editor-fold>
 	
 	//<editor-fold defaultstate="collapsed" desc="GET - Search by name">
-        /**
-         * Search PatientList by Name and get the resource as REF representation
-         * 
-         * @param query the string to search name of patientlist
-         * @param request
-         * @return
-         * @throws ResponseException 
-         */
+	/**
+	 * Search PatientList by Name and get the resource as REF representation
+	 * 
+	 * @param query the string to search name of patientlist
+	 * @param request
+	 * @return
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(method = RequestMethod.GET, params = "q")
 	@WSDoc("Gets Patient Lists by name")
 	@ResponseBody()
@@ -176,16 +188,16 @@ public class PatientListController extends BaseRestController {
 	//</editor-fold>
 	
 	//<editor-fold defaultstate="collapsed" desc="GET by uuid - DEFAULT REP">
-        /**
-         * Get the Patientlist along with patients, encounters and obs (DEFAULT rep).
-         * Contains all encounters of the searched encounterType between the startDate
-         * and endDate
-         * 
-         * @param uuid
-         * @param request
-         * @return
-         * @throws ResponseException 
-         */
+	/**
+	 * Get the Patientlist along with patients, encounters and obs (DEFAULT rep).
+	 * Contains all encounters of the searched encounterType between the startDate
+	 * and endDate
+	 * 
+	 * @param uuid
+	 * @param request
+	 * @return
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
 	@WSDoc("Gets Patient Lists for the uuid path")
 	@ResponseBody()
@@ -238,18 +250,18 @@ public class PatientListController extends BaseRestController {
 	//</editor-fold>
 	
 	//<editor-fold defaultstate="collapsed" desc="GET by uuid - FULL REP">
-        /**
-         * Get the patient list as FULL representation that shows patients, encounters and obs.
-         * Contains all encounters of the searched encounterType between the startDate
-         * and endDate. Contains patientList.searchQuery, encounter.provider and obs.comment
-         * and obs.order compared to DEFAULT rep
-         * 
-         * @param uuid
-         * @param rep
-         * @param request
-         * @return
-         * @throws ResponseException 
-         */
+	/**
+	 * Get the patient list as FULL representation that shows patients, encounters and obs.
+	 * Contains all encounters of the searched encounterType between the startDate
+	 * and endDate. Contains patientList.searchQuery, encounter.provider and obs.comment
+	 * and obs.order compared to DEFAULT rep
+	 * 
+	 * @param uuid
+	 * @param rep
+	 * @param request
+	 * @return
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(value = "/{uuid}", method = RequestMethod.GET, params = "v")
 	@WSDoc("Gets Full representation of Patient Lists for the uuid path")
 	@ResponseBody()
@@ -324,22 +336,23 @@ public class PatientListController extends BaseRestController {
 			}
 			obj.add("auditInfo", auditInfo);
 		}
+		obj.add("resourceVersion", getResourceVersion());
 		return gson.toJson(obj);
 	}
 	
 	//</editor-fold>
 	
 	//<editor-fold defaultstate="collapsed" desc="GET - RETURN PATIENTS">
-        /**
-         * This is the on-the-fly generated patient list, by passing the searchQuery
-         * as part of the resource URL as params. encounterType is required param.
-         * Gives the FULL rep for the Patient list resource.
-         * 
-         * @param params
-         * @param request
-         * @return
-         * @throws ResponseException 
-         */
+	/**
+	 * This is the on-the-fly generated patient list, by passing the searchQuery
+	 * as part of the resource URL as params. encounterType is required param.
+	 * Gives the FULL rep for the Patient list resource.
+	 * 
+	 * @param params
+	 * @param request
+	 * @return
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(method = RequestMethod.GET, params = "encounterType")
 	@WSDoc("Gets Patients Without Saving the Patient list")
 	@ResponseBody()
@@ -399,22 +412,23 @@ public class PatientListController extends BaseRestController {
 			patients.add(patient);
 		}
 		obj.add("patients", patients);
+		obj.add("resourceVersion", getResourceVersion());
 		return gson.toJson(obj);
 	}
 	
 	//</editor-fold>
 	
 	//<editor-fold defaultstate="collapsed" desc="DELETE - Retire PatientList">
-        /**
-         * Retires the patient list resource by making a DELETE call with the '!purge' param
-         * 
-         * @param uuid
-         * @param reason
-         * @param request
-         * @param response
-         * @return
-         * @throws ResponseException 
-         */
+	/**
+	 * Retires the patient list resource by making a DELETE call with the '!purge' param
+	 * 
+	 * @param uuid
+	 * @param reason
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ResponseException 
+	 */
 	@RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE, params = "!purge")
 	@WSDoc("Retires the Patient List")
 	@ResponseBody
@@ -436,9 +450,9 @@ public class PatientListController extends BaseRestController {
 	
 	//<editor-fold defaultstate="collapsed" desc="DELETE - Purge PatientList">
 	/**
-         * Purges (Complete Delete) the patient list resource by making a DELETE
-         * call and passing the 'purge' param
-         * 
+	 * Purges (Complete Delete) the patient list resource by making a DELETE
+	 * call and passing the 'purge' param
+	 * 
 	 * @param uuid
 	 * @param request
 	 * @param response
