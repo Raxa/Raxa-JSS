@@ -123,7 +123,11 @@ Ext.define('Laboratory.view.LabOrderCreation11', {
         xtype: 'button',
         text: 'Save',
         x: 570,
-        y: 360
+        y: 360,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        }        
     }, {
         xtype: 'button',
         text: 'Print',
@@ -131,9 +135,13 @@ Ext.define('Laboratory.view.LabOrderCreation11', {
         y: 360
     }, {
         xtype: 'button',
-        text: 'Create',
+        text: 'Cancel',
         x: 240,
-        y: 360
+        y: 360,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        }        
     }]
 
 });

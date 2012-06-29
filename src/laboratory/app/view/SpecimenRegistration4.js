@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view is home page of Specimen Registration 
+ *  This view allows search on provider (through tree panel on location) 
  */
-Ext.define('Laboratory.view.SpecimenRegistration1', {
+Ext.define('Laboratory.view.SpecimenRegistration4', {
     extend: 'Ext.container.Container',
-    alias: 'widget.SpecimenRegistration1',
+    alias: 'widget.SpecimenRegistration4',
     autoScroll: true,
     activeItem: 0,
 
@@ -63,11 +63,14 @@ Ext.define('Laboratory.view.SpecimenRegistration1', {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_FILTER_LOCATION.value);
         }
+
+
     }, {
         xtype: 'button',
         text: 'Find Provider',
         x: 280,
         y: 90,
+
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_PROVIDER.value);
@@ -83,18 +86,16 @@ Ext.define('Laboratory.view.SpecimenRegistration1', {
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_LAB_ORDER.value);
         }
 
+
     }, {
         xtype: 'button',
         text: 'Continue',
         x: 440,
         y: 160,
-
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_DETAILS.value);
-
-        },
-
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PROVIDER_SEARCH_RESULT.value);
+        }
 
     }, {
         xtype: 'button',
@@ -107,23 +108,57 @@ Ext.define('Laboratory.view.SpecimenRegistration1', {
         }
 
     }, {
-        xtype: 'gridpanel',
-        height: 420,
-        width: 200,
-        title: 'Lab Orders awaiting Specimen',
-        columns: [{
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'String'
-        }],
-        viewConfig: {
-
-        }
-    }, {
         xtype: 'button',
         text: 'Add Anonymous Patient',
         x: 280,
         y: 60
+    }, {
+        xtype: 'container',
+        height: 430,
+        width: 210,
+        layout: {
+            type: 'absolute'
+        },
+        items: [{
+            xtype: 'textfield',
+            width: 180,
+            fieldLabel: '',
+            blankText: '',
+            emptyText: 'Enter Provider Name',
+            x: 10,
+            y: 50
+        }, {
+            xtype: 'displayfield',
+            value: 'Search Provider Name',
+            fieldLabel: '',
+            x: 10,
+            y: 10
+        }, {
+            xtype: 'button',
+            text: 'Find',
+            x: 160,
+            y: 80,
+            handler: function () {
+                var l = Ext.getCmp('mainLabArea').getLayout();
+                l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PROVIDER_SEARCH_RESULT.value);
+            }
+        }, {
+            xtype: 'treepanel',
+            height: 320,
+            width: 210,
+            title: 'Location',
+            x: -3,
+            y: 110,
+            viewConfig: {
+
+            },
+            columns: [{
+                xtype: 'treecolumn',
+                dataIndex: 'text',
+                flex: 1,
+                text: 'Nodes'
+            }]
+        }]
     }]
 
 });

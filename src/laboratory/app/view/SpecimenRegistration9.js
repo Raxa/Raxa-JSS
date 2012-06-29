@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view is home page of Specimen Registration 
+ *  This view allows to filter location
  */
-Ext.define('Laboratory.view.SpecimenRegistration1', {
+Ext.define('Laboratory.view.SpecimenRegistration9', {
     extend: 'Ext.container.Container',
-    alias: 'widget.SpecimenRegistration1',
+    alias: 'widget.SpecimenRegistration9',
     autoScroll: true,
     activeItem: 0,
 
@@ -72,7 +72,6 @@ Ext.define('Laboratory.view.SpecimenRegistration1', {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_PROVIDER.value);
         }
-
     }, {
         xtype: 'button',
         text: 'Find Patient',
@@ -82,20 +81,15 @@ Ext.define('Laboratory.view.SpecimenRegistration1', {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_LAB_ORDER.value);
         }
-
     }, {
         xtype: 'button',
         text: 'Continue',
         x: 440,
         y: 160,
-
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_DETAILS.value);
-
-        },
-
-
+        }
     }, {
         xtype: 'button',
         text: 'Cancel',
@@ -105,25 +99,54 @@ Ext.define('Laboratory.view.SpecimenRegistration1', {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
         }
-
-    }, {
-        xtype: 'gridpanel',
-        height: 420,
-        width: 200,
-        title: 'Lab Orders awaiting Specimen',
-        columns: [{
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'String'
-        }],
-        viewConfig: {
-
-        }
     }, {
         xtype: 'button',
         text: 'Add Anonymous Patient',
         x: 280,
         y: 60
+    }, {
+        xtype: 'container',
+        height: 430,
+        width: 210,
+        layout: {
+            type: 'absolute'
+        },
+        items: [{
+            xtype: 'textfield',
+            width: 180,
+            fieldLabel: '',
+            blankText: '',
+            emptyText: 'Enter Location order to search',
+            x: 10,
+            y: 50
+        }, {
+            xtype: 'displayfield',
+            value: 'Search on Location',
+            fieldLabel: '',
+            x: 10,
+            y: 10
+        }, {
+            xtype: 'button',
+            text: 'Find',
+            x: 160,
+            y: 80
+        }, {
+            xtype: 'treepanel',
+            height: 320,
+            width: 210,
+            title: 'Location',
+            x: -3,
+            y: 110,
+            viewConfig: {
+
+            },
+            columns: [{
+                xtype: 'treecolumn',
+                dataIndex: 'text',
+                flex: 1,
+                text: 'Nodes'
+            }]
+        }]
     }]
 
 });

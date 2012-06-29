@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view is second page of adding new provider.
+ *  This view allows to add new provider (2nd page) 
  */
-Ext.define('Laboratory.view.LabOrderCreation8', {
+Ext.define('Laboratory.view.SpecimenRegistration7', {
     extend: 'Ext.container.Container',
-    alias: 'widget.LabOrderCreation8',
+    alias: 'widget.SpecimenRegistration7',
     autoScroll: true,
     activeItem: 0,
 
@@ -55,10 +55,9 @@ Ext.define('Laboratory.view.LabOrderCreation8', {
 
     }, {
         xtype: 'button',
-        margin: '10 50 0 270',
         width: 60,
         text: 'Cancel',
-        x: 80,
+        x: 200,
         y: 50,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
@@ -67,14 +66,14 @@ Ext.define('Laboratory.view.LabOrderCreation8', {
 
     }, {
         xtype: 'button',
-        margin: '10 0 0 0',
         width: 60,
-        x: 100,
+        x: 400,
         y: 50,
         text: 'Save',
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.LAB_ORDER_ADD_PROVIDER_3.value);
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_ADD_PROVIDER_3.value);
         }
     }]
+
 });

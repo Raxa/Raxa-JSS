@@ -20,7 +20,6 @@ Ext.define('Laboratory.view.SpecimenCollection9', {
     alias: 'widget.SpecimenCollection9',
     autoScroll: true,
     activeItem: 0,
-
     layout: {
         type: 'absolute'
     },
@@ -43,7 +42,7 @@ Ext.define('Laboratory.view.SpecimenCollection9', {
             label: 'Provider Type',
             layout: 'hbox',
             store: new Ext.data.SimpleStore({
-                fields: ['education'],
+                fields: ['provider_type'],
                 data: [
                     ['Surgeon'],
                     ['CHW'],
@@ -55,13 +54,24 @@ Ext.define('Laboratory.view.SpecimenCollection9', {
 
     }, {
         xtype: 'button',
-        margin: '10 50 0 270',
         width: 60,
         text: 'Cancel',
+        x: 200,
+        y: 50,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        }
+
     }, {
         xtype: 'button',
-        margin: '10 0 0 0',
         width: 60,
-        text: 'Save'
-}]
-    });
+        x: 400,
+        y: 50,
+        text: 'Save',
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_ADD_PROVIDER_3.value);
+        }
+    }]
+});

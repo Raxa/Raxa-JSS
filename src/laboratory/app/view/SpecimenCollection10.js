@@ -20,11 +20,6 @@ Ext.define('Laboratory.view.SpecimenCollection10', {
     alias: 'widget.SpecimenCollection10',
     autoScroll: true,
     activeItem: 0,
-
-    layout: {
-        type: 'absolute'
-    },
-
     items: [{
         xtype: 'textfield',
         fieldLabel: 'Block/House/Door No.',
@@ -59,10 +54,18 @@ Ext.define('Laboratory.view.SpecimenCollection10', {
         labelWidth: 210
     }, {
         xtype: 'button',
-        text: 'Cancel'
+        text: 'Cancel',
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        }
     }, {
         xtype: 'button',
-        text: 'Done'
+        text: 'Done',
+        margin: '10 10 10 10',
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
+        }
     }]
-
 });

@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows search result on Lab Order
+ *  This view is first page of Result Entry and contains the list of awaiting investigations 
  */
-Ext.define('Laboratory.view.ReportDelivery3', {
+Ext.define('Laboratory.view.ResultEntry1', {
     extend: 'Ext.container.Container',
-    alias: 'widget.ReportDelivery3',
+    alias: 'widget.ResultEntry1',
     autoScroll: true,
     activeItem: 0,
 
@@ -27,44 +27,28 @@ Ext.define('Laboratory.view.ReportDelivery3', {
 
     items: [{
         xtype: 'gridpanel',
-        autoScroll: true,
-        title: 'Search Result Grid Panel',
+        height: 358,
+        width: 193,
+        title: 'Investigations Awaiting',
         columns: [{
             xtype: 'gridcolumn',
             dataIndex: 'string',
-            text: 'Report Order Number'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Status'
-        }, {
-            xtype: 'datecolumn',
-            dataIndex: 'date',
-            text: 'Date'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Provider Name'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Id'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Name'
+            text: 'String'
         }],
+        viewConfig: {
+
+        }
     }, {
         xtype: 'button',
-        height: 20,
-        width: 70,
-        text: 'Check Entry',
-        x: 10,
-        y: 420,
+        text: 'Search Specimen',
+        x: 200,
+        y: 350,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_TEST_DETAILS.value);
+            l.setActiveItem(LAB_PAGES.RESULT_ENTRY_SEARCH_SPECIMEN.value);
         }
-    }, ]
+
+    }]
+
 
 });
