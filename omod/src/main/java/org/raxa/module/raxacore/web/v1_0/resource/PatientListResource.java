@@ -40,11 +40,11 @@ import org.raxa.module.raxacore.PatientListService;
 @Handler(supports = PatientList.class, order = 0)
 public class PatientListResource extends MetadataDelegatingCrudResource<PatientList> {
 	
-    /**
-     * Getter for the patients property on patient list resource
-     * @param patientList
-     * @return 
-     */
+	/**
+	 * Getter for the patients property on patient list resource
+	 * @param patientList
+	 * @return 
+	 */
 	@PropertyGetter("patients")
 	public List<Patient> getPatients(PatientList patientList) {
 		return getPatientListService().getPatientsInPatientList(patientList);
@@ -114,75 +114,70 @@ public class PatientListResource extends MetadataDelegatingCrudResource<PatientL
 		return description;
 	}
 	
-        /**
-         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getByUniqueId()
-         */
+	/**
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getByUniqueId()
+	 */
 	@Override
 	public PatientList getByUniqueId(String uuid) {
 		return getPatientListService().getPatientListByUuid(uuid);
 	}
 	
-        /**
-         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#purge()
-         */
+	/**
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#purge()
+	 */
 	@Override
 	public void purge(PatientList t, RequestContext rc) throws ResponseException {
 		getPatientListService().deletePatientList(t);
 	}
 	
-        /**
-         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#newDelegate() 
-         */
+	/**
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#newDelegate() 
+	 */
 	@Override
 	public PatientList newDelegate() {
 		return new PatientList();
 	}
 	
-        /*
-         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#save()
-         */
+	/*
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#save()
+	 */
 	@Override
 	public PatientList save(PatientList patientList) {
 		return getPatientListService().savePatientList(patientList);
 	}
 	
-        /**
-         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#doGetAll()
-         * @param context
-         * @return
-         * @throws ResponseException 
-         */
+	/**
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#doGetAll()
+	 * @param context
+	 * @return
+	 * @throws ResponseException 
+	 */
 	@Override
 	protected NeedsPaging<PatientList> doGetAll(RequestContext context) throws ResponseException {
 		return new NeedsPaging<PatientList>(getPatientListService().getAllPatientList(false), context);
 	}
 	
-        /**
-         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#doSearch()
-         * @param query
-         * @param context
-         * @return 
-         */
+	/**
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#doSearch()
+	 * @param query
+	 * @param context
+	 * @return 
+	 */
 	@Override
 	protected NeedsPaging<PatientList> doSearch(String query, RequestContext context) {
 		return new NeedsPaging<PatientList>(getPatientListService().getPatientListByName(query), context);
 	}
 	
-        /**
-         * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getDisplayString()
-         * @param delegate
-         * @return 
-         */
+	/**
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getDisplayString()
+	 * @param delegate
+	 * @return 
+	 */
 	@Override
 	public String getDisplayString(PatientList delegate) {
 		if (delegate.getName() == null) {
 			return "";
 		}
 		return delegate.getName() + " - " + delegate.getDescription();
-	}
-	
-	@Override
-	public String getResourceVersion() {
-		return "1.0";
 	}
 }
