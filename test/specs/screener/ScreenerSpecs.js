@@ -200,7 +200,7 @@ describe("DoctorList", function () {
     });
   
     it("reading from Doctors store & comparing with REST result", function () {
-        expect(store.getCount()).toBeGreaterThan(-1);
+        expect(store.getCount()).toBeGreaterThan(0);
         expect(store.getData().getAt(0).getData().uuid).not.toEqual(null);
     });
     
