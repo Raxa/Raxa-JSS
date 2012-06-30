@@ -16,12 +16,10 @@ Ext.define('RaxaEmr.Pharmacy.view.addFacility', {
             },
             bodyPadding: 10,
             title: 'Add new facility',
-            items: [
-            {
+            items: [{
                 xtype: 'fieldset',
                 title: '',
-                items: [
-                {
+                items: [{
                     xtype: 'combobox',
                     fieldLabel: 'Facility',
                     anchor: '100%',
@@ -32,8 +30,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addFacility', {
                         ['Lab'],
                         ['OPD']              ]
                     })
-                },
-                {
+                },{
                     xtype: 'textfield',
                     fieldLabel: 'Facilty Name',
                     anchor: '100%'
@@ -42,13 +39,11 @@ Ext.define('RaxaEmr.Pharmacy.view.addFacility', {
                     xtype: 'textfield',
                     fieldLabel: 'Address',
                     anchor: '100%'
-                },
-                {
+                },{
                     xtype: 'textfield',
                     fieldLabel: 'City',
                     anchor: '100%'
-                },
-                {
+                },{
                     xtype: 'numberfield',
                     fieldLabel: 'Contact No.',
                     keyNavEnabled: false,
@@ -57,37 +52,31 @@ Ext.define('RaxaEmr.Pharmacy.view.addFacility', {
                     spinUpEnabled: false,
                     allowDecimals: false,
                     anchor: '100%'
-                },
-                {
+                },{
                     xtype: 'textfield',
                     fieldLabel: 'Person Incharge',
                     anchor: '100%'
-                }
-                ]
-            },
-            {
+                }]
+            },{
                 xtype: 'button',
                 height: 22,
                 width: 50,
                 text: 'Reset',
                 x: 190,
                 y: 200
-            },
-            {
+            },{
                 xtype: 'button',
                 width: 61,
                 text: 'Save',
                 x: 250,
                 y: 200
-            },
-            {
+            },{
                 xtype: 'button',
                 width: 50,
                 text: 'Cancel',
                 x: 130,
                 y: 200
-            }
-            ]    
+            }]    
         }];
         this.callParent(arguments);
     }
