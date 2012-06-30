@@ -94,6 +94,9 @@ Ext.define("Screener.controller.Application", {
             sortButton: {
                 tap: 'showSort'
             },
+            drugSubmitButton: {
+                tap: 'drugSubmit'
+            },
             sortByNameButton: {
                 tap: 'sortByName'
             },
@@ -276,6 +279,7 @@ Ext.define("Screener.controller.Application", {
     //adds new person to the NewPersons store
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
+
         if (formp.givenname && formp.familyname && formp.choice) {
             var person = Ext.create('Screener.model.Person', {
                 gender: formp.choice,
@@ -468,6 +472,30 @@ Ext.define("Screener.controller.Application", {
             } else {
 
             }
+        });
+    },
+
+    drugSubmit: function () {
+        objectRef = this;
+        // changes the button text to 'Confirm' and 'Cancel'
+        var MB = Ext.MessageBox;
+        Ext.apply(MB, {
+            YES: {
+                text: 'Confirm',
+                itemId: 'yes',
+                ui: 'action'
+            },
+            NO: {
+                text: 'Cancel',
+                itemId: 'no'
+            }
+        });
+        Ext.apply(MB, {
+            YESNO: [MB.NO, MB.YES]
+        });
+        // on-click, launch MessageBox
+        Ext.get('drugSubmitButton').on('click', function (e) {
+            Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
         });
     }
 });

@@ -51,20 +51,14 @@ Ext.define('Registration.view.Home', {
                     margin: '10 0 13 0',
                     width: 300,
                     text: 'Register New Patient',
-                    handler: function () {
-                        var l = Ext.getCmp('mainRegArea').getLayout();
-                        l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
-                    }
+                    action: 'register'
                 }, {
                     xtype: 'button',
                     height: 35,
                     margin: '10 0 13 0',
                     width: 300,
                     text: 'Search Registered Patient',
-                    handler: function () {
-                        var l = Ext.getCmp('mainRegArea').getLayout();
-                        l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
-                    }
+                    action: 'search'
                 }]
             }]
         };

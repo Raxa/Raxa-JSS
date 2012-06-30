@@ -12,10 +12,9 @@ Ext.application({
     // Name of the application. Modules should use unique module name
     tabletIcon: 'resources/img/icon_s.png',
     tabletStartupScreen: 'resources/img/icon.png',
-
     models: ['Session'],
     // List of Models for dynamic loading
-    views: ['Login', 'AppGrid'],
+    views: ['Login', 'AppGrid','AppCarousel','smartApp'],
     // List of Views for dynamic loading
     controllers: ['Session'],
     // List of Controllers for dynamic loading

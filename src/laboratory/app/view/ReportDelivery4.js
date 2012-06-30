@@ -116,6 +116,7 @@ Ext.define('Laboratory.view.ReportDelivery4', {
                 ['Other']
             ]
         }),
+        displayField: 'types_of_delivery'
     }, {
         xtype: 'button',
         height: 20,
