@@ -20,7 +20,8 @@ Ext.define("Screener.view.PharmacyForm", {
                 xtype: 'drugStore',
                 width: '350px',
                 id: 'form0',
-                height: '250px'
+                height: '320px',
+                scrollable: false
             }, {
                 layout: 'vbox',
                 items: [{

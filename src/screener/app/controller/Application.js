@@ -130,7 +130,7 @@ Ext.define("Screener.controller.Application", {
             },
             drugSubmitButton: {
                 tap: 'drugsubmit'
-                /*function(){
+            /*function(){
                     this.drugsubmit(0)
                 }*/
             }
@@ -166,7 +166,8 @@ Ext.define("Screener.controller.Application", {
             xtype: 'drugStore',
             id: 'form' + form_num,
             width: '350px',
-            height: '250px'
+            height: '320px',
+            scrollable: false
         });
     },
     removeDrugForm: function () {
@@ -219,9 +220,11 @@ Ext.define("Screener.controller.Application", {
                     dose: Ext.getCmp('form' + i).getValues().strength,
                     quantity: Ext.getCmp('form' + i).getValues().quantity,
                     frequency: Ext.getCmp('form' + i).getValues().frequency,
+                    instructions: Ext.getCmp('form' + i).getValues().instruction,
                     // type should be "drugorder" in order to post a drug order
                     type: 'drugorder'
                 }))
+                if(order[i].data.instructions == null) order[i].data.instructions = "-"
                 orderstore.push(Ext.create('Screener.store.drugOrder'))
                 // here it makes the get call for concept of related drug
                 concept[i].load();

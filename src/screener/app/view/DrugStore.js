@@ -90,6 +90,13 @@ Ext.define("Screener.view.DrugStore", {
                     text: 'two months',
                     value: '2m'
                 }]
+            }, {
+                xtype: 'textareafield',
+                id: 'instruction',
+                label: 'Order of medication',
+                name: 'Instruction',
+                labelAlign: 'top',
+                height: '100px'
             }]
         }]
     }
