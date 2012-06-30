@@ -1,6 +1,6 @@
 Ext.define("RaxaEmr.Pharmacy.controller.main", {
     extend: 'Ext.app.Controller',
-    views: ['dispense', 'Viewport', 'mainview', 'Groups', 'groupedDrugs', 'alldrugs', 'add', 'add2', 'prescription'],
+    views: ['dispense', 'Viewport', 'mainview', 'Groups', 'groupedDrugs', 'alldrugs', 'add', 'add2', 'prescription', 'allStockPanel', 'allStockForm', 'allStockGrid','goodReceiptGrid','stockIssueGrid','goodIssuePop','goodIssueText','addDrug','stockIssue','goodReceipt',    'goodIssue'],
     models: ['dispense', 'alldrugsmodel', 'groupmodel', 'drugmodel',],
     stores: ['dispense', 'alldrugsstore', 'groupstore', 'drugstore',],
 
