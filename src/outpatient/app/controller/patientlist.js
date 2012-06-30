@@ -13,9 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 var myRecord;
- 
+
 Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     extend: 'Ext.app.Controller',
 
@@ -28,19 +27,13 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             docname: '#docname',
             urgency: '#urgency',
             lastvisit: '#lastvisit',
-            mainTabs: '#main-tabs',
-			workingArea: '#working-area',
-            submitHistory: '#submit-history',
-            medicationHistory: '#medication-history',
-			reftodocbutton: '#reftodocbutton',
-            showContact: 'patientlist-show',
-			showlabresulthistorypanel: 'labresulthistorypanel',
-			showrefertodocpanel: 'Refer-To-Doc-Panel',
-			showmedicationhistorypanel: 'Medication-History-Panel',
-			confirmLabResultHistoryButton: '#confirmlabresulthistory',
-			confirmMedicationHistoryButton: '#confirmmedicationhistory',
-			confirmReferToDocButton: '#confirmrefertodoc',
-			labinfo : '#labinfo'
+            mainTabs: '#maintabs',
+            medicationHistory: '#medicationhistory',
+            refToDocButton: '#reftodocbutton',
+            confirmLabResultHistoryButton: '#confirmlabresulthistory',
+            confirmMedicationHistoryButton: '#confirmmedicationhistory',
+            confirmReferToDocButton: '#confirmrefertodoc',
+            labinfo: '#labinfo'
         },
 
         control: {
@@ -63,14 +56,11 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             lastvisit: {
                 tap: 'sortByLastVisit'
             },
-            submitHistory: {
-                tap: 'submitHistoryAction'
-            },
             medicationHistory: {
                 tap: 'medicationHistoryAction'
             },
-            reftodocbutton: {
-                tap: 'reftodocbutton'
+            refToDocButton: {
+                tap: 'refToDocButton'
             },
             labinfo: {
                 tap: 'labInfoAction'
@@ -89,17 +79,11 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         }
 
     },
-	
-	onMainPop: function(view, item) {
-        if (item.xtype == "labresulthistorypanel") {
-            this.hideConfirmLabResultHistoryButton();
-        }
-        if (item.xtype == "Medication-History-Panel") {
-            this.hideConfirmMedicationHistoryButton();
-        }
-        if (item.xtype == "Refer-To-Doc-Panel") {
-            this.hideConfirmReferToDocButton();
-        }
+
+    onMainPop: function (view, item) {
+        this.buttonHide('confirmlabresulthistory');
+        this.buttonHide('confirmmedicationhistory');
+        this.buttonHide('confirmrefertodoc');
     },
 
     onContactSelect: function (list, index, node, record) {
@@ -110,123 +94,70 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
         this.showContact.setRecord(record);
         this.getMain().push(this.showContact);
-		myRecord = record;
+        myRecord = record;
     },
-	
-	labInfoAction: function (list, index, node) {
 
-        if (!this.showlabresulthistorypanel) {
-            this.showlabresulthistorypanel = Ext.create('RaxaEmr.Outpatient.view.patient.labresulthistorypanel');
+    buttonAction: function (obj, obj2) {
+        if (!this.obj1) {
+            this.obj1 = Ext.create(obj);
         }
-		
-        this.showlabresulthistorypanel.setRecord(myRecord);
-        this.getMain().push(this.showlabresulthistorypanel);
-		this.showConfirmLabResultHistoryButton();
+        this.obj1.setRecord(myRecord);
+        this.getMain().push(this.obj1);
+        this.buttonShow(obj2);
     },
-	
-	medicationHistoryAction: function (list, index, node) {
 
-        if (!this.showmedicationhistorypanel) {
-            this.showmedicationhistorypanel = Ext.create('RaxaEmr.Outpatient.view.patient.medicationhistorypanel');
-        }
-		
-        this.showmedicationhistorypanel.setRecord(myRecord);
-        this.getMain().push(this.showmedicationhistorypanel);
-		this.showConfirmMedicationHistoryButton();
-    },
-	
-	reftodocbutton: function (list, index, node) {
+    buttonShow: function (obj) {
+        var button = Ext.getCmp(obj);
 
-        if (!this.showrefertodocpanel) {
-            this.showrefertodocpanel = Ext.create('RaxaEmr.Outpatient.view.patient.refertodocpanel');
-        }
-		
-        this.showrefertodocpanel.setRecord(myRecord);
-        this.getMain().push(this.showrefertodocpanel);
-		this.showConfirmReferToDocButton();
-    },
-	
-	showConfirmLabResultHistoryButton: function() {
-        var confirmLabResultHistoryButton = this.getConfirmLabResultHistoryButton();
-
-        if (!confirmLabResultHistoryButton.isHidden()) {
+        if (!button.isHidden()) {
             return;
         }
 
-        confirmLabResultHistoryButton.setHidden(false);
+        button.setHidden(false);
     },
-	
-	hideConfirmLabResultHistoryButton: function() {
-        var confirmLabResultHistoryButton = this.getConfirmLabResultHistoryButton();
 
-        if (confirmLabResultHistoryButton.isHidden()) {
+    buttonHide: function (obj) {
+        var button = Ext.getCmp(obj);
+
+        if (button.isHidden()) {
             return;
         }
 
-        confirmLabResultHistoryButton.setHidden(true);
+        button.setHidden(true);
     },
-	
-	showConfirmMedicationHistoryButton: function() {
-        var confirmMedicationHistoryButton = this.getConfirmMedicationHistoryButton();
 
-        if (!confirmMedicationHistoryButton.isHidden()) {
-            return;
-        }
-
-        confirmMedicationHistoryButton.setHidden(false);
+    labInfoAction: function () {
+        this.buttonAction('RaxaEmr.Outpatient.view.patient.labresulthistorypanel', 'confirmlabresulthistory');
     },
-	
-	hideConfirmMedicationHistoryButton: function() {
-        var confirmMedicationHistoryButton = this.getConfirmMedicationHistoryButton();
 
-        if (confirmMedicationHistoryButton.isHidden()) {
-            return;
-        }
-
-        confirmMedicationHistoryButton.setHidden(true);
+    medicationHistoryAction: function () {
+        this.buttonAction('RaxaEmr.Outpatient.view.patient.medicationhistorypanel', 'confirmmedicationhistory');
     },
-	
-	showConfirmReferToDocButton: function() {
-        var confirmReferToDocButton = this.getConfirmReferToDocButton();
 
-        if (!confirmReferToDocButton.isHidden()) {
-            return;
-        }
-
-        confirmReferToDocButton.setHidden(false);
+    refToDocButton: function () {
+        this.buttonAction('RaxaEmr.Outpatient.view.patient.refertodocpanel', 'confirmrefertodoc');
     },
-	
-	hideConfirmReferToDocButton: function() {
-        var confirmReferToDocButton = this.getConfirmReferToDocButton();
 
-        if (confirmReferToDocButton.isHidden()) {
-            return;
-        }
-
-        confirmReferToDocButton.setHidden(true);
-    },
-	
-    sortByName: function () {
+    sortBy: function (obj) {
         store = this.getContact().getStore();
-        store.setSorters("firstName");
+        store.setSorters(obj);
         store.load();
+    },
+
+    sortByName: function () {
+        this.sortBy('firstName');
     },
 
     sortByDocName: function () {
-        store = this.getContact().getStore();
-        store.setSorters("nameofdoc");
-        store.load();
+        this.sortBy('nameofdoc');
     },
 
     sortByUrgency: function () {
-        store = this.getContact().getStore();
-        store.setSorters("urgency");
-        store.load();
+        this.sortBy('urgency');
     },
+
     sortByLastVisit: function () {
-        store = this.getContact().getStore();
-        store.setSorters("lastvisit");
-        store.load();
+        this.sortBy('lastvisit');
     },
 
     onSearchKeyUp: function (field) {
@@ -267,9 +198,5 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     onSearchClearIconTap: function () {
         store = this.getContact().getStore();
         store.clearFilter();
-    },
-	
-	submitHistoryAction: function () {
-        Ext.getCmp('main-tabs').setActiveItem(1);
     }
 });

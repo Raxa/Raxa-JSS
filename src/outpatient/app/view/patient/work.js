@@ -1,3 +1,26 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+var TABS = {
+    HISTORY: 0,
+    EXAMINATION: 1,
+    DIAGNOSIS: 2,
+    TREATMENT: 3
+}
+
 Ext.define('RaxaEmr.Outpatient.view.patient.work', {
     extend: 'Ext.Container',
     xtype: 'work',
@@ -13,7 +36,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
             margin: '0 20 10 0',
             style: 'border:solid #aaaaaa;',
             flex: 1,
-            id: 'main-tabs',
+            id: 'maintabs',
             items: [{
                 xtype: 'history-panel'
             }, {
@@ -47,7 +70,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 padding: '0 0 0 0',
                 pressed: true,
                 handler: function () {
-                    Ext.getCmp('main-tabs').setActiveItem(0)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.HISTORY)
                 }
             }, {
                 xtype: 'button',
@@ -57,7 +80,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 icon: '../outpatient/resources/images/examination.png',
                 padding: '0 0 0 0',
                 handler: function () {
-                    Ext.getCmp('main-tabs').setActiveItem(1)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION)
                 }
             }, {
                 xtype: 'button',
@@ -67,7 +90,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 icon: '../outpatient/resources/images/diagnosis.png',
                 padding: '0 0 0 0',
                 handler: function () {
-                    Ext.getCmp('main-tabs').setActiveItem(2)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.DIAGNOSIS)
                 }
             }, {
                 xtype: 'button',
@@ -77,7 +100,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 icon: '../outpatient/resources/images/treatment.png',
                 padding: '0 0 0 0',
                 handler: function () {
-                    Ext.getCmp('main-tabs').setActiveItem(3)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.TREATMENT)
                 }
             }]
         }]
