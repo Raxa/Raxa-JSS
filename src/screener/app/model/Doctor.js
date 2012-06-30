@@ -16,7 +16,11 @@ Ext.define('Screener.model.Doctor', {
         }, {
             name: 'display',
             type: 'string'
-        }]
+        }],
+        hasMany: {
+            model: 'Screener.model.Patient',
+            name: 'patients'
+        }
     }
 });
 /*

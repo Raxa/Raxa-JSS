@@ -23,7 +23,6 @@ var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
-var patientUuid;
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
@@ -81,11 +80,23 @@ var Util = {
      *Returns the value of TimeoutLimit for login timeout 
      *@return timeoutLimit for timeout in login 
      */
+    Datetime: function (d){
+        function pad(n){
+            return n<10 ? '0'+n : n
+        }
+        return d.getUTCFullYear()+'-'
+        + pad(d.getUTCMonth()+1)+'-'
+        + pad(d.getUTCDate())+'T'
+        + pad(d.getUTCHours())+':'
+        + pad(d.getUTCMinutes())+':'
+        + pad(d.getUTCSeconds())+'Z'
+    },
+    
     getTimeoutLimit: function () {
         return timeoutLimit;
     },
     
-        getHospitalName: function () {
+    getHospitalName: function () {
         return hospitalName;
     },
 
@@ -111,7 +122,7 @@ var Util = {
             useDefaultXhrHeader: false,
             method: 'DELETE',
             success: function () {
-                // do nothing
+            // do nothing
             }
         });
     },
@@ -149,15 +160,15 @@ var Util = {
     getModules: function () {
         //always keep login at first position as its app path is different
         return ['login', 'screener', 'registration', 'registrationextjs4','CHW'];
-        //TO DO:Add the line below instead the above one 
-        //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+    //TO DO:Add the line below instead the above one 
+    //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
 
     getApps: function () {
         //always keep login at first position as its app path is different
         return ['gotStatins','problemList'];
-        //TO DO:Add the line below instead the above one 
-        //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+    //TO DO:Add the line below instead the above one 
+    //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
     /**
      *Generate six digit randomly generated Device Id  
@@ -186,7 +197,7 @@ var Util = {
         return deviceId;
     },
 
-	getPatientIdentifier : function(){
+    getPatientIdentifier : function(){
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
@@ -207,11 +218,6 @@ var Util = {
             Ext.Error.raise('Could not recognize Library');
         }
     },
-	getPatientIdentifier : function(){
-        //dummy funtion to be used for creating partient
-        // TODO: writen a  ramdom no for patient identufier but it should be a unique id
-        return Math.floor(Math.random() * 1000000000);
-    },
     
     getAttributeFromREST : function(resource,queryParameter,display) {
         //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
@@ -229,15 +235,29 @@ var Util = {
                         localStorage.setItem(queryParameter+"Uuid"+resource,JSON.parse(response.responseText).results[i].uuid)
                     }
                 }
-                
-                
+            }
+        });
+    },
+    
+    getProviderUuid : function(uuid) {
+        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/provider/'+uuid,  //'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                var x = "person not exits"
+                if(console.log(JSON.parse(response.responseText).person.uuid) != null){
+                    return JSON.parse(response.responseText).person.uuid
+                }
+                else{
+                    return x
+                }
             }
         });
     }
 }
-
-if(localStorage.heightUuidconcept == undefined){ var heightUuidConcept = Util.getAttributeFromREST('concept','height','HEIGHT (CM)');}
-if(localStorage.weightUuidconcept == undefined){ var weightUuidConcept = Util.getAttributeFromREST('concept','weight','WEIGHT (KG)');}
-if(localStorage.bmiUuidconcept == undefined){ var bmiUuidConcept = Util.getAttributeFromREST('concept','bmi','BODY MASS INDEX');}
-if(localStorage.regfeeUuidconcept == undefined){ var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee','Registration Fee');}
-if(localStorage.basicUuidform == undefined){ var basicUuidform = Util.getAttributeFromREST('form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms');}

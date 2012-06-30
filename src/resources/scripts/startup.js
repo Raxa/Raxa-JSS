@@ -44,7 +44,40 @@ var Startup = {
 
         return errCode;
     },
-
+    
+    
+    getResourceUuid: function() {
+        var x;
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
+                    if(JSON.parse(response.responseText).results[i].display == 'HEIGHT (CM)'){
+                        x = JSON.parse(response.responseText).results[i].uuid
+                    }
+                }
+                if(x != localStorage.heightUuidconcept){
+                    Util.getAttributeFromREST('concept','height','HEIGHT (CM)');
+                    Util.getAttributeFromREST('concept','weight','WEIGHT (KG)');
+                    Util.getAttributeFromREST('concept','bmi','BODY MASS INDEX');
+                    Util.getAttributeFromREST('concept', 'regfee','Registration Fee');
+                    Util.getAttributeFromREST('form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms');
+                    Util.getAttributeFromREST('encountertype', 'reg','REGISTRATION - New registration');
+                    Util.getAttributeFromREST('encountertype', 'screener','SCREENER - encountered when patient screened');
+                    Util.getAttributeFromREST('encountertype', 'screener','SCREENER - encountered when patient screened');
+                    Util.getAttributeFromREST('location', 'screener','Screener Registration Disk - registration desk in a screener module');
+                    Util.getAttributeFromREST('location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor');
+                }
+            }            
+        });
+    },
+    
     /**
      * for each of the modules defined in Util.getModules(), create a GET
      * request and send to server for the app/app.js file
