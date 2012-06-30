@@ -22,7 +22,7 @@ Ext.application({
 
     //we will use a Patient and Doctor class
 
-    models: ['Patient', 'Doctor', 'Links', 'DoctorList', 'druglist', 'drugOrder'],
+    models: ['Patient', 'Doctor', 'Links', 'druglist', 'drugOrder'],
 
 
     //here we declare the visual components
@@ -33,7 +33,7 @@ Ext.application({
 
     //the stores will hold our data in a local cache
 
-    stores: ['Patients', 'Doctors', 'DoctorList', 'druglist', 'drugOrder'],
+    stores: ['Patients', 'Doctors', 'druglist', 'drugOrder'],
 
     //entry point
     launch: function () {
