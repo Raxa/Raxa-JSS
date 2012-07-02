@@ -62,17 +62,12 @@ var Startup = {
                         x = JSON.parse(response.responseText).results[i].uuid
                     }
                 }
-                if(x != localStorage.heightUuidconcept){
-                    Util.getAttributeFromREST('concept','height','HEIGHT (CM)');
-                    Util.getAttributeFromREST('concept','weight','WEIGHT (KG)');
-                    Util.getAttributeFromREST('concept','bmi','BODY MASS INDEX');
-                    Util.getAttributeFromREST('concept', 'regfee','Registration Fee');
-                    Util.getAttributeFromREST('form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms');
-                    Util.getAttributeFromREST('encountertype', 'reg','REGISTRATION - New registration');
-                    Util.getAttributeFromREST('encountertype', 'screener','SCREENER - encountered when patient screened');
-                    Util.getAttributeFromREST('encountertype', 'screener','SCREENER - encountered when patient screened');
-                    Util.getAttributeFromREST('location', 'screener','Screener Registration Disk - registration desk in a screener module');
-                    Util.getAttributeFromREST('location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor');
+                if(x != localStorage.heightUuidconcept || localStorage.heightUuidconcept == undefined){
+                    
+                    for(var i1 =0;i1<resourceUuid.length;++i1){
+                        var a = resourceUuid[i1]
+                        Util.getAttributeFromREST(a[0], a[1], a[2])
+                    }
                 }
             }            
         });

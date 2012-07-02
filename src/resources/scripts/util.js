@@ -23,6 +23,9 @@ var username = 'admin';
 var password = 'Hello123';
 var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
+var resourceUuid = [['concept','height','HEIGHT (CM)'],['concept','weight','WEIGHT (KG)'],['concept','bmi','BODY MASS INDEX'],['concept', 'regfee','Registration Fee'],
+['form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms'],['encountertype', 'reg','REGISTRATION - New registration'],['encountertype', 'screener','SCREENER - encountered when patient screened'],
+['location', 'screener','Screener Registration Disk - registration desk in a screener module'],['location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor']];
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
