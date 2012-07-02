@@ -77,21 +77,33 @@ Ext.define('Laboratory.view.SpecimenCollection2', {
         width: 50,
         text: 'Find',
         x: 260,
-        y: 110
+        y: 110,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_LAB_ORDER_SEARCH_RESULT.value);
+        }
     }, {
         xtype: 'button',
         height: 20,
         width: 50,
         text: 'Find',
         x: 260,
-        y: 190
+        y: 190,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_LAB_ORDER_SEARCH_RESULT.value);
+        }
     }, {
         xtype: 'button',
         height: 20,
         width: 50,
         text: 'Find',
         x: 10,
-        y: 420
+        y: 420,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_LAB_ORDER_SEARCH_RESULT.value);
+        }
     }, {
         xtype: 'datefield',
         width: 130,
@@ -137,79 +149,13 @@ Ext.define('Laboratory.view.SpecimenCollection2', {
         y: 220
     }, {
         xtype: 'button',
-        text: 'Continue',
-        x: 490,
-        y: 190
-    }, {
-        xtype: 'button',
         text: 'Cancel',
-        x: 300,
-        y: 190
-    }, {
-        xtype: 'displayfield',
-        value: 'Patient',
-        fieldLabel: '',
-        x: 210,
-        y: 60
-    }, {
-        xtype: 'displayfield',
-        value: 'Patient',
-        fieldLabel: '',
-        x: 210,
-        y: 60
-    }, {
-        xtype: 'displayfield',
-        name: '',
-        value: 'PatientID',
-        fieldLabel: 'Name',
-        x: 410,
-        y: 60
-    }, {
-        xtype: 'displayfield',
-        name: '',
-        value: 'ProviderID',
-        fieldLabel: 'Name',
-        x: 410,
-        y: 90
-    }, {
-        xtype: 'displayfield',
-        value: 'Provider',
-        fieldLabel: '',
-        x: 210,
-        y: 90
-    }, {
-        xtype: 'displayfield',
-        value: 'Location',
-        fieldLabel: '',
-        x: 210,
-        y: 120
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'MyButton',
-        x: 280,
-        y: 60
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'Find Patient',
-        x: 280,
-        y: 60
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'Find Location',
-        x: 280,
-        y: 120
-    }, {
-        xtype: 'button',
-        height: 20,
-        text: 'Find Provider',
-        x: 280,
-        y: 90
-    }
-
-
-    ]
+        x: 260,
+        y: 420,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
+        }
+    }]
 
 });

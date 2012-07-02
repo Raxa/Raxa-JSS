@@ -21,19 +21,12 @@ Ext.define('Laboratory.view.LabOrderCreation3', {
     autoScroll: true,
     activeItem: 0,
 
-    layout: {
-        type: 'absolute'
-    },
-
     items: [{
         xtype: 'gridpanel',
-        height: 200,
-        width: 600,
         autoScroll: true,
         title: 'Lab order search result',
         columns: [{
             xtype: 'gridcolumn',
-            width: 128,
             dataIndex: 'string',
             text: 'First Name'
         }, {
@@ -61,6 +54,16 @@ Ext.define('Laboratory.view.LabOrderCreation3', {
         viewConfig: {
 
         }
-    }]
+    },{
+        xtype: 'button',
+        text: 'Continue',
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_DETAILS.value);
+        }        
+    },
+    
+    
+    ]
 
 });

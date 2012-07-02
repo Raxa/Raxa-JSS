@@ -246,34 +246,8 @@ Ext.define("Screener.controller.Application", {
         PatientStore.add(patient);
         PatientStore.sync();
         PatientStore.on('write', function(){
-            this.sendEncounterData(personUuid)
+            this.sendEncounterData(personUuid,localStorage.regUuidencountertype,llocalStorage.waitingUuidlocation,localStorage.loggedInUser)
         } ,this)
-    },
-    
-    sendEncounterData: function(uuid){
-        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
-        
-        var currentDate = new Date();
-        // creates the encounter json object
-        var jsonencounter = Ext.create('Screener.model.encounters',{
-            encounterDatetime : Util.Datetime(currentDate),
-            patient: uuid,//you will get the uuid from ticket 144...pass it here
-            encounterType: localStorage.regUuidencountertype,
-            location: localStorage.location
-        });
-        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
-		var store = Ext.create('Screener.store.encounters');
-        if(localStorage.logedInUser != undefined){
-			
-            jsonencounter.data.provider = localStorage.logedInUser;
-            console.log('aa gya');
-            store.add(jsonencounter);
-            store.sync();
-            store.on('write', function () {
-				
-            }, this)
-		}
-		return store
     },
     
     //function to show screen with patient list
@@ -367,14 +341,35 @@ Ext.define("Screener.controller.Application", {
     assignPatient: function () {
         currentNumPatients = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
+        var provider = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).data.uuid
         Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
         Ext.getStore('patientStore').getAt(this.currentPatientIndex).set('patientid', this.currentDoctorIndex);
-        Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
+        var patient = Ext.getStore('patientStore').getAt(this.currentPatientIndex).data.uuid
+        //Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
-        
+        this.getProviderUuid(provider,patient)
     },
+    
+    getProviderUuid : function(uuid,patient) {
+        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+        Ext.Ajax.request({
+            scope: this,
+            url : HOST+'/ws/rest/v1/provider/'+uuid,  //'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                console.log(JSON.parse(response.responseText).person.uuid)
+                this.sendEncounterData(patient,localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation,JSON.parse(response.responseText).person.uuid)
+            }
+        });
+    },
+    
     //opens the current doctor's waiting list
     expandCurrentDoctor: function (list, index, target, record) {
         this.currentDoctorIndex = index;
@@ -418,5 +413,24 @@ Ext.define("Screener.controller.Application", {
 
             }
         });
+    },
+    
+    sendEncounterData: function(uuid,encountertype,location,provider){
+        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        var currentDate = new Date();
+        // creates the encounter json object
+        var jsonencounter = Ext.create('Screener.model.encounters',{
+            encounterDatetime: Util.Datetime(currentDate),
+            patient: uuid,//you will get the uuid from ticket 144...pass it here
+            encounterType: encountertype,
+            location: location,
+            provider: provider
+        });
+        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+        var store = Ext.create('Screener.store.encounters');
+        store.add(jsonencounter);
+        store.sync();
+        store.on('write', function () {
+            }, this)
     }
 });

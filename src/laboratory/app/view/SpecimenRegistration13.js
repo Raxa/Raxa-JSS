@@ -13,58 +13,47 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows search result on Lab Order
+ *  This view shows result status of various specimens 
  */
-Ext.define('Laboratory.view.ReportDelivery3', {
+Ext.define('Laboratory.view.SpecimenRegistration13', {
     extend: 'Ext.container.Container',
-    alias: 'widget.ReportDelivery3',
+    alias: 'widget.SpecimenRegistration13',
     autoScroll: true,
     activeItem: 0,
 
     layout: {
         type: 'absolute'
     },
-
     items: [{
         xtype: 'gridpanel',
-        autoScroll: true,
-        title: 'Search Result Grid Panel',
+        width: 500,
+        title: '',
+        x: 10,
+        y: 5,
         columns: [{
             xtype: 'gridcolumn',
             dataIndex: 'string',
-            text: 'Report Order Number'
+            text: 'Report Id'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Status'
-        }, {
-            xtype: 'datecolumn',
-            dataIndex: 'date',
-            text: 'Date'
+            text: 'Report Status'
         }, {
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Provider Name'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Id'
-        }, {
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Patient Name'
+            width: 160,
+            text: 'List of Investigation'
         }],
+        viewConfig: {
+
+        }
     }, {
         xtype: 'button',
-        height: 20,
-        width: 70,
-        text: 'Check Entry',
-        x: 10,
-        y: 420,
+        text: 'Back',
+        x: 230,
+        y: 150,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_TEST_DETAILS.value);
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
         }
-    }, ]
+    }]
 
 });
