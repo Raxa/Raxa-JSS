@@ -1,11 +1,8 @@
-/* model for the drugorder post call */
+/* model for the drugorder */
 Ext.define('Screener.model.drugOrder', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{
-            name: 'id',
-            persist: false
-        }, {
             name: 'patient',
             type: 'string'
         }, {
