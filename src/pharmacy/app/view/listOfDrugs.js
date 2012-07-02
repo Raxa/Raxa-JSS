@@ -100,14 +100,14 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                             xtype: 'displayfield',
                             fieldLabel: 'Drug Group Name',
                             labelWidth: 130,
-                            value: 'Group Name comes here',
+                            value: 'Group Name',
                             id: 'groupnameID',
                             readOnly: true
                         },{
                             xtype: 'displayfield',
                             fieldLabel: 'Regimen',
                             labelWidth: 80,
-                            value: 'Group Name comes here',
+                            value: 'Regimen',
                             id: 'regimenID',
                             readOnly: true
                         },{
