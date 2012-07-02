@@ -82,13 +82,13 @@ Ext.define('Registration.view.SearchPart2', {
                         }, {
                             xtype: 'gridcolumn',
                             text: 'Town'
-                        }],
-                        // this was needed to see the patient profile as we click on one of the patient
+                        }], 
+                        //was needed to see the patient profile as we click on one of the patient
                         listeners: {
                             cellClick: {
                                 fn: function () {
                                     var temp = this.getSelectionModel().getSelection()[0].getData()
-                                    localStorage.setItem('searchUuid', temp.uuid)
+                                    localStorage.setItem('uuid',temp.uuid)
                                     Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)
                                     Ext.getCmp('sexSearchedPatient').setValue(temp.gender)

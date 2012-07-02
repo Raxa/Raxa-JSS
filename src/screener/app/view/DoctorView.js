@@ -5,7 +5,7 @@
  * the doctor's waiting list.
  */
 Ext.define("Screener.view.DoctorView", {
-    requires: ['Screener.store.Doctors', 'Ext.dataview.List', 'Ext.Panel'],
+    requires: ['Screener.store.Doctors','Screener.store.Doctors', 'Ext.dataview.List', 'Ext.Panel'],
     extend: 'Ext.Container',
     xtype: 'doctorList',
     config: {
@@ -16,9 +16,18 @@ Ext.define("Screener.view.DoctorView", {
             xtype: 'list',
             id: 'expandDoctorList',
             //regular expression to display doctor information
-            itemTpl: '({numpatients})Dr. {firstname} {lastname} ',
             //our doctor list uses the Doctors store already instantiated in PatientView
-            store: 'doctorStore',
+           itemTpl: new Ext.XTemplate(
+        '<div>({numpatients}){[this.splitter(values.display)]}</div>',
+    {
+         splitter: function(str){
+            var name = str.split("- ")[1]
+            return 'Dr.' + name
+        
+        }
+    }
+),
+           store: 'doctorStore',
 
             items: [{
                 xtype: 'titlebar',
@@ -50,6 +59,8 @@ Ext.define("Screener.view.DoctorView", {
                 }, ]
             }],
             flex: 1
-        }]
-    }
+        }],
+        
+    
+    }    
 });
