@@ -249,7 +249,8 @@ Ext.define("Screener.controller.Application", {
         PatientStore.add(patient);
         PatientStore.sync();
         PatientStore.on('write', function(){
-            this.sendEncounterData(personUuid,localStorage.regUuidencountertype,llocalStorage.waitingUuidlocation,localStorage.loggedInUser)
+            console.log('hi')
+            this.sendEncounterData(personUuid,localStorage.regUuidencountertype,localStorage.screenerUuidlocation,localStorage.loggedInUser)
         } ,this)
     },
     
