@@ -1,12 +1,10 @@
 Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
-    extend: 'Ext.container.Viewport',
+    extend: 'Ext.container.Container',
     alias: 'widget.drugGroups',
     layout: {
         type: 'auto'
     },
     items:[{
-        xtype: 'pharmacytopbar'
-    },{
         xtype: 'container',
         layout:{
             type: 'auto'
@@ -19,20 +17,27 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
             autoScroll: true,
             tabPosition: 'left',
             tabHeight: 100,
-            height: 560,
+            height: 580,
+            margin:'10 0 0 0',
             tabWidth: 60,
             items: [{
                 xtype: 'panel',
                 title: 'Drugs',
                 margin: '10 90 30 120',
                 items: [{
+                    xtype: 'displayfield',
+                    labelWidth: 130,
+                    value: 'List Of Drugs',
+                    readOnly: true
+                },{
                     xtype: 'button',
                     text: 'New Drug',
-                    margin: '0 0 0 840' 
+                    margin: '-35 0 0 820'
                 },{
                     xtype: 'gridpanel',
                     title: 'List Of Drugs',
                     height: 450,
+                    margin: '10 0 0 0',
                     columns: [
                     {
                         header: 'S no',

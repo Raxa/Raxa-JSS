@@ -4,6 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.view.newdrugform', {
     alias: 'widget.newDrugForm',
     height: 250,
     width: 664,
+    modal: true,
     title: 'New Drug',
     items: [
     {

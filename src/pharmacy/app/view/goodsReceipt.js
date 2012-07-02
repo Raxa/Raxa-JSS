@@ -7,8 +7,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
     },
     autoScroll: true,
     items:[{
-        xtype: 'pharmacytopbar'
-    },{
         xtype: 'panel',
         height: 675,
         border: false,
@@ -143,7 +141,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
                 width: 60,
                 text: 'New',
                 x: 260,
-                y: 0
+                y: 0,
+                handler: function() {
+                    Ext.widget('newDrugForm')
+                }
             },
             {
                 xtype: 'button',

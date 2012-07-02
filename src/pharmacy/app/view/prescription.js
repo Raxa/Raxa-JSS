@@ -5,10 +5,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
         type: 'vbox',
         align: 'stretch'
     },
-    
+    autoScroll: true,
     items:[{
-        xtype: 'pharmacytopbar'
-    },{
         xtype: 'container',
         layout:{
             type: 'auto',
@@ -18,7 +16,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
         items:[{
             xtype: 'container',
             border: 0,
-            height: 488,
+            height: 650,
             layout: {
                 type: 'absolute'
             },

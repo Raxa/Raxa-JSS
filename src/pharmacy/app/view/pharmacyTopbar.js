@@ -36,8 +36,11 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             icon: '../../resources/img/mLogo.png',
             iconAlign: 'top',
             scale: 'large',
-            width: 80
-
+            width: 80,
+            handler: function(){
+                var l = Ext.getCmp('mainarea').getLayout();
+                l.setActiveItem(0);
+            }
         }, {
             xtype: 'button',
             text: 'Bill Records',
@@ -58,14 +61,22 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             icon: '../../resources/img/mLogo.png',
             iconAlign: 'top',
             scale: 'large',
-            width: 80
+            width: 80,
+            handler: function(){
+                var l = Ext.getCmp('mainarea').getLayout();
+                l.setActiveItem(2);
+            }
         }, {
             xtype: 'button',
             text: 'Admin',
             icon: '../../resources/img/mLogo.png',
             iconAlign: 'top',
             scale: 'large',
-            width: 80
+            width: 80,
+            handler: function(){
+                var l = Ext.getCmp('mainarea').getLayout();
+                l.setActiveItem(3);
+            }
         }, {
             xtype: 'tbfill'
         }, {

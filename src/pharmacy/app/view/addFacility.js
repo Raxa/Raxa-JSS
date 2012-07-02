@@ -75,7 +75,9 @@ Ext.define('RaxaEmr.Pharmacy.view.addFacility', {
                 width: 50,
                 text: 'Cancel',
                 x: 130,
-                y: 200
+                y: 200,
+                scope: this,
+                handler: this.close
             }]    
         }];
         this.callParent(arguments);

@@ -1,12 +1,10 @@
 Ext.define('RaxaEmr.Pharmacy.view.reports', {
-    extend: 'Ext.container.Viewport',
+    extend: 'Ext.container.Container',
     autoScroll: true,
     id: 'reports',
     alias: 'widget.reports',
     layout: 'auto',
     items:[{
-        xtype: 'pharmacytopbar'
-    },{
         margin: '10 10 50 50',
         xtype: 'tabpanel',
         height: 550,
