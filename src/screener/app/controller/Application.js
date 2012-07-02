@@ -192,7 +192,7 @@ Ext.define("Screener.controller.Application", {
             concept = new Array();
             orderstore = new Array();
             order = new Array();
-            var k = 0;
+            var k = 0,l=0;
             for (i = 0; i <= form_num; i++) {
                 // value of Url for get call is made here using name of drug
                 var Url = HOST + '/ws/rest/v1/concept?q='
@@ -231,29 +231,28 @@ Ext.define("Screener.controller.Application", {
                 orderstore.push(Ext.create('Screener.store.drugOrder'))
                 // here it makes the get call for concept of related drug
                 concept[i].load();
-                // i added counter k which increment as a concept load successfully, after all the concept are loaded
+                // added a counter k which increment as a concept load successfully, after all the concept are loaded
                 // value of k should be equal to the no. of drug forms
                 concept[i].on('load', function () {
-                    k = k + 1
+                    k = k + 1;
+                    // value of k is compared with the no of drug forms
+                    if (k == form_num + 1) {
+                        for (var j = 0; j <= form_num; j++) {
+                            order[j].data.concept = concept[j].getAt(0).getData().uuid
+                            orderstore[j].add(order[j])
+                            orderstore[j].sync()
+                            orderstore[j].on('write',function(){
+                                l = l + 1;
+                                // counter l should be equal to no of form when all the post order are made successfully
+                                if(l==form_num+1){
+                                    Ext.Msg.alert('successfull')
+                                }
+                            //Note- if we want add a TIMEOUT it shown added somewhere here
+                            },this)
+                        }
+                    }
                 }, this);
             }
-            concept[form_num].on('load', function () {
-                // value of k is compared with the no of drug forms
-                if (k == form_num + 1) {
-                    for (var j = 0; j <= form_num; j++) {
-                        order[j].data.concept = concept[j].getAt(0).getData().uuid
-                        orderstore[j].add(order[j])
-                        orderstore[j].sync()
-                    }
-                    orderstore[form_num].on('write',function(){
-                        Ext.Msg.alert('successfull')
-                    },this)
-                } else Ext.Msg.alert("unsuccessfull")
-            }, this, {
-                // this allow the above function to be called after 600ms the "load" event is successfull
-                // we are assuming that within 600ms we have got response for all the get calls.
-                buffer: 600
-            })
         } else Ext.Msg.alert("please select a patient")
     },
     addLabOrder: function () {
