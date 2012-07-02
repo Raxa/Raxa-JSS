@@ -28,7 +28,6 @@ Ext.define('Laboratory.view.SpecimenCollection5', {
     items: [{
         xtype: 'gridpanel',
         height: 250,
-        width: 550,
         autoScroll: true,
         title: 'Lab order search result',
         columns: [{
@@ -58,13 +57,17 @@ Ext.define('Laboratory.view.SpecimenCollection5', {
             xtype: 'gridcolumn',
             text: 'Town'
         }]
-    },
-    {
+    }, {
         xtype: 'button',
         height: 20,
-        text: 'Find Provider',
+        text: 'Add Provider',
         x: 80,
-        y: 300
+        y: 300,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_ADD_PROVIDER_1.value);
+        }
+
     }]
 
 });

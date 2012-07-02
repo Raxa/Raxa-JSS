@@ -20,7 +20,7 @@
 var form_num, lab_num;
 Ext.define("Screener.controller.Application", {
     requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
-    models:['Screener.model.Person'],
+    models: ['Screener.model.Person'],
     extend: 'Ext.app.Controller',
     config: {
         //here we name the elements we need from the page
@@ -93,6 +93,9 @@ Ext.define("Screener.controller.Application", {
             },
             sortButton: {
                 tap: 'showSort'
+            },
+            drugSubmitButton: {
+                tap: 'drugSubmit'
             },
             sortByNameButton: {
                 tap: 'sortByName'
@@ -195,9 +198,9 @@ Ext.define("Screener.controller.Application", {
     //adds new person to the NewPersons store
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
-       
+
         if (formp.givenname && formp.familyname && formp.choice) {
-            var person = Ext.create('Screener.model.Person',{
+            var person = Ext.create('Screener.model.Person', {
                 gender: formp.choice,
                 names: [{
                     givenName: formp.givenname,
@@ -207,39 +210,39 @@ Ext.define("Screener.controller.Application", {
             var store = Ext.create('Screener.store.NewPersons');
             store.add(person);
             store.sync();
-            store.on('write', function(){
+            store.on('write', function () {
                 this.getidentifierstype(store.getData().getAt(0).getData().uuid)
-            } ,this);
+            }, this);
             Ext.getCmp('newPatient').hide();
             Ext.getCmp('newPatient').reset();
             return store;
         }
     },
     // get IdentifierType using IdentifierType store 
-    getidentifierstype:function(personUuid){
+    getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Screener.store.IdentifierType')
         identifiers.load();
-        identifiers.on('load',function(){
-            this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
-        },this);
+        identifiers.on('load', function () {
+            this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
+        }, this);
     },
     // get Location using Location store
-    getlocation:function(personUuid,identifierType){
+    getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Screener.store.Location')
         locations.load();
-        locations.on('load',function(){
-            this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
-        },this)
+        locations.on('load', function () {
+            this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
+        }, this)
     },
     // creates a new patient using NewPatients store 
-    makePatient:function(personUuid,identifierType,location){
-        var patient = Ext.create('Screener.model.NewPatient',{
-            person : personUuid,
-            identifiers : [{
-                identifier : Util.getPatientIdentifier().toString(),
-                identifierType : identifierType,
-                location : location,
-                preferred : true
+    makePatient: function (personUuid, identifierType, location) {
+        var patient = Ext.create('Screener.model.NewPatient', {
+            person: personUuid,
+            identifiers: [{
+                identifier: Util.getPatientIdentifier().toString(),
+                identifierType: identifierType,
+                location: location,
+                preferred: true
             }]
         });
         var PatientStore = Ext.create('Screener.store.NewPatients')
@@ -414,7 +417,6 @@ Ext.define("Screener.controller.Application", {
             }
         });
     },
-    
     sendEncounterData: function(uuid,encountertype,location,provider){
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
         var currentDate = new Date();
@@ -432,5 +434,29 @@ Ext.define("Screener.controller.Application", {
         store.sync();
         store.on('write', function () {
             }, this)
+    },
+	
+    drugSubmit: function () {
+        objectRef = this;
+        // changes the button text to 'Confirm' and 'Cancel'
+        var MB = Ext.MessageBox;
+        Ext.apply(MB, {
+            YES: {
+                text: 'Confirm',
+                itemId: 'yes',
+                ui: 'action'
+            },
+            NO: {
+                text: 'Cancel',
+                itemId: 'no'
+            }
+        });
+        Ext.apply(MB, {
+            YESNO: [MB.NO, MB.YES]
+        });
+        // on-click, launch MessageBox
+        Ext.get('drugSubmitButton').on('click', function (e) {
+            Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
+        });
     }
 });

@@ -13,40 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows list of lab orders for a patient 
+ *  This view allows to add specimen 
  */
-Ext.define('Laboratory.view.LabOrderCreation10', {
+Ext.define('Laboratory.view.SpecimenRegistration12', {
     extend: 'Ext.container.Container',
-    alias: 'widget.LabOrderCreation10',
+    alias: 'widget.SpecimenRegistration12',
     autoScroll: true,
     activeItem: 0,
 
     layout: {
         type: 'absolute'
     },
-
     items: [{
-        xtype: 'gridpanel',
-        height: 400,
-        width: 210,
-        autoScroll: true,
-        title: 'Lab Orders waiting results',
-        columns: [{
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: ''
-        }],
-        viewConfig: {
-
-        },
-        features: [{
-            ftype: 'grouping'
-        }]
-    }, {
         xtype: 'displayfield',
         fieldLabel: 'Lab Order No.',
         x: 230,
-        y: 0
+        y: -1
     }, {
         xtype: 'displayfield',
         fieldLabel: 'Patient',
@@ -101,16 +83,19 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
             columns: [{
                 xtype: 'gridcolumn',
                 dataIndex: 'string',
-                text: 'Lab Order Number'
+                text: 'Specimen Type'
             }, {
                 xtype: 'gridcolumn',
-                text: 'Investigation'
+                text: 'Specimen Role'
             }, {
                 xtype: 'gridcolumn',
-                text: 'Lab specimen Id'
+                text: 'Client Specimen Id'
             }, {
                 xtype: 'datecolumn',
-                text: 'Speciment Collection Date'
+                text: 'Lab Specimen Id'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Reject Reason'
             }],
             viewConfig: {
 
@@ -119,21 +104,65 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
     }, {
         xtype: 'button',
         height: 20,
-        text: 'New Lab Order',
-        x: 530,
-        y: 340,
+        text: 'Reset',
+        x: 420,
+        y: 330
+    }, {
+        xtype: 'button',
+        height: 20,
+        text: 'Save',
+        x: 560,
+        y: 330,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
-        }          
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_REPORT_STATUS.value);
+        }
+
+    }, {
+        xtype: 'container',
+        height: 440,
+        width: 220,
+        layout: {
+            type: 'absolute'
+        },
+        anchor: 'Add',
+        items: [{
+            xtype: 'checkboxgroup',
+            width: 220,
+            fieldLabel: 'Add Investigations',
+            labelAlign: 'top',
+            x: 10,
+            y: 30,
+            items: [{
+                xtype: 'checkboxfield',
+                boxLabel: 'JSS Lab'
+            }, {
+                xtype: 'checkboxfield',
+                boxLabel: 'Other Lab'
+            }]
+        }, {
+            xtype: 'combobox',
+            fieldLabel: '',
+            emptyText: 'Section',
+            x: 10,
+            y: 110
+        }, {
+            xtype: 'textfield',
+            fieldLabel: 'Investigation',
+            labelAlign: 'top',
+            x: 10,
+            y: 170
+        }]
     }, {
         xtype: 'button',
         text: 'Cancel',
-        x: 300,
-        y: 340,
+        x: 240,
+        y: 330,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.HOME.value);
-        }   
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
+        }
+
     }]
+
 });

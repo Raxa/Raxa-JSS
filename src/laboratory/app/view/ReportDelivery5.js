@@ -33,15 +33,15 @@ Ext.define('Laboratory.view.ReportDelivery5', {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Investigation'
-        },{
+        }, {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Customer Specimen ID'
-        },{
+        }, {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Orders'
-        },{
+        }, {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Urgent'

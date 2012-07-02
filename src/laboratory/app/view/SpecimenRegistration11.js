@@ -13,23 +13,39 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view shows criterias for showing various specimen collection criterias
+ *  This view shows details of specimen of a patient
  */
-Ext.define('Laboratory.view.SpecimenCollection12', {
+Ext.define('Laboratory.view.SpecimenRegistration11', {
     extend: 'Ext.container.Container',
-    alias: 'widget.SpecimenCollection12',
+    alias: 'widget.SpecimenRegistration11',
     autoScroll: true,
     activeItem: 0,
 
     layout: {
         type: 'absolute'
     },
-
     items: [{
+        xtype: 'gridpanel',
+        height: 400,
+        width: 210,
+        autoScroll: true,
+        title: 'Lab Orders waiting results',
+        columns: [{
+            xtype: 'gridcolumn',
+            dataIndex: 'string',
+            text: ''
+        }],
+        viewConfig: {
+
+        },
+        features: [{
+            ftype: 'grouping'
+        }]
+    }, {
         xtype: 'displayfield',
         fieldLabel: 'Lab Order No.',
         x: 230,
-        y: 0
+        y: -1
     }, {
         xtype: 'displayfield',
         fieldLabel: 'Patient',
@@ -45,7 +61,7 @@ Ext.define('Laboratory.view.SpecimenCollection12', {
     }, {
         xtype: 'displayfield',
         width: 70,
-        fieldLabel: 'Patient ID',
+        fieldLabel: 'Name',
         x: 240,
         y: 70
     }, {
@@ -69,63 +85,54 @@ Ext.define('Laboratory.view.SpecimenCollection12', {
         x: 240,
         y: 130
     }, {
-        xtype: 'gridpanel',
-        title: 'My Grid Panel',
-        x: 210,
-        y: 190,
-        columns: [{
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'String'
-        }, {
-            xtype: 'gridcolumn',
-            text: 'Investigation'
-        }, {
-            xtype: 'gridcolumn',
-            text: 'Ok to Collect'
-        }],
-        viewConfig: {
+        xtype: 'panel',
+        height: 150,
+        width: 450,
+        autoScroll: true,
+        title: '',
+        x: 230,
+        y: 170,
+        items: [{
+            xtype: 'gridpanel',
+            autoScroll: true,
+            title: 'Lab order',
+            columnLines: true,
+            columns: [{
+                xtype: 'gridcolumn',
+                dataIndex: 'string',
+                text: 'Lab Order no.'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Investigation'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Lab specimen Id'
+            }, {
+                xtype: 'datecolumn',
+                text: 'Speciment Collection Date'
+            }],
+            viewConfig: {
 
-        }
+            }
+        }]
     }, {
-        xtype: 'displayfield',
-        value: 'Patient Criteria:',
-        fieldLabel: '',
-        x: 220,
+        xtype: 'button',
+        height: 20,
+        text: 'New Specimen',
+        x: 420,
         y: 330
     }, {
-        xtype: 'displayfield',
-        value: 'Does patient have a temperation greater than 101 F',
-        fieldLabel: 'Q1',
-        x: 220,
-        y: 350
-    }, {
         xtype: 'button',
-        text: 'Continue',
-        x: 490,
-        y: 390,
+        height: 20,
+        text: 'New Laborder',
+        x: 560,
+        y: 330,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SPECIMEN_COLLECTION_GRID.value);
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_ADD_INVESTIGATION.value);
         }
-    }, {
-        xtype: 'button',
-        text: 'Cancel',
-        x: 320,
-        y: 390,
-        handler: function () {
-            var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
-        }
-    }, {
-        xtype: 'button',
-        text: 'Back',
-        x: 150,
-        y: 390,
-        handler: function () {
-            var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_LAB_ORDER_SEARCH_RESULT.value);
-        }
+
     }]
+
 
 });

@@ -13,14 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view is third and last form (contact information) for adding provider  
+ *  This view allows to add new provider (3rd page) 
  */
-Ext.define('Laboratory.view.LabOrderCreation9', {
+Ext.define('Laboratory.view.SpecimenRegistration8', {
     extend: 'Ext.container.Container',
-    alias: 'widget.LabOrderCreation9',
+    alias: 'widget.SpecimenRegistration8',
     autoScroll: true,
     activeItem: 0,
-
     items: [{
         xtype: 'textfield',
         fieldLabel: 'Block/House/Door No.',
@@ -59,13 +58,14 @@ Ext.define('Laboratory.view.LabOrderCreation9', {
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
-        } 
+        }
     }, {
         xtype: 'button',
         text: 'Done',
+        margin: '10 10 10 10',
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.HOME.value);
-        }        
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
+        }
     }]
-    });
+});
