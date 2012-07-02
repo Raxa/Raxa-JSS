@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.loginScreen',{
+Ext.define('mUserStories.view.confirmLocation',{
     extend:'Ext.Panel',
     config:{
         items:[{
@@ -33,23 +33,35 @@ Ext.define('mUserStories.view.loginScreen',{
                     align:'middle'
                 },
                 padding:'30px',
-                items: [{
+                items:[{
                     xtype:'label',
-                    html:'Login Please<br>'
+                    id:'welcome_label'
                 }]
             },{
                 xtype:'fieldset',
-                id:'loginForm',
+                id:'locationForm',
                 items:[{
-                    xtype:'textfield',
-                    label:'Username',
-                    id:'username',
-                    flex:2
-                },{
-                    xtype:'passwordfield',
-                    label:'Password',
-                    id:'password',
-                    flex:2
+                    xtype:'selectfield',
+                    label:'Location',
+                    id:'location',
+                    flex:2,
+                    required:true,
+                    options:[{
+                        text:'',
+                        value:'empty'
+                    },{
+                        text:'Location #1',
+                        value:'location1'
+                    },{
+                        text:'Location #2',
+                        value:'location2'
+                    },{
+                        text:'Location #3',
+                        value:'location3'
+                    },{
+                        text:'Other',
+                        value:'otherlocation'
+                    }]
                 }]
             },{
                 xtype: 'container',
@@ -68,30 +80,25 @@ Ext.define('mUserStories.view.loginScreen',{
                         flex: '2'
                     },{
                         xtype: 'button',
-                        // text: 'Okay',
-                        id: 'ok_login',
-                        // flex: '1',
-                        ui:'confirm-round',
-                        icon:'resources/rsz_check.png',
-                        width:'50px',
-                        height:'50px'
+                        text: 'Okay',
+                        id: 'ok_loc',
+                        flex: '3',
+                        ui:'confirm-round'
                     },{
                         xtype: 'label',
-                        flex: '2'
+                        flex: '1'
                     },{
                         xtype: 'button',
-                        // text: 'Cancel',
-                        id: 'cancel_login',
-                        ui:'decline-round',
-                        icon:'resources/rsz_delete.png',
-                        width:'50px',
-                        height:'50px'
+                        text: 'Cancel',
+                        id: 'cancel_loc',
+                        flex: '3',
+                        ui:'decline-round'
                     },{
                         xtype: 'label',
                         flex: '2'
                     }]
                 }]
             }]
-        }]
-    }
+        }
+    ]}
 });

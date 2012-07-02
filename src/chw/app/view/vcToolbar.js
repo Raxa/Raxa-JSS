@@ -13,15 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.Loader.setConfig({
-    enabled:true
-});
-Ext.application({
-    name:'mUserStories',
-    controllers:['basic'],
-    models:['downModel','upPersonModel','names','addresses','upPatientModel','identifiers'],
-    stores:['downStore','upPersonStore','location','identifiersType','upPatientStore'],
-    launch:function () {
-        Ext.create('mUserStories.view.loginScreen');
+Ext.define('mUserStories.view.vcToolbar',{
+    extend:'Ext.Toolbar',
+    config:{
+        docked:'bottom',
+        defaults:{
+            iconMask:true,
+            ui:'plain'
+        },
+        layout:{
+            pack:'center',
+            align:'center'
+        },
+        items:[{
+            iconCls:'action',
+            id:'notButton'
+        },{
+            iconCls:'compose',
+            id:'schButton'
+        },{
+            iconCls:'delete',
+            id:'logoutButton_vc'
+        }]
     }
-});
+})

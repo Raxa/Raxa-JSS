@@ -13,15 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.Loader.setConfig({
-    enabled:true
-});
-Ext.application({
-    name:'mUserStories',
-    controllers:['basic'],
-    models:['downModel','upPersonModel','names','addresses','upPatientModel','identifiers'],
-    stores:['downStore','upPersonStore','location','identifiersType','upPatientStore'],
-    launch:function () {
-        Ext.create('mUserStories.view.loginScreen');
+
+Ext.define('mUserStories.model.addresses',{
+    extend:'Ext.data.Model',
+    config:{
+        fields:[{
+            name:'cityVillage',
+            type:'string'
+            
+        }
+//        ,{
+//            name: 'address1',
+//            type:'string'
+//        },{
+//            name: 'address2',
+//            type:'string'
+//        }
+    ]
     }
-});
+})
