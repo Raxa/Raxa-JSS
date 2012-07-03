@@ -13,7 +13,7 @@ Ext.define("Screener.view.NewPatient", {
         hideOnMaskTap: true,
         hidden: true,
         // Set the width and height of the panel
-        width: 400,
+        width: 500,
         height: 240,
 
         items: [{
@@ -47,7 +47,7 @@ Ext.define("Screener.view.NewPatient", {
                     label : 'Female',
                     value: 'F',
                     name  : 'choice',
-                    labelWidth: 70,
+                    labelWidth: 100,
                     flex  : 1
                 },
                 {

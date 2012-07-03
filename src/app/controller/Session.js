@@ -101,6 +101,11 @@ Ext.define('RaxaEmr.controller.Session', {
                             'description': privilegesJson.privileges[i].description
                         };
                     }
+                    for (i = 0; i < privilegesJson.roles.length; i++) {
+                        if(privilegesJson.roles[i].name == 'Provider'){
+                            localStorage.setItem('logedInUser',privilegesJson.person.uuid)
+                        }
+                    }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
                     this.loginSuccess();
                 },
