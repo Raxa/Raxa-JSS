@@ -94,9 +94,7 @@ Ext.define('mUserStories.view.notificationInbox', {
                             flex: '2'
                         }, {
                             xtype: 'button',
-                            // text: 'Okay',
                             id: 'ok_inb',
-                            // flex: '1',
                             ui: 'confirm-round',
                             icon: 'resources/rsz_check2.png',
                             width: '45px',
@@ -107,7 +105,6 @@ Ext.define('mUserStories.view.notificationInbox', {
                             flex: '2'
                         }, {
                             xtype: 'button',
-                            // text: 'Cancel',
                             id: 'cancel_inb',
                             ui: 'decline-round',
                             icon: 'resources/rsz_delete1.png',
