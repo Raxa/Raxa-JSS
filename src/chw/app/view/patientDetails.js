@@ -33,46 +33,6 @@ Ext.define('mUserStories.view.patientDetails',{
             xclass:'mUserStories.view.userToolbar'
         },{
             xtype:'formpanel',
-            title:'Basic',
-            items:[{
-                xtype:'fieldset',
-                title:'Basic Information',
-                defaults:{
-                    labelWidth:'35%',
-                    disabled:true
-                },
-                items:[/*{
-                    xtype:'textfield',
-                    label:'Patient ID',
-                    id:'id_det'
-                },*/{
-                    xtype:'textfield',
-                    label:'First',
-                    id:'first_det'
-                },{
-                    xtype:'textfield',
-                    label:'Last',
-                    id:'last_det'
-                },/*{
-                    xtype:'textfield',
-                    label:'Phone',
-                    id:'phone_det'
-                },*/{
-                    xtype:'textfield',
-                    label:'Address',
-                    id:'address_det'
-                },{
-                    xtype:'textfield',
-                    label:'Gender',
-                    id:'gender_det'
-                },{
-                    xtype:'textfield',
-                    label:'Birthday',
-                    id:'bday_det'
-                }]
-            }]
-        },{
-            xtype:'formpanel',
             title:'Visit',
             items:[{
                 xtype:'fieldset',
@@ -172,6 +132,46 @@ Ext.define('mUserStories.view.patientDetails',{
                     xtype:'textfield',
                     label:'Some results',
                     id:'info_res'
+                }]
+            }]
+        },{
+            xtype:'formpanel',
+            title:'Info',
+            items:[{
+                xtype:'fieldset',
+                title:'Basic Information',
+                defaults:{
+                    labelWidth:'35%',
+                    disabled:true
+                },
+                items:[/*{
+                    xtype:'textfield',
+                    label:'Patient ID',
+                    id:'id_det'
+                },*/{
+                    xtype:'textfield',
+                    label:'First',
+                    id:'first_det'
+                },{
+                    xtype:'textfield',
+                    label:'Last',
+                    id:'last_det'
+                },/*{
+                    xtype:'textfield',
+                    label:'Phone',
+                    id:'phone_det'
+                },*/{
+                    xtype:'textfield',
+                    label:'Address',
+                    id:'address_det'
+                },{
+                    xtype:'textfield',
+                    label:'Gender',
+                    id:'gender_det'
+                },{
+                    xtype:'textfield',
+                    label:'Birthday',
+                    id:'bday_det'
                 }]
             }]
         }]

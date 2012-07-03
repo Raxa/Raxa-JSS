@@ -22,10 +22,14 @@ var PAGES={
     PATIENT_LIST:2,
     PATIENT_DET:3,
     ADD:4,
-    INBOX_CHW:5,
-    RESOURCES:6,
-    INBOX_VC:7,
-    SCHEDULING:8
+    ADD_REG:5,
+    ADD_REM:6,
+    ADD_APP:7,
+    OPTIONS:8,
+    INBOX_CHW:9,
+    RESOURCES:10,
+    INBOX_VC:11,
+    SCHEDULING:12
 };
 var USER=new Object();
 USER.name='';
@@ -51,10 +55,19 @@ var helper = {
         Ext.getCmp('password').reset();
         if(USER.type==='CHW'){
             // continue to next page with proper settings
-            Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
-            Ext.getCmp('viewPort').setActiveItem(PAGES.CONFIRM_LOC)
+            // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
+            helper.doDownload();
+            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         }else if(USER.type==='VC'){
             Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
         }
+    },
+    // Download patient with details
+    doDownload:function(){
+        var down_store=Ext.create('mUserStories.store.downStore');
+        down_store.load();
+        Ext.getCmp('patientlistid').setStore(down_store);
+    // TODO: set patientcurrid to be subset of above organized by appt time
+    // Do we need a separate store for this?
     }
 }

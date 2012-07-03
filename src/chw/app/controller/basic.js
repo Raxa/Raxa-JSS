@@ -20,14 +20,20 @@ Ext.define('mUserStories.controller.basic',{
     views:['loginScreen','confirmLocation','patientList','patientDetails','vcNotifications','vcScheduling'],
     config:{
         refs:{
+            add_app:'#add_app',
+            add_reg:'#add_reg',
+            add_rem:'#add_rem',
+            back_add:'#back_add',
+            back_add_app:'#back_add_app',
+            back_add_reg:'#back_add_reg',
+            back_add_rem:'#back_add_rem',
+            back_det:'#back_det',
+            back_inb:'#back_inb',
+            back_res:'#back_res',
             cancel_loc:'#cancel_loc',
             cancel_login:'#cancel_login',
             cancel_reg:'#cancel_reg',
             cancel_rem:'#cancel_rem',
-            back_add:'#back_add',
-            back_det:'#back_det',
-            back_inb:'#back_inb',
-            back_res:'#back_res',
             downButton:'#downButton',
             inboxButton:'#inboxButton',
             logoutButton:'#logoutButton',
@@ -43,7 +49,31 @@ Ext.define('mUserStories.controller.basic',{
             upButton:'#upButton'
         },
         control:{
-            back_add:{
+            add_app:{
+                tap:function(){
+                    this.doAdd('app',true)
+                }
+            },add_reg:{
+                tap:function(){
+                    this.doAdd('reg',true)
+                }
+            },add_rem:{
+                tap:function(){
+                    this.doAdd('rem',true)
+                }
+            },back_add:{
+                tap:function(){
+                    this.doBack()
+                }
+            },back_add_app:{
+                tap:function(){
+                    this.doBack()
+                }
+            },back_add_reg:{
+                tap:function(){
+                    this.doBack()
+                }
+            },back_add_rem:{
                 tap:function(){
                     this.doBack()
                 }
@@ -152,6 +182,12 @@ Ext.define('mUserStories.controller.basic',{
                 // display options for adding
                 xclass:'mUserStories.view.addOptions'
             },{
+                xclass:'mUserStories.view.addPatient'
+            },{
+                xclass:'mUserStories.view.addReminder'
+            },{
+                xclass:'mUserStories.view.addAppointment'
+            },{
                 // display inbox/outbox
                 xclass:'mUserStories.view.notificationInbox'
             },{
@@ -168,7 +204,13 @@ Ext.define('mUserStories.controller.basic',{
     // TODO: should we add more functionality? ex. place order for sample
     doAdd:function(step,arg){
         if(arg){
-            if(step==='register'){
+            if(step==='app'){
+                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_APP)
+            }else if(step==='reg'){
+                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REG)
+            }else if(step==='rem'){
+                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REM)
+            }else if(step==='register'){
                 // var id = Ext.getCmp('id_reg').getValue();
                 var fname = Ext.getCmp('first_reg').getValue();
                 var lname = Ext.getCmp('last_reg').getValue();
@@ -230,7 +272,7 @@ Ext.define('mUserStories.controller.basic',{
                 }
                 // TODO: pass LOCATION & CURR_DATE to manager
                 // download all data into local storage
-                this.doDownload();
+                helper.doDownload();
                 // continue to the next screen
                 Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
             }
@@ -272,7 +314,7 @@ Ext.define('mUserStories.controller.basic',{
                 if(resp==='yes'){
                     // TODO: check for conflicts
                     // doDownload information in localStorage
-                    this.doDownload();
+                    helper.doDownload();
                 }
             })
         }else if(arg==='inbox'){
@@ -290,16 +332,8 @@ Ext.define('mUserStories.controller.basic',{
     doBack:function(){
         // TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
-        this.doDownload();
+        helper.doDownload();
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
-    },
-    // Download patient with details
-    doDownload:function(){
-        var down_store=Ext.create('mUserStories.store.downStore');
-        down_store.load();
-        Ext.getCmp('patientlistid').setStore(down_store);
-    // TODO: set patientcurrid to be subset of above organized by appt time
-    // Do we need a separate store for this?
     },
     // exit the program
     doExit:function(){
@@ -373,7 +407,7 @@ Ext.define('mUserStories.controller.basic',{
         Ext.getCmp('village_reg').reset();
         Ext.getCmp('bday').reset();
         Ext.getCmp('reg_form').reset();
-        this.doDownload();
+        helper.doDownload();
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
     },
     saveBasicAuthHeader:function(username,password){

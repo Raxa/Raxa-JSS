@@ -13,70 +13,68 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.notificationInbox',{
-    extend:'Ext.tab.Panel',
+Ext.define('mUserStories.view.addReminder',{
+    extend:'Ext.Panel',
     config:{
         height:'100%',
         ui:'neutral',
+        scrollable:true,
         items:[{
             xtype:'titlebar',
             docked:'top',
-            title:'Notifications',
+            title:'Add Reminder',
             items:[{
                 xtype:'button',
                 ui:'back',
                 text:'Back',
-                id:'back_inb'
+                id:'back_add_rem'
             }]
         },{
             xclass:'mUserStories.view.userToolbar'
         },{
-            xtype:'formpanel',
-            title:'Compose',
+            xtype:'container',
+            padding:'10px',
             items:[{
                 xtype:'fieldset',
-                title:'Create Report',
                 defaults:{
                     labelWidth:'35%'
                 },
                 items:[{
+                    xtype:'textfield',
+                    label:'First',
+                    name:'first_rem',
+                    placeHolder:'Harry',
+                    clearIcon:true,
+                    required:true
+                },{
+                    xtype:'textfield',
+                    label:'Last',
+                    name:'last_rem',
+                    placeHolder:'Last',
+                    clearIcon:true,
+                    required:true
+                },{
                     xtype:'selectfield',
                     label:'Type',
-                    id:'type_inb',
+                    id:'type_rem',
                     flex:2,
                     required:true,
                     options:[{
                         text:'',
                         value:'empty'
                     },{
-                        text:'Emergency',
-                        value:'emergency'
+                        text:'Reminder #1',
+                        value:'reminder1'
                     },{
-                        text:'Illness',
-                        value:'illness'
+                        text:'Reminder #2',
+                        value:'reminder2'
                     },{
-                        text:'Transfer',
-                        value:'transfer'
+                        text:'Reminder #3',
+                        value:'reminder3'
                     },{
                         text:'Other',
-                        value:'otherreport'
+                        value:'otherreminder'
                     }]
-                },{
-                    xtype:'textfield',
-                    label:'First',
-                    id:'first_rep',
-                    required:true
-                },{
-                    xtype:'textfield',
-                    label:'Last',
-                    id:'last_rep',
-                    required:true
-                },{
-                    // TODO: Generate necessary fields dynamically
-                    xtype:'textfield',
-                    label:'Details',
-                    id:'details_rep',
-                    labelAlign:'top'
                 },{
                     xtype: 'container',
                     layout: {
@@ -95,7 +93,7 @@ Ext.define('mUserStories.view.notificationInbox',{
                         },{
                             xtype: 'button',
                             // text: 'Okay',
-                            id: 'ok_inb',
+                            id: 'ok_rem',
                             // flex: '1',
                             ui:'confirm-round',
                             icon:'resources/rsz_check2.png',
@@ -108,7 +106,7 @@ Ext.define('mUserStories.view.notificationInbox',{
                         },{
                             xtype: 'button',
                             // text: 'Cancel',
-                            id: 'cancel_inb',
+                            id: 'cancel_rem',
                             ui:'decline-round',
                             icon:'resources/rsz_delete1.png',
                             width:'45px',
@@ -120,36 +118,6 @@ Ext.define('mUserStories.view.notificationInbox',{
                         }]
                     }]
                 }]
-            }]
-        },{
-            title:'Unread',
-            cls:'demo-list',
-            items:[{
-                xtype:'list',
-                ui:'round',
-                grouped:true,
-                pinHeaders:false,
-                id:'inbox_unread',
-                width:Ext.os.deviceType=='Phone'?null:'80%',
-                height:Ext.os.deviceType=='Phone'?null:'100%',
-                centered:true,
-                itemTpl:[],
-                onItemDisclosure:function(record,btn,index){}   
-            }]
-        },{
-            title:'All',
-            cls:'demo-list',
-            items:[{
-                xtype:'list',
-                ui:'round',
-                grouped:true,
-                pinHeaders:false,
-                id:'inbox_all',
-                width:Ext.os.deviceType=='Phone'?null:'80%',
-                height:Ext.os.deviceType=='Phone'?null:'100%',
-                centered:true,
-                itemTpl:[],
-                onItemDisclosure:function(record,btn,index){}
             }]
         }]
     }

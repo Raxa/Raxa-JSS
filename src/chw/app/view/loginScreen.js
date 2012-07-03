@@ -72,9 +72,10 @@ Ext.define('mUserStories.view.loginScreen',{
                         id: 'ok_login',
                         // flex: '1',
                         ui:'confirm-round',
-                        icon:'resources/rsz_check.png',
-                        width:'50px',
-                        height:'50px'
+                        icon:'resources/rsz_check2.png',
+                        width:'45px',
+                        height:'45px',
+                        padding:'0px 0px 0px 3px'
                     },{
                         xtype: 'label',
                         flex: '2'
@@ -83,9 +84,10 @@ Ext.define('mUserStories.view.loginScreen',{
                         // text: 'Cancel',
                         id: 'cancel_login',
                         ui:'decline-round',
-                        icon:'resources/rsz_delete.png',
-                        width:'50px',
-                        height:'50px'
+                        icon:'resources/rsz_delete1.png',
+                        width:'45px',
+                        height:'45px',
+                        padding:'0px 0px 0px 3px'
                     },{
                         xtype: 'label',
                         flex: '2'
