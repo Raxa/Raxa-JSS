@@ -14,16 +14,10 @@
  * the License.
  */
 
-Ext.define('RaxaEmr.Outpatient.store.patientlist', {
-    extend: 'Ext.data.Store',
+Ext.define('RaxaEmr.Outpatient.model.medicationhistory', {
+    extend: 'Ext.data.Model',
 
     config: {
-        model: 'RaxaEmr.Outpatient.model.patientlist',
-        autoLoad: true,
-        sorters: 'firstName',
-        proxy: {
-            type: 'ajax',
-            url: 'data/patient.json'
-        }
+        fields: ['drugname', 'duration', 'lastfilled', 'prescriber', 'drugreaction', 'dosage', 'routeofadministration']
     }
 });

@@ -14,16 +14,12 @@
  * the License.
  */
 
-Ext.define('RaxaEmr.Outpatient.store.patientlist', {
-    extend: 'Ext.data.Store',
-
+Ext.define('RaxaEmr.Outpatient.view.patient.treatmentsummery', {
+    extend: 'Ext.dataview.List',
+    xtype: 'Treatment-Summery',
     config: {
-        model: 'RaxaEmr.Outpatient.model.patientlist',
-        autoLoad: true,
-        sorters: 'firstName',
-        proxy: {
-            type: 'ajax',
-            url: 'data/patient.json'
-        }
+        store: 'drugpanel',
+        itemTpl: ['<div>{drugname} {strength} mg</br>{dosage} {instruction}</br>Continue for {duration} days</div>']
     }
+
 });

@@ -14,16 +14,10 @@
  * the License.
  */
 
-Ext.define('RaxaEmr.Outpatient.store.patientlist', {
-    extend: 'Ext.data.Store',
+Ext.define('RaxaEmr.Outpatient.model.Grid', {
+    extend: 'Ext.data.Model',
 
     config: {
-        model: 'RaxaEmr.Outpatient.model.patientlist',
-        autoLoad: true,
-        sorters: 'firstName',
-        proxy: {
-            type: 'ajax',
-            url: 'data/patient.json'
-        }
+        fields: ['height', 'weight', 'bmi', 'bp', 'pulse', 'resrate', 'temp', 'oxysat']
     }
 });
