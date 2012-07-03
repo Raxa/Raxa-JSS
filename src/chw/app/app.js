@@ -14,14 +14,14 @@
  * the License.
  */
 Ext.Loader.setConfig({
-    enabled:true
+    enabled: true
 });
 Ext.application({
-    name:'mUserStories',
-    controllers:['basic'],
-    models:['downModel','upPersonModel','names','addresses','upPatientModel','identifiers'],
-    stores:['downStore','upPersonStore','location','identifiersType','upPatientStore'],
-    launch:function () {
+    name: 'mUserStories',
+    controllers: ['basic'],
+    models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers'],
+    stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore'],
+    launch: function () {
         Ext.create('mUserStories.view.loginScreen');
     }
 });

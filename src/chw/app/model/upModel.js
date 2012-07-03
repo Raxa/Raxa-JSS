@@ -13,33 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-Ext.define('mUserStories.model.upModel',{
-    extend:'Ext.data.Model',
-    config:{
-        fields:[{
-            name:'id',
-            type:'number',
-            persist:false
-        },
-        {
-            name:'names',
+Ext.define('mUserStories.model.upModel', {
+    extend: 'Ext.data.Model',
+    config: {
+        fields: [{
+            name: 'id',
+            type: 'number',
+            persist: false
+        }, {
+            name: 'names',
             model: 'mUserStories.model.names'
-            
-        },{
-            name:'gender',
-            type:'string'
-        },{
-            name:'birthdate',
-            type:'date'
-        },{
-            name:'addresses',
+
+        }, {
+            name: 'gender',
+            type: 'string'
+        }, {
+            name: 'birthdate',
+            type: 'date'
+        }, {
+            name: 'addresses',
             model: 'mUserStories.model.addresses'
-            
-        },{
-            name:'uuid',
-            type:'number',
-            persist:false
+
+        }, {
+            name: 'uuid',
+            type: 'number',
+            persist: false
         }]
     }
 })

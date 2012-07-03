@@ -13,22 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+Ext.define('mUserStories.model.addresses', {
+    extend: 'Ext.data.Model',
+    config: {
+        fields: [{
+            name: 'cityVillage',
+            type: 'string'
 
-Ext.define('mUserStories.model.addresses',{
-    extend:'Ext.data.Model',
-    config:{
-        fields:[{
-            name:'cityVillage',
-            type:'string'
-            
-        }
-//        ,{
-//            name: 'address1',
-//            type:'string'
-//        },{
-//            name: 'address2',
-//            type:'string'
-//        }
-    ]
+        }]
     }
 })

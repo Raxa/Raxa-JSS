@@ -13,27 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.vcToolbar',{
-    extend:'Ext.Toolbar',
-    config:{
-        docked:'bottom',
-        defaults:{
-            iconMask:true,
-            ui:'plain'
+Ext.define('mUserStories.view.vcToolbar', {
+    extend: 'Ext.Toolbar',
+    config: {
+        docked: 'bottom',
+        defaults: {
+            iconMask: true,
+            ui: 'plain'
         },
-        layout:{
-            pack:'center',
-            align:'center'
+        layout: {
+            pack: 'center',
+            align: 'center'
         },
-        items:[{
-            iconCls:'action',
-            id:'notButton'
-        },{
-            iconCls:'compose',
-            id:'schButton'
-        },{
-            iconCls:'delete',
-            id:'logoutButton_vc'
+        items: [{
+            iconCls: 'action',
+            id: 'notButton'
+        }, {
+            iconCls: 'compose',
+            id: 'schButton'
+        }, {
+            iconCls: 'delete',
+            id: 'logoutButton_vc'
         }]
     }
 })

@@ -13,20 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 /*
  * Model used for names in upPersonModel
  */
-Ext.define('mUserStories.model.names',{
-    extend:'Ext.data.Model',
-    config:{
-        fields:[{
-            name:'giveName',
-            type:'string'
-            
-        },{
+Ext.define('mUserStories.model.names', {
+    extend: 'Ext.data.Model',
+    config: {
+        fields: [{
+            name: 'giveName',
+            type: 'string'
+
+        }, {
             name: 'familyName',
-            type:'string'
+            type: 'string'
         }]
     }
 })

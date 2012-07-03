@@ -13,36 +13,36 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.userToolbar',{
-    extend:'Ext.Toolbar',
-    config:{
-        docked:'bottom',
-        defaults:{
-            iconMask:true,
-            ui:'plain'
+Ext.define('mUserStories.view.userToolbar', {
+    extend: 'Ext.Toolbar',
+    config: {
+        docked: 'bottom',
+        defaults: {
+            iconMask: true,
+            ui: 'plain'
         },
-        layout:{
-            pack:'center',
-            align:'center'
+        layout: {
+            pack: 'center',
+            align: 'center'
         },
-        items:[{
-            iconCls:'add',
-            id:'menuButton'
-        },{
+        items: [{
+            iconCls: 'add',
+            id: 'menuButton'
+        }, {
             //iconCls:'inbox2',
-            iconCls:'action',
-            id:'inboxButton'
-        },{
-            iconCls:'arrow_down',
+            iconCls: 'action',
+            id: 'inboxButton'
+        }, {
+            iconCls: 'arrow_down',
             // iconCls:'cloud_download',
-            id:'downButton'
-        },{
+            id: 'downButton'
+        }, {
             // iconCls:'photos2',
-            iconCls:'star',
-            id:'resourcesButton'
-        },{
-            iconCls:'delete',
-            id:'logoutButton'
+            iconCls: 'star',
+            id: 'resourcesButton'
+        }, {
+            iconCls: 'delete',
+            id: 'logoutButton'
         }]
     }
 })

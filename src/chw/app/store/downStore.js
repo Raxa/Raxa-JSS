@@ -16,20 +16,20 @@
 /*
  * Store used for data while downloading patient details
  */
-Ext.define('mUserStories.store.downStore',{
-    extend:'Ext.data.Store',
-    config:{
-        model:'mUserStories.model.downModel',
-        id:'searchpatient',
-        sorters:'familyName',
-        grouper:function(record){
+Ext.define('mUserStories.store.downStore', {
+    extend: 'Ext.data.Store',
+    config: {
+        model: 'mUserStories.model.downModel',
+        id: 'searchpatient',
+        sorters: 'familyName',
+        grouper: function (record) {
             return record.get('familyName')[0];
         },
-        proxy:{
+        proxy: {
             type: 'rest',
             //Hard-coding the host URL searching for patient name 'alok'
-            url: MRSHOST+'/ws/rest/v1/patient?q=potter&v=full',
-            headers:{
+            url: MRSHOST + '/ws/rest/v1/patient?q=potter&v=full',
+            headers: {
                 "Authorization": "Basic " + window.btoa("admin" + ":" + "Hello123"),
                 "Accept": "application/json",
                 "Content-Type": "application/json"

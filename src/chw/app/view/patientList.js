@@ -13,53 +13,49 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.patientList',{
-    extend:'Ext.tab.Panel',
-    config:{
-        height:'100%',
-        ui:'neutral',
-        items:[{
-            xtype:'titlebar',
-            docked:'top',
-            title:'Patient List'
-        },{
-            xclass:'mUserStories.view.userToolbar'
-        },{
-            title:'All',
-            cls:'demo-list',
-            items:[{
-                xtype:'list',
-                ui:'round',
-                grouped:true,
-                pinHeaders:false,
-                id:'patientlistid',
-                width:Ext.os.deviceType=='Phone'?null:'80%',
-                height:Ext.os.deviceType=='Phone'?null:'100%',
-                centered:true,
-                indexBar:true,
-                itemTpl:[
-                '<div>{familyName}, {givenName}</div>'
-                ],
-                onItemDisclosure:function(record,btn,index){
+Ext.define('mUserStories.view.patientList', {
+    extend: 'Ext.tab.Panel',
+    config: {
+        height: '100%',
+        ui: 'neutral',
+        items: [{
+            xtype: 'titlebar',
+            docked: 'top',
+            title: 'Patient List'
+        }, {
+            xclass: 'mUserStories.view.userToolbar'
+        }, {
+            title: 'All',
+            cls: 'demo-list',
+            items: [{
+                xtype: 'list',
+                ui: 'round',
+                grouped: true,
+                pinHeaders: false,
+                id: 'patientlistid',
+                width: Ext.os.deviceType == 'Phone' ? null : '80%',
+                height: Ext.os.deviceType == 'Phone' ? null : '100%',
+                centered: true,
+                indexBar: true,
+                itemTpl: ['<div>{familyName}, {givenName}</div>'],
+                onItemDisclosure: function (record, btn, index) {
                     helper.listDisclose(record);
-                }   
+                }
             }]
-        },{
-            title:'Current',
-            cls:'demo-list',
-            items:[{
-                xtype:'list',
-                ui:'round',
-                grouped:true,
-                pinHeaders:false,
-                id:'patientcurrid',
-                width:Ext.os.deviceType=='Phone'?null:'80%',
-                height:Ext.os.deviceType=='Phone'?null:'100%',
-                centered:true,
-                itemTpl:[
-                '<div>{familyName}, {givenName}</div>'
-                ],
-                onItemDisclosure:function(record,btn,index){
+        }, {
+            title: 'Current',
+            cls: 'demo-list',
+            items: [{
+                xtype: 'list',
+                ui: 'round',
+                grouped: true,
+                pinHeaders: false,
+                id: 'patientcurrid',
+                width: Ext.os.deviceType == 'Phone' ? null : '80%',
+                height: Ext.os.deviceType == 'Phone' ? null : '100%',
+                centered: true,
+                itemTpl: ['<div>{familyName}, {givenName}</div>'],
+                onItemDisclosure: function (record, btn, index) {
                     helper.listDisclose(record);
                 }
             }]

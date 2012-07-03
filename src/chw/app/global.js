@@ -13,33 +13,32 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-var HOST='http://174.129.222.130:8080/motech-platform-server/';
-var MRSHOST='http://raxajss.jelastic.servint.net';
-var PAGES={
-    LOGIN_SCREEN:0,
-    CONFIRM_LOC:1,
-    PATIENT_LIST:2,
-    PATIENT_DET:3,
-    ADD:4,
-    ADD_REG:5,
-    ADD_REM:6,
-    ADD_APP:7,
-    OPTIONS:8,
-    INBOX_CHW:9,
-    RESOURCES:10,
-    INBOX_VC:11,
-    SCHEDULING:12
+var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
+var MRSHOST = 'http://raxajss.jelastic.servint.net';
+var PAGES = {
+    LOGIN_SCREEN: 0,
+    CONFIRM_LOC: 1,
+    PATIENT_LIST: 2,
+    PATIENT_DET: 3,
+    ADD: 4,
+    ADD_REG: 5,
+    ADD_REM: 6,
+    ADD_APP: 7,
+    OPTIONS: 8,
+    INBOX_CHW: 9,
+    RESOURCES: 10,
+    INBOX_VC: 11,
+    SCHEDULING: 12
 };
-var USER=new Object();
-USER.name='';
-USER.type='CHW';
-var CURR_DATE=new Date();
-var LOCATION="";
-var CONNECTED=false;
+var USER = new Object();
+USER.name = '';
+USER.type = 'CHW';
+var CURR_DATE = new Date();
+var LOCATION = "";
+var CONNECTED = false;
 var helper = {
-    listDisclose: function (record) { 
-        Ext.getCmp('title_det').setTitle(record.get('familyName')+', '+record.get('givenName'))
+    listDisclose: function (record) {
+        Ext.getCmp('title_det').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
         // navigate to details for specific patient and populate fields
         Ext.getCmp('first_det').setValue(record.get('givenName'));
         Ext.getCmp('last_det').setValue(record.get('familyName'));
@@ -49,25 +48,25 @@ var helper = {
         // change to next page
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
     },
-    loginContinue:function(){
+    loginContinue: function () {
         // clear form fields
         Ext.getCmp('username').reset();
         Ext.getCmp('password').reset();
-        if(USER.type==='CHW'){
+        if (USER.type === 'CHW') {
             // continue to next page with proper settings
             // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             helper.doDownload();
             Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
-        }else if(USER.type==='VC'){
+        } else if (USER.type === 'VC') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
         }
     },
     // Download patient with details
-    doDownload:function(){
-        var down_store=Ext.create('mUserStories.store.downStore');
+    doDownload: function () {
+        var down_store = Ext.create('mUserStories.store.downStore');
         down_store.load();
         Ext.getCmp('patientlistid').setStore(down_store);
-    // TODO: set patientcurrid to be subset of above organized by appt time
-    // Do we need a separate store for this?
+        // TODO: set patientcurrid to be subset of above organized by appt time
+        // Do we need a separate store for this?
     }
 }

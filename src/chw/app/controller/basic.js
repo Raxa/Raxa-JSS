@@ -13,205 +13,228 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-Ext.define('mUserStories.controller.basic',{
-    extend:'Ext.app.Controller',
-    controllers:['basic'],
-    views:['loginScreen','confirmLocation','patientList','patientDetails','vcNotifications','vcScheduling'],
-    config:{
-        refs:{
-            add_app:'#add_app',
-            add_reg:'#add_reg',
-            add_rem:'#add_rem',
-            back_add:'#back_add',
-            back_add_app:'#back_add_app',
-            back_add_reg:'#back_add_reg',
-            back_add_rem:'#back_add_rem',
-            back_det:'#back_det',
-            back_inb:'#back_inb',
-            back_res:'#back_res',
-            cancel_loc:'#cancel_loc',
-            cancel_login:'#cancel_login',
-            cancel_reg:'#cancel_reg',
-            cancel_rem:'#cancel_rem',
-            downButton:'#downButton',
-            inboxButton:'#inboxButton',
-            logoutButton:'#logoutButton',
-            logoutButton_vc:'#logoutButton_vc',
-            menuButton:'#menuButton',
-            notButton:'#notButton',
-            ok_loc:'#ok_loc',
-            ok_login:'#ok_login',
-            ok_reg:"#ok_reg",
-            ok_rem:'#ok_rem',
-            resourcesButton:'#resourcesButton',
-            schButton:'#schButton',
-            upButton:'#upButton'
+Ext.define('mUserStories.controller.basic', {
+    extend: 'Ext.app.Controller',
+    controllers: ['basic'],
+    views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling'],
+    config: {
+        refs: {
+            add_app: '#add_app',
+            add_reg: '#add_reg',
+            add_rem: '#add_rem',
+            back_add: '#back_add',
+            back_add_app: '#back_add_app',
+            back_add_reg: '#back_add_reg',
+            back_add_rem: '#back_add_rem',
+            back_det: '#back_det',
+            back_inb: '#back_inb',
+            back_res: '#back_res',
+            cancel_loc: '#cancel_loc',
+            cancel_login: '#cancel_login',
+            cancel_reg: '#cancel_reg',
+            cancel_rem: '#cancel_rem',
+            downButton: '#downButton',
+            inboxButton: '#inboxButton',
+            logoutButton: '#logoutButton',
+            logoutButton_vc: '#logoutButton_vc',
+            menuButton: '#menuButton',
+            notButton: '#notButton',
+            ok_loc: '#ok_loc',
+            ok_login: '#ok_login',
+            ok_reg: "#ok_reg",
+            ok_rem: '#ok_rem',
+            resourcesButton: '#resourcesButton',
+            schButton: '#schButton',
+            upButton: '#upButton'
         },
-        control:{
-            add_app:{
-                tap:function(){
-                    this.doAdd('app',true)
+        control: {
+            add_app: {
+                tap: function () {
+                    this.doAdd('app', true)
                 }
-            },add_reg:{
-                tap:function(){
-                    this.doAdd('reg',true)
+            },
+            add_reg: {
+                tap: function () {
+                    this.doAdd('reg', true)
                 }
-            },add_rem:{
-                tap:function(){
-                    this.doAdd('rem',true)
+            },
+            add_rem: {
+                tap: function () {
+                    this.doAdd('rem', true)
                 }
-            },back_add:{
-                tap:function(){
+            },
+            back_add: {
+                tap: function () {
                     this.doBack()
                 }
-            },back_add_app:{
-                tap:function(){
+            },
+            back_add_app: {
+                tap: function () {
                     this.doBack()
                 }
-            },back_add_reg:{
-                tap:function(){
+            },
+            back_add_reg: {
+                tap: function () {
                     this.doBack()
                 }
-            },back_add_rem:{
-                tap:function(){
+            },
+            back_add_rem: {
+                tap: function () {
                     this.doBack()
                 }
-            },back_det:{
-                tap:function(){
+            },
+            back_det: {
+                tap: function () {
                     this.doBack()
                 }
-            },back_inb:{
-                tap:function(){
+            },
+            back_inb: {
+                tap: function () {
                     this.doBack()
                 }
-            },back_res:{
-                tap:function(){
+            },
+            back_res: {
+                tap: function () {
                     this.doBack()
                 }
-            },cancel_loc:{
-                tap:function(){
+            },
+            cancel_loc: {
+                tap: function () {
                     this.doLocation(false)
                 }
-            },cancel_login:{
-                tap:function(){
+            },
+            cancel_login: {
+                tap: function () {
                     this.doLogin(false)
                 }
-            },cancel_reg:{
-                tap:function(){
-                    this.doAdd('register',false)
+            },
+            cancel_reg: {
+                tap: function () {
+                    this.doAdd('register', false)
                 }
-            },cancel_rem:{
-                tap:function(){
-                    this.doAdd('reminder',false)
+            },
+            cancel_rem: {
+                tap: function () {
+                    this.doAdd('reminder', false)
                 }
-            },downButton:{
-                tap:function(){
+            },
+            downButton: {
+                tap: function () {
                     this.doToolbar('down')
                 }
-            },inboxButton:{
-                tap:function(){
+            },
+            inboxButton: {
+                tap: function () {
                     this.doToolbar('inbox')
                 }
-            },logoutButton:{
-                tap:function(){
+            },
+            logoutButton: {
+                tap: function () {
                     this.doExit()
                 }
-            },logoutButton_vc:{
-                tap:function(){
+            },
+            logoutButton_vc: {
+                tap: function () {
                     this.doExit()
                 }
-            },menuButton:{
-                tap:function(){
+            },
+            menuButton: {
+                tap: function () {
                     this.doToolbar('menu')
                 }
-            },notButton:{
-                tap:function(){
+            },
+            notButton: {
+                tap: function () {
                     this.doToolbar('not')
                 }
-            },ok_loc:{
-                tap:function(){
+            },
+            ok_loc: {
+                tap: function () {
                     this.doLocation(true)
                 }
-            },ok_login:{
-                tap:function(){
+            },
+            ok_login: {
+                tap: function () {
                     this.doLogin(true)
                 }
-            },ok_reg:{
-                tap:function(){
-                    this.doAdd('register',true)
+            },
+            ok_reg: {
+                tap: function () {
+                    this.doAdd('register', true)
                 }
-            },ok_rem:{
-                tap:function(){
-                    this.doAdd('reminder',true)
+            },
+            ok_rem: {
+                tap: function () {
+                    this.doAdd('reminder', true)
                 }
-            },resourcesButton:{
-                tap:function(){
+            },
+            resourcesButton: {
+                tap: function () {
                     this.doToolbar('resources')
                 }
-            },schButton:{
-                tap:function(){
+            },
+            schButton: {
+                tap: function () {
                     this.doToolbar('sch')
                 }
             },
-            upButton:{
-                tap:function(){
+            upButton: {
+                tap: function () {
                     this.doToolbar('up')
                 }
             }
         }
     },
-    launch:function(){
-        Ext.create('Ext.Container',{
-            id:'viewPort',
-            fullscreen:true,
-            layout:'card',
-            items:[{
+    launch: function () {
+        Ext.create('Ext.Container', {
+            id: 'viewPort',
+            fullscreen: true,
+            layout: 'card',
+            items: [{
                 // log into application
-                xclass:'mUserStories.view.loginScreen'
-            },{
+                xclass: 'mUserStories.view.loginScreen'
+            }, {
                 // daily checkin
-                xclass:'mUserStories.view.confirmLocation'
-            },{
+                xclass: 'mUserStories.view.confirmLocation'
+            }, {
                 // display a list of patients
-                xclass:'mUserStories.view.patientList'
-            },{
+                xclass: 'mUserStories.view.patientList'
+            }, {
                 // display details of patient
-                xclass:'mUserStories.view.patientDetails'
-            },{
+                xclass: 'mUserStories.view.patientDetails'
+            }, {
                 // display options for adding
-                xclass:'mUserStories.view.addOptions'
-            },{
-                xclass:'mUserStories.view.addPatient'
-            },{
-                xclass:'mUserStories.view.addReminder'
-            },{
-                xclass:'mUserStories.view.addAppointment'
-            },{
+                xclass: 'mUserStories.view.addOptions'
+            }, {
+                xclass: 'mUserStories.view.addPatient'
+            }, {
+                xclass: 'mUserStories.view.addReminder'
+            }, {
+                xclass: 'mUserStories.view.addAppointment'
+            }, {
                 // display inbox/outbox
-                xclass:'mUserStories.view.notificationInbox'
-            },{
-                xclass:'mUserStories.view.resources'
-            },{
-                xclass:'mUserStories.view.vcNotifications'
-            },{
-                xclass:'mUserStories.view.vcScheduling'
+                xclass: 'mUserStories.view.notificationInbox'
+            }, {
+                xclass: 'mUserStories.view.resources'
+            }, {
+                xclass: 'mUserStories.view.vcNotifications'
+            }, {
+                xclass: 'mUserStories.view.vcScheduling'
             }]
         })
     },
-/* SCREEN FUNCTIONS */
+    /* SCREEN FUNCTIONS */
     // add registrations and reminders
     // TODO: should we add more functionality? ex. place order for sample
-    doAdd:function(step,arg){
-        if(arg){
-            if(step==='app'){
+    doAdd: function (step, arg) {
+        if (arg) {
+            if (step === 'app') {
                 Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_APP)
-            }else if(step==='reg'){
+            } else if (step === 'reg') {
                 Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REG)
-            }else if(step==='rem'){
+            } else if (step === 'rem') {
                 Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REM)
-            }else if(step==='register'){
-                // var id = Ext.getCmp('id_reg').getValue();
+            } else if (step === 'register') {
                 var fname = Ext.getCmp('first_reg').getValue();
                 var lname = Ext.getCmp('last_reg').getValue();
                 var phone = Ext.getCmp('phone_reg').getValue();
@@ -219,54 +242,54 @@ Ext.define('mUserStories.controller.basic',{
                 var radioform = Ext.getCmp('reg_form');
                 var gender = radioform.getValues().radiogroup.charAt(0);
                 var bday = Ext.getCmp('bday').getValue();
-                
-                if(fname=='' || lname=='' || phone=='' || village=='' || gender=='' || bday==''){
-                    Ext.Msg.alert("Error","Please fill in all fields")
-                }else{
-                    var up_store=Ext.create('mUserStories.store.upPersonStore');
-                    var up_Model = Ext.create('mUserStories.model.upPersonModel',{
-                        names:[{
-                            givenName:fname,
-                            familyName:lname
+
+                if (fname == '' || lname == '' || phone == '' || village == '' || gender == '' || bday == '') {
+                    Ext.Msg.alert("Error", "Please fill in all fields")
+                } else {
+                    var up_store = Ext.create('mUserStories.store.upPersonStore');
+                    var up_Model = Ext.create('mUserStories.model.upPersonModel', {
+                        names: [{
+                            givenName: fname,
+                            familyName: lname
                         }],
-                        gender:gender,
-                        birthdate:bday,
-                        addresses:[{
-                            cityVillage:village
+                        gender: gender,
+                        birthdate: bday,
+                        addresses: [{
+                            cityVillage: village
                         }]
                     });
                     //Adding registration details into local storage (a store)
                     up_store.add(up_Model);
                     //REST call for creating a Person
                     up_store.sync();
-                    up_store.on('write',function(){
+                    up_store.on('write', function () {
                         console.log('Stored locally, calling identifier type');
                         // Now that Person is created, send request to create Patient
                         this.getidentifierstype(up_store.getAt(0).getData().uuid)
-                    },this)
+                    }, this)
                 }
-            }else if(step==='reminder'){
-            // TODO: validate all fields
-            // TODO: add 'other' option
+            } else if (step === 'reminder') {
+                // TODO: validate all fields
+                // TODO: add 'other' option
             }
-        }else{
+        } else {
             // TODO: doReturn()
             this.doDownload();
             Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         }
     },
     // allow chw to check in
-    doLocation:function(arg){
-        if(arg){
+    doLocation: function (arg) {
+        if (arg) {
             // TODO: generate close locations based on USER
-            LOCATION=Ext.getCmp('location').getValue();
-            if (LOCATION==='empty'){
-                Ext.Msg.alert("",'Please fill in the form')
-            }else{
-                if(LOCATION==="otherlocation"){
-                    Ext.Msg.prompt("","Please enter other location:",function(btn,text){
-                        if(btn==='ok'){
-                            LOCATION=text;
+            LOCATION = Ext.getCmp('location').getValue();
+            if (LOCATION === 'empty') {
+                Ext.Msg.alert("", 'Please fill in the form')
+            } else {
+                if (LOCATION === "otherlocation") {
+                    Ext.Msg.prompt("", "Please enter other location:", function (btn, text) {
+                        if (btn === 'ok') {
+                            LOCATION = text;
                         }
                     })
                 }
@@ -276,67 +299,67 @@ Ext.define('mUserStories.controller.basic',{
                 // continue to the next screen
                 Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
             }
-        }else{
+        } else {
             // exit the program
             this.doExit();
         }
     },
     // login to the application
-    doLogin:function(arg){
-        if(arg){
+    doLogin: function (arg) {
+        if (arg) {
             // store items
-            USER.name=Ext.getCmp('username').getValue();
-            var pass=Ext.getCmp('password').getValue();
-            if(USER.name==''||pass==''){
-                Ext.Msg.alert("Error","Please fill in all fields")
-            }else{
+            USER.name = Ext.getCmp('username').getValue();
+            var pass = Ext.getCmp('password').getValue();
+            if (USER.name == '' || pass == '') {
+                Ext.Msg.alert("Error", "Please fill in all fields")
+            } else {
                 //this.saveBasicAuthHeader(USER.name,pass);
                 helper.loginContinue();
             }
-        }else{
+        } else {
             // exit the program
             this.doExit();
         }
-    },   
+    },
     // manage navigation based on lower toolbar
-    doToolbar:function(arg){
-        if(arg==='menu'){
+    doToolbar: function (arg) {
+        if (arg === 'menu') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
-        }else if(arg==='up'){
-            Ext.Msg.confirm('','Upload all information?',function(resp){
-                if(resp==='yes'){
+        } else if (arg === 'up') {
+            Ext.Msg.confirm('', 'Upload all information?', function (resp) {
+                if (resp === 'yes') {
                     // upload information in localStorage
                     this.doUpload();
                 }
             })
-        }else if(arg==='down'){
-            Ext.Msg.confirm('','Download all information?',function(resp){
-                if(resp==='yes'){
+        } else if (arg === 'down') {
+            Ext.Msg.confirm('', 'Download all information?', function (resp) {
+                if (resp === 'yes') {
                     // TODO: check for conflicts
                     // doDownload information in localStorage
                     helper.doDownload();
                 }
             })
-        }else if(arg==='inbox'){
+        } else if (arg === 'inbox') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_CHW)
-        }else if(arg==='resources'){
+        } else if (arg === 'resources') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
-        }else if(arg==='not'){
+        } else if (arg === 'not') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
-        }else if(arg==='sch'){
+        } else if (arg === 'sch') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.SCHEDULING)
         }
     },
-/* HELPER FUNCTIONS */  
+    /* HELPER FUNCTIONS */
     // deal with backbutton
-    doBack:function(){
+    doBack: function () {
         // TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
         helper.doDownload();
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
     },
     // exit the program
-    doExit:function(){
+    doExit: function () {
         // TODO: make sure all information is uploaded
         // TODO: delete/save necessary information
         Ext.getCmp('location').reset();
@@ -366,16 +389,16 @@ Ext.define('mUserStories.controller.basic',{
             this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
         }, this)
     },
-    getPatientIdentifier : function(){
+    getPatientIdentifier: function () {
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
     },
-    isEmpty:function(arg){
+    isEmpty: function (arg) {
         // TODO: check to see if the select field is empty
         // TODO: continue to arg if not empty
     },
-    isOther:function(arg){
+    isOther: function (arg) {
         // TODO: check to see if the select field is other
         // TODO: pop up screen prompt
         // TODO: continue to arg 
@@ -392,15 +415,15 @@ Ext.define('mUserStories.controller.basic',{
                 preferred: true
             }]
         });
-        
+
         var PatientStore = Ext.create('mUserStories.store.upPatientStore')
         PatientStore.add(patient);
         //makes the post call for creating the patient
         PatientStore.sync();
-        PatientStore.on('write',function(){
+        PatientStore.on('write', function () {
             console.log('------Patient Created successfully------');
-        },this) ;
-        
+        }, this);
+
         Ext.getCmp('first_reg').reset();
         Ext.getCmp('last_reg').reset();
         Ext.getCmp('phone_reg').reset();
@@ -410,18 +433,18 @@ Ext.define('mUserStories.controller.basic',{
         helper.doDownload();
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
     },
-    saveBasicAuthHeader:function(username,password){
+    saveBasicAuthHeader: function (username, password) {
         // delete existing logged in sessions
         Ext.Ajax.request({
-            url:MRSHOST+'/ws/rest/v1/session',
-            withCredentials:true,
-            useDefaultXhrHeader:false,
-            method:'DELETE',
-            success:function(){}
+            url: MRSHOST + '/ws/rest/v1/session',
+            withCredentials: true,
+            useDefaultXhrHeader: false,
+            method: 'DELETE',
+            success: function () {}
         })
         // check login and save to localStorage if valid
         Ext.Ajax.request({
-            url:MRSHOST+'/ws/rest/v1/session',
+            url: MRSHOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
             headers: {
@@ -429,26 +452,26 @@ Ext.define('mUserStories.controller.basic',{
                 "Authorization": "Basic " + window.btoa(username + ":" + password)
             },
             success: function (response) {
-                CONNECTED=true;
+                CONNECTED = true;
                 var authenticated = Ext.decode(response.responseText).authenticated;
                 if (authenticated) {
                     localStorage.setItem("basicAuthHeader", "Basic " + window.btoa(username + ":" + password));
                     helper.loginContinue();
                 } else {
                     localStorage.removeItem("basicAuthHeader");
-                    Ext.Msg.alert("Error","Please try again")
+                    Ext.Msg.alert("Error", "Please try again")
                 }
             },
-            failure:function(response){
-                CONNECTED=false;
+            failure: function (response) {
+                CONNECTED = false;
                 // hash user/pass
-                var hashPass='Basic ' + window.btoa(username+":"+password);
-                var hashStored=localStorage.getItem('basicAuthHeader');
+                var hashPass = 'Basic ' + window.btoa(username + ":" + password);
+                var hashStored = localStorage.getItem('basicAuthHeader');
                 // compare hashPass to hashStored
-                if(hashPass===hashStored){
+                if (hashPass === hashStored) {
                     helper.loginContinue();
-                }else{
-                    Ext.Msg.alert("Error","Please try again")
+                } else {
+                    Ext.Msg.alert("Error", "Please try again")
                 }
             }
         })

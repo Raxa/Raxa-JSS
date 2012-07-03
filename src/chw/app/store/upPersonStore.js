@@ -16,29 +16,29 @@
 /*
  * Store used for storing Person details when uploading data
  */
-Ext.define('mUserStories.store.upPersonStore',{
-    extend:'Ext.data.Store',
-    config:{
-        model:'mUserStories.model.upPersonModel',
-        id:'searchpatientup',
-        sorters:'familyName',
-        grouper:function(record){
+Ext.define('mUserStories.store.upPersonStore', {
+    extend: 'Ext.data.Store',
+    config: {
+        model: 'mUserStories.model.upPersonModel',
+        id: 'searchpatientup',
+        sorters: 'familyName',
+        grouper: function (record) {
             return record.get('familyName')[0];
         },
-        proxy:{
+        proxy: {
             type: 'rest',
             //The REST call here only creates a person
-            url: MRSHOST+'/ws/rest/v1/person',
-            headers:{
+            url: MRSHOST + '/ws/rest/v1/person',
+            headers: {
                 "Authorization": "Basic " + window.btoa("admin" + ":" + "Hello123"),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             reader: {
                 type: 'json'
-                
+
             },
-            writer:{
+            writer: {
                 type: 'json'
             }
         }

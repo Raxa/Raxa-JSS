@@ -13,38 +13,38 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.resources',{
-    extend:'Ext.Panel',
-    config:{
-        height:'100%',
-        ui:'neutral',
-        items:[{
-            xtype:'titlebar',
-            docked:'top',
-            title:'Resources',
-            items:[{
-                xtype:'button',
-                id:'back_res',
-                ui:'back',
-                text:'Back'
+Ext.define('mUserStories.view.resources', {
+    extend: 'Ext.Panel',
+    config: {
+        height: '100%',
+        ui: 'neutral',
+        items: [{
+            xtype: 'titlebar',
+            docked: 'top',
+            title: 'Resources',
+            items: [{
+                xtype: 'button',
+                id: 'back_res',
+                ui: 'back',
+                text: 'Back'
             }]
-        },{
-            xclass:'mUserStories.view.userToolbar'
-        },{
-            title:'All',
-            cls:'demo-list',
-            items:[{
-                xtype:'list',
-                ui:'round',
-                grouped:true,
-                pinHeaders:false,
-                id:'resourceslist',
-                width:Ext.os.deviceType=='Phone'?null:'80%',
-                height:Ext.os.deviceType=='Phone'?null:'100%',
-                centered:true,
-                indexBar:true,
-                itemTpl:[],
-                onItemDisclosure:function(record,btn,index){}   
+        }, {
+            xclass: 'mUserStories.view.userToolbar'
+        }, {
+            title: 'All',
+            cls: 'demo-list',
+            items: [{
+                xtype: 'list',
+                ui: 'round',
+                grouped: true,
+                pinHeaders: false,
+                id: 'resourceslist',
+                width: Ext.os.deviceType == 'Phone' ? null : '80%',
+                height: Ext.os.deviceType == 'Phone' ? null : '100%',
+                centered: true,
+                indexBar: true,
+                itemTpl: [],
+                onItemDisclosure: function (record, btn, index) {}
             }]
         }]
     }
