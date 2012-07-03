@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This view contains final view of specimen registration
+ *  This view allows search on lab order , patient & provider
  */
 Ext.define('Laboratory.view.SpecimenRegistration2', {
     extend: 'Ext.container.Container',
@@ -25,26 +25,196 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
         type: 'absolute'
     },
     items: [{
-        xtype: 'gridpanel',
-        width: 500,
-        title: '',
-        columns: [{
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'Report Id'
-        }, {
-            xtype: 'gridcolumn',
-            text: 'Report Status'
-        }, {
-            xtype: 'gridcolumn',
-            text: 'List of Specification'
-        }, {
-            xtype: 'datecolumn',
-            text: 'Collection Date '
-        }],
-        viewConfig: {
-
+        xtype: 'displayfield',
+        value: 'Patient',
+        fieldLabel: '',
+        x: 220,
+        y: 30
+    }, {
+        xtype: 'displayfield',
+        value: 'Provider ID',
+        fieldLabel: 'Name',
+        x: 430,
+        y: 60
+    }, {
+        xtype: 'displayfield',
+        value: 'Patient ID',
+        fieldLabel: 'Name',
+        x: 430,
+        y: 30
+    }, {
+        xtype: 'displayfield',
+        value: 'Location',
+        fieldLabel: '',
+        x: 220,
+        y: 120
+    }, {
+        xtype: 'displayfield',
+        value: 'Provider',
+        fieldLabel: '',
+        x: 220,
+        y: 90
+    }, {
+        xtype: 'button',
+        text: 'Find Location',
+        x: 280,
+        y: 120,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_FILTER_LOCATION.value);
         }
-    }]
 
+    }, {
+        xtype: 'button',
+        text: 'Find Provider',
+        x: 280,
+        y: 90,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_PROVIDER.value);
+        }
+
+    }, {
+        xtype: 'button',
+        text: 'Find Patient',
+        x: 280,
+        y: 30,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_LAB_ORDER.value);
+        }
+
+    }, {
+        xtype: 'button',
+        text: 'Continue',
+        x: 440,
+        y: 160,
+
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_DETAILS.value);
+
+        },
+
+
+    }, {
+        xtype: 'button',
+        text: 'Cancel',
+        x: 280,
+        y: 160,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_HOME.value);
+        },
+    }, {
+        xtype: 'button',
+        text: 'Add Anonymous Patient',
+        x: 280,
+        y: 60
+    }, {
+        xtype: 'container',
+        height: 430,
+        width: 200,
+        layout: {
+            type: 'absolute'
+        },
+        items: [{
+            xtype: 'textfield',
+            width: 180,
+            fieldLabel: '',
+            blankText: '',
+            emptyText: 'Enter Lab order to search',
+            x: 10,
+            y: 50
+        }, {
+            xtype: 'textfield',
+            width: 180,
+            fieldLabel: '',
+            emptyText: 'Enter Patient Registration Id',
+            x: 10,
+            y: 120
+        }, {
+            xtype: 'textfield',
+            width: 100,
+            fieldLabel: 'Patient\'s Name',
+            labelAlign: 'top',
+            emptyText: 'First Name',
+            x: 0,
+            y: 200
+        }, {
+            xtype: 'textfield',
+            fieldLabel: '',
+            emptyText: 'Provider\'s Name',
+            x: 0,
+            y: 270
+        }, {
+            xtype: 'textfield',
+            width: 90,
+            fieldLabel: '',
+            emptyText: 'Last Name',
+            x: 110,
+            y: 220
+        }, {
+            xtype: 'displayfield',
+            value: 'Search to Lab order',
+            fieldLabel: '',
+            x: 10,
+            y: 10
+        }, {
+            xtype: 'image',
+            height: 40,
+            width: 40,
+            src: '../resources/img/OR.png',
+            x: 60,
+            y: 80
+        }, {
+            xtype: 'image',
+            height: 40,
+            width: 40,
+            src: '../resources/img/OR.png',
+            x: 60,
+            y: 150
+        }, {
+            xtype: 'datefield',
+            width: 100,
+            fieldLabel: 'Lab Oders from',
+            labelAlign: 'top',
+            x: 0,
+            y: 330
+        }, {
+            xtype: 'datefield',
+            width: 110,
+            fieldLabel: 'to',
+            labelWidth: 20,
+            x: 100,
+            y: 350
+        }, {
+            xtype: 'button',
+            text: 'Find',
+            x: 160,
+            y: 80,
+            handler: function () {
+                var l = Ext.getCmp('mainLabArea').getLayout();
+                l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_LAB_ORDER_SEARCH_RESULT.value);
+            }
+        }, {
+            xtype: 'button',
+            text: 'Find',
+            x: 160,
+            y: 160,
+            handler: function () {
+                var l = Ext.getCmp('mainLabArea').getLayout();
+                l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_LAB_ORDER_SEARCH_RESULT.value);
+            }
+        }, {
+            xtype: 'button',
+            text: 'Find',
+            x: 160,
+            y: 270,
+            handler: function () {
+                var l = Ext.getCmp('mainLabArea').getLayout();
+                l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_LAB_ORDER_SEARCH_RESULT.value);
+            }
+        }]
+    }]
 });

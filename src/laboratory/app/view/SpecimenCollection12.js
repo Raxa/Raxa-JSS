@@ -103,17 +103,29 @@ Ext.define('Laboratory.view.SpecimenCollection12', {
         xtype: 'button',
         text: 'Continue',
         x: 490,
-        y: 390
+        y: 390,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SPECIMEN_COLLECTION_GRID.value);
+        }
     }, {
         xtype: 'button',
         text: 'Cancel',
         x: 320,
-        y: 390
+        y: 390,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
+        }
     }, {
         xtype: 'button',
         text: 'Back',
         x: 150,
-        y: 390
+        y: 390,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_LAB_ORDER_SEARCH_RESULT.value);
+        }
     }]
 
 });

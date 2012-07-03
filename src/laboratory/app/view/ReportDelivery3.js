@@ -33,7 +33,7 @@ Ext.define('Laboratory.view.ReportDelivery3', {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Report Order Number'
-        },{
+        }, {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Status'
@@ -49,11 +49,11 @@ Ext.define('Laboratory.view.ReportDelivery3', {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Patient Id'
-        },{
+        }, {
             xtype: 'gridcolumn',
             dataIndex: 'string',
             text: 'Patient Name'
-        }], 
+        }],
     }, {
         xtype: 'button',
         height: 20,
