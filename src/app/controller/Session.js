@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.controller.Session', {
     extend: 'Ext.app.Controller',
     config: {
@@ -25,7 +24,8 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         refs: {
-            password: '#password',
+            passwordID: '#passwordID',
+            userName: '#userName',
             signInButton: '#signInButton',
             Registration: '#Registration',
             Screener: '#Screener',
@@ -39,7 +39,10 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         control: {
-            password: {
+            passwordID: {
+                action: 'doLogin'
+            },
+            userName: {
                 action: 'doLogin'
             },
             signInButton: {
@@ -62,7 +65,7 @@ Ext.define('RaxaEmr.controller.Session', {
             */
             //            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
             userModules[userModules.length] = allModules[i];
-        //            }
+            //            }
         }
         Ext.getCmp('appGrid').addModules(userModules);
         Ext.getCmp('smartApp').addApps(allApps);
@@ -106,12 +109,12 @@ Ext.define('RaxaEmr.controller.Session', {
                 },
                 failure: function () {
                     Ext.getCmp('mainView').setMasked(false);
-                    Ext.Msg.alert("RaxaEmr.controller.session.alert");
+                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
                 }
             });
         } else {
             // showing modal alert and stop loading mask
-            Ext.Msg.alert("RaxaEmr.controller.session.usernamealert");
+            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.usernamealert'));
             this.launchAfterAJAX();
         }
     },
@@ -119,8 +122,17 @@ Ext.define('RaxaEmr.controller.Session', {
     // doLogin functions populates the views in the background while transferring
     // the view to dashboard
     doLogin: function () {
-        var name = Ext.getCmp('userName').getValue();
-        if (name === "") {
+        var username = Ext.getCmp('userName').getValue();
+        localStorage.setItem("Username", username);
+
+        if (username === "") {
+            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankusername'))
+            return;
+        }
+
+        var password = Ext.getCmp('passwordID').getValue();
+        if (password === "") {
+            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankpassword'))
             return;
         }
 
@@ -135,7 +147,7 @@ Ext.define('RaxaEmr.controller.Session', {
         });
 
         // check for user name validity and privileges
-        this.getUserPrivileges(name);
+        this.getUserPrivileges(username);
 
         //populating views with all the modules, sending a callback function
         Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
@@ -185,7 +197,7 @@ Ext.define('RaxaEmr.controller.Session', {
             */
             //            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
             userModules[userModules.length] = allModules[i];
-        //            }
+            //            }
         }
         Ext.getCmp('appGrid').addModules(userModules);
         Ext.getCmp('smartApp').addApps(allApps);
@@ -201,10 +213,6 @@ Ext.define('RaxaEmr.controller.Session', {
         else {
             this.showDashboard();
         }
-    },
-
-    doLogout: function () {
-    //called whenever any Button with action=logout is tapped
     },
 
     //on entry point for application, give control to Util.getViews()
