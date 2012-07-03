@@ -65,37 +65,37 @@ Ext.define('mUserStories.controller.basic', {
             },
             back_add: {
                 tap: function () {
-                    this.doBack()
+                    this.doBack('list')
                 }
             },
             back_add_app: {
                 tap: function () {
-                    this.doBack()
+                    this.doBack('add')
                 }
             },
             back_add_reg: {
                 tap: function () {
-                    this.doBack()
+                    this.doBack('add')
                 }
             },
             back_add_rem: {
                 tap: function () {
-                    this.doBack()
+                    this.doBack('add')
                 }
             },
             back_det: {
                 tap: function () {
-                    this.doBack()
+                    this.doBack('list')
                 }
             },
             back_inb: {
                 tap: function () {
-                    this.doBack()
+                    this.doBack('list')
                 }
             },
             back_res: {
                 tap: function () {
-                    this.doBack()
+                    this.doBack('list')
                 }
             },
             cancel_loc: {
@@ -325,19 +325,13 @@ Ext.define('mUserStories.controller.basic', {
     doToolbar: function (arg) {
         if (arg === 'menu') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
-        } else if (arg === 'up') {
-            Ext.Msg.confirm('', 'Upload all information?', function (resp) {
-                if (resp === 'yes') {
-                    // upload information in localStorage
-                    this.doUpload();
-                }
-            })
         } else if (arg === 'down') {
-            Ext.Msg.confirm('', 'Download all information?', function (resp) {
+            Ext.Msg.confirm('', 'Sync all information?', function (resp) {
                 if (resp === 'yes') {
                     // TODO: check for conflicts
                     // doDownload information in localStorage
                     helper.doDownload();
+                    // doUpload all information
                 }
             })
         } else if (arg === 'inbox') {
@@ -352,11 +346,15 @@ Ext.define('mUserStories.controller.basic', {
     },
     /* HELPER FUNCTIONS */
     // deal with backbutton
-    doBack: function () {
+    doBack: function (arg) {
         // TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
-        helper.doDownload();
-        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+        if (arg === 'list') {
+            helper.doDownload();
+            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+        } else if (arg === 'add') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
+        }
     },
     // exit the program
     doExit: function () {

@@ -24,11 +24,10 @@ var PAGES = {
     ADD_REG: 5,
     ADD_REM: 6,
     ADD_APP: 7,
-    OPTIONS: 8,
-    INBOX_CHW: 9,
-    RESOURCES: 10,
-    INBOX_VC: 11,
-    SCHEDULING: 12
+    INBOX_CHW: 8,
+    RESOURCES: 9,
+    INBOX_VC: 10,
+    SCHEDULING: 11
 };
 var USER = new Object();
 USER.name = '';
