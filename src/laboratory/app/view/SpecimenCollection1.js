@@ -26,92 +26,87 @@ Ext.define('Laboratory.view.SpecimenCollection1', {
     },
 
     items: [{
-            xtype: 'gridpanel',
-            height: 367,
-            width: 182,
-            title: 'Tests',
-            columns: [{
-                xtype: 'gridcolumn',
-                dataIndex: 'string',
-                text: 'List'
-            }],
-            viewConfig: {
+        xtype: 'gridpanel',
+        height: 367,
+        width: 182,
+        title: 'Tests',
+        columns: [{
+            xtype: 'gridcolumn',
+            dataIndex: 'string',
+            text: 'List'
+        }],
+        viewConfig: {
 
-            }
-        }, {
-            xtype: 'container'
-        }, {
-            xtype: 'button',
-            text: 'Continue',
-            x: 490,
-            y: 190
-        }, {
-            xtype: 'button',
-            text: 'Cancel',
-            x: 300,
-            y: 190
-        }, {
-            xtype: 'displayfield',
-            value: 'Patient',
-            fieldLabel: '',
-            x: 210,
-            y: 60
-        }, {
-            xtype: 'displayfield',
-            value: 'Patient',
-            fieldLabel: '',
-            x: 210,
-            y: 60
-        }, {
-            xtype: 'displayfield',
-            name: '',
-            value: 'PatientID',
-            fieldLabel: 'Name',
-            x: 410,
-            y: 60
-        }, {
-            xtype: 'displayfield',
-            name: '',
-            value: 'ProviderID',
-            fieldLabel: 'Name',
-            x: 410,
-            y: 90
-        }, {
-            xtype: 'displayfield',
-            value: 'Provider',
-            fieldLabel: '',
-            x: 210,
-            y: 90
-        }, {
-            xtype: 'displayfield',
-            value: 'Location',
-            fieldLabel: '',
-            x: 210,
-            y: 120
-        }, {
-            xtype: 'button',
-            height: 20,
-            text: 'MyButton',
-            x: 280,
-            y: 60
-        }, {
-            xtype: 'button',
-            height: 20,
-            text: 'Find Patient',
-            x: 280,
-            y: 60
-        }, {
-            xtype: 'button',
-            height: 20,
-            text: 'Find Location',
-            x: 280,
-            y: 120
-        }, {
-            xtype: 'button',
-            height: 20,
-            text: 'Find Provider',
-            x: 280,
-            y: 90
-        }]
-
-    });
+        }
+    }, {
+        xtype: 'container'
+    }, {
+        xtype: 'displayfield',
+        value: 'Patient',
+        fieldLabel: '',
+        x: 210,
+        y: 60
+    }, {
+        xtype: 'displayfield',
+        value: 'Patient',
+        fieldLabel: '',
+        x: 210,
+        y: 60
+    }, {
+        xtype: 'displayfield',
+        name: '',
+        value: 'PatientID',
+        fieldLabel: 'Name',
+        x: 410,
+        y: 60
+    }, {
+        xtype: 'displayfield',
+        name: '',
+        value: 'ProviderID',
+        fieldLabel: 'Name',
+        x: 410,
+        y: 90
+    }, {
+        xtype: 'displayfield',
+        value: 'Provider',
+        fieldLabel: '',
+        x: 210,
+        y: 90
+    }, {
+        xtype: 'displayfield',
+        value: 'Location',
+        fieldLabel: '',
+        x: 210,
+        y: 120
+    }, {
+        xtype: 'button',
+        height: 20,
+        text: 'Find Patient',
+        x: 280,
+        y: 60,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SEARCH_LAB_ORDER.value);
+        }
+    }, {
+        xtype: 'button',
+        height: 20,
+        text: 'Find Location',
+        x: 280,
+        y: 120,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_FILTER_LOCATION.value);
+        }
+    }, {
+        xtype: 'button',
+        height: 20,
+        text: 'Find Provider',
+        x: 280,
+        y: 90,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SEARCH_PROVIDER.value);
+        }
+    }]
+});

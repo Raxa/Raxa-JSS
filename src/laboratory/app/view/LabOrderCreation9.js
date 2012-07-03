@@ -21,10 +21,6 @@ Ext.define('Laboratory.view.LabOrderCreation9', {
     autoScroll: true,
     activeItem: 0,
 
-    layout: {
-        type: 'absolute'
-    },
-
     items: [{
         xtype: 'textfield',
         fieldLabel: 'Block/House/Door No.',
@@ -59,9 +55,17 @@ Ext.define('Laboratory.view.LabOrderCreation9', {
         labelWidth: 210
     }, {
         xtype: 'button',
-        text: 'Cancel'
+        text: 'Cancel',
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        } 
     }, {
         xtype: 'button',
-        text: 'Done'
+        text: 'Done',
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        }        
     }]
     });

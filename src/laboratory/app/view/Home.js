@@ -34,7 +34,11 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Specimen Collection',
         x: 20,
-        y: 30
+        y: 30,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
+        }
     }, {
         xtype: 'button',
         height: 40,
@@ -52,7 +56,11 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Anonymous Identification',
         x: 240,
-        y: 230
+        y: 230,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.ANONYMOUS_PATIENT_HOME.value);
+        }
     }, {
         xtype: 'button',
         height: 40,
@@ -74,7 +82,7 @@ Ext.define('Laboratory.view.Home', {
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_LIST.value);
-        }        
+        }
     }, {
         xtype: 'button',
         height: 40,
@@ -88,7 +96,11 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Create  Lab Order',
         x: 240,
-        y: 30
+        y: 30,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_HOME.value);
+        }
     }, {
         xtype: 'button',
         height: 40,
@@ -102,7 +114,12 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Report Approval',
         x: 20,
-        y: 230
+        y: 230,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
+        }
+
     }, {
         xtype: 'button',
         height: 40,
@@ -120,14 +137,22 @@ Ext.define('Laboratory.view.Home', {
         width: 200,
         text: 'Result Entry',
         x: 20,
-        y: 130
+        y: 130,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.RESULT_ENTRY_HOME.value);
+        }
     }, {
         xtype: 'button',
         height: 40,
         width: 200,
         text: 'Specimen Registration',
         x: 20,
-        y: 80
+        y: 80,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
+        }
     }, {
         layout: 'vbox',
         xtype: 'button',

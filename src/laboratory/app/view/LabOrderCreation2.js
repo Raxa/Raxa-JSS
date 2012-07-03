@@ -77,21 +77,35 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         width: 50,
         text: 'Find',
         x: 260,
-        y: 110
+        y: 110,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
+        }        
+        
     }, {
         xtype: 'button',
         height: 20,
         width: 50,
         text: 'Find',
         x: 260,
-        y: 190
+        y: 190,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
+        }        
+        
     }, {
         xtype: 'button',
         height: 20,
         width: 50,
         text: 'Find',
         x: 10,
-        y: 420
+        y: 420,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
+        }                
     }, {
         xtype: 'datefield',
         width: 130,

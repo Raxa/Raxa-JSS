@@ -69,6 +69,13 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     text: 'Item Price'
                 }
                 ]
+            },{
+                xtype: 'button',
+                width: 180,
+                text: 'Add Patient',
+                action: 'addPatient',
+                x : 0,
+                y: 30    
             },
             {
                 xtype: 'panel',

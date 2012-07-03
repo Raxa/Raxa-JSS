@@ -1,0 +1,64 @@
+{ 
+    success: true,
+    "drug": [{
+        'drugname': 'Amoxylin',
+        "tablets": 30,
+        "days": 4
+    },
+    {
+        'drugname': 'Penicillin',
+        "tablets": 100,
+        "days": 10
+    },
+    {
+        'drugname': 'D\'Cold',
+        "tablets": 320,
+        "days": 10
+    },
+
+    {
+        'drugname': 'Crocin',
+        "tablets": 90,
+        "days": 2
+    },{
+        'drugname': 'Plenaxis',
+        "tablets": 30,
+        "days": 10
+    },
+    {
+        'drugname': 'Orencia',
+        "tablets": 50,
+        "days": 10
+    },
+    {
+        'drugname': 'Zytiga',
+        "tablets": 320,
+        "days": 30
+    },
+
+    {
+        'drugname': 'Campral',
+        "tablets": 270,
+        "days": 30
+    },{
+        'drugname': 'Accuzyme',
+        "tablets": 75,
+        "days": 7
+    },
+    {
+        'drugname': 'Acebutolol',
+        "tablets": 200,
+        "days": 10
+    },
+    {
+        'drugname': 'Accutane',
+        "tablets": 370,
+        "days": 25
+    },
+
+    {
+        'drugname': 'Zovirax',
+        "tablets": 140,
+        "days": 7
+    }],
+}

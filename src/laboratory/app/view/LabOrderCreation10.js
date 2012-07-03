@@ -121,13 +121,19 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         height: 20,
         text: 'New Lab Order',
         x: 530,
-        y: 340
+        y: 340,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
+        }          
     }, {
         xtype: 'button',
-        text: 'Create',
+        text: 'Cancel',
         x: 300,
-        y: 340
+        y: 340,
+        handler: function () {
+            var l = Ext.getCmp('mainLabArea').getLayout();
+            l.setActiveItem(LAB_PAGES.HOME.value);
+        }   
     }]
-
-
 });
