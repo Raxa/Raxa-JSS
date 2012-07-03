@@ -1,10 +1,10 @@
 Ext.define('Topbar.view.LogoutConfirmPanel', {
     extend: 'Ext.Panel',
-    alias: 'widget.LogoutConfirmPanelAlias',
+    alias: 'widget.logoutConfirmPanel',
 
     config: {
         height: 100,
-        id: 'LogoutConfirmPanelID',
+        itemId: 'LogoutConfirmPanel',
         left: 0,
         top: 0,
         width: 200,
@@ -18,11 +18,9 @@ Ext.define('Topbar.view.LogoutConfirmPanel', {
         items: [{
             xtype: 'label',
             html: 'Are you sure?',
-            id: 'LogoutConfirmLabelID',
             itemId: 'LogoutConfrimLabel',
         }, {
             xtype: 'actionsheet',
-            id: 'LogoutConfirmActionSheetID',
             itemId: 'LogoutConfirmActionSheet',
             layout: {
                 align: 'start',
@@ -32,14 +30,14 @@ Ext.define('Topbar.view.LogoutConfirmPanel', {
             modal: false,
             items: [{
                 xtype: 'button',
-                id: 'LogoutConfirmYesID',
                 itemId: 'LogoutConfirmYes',
                 minWidth: 80,
                 ui: 'confirm',
                 text: 'Yes'
             }, {
+                xtype: 'spacer',
+            }, {
                 xtype: 'button',
-                id: 'LogoutConfirmNoID',
                 itemId: 'LogoutConfirmNo',
                 minWidth: 80,
                 ui: 'decline',
@@ -47,24 +45,29 @@ Ext.define('Topbar.view.LogoutConfirmPanel', {
             }]
         }],
         listeners: [{
-            fn: 'onLogoutConfirmYesIDTap',
+            fn: 'onLogoutConfirmYesTap',
             event: 'tap',
-            delegate: '#LogoutConfirmYesID'
+            delegate: '#LogoutConfirmYes'
         }, {
-            fn: 'onLogoutConfirmNoIDTap',
+            fn: 'onLogoutConfirmNoTap',
             event: 'tap',
-            delegate: '#LogoutConfirmNoID'
+            delegate: '#LogoutConfirmNo'
         }]
     },
 
-    onLogoutConfirmYesIDTap: function (button, e, options) {
+    onLogoutConfirmYesTap: function (button, e, options) {
         Util.logoutUser();
-        var logconfirm = Ext.getCmp('LogoutConfirmPanelID');
+        localStorage.removeItem('basicAuthHeader');
+        localStorage.removeItem('privileges');
+        localStorage.removeItem('Username');
+        window.location.hash = 'Login';
+        Ext.getCmp('mainView').setActiveItem(0);
+        var logconfirm = this.parent.getComponent('LogoutConfirmPanel');
         logconfirm.hide();
     },
 
-    onLogoutConfirmNoIDTap: function (button, e, options) {
-        var logconfirm = Ext.getCmp('LogoutConfirmPanelID');
+    onLogoutConfirmNoTap: function (button, e, options) {
+        var logconfirm = this.parent.getComponent('LogoutConfirmPanel');
         logconfirm.hide();
     }
 

@@ -6,6 +6,10 @@ Ext.define('Topbar.view.TopToolbar', {
         docked: 'top',
         width: '100%',
         scrollable: false,
+        layout: {
+            type: 'hbox',
+            align: 'center',
+        },
         items: [{
             xtype: 'label',
             html: 'JSS',
@@ -16,32 +20,53 @@ Ext.define('Topbar.view.TopToolbar', {
             html: 'Welcome,',
             itemId: 'WelcomeLabel',
             margin: 5,
+            listeners: [{
+                fn: function (component, options) {
+                    if (Util.getLoginState() === 0) {
+                        this.parent.getComponent('UsernameLabel').setHtml('Guest');
+                        var buttonUrlSettings = this.parent.add({
+                            xtype: 'urlSettingsButton',
+                            margin: 5,
+                            right: 0,
+                        });
+                        if (buttonLogout) {
+                            buttonLogout.hide();
+                        }
+                    } else {
+                        this.parent.getComponent('UsernameLabel').setHtml(localStorage.getItem('Username'));
+                        var buttonLogout = this.parent.add({
+                            xtype: 'button',
+                            itemId: 'LogoutButton',
+                            margin: 5,
+                            right: 0,
+                            ui: 'action',
+                            text: 'Logout',
+                        });
+                        if (buttonUrlSettings) {
+                            buttonUrlSettings.hide();
+                        }
+                    }
+                },
+                event: 'painted',
+                buffer: 40
+            }]
+
         }, {
             xtype: 'label',
-            id: 'UsernameLabelID',
             itemId: 'UsernameLabel',
             margin: 5,
-        }, {
-            xtype: 'button',
-            id: 'LogoutButtonID',
-            itemId: 'LogoutButton',
-            margin: 5,
-            right: 0,
-            top: '7%',
-            ui: 'action',
-            text: 'Logout'
         }],
         listeners: [{
-            fn: 'onLogoutButtonIDTap',
+            fn: 'onLogoutButtonTap',
             event: 'tap',
-            delegate: '#LogoutButtonID'
+            delegate: '#LogoutButton'
         }]
     },
 
-    onLogoutButtonIDTap: function (button, e, options) {
-        var logconfirm = button.LogoutButtonID;
+    onLogoutButtonTap: function (button, e, options) {
+        var logconfirm = button.LogoutButton;
         if (!logconfirm) {
-            logconfirm = button.LogoutButtonID = Ext.widget('LogoutConfirmPanelAlias');
+            logconfirm = button.LogoutButton = Ext.widget('logoutConfirmPanel');
         }
         logconfirm.showBy(button);
     }

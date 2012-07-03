@@ -19,8 +19,8 @@ if (localStorage.getItem("host") == null) {
     var HOST = 'http://raxajss.jelastic.servint.net';
 } else HOST = localStorage.getItem("host");
 
-var username = 'admin';
-var password = 'Hello123';
+var username;
+var password;
 var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
 var patientUuid;
@@ -84,8 +84,8 @@ var Util = {
     getTimeoutLimit: function () {
         return timeoutLimit;
     },
-    
-        getHospitalName: function () {
+
+    getHospitalName: function () {
         return hospitalName;
     },
 
@@ -101,6 +101,7 @@ var Util = {
         }
         return headers;
     },
+
     /**
      * Logout the current user. Ends the current session
      */
@@ -114,6 +115,17 @@ var Util = {
                 // do nothing
             }
         });
+    },
+
+    /**
+     * Gets the Login State. If returns 0, then user is Logged Out. For any other value, the user is logged in.
+     */
+    getLoginState: function () {
+        var loginState = Ext.getCmp('mainView').getActiveItem()._activeItem;
+        if (loginState === 0) {
+            Util.logoutUser();
+        }
+        return loginState;
     },
 
     /**
@@ -148,14 +160,14 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4','CHW'];
+        return ['login', 'screener', 'registration', 'registrationextjs4', 'CHW'];
         //TO DO:Add the line below instead the above one 
         //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
 
     getApps: function () {
         //always keep login at first position as its app path is different
-        return ['gotStatins','problemList'];
+        return ['gotStatins', 'problemList'];
         //TO DO:Add the line below instead the above one 
         //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
@@ -186,7 +198,7 @@ var Util = {
         return deviceId;
     },
 
-	getPatientIdentifier : function(){
+    getPatientIdentifier: function () {
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
@@ -207,37 +219,47 @@ var Util = {
             Ext.Error.raise('Could not recognize Library');
         }
     },
-	getPatientIdentifier : function(){
+    getPatientIdentifier: function () {
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
     },
-    
-    getAttributeFromREST : function(resource,queryParameter,display) {
+
+    getAttributeFromREST: function (resource, queryParameter, display) {
         //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
         Ext.Ajax.request({
-            url : HOST+'/ws/rest/v1/'+resource+'?q='+queryParameter,  //'/ws/rest/v1/concept?q=height',
+            url: HOST + '/ws/rest/v1/' + resource + '?q=' + queryParameter, //'/ws/rest/v1/concept?q=height',
             method: 'GET',
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             failure: function (response) {
-                console.log('GET failed with response status: '+ response.status); // + response.status);
+                console.log('GET failed with response status: ' + response.status); // + response.status);
             },
             success: function (response) {
-                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
-                    if(JSON.parse(response.responseText).results[i].display == display){
-                        localStorage.setItem(queryParameter+"Uuid"+resource,JSON.parse(response.responseText).results[i].uuid)
+                for (var i = 0; i < JSON.parse(response.responseText).results.length; ++i) {
+                    if (JSON.parse(response.responseText).results[i].display == display) {
+                        localStorage.setItem(queryParameter + "Uuid" + resource, JSON.parse(response.responseText).results[i].uuid)
                     }
                 }
-                
-                
+
+
             }
         });
     }
 }
 
-if(localStorage.heightUuidconcept == undefined){ var heightUuidConcept = Util.getAttributeFromREST('concept','height','HEIGHT (CM)');}
-if(localStorage.weightUuidconcept == undefined){ var weightUuidConcept = Util.getAttributeFromREST('concept','weight','WEIGHT (KG)');}
-if(localStorage.bmiUuidconcept == undefined){ var bmiUuidConcept = Util.getAttributeFromREST('concept','bmi','BODY MASS INDEX');}
-if(localStorage.regfeeUuidconcept == undefined){ var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee','Registration Fee');}
-if(localStorage.basicUuidform == undefined){ var basicUuidform = Util.getAttributeFromREST('form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms');}
+if (localStorage.heightUuidconcept == undefined) {
+    var heightUuidConcept = Util.getAttributeFromREST('concept', 'height', 'HEIGHT (CM)');
+}
+if (localStorage.weightUuidconcept == undefined) {
+    var weightUuidConcept = Util.getAttributeFromREST('concept', 'weight', 'WEIGHT (KG)');
+}
+if (localStorage.bmiUuidconcept == undefined) {
+    var bmiUuidConcept = Util.getAttributeFromREST('concept', 'bmi', 'BODY MASS INDEX');
+}
+if (localStorage.regfeeUuidconcept == undefined) {
+    var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee', 'Registration Fee');
+}
+if (localStorage.basicUuidform == undefined) {
+    var basicUuidform = Util.getAttributeFromREST('form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms');
+}
