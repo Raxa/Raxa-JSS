@@ -1,7 +1,8 @@
 Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     extend: 'Ext.app.Controller',
-    views: ['prescription', 'Viewport', 'addPatient'],
-
+    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 'reports',  'addPatient'],
+    
+    
     init: function () {
         this.control({
             'prescription [action=addPatient]': {
@@ -21,8 +22,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             maximizable: false,
             modal: true,
             items: [{
-                xtype: 'addPatient'
-            }]
+                    xtype: 'addPatient'
+                }]
         }).show();
 
 
@@ -33,14 +34,14 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
             addresses: [{
-                address1: Ext.getCmp('block').value,
-                cityVillage: Ext.getCmp('village').value,
-                countyDistrict: Ext.getCmp('District').value
-            }],
+                    address1: Ext.getCmp('block').value,
+                    cityVillage: Ext.getCmp('village').value,
+                    countyDistrict: Ext.getCmp('District').value
+                }],
             names: [{
-                givenName: Ext.getCmp('givenName').value,
-                familyName: Ext.getCmp('familyName').value
-            }]
+                    givenName: Ext.getCmp('givenName').value,
+                    familyName: Ext.getCmp('familyName').value
+                }]
         })
         //this if else statement change the persist property of age field in Person model so that if its
         //empty it should not be sent to server in the body of post call
@@ -95,11 +96,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var patient = Ext.create('RaxaEmr.Pharmacy.model.Patient', {
             person: personUuid,
             identifiers: [{
-                identifier: Util.getPatientIdentifier().toString(),
-                identifierType: identifierType,
-                location: location,
-                preferred: true
-            }]
+                    identifier: Util.getPatientIdentifier().toString(),
+                    identifierType: identifierType,
+                    location: location,
+                    preferred: true
+                }]
         });
         var PatientStore = Ext.create('RaxaEmr.Pharmacy.store.Patients')
         PatientStore.add(patient);
