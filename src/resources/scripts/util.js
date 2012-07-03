@@ -160,16 +160,13 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'CHW'];
+        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'CHW'];
         //TO DO:Add the line below instead the above one 
         //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
 
     getApps: function () {
-        //always keep login at first position as its app path is different
         return ['gotStatins', 'problemList'];
-        //TO DO:Add the line below instead the above one 
-        //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
     /**
      *Generate six digit randomly generated Device Id  
