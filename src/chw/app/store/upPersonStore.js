@@ -30,7 +30,7 @@ Ext.define('mUserStories.store.upPersonStore', {
             //The REST call here only creates a person
             url: MRSHOST + '/ws/rest/v1/person',
             headers: {
-                "Authorization": "Basic " + window.btoa("admin" + ":" + "Hello123"),
+                "Authorization": localStorage.getItem('basicAuthHeader'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },

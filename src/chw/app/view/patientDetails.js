@@ -119,7 +119,7 @@ Ext.define('mUserStories.view.patientDetails', {
             }]
         }, {
             xtype: 'formpanel',
-            title: 'Results',
+            title: 'Lab',
             items: [{
                 xtype: 'fieldset',
                 title: 'Laboratory Results',

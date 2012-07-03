@@ -295,7 +295,7 @@ Ext.define('mUserStories.controller.basic', {
                 }
                 // TODO: pass LOCATION & CURR_DATE to manager
                 // download all data into local storage
-                helper.doDownload();
+                this.doDownload();
                 // continue to the next screen
                 Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
             }
@@ -310,11 +310,11 @@ Ext.define('mUserStories.controller.basic', {
             // store items
             USER.name = Ext.getCmp('username').getValue();
             var pass = Ext.getCmp('password').getValue();
-            if (USER.name == '' || pass == '') {
+            if (USER.name === '' || pass === '') {
                 Ext.Msg.alert("Error", "Please fill in all fields")
             } else {
                 //this.saveBasicAuthHeader(USER.name,pass);
-                helper.loginContinue();
+                this.loginContinue();
             }
         } else {
             // exit the program
@@ -330,7 +330,7 @@ Ext.define('mUserStories.controller.basic', {
                 if (resp === 'yes') {
                     // TODO: check for conflicts
                     // doDownload information in localStorage
-                    helper.doDownload();
+                    this.doDownload();
                     // doUpload all information
                 }
             })
@@ -350,11 +350,19 @@ Ext.define('mUserStories.controller.basic', {
         // TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
         if (arg === 'list') {
-            helper.doDownload();
+            this.doDownload();
             Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (arg === 'add') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
         }
+    },
+    // Download patient with details
+    doDownload: function () {
+        var down_store = Ext.create('mUserStories.store.downStore');
+        down_store.load();
+        Ext.getCmp('patientlistid').setStore(down_store);
+        // TODO: set patientcurrid to be subset of above organized by appt time
+        // Do we need a separate store for this?
     },
     // exit the program
     doExit: function () {
@@ -401,6 +409,19 @@ Ext.define('mUserStories.controller.basic', {
         // TODO: pop up screen prompt
         // TODO: continue to arg 
     },
+    loginContinue: function () {
+        // clear form fields
+        Ext.getCmp('username').reset();
+        Ext.getCmp('password').reset();
+        if (USER.type === 'CHW') {
+            // continue to next page with proper settings
+            // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
+            this.doDownload();
+            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+        } else if (USER.type === 'VC') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
+        }
+    },
     /* this funtions makes a post call to create the patient with three parameter which will sent as person, identifiertype 
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
@@ -428,7 +449,7 @@ Ext.define('mUserStories.controller.basic', {
         Ext.getCmp('village_reg').reset();
         Ext.getCmp('bday').reset();
         Ext.getCmp('reg_form').reset();
-        helper.doDownload();
+        this.doDownload();
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
     },
     saveBasicAuthHeader: function (username, password) {
@@ -442,6 +463,7 @@ Ext.define('mUserStories.controller.basic', {
         })
         // check login and save to localStorage if valid
         Ext.Ajax.request({
+            scope:this,
             url: MRSHOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
@@ -454,7 +476,7 @@ Ext.define('mUserStories.controller.basic', {
                 var authenticated = Ext.decode(response.responseText).authenticated;
                 if (authenticated) {
                     localStorage.setItem("basicAuthHeader", "Basic " + window.btoa(username + ":" + password));
-                    helper.loginContinue();
+                    this.loginContinue();
                 } else {
                     localStorage.removeItem("basicAuthHeader");
                     Ext.Msg.alert("Error", "Please try again")
@@ -467,7 +489,7 @@ Ext.define('mUserStories.controller.basic', {
                 var hashStored = localStorage.getItem('basicAuthHeader');
                 // compare hashPass to hashStored
                 if (hashPass === hashStored) {
-                    helper.loginContinue();
+                    this.loginContinue();
                 } else {
                     Ext.Msg.alert("Error", "Please try again")
                 }

@@ -28,9 +28,10 @@ Ext.define('mUserStories.store.downStore', {
         proxy: {
             type: 'rest',
             //Hard-coding the host URL searching for patient name 'alok'
-            url: MRSHOST + '/ws/rest/v1/patient?q=potter&v=full',
+            // TODO: check out cohort class in OpenMRS
+            url: MRSHOST + '/ws/rest/v1/patient?q=john&v=full',
             headers: {
-                "Authorization": "Basic " + window.btoa("admin" + ":" + "Hello123"),
+                "Authorization": localStorage.getItem('basicAuthHeader'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },

@@ -76,8 +76,8 @@ Ext.define('mUserStories.view.vcNotifications', {
                 grouped: true,
                 pinHeaders: false,
                 id: 'vcinbox_unread',
-                width: Ext.os.deviceType == 'Phone' ? null : '80%',
-                height: Ext.os.deviceType == 'Phone' ? null : '100%',
+                width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                height: Ext.os.deviceType === 'Phone' ? null : '100%',
                 centered: true,
                 itemTpl: [],
                 onItemDisclosure: function (record, btn, index) {}
@@ -91,8 +91,8 @@ Ext.define('mUserStories.view.vcNotifications', {
                 grouped: true,
                 pinHeaders: false,
                 id: 'vcinbox_all',
-                width: Ext.os.deviceType == 'Phone' ? null : '80%',
-                height: Ext.os.deviceType == 'Phone' ? null : '100%',
+                width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                height: Ext.os.deviceType === 'Phone' ? null : '100%',
                 centered: true,
                 itemTpl: [],
                 onItemDisclosure: function (record, btn, index) {}

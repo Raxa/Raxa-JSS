@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+// TODO: find a way to set the value in the program
+// See src/app/view/Login.js
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
 var MRSHOST = 'http://raxajss.jelastic.servint.net';
 var PAGES = {
@@ -46,26 +48,5 @@ var helper = {
         Ext.getCmp('bday_det').setValue(record.get('birthdate'))
         // change to next page
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
-    },
-    loginContinue: function () {
-        // clear form fields
-        Ext.getCmp('username').reset();
-        Ext.getCmp('password').reset();
-        if (USER.type === 'CHW') {
-            // continue to next page with proper settings
-            // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
-            helper.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
-        } else if (USER.type === 'VC') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
-        }
-    },
-    // Download patient with details
-    doDownload: function () {
-        var down_store = Ext.create('mUserStories.store.downStore');
-        down_store.load();
-        Ext.getCmp('patientlistid').setStore(down_store);
-        // TODO: set patientcurrid to be subset of above organized by appt time
-        // Do we need a separate store for this?
     }
 }

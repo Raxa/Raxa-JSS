@@ -24,7 +24,7 @@ Ext.define('mUserStories.store.location', {
             type: 'rest',
             url: MRSHOST + '/ws/rest/v1/location',
             headers: {
-                "Authorization": "Basic " + window.btoa("admin" + ":" + "Hello123"),
+                "Authorization": localStorage.getItem('basicAuthHeader'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
