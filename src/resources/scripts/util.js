@@ -245,6 +245,7 @@ var Util = {
     }
 }
 
+
 if (localStorage.heightUuidconcept == undefined) {
     var heightUuidConcept = Util.getAttributeFromREST('concept', 'height', 'HEIGHT (CM)');
 }
@@ -260,3 +261,7 @@ if (localStorage.regfeeUuidconcept == undefined) {
 if (localStorage.basicUuidform == undefined) {
     var basicUuidform = Util.getAttributeFromREST('form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms');
 }
+if(localStorage.prescriptionUuidencountertype == undefined){ 
+	var prescriptionUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescription','PRESCRIPTION - Patient receives a drug prescription.');
+}
+
