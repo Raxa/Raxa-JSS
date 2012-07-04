@@ -46,7 +46,7 @@ Ext.define('mUserStories.view.patientDetails', {
                     disabled: true,
                     label: 'Symptom Description',
                     id: 'info_vis',
-                    placeHolder: 'Has had diarrhea for more than 2 days'
+                    placeHolder: 'Has had diarrhea for more than 2 days and is having trouble swallowing solid foods.'
                 }]
             }, { // maybe this should be a list not checklist?
                 // how much detail is necessary?

@@ -21,7 +21,7 @@ Ext.define('mUserStories.view.notificationInbox', {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Notifications',
+            title: 'Inbox',
             items: [{
                 xtype: 'button',
                 ui: 'back',
@@ -65,57 +65,24 @@ Ext.define('mUserStories.view.notificationInbox', {
                     xtype: 'textfield',
                     label: 'First',
                     id: 'first_rep',
-                    required: true
+                    required: true,
+                    placeHolder: 'Ronak'
                 }, {
                     xtype: 'textfield',
                     label: 'Last',
                     id: 'last_rep',
-                    required: true
+                    required: true,
+                    placeHolder: 'Patel'
                 }, {
                     // TODO: Generate necessary fields dynamically
+                    // What is the best user interface for this--picture buttons?
                     xtype: 'textfield',
                     label: 'Details',
                     id: 'details_rep',
-                    labelAlign: 'top'
+                    labelAlign: 'top',
+                    placeHolder: 'Has malaria.'
                 }, {
-                    xtype: 'container',
-                    layout: {
-                        type: 'vbox',
-                        pack: 'center',
-                        align: 'middle'
-                    },
-                    items: [{
-                        xtype: 'container',
-                        layout: 'hbox',
-                        padding: '10px',
-                        width: "100%",
-                        items: [{
-                            xtype: 'label',
-                            flex: '2'
-                        }, {
-                            xtype: 'button',
-                            id: 'ok_inb',
-                            ui: 'confirm-round',
-                            icon: 'resources/rsz_check2.png',
-                            width: '45px',
-                            height: '45px',
-                            padding: '0px 0px 0px 3px'
-                        }, {
-                            xtype: 'label',
-                            flex: '2'
-                        }, {
-                            xtype: 'button',
-                            id: 'cancel_inb',
-                            ui: 'decline-round',
-                            icon: 'resources/rsz_delete1.png',
-                            width: '45px',
-                            height: '45px',
-                            padding: '0px 0px 0px 3px'
-                        }, {
-                            xtype: 'label',
-                            flex: '2'
-                        }]
-                    }]
+                    xclass: 'mUserStories.view.okCancel'
                 }]
             }]
         }, {
