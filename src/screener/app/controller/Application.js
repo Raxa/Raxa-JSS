@@ -250,7 +250,7 @@ Ext.define("Screener.controller.Application", {
                         var encounter = Ext.create('Screener.model.drugEncounter', {
                             patient: Ext.getCmp('patientList').getSelection()[0].getData().uuid,
                             // this is the encounter for the prescription encounterType
-                            encounterType: "2e1df184-8cd5-4879-85b1-9d87e1ea5d77",
+                            encounterType: localStorage.prescriptionUuidencountertype,
                             encounterDatetime: time,
                             orders: order
                         })
