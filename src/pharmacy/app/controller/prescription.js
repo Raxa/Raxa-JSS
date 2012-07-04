@@ -1,7 +1,10 @@
 Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     extend: 'Ext.app.Controller',
-    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 'reports',  'addPatient'],
     
+    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 
+        'reports', 'addPatient', 'stockIssue', 'stockIssueGrid', 'goodReceiptGrid', 'goodReceipt', 'goodIssueText', 'goodIssuePop', 'goodIssue',
+        'allStockPanel', 'allStockGrid', 'allStockForm', 'allStock', 'addDrug', 'allStock', 'prescribedDrugs'],
+    stores: ['orderStore'],
     
     init: function () {
         this.control({
@@ -10,25 +13,32 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             },
             "addPatient button[action=submit]": {
                 click: this.savePerson
-            }
+            },
+            'prescribedDrugs': {
+                render: this.onEditorRender,
+                edit: this.afterMovieEdit
+            },
         })
+    },
+    
+    
+    onEditorRender: function () {
+        // cache a reference to the moviesEditor and rowEditor
+        this.moviesEditor = Ext.ComponentQuery.query('prescribedDrugs')[0];
+        this.rowEditor = this.moviesEditor.rowEditor;
+    },
+
+    afterMovieEdit: function () {
+        var movieStore = this.getStore('orderStore');
+        movieStore.sync();
     },
 
     displayForm: function () {
-        //  a new pop window for new patient form
-        var winObj = Ext.create('Ext.window.Window', {
-            width: 868,
-            height: 225,
-            maximizable: false,
-            modal: true,
-            items: [{
-                    xtype: 'addPatient'
-                }]
-        }).show();
-
-
+        var l = Ext.getCmp('addpatientarea').getLayout();
+        l.setActiveItem(1);
+        var l = Ext.getCmp('addpatientgridarea').getLayout();
+        l.setActiveItem(1);
     },
-
 
     savePerson: function () {
         var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
@@ -109,4 +119,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         //I made this funtion return this store because i needed this in jasmine unit test
         return PatientStore
     }
+    
+    
 });

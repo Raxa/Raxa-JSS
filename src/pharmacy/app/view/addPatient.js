@@ -2,13 +2,10 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
     extend: 'Ext.form.Panel',
     alias: 'widget.addPatient',
     id: 'addPatient',
-    height: 195,
-    width: 868,
     layout: {
         type: 'absolute'
     },
     bodyPadding: 10,
-    title: 'Add a new Patient',
     items: [{
         xtype: 'datefield',
         id: 'dob',
@@ -80,13 +77,5 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         displayField: 'display',
         x: 480,
         y: 120
-
-    }, {
-        xtype: 'button',
-        text: 'ADD',
-        width: 120,
-        x: 480,
-        y: 150,
-        action: 'submit'
     }]
 });
