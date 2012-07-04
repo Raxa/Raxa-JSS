@@ -20,7 +20,7 @@ Ext.application({
     name: 'mUserStories',
     controllers: ['basic'],
     models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers'],
-    stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore'],
+    stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore','offlineStore'],
     launch: function () {
         Ext.create('mUserStories.view.loginScreen');
     }
