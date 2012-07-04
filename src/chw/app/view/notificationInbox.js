@@ -65,18 +65,22 @@ Ext.define('mUserStories.view.notificationInbox', {
                     xtype: 'textfield',
                     label: 'First',
                     id: 'first_rep',
-                    required: true
+                    required: true,
+                    placeHolder: 'Ronak'
                 }, {
                     xtype: 'textfield',
                     label: 'Last',
                     id: 'last_rep',
-                    required: true
+                    required: true,
+                    placeHolder: 'Patel'
                 }, {
                     // TODO: Generate necessary fields dynamically
+                    // What is the best user interface for this--picture buttons?
                     xtype: 'textfield',
                     label: 'Details',
                     id: 'details_rep',
-                    labelAlign: 'top'
+                    labelAlign: 'top',
+                    placeHolder: 'Has malaria.'
                 }, {
                     xclass: 'mUserStories.view.okCancel'
                 }]
