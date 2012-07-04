@@ -277,8 +277,7 @@ Ext.define('mUserStories.controller.basic', {
             if (USER.name === '' || pass === '') {
                 Ext.Msg.alert("Error", "Please fill in all fields")
             } else {
-                //this.saveBasicAuthHeader(USER.name,pass);
-                this.loginContinue();
+                this.saveBasicAuthHeader(USER.name,pass);
             }
         } else {
             // exit the program
@@ -374,12 +373,17 @@ Ext.define('mUserStories.controller.basic', {
     // distinguish between ok and cancel
     doOption: function (arg) {
         var active = Ext.getCmp('viewPort').getActiveItem().getActiveItem();
-        // console.log(active);
-        if (arg) {
-            if (active === 0) {
-                this.doLogin(true);
-            }
-        } else {
+        if (active === PAGES.LOGIN_SCREEN) {
+            this.doLogin(arg)
+        } else if (active === PAGES.ADD_REG) {
+            this.doAdd('reg',arg)
+        } else if (active === PAGES.ADD_REM) {
+            this.doAdd('rem',arg)
+        } else if (active === PAGES.ADD_APP) {
+            this.doAdd('app',arg)
+        } else if (active === PAGES.INBOX_CHW) {
+            
+        } else if (active === PAGES.INBOX_VC) {
             
         }
     },
