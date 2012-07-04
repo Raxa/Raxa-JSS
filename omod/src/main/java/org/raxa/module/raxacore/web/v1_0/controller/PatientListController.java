@@ -3,16 +3,18 @@ package org.raxa.module.raxacore.web.v1_0.controller;
 /**
  * Copyright 2012, Raxa
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
-
 import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,13 +51,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/rest/v1/raxacore/patientlist")
 public class PatientListController extends BaseRestController {
 	
-	PatientListService service = Context.getService(PatientListService.class);
+	PatientListService service;
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	
 	Gson gson = new GsonBuilder().serializeNulls().create();
 	
 	private static final String[] REF = { "uuid", "name", "description" };
+	
+	public void initPatientListController() {
+		service = Context.getService(PatientListService.class);
+	}
 	
 	//<editor-fold defaultstate="collapsed" desc="getResourceVersion">
 	/**
@@ -83,6 +89,7 @@ public class PatientListController extends BaseRestController {
 	@ResponseBody
 	public Object createNewPatientList(@RequestBody SimpleObject post, HttpServletRequest request,
 	        HttpServletResponse response) throws ResponseException {
+		initPatientListController();
 		PatientList patientList = new PatientList();
 		patientList.setName(post.get("name").toString());
 		patientList.setDescription(post.get("description").toString());
@@ -116,6 +123,7 @@ public class PatientListController extends BaseRestController {
 	@ResponseBody
 	public Object updatePatientList(@PathVariable("uuid") String uuid, @RequestBody SimpleObject post,
 	        HttpServletRequest request, HttpServletResponse response) throws ResponseException {
+		initPatientListController();
 		PatientList patientList = service.getPatientListByUuid(uuid);
 		patientList.setName(post.get("name").toString());
 		patientList.setDescription(post.get("description").toString());
@@ -145,6 +153,7 @@ public class PatientListController extends BaseRestController {
 	@WSDoc("Get All Unretired Patient Lists in the system")
 	@ResponseBody()
 	public String getAllPatientLists(HttpServletRequest request, HttpServletResponse response) throws ResponseException {
+		initPatientListController();
 		List<PatientList> allPatientList = service.getAllPatientList(false);
 		ArrayList results = new ArrayList();
 		for (PatientList patientList : allPatientList) {
@@ -173,6 +182,7 @@ public class PatientListController extends BaseRestController {
 	@ResponseBody()
 	public String getPatientListsByName(@RequestParam("q") String query, HttpServletRequest request)
 	        throws ResponseException {
+		initPatientListController();
 		List<PatientList> allPatientList = service.getPatientListByName(query);
 		ArrayList results = new ArrayList();
 		for (PatientList patientList : allPatientList) {
@@ -203,6 +213,7 @@ public class PatientListController extends BaseRestController {
 	@ResponseBody()
 	public String getAllPatientListByUuid(@PathVariable("uuid") String uuid, HttpServletRequest request)
 	        throws ResponseException {
+		initPatientListController();
 		PatientList patientList = service.getPatientListByUuid(uuid);
 		SimpleObject obj = new SimpleObject();
 		obj.add("uuid", patientList.getUuid());
@@ -267,7 +278,7 @@ public class PatientListController extends BaseRestController {
 	@ResponseBody()
 	public String getAllPatientListByUuidFull(@PathVariable("uuid") String uuid, @RequestParam("v") String rep,
 	        HttpServletRequest request) throws ResponseException {
-		
+		initPatientListController();
 		PatientList patientList = service.getPatientListByUuid(uuid);
 		SimpleObject obj = new SimpleObject();
 		obj.add("uuid", patientList.getUuid());
@@ -358,6 +369,7 @@ public class PatientListController extends BaseRestController {
 	@ResponseBody()
 	public String getPatientsInPatientList(@RequestParam Map<String, String> params, HttpServletRequest request)
 	        throws ResponseException {
+		initPatientListController();
 		PatientList patientList = new PatientList();
 		patientList.setSearchQuery("?" + Joiner.on("&").withKeyValueSeparator("=").join(params));
 		SimpleObject obj = new SimpleObject();
@@ -435,7 +447,7 @@ public class PatientListController extends BaseRestController {
 	public Object retirePatientList(@PathVariable("uuid") String uuid,
 	        @RequestParam(value = "reason", defaultValue = "web service call") String reason, HttpServletRequest request,
 	        HttpServletResponse response) throws ResponseException {
-		
+		initPatientListController();
 		PatientList patientList = service.getPatientListByUuid(uuid);
 		if (patientList != null) {
 			patientList.setRetired(true);
@@ -462,7 +474,7 @@ public class PatientListController extends BaseRestController {
 	@ResponseBody
 	public Object purgePatientList(@PathVariable("uuid") String uuid, HttpServletRequest request,
 	        HttpServletResponse response) throws ResponseException {
-		
+		initPatientListController();
 		PatientList patientList = service.getPatientListByUuid(uuid);
 		if (patientList != null) {
 			service.deletePatientList(patientList);
