@@ -38,7 +38,7 @@ $default-gradient: matte !default;
     background-image: none;
     background-color: $bg-color;
 
-    @if $type != null and $bg-color != transparent {
+    @if $bg-color != transparent {
         // Color stops provided
         @if type-of($type) == "list" {
             @include background-image(linear-gradient($direction, $type));

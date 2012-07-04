@@ -96,23 +96,19 @@ Ext.define('mUserStories.view.addAppointment', {
                         flex: '2'
                     }, {
                         xtype: 'button',
-                        id: 'ok_appt',
-                        ui: 'confirm-round',
-                        icon: 'resources/rsz_check2.png',
-                        width: '45px',
-                        height: '45px',
-                        padding: '0px 0px 0px 3px'
+                        iconMask: true,
+                        iconCls: 'check2',
+                        id: 'ok_app',
+                        ui: 'confirm'
                     }, {
                         xtype: 'label',
                         flex: '2'
                     }, {
                         xtype: 'button',
-                        id: 'cancel_appt',
-                        ui: 'decline-round',
-                        icon: 'resources/rsz_delete1.png',
-                        width: '45px',
-                        height: '45px',
-                        padding: '0px 0px 0px 3px'
+                        iconMask: true,
+                        iconCls: 'delete1',
+                        id: 'cancel_app',
+                        ui: 'decline'
                     }, {
                         xtype: 'label',
                         flex: '2'

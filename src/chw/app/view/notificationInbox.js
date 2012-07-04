@@ -21,7 +21,7 @@ Ext.define('mUserStories.view.notificationInbox', {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Notifications',
+            title: 'Inbox',
             items: [{
                 xtype: 'button',
                 ui: 'back',
@@ -94,23 +94,19 @@ Ext.define('mUserStories.view.notificationInbox', {
                             flex: '2'
                         }, {
                             xtype: 'button',
+                            iconMask: true,
+                            iconCls: 'check2',
                             id: 'ok_inb',
-                            ui: 'confirm-round',
-                            icon: 'resources/rsz_check2.png',
-                            width: '45px',
-                            height: '45px',
-                            padding: '0px 0px 0px 3px'
+                            ui: 'confirm'
                         }, {
                             xtype: 'label',
                             flex: '2'
                         }, {
                             xtype: 'button',
+                            iconMask: true,
+                            iconCls: 'delete1',
                             id: 'cancel_inb',
-                            ui: 'decline-round',
-                            icon: 'resources/rsz_delete1.png',
-                            width: '45px',
-                            height: '45px',
-                            padding: '0px 0px 0px 3px'
+                            ui: 'decline'
                         }, {
                             xtype: 'label',
                             flex: '2'

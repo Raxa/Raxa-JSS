@@ -115,23 +115,19 @@ Ext.define('mUserStories.view.addPatient', {
                         flex: '2'
                     }, {
                         xtype: 'button',
+                        iconMask: true,
+                        iconCls: 'check2',
                         id: 'ok_reg',
-                        ui: 'confirm-round',
-                        icon: 'resources/rsz_check2.png',
-                        width: '45px',
-                        height: '45px',
-                        padding: '0px 0px 0px 3px'
+                        ui: 'confirm'
                     }, {
                         xtype: 'label',
                         flex: '2'
                     }, {
                         xtype: 'button',
+                        iconMask: true,
+                        iconCls: 'delete1',
                         id: 'cancel_reg',
-                        ui: 'decline-round',
-                        icon: 'resources/rsz_delete1.png',
-                        width: '45px',
-                        height: '45px',
-                        padding: '0px 0px 0px 3px'
+                        ui: 'decline'
                     }, {
                         xtype: 'label',
                         flex: '2'
