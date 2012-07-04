@@ -489,7 +489,7 @@ Ext.define('mUserStories.controller.basic', {
             encounterDatetime: ISODateString(new Date()),
             patient: Uuid,
             encounterType: 'e9897b1e-16af-4b67-9be7-6c89e971d907',
-            provider : '13a2e332-c27f-11e1-9262-a5fbf9edb8d2'
+            provider : 'fcd0f2cc-c27e-11e1-9262-a5fbf9edb8d2'
         })
         
        var store = Ext.create('mUserStories.store.encounterStore');
