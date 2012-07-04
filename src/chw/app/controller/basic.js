@@ -203,8 +203,9 @@ Ext.define('mUserStories.controller.basic', {
                 var lname = Ext.getCmp('last_reg').getValue();
                 var phone = Ext.getCmp('phone_reg').getValue();
                 var village = Ext.getCmp('village_reg').getValue();
-                var radioform = Ext.getCmp('reg_form');
-                var gender = radioform.getValues().radiogroup.charAt(0);
+                // var radioform = Ext.getCmp('radiogroup');
+                // var gender = radioform.getValues().radiogroup.charAt(0);
+                var gender = 'Male';
                 var bday = Ext.getCmp('bday').getValue();
 
                 if (fname == '' || lname == '' || phone == '' || village == '' || gender == '' || bday == '') {
@@ -337,16 +338,19 @@ Ext.define('mUserStories.controller.basic', {
     },
     // distinguish between ok and cancel
     doOption: function (arg) {
-        var active = Ext.getCmp('viewPort').getActiveItem().getActiveItem();
-        if (active === PAGES.LOGIN_SCREEN) {
+        var active = Ext.getCmp('viewPort').getActiveItem();
+        console.log(active);
+        console.log(active.id);
+        // console.log(Ext.getCmp('viewPort').getActiveItem().getActiveIndex());
+        if (active.getActiveItem() === PAGES.LOGIN_SCREEN) {
             this.doLogin(arg)
-        } else if (active === PAGES.ADD_REG) {
-            this.doAdd('reg',arg)
-        } else if (active === PAGES.ADD_REM) {
-            this.doAdd('rem',arg)
-        } else if (active === PAGES.ADD_APP) {
-            this.doAdd('app',arg)
-        } else if (active === PAGES.INBOX_CHW) {
+        } else if (active.id === 'ext-panel-5') {
+            this.doAdd('register',arg)
+        } else if (active === 'ext-panel-6') {
+            this.doAdd('reminder',arg)
+        } else if (active === 'ext-panel-7') {
+            this.doAdd('appointment',arg)
+        } else if (active === 'ext-tabpanel-3') {
             
         } else if (active === PAGES.INBOX_VC) {
             
