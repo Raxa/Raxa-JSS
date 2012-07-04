@@ -29,20 +29,14 @@ Ext.define('mUserStories.controller.basic', {
             back_det: '#back_det',
             back_inb: '#back_inb',
             back_res: '#back_res',
-            cancel_loc: '#cancel_loc',
-            cancel_login: '#cancel_login',
-            cancel_reg: '#cancel_reg',
-            cancel_rem: '#cancel_rem',
+            cancelButton: '#cancelButton',
             downButton: '#downButton',
             inboxButton: '#inboxButton',
             logoutButton: '#logoutButton',
             logoutButton_vc: '#logoutButton_vc',
             menuButton: '#menuButton',
             notButton: '#notButton',
-            ok_loc: '#ok_loc',
-            ok_login: '#ok_login',
-            ok_reg: "#ok_reg",
-            ok_rem: '#ok_rem',
+            okButton: '#okButton',
             resourcesButton: '#resourcesButton',
             schButton: '#schButton',
             upButton: '#upButton'
@@ -98,24 +92,9 @@ Ext.define('mUserStories.controller.basic', {
                     this.doBack('list')
                 }
             },
-            cancel_loc: {
+            cancelButton: {
                 tap: function () {
-                    this.doLocation(false)
-                }
-            },
-            cancel_login: {
-                tap: function () {
-                    this.doLogin(false)
-                }
-            },
-            cancel_reg: {
-                tap: function () {
-                    this.doAdd('register', false)
-                }
-            },
-            cancel_rem: {
-                tap: function () {
-                    this.doAdd('reminder', false)
+                    this.doOption(false)
                 }
             },
             downButton: {
@@ -148,24 +127,9 @@ Ext.define('mUserStories.controller.basic', {
                     this.doToolbar('not')
                 }
             },
-            ok_loc: {
+            okButton: {
                 tap: function () {
-                    this.doLocation(true)
-                }
-            },
-            ok_login: {
-                tap: function () {
-                    this.doLogin(true)
-                }
-            },
-            ok_reg: {
-                tap: function () {
-                    this.doAdd('register', true)
-                }
-            },
-            ok_rem: {
-                tap: function () {
-                    this.doAdd('reminder', true)
+                    this.doOption(true)
                 }
             },
             resourcesButton: {
@@ -371,6 +335,15 @@ Ext.define('mUserStories.controller.basic', {
         Ext.getCmp('location').reset();
         // return to login screen
         Ext.getCmp('viewPort').setActiveItem(PAGES.LOGIN_SCREEN)
+    },
+    // distinguish between ok and cancel
+    doOption: function (arg) {
+        var active = Ext.getCmp('viewPort').getActiveItem();
+        if (arg) {
+            
+        } else {
+            
+        }
     },
     /* this funtions makes a get call to get the patient identifiers type */
     getidentifierstype: function (personUuid) {

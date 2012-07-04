@@ -160,7 +160,7 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'CHW'];
+        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw'];
         //TO DO:Add the line below instead the above one 
         //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },

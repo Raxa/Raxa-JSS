@@ -87,32 +87,7 @@ Ext.define('mUserStories.view.addAppointment', {
                         yearFrom: 1900
                     }
                 }, {
-                    xtype: 'container',
-                    layout: 'hbox',
-                    padding: '10px',
-                    width: "100%",
-                    items: [{
-                        xtype: 'label',
-                        flex: '2'
-                    }, {
-                        xtype: 'button',
-                        iconMask: true,
-                        iconCls: 'check2',
-                        id: 'ok_app',
-                        ui: 'confirm'
-                    }, {
-                        xtype: 'label',
-                        flex: '2'
-                    }, {
-                        xtype: 'button',
-                        iconMask: true,
-                        iconCls: 'delete1',
-                        id: 'cancel_app',
-                        ui: 'decline'
-                    }, {
-                        xtype: 'label',
-                        flex: '2'
-                    }]
+                    xclass: 'mUserStories.view.okCancel'
                 }]
             }]
         }]

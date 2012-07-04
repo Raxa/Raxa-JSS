@@ -52,40 +52,7 @@ Ext.define('mUserStories.view.loginScreen', {
                     flex: 2
                 }]
             }, {
-                xtype: 'container',
-                layout: {
-                    type: 'vbox',
-                    pack: 'center',
-                    align: 'middle'
-                },
-                items: [{
-                    xtype: 'container',
-                    layout: 'hbox',
-                    padding: '10px',
-                    width: "100%",
-                    items: [{
-                        xtype: 'label',
-                        flex: '2'
-                    }, {
-                        xtype: 'button',
-                        iconMask: true,
-                        iconCls: 'check2',
-                        id: 'ok_login',
-                        ui: 'confirm'
-                    }, {
-                        xtype: 'label',
-                        flex: '2'
-                    }, {
-                        xtype: 'button',
-                        iconMask: true,
-                        iconCls: 'delete1',
-                        id: 'cancel_login',
-                        ui: 'decline'
-                    }, {
-                        xtype: 'label',
-                        flex: '2'
-                    }]
-                }]
+                xclass: 'mUserStories.view.okCancel'
             }]
         }]
     }
