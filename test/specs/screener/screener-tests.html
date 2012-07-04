@@ -22,9 +22,11 @@
                     //fill in details for your module
                     name: 'Screener',
                     appFolder: '../../../src/screener/app',
-                        models: ['Doctor', 'Patient', 'Links', 'Person', 'NewPatient'],
-                        stores: ['Doctors', 'Patients', 'IdentifierType', 'Location'],
-                        views: ['NewPatient'],
+
+                        models: ['DoctorList', 'Patient', 'Links', 'Person', 'NewPatient','druglist'],
+                        stores: ['DoctorList', 'Patients', 'IdentifierType', 'Location'],
+                        views: ['NewPatient','DrugStore'],
+
                         controllers: ['Application'],
 
                     launch: function() {
