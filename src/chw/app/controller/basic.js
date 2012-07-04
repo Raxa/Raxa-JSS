@@ -460,6 +460,7 @@ Ext.define('mUserStories.controller.basic', {
         PatientStore.sync();
         PatientStore.on('write', function () {
             console.log('------Patient Created successfully------');
+            //After patient has been created, send the encounter data
             this.sendEncounterData(personUuid);
         }, this);
         
@@ -474,6 +475,8 @@ Ext.define('mUserStories.controller.basic', {
     },
     
     sendEncounterData:function(Uuid){
+        
+        //Function for getting date in correct format
         function ISODateString(d){
             function pad(n){
                 return n<10 ? '0'+n : n
@@ -485,6 +488,7 @@ Ext.define('mUserStories.controller.basic', {
             + pad(d.getUTCMinutes())+':'
             + pad(d.getUTCSeconds())+'Z'
         }
+        //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
         var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
             encounterDatetime: ISODateString(new Date()),
             patient: Uuid,
@@ -492,11 +496,10 @@ Ext.define('mUserStories.controller.basic', {
             provider : 'fcd0f2cc-c27e-11e1-9262-a5fbf9edb8d2'
         })
         
-       var store = Ext.create('mUserStories.store.encounterStore');
-       store.add(JSONEncounter);
-       store.sync();
-       
- 
+        //Create the encounter store and POST the encounter
+        var store = Ext.create('mUserStories.store.encounterStore');
+        store.add(JSONEncounter);
+        store.sync();
     },
     
     saveBasicAuthHeader: function (username, password) {
