@@ -234,8 +234,8 @@ Ext.define('mUserStories.controller.basic', {
                     }, this)
                 }
             } else if (step === 'reminder') {
-                // TODO: validate all fields
-                // TODO: add 'other' option
+            // TODO: validate all fields
+            // TODO: add 'other' option
             }
         } else {
             // TODO: doReturn()
@@ -295,9 +295,9 @@ Ext.define('mUserStories.controller.basic', {
                     // TODO: check for conflicts
                     // doDownload information in localStorage
                     this.doDownload();
-                    // doUpload all information
+                // doUpload all information
                 }
-            })
+            },this)
         } else if (arg === 'inbox') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_CHW)
         } else if (arg === 'resources') {
@@ -322,11 +322,46 @@ Ext.define('mUserStories.controller.basic', {
     },
     // Download patient with details
     doDownload: function () {
-        var down_store = Ext.create('mUserStories.store.downStore');
+        //Initially assuming we are connected
+        CONNECTED = true;
+        
+        //Get the download store. If it doesnt exist, then create one
+        var down_store=Ext.getStore('downStore');
+        if(!down_store){
+            down_store = Ext.create('mUserStories.store.downStore');
+            console.log('created down store');
+        }
+        
+        //Similarly get the offline store. Create if it doesnt exist.
+        var offlineStore=Ext.getStore('offlineStore');
+        if(!offlineStore){
+            offlineStore = Ext.create('mUserStories.store.offlineStore');
+            console.log('created offline store');
+        }
+
+        //Make the download store attempt to fetch values from the web. See downStore.js
         down_store.load();
-        Ext.getCmp('patientlistid').setStore(down_store);
-        // TODO: set patientcurrid to be subset of above organized by appt time
-        // Do we need a separate store for this?
+        down_store.on('load',function(){
+            // So if the exception was raised (in downStore.js), the list would at this point be populated with offline data.
+            // If the exception was not raised, and hence CONNECTED=1, then we proceed to fill the offline store with new values
+            if(CONNECTED){
+                //Before updating the offline store, clean it up
+                offlineStore.removeAll();
+                //Fill offline store
+                down_store.each(function (record){
+                    offlineStore.add(record);
+                    offlineStore.sync();
+                });
+                //At this point, when we do have connectivity, borh our stores- the offline and online stores will have the same value. 
+                // So you can populate the list with either stores. This is the end of the scenario when we do have connectivity.
+                Ext.getCmp('patientlistid').setStore(offlineStore);
+            }
+        },this)
+        
+       
+        
+    // TODO: set patientcurrid to be subset of above organized by appt time
+    // Do we need a separate store for this?
     },
     // exit the program
     doExit: function () {
@@ -385,13 +420,13 @@ Ext.define('mUserStories.controller.basic', {
         return Math.floor(Math.random() * 1000000000);
     },
     isEmpty: function (arg) {
-        // TODO: check to see if the select field is empty
-        // TODO: continue to arg if not empty
+    // TODO: check to see if the select field is empty
+    // TODO: continue to arg if not empty
     },
     isOther: function (arg) {
-        // TODO: check to see if the select field is other
-        // TODO: pop up screen prompt
-        // TODO: continue to arg 
+    // TODO: check to see if the select field is other
+    // TODO: pop up screen prompt
+    // TODO: continue to arg 
     },
     loginContinue: function () {
         // clear form fields
