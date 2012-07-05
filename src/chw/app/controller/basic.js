@@ -320,6 +320,7 @@ Ext.define('mUserStories.controller.basic', {
             if (USER.name === '' || pass === '') {
                 Ext.Msg.alert("Error", "Please fill in all fields")
             } else {
+                this.getUserInformation(USER.name);
                 this.saveBasicAuthHeader(USER.name,pass);
             }
         } else {
@@ -473,6 +474,18 @@ Ext.define('mUserStories.controller.basic', {
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
     },
+    getUserInformation: function (username) {
+        Ext.Ajax.request({
+            scope: this,
+            withCredentials: true,
+            useDefaultXhrHeader: false,
+            url: MRSHOST + '/ws/rest/v1/user?q=' + username,
+            method: 'GET',
+            headers: HEADERS,
+            success: this.storeUserInformation,
+            failure: function () {}
+        });
+    },
     isEmpty: function (arg) {
     // TODO: check to see if the select field is empty
     // TODO: continue to arg if not empty
@@ -524,6 +537,7 @@ Ext.define('mUserStories.controller.basic', {
 //        Ext.getCmp('village_reg').reset();
 //        Ext.getCmp('bday').reset();
 //        Ext.getCmp('gender_cont').reset();
+        // TODO: I don't think this works
         Ext.getCmp('ext-formpanel-5').reset();
         
         this.doDownload();
@@ -557,7 +571,6 @@ Ext.define('mUserStories.controller.basic', {
         store.add(JSONEncounter);
         store.sync();
     },
-    
     saveBasicAuthHeader: function (username, password) {
         // delete existing logged in sessions
         Ext.Ajax.request({
@@ -601,5 +614,26 @@ Ext.define('mUserStories.controller.basic', {
                 }
             }
         })
+    }, 
+    storeUserInformation: function (userInfo) {
+        var userInfoJson = Ext.decode(userInfo.responseText);
+        if (userInfoJson.results.length !== 0) {
+            Ext.Ajax.request({
+                scope: this,
+                url: userInfoJson.results[0].links[0].uri + '?v=full',
+                method: 'GET',
+                withCredentials: true,
+                useDefaultXhrHeader: false,
+                headers: HEADERS,
+                success: function (response) {
+                    var userInfo = Ext.decode(response.responseText);
+                    USER.uuid = userInfo.uuid;
+                    localStorage.setItem('uuid', userInfo.uuid)
+                },
+                failure: function () {
+                    USER.uuid = localStorage.getItem('uuid')
+                }
+            });
+        } else {}
     }
 })

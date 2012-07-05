@@ -5,11 +5,7 @@ Ext.define('mUserStories.store.encounterStore', {
         proxy: {
             type: 'rest',
             url : MRSHOST + '/ws/rest/v1/encounter',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: HEADERS,
             reader: {
                 type: 'json'
             },

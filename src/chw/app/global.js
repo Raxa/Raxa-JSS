@@ -37,6 +37,7 @@ var PAGES = {
 var USER = new Object();
 USER.name = '';
 USER.type = 'CHW';
+USER.uuid = '';
 var CURR_DATE = new Date();
 var LOCATION = "";
 var CONNECTED = true;   //Variable for connectivity status
@@ -52,4 +53,9 @@ var helper = {
         // change to next page
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
     }
+}
+var HEADERS = {
+    "Authorization": localStorage.getItem("basicAuthHeader"),
+    "Accept": "application/json",
+    "Content-Type": "application/json"
 }
