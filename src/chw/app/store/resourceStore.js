@@ -18,22 +18,22 @@ Ext.define('mUserStories.store.resourceStore', {
     config: {
         model: 'mUserStories.model.resourceModel',
         id: 'resourceStore',
-        sorters: 'name',
+        sorters: 'resourceName',
         grouper: function (record) {
-            return record.get('type')[0];
+            return record.get('resourceName')[0];
         },
         data: [{
-            type: 'photo',
-            name: 'Sharing',
-            location: 'sharing'
+            resourceType: 'photo',
+            resourceName: 'Sharing',
+            resourceLocation: 'sharing'
         }, {
-            type: 'photo',
-            name: 'Spider Bites',
-            location: 'spider'
+            resourceType: 'photo',
+            resourceName: 'Spider Bites',
+            resourceLocation: 'spider'
         }, {
-            type: 'photo',
-            name: 'Wash Your Hands',
-            location: 'freeride'
+            resourceType: 'photo',
+            resourceName: 'Wash Your Hands',
+            resourceLocation: 'freeride'
         }]
     }
 })

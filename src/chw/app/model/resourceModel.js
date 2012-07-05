@@ -16,6 +16,16 @@
 Ext.define('mUserStories.model.resourceModel', {
     extend: 'Ext.data.Model',
     config: {
-        fields: ['type', 'name', 'location']
+        fields: [{
+            name: 'resourceType',
+            type: 'string'
+        }, {
+            name: 'resourceName',
+            type: 'string',
+            isUnique: true
+        }, {
+            name: 'resourceLocation',
+            type: 'string'
+        }]
     }
 })

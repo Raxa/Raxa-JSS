@@ -27,12 +27,10 @@ Ext.define('mUserStories.controller.basic', {
             back_add_app: '#back_add_app',
             back_add_reg: '#back_add_reg',
             back_add_rem: '#back_add_rem',
-            back_aud: '#back_aud',
             back_det: '#back_det',
             back_inb: '#back_inb',
-            back_pho: '#back_pho',
             back_res: '#back_res',
-            back_vid: '#back_vid',
+            back_res_det: '#back_res_det',
             cancelButton: '#cancelButton',
             syncButton: '#syncButton',
             inboxButton: '#inboxButton',
@@ -67,6 +65,58 @@ Ext.define('mUserStories.controller.basic', {
                     this.doResources('audio')
                 }
             },
+eventDispatcher: Ext.apply.create.Class
+getEventDispatcher: function () {
+getObservableId: function () {
+getUniqueId: function () {
+id: "ext-record-197"
+internalId: "ext-record-197"
+managedListeners: Object
+modified: Object
+observableId: "#ext-record-197"
+phantom: false
+raw: Object
+stores: Array[1]
+usedSelectors: Array[1]
+__proto__: TemplateClass
+length: 1
+__proto__: Array[0]
+config: Ext.Object.classify.objectClass
+dirtyIndices: false
+dirtySortFn: false
+getKey: function (record) {
+indices: Object
+initConfig: function (){}
+initialConfig: Object
+items: Array[1]
+keys: Array[1]
+length: 1
+map: Object
+sortFn: function (r1, r2) {
+sorted: true
+__proto__: TemplateClass
+_grouper: Ext.apply.create.Class
+_model: function () {
+_modelDefaults: Ext.Object.classify.objectClass
+_proxy: Ext.apply.create.Class
+_remoteFilter: false
+_remoteSort: false
+_sorters: "familyName"
+_storeId: "muserstories-store-uppersonstore-2"
+config: Ext.Object.classify.objectClass
+data: Ext.apply.create.Class
+eventDispatcher: Ext.apply.create.Class
+getEventDispatcher: function () {
+getObservableId: function () {
+getUniqueId: function () {
+id: "muserstories-store-uppersonstore-2"
+initConfig: function (){}
+initialConfig: Object
+managedListeners: Object
+observableId: "#muserstories-store-uppersonstore-2"
+removed: Array[0]
+usedSelectors: Array[1]
+__proto__: TemplateClass
             back_add: {
                 tap: function () {
                     this.doBack('list')
@@ -87,11 +137,6 @@ Ext.define('mUserStories.controller.basic', {
                     this.doBack('add')
                 }
             },
-            back_aud: {
-                tap: function () {
-                    this.doBack('res')
-                }
-            },
             back_det: {
                 tap: function () {
                     this.doBack('list')
@@ -102,17 +147,12 @@ Ext.define('mUserStories.controller.basic', {
                     this.doBack('list')
                 }
             },
-            back_pho: {
-                tap: function () {
-                    this.doBack('res')
-                }
-            },
             back_res: {
                 tap: function () {
                     this.doBack('list')
                 }
             },
-            back_vid: {
+            back_res_det: {
                 tap: function () {
                     this.doBack('res')
                 }
@@ -211,12 +251,8 @@ Ext.define('mUserStories.controller.basic', {
             }, {
                 xclass: 'mUserStories.view.resources'
             }, {
-                xclass: 'mUserStories.view.videoResources'
+                xclass: 'mUserStories.view.resourceDetail'
             }, {
-                xclass: 'mUserStories.view.audioResources'
-            }, /*{
-                xclass: 'mUserStories.view.photoResources'
-            },*/ {
                 xclass: 'mUserStories.view.vcNotifications'
             }, {
                 xclass: 'mUserStories.view.vcScheduling'
@@ -381,6 +417,7 @@ Ext.define('mUserStories.controller.basic', {
         } else if (arg === 'inbox') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_CHW)
         } else if (arg === 'resources') {
+            this.getResources();
             Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
         } else if (arg === 'not') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
@@ -456,9 +493,6 @@ Ext.define('mUserStories.controller.basic', {
     // distinguish between ok and cancel
     doOption: function (arg) {
         var active = Ext.getCmp('viewPort').getActiveItem();
-        console.log(active);
-        console.log(active.id);
-        // console.log(Ext.getCmp('viewPort').getActiveItem().getActiveIndex());
         if (active.getActiveItem() === PAGES.LOGIN_SCREEN) {
             this.doLogin(arg)
         } else if (active.id === 'ext-formpanel-5') {
@@ -500,6 +534,11 @@ Ext.define('mUserStories.controller.basic', {
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
+    },
+    getResources : function () {
+        var resource_store = Ext.getStore('resourceStore');
+        resource_store.load();
+        Ext.getCmp('resourceList').setStore(resource_store)
     },
     getUserInformation: function (username) {
         Ext.Ajax.request({
@@ -647,8 +686,8 @@ Ext.define('mUserStories.controller.basic', {
                 headers: HEADERS,
                 success: function (response) {
                     var userInfo = Ext.decode(response.responseText);
-                    USER.uuid = userInfo.uuid;
-                    localStorage.setItem('uuid', userInfo.uuid)
+                    USER.uuid = userInfo.person.uuid;
+                    localStorage.setItem('uuid', userInfo.person.uuid)
                 },
                 failure: function () {
                     USER.uuid = localStorage.getItem('uuid')
