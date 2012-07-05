@@ -17,17 +17,17 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 activate: function(){
                     // below there listners call searchPatient() as enter key is pressed 
                     Ext.getCmp('patientNameASearch').on('specialkey', function(field, e){
-                        if (e.getKey() == 13) {
+                        if (e.getKey() == KEY.ENTER) {
                             this.searchPatient()
                         }
                     },this)
                     Ext.getCmp('prescriptionIdASearch').on('specialkey', function(field, e){
-                        if (e.getKey() == 13) {
+                        if (e.getKey() == KEY.ENTER) {
                             this.searchPatient()
                         }
                     },this)
                     Ext.getCmp('prescriptionDateASearch').on('specialkey', function(field, e){
-                        if (e.getKey() == 13) {
+                        if (e.getKey() == KEY.ENTER) {
                             this.searchPatient()
                         }
                     },this)
