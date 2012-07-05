@@ -34,7 +34,7 @@ Ext.define('mUserStories.controller.basic', {
             back_res: '#back_res',
             back_vid: '#back_vid',
             cancelButton: '#cancelButton',
-            downButton: '#downButton',
+            syncButton: '#syncButton',
             inboxButton: '#inboxButton',
             logoutButton: '#logoutButton',
             logoutButton_vc: '#logoutButton_vc',
@@ -44,7 +44,6 @@ Ext.define('mUserStories.controller.basic', {
             photoButton: '#photoButton',
             resourcesButton: '#resourcesButton',
             schButton: '#schButton',
-            upButton: '#upButton',
             videoButton: '#videoButton'
         },
         control: {
@@ -123,9 +122,9 @@ Ext.define('mUserStories.controller.basic', {
                     this.doOption(false)
                 }
             },
-            downButton: {
+            syncButton: {
                 tap: function () {
-                    this.doToolbar('down')
+                    this.doToolbar('sync')
                 }
             },
             inboxButton: {
@@ -171,11 +170,6 @@ Ext.define('mUserStories.controller.basic', {
             schButton: {
                 tap: function () {
                     this.doToolbar('sch')
-                }
-            },
-            upButton: {
-                tap: function () {
-                    this.doToolbar('up')
                 }
             },
             videoButton: {
@@ -253,7 +247,11 @@ Ext.define('mUserStories.controller.basic', {
                 if (fname == '' || lname == '' || phone == '' || village == '' || gender == '' || bday == '') {
                     Ext.Msg.alert("Error", "Please fill in all fields")
                 } else {
-                    var up_store = Ext.create('mUserStories.store.upPersonStore');
+                    //                    var up_store = Ext.create('mUserStories.store.upPersonStore');
+                    var offlineRegStore = Ext.getStore('offlineRegisterStore');
+                    if(!offlineRegStore){
+                        offlineRegStore = Ext.create(mUserStories.store.offlineRegisterStore);
+                    }
                     var up_Model = Ext.create('mUserStories.model.upPersonModel', {
                         names: [{
                             givenName: fname,
@@ -266,14 +264,15 @@ Ext.define('mUserStories.controller.basic', {
                         }]
                     });
                     //Adding registration details into local storage (a store)
-                    up_store.add(up_Model);
+                    //                    up_store.add(up_Model);
+                    offlineRegStore.add(up_Model);
                     //REST call for creating a Person
-                    up_store.sync();
-                    up_store.on('write', function () {
-                        console.log('Stored locally, calling identifier type');
-                        // Now that Person is created, send request to create Patient
-                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
-                    }, this)
+                    //                    up_store.sync();
+//                    up_store.on('write', function () {
+//                        console.log('Stored locally, calling identifier type');
+//                        // Now that Person is created, send request to create Patient
+//                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
+//                    }, this)
                 }
             } else if (step === 'reminder') {
             // TODO: validate all fields
@@ -342,13 +341,28 @@ Ext.define('mUserStories.controller.basic', {
     doToolbar: function (arg) {
         if (arg === 'menu') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
-        } else if (arg === 'down') {
+        } else if (arg === 'sync') {
             Ext.Msg.confirm('', 'Sync all information?', function (resp) {
                 if (resp === 'yes') {
                     // TODO: check for conflicts
                     // doDownload information in localStorage
                     this.doDownload();
-                // doUpload all information
+                    // doUpload all information
+                    var up_store = Ext.create('mUserStories.store.upPersonStore');
+                    var offlineRegStore = Ext.getStore('offlineRegisterStore');
+                    //copy all data from offlineRegStore to up_store
+                    offlineRegStore.each(function (record){
+                        up_store.add(record);
+                        up_store.sync();
+                    });
+                    up_store.on('write', function () {
+                        console.log('Stored locally, calling identifier type');
+                        // Now that Person is created, send request to create Patient
+                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
+                    }, this)
+                    //Empty out the offlineStore
+                    
+                    
                 }
             },this)
         } else if (arg === 'inbox') {
@@ -531,13 +545,6 @@ Ext.define('mUserStories.controller.basic', {
             this.sendEncounterData(personUuid);
         }, this);
         
-//        Ext.getCmp('first_reg').reset();
-//        Ext.getCmp('last_reg').reset();
-//        Ext.getCmp('phone_reg').reset();
-//        Ext.getCmp('village_reg').reset();
-//        Ext.getCmp('bday').reset();
-//        Ext.getCmp('gender_cont').reset();
-        // TODO: I don't think this works
         Ext.getCmp('ext-formpanel-5').reset();
         
         this.doDownload();

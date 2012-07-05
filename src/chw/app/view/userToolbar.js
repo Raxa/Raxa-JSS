@@ -35,7 +35,7 @@ Ext.define('mUserStories.view.userToolbar', {
         }, {
             // iconCls: 'arrow_down',
             iconCls:'cloud_black_upload1',
-            id: 'downButton'
+            id: 'syncButton'
         }, {
             iconCls:'photos2',
             // iconCls: 'star',
