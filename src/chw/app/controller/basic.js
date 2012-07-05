@@ -628,7 +628,7 @@ Ext.define('mUserStories.controller.basic', {
                 success: function (response) {
                     var userInfo = Ext.decode(response.responseText);
                     USER.uuid = userInfo.uuid;
-                    localStorage.setItem('uuid', userInfo.uuid)
+                    localStorage.setItem('uuid', userInfo.person.uuid)
                 },
                 failure: function () {
                     USER.uuid = localStorage.getItem('uuid')
