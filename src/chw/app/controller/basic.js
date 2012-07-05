@@ -369,6 +369,7 @@ Ext.define('mUserStories.controller.basic', {
         } else if (arg === 'add') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
         } else if (arg === 'res') {
+            this.getResources();
             Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
         }
     },

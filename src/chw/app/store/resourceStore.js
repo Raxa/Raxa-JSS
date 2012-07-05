@@ -34,6 +34,10 @@ Ext.define('mUserStories.store.resourceStore', {
             resourceType: 'photo',
             resourceName: 'Wash Your Hands',
             resourceLocation: 'freeride'
+        }, {
+            resourceType: 'photo',
+            resourceName: 'Cover Your Cough',
+            resourceLocation: 'cough'
         }]
     }
 })
