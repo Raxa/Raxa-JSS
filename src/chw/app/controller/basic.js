@@ -563,7 +563,7 @@ Ext.define('mUserStories.controller.basic', {
             encounterDatetime: ISODateString(new Date()),
             patient: Uuid,
             encounterType: 'e9897b1e-16af-4b67-9be7-6c89e971d907',
-            provider : 'fcd0f2cc-c27e-11e1-9262-a5fbf9edb8d2'
+            provider : USER.uuid
         })
         
         //Create the encounter store and POST the encounter
