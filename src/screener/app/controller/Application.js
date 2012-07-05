@@ -4,8 +4,8 @@
  */
 var form_num, lab_num;
 Ext.define("Screener.controller.Application", {
-    requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
-    models:['Screener.model.Person'],
+    requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.PatientList', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
+    models:['Screener.model.Person', 'Screener.mosel.PostList'],
     extend: 'Ext.app.Controller',
     config: {
         //here we name the elements we need from the page
@@ -36,6 +36,7 @@ Ext.define("Screener.controller.Application", {
             savePatientButton: '#savePatientButton',
             assignButton: '#assignButton',
             sortButton: '#sortButton',
+			refreshButton: '#refreshButton',
             drugSubmitButton: '#drugSubmitButton',
             addDrugFormButton: '#addDrugFormButton',
             addLabOrderButton: '#addLabOrderButton',
@@ -44,7 +45,8 @@ Ext.define("Screener.controller.Application", {
             sortByFIFOButton: '#sortByFIFOButton',
             sortByBMIButton: '#sortByBMIButton',
             removePatientButton: '#removePatientButton',
-            removeAllPatientsButton: '#removeAllPatientsButton'
+            removeAllPatientsButton: '#removeAllPatientsButton',
+			patientListView: '#patientListViewId'
         },
         //now we define all our listening methods
         control: {
@@ -77,6 +79,9 @@ Ext.define("Screener.controller.Application", {
             },
             sortButton: {
                 tap: 'showSort'
+            },
+            refreshButton: {
+                tap: 'refreshList'
             },
             sortByNameButton: {
                 tap: 'sortByName'
@@ -129,12 +134,55 @@ Ext.define("Screener.controller.Application", {
     },
     //called on startup
     init: function () {
-        //Ext.Msg.confirm("Confirmation", "Are you sure you want to do that?", Ext.emptyFn);
-        this.totalPatients = Ext.getStore('patientStore').getCount();
-        Ext.getStore('patientStore').each(this.addToDoctor);
         form_num = 0;
         lab_num = 0;
+        var list_regEncounter = Ext.create('Screener.model.PostList', {
+        	name: "Registration Encounter",
+        	description: "Patients encountered Registration",
+        	searchQuery: "?encounterType="+ localStorage.regUuidencountertype	
+        });
+		var store_regEncounter = Ext.create('Screener.store.PostLists');
+        store_regEncounter.add(list_regEncounter);
+        store_regEncounter.sync();
+        store_regEncounter.on('write', function(){
+        console.log("--Reg encounter list created--");
+		
+		var list_scrEncounter = Ext.create('Screener.model.PostList', {
+        	name: "Screener Encounter",
+        	description: "Patients encountered Screener",
+        	searchQuery: "?encounterType="+localStorage.screenerUuidencountertype
+        });
+		var store_scrEncounter = Ext.create('Screener.store.PostLists');
+        store_scrEncounter.add(list_scrEncounter);
+        store_scrEncounter.sync();
+        store_scrEncounter.on('write', function(){
+        console.log("--Scr encounter list created--");
+		
+		var store_patientList = Ext.create('Screener.store.PatientList',{
+		storeId: 'patientStore'});
+				store_patientList.getProxy().setUrl(this.getPatientListUrl(store_regEncounter.getData().getAt(0).getData().uuid,store_scrEncounter.getData().getAt(0).getData().uuid));
+				//HOST + '/ws/rest/v1/raxacore/patientlist'+'?inList='+store_regEncounter.getData().getAt(0).getData().uuid+'&notInLIst='+store_scrEncounter.getData().getAt(0).getData().uuid+'&encounterType='+localStorage.regUuidencountertype
+				store_patientList.load();
+				store_patientList.on('load', function(){
+				console.log("----list created----");		
+			}, this);
+		
+		
+		} ,this);
+		
+		
+		} ,this);
+		
+        
+		
+		
+		
     },
+	
+	getPatientListUrl: function (reg_UUID, scr_UUID) {
+		return(HOST + '/ws/rest/v1/raxacore/patientlist'+'?inList='+reg_UUID+'&notInLIst='+scr_UUID+'&encounterType='+localStorage.regUuidencountertype);
+	},
+	
     //add new drug order form 
     addDrugForm: function () {
         form_num++;
@@ -153,7 +201,7 @@ Ext.define("Screener.controller.Application", {
             });
             Ext.getCmp('form' + form_num).hide();
             form_num--;
-        }
+        }store.getData().getAt(0).getData().uuid
     },
     addLabOrder: function () {
         lab_num++;
@@ -191,7 +239,7 @@ Ext.define("Screener.controller.Application", {
             store.add(person);
             store.sync();
             store.on('write', function(){
-               this.getidentifierstype(store.getData().getAt(0).getData().uuid)
+			   this.getidentifierstype(store.getData().getAt(0).getData().uuid)
             } ,this);
             Ext.getCmp('newPatient').hide();
             Ext.getCmp('newPatient').reset();
@@ -309,6 +357,9 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').sort('bmi');
         this.getSortPanel().hide();
     },
+	refreshList: function() {
+		console.log(Ext.getStore('patientStore'))
+	},
     //if patient and doctor are both selected, removes patient from list, increases numpatients for doctor,
     //and adds patient to the patients() store in the doctor
     assignPatient: function () {

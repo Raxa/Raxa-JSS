@@ -16,12 +16,16 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxaemr.jelastic.tsukaeru.net';
+    var HOST = 'http://192.168.1.8:8080/openmrs';
 } else HOST = localStorage.getItem("host");
 
-var username = 'admin';
+var username = 'shivam';
 var password = 'Hello123';
-var timeoutLimit = 5000;
+var timeoutLimit = 20000;
+var hospitalName = 'JSS Hospital';
+var resourceUuid = [['concept','height','HEIGHT (CM)'],['concept','weight','WEIGHT (KG)'],['concept','bmi','BODY MASS INDEX'],['concept', 'regfee','Registration Fee'],
+['form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms'],['encountertype', 'reg','REGISTRATION - registration encounter'],['encountertype', 'screener','SCREENER - screener encounter'],
+['location', 'screener','Screener Registration Disk - registration desk in a screener module'],['location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor']];
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
@@ -79,8 +83,24 @@ var Util = {
      *Returns the value of TimeoutLimit for login timeout 
      *@return timeoutLimit for timeout in login 
      */
+    Datetime: function (d){
+        function pad(n){
+            return n<10 ? '0'+n : n
+        }
+        return d.getUTCFullYear()+'-'
+        + pad(d.getUTCMonth()+1)+'-'
+        + pad(d.getUTCDate())+'T'
+        + pad(d.getUTCHours())+':'
+        + pad(d.getUTCMinutes())+':'
+        + pad(d.getUTCSeconds())+'Z'
+    },
+    
     getTimeoutLimit: function () {
         return timeoutLimit;
+    },
+    
+    getHospitalName: function () {
+        return hospitalName;
     },
 
     /**
@@ -105,7 +125,7 @@ var Util = {
             useDefaultXhrHeader: false,
             method: 'DELETE',
             success: function () {
-                // do nothing
+            // do nothing
             }
         });
     },
@@ -142,11 +162,17 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4'];
-        //TO DO:Add the line below instead the above one 
-        //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+        return ['login', 'screener', 'registration', 'registrationextjs4','CHW'];
+    //TO DO:Add the line below instead the above one 
+    //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
 
+    getApps: function () {
+        //always keep login at first position as its app path is different
+        return ['gotStatins','problemList'];
+    //TO DO:Add the line below instead the above one 
+    //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+    },
     /**
      *Generate six digit randomly generated Device Id  
      *Checks if any key with name "deviceId" is previously stored in localStorage, returns it if availaible
@@ -174,6 +200,11 @@ var Util = {
         return deviceId;
     },
 
+    getPatientIdentifier : function(){
+        //dummy funtion to be used for creating partient
+        // TODO: writen a  ramdom no for patient identufier but it should be a unique id
+        return Math.floor(Math.random() * 1000000000);
+    },
     //Function to help share Models between ExtJS and Sencha Touch 2.
     platformizeModelConfig: function (extJsModelConfig) {
         if (Ext.versions.extjs) {
@@ -190,10 +221,52 @@ var Util = {
             Ext.Error.raise('Could not recognize Library');
         }
     },
-	getPatientIdentifier : function(){
-        //dummy funtion to be used for creating partient
-        // TODO: writen a  ramdom no for patient identufier but it should be a unique id
-        return Math.floor(Math.random() * 1000000000);
-    }
+    
+    getAttributeFromREST : function(resource,queryParameter,display) {
 
+        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/'+resource+'?q='+queryParameter,  //'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {		console.log(response)	
+                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
+                    if(JSON.parse(response.responseText).results[i].display == display){
+                        if(resource != 'location'){
+                            localStorage.setItem(queryParameter+"Uuid"+resource,JSON.parse(response.responseText).results[i].uuid)
+                        }
+                        else{
+                            localStorage.setItem(queryParameter+"Uuid"+resource,display)
+                        }
+                    }
+                }
+            }
+        });
+    },
+    
+    getProviderUuid : function(uuid) {
+        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/provider/'+uuid,  //'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                var x = "person not exits"
+                if(console.log(JSON.parse(response.responseText).person.uuid) != null){
+                    return JSON.parse(response.responseText).person.uuid
+                }
+                else{
+                    return x
+                }
+            }
+        });
+    }
 }

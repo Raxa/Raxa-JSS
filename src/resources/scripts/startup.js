@@ -44,7 +44,36 @@ var Startup = {
 
         return errCode;
     },
-
+    
+    
+    getResourceUuid: function() {
+        var x;
+		console.log("asa")
+        Ext.Ajax.request({
+            url : HOST+'/ws/rest/v1/concept?q=height',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: '+ response.status); // + response.status);
+            },
+            success: function (response) {
+                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){console.log("adad")
+                    if(JSON.parse(response.responseText).results[i].display == 'HEIGHT (CM)'){
+                        x = JSON.parse(response.responseText).results[i].uuid
+                    }
+                }
+                if(x != localStorage.heightUuidconcept || localStorage.heightUuidconcept == undefined){
+                    
+                    for(var i1 =0;i1<resourceUuid.length;++i1){
+                        var a = resourceUuid[i1]
+                        Util.getAttributeFromREST(a[0], a[1], a[2])
+                    }
+                }
+            }            
+        });
+    },
+    
     /**
      * for each of the modules defined in Util.getModules(), create a GET
      * request and send to server for the app/app.js file
@@ -91,7 +120,7 @@ var Startup = {
         //adding url for home page (relative URL is blank)
         views[0] = [];
         views[0][0] = 'RaxaEmrView home Page';
-        views[0][1] = '';
+        views[0][1] = './';
         currModuleAddr = '';
         for (i = 0; i < modules.length; i++) {
             if (i === 0) {
@@ -113,40 +142,40 @@ var Startup = {
     * @param views: 2-d array for storing view names+URLs
     * @param callback: function to be called after AJAX GETs are finished, 
     */
-   postPrivilege: function (views, callback) {
-       //Counts the successful POST AJAX Calls
-       postSuccessCount = 0;
+    postPrivilege: function (views, callback) {
+        //Counts the successful POST AJAX Calls
+        postSuccessCount = 0;
 
-       //create POST call for all views repeatedly
-       for (i = 0; i < views.length; i++) {
-           //Copies names & URL to json Object
-           var jsonPriviledge = {
-               "name": views[i][0],
-               "description": views[i][1]
-           };
+        //create POST call for all views repeatedly
+        for (i = 0; i < views.length; i++) {
+            //Copies names & URL to json Object
+            var jsonPriviledge = {
+                "name": views[i][0],
+                "description": views[i][1]
+            };
 
-           //Ajax Request to POST json Object containing name+URL
-           Ext.Ajax.request({
-               url: HOST + '/ws/rest/v1/privilege',
-               method: 'POST',
-               disableCaching: false,
-               jsonData: jsonPriviledge,
-               headers: Util.getBasicAuthHeaders(),
+            //Ajax Request to POST json Object containing name+URL
+            Ext.Ajax.request({
+                url: HOST + '/ws/rest/v1/privilege',
+                method: 'POST',
+                disableCaching: false,
+                jsonData: jsonPriviledge,
+                headers: Util.getBasicAuthHeaders(),
 
-               failure: function (response) {
-                   console.log('Privilege POST failed with response status ' + response.status);
-               },
+                failure: function (response) {
+                    console.log('Privilege POST failed with response status ' + response.status);
+                },
 
-               success: function (response) {
-                   postSuccessCount++;
-                   //if all POST calls are successful, callback method is called
-                   if (postSuccessCount == (views.length - 1)) {
-                       console.log('All ' + postSuccessCount + ' views POST successful');
-                       callback(views);
-                   }
-               },
+                success: function (response) {
+                    postSuccessCount++;
+                    //if all POST calls are successful, callback method is called
+                    if (postSuccessCount == (views.length - 1)) {
+                        console.log('All ' + postSuccessCount + ' views POST successful');
+                        callback(views);
+                    }
+                }
 
-           });
-       }
-   },
+            });
+        }
+    }
 }

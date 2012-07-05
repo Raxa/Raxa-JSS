@@ -181,6 +181,7 @@ Ext.define('RaxaEmr.controller.Session', {
 
     //on entry point for application, give control to Util.getViews()
     launch: function () {
+		Startup.getResourceUuid();
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,
