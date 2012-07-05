@@ -34,7 +34,19 @@ Ext.define('mUserStories.view.audioResources', {
             xtype: 'container',
             layout: 'vbox',
             centered: true,
-            items: []
+            items: [{
+                xtype: 'list',
+                ui: 'round',
+                pinHeaders: false,
+                id: 'audioList',
+                width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                height: Ext.os.deviceType === 'Phone' ? null : '100%',
+                centered: true
+                /*itemTpl: ['<div>{familyName}, {givenName}</div>'],
+                onItemDisclosure: function (record, btn, index) {
+                    helper.listDisclose(record);
+                }*/
+            }]
         }]
     }
 })

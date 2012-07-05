@@ -30,7 +30,7 @@ var PAGES = {
     RESOURCES: 9,
     VIDEO: 10,
     AUDIO: 11,
-    PHOTO: 12,
+    // PHOTO: 12,
     INBOX_VC: 13,
     SCHEDULING: 14
 };

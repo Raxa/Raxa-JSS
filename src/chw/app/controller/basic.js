@@ -220,9 +220,9 @@ Ext.define('mUserStories.controller.basic', {
                 xclass: 'mUserStories.view.videoResources'
             }, {
                 xclass: 'mUserStories.view.audioResources'
-            }, {
+            }, /*{
                 xclass: 'mUserStories.view.photoResources'
-            }, {
+            },*/ {
                 xclass: 'mUserStories.view.vcNotifications'
             }, {
                 xclass: 'mUserStories.view.vcScheduling'
