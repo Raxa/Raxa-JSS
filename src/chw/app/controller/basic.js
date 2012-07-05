@@ -65,58 +65,7 @@ Ext.define('mUserStories.controller.basic', {
                     this.doResources('audio')
                 }
             },
-eventDispatcher: Ext.apply.create.Class
-getEventDispatcher: function () {
-getObservableId: function () {
-getUniqueId: function () {
-id: "ext-record-197"
-internalId: "ext-record-197"
-managedListeners: Object
-modified: Object
-observableId: "#ext-record-197"
-phantom: false
-raw: Object
-stores: Array[1]
-usedSelectors: Array[1]
-__proto__: TemplateClass
-length: 1
-__proto__: Array[0]
-config: Ext.Object.classify.objectClass
-dirtyIndices: false
-dirtySortFn: false
-getKey: function (record) {
-indices: Object
-initConfig: function (){}
-initialConfig: Object
-items: Array[1]
-keys: Array[1]
-length: 1
-map: Object
-sortFn: function (r1, r2) {
-sorted: true
-__proto__: TemplateClass
-_grouper: Ext.apply.create.Class
-_model: function () {
-_modelDefaults: Ext.Object.classify.objectClass
-_proxy: Ext.apply.create.Class
-_remoteFilter: false
-_remoteSort: false
-_sorters: "familyName"
-_storeId: "muserstories-store-uppersonstore-2"
-config: Ext.Object.classify.objectClass
-data: Ext.apply.create.Class
-eventDispatcher: Ext.apply.create.Class
-getEventDispatcher: function () {
-getObservableId: function () {
-getUniqueId: function () {
-id: "muserstories-store-uppersonstore-2"
-initConfig: function (){}
-initialConfig: Object
-managedListeners: Object
-observableId: "#muserstories-store-uppersonstore-2"
-removed: Array[0]
-usedSelectors: Array[1]
-__proto__: TemplateClass
+
             back_add: {
                 tap: function () {
                     this.doBack('list')
@@ -225,38 +174,38 @@ __proto__: TemplateClass
             fullscreen: true,
             layout: 'card',
             items: [{
-                // log into application
-                xclass: 'mUserStories.view.loginScreen'
-            }, {
-                // daily checkin
-                xclass: 'mUserStories.view.confirmLocation'
-            }, {
-                // display a list of patients
-                xclass: 'mUserStories.view.patientList'
-            }, {
-                // display details of patient
-                xclass: 'mUserStories.view.patientDetails'
-            }, {
-                // display options for adding
-                xclass: 'mUserStories.view.addOptions'
-            }, {
-                xclass: 'mUserStories.view.addPatient'
-            }, {
-                xclass: 'mUserStories.view.addReminder'
-            }, {
-                xclass: 'mUserStories.view.addAppointment'
-            }, {
-                // display inbox/outbox
-                xclass: 'mUserStories.view.notificationInbox'
-            }, {
-                xclass: 'mUserStories.view.resources'
-            }, {
-                xclass: 'mUserStories.view.resourceDetail'
-            }, {
-                xclass: 'mUserStories.view.vcNotifications'
-            }, {
-                xclass: 'mUserStories.view.vcScheduling'
-            }]
+                    // log into application
+                    xclass: 'mUserStories.view.loginScreen'
+                }, {
+                    // daily checkin
+                    xclass: 'mUserStories.view.confirmLocation'
+                }, {
+                    // display a list of patients
+                    xclass: 'mUserStories.view.patientList'
+                }, {
+                    // display details of patient
+                    xclass: 'mUserStories.view.patientDetails'
+                }, {
+                    // display options for adding
+                    xclass: 'mUserStories.view.addOptions'
+                }, {
+                    xclass: 'mUserStories.view.addPatient'
+                }, {
+                    xclass: 'mUserStories.view.addReminder'
+                }, {
+                    xclass: 'mUserStories.view.addAppointment'
+                }, {
+                    // display inbox/outbox
+                    xclass: 'mUserStories.view.notificationInbox'
+                }, {
+                    xclass: 'mUserStories.view.resources'
+                }, {
+                    xclass: 'mUserStories.view.resourceDetail'
+                }, {
+                    xclass: 'mUserStories.view.vcNotifications'
+                }, {
+                    xclass: 'mUserStories.view.vcScheduling'
+                }]
         })
     },
     /* SCREEN FUNCTIONS */
@@ -291,14 +240,14 @@ __proto__: TemplateClass
                     }
                     var up_Model = Ext.create('mUserStories.model.upPersonModel', {
                         names: [{
-                            givenName: fname,
-                            familyName: lname
-                        }],
+                                givenName: fname,
+                                familyName: lname
+                            }],
                         gender: gender,
                         birthdate: bday,
                         addresses: [{
-                            cityVillage: village
-                        }]
+                                cityVillage: village
+                            }]
                     });
                     //Adding registration details into local storage (a store)
                     //                    up_store.add(up_Model);
@@ -309,17 +258,17 @@ __proto__: TemplateClass
                     this.doDownload();
                     Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
                     
-                //REST call for creating a Person
-                //                    up_store.sync();
-                //                    up_store.on('write', function () {
-                //                        console.log('Stored locally, calling identifier type');
-                //                        // Now that Person is created, send request to create Patient
-                //                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
-                //                    }, this)
+                    //REST call for creating a Person
+                    //                    up_store.sync();
+                    //                    up_store.on('write', function () {
+                    //                        console.log('Stored locally, calling identifier type');
+                    //                        // Now that Person is created, send request to create Patient
+                    //                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
+                    //                    }, this)
                 }
             } else if (step === 'reminder') {
-            // TODO: validate all fields
-            // TODO: add 'other' option
+                // TODO: validate all fields
+                // TODO: add 'other' option
             }
         } else {
             // TODO: doReturn()
@@ -479,8 +428,8 @@ __proto__: TemplateClass
         
        
         
-    // TODO: set patientcurrid to be subset of above organized by appt time
-    // Do we need a separate store for this?
+        // TODO: set patientcurrid to be subset of above organized by appt time
+        // Do we need a separate store for this?
     },
     // exit the program
     doExit: function () {
@@ -553,13 +502,13 @@ __proto__: TemplateClass
         });
     },
     isEmpty: function (arg) {
-    // TODO: check to see if the select field is empty
-    // TODO: continue to arg if not empty
+        // TODO: check to see if the select field is empty
+        // TODO: continue to arg if not empty
     },
     isOther: function (arg) {
-    // TODO: check to see if the select field is other
-    // TODO: pop up screen prompt
-    // TODO: continue to arg 
+        // TODO: check to see if the select field is other
+        // TODO: pop up screen prompt
+        // TODO: continue to arg 
     },
     loginContinue: function () {
         // clear form fields
@@ -580,11 +529,11 @@ __proto__: TemplateClass
         var patient = Ext.create('mUserStories.model.upPatientModel', {
             person: personUuid,
             identifiers: [{
-                identifier: this.getPatientIdentifier().toString(),
-                identifierType: identifierType,
-                location: location,
-                preferred: true
-            }]
+                    identifier: this.getPatientIdentifier().toString(),
+                    identifierType: identifierType,
+                    location: location,
+                    preferred: true
+                }]
         });
 
         var PatientStore = Ext.create('mUserStories.store.upPatientStore')
@@ -611,11 +560,11 @@ __proto__: TemplateClass
                 return n<10 ? '0'+n : n
             }
             return d.getUTCFullYear()+'-'
-            + pad(d.getUTCMonth()+1)+'-'
-            + pad(d.getUTCDate())+'T'
-            + pad(d.getUTCHours())+':'
-            + pad(d.getUTCMinutes())+':'
-            + pad(d.getUTCSeconds())+'Z'
+                + pad(d.getUTCMonth()+1)+'-'
+                + pad(d.getUTCDate())+'T'
+                + pad(d.getUTCHours())+':'
+                + pad(d.getUTCMinutes())+':'
+                + pad(d.getUTCSeconds())+'Z'
         }
         //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
         var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
