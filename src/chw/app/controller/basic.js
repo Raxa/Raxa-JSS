@@ -22,13 +22,17 @@ Ext.define('mUserStories.controller.basic', {
             add_app: '#add_app',
             add_reg: '#add_reg',
             add_rem: '#add_rem',
+            audioButton: '#audioButton',
             back_add: '#back_add',
             back_add_app: '#back_add_app',
             back_add_reg: '#back_add_reg',
             back_add_rem: '#back_add_rem',
+            back_aud: '#back_aud',
             back_det: '#back_det',
             back_inb: '#back_inb',
+            back_pho: '#back_pho',
             back_res: '#back_res',
+            back_vid: '#back_vid',
             cancelButton: '#cancelButton',
             downButton: '#downButton',
             inboxButton: '#inboxButton',
@@ -37,9 +41,11 @@ Ext.define('mUserStories.controller.basic', {
             menuButton: '#menuButton',
             notButton: '#notButton',
             okButton: '#okButton',
+            photoButton: '#photoButton',
             resourcesButton: '#resourcesButton',
             schButton: '#schButton',
-            upButton: '#upButton'
+            upButton: '#upButton',
+            videoButton: '#videoButton'
         },
         control: {
             add_app: {
@@ -55,6 +61,11 @@ Ext.define('mUserStories.controller.basic', {
             add_rem: {
                 tap: function () {
                     this.doAdd('rem', true)
+                }
+            },
+            audioButton: {
+                tap: function () {
+                    this.doResources('audio')
                 }
             },
             back_add: {
@@ -77,6 +88,11 @@ Ext.define('mUserStories.controller.basic', {
                     this.doBack('add')
                 }
             },
+            back_aud: {
+                tap: function () {
+                    this.doBack('res')
+                }
+            },
             back_det: {
                 tap: function () {
                     this.doBack('list')
@@ -87,9 +103,19 @@ Ext.define('mUserStories.controller.basic', {
                     this.doBack('list')
                 }
             },
+            back_pho: {
+                tap: function () {
+                    this.doBack('res')
+                }
+            },
             back_res: {
                 tap: function () {
                     this.doBack('list')
+                }
+            },
+            back_vid: {
+                tap: function () {
+                    this.doBack('res')
                 }
             },
             cancelButton: {
@@ -132,6 +158,11 @@ Ext.define('mUserStories.controller.basic', {
                     this.doOption(true)
                 }
             },
+            photoButton: {
+                tap: function () {
+                    this.doResources('photo')
+                }
+            },
             resourcesButton: {
                 tap: function () {
                     this.doToolbar('resources')
@@ -145,6 +176,11 @@ Ext.define('mUserStories.controller.basic', {
             upButton: {
                 tap: function () {
                     this.doToolbar('up')
+                }
+            },
+            videoButton: {
+                tap: function () {
+                    this.doResources('video')
                 }
             }
         }
@@ -180,6 +216,12 @@ Ext.define('mUserStories.controller.basic', {
                 xclass: 'mUserStories.view.notificationInbox'
             }, {
                 xclass: 'mUserStories.view.resources'
+            }, {
+                xclass: 'mUserStories.view.videoResources'
+            }, {
+                xclass: 'mUserStories.view.audioResources'
+            }, {
+                xclass: 'mUserStories.view.photoResources'
             }, {
                 xclass: 'mUserStories.view.vcNotifications'
             }, {
@@ -285,6 +327,16 @@ Ext.define('mUserStories.controller.basic', {
             this.doExit();
         }
     },
+    // manage resources pages
+    doResources: function (arg) {
+        if (arg === 'video') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.VIDEO)
+        } else if (arg === 'audio') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.AUDIO)
+        } else if (arg === 'photo') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.PHOTO)
+        }
+    },
     // manage navigation based on lower toolbar
     doToolbar: function (arg) {
         if (arg === 'menu') {
@@ -318,6 +370,8 @@ Ext.define('mUserStories.controller.basic', {
             Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (arg === 'add') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
+        } else if (arg === 'res') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
         }
     },
     // Download patient with details

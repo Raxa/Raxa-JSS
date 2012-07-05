@@ -28,8 +28,11 @@ var PAGES = {
     ADD_APP: 7,
     INBOX_CHW: 8,
     RESOURCES: 9,
-    INBOX_VC: 10,
-    SCHEDULING: 11
+    VIDEO: 10,
+    AUDIO: 11,
+    PHOTO: 12,
+    INBOX_VC: 13,
+    SCHEDULING: 14
 };
 var USER = new Object();
 USER.name = '';

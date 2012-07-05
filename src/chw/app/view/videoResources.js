@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.resources', {
+Ext.define('mUserStories.view.videoResources', {
     extend: 'Ext.Panel',
     config: {
         height: '100%',
@@ -21,10 +21,10 @@ Ext.define('mUserStories.view.resources', {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Resources',
+            title: 'Videos',
             items: [{
                 xtype: 'button',
-                id: 'back_res',
+                id: 'back_vid',
                 ui: 'back',
                 text: 'Back'
             }]
@@ -34,25 +34,7 @@ Ext.define('mUserStories.view.resources', {
             xtype: 'container',
             layout: 'vbox',
             centered: true,
-            items: [{
-                xtype: 'button',
-                text: 'Video',
-                id: 'videoButton',
-                iconMask: true,
-                iconCls: 'video'
-            }, {
-                xtype: 'button', 
-                text: 'Audio',
-                id: 'audioButton',
-                iconMask: true,
-                iconCls: 'volume_down'
-            }, {
-                xtype: 'button',
-                text: 'Images',
-                id: 'photoButton',
-                iconMask: true,
-                iconCls: 'photo3'
-            }]
+            items: []
         }]
     }
 })
