@@ -1,0 +1,29 @@
+/*Custom CSS for Menu Screen*/
+
+.menuContainer
+{
+    width: 250px;
+    height: 286px;
+}
+
+.x-button.instructionImageButton.x-button-normal
+{
+    background-image: url('../images/instructions-01.png');
+    width: 250px;
+    height: 250px;
+
+}
+.x-button.nextAppointmentButton.x-button-normal
+{
+    background-image: url('../images/next appointment-01.png');
+    width: 250px;
+    height: 250px;
+
+}
+
+.x-button.medicineReminderButton.x-button-normal
+{
+    background-image: url('../images/medicine reminder_without drop shadow.png');
+    width: 250px;
+    height: 250px;
+}

@@ -1,0 +1,8 @@
+/*Custom CSS for Home Screen*/
+
+.x-button.homeScreenImage.x-button-normal
+{
+    background-image: url('../images/homescreen.png');
+    width: 350px;
+    height: 350px;
+}
