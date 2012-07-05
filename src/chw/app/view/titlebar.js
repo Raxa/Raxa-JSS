@@ -15,10 +15,10 @@
  */
 Ext.define('mUserStories.view.titlebar', {
     extend: 'Ext.TitleBar',
+    id: 'narwhal',
     config: {
         docked: 'top',
-        id: 'narwhal',
-        // title: 'Community Health Worker Module',
+        title: 'CHW Module',
         items: [{
             ui: 'back',
             text: 'Back',

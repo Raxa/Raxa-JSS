@@ -455,6 +455,7 @@ Ext.define('mUserStories.controller.basic', {
             // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
             this.toPage(PAGES.PATIENT_LIST);
+            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
             // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (USER.type === 'VC') {
             this.toPage(PAGES.INBOX_VC)
@@ -584,10 +585,10 @@ Ext.define('mUserStories.controller.basic', {
     toPage : function (arg) {
         var t = Ext.getCmp('narwhal');
         var b = Ext.getCmp('backButton');
-        // console.log(title,button)
+        console.log(t,b)
         if (arg === PAGES.LOGIN_SCREEN) {
             t.setTitle('Community Health Worker Module');
-            b.setHidden(false)
+            b.setHidden(true)
         } else if (arg === PAGES.PATIENT_LIST) {
             t.setTitle('Patient List');
             b.setHidden(true);

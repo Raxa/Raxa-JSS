@@ -49,7 +49,7 @@ Ext.define('mUserStories.view.patientList', {
                 grouped: true,
                 pinHeaders: false,
                 id: 'patientcurrid',
-                width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                width: Ext.os.deviceType === 'Phone' ? null : '100%',
                 height: Ext.os.deviceType === 'Phone' ? null : '100%',
                 centered: true,
                 itemTpl: ['<div>{familyName}, {givenName}</div>'],
