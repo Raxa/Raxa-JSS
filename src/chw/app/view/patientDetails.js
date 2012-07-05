@@ -19,16 +19,7 @@ Ext.define('mUserStories.view.patientDetails', {
         height: '100%',
         ui: 'neutral',
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            id: 'title_det',
-            title: 'Mobile User Stories',
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                id: 'back_det'
-            }]
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

@@ -22,14 +22,7 @@ Ext.define('mUserStories.controller.basic', {
             addApp: '#add_app',
             addReg: '#add_reg',
             addRem: '#add_rem',
-            back_add: '#back_add',
-            back_add_app: '#back_add_app',
-            back_add_reg: '#back_add_reg',
-            back_add_rem: '#back_add_rem',
-            back_det: '#back_det',
-            back_inb: '#back_inb',
-            back_res: '#back_res',
-            back_res_det: '#back_res_det',
+            back: '#backButton',
             cancel: '#cancelButton',
             sync: '#syncButton',
             inbox: '#inboxButton',
@@ -57,44 +50,9 @@ Ext.define('mUserStories.controller.basic', {
                     this.doAdd('rem', true)
                 }
             },
-            back_add: {
+            back: {
                 tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_add_app: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_add_reg: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_add_rem: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_det: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_inb: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_res: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_res_det: {
-                tap: function () {
-                    this.doBack('res')
+                    this.doBack()
                 }
             },
             cancel: {
@@ -163,9 +121,6 @@ Ext.define('mUserStories.controller.basic', {
                 // log into application
                 xclass: 'mUserStories.view.loginScreen'
             }, {
-                // daily checkin
-                xclass: 'mUserStories.view.confirmLocation'
-            }, {
                 // display a list of patients
                 xclass: 'mUserStories.view.patientList'
             }, {
@@ -200,11 +155,11 @@ Ext.define('mUserStories.controller.basic', {
     doAdd: function (step, arg) {
         if (arg) {
             if (step === 'app') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_APP)
+                this.toPage(PAGES.ADD_APP)
             } else if (step === 'reg') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REG)
+                this.toPage(PAGES.ADD_REG)
             } else if (step === 'rem') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REM)
+                this.toPage(PAGES.ADD_REM)
             } else if (step === 'register') {
                 var fname = Ext.getCmp('first_reg').getValue();
                 var lname = Ext.getCmp('last_reg').getValue();
@@ -252,7 +207,7 @@ Ext.define('mUserStories.controller.basic', {
         } else {
             // TODO: doReturn()
             this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+            this.toPage(PAGES.PATIENT_LIST)
         }
     },
     // allow chw to check in
@@ -274,7 +229,7 @@ Ext.define('mUserStories.controller.basic', {
                 // download all data into local storage
                 this.doDownload();
                 // continue to the next screen
-                Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+                this.toPage(PAGES.PATIENT_LIST)
             }
         } else {
             // exit the program
@@ -301,17 +256,17 @@ Ext.define('mUserStories.controller.basic', {
     // manage resources pages
     doResources: function (arg) {
         if (arg === 'video') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.VIDEO)
+            this.toPage(PAGES.VIDEO)
         } else if (arg === 'audio') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.AUDIO)
+            this.toPage(PAGES.AUDIO)
         } else if (arg === 'photo') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PHOTO)
+            this.toPage(PAGES.PHOTO)
         }
     },
     // manage navigation based on lower toolbar
     doToolbar: function (arg) {
         if (arg === 'menu') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
+            this.toPage(PAGES.ADD)
         } else if (arg === 'sync') {
             Ext.Msg.confirm('', 'Sync all information?', function (resp) {
                 if (resp === 'yes') {
@@ -335,19 +290,26 @@ Ext.define('mUserStories.controller.basic', {
                 }
             },this)
         } else if (arg === 'inbox') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_CHW)
+            this.toPage(PAGES.INBOX_CHW)
         } else if (arg === 'resources') {
             this.getResources();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
+            this.toPage(PAGES.RESOURCES)
         } else if (arg === 'not') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
+            this.toPage(PAGES.INBOX_VC)
         } else if (arg === 'sch') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.SCHEDULING)
+            this.toPage(PAGES.SCHEDULING)
         }
     },
     /* HELPER FUNCTIONS */
     // deal with backbutton
-    doBack: function (arg) {
+    doBack: function () {
+        /*var active = Ext.getCmp('viewPort').getActiveItem();
+        if (active.getActiveItem() === PAGES.LOGIN_SCREEN) {
+            title.setTitle('Community Health Worker Module');
+            button.setHidden(true);
+        } else if (active.id === 'ext-formpanel-5' || active === 'ext-panel-6' || active === 'ext-panel-7') {
+            this.doAdd('register',arg)
+        } 
         // TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
         if (arg === 'list') {
@@ -358,7 +320,7 @@ Ext.define('mUserStories.controller.basic', {
         } else if (arg === 'res') {
             this.getResources();
             Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
-        }
+        }*/
     },
     // Download patient with details
     doDownload: function () {
@@ -407,9 +369,11 @@ Ext.define('mUserStories.controller.basic', {
     doExit: function () {
         // TODO: make sure all information is uploaded
         // TODO: delete/save necessary information
-        Ext.getCmp('location').reset();
+        // Ext.getCmp('location').reset();
         // return to login screen
-        Ext.getCmp('viewPort').setActiveItem(PAGES.LOGIN_SCREEN)
+        USER.name = '';
+        USER.uuid = '';
+        this.toPage(PAGES.LOGIN_SCREEN)
     },
     // distinguish between ok and cancel
     doOption: function (arg) {
@@ -490,9 +454,10 @@ Ext.define('mUserStories.controller.basic', {
             // continue to next page with proper settings
             // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+            this.toPage(PAGES.PATIENT_LIST);
+            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (USER.type === 'VC') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
+            this.toPage(PAGES.INBOX_VC)
         }
     },
     /* this funtions makes a post call to create the patient with three parameter which will sent as person, identifiertype 
@@ -521,7 +486,7 @@ Ext.define('mUserStories.controller.basic', {
         Ext.getCmp('ext-formpanel-5').reset();
         
         this.doDownload();
-        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+        this.toPage(PAGES.PATIENT_LIST)
     },
     
     sendEncounterData:function(Uuid){
@@ -615,5 +580,56 @@ Ext.define('mUserStories.controller.basic', {
                 }
             });
         } else {}
+    },
+    toPage : function (arg) {
+        var title = Ext.getCmp('titletext');
+        var button = Ext.getCmp('backButton');
+        console.log(title,button)
+        if (arg === PAGES.LOGIN_SCREEN) {
+            title.setTitle('Community Health Worker Module');
+            button.setHidden(false)
+        } else if (arg === PAGES.PATIENT_LIST) {
+            title.setTitle('Patient List');
+            button.setHidden(true);
+        } else if (arg === PAGES.PATIENT_DET) {
+            // title.setTitle('Patient Details');
+            button.setHidden(false)
+        } else if (arg === PAGES.ADD) {
+            title.setTitle('Add Options');
+            button.setHidden(false)
+        }
+        else if (arg === PAGES.ADD_REG) {
+            title.setTitle('Add Patient');
+            button.setHidden(false)
+        }
+        else if (arg === PAGES.ADD_REM) {
+            title.setTitle('Add Reminder');
+            button.setHidden(false)
+        }
+        else if (arg === PAGES.ADD_APP) {
+            title.setTitle('Add Appointment');
+            button.setHidden(false)
+        }
+        else if (arg === PAGES.INBOX_CHW) {
+            title.setTitle('Inbox');
+            button.setHidden(false)
+        }
+        else if (arg === PAGES.RESOURCES) {
+            title.setTitle('Resources');
+            button.setHidden(false)
+        }
+        else if (arg === PAGES.RESOURCE_DET) {
+            // title.setTitle('Patient Details');
+            button.setHidden(false)
+        }
+        else if (arg === PAGES.INBOX_VC) {
+            title.setTitle('Inbox');
+            button.setHidden(true)
+        }
+        else if (arg === PAGES.SCHEDULING) {
+            title.setTitle('Scheduling');
+            button.setHidden(true)
+        }
+        Ext.getCmp('viewPort').setActiveItem(arg);
     }
 })

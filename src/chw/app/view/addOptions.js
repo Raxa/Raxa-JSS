@@ -19,15 +19,7 @@ Ext.define('mUserStories.view.addOptions', {
         height: '100%',
         ui: 'neutral',
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            title: 'Add',
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                id: 'back_add'
-            }]
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

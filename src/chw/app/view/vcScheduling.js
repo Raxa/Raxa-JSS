@@ -19,9 +19,7 @@ Ext.define('mUserStories.view.vcScheduling', {
         height: '100%',
         ui: 'neutral',
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            title: 'Scheduling'
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xclass: 'mUserStories.view.vcToolbar'
         }, {

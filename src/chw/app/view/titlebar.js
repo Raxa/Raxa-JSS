@@ -13,19 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.resourceDetail', {
-    extend: 'Ext.Panel',
+Ext.define('mUserStories.view.titlebar', {
+    extend: 'Ext.TitleBar',
     config: {
-        height: '100%',
-        ui: 'neutral',
+        docked: 'top',
+        id: 'titletext',
+        // title: 'Community Health Worker Module',
         items: [{
-            xclass: 'mUserStories.view.titlebar'
-        }, {
-            xclass: 'mUserStories.view.userToolbar'
-        }, {
-            xtype: 'container',
-            id: 'resource_label',
-            centered: true
+            ui: 'back',
+            text: 'Back',
+            id: 'backButton'
+            // hidden: true
         }]
     }
 })
