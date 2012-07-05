@@ -22,11 +22,7 @@ Ext.define('mUserStories.store.upPatientStore', {
 
             type: 'rest',
             url: MRSHOST + '/ws/rest/v1/patient',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: HEADERS,
 
             reader: {
                 type: 'json'

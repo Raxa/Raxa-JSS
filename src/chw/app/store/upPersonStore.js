@@ -29,11 +29,7 @@ Ext.define('mUserStories.store.upPersonStore', {
             type: 'rest',
             //The REST call here only creates a person
             url: MRSHOST + '/ws/rest/v1/person',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: HEADERS,
             reader: {
                 type: 'json'
 

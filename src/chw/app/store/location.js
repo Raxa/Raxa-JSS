@@ -23,11 +23,7 @@ Ext.define('mUserStories.store.location', {
         proxy: {
             type: 'rest',
             url: MRSHOST + '/ws/rest/v1/location',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: HEADERS,
             reader: {
                 type: 'json',
                 rootProperty: 'results'
