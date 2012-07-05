@@ -11,33 +11,73 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'prescription [action=addPatient]': {
                 click: this.displayForm
             },
-            "addPatient button[action=submit]": {
+            "prescription button[action=done2]": {
                 click: this.savePerson
             },
             'prescribedDrugs': {
                 render: this.onEditorRender,
-                edit: this.afterMovieEdit
+                edit: this.afterMovieEdit,
+                drugEdit: this.onDrugEdit,
+                drugDelete: this.onDrugDelete
             },
+            'prescribedDrugs button': {
+                click: this.addDrug
+            }
         })
     },
     
-    
     onEditorRender: function () {
         // cache a reference to the moviesEditor and rowEditor
-        this.moviesEditor = Ext.ComponentQuery.query('prescribedDrugs')[0];
-        this.rowEditor = this.moviesEditor.rowEditor;
+        this.drugsEditor = Ext.ComponentQuery.query('prescribedDrugs')[0];
+        this.rowEditor = this.drugsEditor.rowEditor;
     },
 
     afterMovieEdit: function () {
-        var movieStore = this.getStore('orderStore');
-        movieStore.sync();
+        var drugStore = this.getStore('orderStore');
+        var x = Ext.getCmp('prescribedDrugs').getSelectionModel().getSelection()
+        console.log(x[0].data.itemprice);
+        if(x[0].data.unitprice != null && x[0].data.qty){
+            x[0].data.itemprice = x[0].data.unitprice*x[0].data.qty;
+        }
+        drugStore.sync();
     },
 
+    onDrugEdit: function (evtData) {
+        var store = this.getStore('orderStore');
+        var record = store.getAt(evtData.rowIndex);
+        if(record) {
+            this.rowEditor.startEdit(record, this.drugsEditor.columns[evtData.colIndex]);
+        }
+    },
+
+    onDrugDelete: function (evtData) {
+        var store = this.getStore('orderStore');
+        var record = store.getAt(evtData.rowIndex);
+        if(record) {
+            store.remove(record);
+            store.sync();
+        }
+    }, 
+    
+    addDrug: function() {
+        var newDrug;
+        drugStore = Ext.getStore('orderStore');
+        // add blank item to store -- will automatically add new row to grid
+        newDrug = drugStore.add({
+            drugname: '',
+            dosage: '',
+            duration: '',
+            unitprice: '',
+            itemprice: ''
+        })[0];
+        this.rowEditor.startEdit(newDrug, this.drugsEditor.columns[0]);
+    },
+    
     displayForm: function () {
         var l = Ext.getCmp('addpatientarea').getLayout();
         l.setActiveItem(1);
-        var l = Ext.getCmp('addpatientgridarea').getLayout();
-        l.setActiveItem(1);
+        var l1 = Ext.getCmp('addpatientgridarea').getLayout();
+        l1.setActiveItem(1);
     },
 
     savePerson: function () {

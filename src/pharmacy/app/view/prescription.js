@@ -112,13 +112,13 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Done',
-                        action: 'done',
+                        action: 'done2',
                         x: 330,
                         y: 580
                     },{
                         xtype: 'button',
                         width: 60,
-                        text: 'Print',
+                        text: 'Print2',
                         x: 460,
                         y: 580
                     }]
