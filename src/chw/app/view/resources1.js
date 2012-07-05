@@ -31,20 +31,27 @@ Ext.define('mUserStories.view.resources', {
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
-            xtype: 'panel',
+            xtype: 'container',
+            layout: 'vbox',
+            centered: true,
             items: [{
-                width: Ext.os.deviceType === 'Phone' ? null : '80%',
-                height: Ext.os.deviceType === 'Phone' ? null : '100%',
-                xtype: 'list',
-                ui: 'round',
-                grouped: true,
-                pinHeaders: false,
-                onItemDisclosure: function (record, btn, index) {
-                    Ext.Msg.alert('Tap', 'Disclose more info for ' + record.get('name'));
-                },
-                store: 'resourceStore',
-                itemTpl: '<div>{name}</div>',
-                indexBar: true
+                xtype: 'button',
+                text: 'Video',
+                id: 'videoButton',
+                iconMask: true,
+                iconCls: 'video'
+            }, {
+                xtype: 'button', 
+                text: 'Audio',
+                id: 'audioButton',
+                iconMask: true,
+                iconCls: 'volume_down'
+            }, {
+                xtype: 'button',
+                text: 'Images',
+                id: 'photoButton',
+                iconMask: true,
+                iconCls: 'photo3'
             }]
         }]
     }

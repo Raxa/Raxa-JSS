@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.resources', {
+Ext.define('mUserStories.view.audioResources', {
     extend: 'Ext.Panel',
     config: {
         height: '100%',
@@ -21,30 +21,31 @@ Ext.define('mUserStories.view.resources', {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Resources',
+            title: 'Audios',
             items: [{
                 xtype: 'button',
-                id: 'back_res',
+                id: 'back_aud',
                 ui: 'back',
                 text: 'Back'
             }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
-            xtype: 'panel',
+            xtype: 'container',
+            layout: 'vbox',
+            centered: true,
             items: [{
-                width: Ext.os.deviceType === 'Phone' ? null : '80%',
-                height: Ext.os.deviceType === 'Phone' ? null : '100%',
                 xtype: 'list',
                 ui: 'round',
-                grouped: true,
                 pinHeaders: false,
+                id: 'audioList',
+                width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                height: Ext.os.deviceType === 'Phone' ? null : '100%',
+                centered: true
+                /*itemTpl: ['<div>{familyName}, {givenName}</div>'],
                 onItemDisclosure: function (record, btn, index) {
-                    Ext.Msg.alert('Tap', 'Disclose more info for ' + record.get('name'));
-                },
-                store: 'resourceStore',
-                itemTpl: '<div>{name}</div>',
-                indexBar: true
+                    helper.listDisclose(record);
+                }*/
             }]
         }]
     }

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.resources', {
+Ext.define('mUserStories.view.videoResources', {
     extend: 'Ext.Panel',
     config: {
         height: '100%',
@@ -21,30 +21,36 @@ Ext.define('mUserStories.view.resources', {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Resources',
+            title: 'Videos',
             items: [{
                 xtype: 'button',
-                id: 'back_res',
+                id: 'back_vid',
                 ui: 'back',
                 text: 'Back'
             }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
-            xtype: 'panel',
+            xtype: 'container',
+            layout: 'vbox',
+            centered: true,
             items: [{
-                width: Ext.os.deviceType === 'Phone' ? null : '80%',
-                height: Ext.os.deviceType === 'Phone' ? null : '100%',
-                xtype: 'list',
-                ui: 'round',
-                grouped: true,
-                pinHeaders: false,
-                onItemDisclosure: function (record, btn, index) {
-                    Ext.Msg.alert('Tap', 'Disclose more info for ' + record.get('name'));
-                },
-                store: 'resourceStore',
-                itemTpl: '<div>{name}</div>',
-                indexBar: true
+                xtype: 'container',
+                layout: 'vbox',
+                centered: true,
+                items: [{
+                    xtype: 'list',
+                    ui: 'round',
+                    pinHeaders: false,
+                    id: 'videoList',
+                    width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                    height: Ext.os.deviceType === 'Phone' ? null : '100%',
+                    centered: true
+                    /*itemTpl: ['<div>{familyName}, {givenName}</div>'],
+                    onItemDisclosure: function (record, btn, index) {
+                        helper.listDisclose(record);
+                    }*/
+                }]
             }]
         }]
     }
