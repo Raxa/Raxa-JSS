@@ -1,3 +1,24 @@
+var states = Ext.create('Ext.data.Store', {
+    fields: ['abbr', 'name'],
+    data : [
+    {
+        "abbr":"AL", 
+        "name":"Alabama"
+    },
+
+    {
+        "abbr":"AK", 
+        "name":"Alaska"
+    },
+
+    {
+        "abbr":"AZ", 
+        "name":"Arizona"
+    }
+    //...
+    ]
+});
+
 Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.prescribedDrugs',
@@ -24,8 +45,10 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             dataIndex: 'drugname',
             text: 'Name Of drug',
             editor: {
-                xtype: 'textfield',
-                allowBlank: false
+                xtype: 'combobox',
+                allowBlank: false,
+                store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
+                displayField: 'text'       
             }
         },
         {
@@ -104,20 +127,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             '->',
             {
                 text: 'Add Drug',
-                iconCls: 'icon-add',/*
-                handler: function() {
-                    var newDrug;
-                    drugStore = Ext.getStore('orderStore');
-                    // add blank item to store -- will automatically add new row to grid
-                    newDrug = drugStore.add({
-                        drugname: '',
-                        dosage: '',
-                        duration: '',
-                        unitprice: '',
-                        itemprice: ''
-                    })[0];
-                    this.rowEditor.startEdit(newDrug, this.drugsEditor.columns[0]);
-                }*/
+                iconCls: 'icon-add'
             }]
         }];
         this.callParent(arguments);
