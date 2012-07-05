@@ -17,7 +17,7 @@ Ext.define('mUserStories.view.titlebar', {
     extend: 'Ext.TitleBar',
     config: {
         docked: 'top',
-        id: 'titletext',
+        id: 'narwhal',
         // title: 'Community Health Worker Module',
         items: [{
             ui: 'back',
