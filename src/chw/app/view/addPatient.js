@@ -14,7 +14,7 @@
  * the License.
  */
 Ext.define('mUserStories.view.addPatient', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.form.Panel',
     config: {
         height: '100%',
         ui: 'neutral',
@@ -110,5 +110,8 @@ Ext.define('mUserStories.view.addPatient', {
                 }]
             }]
         }]
+    },
+    saveForm: function () {
+        return this.getValues();
     }
 })

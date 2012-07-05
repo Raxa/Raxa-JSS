@@ -203,9 +203,9 @@ Ext.define('mUserStories.controller.basic', {
                 var lname = Ext.getCmp('last_reg').getValue();
                 var phone = Ext.getCmp('phone_reg').getValue();
                 var village = Ext.getCmp('village_reg').getValue();
-                // var radioform = Ext.getCmp('radiogroup');
-                // var gender = radioform.getValues().radiogroup.charAt(0);
-                var gender = 'Male';
+                var radioform = Ext.getCmp('ext-formpanel-5').saveForm();
+                var gender = radioform.radiogroup.charAt(0);
+                console.log(gender);
                 var bday = Ext.getCmp('bday').getValue();
 
                 if (fname == '' || lname == '' || phone == '' || village == '' || gender == '' || bday == '') {
@@ -379,7 +379,7 @@ Ext.define('mUserStories.controller.basic', {
         // console.log(Ext.getCmp('viewPort').getActiveItem().getActiveIndex());
         if (active.getActiveItem() === PAGES.LOGIN_SCREEN) {
             this.doLogin(arg)
-        } else if (active.id === 'ext-panel-5') {
+        } else if (active.id === 'ext-formpanel-5') {
             this.doAdd('register',arg)
         } else if (active === 'ext-panel-6') {
             this.doAdd('reminder',arg)
@@ -464,12 +464,14 @@ Ext.define('mUserStories.controller.basic', {
             this.sendEncounterData(personUuid);
         }, this);
         
-        Ext.getCmp('first_reg').reset();
-        Ext.getCmp('last_reg').reset();
-        Ext.getCmp('phone_reg').reset();
-        Ext.getCmp('village_reg').reset();
-        Ext.getCmp('bday').reset();
-        Ext.getCmp('reg_form').reset();
+//        Ext.getCmp('first_reg').reset();
+//        Ext.getCmp('last_reg').reset();
+//        Ext.getCmp('phone_reg').reset();
+//        Ext.getCmp('village_reg').reset();
+//        Ext.getCmp('bday').reset();
+//        Ext.getCmp('gender_cont').reset();
+        Ext.getCmp('ext-formpanel-5').reset();
+        
         this.doDownload();
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
     },
