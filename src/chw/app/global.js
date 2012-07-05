@@ -28,11 +28,9 @@ var PAGES = {
     ADD_APP: 7,
     INBOX_CHW: 8,
     RESOURCES: 9,
-    VIDEO: 10,
-    AUDIO: 11,
-    // PHOTO: 12,
-    INBOX_VC: 13,
-    SCHEDULING: 14
+    RESOURCE_DET: 10,
+    INBOX_VC: 11,
+    SCHEDULING: 12
 };
 var USER = new Object();
 USER.name = '';
@@ -52,6 +50,11 @@ var helper = {
         Ext.getCmp('bday_det').setValue(record.get('birthdate'))
         // change to next page
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
+    },
+    discloseResource: function (record) {
+        Ext.getCmp('resource_title').setTitle(record.get('resourceName'));
+        Ext.getCmp('resource_label').setHtml('<img src="resources/'+record.get('resourceLocation')+'.png" height="100%" width="100%"/>')
+        Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCE_DET)
     }
 }
 var HEADERS = {

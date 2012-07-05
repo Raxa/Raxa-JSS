@@ -13,8 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.resources', {
-    extend: 'Ext.tab.Panel',
+Ext.define('mUserStories.view.resourceDetail', {
+    extend: 'Ext.Panel',
     config: {
         height: '100%',
         ui: 'neutral',
@@ -22,29 +22,21 @@ Ext.define('mUserStories.view.resources', {
             xtype: 'titlebar',
             docked: 'top',
             title: 'Resources',
+            id: 'resource_title',
             items: [{
                 xtype: 'button',
-                id: 'back_res',
+                id: 'back_res_det',
                 ui: 'back',
                 text: 'Back'
             }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
-            width: Ext.os.deviceType === 'Phone' ? null : '80%',
-            height: Ext.os.deviceType === 'Phone' ? null : '100%',
-            xtype: 'list',
-            ui: 'round',
-            grouped: true,
-            centered: true,
-            id: 'resourceList',
-            pinHeaders: false,
-            onItemDisclosure: function (record, btn, index) {
-                helper.discloseResource(record);
-            },
-            //store: 'mUserStories.store.resourceStore',
-            itemTpl: '<div>{resourceName}</div>',
-            indexBar: true
+            xtype: 'container',
+            id: 'resource_label',
+            // height: '80%',
+            // width: '80%',
+            centered: true
         }]
     }
 })
