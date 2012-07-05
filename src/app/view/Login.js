@@ -8,46 +8,6 @@ Ext.define('RaxaEmr.view.Login', {
             xtype: 'topbar',
             docked: 'top',
         }, {
-            xtype: 'toolbar',
-            docked: 'top',
-            items: [{
-                xtype: 'spacer'
-            }, {
-                iconCls: 'settings',
-                iconMask: true,
-                ui: 'plain',
-                handler: function () {
-                    if (!this.overlay) {
-                        this.overlay = Ext.Viewport.add({
-                            xtype: 'panel',
-                            modal: true,
-                            hideOnMaskTap: true,
-                            top: 45,
-                            right: 0,
-                            style: 'right: -5px;top: 45px',
-                            items: [{
-                                xtype: 'fieldset',
-                                items: [{
-                                    xtype: 'textfield',
-                                    placeHolder: 'Host URL',
-                                    name: 'hostField',
-                                    listeners: {
-                                        blur: function (field, event, options) {
-                                            HOST = field.getValue();
-                                            localStorage.setItem("host", HOST);
-                                        }
-                                    },
-                                    width: 450,
-                                    style: 'background-color: white;',
-                                    value: HOST
-                                }]
-                            }]
-                        });
-                    }
-                    this.overlay.show();
-                }
-            }]
-        }, {
             id: 'logoPanel',
             centered: true,
             style: 'margin-top: -350px',
@@ -69,7 +29,7 @@ Ext.define('RaxaEmr.view.Login', {
                 clearIcon: true
             }, {
                 xtype: 'passwordfield',
-                id: 'password',
+                id: 'passwordID',
                 label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.passwordfield.label'),
                 clearIcon: true
             }]

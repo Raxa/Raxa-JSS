@@ -20,9 +20,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             layout: {
                 type: 'absolute'
             },
-            items: [
-            {
-                //xtype: 'container',
+            items: [{
                 layout: 'card',
                 id: 'addpatientgridarea',
                 border: false,
@@ -33,6 +31,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     border: false,
                     items:[{
                         xtype: 'gridpanel',
+                        id: 'drugASearchGrid',
                         height: 380,
                         styleHtmlContent: false,
                         width: 780,
@@ -43,31 +42,38 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         viewConfig: {
                             stripeRows: false
                         },
+                        store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
                         columns: [
-                        {
-                            xtype: 'numbercolumn',
-                            width: 50,
-                            text: 'Sl. No'
-                        },
                         {
                             xtype: 'gridcolumn',
                             width: 117,
-                            text: 'Name Of drug'
+                            text: 'Name Of drug',
+                            dataIndex: 'drugname'
                         },
                         {
                             xtype: 'gridcolumn',
                             width: 67,
-                            text: 'Dosage'
+                            text: 'Dosage',
+                            dataIndex: 'dosage'
                         },
                         {
                             xtype: 'gridcolumn',
                             width: 73,
-                            text: 'Duration'
+                            text: 'Duration',
+                            // gets the duration using start and end date of prescription
+                            renderer: function(value, metadata, record){
+                                console.log(record)
+                                var temp = record.getData().endDate - record.getData().startDate
+                                temp = temp/(86400000)
+                                temp = parseInt(temp) + 1
+                                return temp + ' days'
+                            }
                         },
                         {
                             xtype: 'numbercolumn',
                             width: 38,
-                            text: 'Qty'
+                            text: 'Qty',
+                            dataIndex: 'quantity'
                         },
                         {
                             xtype: 'numbercolumn',
@@ -77,7 +83,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             xtype: 'numbercolumn',
                             width: 103,
                             text: 'Item Price'
-                        }]
+                        }
+                        ]
                     },
                     {
                         xtype: 'button',
@@ -133,7 +140,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             },
             {
                 xtype: 'panel',
-                height: 450,
+                height: 480,
                 width: 180,
                 layout: {
                     type: 'accordion'
@@ -152,41 +159,81 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     {
                         xtype: 'textfield',
                         emptyText: 'Patient Name',
+                        name:'patientName',
                         x: 10,
-                        y: 30
+                        y: 20,
+                        id: 'patientNameASearch'
                     },
                     {
                         xtype: 'textfield',
                         emptyText: 'Prescription ID',
                         x: 10,
-                        y: 80
+                        y: 60,
+                        id: 'prescriptionIdASearch'
                     },
                     {
                         xtype: 'datefield',
                         emptyText: 'Prescription Date',
                         x: 10,
-                        y: 130
+                        y: 100,
+                        id: 'prescriptionDateASearch'
                     },
                     {
-                        xtype: 'gridpanel',
-                        height: 170,
-                        width: 190,
-                        title: 'Today',
+                        xtype: 'panel',
+                        layout: 'card',
+                        height: 200,
+                        width: 180,
                         x: 0,
-                        y: 170,
-                        columns: [
-                        {
-                            xtype: 'numbercolumn',
-                            width: 40,
-                            dataIndex: 'number',
-                            text: 'Sl. No'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 146,
-                            text: 'Patient Name'
-                        }
-                        ]
+                        y: 140,
+                        activeItem: 0,
+                        id: 'searchGrid',
+                        items: [{
+                            xtype: 'gridpanel',
+                            id: 'patientASearchGrid',
+                            title: 'Search Results',
+                            store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderPatient'),
+                            columns: [
+                            {
+                                xtype: 'gridcolumn',
+                                width: 120,
+                                text: 'Patient Name',
+                                dataIndex : 'display'
+                            },
+                            {
+                                xtype: 'gridcolumn',
+                                width: 40,
+                                dataIndex: 'age',
+                                text: 'Age'
+                            }
+                            ]
+                        }, {
+                            xtype: 'gridpanel',
+                            title: 'prescriptions',
+                            id: 'drugOrderASearchGrid',
+                            store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
+                            columns: [
+                            {
+                                xtype: 'gridcolumn',
+                                width: 80,
+                                text: 'drug',
+                                dataIndex : 'drugname'
+                            },
+                            {
+                                xtype: 'gridcolumn',
+                                width: 80,
+                                text: 'Date',
+                                renderer: Ext.util.Format.dateRenderer('d.m.Y'),
+                                dataIndex : 'startDate'
+                            }
+                            ]
+                        }]
+                    }, {
+                        xtype: 'button',
+                        width: 80,
+                        x: 50,
+                        y: 340,
+                        text: 'Back',
+                        action: 'back'
                     }]
                 },
                 {
@@ -268,6 +315,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         text: 'Patient Name'
                     }]
                 }]
+            //TODO: patient image
             },
             {
                 xtype: 'container',
@@ -299,6 +347,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         items: [{
                             xtype: 'displayfield',
                             fieldLabel: 'Patient Name',
+                            id: 'prescriptionPatientName',
                             readOnly: true,
                             value: '',
                             width: 300,
@@ -307,6 +356,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         },{
                             xtype: 'displayfield',
                             fieldLabel: 'Patient ID',
+                            id: 'prescriptionPatientId',
                             readOnly: true,
                             value: '',
                             width: 300,
@@ -315,6 +365,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         },{
                             xtype: 'displayfield',
                             fieldLabel: 'Age',
+                            id: 'prescriptionPatientAge',
                             readOnly: true,
                             value: '',
                             width: 300,
@@ -323,6 +374,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         },{
                             xtype: 'displayfield',
                             fieldLabel: 'Gender',
+                            id: 'prescriptionPatientGender',
                             readOnly: true,
                             value: '',
                             width: 300,
@@ -366,6 +418,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         },{
                             xtype: 'displayfield',
                             fieldLabel: 'Prescription Date',
+                            id: 'prescriptionDate',
                             readOnly: true,
                             value: '',
                             width: 300,

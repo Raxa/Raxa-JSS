@@ -22,6 +22,40 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             },
             'prescribedDrugs button': {
                 click: this.addDrug
+            },
+            "prescription": {
+                // as the perscription view activates it attaches listners to the 3 fields and 2
+                // girds of advanced search
+                activate: function(){
+                    // below there listners call searchPatient() as enter key is pressed 
+                    Ext.getCmp('patientNameASearch').on('specialkey', function(field, e){
+                        if (e.getKey() == KEY.ENTER) {
+                            this.searchPatient()
+                        }
+                    },this)
+                    Ext.getCmp('prescriptionIdASearch').on('specialkey', function(field, e){
+                        if (e.getKey() == KEY.ENTER) {
+                            this.searchPatient()
+                        }
+                    },this)
+                    Ext.getCmp('prescriptionDateASearch').on('specialkey', function(field, e){
+                        if (e.getKey() == KEY.ENTER) {
+                            this.searchPatient()
+                        }
+                    },this)
+                    // listner on patient search results to show drugorders when a patient is selected
+                    Ext.getCmp('patientASearchGrid').on('cellClick', function(){
+                      this.patientSelect(Ext.getCmp('patientASearchGrid').getSelectionModel().getSelection()[0].getData())
+                    },this)
+                    // listner on perscription grid to show drugorder on main grid with more details
+                    Ext.getCmp('drugOrderASearchGrid').on('cellClick', function(){
+                      this.DrugOrderSelect(Ext.getCmp('drugOrderASearchGrid').getSelectionModel().getSelection()[0])
+                    },this)
+                }
+            },
+            // show patient search results when pressed
+            'prescription button[action=back]': {
+                click: this.goback
             }
         })
     },
@@ -143,7 +177,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     /* this funtions makes a post call to creat the patient with three parameter which will sent as person, identifiertype 
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
-        var patient = Ext.create('RaxaEmr.Pharmacy.model.Patient', {
+        var patient = Ext.create('RaxaEmr.Pharmacy.model.patient', {
             person: personUuid,
             identifiers: [{
                     identifier: Util.getPatientIdentifier().toString(),
@@ -158,6 +192,72 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         PatientStore.sync();
         //I made this funtion return this store because i needed this in jasmine unit test
         return PatientStore
+    },
+    
+    //fuction to be called when a drug order is selected in prescription grid of advanced search
+    //sets the prescription date and store for main prescription grid
+    DrugOrderSelect: function(x){
+        Ext.getCmp('drugASearchGrid').getStore().removeAll();
+        Ext.getCmp('drugASearchGrid').getStore().add(x)
+        Ext.getCmp('prescriptionDate').setValue(x.getData().startDate.toLocaleDateString())
+    },
+    
+    //function to be call when a patient is selected in the patient search results gird of advanced search
+    //sets the fields realted to patient in main screen and then calls for function getDrugOrders()
+    patientSelect: function(x){
+        Ext.getCmp('prescriptionPatientName').setValue(x.display)
+        //below its commented as the identifier are not sent in patient search results
+        //Ext.getCmp('prescriptionPatientId').setValue(x.identifier)
+        if(x.age != 0)Ext.getCmp('prescriptionPatientAge').setValue(x.age)
+        else Ext.getCmp('prescriptionPatientAge').setValue(null)
+        Ext.getCmp('prescriptionPatientGender').setValue(x.gender)
+        this.getDrugOrders(x.uuid)
+    },
+    
+    //function for the get call for drugorder for related patient
+    getDrugOrders: function(x){
+        var Url = HOST + '/ws/rest/v1/order?patient=';
+            Url = Url + x + '&&v=full';
+            // setting up the proxy here because url is not fixed
+            Ext.getCmp('drugOrderASearchGrid').getStore().setProxy({
+                type: 'rest',
+                url: Url,
+                headers: Util.getBasicAuthHeaders(),
+                reader: {
+                    type: 'json',
+                    root: 'results'
+                }
+            })
+            Ext.getCmp('drugOrderASearchGrid').getStore().load();
+            Ext.getCmp('drugOrderASearchGrid').getStore().on('load', function(){
+                // show prescriptions grid(drugOrderASearchGrid) when drug orders are loaded
+                Ext.getCmp('searchGrid').getLayout().setActiveItem(1)
+            },this)
+        },
+    
+    //function that make the get call when enter is pressed within any of the 3 text fieds in advanced search
+    searchPatient: function(){
+        Ext.getCmp('searchGrid').getLayout().setActiveItem(0)
+        if(Ext.getCmp('patientNameASearch').getValue() != ""){
+            var Url = HOST + '/ws/rest/v1/patient?q=';
+            Url = Url + Ext.getCmp('patientNameASearch').getValue() + "&"
+            Url = Url + "&v=full";
+            // setting up the proxy here because url is not fixed
+            Ext.getCmp('patientASearchGrid').getStore().setProxy({
+                type: 'rest',
+                url: Url,
+                headers: Util.getBasicAuthHeaders(),
+                reader: {
+                    type: 'json',
+                    root: 'results'
+                }
+            })
+            Ext.getCmp('patientASearchGrid').getStore().load();
+        }
+    },
+    //functiont to go to patient search grid when back button is pressed in advanced search
+    goback: function(){
+        Ext.getCmp('searchGrid').getLayout().setActiveItem(0)
     }
     
     
