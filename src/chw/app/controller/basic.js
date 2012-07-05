@@ -251,6 +251,7 @@ Ext.define('mUserStories.controller.basic', {
                     var offlineRegStore = Ext.getStore('offlineRegisterStore');
                     if(!offlineRegStore){
                         offlineRegStore = Ext.create(mUserStories.store.offlineRegisterStore);
+                        console.log('created offline reg store');
                     }
                     var up_Model = Ext.create('mUserStories.model.upPersonModel', {
                         names: [{
@@ -266,13 +267,19 @@ Ext.define('mUserStories.controller.basic', {
                     //Adding registration details into local storage (a store)
                     //                    up_store.add(up_Model);
                     offlineRegStore.add(up_Model);
-                    //REST call for creating a Person
-                    //                    up_store.sync();
-//                    up_store.on('write', function () {
-//                        console.log('Stored locally, calling identifier type');
-//                        // Now that Person is created, send request to create Patient
-//                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
-//                    }, this)
+                    offlineRegStore.sync();
+                    console.log('offline Store synced');
+                    Ext.getCmp('ext-formpanel-5').reset();
+                    this.doDownload();
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+                    
+                //REST call for creating a Person
+                //                    up_store.sync();
+                //                    up_store.on('write', function () {
+                //                        console.log('Stored locally, calling identifier type');
+                //                        // Now that Person is created, send request to create Patient
+                //                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
+                //                    }, this)
                 }
             } else if (step === 'reminder') {
             // TODO: validate all fields
@@ -337,6 +344,7 @@ Ext.define('mUserStories.controller.basic', {
             Ext.getCmp('viewPort').setActiveItem(PAGES.PHOTO)
         }
     },
+    scope : this,
     // manage navigation based on lower toolbar
     doToolbar: function (arg) {
         if (arg === 'menu') {
@@ -344,25 +352,30 @@ Ext.define('mUserStories.controller.basic', {
         } else if (arg === 'sync') {
             Ext.Msg.confirm('', 'Sync all information?', function (resp) {
                 if (resp === 'yes') {
-                    // TODO: check for conflicts
-                    // doDownload information in localStorage
-                    this.doDownload();
+                    // TODO: check for conflicts             
                     // doUpload all information
                     var up_store = Ext.create('mUserStories.store.upPersonStore');
                     var offlineRegStore = Ext.getStore('offlineRegisterStore');
+                    up_store.removeAll();
                     //copy all data from offlineRegStore to up_store
                     offlineRegStore.each(function (record){
                         up_store.add(record);
+                        console.log(up_store);
                         up_store.sync();
+                        console.log('added to up_store')
+                        up_store.on('write', function () {
+                            console.log('Stored locally, calling identifier type');
+                            // Now that Person is created, send request to create Patient
+                            this.getidentifierstype(up_store.getAt(0).getData().uuid)
+                        }, this);
+                        
                     });
-                    up_store.on('write', function () {
-                        console.log('Stored locally, calling identifier type');
-                        // Now that Person is created, send request to create Patient
-                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
-                    }, this)
                     //Empty out the offlineStore
+                    offlineRegStore.removeAll();
                     
-                    
+                    console.log('removed from offline and up store');
+                    this.doDownload();
+                    console.log('download complete');
                 }
             },this)
         } else if (arg === 'inbox') {
