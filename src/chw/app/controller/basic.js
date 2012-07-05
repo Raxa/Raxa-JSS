@@ -19,10 +19,9 @@ Ext.define('mUserStories.controller.basic', {
     views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling'],
     config: {
         refs: {
-            add_app: '#add_app',
-            add_reg: '#add_reg',
-            add_rem: '#add_rem',
-            audioButton: '#audioButton',
+            addApp: '#add_app',
+            addReg: '#add_reg',
+            addRem: '#add_rem',
             back_add: '#back_add',
             back_add_app: '#back_add_app',
             back_add_reg: '#back_add_reg',
@@ -31,38 +30,31 @@ Ext.define('mUserStories.controller.basic', {
             back_inb: '#back_inb',
             back_res: '#back_res',
             back_res_det: '#back_res_det',
-            cancelButton: '#cancelButton',
-            syncButton: '#syncButton',
-            inboxButton: '#inboxButton',
-            logoutButton: '#logoutButton',
-            logoutButton_vc: '#logoutButton_vc',
-            menuButton: '#menuButton',
-            notButton: '#notButton',
-            okButton: '#okButton',
-            photoButton: '#photoButton',
-            resourcesButton: '#resourcesButton',
-            schButton: '#schButton',
-            videoButton: '#videoButton'
+            cancel: '#cancelButton',
+            sync: '#syncButton',
+            inbox: '#inboxButton',
+            logout: '#logoutButton',
+            logout_vc: '#logoutButton_vc',
+            menu: '#menuButton',
+            not_vc: '#notButton',
+            ok: '#okButton',
+            resources: '#resourcesButton',
+            sch_vc: '#schButton'
         },
         control: {
-            add_app: {
+            addApp: {
                 tap: function () {
                     this.doAdd('app', true)
                 }
             },
-            add_reg: {
+            addReg: {
                 tap: function () {
                     this.doAdd('reg', true)
                 }
             },
-            add_rem: {
+            addRem: {
                 tap: function () {
                     this.doAdd('rem', true)
-                }
-            },
-            audioButton: {
-                tap: function () {
-                    this.doResources('audio')
                 }
             },
             back_add: {
@@ -105,64 +97,59 @@ Ext.define('mUserStories.controller.basic', {
                     this.doBack('res')
                 }
             },
-            cancelButton: {
+            cancel: {
                 tap: function () {
                     this.doOption(false)
                 }
             },
-            syncButton: {
+            sync: {
                 tap: function () {
                     this.doToolbar('sync')
                 }
             },
-            inboxButton: {
+            inbox: {
                 tap: function () {
                     this.doToolbar('inbox')
                 }
             },
-            logoutButton: {
+            logout: {
                 tap: function () {
                     this.doExit()
                 }
             },
-            logoutButton_vc: {
+            logout_vc: {
                 tap: function () {
                     this.doExit()
                 }
             },
-            menuButton: {
+            menu: {
                 tap: function () {
                     this.doToolbar('menu')
                 }
             },
-            notButton: {
+            not_vc: {
                 tap: function () {
                     this.doToolbar('not')
                 }
             },
-            okButton: {
+            ok: {
                 tap: function () {
                     this.doOption(true)
                 }
             },
-            photoButton: {
+            photo: {
                 tap: function () {
                     this.doResources('photo')
                 }
             },
-            resourcesButton: {
+            resources: {
                 tap: function () {
                     this.doToolbar('resources')
                 }
             },
-            schButton: {
+            sch_vc: {
                 tap: function () {
                     this.doToolbar('sch')
-                }
-            },
-            videoButton: {
-                tap: function () {
-                    this.doResources('video')
                 }
             }
         }
