@@ -31,47 +31,100 @@ Ext.define('Screener.view.PatientSummary', {
         height: 260,
         scrollable: true,
         items: [{
-            xtype: 'textfield',
-            label: 'Name : ',
-            width: '100%',
-            value: 'Creative',
-            disabled: 'true',
+            xtype: 'titlebar',
+            title: 'Patient Summary',
+            layout: {
+                align: 'center',
+                type: 'hbox'
+            }
         }, {
             xtype: 'textfield',
-            label: 'Gender : ',
+            id: 'name',
+            label: 'Name',
+            width: '100%',
+            value: '',
+            disabled: 'true',
+            disabledCls: 'x-item',
+        }, {
+            xtype: 'textfield',
+            id: 'gen',
+            label: 'Gender',
             width: '100%',
             value: 'Male',
             disabled: 'true',
+            disabledCls: 'x-item',
         }, {
             xtype: 'textfield',
-            label: 'Age : ',
+            id: 'age',
+            label: 'Age',
             width: '100%',
             value: '18',
             disabled: 'true',
+            disabledCls: 'x-item',
         }, {
             xtype: 'textfield',
-            label: 'BMI : ',
+            id: 'bmi',
+            label: 'BMI',
             width: '100%',
             value: '22',
             disabled: 'true',
+            disabledCls: 'x-item',
         }, {
             xtype: 'textfield',
-            label: 'ID# : ',
+            id: 'idno',
+            label: 'ID#',
             width: '100%',
             value: '1',
             disabled: 'true',
+            disabledCls: 'x-item',
         }, {
             xtype: 'textfield',
-            label: 'Village : ',
+            id: 'vill',
+            label: 'Village',
             width: '100%',
             value: 'abc',
             disabled: 'true',
+            disabledCls: 'x-item',
         }, {
             xtype: 'textfield',
-            label: 'District : ',
+            id: 'dis',
+            label: 'District',
             width: '100%',
             value: 'xyz',
             disabled: 'true',
+            disabledCls: 'x-item',
+        }, {
+            xtype: 'titlebar',
+            title: 'Last Encounter',
+            layout: {
+                align: 'center',
+                type: 'hbox'
+            }
+        }, {
+            xtype: 'label',
+            id: '1',
+            html: '',
+            width: '100%',
+        }, {
+            xtype: 'label',
+            id: '2',
+            html: '',
+            width: '100%',
+        }, {
+            xtype: 'label',
+            id: '3',
+            html: '',
+            width: '100%',
+        }, {
+            xtype: 'label',
+            id: '4',
+            html: '',
+            width: '100%',
+        }, {
+            xtype: 'label',
+            id: '5',
+            html: '',
+            width: '100%',
         }]
     }
 });
