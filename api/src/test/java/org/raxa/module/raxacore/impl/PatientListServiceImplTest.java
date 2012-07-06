@@ -290,24 +290,19 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	 * PatientListServiceImpl.
 	 * All 3 lists have the same start and end dates.
 	 * notInList1 has 1 encounter (type 2) with Patient #7.
-	 * notInList2 has 2 encounters (type 1) with Patient #7.
-	 * mainList has all encounters of type 1 which are not associated with Patient #7.
-	 * Since no such encounter exists in the dataset, the value should be 0
+	 * Without the notInList query, mainList would have had 2 encounters of type 1 with Patient #7.
+	 * Because of notInList, mainList has all encounters of type 1 which are not associated with Patient #7.
+	 * Since no such encounter exists in the dataset, the value should be 0.
 	 */
 	@Test
 	public void testGetEncountersInPatientListShouldNotReturnPatientsAccordingToNotInList() {
 		PatientList mainList = new PatientList();
 		PatientList notInList1 = new PatientList();
-		PatientList notInList2 = new PatientList();
 		mainList.setName("GetPatientsTestList");
 		notInList1.setName("TestPatientsNotInList");
-		notInList2.setName("TestPatientsNotInList2");
 		notInList1.setSearchQuery("?encounterType=07000be2-26b6-4cce-8b40-866d8435b613"
 		        + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00");
-		notInList2.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
-		        + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00");
 		s.savePatientList(notInList1);
-		s.savePatientList(notInList2);
 		mainList.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
 		        + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00&notInList=" + notInList1.getUuid());
 		List<Encounter> encs = s.getEncountersInPatientList(mainList);
