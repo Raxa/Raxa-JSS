@@ -15,14 +15,9 @@ Ext.define('Topbar.view.TopToolbar', {
             html: 'JSS',
             itemId: 'JSSLabel',
             margin: 5,
-        }, {
-            xtype: 'label',
-            html: 'Welcome,',
-            itemId: 'WelcomeLabel',
-            margin: 5,
             listeners: [{
                 fn: function (component, options) {
-                    if (Util.getLoginState() === 0) {
+                    if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
                         this.parent.getComponent('UsernameLabel').setHtml('Guest');
                         var buttonUrlSettings = this.parent.add({
                             xtype: 'urlSettingsButton',
@@ -48,9 +43,13 @@ Ext.define('Topbar.view.TopToolbar', {
                     }
                 },
                 event: 'painted',
-                buffer: 40
+                buffer: 10
             }]
-
+        }, {
+            xtype: 'label',
+            html: 'Welcome,',
+            itemId: 'WelcomeLabel',
+            margin: 5,
         }, {
             xtype: 'label',
             itemId: 'UsernameLabel',
