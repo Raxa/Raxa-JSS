@@ -23,7 +23,7 @@ Ext.define('mUserStories.view.resources', {
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
-            width: Ext.os.deviceType === 'Phone' ? null : '80%',
+            width: Ext.os.deviceType === 'Phone' ? null : '100%',
             height: Ext.os.deviceType === 'Phone' ? null : '100%',
             xtype: 'list',
             ui: 'round',

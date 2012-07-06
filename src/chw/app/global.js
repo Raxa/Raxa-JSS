@@ -40,7 +40,7 @@ var LOCATION = "";
 var CONNECTED = true;   //Variable for connectivity status
 var helper = {
     listDisclose: function (record) {
-        Ext.getCmp('titletext').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
+        Ext.getCmp('narwhal').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
         // navigate to details for specific patient and populate fields
         Ext.getCmp('first_det').setValue(record.get('givenName'));
         Ext.getCmp('last_det').setValue(record.get('familyName'));

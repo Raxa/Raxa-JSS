@@ -26,20 +26,32 @@ Ext.define('mUserStories.view.patientDetails', {
             xtype: 'formpanel',
             title: 'Visit',
             items: [{
-                xtype: 'fieldset',
+                xtype: 'container',
+                layout: 'hbox',
                 title: 'Visit Details',
-                defaults: {
-                    labelWidth: '35%',
-                    labelAlign: 'top'
-                },
                 items: [{
-                    xtype: 'textfield',
-                    disabled: true,
-                    label: 'Symptom Description',
-                    id: 'info_vis',
-                    placeHolder: 'Has had diarrhea for more than 2 days and is having trouble swallowing solid foods.'
+                       xtype: 'container',
+                       id: 'img_vis',
+                       html: '<img src="resources/diarrhea.png" height="100%" width="100%"/>',
+                       height: '40%',
+                       //width: '20%',
+                       flex: 1
+                },{
+                    xtype: 'fieldset',
+                    defaults: {
+                        labelWidth: '35%',
+                        labelAlign: 'top'
+                    },
+                    flex: 2,
+                    items: [{
+                        xtype: 'textfield',
+                        disabled: true,
+                        label: 'Symptom',
+                        id: 'info_vis',
+                        placeHolder: 'Diarrhea'
+                    }]
                 }]
-            }, { // maybe this should be a list not checklist?
+            }, /*{ // maybe this should be a list not checklist?
                 // how much detail is necessary?
                 xtype: 'fieldset',
                 title: 'Suggested Tasks',
@@ -49,11 +61,11 @@ Ext.define('mUserStories.view.patientDetails', {
                 items: [{
                     xtype: 'checkboxfield',
                     name: 'task1',
-                    label: 'Oral Rehydration Salts'
+                    label: 'ORS'
                 }, {
                     xtype: 'checkboxfield',
                     name: 'task2',
-                    label: 'Rapid Diagnostic Test malaria'
+                    label: 'RDT malaria'
                 }, {
                     xtype: 'checkboxfield',
                     name: 'task3',
@@ -67,6 +79,43 @@ Ext.define('mUserStories.view.patientDetails', {
                     name: 'task5',
                     label: 'Blood sample for CBC'
                 }]
+            }*/ // How can i generate these dynamically? (grid)
+                {
+                    xtype: 'container',
+                    id: 'check_vis',
+                    padding: '10px',
+                    items: [{
+                        xtype: 'button',
+                        id: 'vis_ors',
+                        text: 'ORS',
+                        ui: 'confirm'
+                    }, {
+                        xtype: 'button',
+                        id: 'vis_rdt',
+                        text: 'RDT',
+                        ui: 'confirm'
+                    }, {
+                        xtype: 'button',
+                        id: 'vis_vita',
+                        text: 'Vitamin A',
+                        ui: 'confirm'
+                    }, {
+                        xtype: 'button',
+                        id: 'vis_alb',
+                        text: 'Albendazole',
+                        ui: 'confirm'
+                    }, {
+                        xtype: 'button',
+                        id: 'vis_blood',
+                        text: 'Blood sample',
+                        ui: 'confirm'
+                    }
+                ]
+            }, {
+                xtype: 'audio',
+                url: 'resources/ping.amr',
+                id: 'ping',
+                hidden: true
             }]
         }, {
             xtype: 'formpanel',

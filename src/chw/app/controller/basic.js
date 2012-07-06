@@ -29,10 +29,16 @@ Ext.define('mUserStories.controller.basic', {
             logout: '#logoutButton',
             logout_vc: '#logoutButton_vc',
             menu: '#menuButton',
+            narwhal: '#narwhal',
             not_vc: '#notButton',
             ok: '#okButton',
             resources: '#resourcesButton',
-            sch_vc: '#schButton'
+            sch_vc: '#schButton',
+            vis_ors: '#vis_ors',
+            vis_rdt: '#vis_rdt',
+            vis_vita: '#vis_vita',
+            vis_alb: '#vis_alb',
+            vis_blood: '#vis_blood'
         },
         control: {
             addApp: {
@@ -108,6 +114,31 @@ Ext.define('mUserStories.controller.basic', {
             sch_vc: {
                 tap: function () {
                     this.doToolbar('sch')
+                }
+            },
+            vis_ors: {
+                tap: function () {
+                    this.doVis('ors')
+                }
+            },
+            vis_rdt: {
+                tap: function () {
+                    this.doVis('rdt')
+                }
+            },
+            vis_vita: {
+                tap: function () {
+                    this.doVis('vita')
+                }
+            },
+            vis_alb: {
+                tap: function () {
+                    this.doVis('alb')
+                }
+            },
+            vis_blood: {
+                tap: function () {
+                    this.doVis('blood')
                 }
             }
         }
@@ -315,17 +346,49 @@ Ext.define('mUserStories.controller.basic', {
             this.toPage(PAGES.SCHEDULING)
         }
     },
+    doVis: function (arg) {
+        var reading = '';
+        var title = '';
+        var detail = '';
+        if (arg === 'ors') {
+            title = 'ORS';
+            detail = 'Adminster Oral Rehydration Salts'
+        } else if (arg === 'rdt') {
+            title = 'RDT';
+            detail = 'Adminster Rapid Diagnostic Test for malaria'
+        } else if (arg === 'vita') {
+            title = 'Vitamin A';
+            detail = 'Check if Vitamin A has been administered.'
+        } else if (arg === 'alb') {
+            title = 'Albendazole';
+            detail = 'Check if Albendazole has been administered'
+        } else if (arg === 'blood') {
+            title = 'Blood sample';
+            detail = 'Take a bloodsample for CBC'
+        }
+        // TODO: play recording
+        Ext.getCmp('ping').play();
+        // confirm completion
+        Ext.Msg.confirm('Task', detail, function (resp) {
+            if (resp === 'yes') {
+                // TODO: record that the task has been completed
+                // change button to demonstrate this
+                Ext.getCmp('vis_'+arg).setUi('decline');
+                Ext.getCmp('vis_'+arg).setDisabled(true)
+            }
+        })
+        // TODO: when all buttons are clicked, notify of completion
+    },
     /* HELPER FUNCTIONS */
     // deal with backbutton
     doBack: function () {
-        /*var active = Ext.getCmp('viewPort').getActiveItem();
-        if (active.getActiveItem() === PAGES.LOGIN_SCREEN) {
-            title.setTitle('Community Health Worker Module');
-            button.setHidden(true);
-        } else if (active.id === 'ext-formpanel-5' || active === 'ext-panel-6' || active === 'ext-panel-7') {
-            this.doAdd('register',arg)
-        } 
-        // TODO: Best logic for returning to previous page - doReturn()
+        var active = Ext.getCmp('viewPort').getActiveItem();
+        if (active.id === 'ext-formpanel-5' || active === 'ext-panel-6' || active === 'ext-panel-7') {
+            this.toPage(PAGES.ADD)
+        } else {
+            this.toPage(PAGES.PATIENT_LIST)
+        }
+        /*/ TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
         if (arg === 'list') {
             this.doDownload();
