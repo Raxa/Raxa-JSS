@@ -42,7 +42,7 @@ Ext.define('Registration.view.RegistrationBMI', {
                         value: 'Patient ID comes here',
                         id: 'bmiPatientID',
                         readOnly: true,
-                        labelAlign: 'right',
+                        labelAlign: 'right'
                     }, {
                         xtype: 'label',
                         text: 'BMI Value'
@@ -160,11 +160,7 @@ Ext.define('Registration.view.RegistrationBMI', {
                         width: 60,
                         action: 'bmiSubmit',
                         id: 'submitBMI',
-                        text: 'Submit',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.HOME.value); //Going Back to Home Page - BMI to be Posted Here
-                        }
+                        text: 'Submit' //Going Back to Home Page - BMI to be Posted Here
                     }]
                 }]
             }]

@@ -38,5 +38,17 @@ Ext.define('RaxaEmr.Pharmacy.view.dispense', {
         hideable: false,
         header: 'In Hand',
         dataIndex: 'inhand'
+    }],
+
+    dockedItems:[{
+        dock: 'bottom',
+        height: 35,
+        border: false,
+        items:[{
+            xtype: 'button',
+            text: 'Back',
+            action: 'back',
+            width: 40
+        }]
     }]
 });

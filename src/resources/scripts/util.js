@@ -16,7 +16,7 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://192.168.1.8:8080/openmrs';
+    var HOST = 'http://192.168.1.9:8080/openmrs';
 } else HOST = localStorage.getItem("host");
 
 var username = 'shivam';
@@ -40,7 +40,9 @@ var BMI_HEIGHT_MAX = 300;
 var BMI_HEIGHT_MIN = 0;
 var BMI_WEIGHT_MAX = 800;
 var BMI_WEIGHT_MIN = 0;
-
+var KEY= {
+    ENTER : 13
+};
 // Enum for Registration Module Page Numbers
 var REG_PAGES = {
     HOME: {
@@ -103,6 +105,10 @@ var Util = {
         return hospitalName;
     },
 
+    getHospitalName: function () {
+        return hospitalName;
+    },
+
     /**
      * Returns all the headers required for Basic Authenticated REST calls
      * @return headers object that includes Authorization, Accept and Content-Type
@@ -115,6 +121,7 @@ var Util = {
         }
         return headers;
     },
+
     /**
      * Logout the current user. Ends the current session
      */
@@ -128,6 +135,17 @@ var Util = {
             // do nothing
             }
         });
+    },
+
+    /**
+     * Gets the Login State. If returns 0, then user is Logged Out. For any other value, the user is logged in.
+     */
+    getLoginState: function () {
+        var loginState = Ext.getCmp('mainView').getActiveItem()._activeItem;
+        if (loginState === 0) {
+            Util.logoutUser();
+        }
+        return loginState;
     },
 
     /**
@@ -200,7 +218,7 @@ var Util = {
         return deviceId;
     },
 
-    getPatientIdentifier : function(){
+    getPatientIdentifier: function () {
         //dummy funtion to be used for creating partient
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
@@ -270,3 +288,24 @@ var Util = {
         });
     }
 }
+
+
+if (localStorage.heightUuidconcept == undefined) {
+    var heightUuidConcept = Util.getAttributeFromREST('concept', 'height', 'HEIGHT (CM)');
+}
+if (localStorage.weightUuidconcept == undefined) {
+    var weightUuidConcept = Util.getAttributeFromREST('concept', 'weight', 'WEIGHT (KG)');
+}
+if (localStorage.bmiUuidconcept == undefined) {
+    var bmiUuidConcept = Util.getAttributeFromREST('concept', 'bmi', 'BODY MASS INDEX');
+}
+if (localStorage.regfeeUuidconcept == undefined) {
+    var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee', 'Registration Fee');
+}
+if (localStorage.basicUuidform == undefined) {
+    var basicUuidform = Util.getAttributeFromREST('form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms');
+}
+if(localStorage.prescriptionUuidencountertype == undefined){ 
+	var prescriptionUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescription','PRESCRIPTION - Patient receives a drug prescription.');
+}
+

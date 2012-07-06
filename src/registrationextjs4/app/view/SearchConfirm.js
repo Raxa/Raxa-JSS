@@ -206,7 +206,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             allowBlank: false
                         }]
                     }, {
-                        xtype: 'text',
+                        xtype: 'textfield',
                         id: 'blockSearchedPatient',
                         fieldLabel: 'Block/House/Door Number',
                         labelAlign: 'right',
@@ -296,7 +296,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             hideLabel: 'true'
                         },
                         items: [{
-                            name: 'occuption',
+                            name: 'phoneNo.',
                             id: 'phoneSearchedPatient',
                             emptyText: 'Yes/No (READ ONLY)',
                             flex: 1,
@@ -357,10 +357,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         margin: '10 0 0 10',
                         width: 160,
                         text: 'Continue to Submit BMI',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.HOME.value); //TODO: Change to Returning BMI here
-                        }
+                        action: 'bmipage'
                     }]
                 }]
             }]

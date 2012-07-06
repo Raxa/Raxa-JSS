@@ -2,7 +2,7 @@
  * Note: there is no 'writer' attached to this store, so the
  */
 Ext.define('Screener.store.Patients', {
-    requires: ['Screener.model.Patient'],
+    requires: ['Screener.model.Patients'],
     extend: 'Ext.data.Store',
     config: {
         model: 'Screener.model.Patients',

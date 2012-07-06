@@ -54,11 +54,10 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             id: 'oldPatientIdentifierConfirm',
                             readOnly: true,
-                            emptyText: 'Old Patient Identifier as filled in form (READ ONLY)',
-                            allowBlank: true
+                            emptyText: 'Old Patient Identifier as filled in form (READ ONLY)'
                         }]
                     },
-
+ 
                     {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Patient Name',
@@ -77,8 +76,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             id: 'patientNameConfirm',
                             emptyText: 'Patient\'s Name as filled in form (READ ONLY)',
                             flex: 1,
-                            readOnly: true,
-                            allowBlank: false
+                            readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -98,8 +96,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             id: 'relativeNameConfirm',
                             emptyText: 'Father/Husband\'s Name (READ ONLY)',
                             flex: 1,
-                            readOnly: true,
-                            allowBlank: false
+                            readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -119,8 +116,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             id: 'ageConfirm',
                             emptyText: 'Age (READ ONLY)',
                             flex: 1,
-                            readOnly: true,
-                            allowBlank: false
+                            readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -140,8 +136,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             id: 'sexConfirm',
                             emptyText: 'Sex (READ ONLY)',
                             flex: 1,
-                            readOnly: true,
-                            allowBlank: false
+                            readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -161,8 +156,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             id: 'educationConfirm',
                             emptyText: 'Education Details (READ ONLY)',
                             flex: 1,
-                            readOnly: true,
-                            allowBlank: false
+                            readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -182,8 +176,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             id: 'casteConfirm',
                             emptyText: 'Caste (READ ONLY)',
                             flex: 1,
-                            readOnly: true,
-                            allowBlank: false
+                            readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -200,12 +193,11 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         },
                         items: [{
                             name: 'occuption',
-                            id: 'occuptionConfirm',
+                            id: 'occupationConfirm',
                             emptyText: 'Occupation (READ ONLY)',
-
+ 
                             readOnly: true,
-                            flex: 1,
-                            allowBlank: false
+                            flex: 1
                         }]
                     }, {
                         xtype: 'textfield',
@@ -213,7 +205,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         fieldLabel: 'Block/House/Door Number',
                         labelAlign: 'right',
                         emptyText: 'Block/House/Door Number (READ ONLY)',
-
+ 
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
@@ -224,7 +216,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         fieldLabel: 'Street/Area/Locality/Mohala/Road',
                         labelAlign: 'right',
                         emptyText: 'Street/Area/Locality/Mohala/Road (READ ONLY)',
-
+ 
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
@@ -235,7 +227,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         fieldLabel: 'Town/Village/City',
                         labelAlign: 'right',
                         emptyText: 'Town/Village/City (READ ONLY)',
-
+ 
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
@@ -246,7 +238,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         fieldLabel: 'Post Office',
                         labelAlign: 'right',
                         emptyText: 'Post Office (READ ONLY)',
-
+ 
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
@@ -257,7 +249,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         fieldLabel: 'Pin Code',
                         labelAlign: 'right',
                         emptyText: 'Pin Code (READ ONLY)',
-
+ 
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
@@ -268,17 +260,17 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         fieldLabel: 'Tehsil/Taluka/Mandal/Thana',
                         labelAlign: 'right',
                         emptyText: 'Tehsil/Taluka/Mandal/Thana (READ ONLY)',
-
+ 
                         readOnly: true,
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
-                        xtype: 'numberfield',
+                        xtype: 'textfield',
                         fieldLabel: 'District',
                         id: 'districtConfirm',
                         emptyText: 'District (READ ONLY)',
-
+ 
                         readOnly: true,
                         labelAlign: 'right',
                         labelPad: 20,
@@ -302,8 +294,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             id: 'phoneConfirm',
                             emptyText: 'Yes/No (READ ONLY)',
                             flex: 1,
-                            readOnly: true,
-                            allowBlank: false
+                            readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -322,39 +313,83 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             name: 'primaryContact',
                             emptyText: 'Primary Contact',
                             id: 'patientPrimaryContactNumberConfirm',
-
+ 
                             readOnly: true,
-                            flex: 1,
-                            allowBlank: false
+                            flex: 1
                         }, {
                             name: 'lastName',
                             emptyText: 'Secondary Contact',
                             id: 'patientSecondaryContactNumberConfirm',
-
+ 
                             readOnly: true,
                             flex: 1,
-                            margins: '0 0 0 6',
-                            allowBlank: false
+                            margins: '0 0 0 6'
                         }]
-                    }, {
+                    }/*, {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
                         text: 'Submit and Confirm',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.REG_BMI.value); //Going to BMI Page
-                        }
+                        action: 'submit'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
                         text: 'Cancel',
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
-                        }
+                        action: 'cancel'
+                    }*/]
+                },{
+                    xtype: 'fieldset',
+                    padding: 10,
+                    title: 'New Registration',
+                    items:[{
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Registration Fees',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            xtype: 'numberfield',
+                            fieldLabel: 'Registration Fees Paid',
+                            id: 'registrationfeespaid',
+                            emptyText: 'Registration fees',
+                            defaultValue: 0,
+                            labelPad: 20,
+                            labelWidth: 70,
+                            labelAlign: 'right',
+                            anchor: '95%',
+                            margin: '0 10 0 0',
+                            hideTrigger: true,
+                            keyNavEnabled: false,
+                            mouseWheelEnabled: false,
+                            nanText: 'Invalid Input'
+                        }]  
                     }]
+                },{
+                    xtype: 'fieldset',
+                    padding: 10,
+                    border: false,
+                    items:[{
+                        xtype: 'button',
+                        margin: '10 50 0 270',
+                        width: 120,
+                        text: 'Submit and Confirm',
+                        action: 'submit'
+                    }, {
+                        xtype: 'button',
+                        margin: '10 0 0 0',
+                        width: 60,
+                        text: 'Cancel',
+                        action: 'cancel'
+                    }]  
+                    
                 }]
             }]
         };

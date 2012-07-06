@@ -1,6 +1,6 @@
 // Automatically load views
 Ext.Loader.setConfig({
-    enabled: true
+    enabled: true,
 });
 
 var App = new Ext.Application({

@@ -1,0 +1,53 @@
+[
+{	"drug" : "acetaminophen",
+	"dose" : 650,
+	"unit" : "mg",
+	"route" : "By mouth",
+	"frequency" : "Three times daily",
+	"notes" : "As needed for low back pain"
+},
+{	"drug" : "naproxen",
+	"dose" : 200,
+	"unit" : "mg",
+	"route" : "By mouth",
+	"frequency" : "Twice daily",
+	"notes" : "As needed for low back pain"
+},
+{	"drug" : "hydrochlorothiazide",
+	"dose" : 25,
+	"unit" : "mg",
+	"route" : "By mouth",
+	"frequency" : "daily"
+},
+{	"drug" : "diphenhydramine",
+	"dose" : 25,
+	"unit" : "mg",
+	"route" : "By mouth",
+	"frequency" : "",
+	"notes" : "As needed for itching"
+},
+{	"drug" : "atorvastatin",
+	"dose" : 20,
+	"unit" : "mg",
+	"route" : "By mouth",
+	"frequency" : "daily"
+},
+{	"drug" : "Vitamin D",
+	"dose" : 1200,
+	"unit" : "IU",
+	"route" : "By mouth",
+	"frequency" : "daily"
+},
+{	"drug" : "Calcium",
+	"dose" : 800,
+	"unit" : "mg",
+	"route" : "By mouth",
+	"frequency" : "daily"
+},
+{	"drug" : "aspirin",
+	"dose" : 81,
+	"unit" : "mg",
+	"route" : "By mouth",
+	"frequency" : "daily"
+}
+]

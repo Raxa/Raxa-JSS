@@ -1,3 +1,19 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 .x-list.x-list-indexed .x-list-disclosure{margin-right:1em}
 .x-list .x-item-selected .x-list-disclosure{background:#fff none}
 .x-list .x-list-item{position:relative;color:black}
@@ -21,12 +37,58 @@
 .x-contacts .x-list-item{height:70px}
 .x-contact .x-list-item > *{float:left}
 .x-contacts .headshot{float:left;height:50px;width:50px;margin-right:10px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 2px rgba(0, 0, 0, 0.6)}
+.x-contacts .property{float:left;height:56px;margin-right:2px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:0px;border-radius:4px;-webkit-box-shadow:inset 0 0 5px rgba(0, 0, 0, 0.8)}
 .x-contacts .x-item-pressed,.x-contacts .x-item-selected{border-top-color:#D1D1D1 !important}
 .x-show-contact{background:#EEEEEE}
-.x-show-contact .top{padding:22px;height:100px}
+.x-show-contact.x-list-item{background:#EEEEEE}
+.x-show-contact .top{padding:15px;height:80px}
 .x-show-contact .top > *{float:left}
 .x-show-contact .top .headshot{height:50px;width:50px;margin-right:10px;background-size:cover;background-position:center center;-webkit-border-radius:10px;border-radius:10px;border:1px solid #444;-webkit-box-shadow:inset 0 0 2px rgba(0, 0, 0, 0.4)}
 .x-show-contact .top .name{width:195px;padding-top:0;font-size:22px;font-weight:bold}
-.x-show-contact .top .name span{display:block;font-size:14px;font-weight:normal;color:#666}.x-show-contact .top .name a:link{color:#3f9b26;text-decoration:none}
+.x-show-contact .top .name span{display:block;font-size:14px;font-weight:normal;color:#666}
+.x-show-contact .top .name a:link{color:#3f9b26;text-decoration:none}
+.x-show-contact .top .name_small{width:195px;padding-top:10px;font-size:22px;font-weight:bold}
+.x-show-contact .top .name_small span{display:block;font-size:14px;font-weight:normal;color:#666}
+.x-show-contact .top .name_small a:link{color:#3f9b26;text-decoration:none}
+.x-show-contact .top .name_right{width:195px;padding-top:10px;font-size:22px;font-weight:bold;text-align:right}
+.x-show-contact .top .name_right span{display:block;font-size:14px;font-weight:normal;color:#666}
+.x-show-contact .top .name_right a:link{color:#3f9b26;text-decoration:none}
 .x-map{position:relative}.x-map:before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:999;-webkit-box-shadow:inset 0 3px 3px rgba(0, 0, 0, 0.4)}.x-toolbar-inner .x-layout-hbox{position:relative}.x-toolbar-inner .x-layout-hbox #editButton,.x-toolbar-inner .x-layout-hbox #saveButton{position:absolute;right:0;top:.4em}
 .horizontalDiv{float:left}
+.x-form-fieldset-mod .x-form-fieldset-inner{border:0px solid #dddddd;border-bottom-width: 1px;background:#fff;padding:0;-webkit-border-radius:0.4em;border-radius:0em;overflow:hidden}
+.x-segmentedbutton-vertical .x-button.x-first {
+-webkit-border-top-left-radius: 0.4em;
+border-top-left-radius: 0.4em;
+-webkit-border-bottom-left-radius: 0.0em;
+border-bottom-left-radius: 0.0em;
+}
+.x-segmentedbutton-vertical .x-button.x-last {
+-webkit-border-top-right-radius: 0.0em;
+border-top-right-radius: 0.0em;
+-webkit-border-bottom-right-radius: 0.0em;
+border-bottom-right-radius: 0.0em;
+-webkit-border-bottom-left-radius: 0.4em;
+border-bottom-left-radius: 0.4em;
+}
+.x-button-vikas .x-button-icon {
+width: 2.1em;
+height: 6.0em;
+background-repeat: no-repeat;
+background-position: center;
+display: block;
+}
+
+.x-button-vikas.x-button-pressing, .x-button-vikas.x-button-pressing::after, .x-button-vikas.x-button-pressed, .x-button-vikas.x-button-pressed::after, .x-button-vikas.x-button-active, .x-button-vikas.x-button-active::after, .x-toolbar .x-button-vikas.x-button-pressing, .x-toolbar .x-button-vikas.x-button-pressing::after, .x-toolbar .x-button-vikas.x-button-pressed, .x-toolbar .x-button-vikas.x-button-pressed::after, .x-toolbar .x-button-vikas.x-button-active, .x-toolbar .x-button-vikas.x-button-active::after {
+background-image: none;
+background-color: #C4C4C4;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ABABAB), color-stop(10%, #B8B8B8), color-stop(65%, #C4C4C4),color-stop(100%, #C6C6C6));
+background-image: -webkit-linear-gradient(left, #1985D0,#1468A2 3%,#0E4B75);
+background-image: linear-gradient(top, #ABABAB,#B8B8B8 10%,#C4C4C4 65%,#C6C6C6);
+}
+
+.x-segmentedbutton-vertical .x-button:not(:first-child) {
+border-top: 0;
+border-left: solid;
+border-left-width: 1px;
+border-left-color: #999;
+}
