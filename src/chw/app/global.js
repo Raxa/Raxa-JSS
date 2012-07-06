@@ -40,6 +40,7 @@ var LOCATION = "";
 var CONNECTED = true;   //Variable for connectivity status
 var helper = {
     listDisclose: function (record) {
+        console.log(Ext.getCmp('narwhal'));
         Ext.getCmp('narwhal').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
         // navigate to details for specific patient and populate fields
         Ext.getCmp('first_det').setValue(record.get('givenName'));
@@ -52,7 +53,8 @@ var helper = {
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
     },
     discloseResource: function (record) {
-        Ext.getCmp('titletext').setTitle(record.get('resourceName'));
+        console.log(Ext.getCmp('narwhal'));
+        Ext.getCmp('narwhal').setTitle(record.get('resourceName'));
         if (record.get('resourceType')==='photo') {
             var located = 'resources/' + record.get('resourceLocation') + '.png'
             Ext.getCmp('resource_label').setHtml('<img src="'+located+'" height="100%" width="100%"/>')

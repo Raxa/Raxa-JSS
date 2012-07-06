@@ -13,15 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
-Ext.application({
-    name: 'mUserStories',
-    controllers: ['basic'],
-    models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers','encounterModel', 'resourceModel', 'visitModel'],
-    stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore','offlineStore','encounterStore','offlineRegisterStore', 'resourceStore', 'visitStore'],
-    launch: function () {
-        Ext.create('mUserStories.view.loginScreen');
+Ext.define('mUserStories.model.visitModel', {
+    extend: 'Ext.data.Model',
+    config: {
+        fields: [{
+            name: 'vis_id',
+            type: 'string'
+        }, {
+            name: 'vis_text',
+            type: 'string'
+
+        }, {
+            name: 'vis_det',
+            type: 'string'
+        }, {
+            name: 'vis_aud',
+            type: 'string'
+        }, {
+            name: 'vis_comp',
+            type: 'boolean'
+
+        }, {
+            name: 'vis_incl',
+            type: 'boolean'
+        }]
     }
-});
+})

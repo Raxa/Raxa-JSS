@@ -13,15 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
-Ext.application({
-    name: 'mUserStories',
-    controllers: ['basic'],
-    models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers','encounterModel', 'resourceModel', 'visitModel'],
-    stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore','offlineStore','encounterStore','offlineRegisterStore', 'resourceStore', 'visitStore'],
-    launch: function () {
-        Ext.create('mUserStories.view.loginScreen');
+Ext.define('mUserStories.store.visitStore', {
+    extend: 'Ext.data.Store',
+    config: {
+        model: 'mUserStories.model.visitModel',
+        id: 'visStore',
+        /*sorters: 'resourceName',
+        grouper: function (record) {
+            return record.get('resourceName')[0];
+        },*/
+        data: [{
+            vis_id: 'vis_ors',
+            vis_text: 'ORS',
+            vis_det: 'Administer Oral Rehydration Salts',
+            vis_aud: 'resources/ping.amr',
+            vis_comp: false,
+            vis_incl: true
+        }]
     }
-});
+})
