@@ -25,7 +25,7 @@ var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
 var resourceUuid = [['concept','height','HEIGHT (CM)'],['concept','weight','WEIGHT (KG)'],['concept','bmi','BODY MASS INDEX'],['concept', 'regfee','Registration Fee'],
 ['form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms'],['encountertype', 'reg','REGISTRATION - New registration'],['encountertype', 'screener','SCREENER - encountered when patient screened'],
-['location', 'screener','Screener Registration Disk - registration desk in a screener module'],['location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor']];
+['location', 'screener','Screener Registration Disk - registration desk in a screener module'],['location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor'],['pharmacy','encountertype','PHARMACY - encounter for pharmacy']];
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
@@ -247,7 +247,7 @@ var Util = {
         });
     },
     
-    getProviderUuid : function(uuid) {
+    getProviderUuid : function(uuid,controller,patient,encountertype,location) {
         //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
         Ext.Ajax.request({
             url : HOST+'/ws/rest/v1/provider/'+uuid,  //'/ws/rest/v1/concept?q=height',
@@ -259,12 +259,8 @@ var Util = {
             },
             success: function (response) {
                 var x = "person not exits"
-                if(console.log(JSON.parse(response.responseText).person.uuid) != null){
-                    return JSON.parse(response.responseText).person.uuid
-                }
-                else{
-                    return x
-                }
+                //return JSON.parse(response.responseText).person.uuid
+                controller.sendEncounterData(patient,encountertype,location,JSON.parse(response.responseText).person.uuid)
             }
         });
     }

@@ -353,25 +353,7 @@ Ext.define("Screener.controller.Application", {
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
-        this.getProviderUuid(provider,patient)
-    },
-    
-    getProviderUuid : function(uuid,patient) {
-        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
-        Ext.Ajax.request({
-            scope: this,
-            url : HOST+'/ws/rest/v1/provider/'+uuid,  //'/ws/rest/v1/concept?q=height',
-            method: 'GET',
-            disableCaching: false,
-            headers: Util.getBasicAuthHeaders(),
-            failure: function (response) {
-                console.log('GET failed with response status: '+ response.status); // + response.status);
-            },
-            success: function (response) {
-                console.log(JSON.parse(response.responseText).person.uuid)
-                this.sendEncounterData(patient,localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation,JSON.parse(response.responseText).person.uuid)
-            }
-        });
+        Util.getProviderUuid(provider,this.getApplication('Screener').getController('Application'),patient,localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation)
     },
     
     //opens the current doctor's waiting list

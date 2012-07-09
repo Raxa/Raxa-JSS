@@ -6,7 +6,7 @@ Ext.define('RaxaEmr.view.Login', {
         id: 'halo',
         items: [{
             xtype: 'topbar',
-            docked: 'top',
+            docked: 'top'
         }, {
             xtype: 'toolbar',
             docked: 'top',
@@ -33,6 +33,7 @@ Ext.define('RaxaEmr.view.Login', {
                                     name: 'hostField',
                                     listeners: {
                                         blur: function (field, event, options) {
+                                         //   Startup.getResourceUuid();
                                             HOST = field.getValue();
                                             localStorage.setItem("host", HOST);
                                         }

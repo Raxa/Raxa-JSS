@@ -173,7 +173,6 @@ var Startup = {
                         callback(views);
                     }
                 }
-
             });
         }
     }
