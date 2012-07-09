@@ -264,6 +264,6 @@ if (localStorage.basicUuidform == undefined) {
     var basicUuidform = Util.getAttributeFromREST('form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms');
 }
 if(localStorage.prescriptionUuidencountertype == undefined){ 
-	var prescriptionUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescription','PRESCRIPTION - Patient receives a drug prescription.');
+	var prescriptionUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescription', 'PRESCRIPTION - Prescription encounter');
 }
 

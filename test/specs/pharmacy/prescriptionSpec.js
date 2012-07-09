@@ -69,4 +69,46 @@ describe("prescription", function () {
         expect(Ext.getCmp('prescriptionPatientAge').getValue()).toEqual('37')
         expect(Ext.getCmp('prescriptionPatientGender').getValue()).toEqual("M")
     });
+    it("todays patient list grid store should load", function () {
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+            var response = {
+                responseText: "{\"uuid\":\"6a37868d-b6e2-4f3f-a6c2-edb62bc4d9d6\",\"name\":null,\"description\":null,\"searchQuery\":\"?limit\u003d25\u0026startDate\u003d2012-7-9\u0026start\u003d0\u0026page\u003d1\u0026endDate\u003d2012-7-9\u0026_dc\u003d1341814872902\u0026encounterType\u003d2e2f8f17-b209-4689-b7cf-2135af2a7973\",\"patients\":[{\"uuid\":\"7238bcc8-cd20-434d-9935-54b8111ce72b\",\"display\":\"piyush dane\",\"gender\":\"M\",\"age\":19,\"encounters\":[{\"uuid\":\"3a6e20fe-0dce-403e-8026-d2df9a4ec227\",\"display\":\"PRESCRIPTION - 2012-07-09 00:00:00.0\",\"encounterType\":\"2e2f8f17-b209-4689-b7cf-2135af2a7973\",\"encounterDatetime\":\"2012-07-09T00:00:00.000+0000\",\"provider\":\"9a5f309b-7361-42e4-aeab-5db2ffb795c5\",\"obs\":[]}]}],\"resourceVersion\":\"1.0\"}",
+                status: 201
+
+            }
+            request.success = 'true';
+            request.callback(null, true, response);
+            expect(request.method).toEqual("GET")
+        })
+        // function used in controller to searcb patients
+        ctlr.getTodayPatients();
+       
+        //checks whether the patient are load in the store ofh grid
+        expect(Ext.getCmp('todayPatientGrid').getStore().getAt(0).getData().age).toEqual(19);
+        expect(Ext.getCmp('todayPatientGrid').getStore().getAt(0).getData().display).toEqual("piyush dane");
+        expect(Ext.getCmp('todayPatientGrid').getStore().getAt(0).getData().gender).toEqual("M");
+        expect(Ext.getCmp('todayPatientGrid').getStore().getAt(0).getData().uuid).toEqual("7238bcc8-cd20-434d-9935-54b8111ce72b");
+        expect(Ext.getCmp('todayPatientGrid').getStore().getAt(0).getData().encounters[0].uuid).toEqual("3a6e20fe-0dce-403e-8026-d2df9a4ec227");
+    });
+    it("1 week patient list grid store should load", function () {
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+            var response = {
+                responseText: "{\"uuid\":\"6a37868d-b6e2-4f3f-a6c2-edb62bc4d9d6\",\"name\":null,\"description\":null,\"searchQuery\":\"?limit\u003d25\u0026startDate\u003d2012-7-9\u0026start\u003d0\u0026page\u003d1\u0026endDate\u003d2012-7-9\u0026_dc\u003d1341814872902\u0026encounterType\u003d2e2f8f17-b209-4689-b7cf-2135af2a7973\",\"patients\":[{\"uuid\":\"7238bcc8-cd20-434d-9935-54b8111ce72b\",\"display\":\"piyush dane\",\"gender\":\"M\",\"age\":19,\"encounters\":[{\"uuid\":\"3a6e20fe-0dce-403e-8026-d2df9a4ec227\",\"display\":\"PRESCRIPTION - 2012-07-09 00:00:00.0\",\"encounterType\":\"2e2f8f17-b209-4689-b7cf-2135af2a7973\",\"encounterDatetime\":\"2012-07-09T00:00:00.000+0000\",\"provider\":\"9a5f309b-7361-42e4-aeab-5db2ffb795c5\",\"obs\":[]}]}],\"resourceVersion\":\"1.0\"}",
+                status: 201
+
+            }
+            request.success = 'true';
+            request.callback(null, true, response);
+            expect(request.method).toEqual("GET")
+        })
+        // function used in controller to get patients list
+        ctlr.getSevenDaysPatients();
+       
+        //checks whether the patients are load in the store of grid
+        expect(Ext.getCmp('sevenDaysPatientGrid').getStore().getAt(0).getData().age).toEqual(19);
+        expect(Ext.getCmp('sevenDaysPatientGrid').getStore().getAt(0).getData().display).toEqual("piyush dane");
+        expect(Ext.getCmp('sevenDaysPatientGrid').getStore().getAt(0).getData().gender).toEqual("M");
+        expect(Ext.getCmp('sevenDaysPatientGrid').getStore().getAt(0).getData().uuid).toEqual("7238bcc8-cd20-434d-9935-54b8111ce72b");
+        expect(Ext.getCmp('sevenDaysPatientGrid').getStore().getAt(0).getData().encounters[0].uuid).toEqual("3a6e20fe-0dce-403e-8026-d2df9a4ec227");
+    });
 })
