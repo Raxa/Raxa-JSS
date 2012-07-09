@@ -45,7 +45,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 editable: false,
                 store: new Ext.data.Store({
                     fields:['value'],
-                    data: [{value: '250 mg'},{value: '500 mg'},{value: '600 mg'},{value: '800 mg'}]
+                    data: [{value: '250'},{value: '500'},{value: '600'},{value: '800'}]
                 }),
                 displayField: 'value',
                 forceSelection: true
