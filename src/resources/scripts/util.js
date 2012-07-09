@@ -15,10 +15,8 @@
  *
  * This class provides util methods that are shared by the core, apps and modules
  */
-if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxajss.jelastic.servint.net';
-} else HOST = localStorage.getItem("host");
 
+var HOST = 'http://raxajss.jelastic.servint.net';
 var username;
 var password;
 var timeoutLimit = 20000;
@@ -120,40 +118,25 @@ var Util = {
     },
 
     /**
-     * Gets the Login State. If returns 0, then user is Logged Out. For any other value, the user is logged in.
-     */
-    getLoginState: function () {
-        var loginState = Ext.getCmp('mainView').getActiveItem()._activeItem;
-        if (loginState === 0) {
-            Util.logoutUser();
-        }
-        return loginState;
-    },
-
-    /**
      * Saves the Basic Authentication header to Localstorage
      * Verifies if username + password is valid on server and saves as Base4 encoded string of user:pass
      */
     saveBasicAuthHeader: function (username, password) {
-        Util.logoutUser(); // Delete existing logged in sessions
-        // Check login and save to localStorage if valid
-        Ext.Ajax.request({
-            url: HOST + '/ws/rest/v1/session',
-            withCredentials: true,
-            useDefaultXhrHeader: false,
-            headers: {
-                "Accept": "application/json",
-                "Authorization": "Basic " + window.btoa(username + ":" + password)
-            },
-            success: function (response) {
-                var authenticated = Ext.decode(response.responseText).authenticated;
-                if (authenticated) {
+        Util.logoutUser(); //Delete existing logged in sessions
+        //Check login and save to localStorage if valid
+        var xmlReq = new XMLHttpRequest();
+        xmlReq.open("GET", HOST + '/ws/rest/v1/session', false);
+        xmlReq.setRequestHeader("Accept", "application/json");
+        xmlReq.setRequestHeader("Authorization", "Basic " + window.btoa(username + ":" + password));
+        xmlReq.send();
+        if (xmlReq.status = "200") {
+        var authenticated = Ext.decode(xmlReq.responseText).authenticated;
+        if (authenticated) {
                     localStorage.setItem("basicAuthHeader", "Basic " + window.btoa(username + ":" + password));
                 } else {
                     localStorage.removeItem("basicAuthHeader");
                 }
-            }
-        });
+        }            
     },
 
     /**
