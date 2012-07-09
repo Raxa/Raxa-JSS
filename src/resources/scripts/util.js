@@ -38,7 +38,9 @@ var BMI_HEIGHT_MAX = 300;
 var BMI_HEIGHT_MIN = 0;
 var BMI_WEIGHT_MAX = 800;
 var BMI_WEIGHT_MIN = 0;
-
+var KEY= {
+    ENTER : 13
+};
 // Enum for Registration Module Page Numbers
 var REG_PAGES = {
     HOME: {

@@ -13,19 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.resourceDetail', {
-    extend: 'Ext.Panel',
+Ext.define('mUserStories.model.visitModel', {
+    extend: 'Ext.data.Model',
     config: {
-        height: '100%',
-        ui: 'neutral',
-        items: [{
-            xclass: 'mUserStories.view.titlebar'
+        fields: [{
+            name: 'vis_id',
+            type: 'string'
         }, {
-            xclass: 'mUserStories.view.userToolbar'
+            name: 'vis_text',
+            type: 'string'
+
         }, {
-            xtype: 'container',
-            id: 'resource_label',
-            centered: true
+            name: 'vis_det',
+            type: 'string'
+        }, {
+            name: 'vis_aud',
+            type: 'string'
+        }, {
+            name: 'vis_comp',
+            type: 'boolean'
+
+        }, {
+            name: 'vis_incl',
+            type: 'boolean'
         }]
     }
 })

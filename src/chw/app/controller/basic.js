@@ -19,151 +19,126 @@ Ext.define('mUserStories.controller.basic', {
     views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling'],
     config: {
         refs: {
-            add_app: '#add_app',
-            add_reg: '#add_reg',
-            add_rem: '#add_rem',
-            audioButton: '#audioButton',
-            back_add: '#back_add',
-            back_add_app: '#back_add_app',
-            back_add_reg: '#back_add_reg',
-            back_add_rem: '#back_add_rem',
-            back_det: '#back_det',
-            back_inb: '#back_inb',
-            back_res: '#back_res',
-            back_res_det: '#back_res_det',
-            cancelButton: '#cancelButton',
-            syncButton: '#syncButton',
-            inboxButton: '#inboxButton',
-            logoutButton: '#logoutButton',
-            logoutButton_vc: '#logoutButton_vc',
-            menuButton: '#menuButton',
-            notButton: '#notButton',
-            okButton: '#okButton',
-            photoButton: '#photoButton',
-            resourcesButton: '#resourcesButton',
-            schButton: '#schButton',
-            videoButton: '#videoButton'
+            addApp: '#add_app',
+            addReg: '#add_reg',
+            addRem: '#add_rem',
+            back: '#backButton',
+            cancel: '#cancelButton',
+            sync: '#syncButton',
+            inbox: '#inboxButton',
+            logout: '#logoutButton',
+            logout_vc: '#logoutButton_vc',
+            menu: '#menuButton',
+            narwhal: '#narwhal',
+            not_vc: '#notButton',
+            ok: '#okButton',
+            resources: '#resourcesButton',
+            sch_vc: '#schButton',
+            vis_ors: '#vis_ors',
+            vis_rdt: '#vis_rdt',
+            vis_vita: '#vis_vita',
+            vis_alb: '#vis_alb',
+            vis_blood: '#vis_blood'
         },
         control: {
-            add_app: {
+            addApp: {
                 tap: function () {
                     this.doAdd('app', true)
                 }
             },
-            add_reg: {
+            addReg: {
                 tap: function () {
                     this.doAdd('reg', true)
                 }
             },
-            add_rem: {
+            addRem: {
                 tap: function () {
                     this.doAdd('rem', true)
                 }
             },
-            audioButton: {
+            back: {
                 tap: function () {
-                    this.doResources('audio')
+                    this.doBack()
                 }
             },
-
-            back_add: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_add_app: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_add_reg: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_add_rem: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_det: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_inb: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_res: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_res_det: {
-                tap: function () {
-                    this.doBack('res')
-                }
-            },
-            cancelButton: {
+            cancel: {
                 tap: function () {
                     this.doOption(false)
                 }
             },
-            syncButton: {
+            sync: {
                 tap: function () {
                     this.doToolbar('sync')
                 }
             },
-            inboxButton: {
+            inbox: {
                 tap: function () {
                     this.doToolbar('inbox')
                 }
             },
-            logoutButton: {
+            logout: {
                 tap: function () {
                     this.doExit()
                 }
             },
-            logoutButton_vc: {
+            logout_vc: {
                 tap: function () {
                     this.doExit()
                 }
             },
-            menuButton: {
+            menu: {
                 tap: function () {
                     this.doToolbar('menu')
                 }
             },
-            notButton: {
+            not_vc: {
                 tap: function () {
                     this.doToolbar('not')
                 }
             },
-            okButton: {
+            ok: {
                 tap: function () {
                     this.doOption(true)
                 }
             },
-            photoButton: {
+            photo: {
                 tap: function () {
                     this.doResources('photo')
                 }
             },
-            resourcesButton: {
+            resources: {
                 tap: function () {
                     this.doToolbar('resources')
                 }
             },
-            schButton: {
+            sch_vc: {
                 tap: function () {
                     this.doToolbar('sch')
                 }
             },
-            videoButton: {
+            vis_ors: {
                 tap: function () {
-                    this.doResources('video')
+                    this.doVis('ors')
+                }
+            },
+            vis_rdt: {
+                tap: function () {
+                    this.doVis('rdt')
+                }
+            },
+            vis_vita: {
+                tap: function () {
+                    this.doVis('vita')
+                }
+            },
+            vis_alb: {
+                tap: function () {
+                    this.doVis('alb')
+                }
+            },
+            vis_blood: {
+                tap: function () {
+                    this.doVis('blood')
                 }
             }
         }
@@ -214,11 +189,11 @@ Ext.define('mUserStories.controller.basic', {
     doAdd: function (step, arg) {
         if (arg) {
             if (step === 'app') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_APP)
+                this.toPage(PAGES.ADD_APP)
             } else if (step === 'reg') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REG)
+                this.toPage(PAGES.ADD_REG)
             } else if (step === 'rem') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REM)
+                this.toPage(PAGES.ADD_REM)
             } else if (step === 'register') {
                 var fname = Ext.getCmp('first_reg').getValue();
                 var lname = Ext.getCmp('last_reg').getValue();
@@ -265,7 +240,7 @@ Ext.define('mUserStories.controller.basic', {
         } else {
             // TODO: doReturn()
             this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+            this.toPage(PAGES.PATIENT_LIST)
         }
     },
     // allow chw to check in
@@ -287,7 +262,7 @@ Ext.define('mUserStories.controller.basic', {
                 // download all data into local storage
                 this.doDownload();
                 // continue to the next screen
-                Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+                this.toPage(PAGES.PATIENT_LIST)
             }
         } else {
             // exit the program
@@ -314,18 +289,18 @@ Ext.define('mUserStories.controller.basic', {
     // manage resources pages
     doResources: function (arg) {
         if (arg === 'video') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.VIDEO)
+            this.toPage(PAGES.VIDEO)
         } else if (arg === 'audio') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.AUDIO)
+            this.toPage(PAGES.AUDIO)
         } else if (arg === 'photo') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PHOTO)
+            this.toPage(PAGES.PHOTO)
         }
     },
     
     // manage navigation based on lower toolbar
     doToolbar: function (arg) {
         if (arg === 'menu') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
+            this.toPage(PAGES.ADD)
         } else if (arg === 'sync') {
             Ext.Msg.confirm('', 'Sync all information?', function (resp) {
                 if (resp === 'yes') {
@@ -356,20 +331,59 @@ Ext.define('mUserStories.controller.basic', {
                 }
             },this)
         } else if (arg === 'inbox') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_CHW)
+            this.toPage(PAGES.INBOX_CHW)
         } else if (arg === 'resources') {
             this.getResources();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
+            this.toPage(PAGES.RESOURCES)
         } else if (arg === 'not') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
+            this.toPage(PAGES.INBOX_VC)
         } else if (arg === 'sch') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.SCHEDULING)
+            this.toPage(PAGES.SCHEDULING)
         }
+    },
+    doVis: function (arg) {
+        var reading = '';
+        var title = '';
+        var detail = '';
+        if (arg === 'ors') {
+            title = 'ORS';
+            detail = 'Adminster Oral Rehydration Salts'
+        } else if (arg === 'rdt') {
+            title = 'RDT';
+            detail = 'Adminster Rapid Diagnostic Test for malaria'
+        } else if (arg === 'vita') {
+            title = 'Vitamin A';
+            detail = 'Check if Vitamin A has been administered.'
+        } else if (arg === 'alb') {
+            title = 'Albendazole';
+            detail = 'Check if Albendazole has been administered'
+        } else if (arg === 'blood') {
+            title = 'Blood sample';
+            detail = 'Take a bloodsample for CBC'
+        }
+        // TODO: play recording
+        Ext.getCmp('ping').play();
+        // confirm completion
+        Ext.Msg.confirm('Task', detail, function (resp) {
+            if (resp === 'yes') {
+                // TODO: record that the task has been completed
+                // change button to demonstrate this
+                Ext.getCmp('vis_'+arg).setUi('decline');
+                Ext.getCmp('vis_'+arg).setDisabled(true)
+            }
+        })
+        // TODO: when all buttons are clicked, notify of completion
     },
     /* HELPER FUNCTIONS */
     // deal with backbutton
-    doBack: function (arg) {
-        // TODO: Best logic for returning to previous page - doReturn()
+    doBack: function () {
+        var active = Ext.getCmp('viewPort').getActiveItem();
+        if (active.id === 'ext-formpanel-5' || active === 'ext-panel-6' || active === 'ext-panel-7') {
+            this.toPage(PAGES.ADD)
+        } else {
+            this.toPage(PAGES.PATIENT_LIST)
+        }
+        /*/ TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
         if (arg === 'list') {
             this.doDownload();
@@ -377,8 +391,9 @@ Ext.define('mUserStories.controller.basic', {
         } else if (arg === 'add') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
         } else if (arg === 'res') {
+            this.getResources();
             Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
-        }
+        }*/
     },
     // Download patient with details
     doDownload: function () {
@@ -427,9 +442,11 @@ Ext.define('mUserStories.controller.basic', {
     doExit: function () {
         // TODO: make sure all information is uploaded
         // TODO: delete/save necessary information
-        Ext.getCmp('location').reset();
+        // Ext.getCmp('location').reset();
         // return to login screen
-        Ext.getCmp('viewPort').setActiveItem(PAGES.LOGIN_SCREEN)
+        USER.name = '';
+        USER.uuid = '';
+        this.toPage(PAGES.LOGIN_SCREEN)
     },
     // distinguish between ok and cancel
     doOption: function (arg) {
@@ -510,9 +527,11 @@ Ext.define('mUserStories.controller.basic', {
             // continue to next page with proper settings
             // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+            this.toPage(PAGES.PATIENT_LIST);
+            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
+            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (USER.type === 'VC') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
+            this.toPage(PAGES.INBOX_VC)
         }
     },
     /* this funtions makes a post call to create the patient with three parameter which will sent as person, identifiertype 
@@ -541,7 +560,7 @@ Ext.define('mUserStories.controller.basic', {
         Ext.getCmp('ext-formpanel-5').reset();
         
         this.doDownload();
-        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+        this.toPage(PAGES.PATIENT_LIST)
     },
     
     sendEncounterData:function(Uuid){
@@ -635,5 +654,56 @@ Ext.define('mUserStories.controller.basic', {
                 }
             });
         } else {}
+    },
+    toPage : function (arg) {
+        var t = Ext.getCmp('narwhal');
+        var b = Ext.getCmp('backButton');
+        console.log(t,b)
+        if (arg === PAGES.LOGIN_SCREEN) {
+            t.setTitle('Community Health Worker Module');
+            b.setHidden(true)
+        } else if (arg === PAGES.PATIENT_LIST) {
+            t.setTitle('Patient List');
+            b.setHidden(true);
+        } else if (arg === PAGES.PATIENT_DET) {
+            // title.setTitle('Patient Details');
+            b.setHidden(false)
+        } else if (arg === PAGES.ADD) {
+            t.setTitle('Add Options');
+            b.setHidden(false)
+        }
+        else if (arg === PAGES.ADD_REG) {
+            t.setTitle('Add Patient');
+            b.setHidden(false)
+        }
+        else if (arg === PAGES.ADD_REM) {
+            t.setTitle('Add Reminder');
+            b.setHidden(false)
+        }
+        else if (arg === PAGES.ADD_APP) {
+            t.setTitle('Add Appointment');
+            b.setHidden(false)
+        }
+        else if (arg === PAGES.INBOX_CHW) {
+            t.setTitle('Inbox');
+            b.setHidden(false)
+        }
+        else if (arg === PAGES.RESOURCES) {
+            t.setTitle('Resources');
+            b.setHidden(false)
+        }
+        else if (arg === PAGES.RESOURCE_DET) {
+            // title.setTitle('Patient Details');
+            b.setHidden(false)
+        }
+        else if (arg === PAGES.INBOX_VC) {
+            t.setTitle('Inbox');
+            b.setHidden(true)
+        }
+        else if (arg === PAGES.SCHEDULING) {
+            t.setTitle('Scheduling');
+            b.setHidden(true)
+        }
+        Ext.getCmp('viewPort').setActiveItem(arg);
     }
 })

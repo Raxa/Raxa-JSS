@@ -19,19 +19,11 @@ Ext.define('mUserStories.view.resources', {
         height: '100%',
         ui: 'neutral',
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            title: 'Resources',
-            items: [{
-                xtype: 'button',
-                id: 'back_res',
-                ui: 'back',
-                text: 'Back'
-            }]
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
-            width: Ext.os.deviceType === 'Phone' ? null : '80%',
+            width: Ext.os.deviceType === 'Phone' ? null : '100%',
             height: Ext.os.deviceType === 'Phone' ? null : '100%',
             xtype: 'list',
             ui: 'round',

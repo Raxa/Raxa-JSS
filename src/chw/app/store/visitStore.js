@@ -13,31 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.store.resourceStore', {
+Ext.define('mUserStories.store.visitStore', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'mUserStories.model.resourceModel',
-        id: 'resourceStore',
-        sorters: 'resourceName',
+        model: 'mUserStories.model.visitModel',
+        id: 'visStore',
+        /*sorters: 'resourceName',
         grouper: function (record) {
             return record.get('resourceName')[0];
-        },
+        },*/
         data: [{
-            resourceType: 'photo',
-            resourceName: 'Sharing',
-            resourceLocation: 'sharing'
-        }, {
-            resourceType: 'photo',
-            resourceName: 'Spider Bites',
-            resourceLocation: 'spider'
-        }, {
-            resourceType: 'photo',
-            resourceName: 'Wash Your Hands',
-            resourceLocation: 'freeride'
-        }, {
-            resourceType: 'photo',
-            resourceName: 'Cover Your Cough',
-            resourceLocation: 'cough'
+            vis_id: 'vis_ors',
+            vis_text: 'ORS',
+            vis_det: 'Administer Oral Rehydration Salts',
+            vis_aud: 'resources/ping.amr',
+            vis_comp: false,
+            vis_incl: true
         }]
     }
 })

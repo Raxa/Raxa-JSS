@@ -19,9 +19,7 @@ Ext.define('mUserStories.view.vcNotifications', {
         height: '100%',
         ui: 'neutral',
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            title: 'Notifications'
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xclass: 'mUserStories.view.vcToolbar'
         }, {

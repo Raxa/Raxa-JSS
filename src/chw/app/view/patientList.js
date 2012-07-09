@@ -19,9 +19,7 @@ Ext.define('mUserStories.view.patientList', {
         height: '100%',
         ui: 'neutral',
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            title: 'Patient List'
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
@@ -33,7 +31,7 @@ Ext.define('mUserStories.view.patientList', {
                 grouped: true,
                 pinHeaders: false,
                 id: 'patientlistid',
-                width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                width: Ext.os.deviceType === 'Phone' ? null : '100%',
                 height: Ext.os.deviceType === 'Phone' ? null : '100%',
                 centered: true,
                 indexBar: true,
@@ -51,7 +49,7 @@ Ext.define('mUserStories.view.patientList', {
                 grouped: true,
                 pinHeaders: false,
                 id: 'patientcurrid',
-                width: Ext.os.deviceType === 'Phone' ? null : '80%',
+                width: Ext.os.deviceType === 'Phone' ? null : '100%',
                 height: Ext.os.deviceType === 'Phone' ? null : '100%',
                 centered: true,
                 itemTpl: ['<div>{familyName}, {givenName}</div>'],

@@ -20,15 +20,7 @@ Ext.define('mUserStories.view.addAppointment', {
         ui: 'neutral',
         scrollable: true,
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            title: 'Add Appointment',
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                id: 'back_add_app'
-            }]
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

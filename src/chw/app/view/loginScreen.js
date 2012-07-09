@@ -17,9 +17,7 @@ Ext.define('mUserStories.view.loginScreen', {
     extend: 'Ext.Panel',
     config: {
         items: [{
-            xtype: 'titlebar',
-            docked: 'top',
-            title: 'Mobile User Stories'
+            xclass: 'mUserStories.view.titlebar'
         }, {
             xtype: 'container',
             centered: true,

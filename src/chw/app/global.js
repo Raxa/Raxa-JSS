@@ -19,18 +19,17 @@ var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
 var MRSHOST = 'http://192.168.1.6:8080/openmrs';
 var PAGES = {
     LOGIN_SCREEN: 0,
-    CONFIRM_LOC: 1,
-    PATIENT_LIST: 2,
-    PATIENT_DET: 3,
-    ADD: 4,
-    ADD_REG: 5,
-    ADD_REM: 6,
-    ADD_APP: 7,
-    INBOX_CHW: 8,
-    RESOURCES: 9,
-    RESOURCE_DET: 10,
-    INBOX_VC: 11,
-    SCHEDULING: 12
+    PATIENT_LIST: 1,
+    PATIENT_DET: 2,
+    ADD: 3,
+    ADD_REG: 4,
+    ADD_REM: 5,
+    ADD_APP: 6,
+    INBOX_CHW: 7,
+    RESOURCES: 8,
+    RESOURCE_DET: 9,
+    INBOX_VC: 10,
+    SCHEDULING: 11
 };
 var USER = new Object();
 USER.name = '';
@@ -41,19 +40,26 @@ var LOCATION = "";
 var CONNECTED = true;   //Variable for connectivity status
 var helper = {
     listDisclose: function (record) {
-        Ext.getCmp('title_det').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
+        console.log(Ext.getCmp('narwhal'));
+        Ext.getCmp('narwhal').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
         // navigate to details for specific patient and populate fields
         Ext.getCmp('first_det').setValue(record.get('givenName'));
         Ext.getCmp('last_det').setValue(record.get('familyName'));
         Ext.getCmp('address_det').setValue(record.get('cityVillage'));
         Ext.getCmp('gender_det').setValue(record.get('gender'));
-        Ext.getCmp('bday_det').setValue(record.get('birthdate'))
+        Ext.getCmp('bday_det').setValue(record.get('birthdate'));
         // change to next page
+        Ext.getCmp('backButton').setHidden(false);
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
     },
     discloseResource: function (record) {
-        Ext.getCmp('resource_title').setTitle(record.get('resourceName'));
-        Ext.getCmp('resource_label').setHtml('<img src="resources/'+record.get('resourceLocation')+'.png" height="100%" width="100%"/>')
+        console.log(Ext.getCmp('narwhal'));
+        Ext.getCmp('narwhal').setTitle(record.get('resourceName'));
+        if (record.get('resourceType')==='photo') {
+            var located = 'resources/' + record.get('resourceLocation') + '.png'
+            Ext.getCmp('resource_label').setHtml('<img src="'+located+'" height="100%" width="100%"/>')
+        }
+        Ext.getCmp('backButton').setHidden(false);
         Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCE_DET)
     }
 }
