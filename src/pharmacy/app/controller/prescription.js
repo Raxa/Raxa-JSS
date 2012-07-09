@@ -116,6 +116,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     savePerson: function () {
+        if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid()){
         var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
             addresses: [{
@@ -154,6 +155,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp('addPatient').getForm().reset();
         //I made this funtion return this store because i needed this in jasmine unit test
         return store;
+        }
+        else{
+            Ext.Msg.alert('fields invalid')
+        }
     },
 
     getidentifierstype: function (personUuid) {
