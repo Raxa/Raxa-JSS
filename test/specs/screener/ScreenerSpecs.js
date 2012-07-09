@@ -130,23 +130,29 @@ describe("pharmacy", function () {
     it("makes the post call", function () {
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
-                responseText: "{\"uuid\":\"503bb47f-8e06-458c-b492-31ed17631892\",\"display\":\"STAVUDINE LAMIVUDINE AND NEVIRAPINE\",\"orderType\":{\"uuid\":\"131168f4-15f5-102d-96e4-000c29c2a5d7\",\"display\":\"Drug Order - An order for a medication to be given to the patient\",\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/ordertype/131168f4-15f5-102d-96e4-000c29c2a5d7\",\"rel\":\"self\"}]},\"patient\":{\"uuid\":\"18bed512-be9b-11e1-ab94-0fb973140af6\",\"display\":\"Mr. John D Patient\",\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/person/18bed512-be9b-11e1-ab94-0fb973140af6\",\"rel\":\"self\"}]},\"concept\":{\"uuid\":\"18666ae0-be9b-11e1-ab94-0fb973140af6\",\"display\":\"STAVUDINE LAMIVUDINE AND NEVIRAPINE\",\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/concept/18666ae0-be9b-11e1-ab94-0fb973140af6\",\"rel\":\"self\"}]},\"instructions\":\"-\",\"startDate\":\"2012-06-28T11:03:18.000+0400\",\"autoExpireDate\":\"2012-07-05T00:00:00.000+0400\",\"encounter\":null,\"orderer\":null,\"accessionNumber\":null,\"discontinuedBy\":null,\"discontinuedDate\":null,\"discontinuedReason\":null,\"discontinuedReasonNonCoded\":null,\"dose\":250.0,\"units\":null,\"frequency\":\"ond\",\"prn\":false,\"complex\":false,\"quantity\":1,\"drug\":{\"uuid\":\"18a79728-be9b-11e1-ab94-0fb973140af6\",\"display\":\"Triomune-30 - \",\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/drug/18a79728-be9b-11e1-ab94-0fb973140af6\",\"rel\":\"self\"}]},\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/order/503bb47f-8e06-458c-b492-31ed17631892\",\"rel\":\"self\"},{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/order/503bb47f-8e06-458c-b492-31ed17631892?v=full\",\"rel\":\"full\"}],\"type\":\"drugorder\",\"resourceVersion\":\"1.8\"}",
+                responseText: "{\"uuid\":\"80dbc4ec-53c4-41ff-b784-3888c9005a6d\",\"display\":\"PRESCRIPTION 05/07/2012\",\"encounterDatetime\":\"2012-07-05T07:47:10.000+0400\",\"patient\":{\"uuid\":\"7bd18c77-4334-4bee-a65b-e29756c0d6e8\",\"display\":\"John Adams\",\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/person/7bd18c77-4334-4bee-a65b-e29756c0d6e8\",\"rel\":\"self\"}]},\"location\":null,\"form\":null,\"encounterType\":{\"uuid\":\"2e1df184-8cd5-4879-85b1-9d87e1ea5d77\",\"display\":\"PRESCRIPTION - Patient receives a drug prescription.\",\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/encountertype/2e1df184-8cd5-4879-85b1-9d87e1ea5d77\",\"rel\":\"self\"}]},\"provider\":null,\"obs\":[],\"orders\":[{\"uuid\":\"65bbb9ee-3e7c-4eb8-b5b1-57e36b263fc5\",\"display\":\"Triomune-30: 250.0 null\",\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/order/65bbb9ee-3e7c-4eb8-b5b1-57e36b263fc5\",\"rel\":\"self\"}],\"type\":\"drugorder\"}],\"voided\":false,\"links\":[{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/encounter/80dbc4ec-53c4-41ff-b784-3888c9005a6d\",\"rel\":\"self\"},{\"uri\":\"http://raxajss.jelastic.servint.net/ws/rest/v1/encounter/80dbc4ec-53c4-41ff-b784-3888c9005a6d?v=full\",\"rel\":\"full\"}],\"resourceVersion\":\"1.8\"}",
                 status: 200
             }
             request.success = true;
             request.callback(null, true, response)
-            expect(request.jsonData.concept).toEqual("18666ae0-be9b-11e1-ab94-0fb973140af6")
-            expect(request.jsonData.drug).toEqual("18a79728-be9b-11e1-ab94-0fb973140af6")
-            expect(request.jsonData.patient).toEqual("18bed512-be9b-11e1-ab94-0fb973140af6")
-            expect(request.jsonData.instructions).toEqual("after lunch")
+            expect(request.jsonData.encountertype).toEqual("2e1df184-8cd5-4879-85b1-9d87e1ea5d77")
+            expect(request.jsonData.orders.concept).toEqual("18666ae0-be9b-11e1-ab94-0fb973140af6")
+            expect(request.jsonData.orders.drug).toEqual("18a79728-be9b-11e1-ab94-0fb973140af6")
+            expect(request.jsonData.orders.patient).toEqual("18bed512-be9b-11e1-ab94-0fb973140af6")
+            expect(request.jsonData.orders.instructions).toEqual("after lunch")
         })
-        var order = Ext.create('Screener.model.drugOrder', {
-            patient: '18bed512-be9b-11e1-ab94-0fb973140af6',
-            drug: '18a79728-be9b-11e1-ab94-0fb973140af6',
-            concept: '18666ae0-be9b-11e1-ab94-0fb973140af6',
-            instructions : 'after lunch'
+        var order = Ext.create('Screener.store.drugEncounter', {
+            patient:"7bd18c77-4334-4bee-a65b-e29756c0d6e8",
+            encounterType:"2e1df184-8cd5-4879-85b1-9d87e1ea5d77",
+            encounterDatetime:"2012-07-05T07:47:10Z",
+            orders:[{
+                patient:"7bd18c77-4334-4bee-a65b-e29756c0d6e8",
+                drug:"fcb49b42-c27e-11e1-9262-a5fbf9edb8d2",
+                instructions:"after lunch",
+                concept:"fc6f4854-c27e-11e1-9262-a5fbf9edb8d2"
+            }]
         })
-        orderstore = Ext.create('Screener.store.drugOrder')
+        orderstore = Ext.create('Screener.store.drugEncounter')
         orderstore.add(order)
         orderstore.sync()
     })
@@ -200,30 +206,61 @@ describe("DoctorList", function () {
         }
         expect(store).toBeTruthy()
         waitsFor(
-
-            function () {
-                return !store.isLoading();
-            }, "load never completed", timeout)
+        function () {
+            return !store.isLoading();
+        }, "load never completed", timeout)
     });
-  
+
     it("reading from Doctors store & comparing with REST result", function () {
         expect(store.getCount()).toBeGreaterThan(0);
         expect(store.getData().getAt(0).getData().uuid).not.toEqual(null);
     });
-    
-    it("returns values to the store on a ajax call", function (){                
+
+    it("returns values to the store on an ajax call", function () {
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
-                responseText: "{\"results\":[{\"uuid\":\"testuuid1\",\"display\":\"testdoc1\"}," +
-                "{\"uuid\":\"testuuid2\",\"display\":\"testdoc2\"}]}", 
+                responseText: "{\"results\":[{\"uuid\":\"testuuid1\",\"display\":\"testdoc1\"}," + "{\"uuid\":\"testuuid2\",\"display\":\"testdoc2\"}]}",
                 status: 200
             };
-            request.callback(null,true,response)  
+            request.callback(null, true, response)
         });
         store = Ext.create('Screener.store.Doctors');
         expect(store.getData().getAt(0).getData().uuid).toEqual("testuuid1");
         expect(store.getData().getAt(0).getData().display).toEqual("testdoc1");
         expect(store.getData().getAt(1).getData().uuid).toEqual("testuuid2");
         expect(store.getData().getAt(1).getData().display).toEqual("testdoc2");
-    })
+    });
+});
+
+describe("PatientSummary", function () {
+    var store = null;
+    var timeout = 10000;
+    beforeEach(function () {
+        Util.saveBasicAuthHeader("admin", "Hello123");
+        if (!store) {
+            store = Ext.create('Screener.store.PatientSummary');
+        }
+        expect(store).toBeTruthy()
+        waitsFor(
+
+        function () {
+            return !store.isLoading();
+        }, "load never completed", timeout)
+    });
+    it("returns value to the PatientSummary store on an ajax call", function () {
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+            var response = {
+                responseText: "{\"results\":[{\"uuid\": \"1\",\"display\": \"OPD 1/1/1\",\"encounterDatetime\": \"2009-09-28T19:03:12.000+0400\",\"patient\":{\"uuid\":\"2\",\"display\": \"ABC\",\"links\":[{\"uri\": \"restcallurl/person/2\",\"rel\": \"self\"}]},\"location\": null,\"form\": null,\"encounterType\":{\"uuid\": \"2\",\"display\": \"OPD - Test\",\"links\":[{\"uri\": \"restcallurl/encountertype/2\",\"rel\": \"self\"}]},\"provider\": null,\"obs\":[],\"orders\":[],\"voided\": false,\"links\":[{\"uri\": \"restcallurl/encounter/1\",\"rel\": \"self\"},{\"uri\": \"restcallurl/encounter/1?v=full\",\"rel\": \"full\"}],\"resourceVersion\": \"1.8\"}]}",
+                status: 200
+            }
+            request.success = 'true';
+            request.callback(null, true, response)
+        });
+        store = Ext.create('Screener.store.PatientSummary');
+        store.load({
+            callback: function (records, operation, success) {
+                expect(store.getData().getAt(0).raw.encounterDatetime).toEqual("2009-09-28T19:03:12.000+0400");
+            }
+        });
+    });
 });
