@@ -34,7 +34,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         id: 'drugASearchGrid',
                         height: 380,
                         styleHtmlContent: false,
-                        width: 780,
+                        width: 770,
                         autoScroll: true,
                         columnLines: true,
                         x: 190,
@@ -46,19 +46,21 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         columns: [
                         {
                             xtype: 'gridcolumn',
-                            width: 117,
+                            width: 220,
                             text: 'Name Of drug',
-                            dataIndex: 'drugname'
+                            dataIndex: 'drugname',
+                            resizable: false
                         },
                         {
                             xtype: 'gridcolumn',
-                            width: 67,
+                            width: 90,
                             text: 'Dosage',
-                            dataIndex: 'dosage'
+                            dataIndex: 'dosage',
+                            resizable: false
                         },
                         {
                             xtype: 'gridcolumn',
-                            width: 73,
+                            width: 93,
                             text: 'Duration',
                             // gets the duration using start and end date of prescription
                             renderer: function(value, metadata, record){
@@ -67,22 +69,27 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                                 temp = temp/(86400000)
                                 temp = parseInt(temp) + 1
                                 return temp + ' days'
-                            }
+                            },
+                            resizable: false
                         },
                         {
                             xtype: 'numbercolumn',
-                            width: 38,
+                            width: 65,
                             text: 'Qty',
-                            dataIndex: 'quantity'
+                            dataIndex: 'quantity',
+                            resizable: false
                         },
                         {
                             xtype: 'numbercolumn',
-                            text: 'Unit Price'
+                            text: 'Unit Price',
+                            width: 130,
+                            resizable: false
                         },
                         {
                             xtype: 'numbercolumn',
-                            width: 103,
-                            text: 'Item Price'
+                            width: 170,
+                            text: 'Item Price',
+                            resizable: false
                         }
                         ]
                     },
@@ -125,7 +132,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     },{
                         xtype: 'button',
                         width: 60,
-                        text: 'Print2',
+                        text: 'Print',
+                        action: 'print2',
                         x: 460,
                         y: 580
                     }]

@@ -1,31 +1,10 @@
-var states = Ext.create('Ext.data.Store', {
-    fields: ['abbr', 'name'],
-    data : [
-    {
-        "abbr":"AL", 
-        "name":"Alabama"
-    },
-
-    {
-        "abbr":"AK", 
-        "name":"Alaska"
-    },
-
-    {
-        "abbr":"AZ", 
-        "name":"Arizona"
-    }
-    //...
-    ]
-});
-
 Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.prescribedDrugs',
     id: 'prescribedDrugs',
     height: 300,
     styleHtmlContent: false,
-    width: 780,
+    width: 777,
     store: 'orderStore',
     autoScroll: true,
     selType: 'rowmodel',
@@ -41,41 +20,61 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         this.columns = [
         {
             xtype: 'gridcolumn',
-            width: 117,
+            width: 200,
             dataIndex: 'drugname',
             text: 'Name Of drug',
+            resizable: false,
             editor: {
                 xtype: 'combobox',
                 allowBlank: false,
+                editable: false,
                 store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
-                displayField: 'text'       
+                displayField: 'text',
+                forceSelection: true     
             }
         },
         {
             xtype: 'gridcolumn',
-            width: 67,
+            width: 85,
             dataIndex: 'dosage',
             text: 'Dosage',
+            resizable: false,
             editor: {
-                xtype: 'textfield',
-                allowBlank: false
+                xtype: 'combobox',
+                allowBlank: false,
+                editable: false,
+                store: new Ext.data.Store({
+                    fields:['value'],
+                    data: [{value: '250 mg'},{value: '500 mg'},{value: '600 mg'},{value: '800 mg'}]
+                }),
+                displayField: 'value',
+                forceSelection: true
             }
         },
         {
             xtype: 'gridcolumn',
-            width: 73,
+            width: 90,
             dataIndex: 'duration',
             text: 'Duration',
+            resizable: false,
             editor: {
-                xtype: 'textfield',
-                allowBlank: false
+                xtype: 'combobox',
+                allowBlank: false,
+                editable: false,
+                store: new Ext.data.Store({
+                    fields:['value'],
+                    data: [{value: '1 week'},{value: '2 week'},{value: '3 week'},{value: '1 month'},{value: '2 month'}]
+                }),
+                displayField: 'value',
+                forceSelection: true
             }
         },
         {
             xtype: 'numbercolumn',
-            width: 38,
+            width: 55,
             dataIndex: 'qty',
             text: 'Qty',
+            resizable: false,
             editor: {
                 xtype: 'numberfield',
                 allowBlank: true
@@ -84,6 +83,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         {
             xtype: 'numbercolumn',
             text: 'Unit Price',
+            width: 130,
+            resizable: false,
             dataIndex: 'unitprice',
             editor: {
                 xtype: 'numberfield',
@@ -92,15 +93,16 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         },
         {
             xtype: 'numbercolumn',
-            width: 103,
+            width: 170,
             dataIndex: 'itemprice',
             text: 'Item Price',
+            resizable: false,
             id: 'itemprice'
         },{
             xtype: 'actioncolumn',
-            width: 50,
+            width: 45,
             items: [{
-                icon: '../../resources/img/edit.png',  // Use a URL in the icon config
+                icon: '../../resources/img/edit.png',
                 tooltip: 'Edit',
                 handler: function(grid, rowIndex, colIndex) {
                     drugEditor.fireEvent('drugEdit', {

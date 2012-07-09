@@ -23,13 +23,7 @@ Ext.define('RaxaEmr.Pharmacy.model.drugOrder', {
         name: 'quantity',
         type: 'number'
     }, {
-        name: 'frequency',
-        type: 'string'
-    }, {
         name: 'type',
-        type: 'string'
-    }, {
-        name: 'instructions',
         type: 'string'
     }]
 });
