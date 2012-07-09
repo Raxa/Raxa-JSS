@@ -198,6 +198,7 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'phoneNumberSearch',
                             fieldLabel: 'Phone Number',
                             emptyText: 'Phone Number',
+                            vtype: 'phone',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
