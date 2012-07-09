@@ -16,7 +16,7 @@
 // TODO: find a way to set the value in the program
 // See src/app/view/Login.js
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
-var MRSHOST = 'http://raxajss.jelastic.servint.net';
+var MRSHOST = 'http://192.168.1.6:8080/openmrs';
 var PAGES = {
     LOGIN_SCREEN: 0,
     CONFIRM_LOC: 1,

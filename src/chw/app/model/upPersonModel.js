@@ -19,11 +19,13 @@
 Ext.define('mUserStories.model.upPersonModel', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [{
+        fields: [
+            {
             name: 'id',
             type: 'number',
             persist: false
-        }, {
+        }, 
+        {
             name: 'names',
             model: 'mUserStories.model.names'
 
