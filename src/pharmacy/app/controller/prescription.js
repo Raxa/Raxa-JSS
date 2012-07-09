@@ -116,7 +116,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     savePerson: function () {
-        if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid()){
+        if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid() && (Ext.getCmp('dob').getValue() != null || Ext.getCmp('age').getValue() != null)){
         var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
             addresses: [{
@@ -131,13 +131,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         })
         //this if else statement change the persist property of age field in Person model so that if its
         //empty it should not be sent to server in the body of post call
-        if (Ext.getCmp('age').isValid()) {
+        if (Ext.getCmp('age').getValue()!= null) {
             jsonperson.data.age = Ext.getCmp('age').value;
             RaxaEmr.Pharmacy.model.Person.getFields()[2].persist = true;
         } else {
             RaxaEmr.Pharmacy.model.Person.getFields()[2].persist = false;
         }
-        if (Ext.getCmp('dob').isValid()) {
+        if (Ext.getCmp('dob').getValue()!= null) {
             jsonperson.data.birthdate = Ext.getCmp('dob').value;
             RaxaEmr.Pharmacy.model.Person.getFields()[3].persist = true;
         } else {
@@ -157,7 +157,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         return store;
         }
         else{
-            Ext.Msg.alert('fields invalid')
+            Ext.Msg.alert('fields invalid');
+            return null
         }
     },
 
@@ -261,6 +262,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         for (var j = 0; j < concept.length; j++) {
                             order[j].concept = concept[j].getAt(0).getData().uuid;
                         }
+                        if(order.length == 0){
+                            RaxaEmr.Pharmacy.model.drugEncounter.getFields()[4].persist = false;
+                        }
                         var time = this.ISODateString(new Date());
                         // model for posting the encounter for given drug orders
                         var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
@@ -297,7 +301,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         encounterDatetime: time,
                         orders: order
                     })
-                    console.log('aa gya')
                     var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
                     encounterStore.add(encounter)
                     // make post call for encounter
