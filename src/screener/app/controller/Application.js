@@ -402,8 +402,8 @@ Ext.define("Screener.controller.Application", {
             callback: function (records, operation, success) {
                 // the operation object contains all of the details of the load operation
                 for(i=1;i<=5;i++) {
-                Ext.getCmp('i').setHtml("");
-                Ext.getCmp('5').setHtml(store.last().raw.obs[i-1].display);
+                Ext.getCmp(i).setHtml("");
+                Ext.getCmp(i).setHtml(store.last().raw.obs[i-1].display);
                 }
             },
             scope: this
