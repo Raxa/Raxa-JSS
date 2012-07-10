@@ -23,7 +23,9 @@ var username;
 var password;
 var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
-var patientUuid;
+var resourceUuid = [['concept','height','HEIGHT (CM)'],['concept','weight','WEIGHT (KG)'],['concept','bmi','BODY MASS INDEX'],['concept', 'regfee','Registration Fee'],
+['form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms'],['encountertype', 'reg','REGISTRATION - New registration'],['encountertype', 'screener','SCREENER - encountered when patient screened'],
+['location', 'screener','Screener Registration Disk - registration desk in a screener module'],['location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor'],['pharmacy','encountertype','PHARMACY - encounter for pharmacy']];
 
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
@@ -83,10 +85,22 @@ var Util = {
      *Returns the value of TimeoutLimit for login timeout 
      *@return timeoutLimit for timeout in login 
      */
+    Datetime: function (d){
+        function pad(n){
+            return n<10 ? '0'+n : n
+        }
+        return d.getUTCFullYear()+'-'
+        + pad(d.getUTCMonth()+1)+'-'
+        + pad(d.getUTCDate())+'T'
+        + pad(d.getUTCHours())+':'
+        + pad(d.getUTCMinutes())+':'
+        + pad(d.getUTCSeconds())+'Z'
+    },
+    
     getTimeoutLimit: function () {
         return timeoutLimit;
     },
-
+    
     getHospitalName: function () {
         return hospitalName;
     },
@@ -114,7 +128,7 @@ var Util = {
             useDefaultXhrHeader: false,
             method: 'DELETE',
             success: function () {
-                // do nothing
+            // do nothing
             }
         });
     },
@@ -147,6 +161,7 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
+
         return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient'];
         //TO DO:Add the line below instead the above one 
         //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
@@ -231,24 +246,3 @@ var Util = {
         });
     }
 }
-
-
-if (localStorage.heightUuidconcept == undefined) {
-    var heightUuidConcept = Util.getAttributeFromREST('concept', 'height', 'HEIGHT (CM)');
-}
-if (localStorage.weightUuidconcept == undefined) {
-    var weightUuidConcept = Util.getAttributeFromREST('concept', 'weight', 'WEIGHT (KG)');
-}
-if (localStorage.bmiUuidconcept == undefined) {
-    var bmiUuidConcept = Util.getAttributeFromREST('concept', 'bmi', 'BODY MASS INDEX');
-}
-if (localStorage.regfeeUuidconcept == undefined) {
-    var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee', 'Registration Fee');
-}
-if (localStorage.basicUuidform == undefined) {
-    var basicUuidform = Util.getAttributeFromREST('form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms');
-}
-if(localStorage.prescriptionUuidencountertype == undefined){ 
-	var prescriptionUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescription','PRESCRIPTION - Patient receives a drug prescription.');
-}
-
