@@ -3,14 +3,17 @@ package org.raxa.module.raxacore.impl;
 /**
  * Copyright 2012, Raxa
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 import java.util.List;
 import static org.junit.Assert.*;
@@ -185,7 +188,8 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test of getPatientListByEncounterType method, of class PatientListServiceImpl.
+	 * Test of getPatientListByEncounterType method, of class
+	 * PatientListServiceImpl.
 	 */
 	@Test
 	public void testGetPatientListByEncounterTypeShouldReturnPatientList() {
@@ -196,7 +200,8 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test of getPatientListByEncounterType method, of class PatientListServiceImpl.
+	 * Test of getPatientListByEncounterType method, of class
+	 * PatientListServiceImpl.
 	 */
 	@Test
 	public void testGetPatientListByEncounterTypeShouldUsePrivileges() {
@@ -218,7 +223,8 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test of getEncountersInPatientList method, of class PatientListServiceImpl.
+	 * Test of getEncountersInPatientList method, of class
+	 * PatientListServiceImpl.
 	 */
 	@Test
 	public void testGetEncountersInPatientListShouldReturnEncounters() {
@@ -238,7 +244,8 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test of getEncountersInPatientList method, of class PatientListServiceImpl.
+	 * Test of getEncountersInPatientList method, of class
+	 * PatientListServiceImpl.
 	 */
 	@Test
 	public void testGetEncountersInPatientListShouldNotReturnEncountersWithInvalidDates() {
@@ -253,34 +260,59 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test notInList parts of getEncountersInPatientList method, of class PatientListServiceImpl.
+	 * Test notInList according to Encounters of getEncountersInPatientList method, of class
+	 * PatientListServiceImpl.
 	 */
 	@Test
 	public void testGetEncountersInPatientListShouldNotReturnEncountersAccordingToNotInList() {
-		PatientList p = new PatientList();
-		PatientList p2 = new PatientList();
-		PatientList p3 = new PatientList();
-		p.setCreator(Context.getUserContext().getAuthenticatedUser());
-		p.setName("GetPatientsTestList");
-		p2.setName("TestPatientsNotInList");
-		p2.setName("TestPatientsNotInList2");
-		p.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
+		PatientList mainList = new PatientList();
+		PatientList notInList1 = new PatientList();
+		PatientList notInList2 = new PatientList();
+		mainList.setName("GetPatientsTestList");
+		notInList1.setName("TestPatientsNotInList");
+		notInList2.setName("TestPatientsNotInList2");
+		notInList1.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
 		        + "&startDate=2000-01-01T00:00:00&endDate=2008-08-16T00:00:00");
-		p3.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
+		notInList2.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
 		        + "&startDate=2008-08-16T00:00:00&endDate=2012-01-02T00:00:00");
-		s.savePatientList(p);
-		s.savePatientList(p3);
-		p2
-		        .setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
-		                + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00&notInList=" + p.getUuid() + ","
-		                + p3.getUuid());
-		List<Encounter> encs = s.getEncountersInPatientList(p2);
+		s.savePatientList(notInList1);
+		s.savePatientList(notInList2);
+		mainList.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
+		        + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00&notInList=" + notInList1.getUuid() + ","
+		        + notInList2.getUuid());
+		List<Encounter> encs = s.getEncountersInPatientList(mainList);
 		//now checking that notInList works
 		assertEquals(encs.size(), 0);
 	}
 	
 	/**
-	 * Test inList parts of getEncountersInPatientList method, of class PatientListServiceImpl.
+	 * Test notInList according to Patient of getEncountersInPatientList method, of class
+	 * PatientListServiceImpl.
+	 * All 3 lists have the same start and end dates.
+	 * notInList1 has 1 encounter (type 2) with Patient #7.
+	 * Without the notInList query, mainList would have had 2 encounters of type 1 with Patient #7.
+	 * Because of notInList, mainList has all encounters of type 1 which are not associated with Patient #7.
+	 * Since no such encounter exists in the dataset, the value should be 0.
+	 */
+	@Test
+	public void testGetEncountersInPatientListShouldNotReturnPatientsAccordingToNotInList() {
+		PatientList mainList = new PatientList();
+		PatientList notInList1 = new PatientList();
+		mainList.setName("GetPatientsTestList");
+		notInList1.setName("TestPatientsNotInList");
+		notInList1.setSearchQuery("?encounterType=07000be2-26b6-4cce-8b40-866d8435b613"
+		        + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00");
+		s.savePatientList(notInList1);
+		mainList.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383cce1"
+		        + "&startDate=2000-01-01T00:00:00&endDate=2012-01-02T00:00:00&notInList=" + notInList1.getUuid());
+		List<Encounter> encs = s.getEncountersInPatientList(mainList);
+		//now checking that notInList works
+		assertEquals(encs.size(), 0);
+	}
+	
+	/**
+	 * Test inList parts of getEncountersInPatientList method, of class
+	 * PatientListServiceImpl.
 	 */
 	@Test
 	public void testGetEncountersInPatientListShouldOnlyReturnEncountersAccordingToInList() {

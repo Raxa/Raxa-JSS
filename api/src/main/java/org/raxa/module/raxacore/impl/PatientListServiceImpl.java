@@ -3,14 +3,17 @@ package org.raxa.module.raxacore.impl;
 /**
  * Copyright 2012, Raxa
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,8 +31,8 @@ import org.raxa.module.raxacore.PatientListService;
 import org.raxa.module.raxacore.db.PatientListDAO;
 
 /*
- * Implements PatientListService.java
- * Note the PatientList query must be in the form of:
+ * Implements PatientListService.java Note the PatientList query must be in the
+ * form of:
  * "?encounterType=<uuid>&startDate=2012-05-07&endDate=2012-05-08&inlist=<uuidForList>&notinlist=<uuidForList>"
  */
 public class PatientListServiceImpl implements PatientListService {
@@ -63,7 +66,8 @@ public class PatientListServiceImpl implements PatientListService {
 	}
 	
 	/**
-	 * @see org.raxa.module.raxacore.PatientListService#getPatientListByName(String)
+	 * @see
+	 * org.raxa.module.raxacore.PatientListService#getPatientListByName(String)
 	 */
 	@Override
 	public List<PatientList> getPatientListByName(String name) {
@@ -71,7 +75,8 @@ public class PatientListServiceImpl implements PatientListService {
 	}
 	
 	/**
-	 * @see org.raxa.module.raxacore.PatientListService#getPatientListByUuid(String)
+	 * @see
+	 * org.raxa.module.raxacore.PatientListService#getPatientListByUuid(String)
 	 */
 	@Override
 	public PatientList getPatientListByUuid(String uuid) {
@@ -79,7 +84,8 @@ public class PatientListServiceImpl implements PatientListService {
 	}
 	
 	/**
-	 * @see org.raxa.module.raxacore.PatientListService#getPatientListByEncounterType
+	 * @see
+	 * org.raxa.module.raxacore.PatientListService#getPatientListByEncounterType
 	 */
 	@Override
 	public List<PatientList> getPatientListByEncounterType(EncounterType encounterType) {
@@ -118,7 +124,8 @@ public class PatientListServiceImpl implements PatientListService {
 	}
 	
 	/**
-	 * @see org.raxa.module.raxacore.PatientListService#getEncountersInPatientList
+	 * @see
+	 * org.raxa.module.raxacore.PatientListService#getEncountersInPatientList
 	 */
 	@Override
 	public List<Encounter> getEncountersInPatientList(PatientList patientList) {
@@ -135,8 +142,8 @@ public class PatientListServiceImpl implements PatientListService {
 		Date endDate = null;
 		//the return value can only choose encounters from this list (if not null)
 		List<Encounter> inListEncounters = null;
-		//the return value can not contain any encounters from this list
-		List<Encounter> notInListEncounters = new ArrayList<Encounter>();
+		//the return value can not contain any patients from this list
+		List<Patient> notInListPatients = new ArrayList<Patient>();
 		String[] queryFields = query.split("&");
 		//if we have an encountertype in our search query, set it
 		for (int i = 0; i < queryFields.length; i++) {
@@ -156,22 +163,30 @@ public class PatientListServiceImpl implements PatientListService {
 			} else if (queryFields[i].indexOf("notInList=") != -1) {
 				String[] notInListUuids = queryFields[i].substring(10).split(",");
 				for (int k = 0; k < notInListUuids.length; k++) {
-					notInListEncounters.addAll(getEncountersInPatientList(getPatientListByUuid(notInListUuids[k])));
+					notInListPatients.addAll(getPatientsInPatientList(getPatientListByUuid(notInListUuids[k])));
 				}
 			}
 		}
-		
 		List<EncounterType> encTypes = new ArrayList<EncounterType>();
 		encTypes.add(encType);
 		List<Encounter> encs = Context.getEncounterService().getEncounters(null, null, startDate, endDate, null, encTypes,
 		    null, Boolean.FALSE);
-		encs.removeAll(notInListEncounters);
 		if (inListEncounters != null) {
 			Iterator<Encounter> iter = encs.iterator();
 			//if encounter is not in inListEncounters, remove it
 			while (iter.hasNext()) {
 				Encounter currEnc = iter.next();
 				if (!inListEncounters.contains(currEnc)) {
+					iter.remove();
+				}
+			}
+		}
+		if (notInListPatients != null) {
+			Iterator<Encounter> iter = encs.iterator();
+			//if patient is in notInListPatients, remove the encounter
+			while (iter.hasNext()) {
+				Encounter currEnc = iter.next();
+				if (notInListPatients.contains(currEnc.getPatient())) {
 					iter.remove();
 				}
 			}
