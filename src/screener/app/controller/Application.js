@@ -454,7 +454,7 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
         //Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
         Ext.getStore('patientStore').getAt(this.currentPatientIndex).set('patientid', this.currentDoctorIndex);
-        console.log(Ext.getStore('doctorStore').getAt(this.currentDoctorIndex))
+        console.log(Ext.getStore('doctorStore'))
         var patient = Ext.getStore('patientStore').getAt(this.currentPatientIndex).data.uuid
         var provider = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).data.person.uuid
         //Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
