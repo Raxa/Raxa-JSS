@@ -320,6 +320,7 @@ Ext.define('mUserStories.controller.basic', {
                         this.getidentifierstype(onlineStore.getAt(0).getData().uuid)
                         offlineStore.removeAll();
                         offlineStore.sync();
+                        this.doDownload();
                     },this);
                     
                     offlineStore.each(function(record){
@@ -333,8 +334,8 @@ Ext.define('mUserStories.controller.basic', {
                         onlineStore.sync();
                         
                     },this);
-                    this.doDownload();
-                    Ext.getCmp('patientlistid').reset();
+                    
+//                    Ext.getCmp('patientlistid').reset();
                 }
             },this)
         } else if (arg === 'inbox') {
