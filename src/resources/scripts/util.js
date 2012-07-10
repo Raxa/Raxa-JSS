@@ -16,7 +16,9 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 
-var HOST = 'http://raxajss.jelastic.servint.net';
+if (localStorage.getItem("host") == null) {
+    var HOST = 'http://emrjss.jelastic.dogado.eu';
+} else HOST = localStorage.getItem("host");
 var username;
 var password;
 var timeoutLimit = 20000;
