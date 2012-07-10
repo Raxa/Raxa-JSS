@@ -142,6 +142,7 @@ describe("pharmacy", function () {
             expect(request.jsonData.orders.instructions).toEqual("after lunch")
         })
         var order = Ext.create('Screener.store.drugEncounter', {
+<<<<<<< HEAD
             patient: "7bd18c77-4334-4bee-a65b-e29756c0d6e8",
             encounterType: "2e1df184-8cd5-4879-85b1-9d87e1ea5d77",
             encounterDatetime: "2012-07-05T07:47:10Z",
@@ -150,6 +151,16 @@ describe("pharmacy", function () {
                 drug: "fcb49b42-c27e-11e1-9262-a5fbf9edb8d2",
                 instructions: "after lunch",
                 concept: "fc6f4854-c27e-11e1-9262-a5fbf9edb8d2"
+=======
+            patient:"7bd18c77-4334-4bee-a65b-e29756c0d6e8",
+            encounterType:"2e1df184-8cd5-4879-85b1-9d87e1ea5d77",
+            encounterDatetime:"2012-07-05T07:47:10Z",
+            orders:[{
+                patient:"7bd18c77-4334-4bee-a65b-e29756c0d6e8",
+                drug:"fcb49b42-c27e-11e1-9262-a5fbf9edb8d2",
+                instructions:"after lunch",
+                concept:"fc6f4854-c27e-11e1-9262-a5fbf9edb8d2"
+>>>>>>> 4c5b0f864fb27a155bf8412c2936ceb58b53f145
             }]
         })
         orderstore = Ext.create('Screener.store.drugEncounter')
@@ -179,7 +190,7 @@ describe("DoctorList", function () {
         expect(store.getData().getAt(0).getData().uuid).not.toEqual(null);
     });
 
-    it("returns values to the store on a ajax call", function () {
+    it("returns values to the store on an ajax call", function () {
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
                 responseText: "{\"results\":[{\"uuid\":\"testuuid1\",\"display\":\"testdoc1\"}," + "{\"uuid\":\"testuuid2\",\"display\":\"testdoc2\"}]}",
@@ -263,5 +274,38 @@ describe("PatientList", function () {
         var notInList = link.indexOf(Lists[1].getData().getAt(0).getData().uuid);
         expect(inList).toNotEqual(-1);
         expect(notInList).toNotEqual(-1);
+    });
+});
+
+describe("PatientSummary", function () {
+    var store = null;
+    var timeout = 10000;
+    beforeEach(function () {
+        Util.saveBasicAuthHeader("admin", "Hello123");
+        if (!store) {
+            store = Ext.create('Screener.store.PatientSummary');
+        }
+        expect(store).toBeTruthy()
+        waitsFor(
+
+        function () {
+            return !store.isLoading();
+        }, "load never completed", timeout)
+    });
+    it("returns value to the PatientSummary store on an ajax call", function () {
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+            var response = {
+                responseText: "{\"results\":[{\"uuid\": \"1\",\"display\": \"OPD 1/1/1\",\"encounterDatetime\": \"2009-09-28T19:03:12.000+0400\",\"patient\":{\"uuid\":\"2\",\"display\": \"ABC\",\"links\":[{\"uri\": \"restcallurl/person/2\",\"rel\": \"self\"}]},\"location\": null,\"form\": null,\"encounterType\":{\"uuid\": \"2\",\"display\": \"OPD - Test\",\"links\":[{\"uri\": \"restcallurl/encountertype/2\",\"rel\": \"self\"}]},\"provider\": null,\"obs\":[],\"orders\":[],\"voided\": false,\"links\":[{\"uri\": \"restcallurl/encounter/1\",\"rel\": \"self\"},{\"uri\": \"restcallurl/encounter/1?v=full\",\"rel\": \"full\"}],\"resourceVersion\": \"1.8\"}]}",
+                status: 200
+            }
+            request.success = 'true';
+            request.callback(null, true, response)
+        });
+        store = Ext.create('Screener.store.PatientSummary');
+        store.load({
+            callback: function (records, operation, success) {
+                expect(store.getData().getAt(0).raw.encounterDatetime).toEqual("2009-09-28T19:03:12.000+0400");
+            }
+        });
     });
 });

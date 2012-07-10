@@ -31,47 +31,52 @@ Ext.define('Screener.view.PatientSummary', {
         height: 260,
         scrollable: true,
         items: [{
-            xtype: 'textfield',
-            label: 'Name : ',
-            width: '100%',
-            value: 'Creative',
-            disabled: 'true',
+            xtype: 'titlebar',
+            title: 'Patient Summary',
+            layout: {
+                align: 'center',
+                type: 'hbox'
+            }
         }, {
             xtype: 'textfield',
-            label: 'Gender : ',
+            id: 'name',
+            label: 'Name',
             width: '100%',
-            value: 'Male',
+            value: '',
             disabled: 'true',
+            disabledCls: 'x-item',
         }, {
-            xtype: 'textfield',
-            label: 'Age : ',
-            width: '100%',
-            value: '18',
-            disabled: 'true',
+            xtype: 'titlebar',
+            title: 'Last Encounter',
+            layout: {
+                align: 'center',
+                type: 'hbox'
+            }
         }, {
-            xtype: 'textfield',
-            label: 'BMI : ',
+            xtype: 'label',
+            id: '1',
+            html: '',
             width: '100%',
-            value: '22',
-            disabled: 'true',
         }, {
-            xtype: 'textfield',
-            label: 'ID# : ',
+            xtype: 'label',
+            id: '2',
+            html: '',
             width: '100%',
-            value: '1',
-            disabled: 'true',
         }, {
-            xtype: 'textfield',
-            label: 'Village : ',
+            xtype: 'label',
+            id: '3',
+            html: '',
             width: '100%',
-            value: 'abc',
-            disabled: 'true',
         }, {
-            xtype: 'textfield',
-            label: 'District : ',
+            xtype: 'label',
+            id: '4',
+            html: '',
             width: '100%',
-            value: 'xyz',
-            disabled: 'true',
+        }, {
+            xtype: 'label',
+            id: '5',
+            html: '',
+            width: '100%',
         }]
     }
 });
