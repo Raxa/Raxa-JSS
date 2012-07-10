@@ -25,6 +25,7 @@ Ext.define('mUserStories.view.patientDetails', {
         }, {
             xtype: 'formpanel',
             title: 'Visit',
+            id: 'vis_panel',
             items: [{
                 xtype: 'container',
                 layout: 'hbox',
@@ -51,71 +52,13 @@ Ext.define('mUserStories.view.patientDetails', {
                         placeHolder: 'Diarrhea'
                     }]
                 }]
-            }, /*{ // maybe this should be a list not checklist?
-                // how much detail is necessary?
-                xtype: 'fieldset',
-                title: 'Suggested Tasks',
-                defaults: {
-                    labelWidth: '80%'
-                },
-                items: [{
-                    xtype: 'checkboxfield',
-                    name: 'task1',
-                    label: 'ORS'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task2',
-                    label: 'RDT malaria'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task3',
-                    label: 'Check Vitamin A'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task4',
-                    label: 'Check albendazole'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task5',
-                    label: 'Blood sample for CBC'
-                }]
-            }*/ // How can i generate these dynamically? (grid)
-                {
-                    xtype: 'container',
-                    id: 'check_vis',
-                    padding: '10px',
-                    items: [{
-                        xtype: 'button',
-                        id: 'vis_ors',
-                        text: 'ORS',
-                        ui: 'confirm'
-                    }, {
-                        xtype: 'button',
-                        id: 'vis_rdt',
-                        text: 'RDT',
-                        ui: 'confirm'
-                    }, {
-                        xtype: 'button',
-                        id: 'vis_vita',
-                        text: 'Vitamin A',
-                        ui: 'confirm'
-                    }, {
-                        xtype: 'button',
-                        id: 'vis_alb',
-                        text: 'Albendazole',
-                        ui: 'confirm'
-                    }, {
-                        xtype: 'button',
-                        id: 'vis_blood',
-                        text: 'Blood sample',
-                        ui: 'confirm'
-                    }
-                ]
             }, {
-                xtype: 'audio',
-                url: 'resources/ping.amr',
-                id: 'ping',
-                hidden: true
+                xtype: 'container',
+                id: 'check_vis',
+                padding: '10px',
+                height: '80%',
+                width: '100%',
+                items: []
             }]
         }, {
             xtype: 'formpanel',
