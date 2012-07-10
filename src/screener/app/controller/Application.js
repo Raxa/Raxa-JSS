@@ -178,33 +178,36 @@ Ext.define("Screener.controller.Application", {
             description: "Patients encountered Screener on " + "startDate=" + Util.startDatetime(d) + "&endDate=" + Util.Datetime(d),
             searchQuery: "?encounterType=" + localStorage.screenerUuidencountertype + "&startDate=" + Util.startDatetime(d) + "&endDate=" + Util.Datetime(d)
         });
-        this.createRegList(d, list_regEncounter, list_scrEncounter);
+        //this.createRegList(list_regEncounter, list_scrEncounter);
+		var k = 0;
+		this.createList(list_regEncounter, list_scrEncounter, k);
+		
     },
-    // Creates Registred Patients List
-    createRegList: function (d, list_regEncounter, list_scrEncounter) {
-        var store_regEncounter = Ext.create('Screener.store.PostLists');
-        store_regEncounter.add(list_regEncounter);
-        store_regEncounter.sync();
-        store_regEncounter.on('write', function () {
-            // added a write listener for assuring
-            // uuid of store_regEncounter != null
-            this.createScrList(d, store_regEncounter, list_scrEncounter);
-        }, this);
-        return store_regEncounter;
-    },
-    // Creates Screened Patients List
-    createScrList: function (d, store_regEncounter, list_scrEncounter) {
-        var store_scrEncounter = Ext.create('Screener.store.PostLists');
-        store_scrEncounter.add(list_scrEncounter);
-        store_scrEncounter.sync();
-        store_scrEncounter.on('write', function () {
-            // added a write listener for assuring
-            // uuid of store_scrEncounter != null
-            this.finalPatientList(store_regEncounter, store_scrEncounter);
-        }, this);
-        return store_scrEncounter;
-    },
-    // Creates List of Patients registered but not screened
+    // Creates two different List of Patients Registered and Patients Screened within last 24 hours
+	createList: function(list_reg, list_scr, k) {
+	var store_reg = Ext.create('Screener.store.PostLists');
+	var store_scr = Ext.create('Screener.store.PostLists');
+	store_reg.add(list_reg);
+	store_scr.add(list_scr);
+	store_reg.sync();
+	store_scr.sync();
+	store_reg.on('write', function() {
+	k=k+1;
+	if(k==2){
+	this.finalPatientList(store_reg, store_scr);
+	}
+	},this);
+	store_scr.on('write', function() {
+	k=k+1;
+	if(k==2){
+	this.finalPatientList(store_reg, store_scr);
+	}
+	},this);
+	var a = [store_reg, store_scr];
+	return a;
+	},
+
+  	// Creates List of Patients registered but not screened in last 24 hours
     finalPatientList: function (store_regEncounter, store_scrEncounter) {
         var store_patientList = Ext.create('Screener.store.PatientList', {
             storeId: 'patientStore'
@@ -219,6 +222,7 @@ Ext.define("Screener.controller.Application", {
     getPatientListUrl: function (reg_UUID, scr_UUID) {
         return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + reg_UUID + '&notInLIst=' + scr_UUID + '&encounterType=' + localStorage.regUuidencountertype);
     },
+  
 
     //add new drug order form 
     addDrugForm: function () {

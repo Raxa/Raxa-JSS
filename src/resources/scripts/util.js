@@ -16,15 +16,15 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://192.168.1.9:8080/openmrs';
+    var HOST = 'http://emrjss.jelastic.dogado.eu';
 } else HOST = localStorage.getItem("host");
 
-var username = 'shivam';
-var password = 'Hello123';
+var username;
+var password ;
 var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
 var resourceUuid = [['concept','height','HEIGHT (CM)'],['concept','weight','WEIGHT (KG)'],['concept','bmi','BODY MASS INDEX'],['concept', 'regfee','Registration Fee'],
-['form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms'],['encountertype', 'reg','REGISTRATION - registration encounter'],['encountertype', 'screener','SCREENER - screener encounter'],
+['form', 'basic','Basic Form - This form contains only the common/core elements needed for most forms'],['encountertype', 'reg','REGISTRATION - Registration encounter'],['encountertype', 'screener','SCREENER - Screener encounter'],
 ['location', 'screener','Screener Registration Disk - registration desk in a screener module'],['location', 'waiting','Waiting Patient: Screener - patients assigned to a doctor']];
 
 //BMI WHO Constants
@@ -89,14 +89,27 @@ var Util = {
         function pad(n){
             return n<10 ? '0'+n : n
         }
-        return d.getUTCFullYear()+'-'
-        + pad(d.getUTCMonth()+1)+'-'
-        + pad(d.getUTCDate())+'T'
-        + pad(d.getUTCHours())+':'
-        + pad(d.getUTCMinutes())+':'
-        + pad(d.getUTCSeconds())+'Z'
+        return d.getFullYear()+'-'
+        + pad(d.getMonth()+1)+'-'
+        + pad(d.getDate())+'T'
+        + pad(d.getHours())+':'
+        + pad(d.getMinutes())+':'
+        + pad(d.getSeconds())+'Z'
     },
-    
+    startDatetime: function (d) {
+        var MS_PER_MINUTE = 60000;
+        var k = new Date(d - 1440 * MS_PER_MINUTE);
+
+        function pad(n) {
+            return n < 10 ? '0' + n : n
+        }
+        return k.getFullYear() + '-' 
+		+ pad(k.getMonth() + 1) + '-' 
+		+ pad(k.getDate()) + 'T' 
+		+ pad(k.getHours()) + ':' 
+		+ pad(k.getMinutes()) + ':' 
+		+ pad(k.getSeconds()) + 'Z'
+    },
     getTimeoutLimit: function () {
         return timeoutLimit;
     },
@@ -180,7 +193,7 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4','CHW'];
+         return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient'];
     //TO DO:Add the line below instead the above one 
     //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
@@ -251,13 +264,13 @@ var Util = {
             failure: function (response) {
                 console.log('GET failed with response status: '+ response.status); // + response.status);
             },
-            success: function (response) {		console.log(response)	
+            success: function (response) {
                 for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
                     if(JSON.parse(response.responseText).results[i].display == display){
                         if(resource != 'location'){
                             localStorage.setItem(queryParameter+"Uuid"+resource,JSON.parse(response.responseText).results[i].uuid)
                         }
-                        else{
+                        else{console.log
                             localStorage.setItem(queryParameter+"Uuid"+resource,display)
                         }
                     }

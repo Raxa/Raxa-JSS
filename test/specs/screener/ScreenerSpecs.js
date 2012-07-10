@@ -219,7 +219,7 @@ describe("PatientList", function () {
 
     });
 
-    it("Posts Reg List", function () {
+    it("Posts Regisration abd Screener Lists", function () {
 
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
@@ -239,29 +239,13 @@ describe("PatientList", function () {
             description: "Patients encountered ScreenerstartDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z",
             searchQuery: "?encounterType=f9591030-b8cb-4b30-9cc3-3f059494594e&startDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z"
         });
-        regList = ctrl.createRegList(d, list_regEncounter, list_scrEncounter);
-        expect(regList.getData().getAt(0).getData().uuid).toEqual('02b2235a-c209-4000-b4b0-25e0223eaa80');
+		var k = 0;
+        Lists = ctrl.createList(list_regEncounter, list_scrEncounter, k);
+        expect(Lists[0].getData().getAt(0).getData().uuid).toEqual('02b2235a-c209-4000-b4b0-25e0223eaa80');
+		expect(Lists[1].getData().getAt(0).getData().uuid).toEqual('02b2235a-c209-4000-b4b0-25e0223eaa80');
     });
 
-    it("Posts Scr List", function () {
-
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
-            var response = {
-                responseText: "{\"uuid\":\"472899a9-e388-4fe5-ad97-d1c7b6de61c5\",\"name\":\"Screener Encounter\",\"description\":\"Patients encountered ScreenerstartDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z\"}",
-                status: 201
-            }
-            request.callback(null, true, response);
-        })
-        var list_scrEncounter = Ext.create('Screener.model.PostList', {
-            name: "Testing Registration Encounter",
-            description: "Patients encountered ScreenerstartDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z",
-            searchQuery: "?encounterType=f9591030-b8cb-4b30-9cc3-3f059494594e&startDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z"
-        });
-        scrList = ctrl.createScrList(d, regList, list_scrEncounter);
-        expect(scrList.getData().getAt(0).getData().uuid).toEqual('472899a9-e388-4fe5-ad97-d1c7b6de61c5');
-    });
-
-
+    
     it(" Gets patient List", function () {
 
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
@@ -272,12 +256,11 @@ describe("PatientList", function () {
             request.success = 'true';
             request.callback(null, true, response);
         })
-
-        patientList = ctrl.finalPatientList(regList, scrList);
+		patientList = ctrl.finalPatientList(Lists[0], Lists[1]);
         expect(patientList.getData().getAt(0).getData().display).toEqual("Alpha d Beta");
         var link = patientList.getProxy().getUrl();
-        var inList = link.indexOf(regList.getData().getAt(0).getData().uuid);
-        var notInList = link.indexOf(scrList.getData().getAt(0).getData().uuid);
+        var inList = link.indexOf(Lists[0].getData().getAt(0).getData().uuid);
+        var notInList = link.indexOf(Lists[1].getData().getAt(0).getData().uuid);
         expect(inList).toNotEqual(-1);
         expect(notInList).toNotEqual(-1);
     });
