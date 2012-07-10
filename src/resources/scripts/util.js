@@ -16,7 +16,7 @@
  * This class provides util methods that are shared by the core, apps and modules
  */
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://raxajss.jelastic.servint.net';
+    var HOST = 'http://emrjss.jelastic.dogado.eu';
 } else HOST = localStorage.getItem("host");
 
 var username = 'admin';
@@ -247,7 +247,7 @@ var Util = {
         });
     },
     
-    getProviderUuid : function(uuid,controller,patient,encountertype,location) {
+    getProviderUuid : function(uuid,helper) {
         //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
         Ext.Ajax.request({
             url : HOST+'/ws/rest/v1/provider/'+uuid,  //'/ws/rest/v1/concept?q=height',
@@ -260,7 +260,9 @@ var Util = {
             success: function (response) {
                 var x = "person not exits"
                 //return JSON.parse(response.responseText).person.uuid
-                controller.sendEncounterData(patient,encountertype,location,JSON.parse(response.responseText).person.uuid)
+                //controller.sendEncounterData(patient,encountertype,location,JSON.parse(response.responseText).person.uuid)
+                console.log(helper)
+                helper(JSON.parse(response.responseText).person.uuid)
             }
         });
     }

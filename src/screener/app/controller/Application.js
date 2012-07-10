@@ -345,15 +345,16 @@ Ext.define("Screener.controller.Application", {
     assignPatient: function () {
         currentNumPatients = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
-        var provider = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).data.uuid
-        Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
+        //Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
         Ext.getStore('patientStore').getAt(this.currentPatientIndex).set('patientid', this.currentDoctorIndex);
+        console.log(Ext.getStore('doctorStore').getAt(this.currentDoctorIndex))
         var patient = Ext.getStore('patientStore').getAt(this.currentPatientIndex).data.uuid
+        var provider = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).data.person.uuid
         //Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
-        Util.getProviderUuid(provider,this.getApplication('Screener').getController('Application'),patient,localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation)
+        this.sendEncounterData(patient,localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation,provider)
     },
     
     //opens the current doctor's waiting list
@@ -400,6 +401,7 @@ Ext.define("Screener.controller.Application", {
             }
         });
     },
+    
     sendEncounterData: function(uuid,encountertype,location,provider){
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
         var currentDate = new Date();

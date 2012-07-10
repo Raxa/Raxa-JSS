@@ -16,6 +16,9 @@ Ext.define('Screener.model.Doctor', {
         }, {
             name: 'display',
             type: 'string'
+        }, {
+            name: 'person',
+            model: 'Screener.model.Person'
         }],
         hasMany: {
             model: 'Screener.model.Patient',
