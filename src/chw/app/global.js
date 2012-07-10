@@ -106,14 +106,14 @@ var helper = {
             Ext.getCmp('vis_panel').hidden(true);
         }
         // set up basic info
-        /*Ext.getCmp('first_det').setValue(record.get('givenName'));
+        Ext.getCmp('first_det').setValue(record.get('givenName'));
         Ext.getCmp('last_det').setValue(record.get('familyName'));
         Ext.getCmp('address_det').setValue(record.get('cityVillage'));
         Ext.getCmp('gender_det').setValue(record.get('gender'));
         Ext.getCmp('bday_det').setValue(record.get('birthdate'));
         // change to next page
         Ext.getCmp('backButton').setHidden(false);
-        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)*/
+        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
     },
     discloseResource: function (record) {
         // console.log(Ext.getCmp('narwhal'));

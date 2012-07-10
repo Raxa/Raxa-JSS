@@ -143,7 +143,7 @@ Ext.define('mUserStories.controller.basic', {
         visStore.load();
         var t = visStore.getAt(VIS.ORS);
         console.log(t);*/
-        helper.listDisclose();
+        // helper.listDisclose();
     },
     /* SCREEN FUNCTIONS */
     // add registrations and reminders
