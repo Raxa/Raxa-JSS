@@ -244,27 +244,5 @@ var Util = {
 
             }
         });
-    },
-    
-    getProviderUuid : function(uuid,helper) {
-        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
-        Ext.Ajax.request({
-            url : HOST+'/ws/rest/v1/provider/'+uuid,  //'/ws/rest/v1/concept?q=height',
-            method: 'GET',
-            disableCaching: false,
-            headers: Util.getBasicAuthHeaders(),
-            failure: function (response) {
-                console.log('GET failed with response status: '+ response.status); // + response.status);
-            },
-            success: function (response) {
-                var x = "person not exits"
-                //return JSON.parse(response.responseText).person.uuid
-                //controller.sendEncounterData(patient,encountertype,location,JSON.parse(response.responseText).person.uuid)
-                console.log(helper)
-                helper(JSON.parse(response.responseText).person.uuid)
-            }
-        });
     }
 }
-                
-
