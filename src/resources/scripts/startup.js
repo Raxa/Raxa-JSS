@@ -48,7 +48,6 @@ var Startup = {
     
     getResourceUuid: function() {
         var x;
-		console.log("asa")
         Ext.Ajax.request({
             url : HOST+'/ws/rest/v1/concept?q=height',
             method: 'GET',
@@ -58,7 +57,7 @@ var Startup = {
                 console.log('GET failed with response status: '+ response.status); // + response.status);
             },
             success: function (response) {
-                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){console.log("adad")
+                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
                     if(JSON.parse(response.responseText).results[i].display == 'HEIGHT (CM)'){
                         x = JSON.parse(response.responseText).results[i].uuid
                     }
@@ -174,7 +173,6 @@ var Startup = {
                         callback(views);
                     }
                 }
-
             });
         }
     }

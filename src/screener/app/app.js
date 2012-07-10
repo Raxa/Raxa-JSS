@@ -21,7 +21,7 @@ Ext.application({
     requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Screener.store.Doctors', 'Ext.navigation.View'],
 
     //we will use a Patient and Doctor class
-    models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'Encounters', 'Observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
+    models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'encounters', 'Observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
 
     //here we declare the visual components
     views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary'],
