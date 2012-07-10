@@ -63,14 +63,14 @@ var helper = {
             var c = Ext.getCmp('check_vis');
             var cont = Ext.create('Ext.Container', {
                 centered: true,
-                width: '80%',
+                width: '100%',
                 id: 'cont'
             })
             var visStore = Ext.getStore('visitStore');
             visStore.load();
             for (var i = 0; i < taskList.length; i++) {
                 var t = visStore.getAt(taskList[i]);
-                console.log(t);
+                // console.log(t);
                 var u = 'confirm';
                 var d = false;
                 if (t.get('vis_comp')) {
@@ -81,19 +81,18 @@ var helper = {
                     items: [{
                         layout: 'vbox',
                         xtype: 'button',
-                        id: t.get('vis_id'),
+                        id: t.get('id'),
                         text: t.get('vis_text'),
                         ui: u,
                         disabled: d,
                         listeners: {
                             tap: function () {
-                                helper.doVis(t)
-                                // console.log(t)
+                                helper.doVis(this.id)
                             }
                         }
                     }, {
                         xtype: 'audio',
-                        id: t.get('vis_id') + '_audio',
+                        id: t.get('id') + '_audio',
                         url: t.get('vis_aud'),
                         hidden: true
                     }]
@@ -101,42 +100,7 @@ var helper = {
                 cont.add(cell);
             }
             c.add(cont);
-            /*for (var i = 0; i < taskList.length; i++) {
-                var visStore = Ext.getStore('visitStore');
-                visStore.load();
-                var t = visStore.getAt(taskList[0]);
-                if (t.get('vis_comp')) {
-                    var u = 'decline';
-                    var d = true
-                } else {
-                    var u = 'confirm';
-                    var d = false
-                }
-                var p = Ext.create('Ext.Panel', {
-                    items: [{
-                        layout: 'vbox',
-                        type: 'button',
-                        id: t.get('vis_id'),
-                        text: t.get('vis_text'),
-                        ui: u,
-                        disabled: d,
-                        listeners: {
-                            tap: function () {
-                                window.location = this.doVis(t.get('vis_id'))
-                            }
-                        }
-                    }, {
-                        xtype: 'audio',
-                        id: t.get('vis_id') + '_audio',
-                        url: t.get('vis_aud'),
-                        hidden: true
-                    }]
-                })
-                cont.add(p);
-                console.log(cont);
-            }*/
-            c.add(cont)
-            console.log(c);
+            // console.log(c);
         } else {
             // TODO: hide visit panel
             Ext.getCmp('vis_panel').hidden(true);
@@ -152,7 +116,7 @@ var helper = {
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)*/
     },
     discloseResource: function (record) {
-        console.log(Ext.getCmp('narwhal'));
+        // console.log(Ext.getCmp('narwhal'));
         Ext.getCmp('narwhal').setTitle(record.get('resourceName'));
         if (record.get('resourceType')==='photo') {
             var located = 'resources/' + record.get('resourceLocation') + '.png'
@@ -167,13 +131,16 @@ var helper = {
     getTaskList: function (visType) {
         
     },
-    doVis: function (t) {
+    doVis: function (vid) {
+        var visStore = Ext.getStore('visitStore');
+        visStore.load();
+        var t = visStore.getById(vid)
         Ext.Msg.confirm('Task', t.get('vis_det'), function (resp) {
             if (resp === 'yes') {
-                // Ext.getCmp(t.get('vis_comp')).set(true);
-                Ext.getCmp(t.get('vis_id')).setUi('decline');
-                Ext.getCmp(t.get('vis_id')).setDisabled(true);
-                Ext.getCmp(t.get('vis_id')+'_audio').play();
+                // set vis_comp as true
+                Ext.getCmp(t.get('id')).setUi('decline');
+                Ext.getCmp(t.get('id')).setDisabled(true);
+                Ext.getCmp(t.get('id') + '_audio').play();
             }
         })
     }

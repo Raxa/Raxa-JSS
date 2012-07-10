@@ -23,35 +23,35 @@ Ext.define('mUserStories.store.visitStore', {
             return record.get('resourceName')[0];
         },*/
         data: [{
-            vis_id: 'vis_ors',
+            id: 'vis_ors',
             vis_text: 'ORS',
             vis_det: 'Administer Oral Rehydration Salts',
             vis_aud: 'resources/ping.amr',
             vis_comp: false,
             vis_incl: true
         }, {
-            vis_id: 'vis_rdt',
+            id: 'vis_rdt',
             vis_text: 'RDT',
             vis_det: 'Administer Rapid Diagnostic Test for malaria',
             vis_aud: 'resources/ping.amr',
             vis_comp: false,
             vis_incl: true
         }, {
-            vis_id: 'vis_vita',
+            id: 'vis_vita',
             vis_text: 'Vitamin A',
             vis_det: 'Check if Vitamin A has been registered',
             vis_aud: 'resources/ping.amr',
             vis_comp: false,
             vis_incl: true
         }, {
-            vis_id: 'vis_alb',
+            id: 'vis_alb',
             vis_text: 'Albendazole',
             vis_det: 'Check if Albendazole has been administered',
             vis_aud: 'resources/ping.amr',
             vis_comp: false,
             vis_incl: true
         }, {
-            vis_id: 'vis_blood',
+            id: 'vis_blood',
             vis_text: 'Blood sample',
             vis_det: 'Take a blood sample for CBC',
             vis_aud: 'resources/ping.amr',
