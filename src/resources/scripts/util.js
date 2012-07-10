@@ -86,7 +86,11 @@ var Util = {
      *@return timeoutLimit for timeout in login 
      */
     Datetime: function (d, hours) {
-        var MS_PER_MINUTE = 60000;
+        if(typeof hours == 'undefined')
+		{
+			hours = 0;
+		}
+		var MS_PER_MINUTE = 60000;
         var k = new Date(d - (60*hours) * MS_PER_MINUTE);
 
         function pad(n) {

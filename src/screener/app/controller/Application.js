@@ -170,13 +170,13 @@ Ext.define("Screener.controller.Application", {
         var d = new Date();
         var list_regEncounter = Ext.create('Screener.model.PostList', {
             name: "Registration Encounter",
-            description: "Patients encountered Registration" + "startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d,0),
-            searchQuery: "?encounterType=" + localStorage.regUuidencountertype + "&startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d,0)
+            description: "Patients encountered Registration" + "startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d),
+            searchQuery: "?encounterType=" + localStorage.regUuidencountertype + "&startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d)
         });
         var list_scrEncounter = Ext.create('Screener.model.PostList', {
             name: "Screener Encounter",
-            description: "Patients encountered Screener on " + "startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d,0),
-            searchQuery: "?encounterType=" + localStorage.screenerUuidencountertype + "&startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d,0)
+            description: "Patients encountered Screener on " + "startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d),
+            searchQuery: "?encounterType=" + localStorage.screenerUuidencountertype + "&startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d)
         });
         //this.createRegList(list_regEncounter, list_scrEncounter);
 		var k = 0;
