@@ -19,8 +19,8 @@
  */
 var form_num, lab_num;
 Ext.define("Screener.controller.Application", {
-    requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
-    models: ['Screener.model.Person'],
+    requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.PatientList', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView'],
+    models: ['Screener.model.Person', 'Screener.mosel.PostList', 'Screener.mosel.Patients'],
     extend: 'Ext.app.Controller',
     config: {
         //here we name the elements we need from the page
@@ -52,6 +52,7 @@ Ext.define("Screener.controller.Application", {
             savePatientButton: '#savePatientButton',
             assignButton: '#assignButton',
             sortButton: '#sortButton',
+            refreshButton: '#refreshButton',
             drugSubmitButton: '#drugSubmitButton',
             addDrugFormButton: '#addDrugFormButton',
             addLabOrderButton: '#addLabOrderButton',
@@ -60,7 +61,8 @@ Ext.define("Screener.controller.Application", {
             sortByFIFOButton: '#sortByFIFOButton',
             sortByBMIButton: '#sortByBMIButton',
             removePatientButton: '#removePatientButton',
-            removeAllPatientsButton: '#removeAllPatientsButton'
+            removeAllPatientsButton: '#removeAllPatientsButton',
+            patientListView: '#patientListViewId'
         },
         //now we define all our listening methods
         control: {
@@ -93,6 +95,9 @@ Ext.define("Screener.controller.Application", {
             },
             sortButton: {
                 tap: 'showSort'
+            },
+            refreshButton: {
+                tap: 'refreshList'
             },
             drugSubmitButton: {
                 tap: 'drugSubmit'
@@ -155,12 +160,70 @@ Ext.define("Screener.controller.Application", {
     },
     //called on startup
     init: function () {
-        //Ext.Msg.confirm("Confirmation", "Are you sure you want to do that?", Ext.emptyFn);
-        this.totalPatients = Ext.getStore('patientStore').getCount();
-        Ext.getStore('patientStore').each(this.addToDoctor);
         form_num = 0;
         lab_num = 0;
+        this.getPatientList();
     },
+
+    // Creates an instance of PostList model for posting Registration and Screener List
+    getPatientList: function () {
+        var d = new Date();
+        var list_regEncounter = Ext.create('Screener.model.PostList', {
+            name: "Registration Encounter",
+            description: "Patients encountered Registration" + "startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d),
+            searchQuery: "?encounterType=" + localStorage.regUuidencountertype + "&startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d)
+        });
+        var list_scrEncounter = Ext.create('Screener.model.PostList', {
+            name: "Screener Encounter",
+            description: "Patients encountered Screener on " + "startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d),
+            searchQuery: "?encounterType=" + localStorage.screenerUuidencountertype + "&startDate=" + Util.Datetime(d,24) + "&endDate=" + Util.Datetime(d)
+        });
+        //this.createRegList(list_regEncounter, list_scrEncounter);
+		var k = 0;
+		this.createList(list_regEncounter, list_scrEncounter, k);
+		
+    },
+    // Creates two different List of Patients Registered and Patients Screened within last 24 hours
+	createList: function(list_reg, list_scr, k) {
+	var store_reg = Ext.create('Screener.store.PostLists');
+	var store_scr = Ext.create('Screener.store.PostLists');
+	store_reg.add(list_reg);
+	store_scr.add(list_scr);
+	store_reg.sync();
+	store_scr.sync();
+	store_reg.on('write', function() {
+	k=k+1;
+	if(k==2){
+	this.finalPatientList(store_reg, store_scr);
+	}
+	},this);
+	store_scr.on('write', function() {
+	k=k+1;
+	if(k==2){
+	this.finalPatientList(store_reg, store_scr);
+	}
+	},this);
+	var a = [store_reg, store_scr];
+	return a;
+	},
+
+  	// Creates List of Patients registered but not screened in last 24 hours
+    finalPatientList: function (store_regEncounter, store_scrEncounter) {
+        var store_patientList = Ext.create('Screener.store.PatientList', {
+            storeId: 'patientStore'
+        });
+        // Setting the url dynamically for store to store patients list
+        store_patientList.getProxy().setUrl(this.getPatientListUrl(store_regEncounter.getData().getAt(0).getData().uuid, store_scrEncounter.getData().getAt(0).getData().uuid));
+        store_patientList.load();
+        store_patientList.on('load', function () {}, this);
+        return store_patientList;
+    },
+    // returns dynamically changed URL for getting patientList
+    getPatientListUrl: function (reg_UUID, scr_UUID) {
+        return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + reg_UUID + '&notInLIst=' + scr_UUID + '&encounterType=' + localStorage.regUuidencountertype);
+    },
+  
+
     //add new drug order form 
     addDrugForm: function () {
         form_num++;
@@ -181,6 +244,7 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('form' + form_num).hide();
             form_num--;
         }
+        store.getData().getAt(0).getData().uuid
     },
     ISODateString: function (d) {
         function pad(n) {
@@ -289,7 +353,7 @@ Ext.define("Screener.controller.Application", {
         this.newPatient.show();
     },
     //adds new person to the NewPersons store
-    savePerson: function() {
+    savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
 
         if (formp.givenname && formp.familyname && formp.choice) {
@@ -447,6 +511,7 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').sort('bmi');
         this.getSortPanel().hide();
     },
+    refreshList: function () {},
     //if patient and doctor are both selected, removes patient from list, increases numpatients for doctor,
     //and adds patient to the patients() store in the doctor
     assignPatient: function () {
@@ -490,7 +555,7 @@ Ext.define("Screener.controller.Application", {
     },
     //helper function to remove a single patient
     removeAPatient: function (patient) {
-        patient.set('doctorid', -1);
+        patient.set('doctorid', - 1);
         Ext.getStore('patientStore').add(patient);
     },
     //removes all patients from the current doctor
