@@ -39,7 +39,7 @@ Ext.define('mUserStories.store.visitStore', {
         }, {
             id: 'vis_vita',
             vis_text: 'Vitamin A',
-            vis_det: 'Check if Vitamin A has been registered',
+            vis_det: 'Check if Vitamin A has been administered',
             vis_aud: 'resources/ping.amr',
             vis_comp: false,
             vis_incl: true
