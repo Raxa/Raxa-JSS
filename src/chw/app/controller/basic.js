@@ -114,11 +114,11 @@ Ext.define('mUserStories.controller.basic', {
             fullscreen: true,
             layout: 'card',
             items: [{
+                xclass: 'mUserStories.view.patientDetails'
+            }, {
                 xclass: 'mUserStories.view.loginScreen'
             }, {
                 xclass: 'mUserStories.view.patientList'
-            }, {
-                xclass: 'mUserStories.view.patientDetails'
             }, {
                 xclass: 'mUserStories.view.addOptions'
             }, {

@@ -68,30 +68,38 @@ var helper = {
             })
             var visStore = Ext.getStore('visitStore');
             visStore.load();
-            var t = visStore.getAt(taskList[0]);
-            var u = 'confirm';
-            var d = false;
-            if (t.get('vis_comp')) {
-                u = 'decline',
-                d = true
-            }
-            var cell = Ext.create('Ext.Panel', {
-                items: [{
-                    layout: 'vbox',
-                    xtype: 'button',
-                    id: t.get('vis_id'),
-                    text: t.get('vis_text'),
-                    ui: u,
-                    disabled: d,
-                    listeners: {
-                        tap: function () {
-                            helper.doVis(t)
-                            console.log(t)
+            for (var i = 0; i < taskList.length; i++) {
+                var t = visStore.getAt(taskList[i]);
+                console.log(t);
+                var u = 'confirm';
+                var d = false;
+                if (t.get('vis_comp')) {
+                    u = 'decline',
+                    d = true
+                }
+                var cell = Ext.create('Ext.Panel', {
+                    items: [{
+                        layout: 'vbox',
+                        xtype: 'button',
+                        id: t.get('vis_id'),
+                        text: t.get('vis_text'),
+                        ui: u,
+                        disabled: d,
+                        listeners: {
+                            tap: function () {
+                                helper.doVis(t)
+                                // console.log(t)
+                            }
                         }
-                    }
-                }]
-            })
-            cont.add(cell);
+                    }, {
+                        xtype: 'audio',
+                        id: t.get('vis_id') + '_audio',
+                        url: t.get('vis_aud'),
+                        hidden: true
+                    }]
+                })
+                cont.add(cell);
+            }
             c.add(cont);
             /*for (var i = 0; i < taskList.length; i++) {
                 var visStore = Ext.getStore('visitStore');
@@ -165,9 +173,7 @@ var helper = {
                 // Ext.getCmp(t.get('vis_comp')).set(true);
                 Ext.getCmp(t.get('vis_id')).setUi('decline');
                 Ext.getCmp(t.get('vis_id')).setDisabled(true);
-                //t.setUi('decline');
-                //t.setDisabled(true);
-                console.log(t)
+                Ext.getCmp(t.get('vis_id')+'_audio').play();
             }
         })
     }
