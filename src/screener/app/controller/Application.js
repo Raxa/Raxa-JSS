@@ -30,6 +30,7 @@ Ext.define("Screener.controller.Application", {
             navBar: '#navBar',
             patientView: 'patientView',
             patientSummary: 'patientSummary',
+            doctorSummary: 'doctorSummary',
             doctorView: 'doctorView',
             labOrderForm: 'labOrderForm',
             pharmacyView: 'pharmacyView',
@@ -40,6 +41,7 @@ Ext.define("Screener.controller.Application", {
             patientList: '#patientList',
             doctorList: '#doctorList',
             expandDoctorList: '#expandDoctorList',
+            assignedPatientList: '#assignedPatientList',
             currentPatients: '#currentPatients',
             doctorStore: 'doctorStore',
             "'form'+form_num": 'form' + form_num,
@@ -51,6 +53,7 @@ Ext.define("Screener.controller.Application", {
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
             assignButton: '#assignButton',
+            removeButton: '#removeButton',
             sortButton: '#sortButton',
             drugSubmitButton: '#drugSubmitButton',
             addDrugFormButton: '#addDrugFormButton',
@@ -91,6 +94,9 @@ Ext.define("Screener.controller.Application", {
             assignButton: {
                 tap: 'assignPatient'
             },
+            removeButton: {
+                tap: 'removePatient'
+            },
             sortButton: {
                 tap: 'showSort'
             },
@@ -111,13 +117,17 @@ Ext.define("Screener.controller.Application", {
                 itemtaphold: 'showPatientSummary'
             },
             doctorList: {
-                itemtap: 'setCurrentDoctor'
+                itemtap: 'setCurrentDoctor',
+                itemtaphold: 'showDoctorSummary'
             },
             expandDoctorList: {
                 itemtap: 'expandCurrentDoctor'
             },
             currentPatients: {
                 itemtap: 'currentPatientsTapped'
+            },
+            assignedPatientList: {
+                itemtap: 'expandAssignedPatient'
             },
             removePatientButton: {
                 tap: 'removePatient'
@@ -151,7 +161,6 @@ Ext.define("Screener.controller.Application", {
     init: function () {
         //Ext.Msg.confirm("Confirmation", "Are you sure you want to do that?", Ext.emptyFn);
         this.totalPatients = Ext.getStore('patientStore').getCount();
-        Ext.getStore('patientStore').each(this.addToDoctor);
         form_num = 0;
         lab_num = 0;
     },
@@ -252,19 +261,47 @@ Ext.define("Screener.controller.Application", {
     },
     //function to show screen with patient list
     showPatients: function () {
+        if (Ext.getCmp('doctorSummary')) {
+            Ext.getCmp('doctorSummary').hide();
+        }
         if (!this.patientView) {
             this.patientView = Ext.create('Screener.view.PatientView');
         }
-        this.getDoctorList().deselectAll();
+        // this.getDoctorList().deselectAll();
         this.getView().push(this.patientView);
+        this.countPatients();
     },
     //function to show screen with doctor list
     showDoctors: function () {
         if (!this.doctorView) {
             this.doctorView = Ext.create('Screener.view.DoctorView');
         }
-        this.getExpandDoctorList().deselectAll();
         this.getView().push(this.doctorView);
+        this.countPatients();
+
+    },
+ // counts number of patients assigned to a doctor   
+    countPatients: function() {
+        store = Ext.create('Screener.store.PatientList');
+        docStore = Ext.create('Screener.store.Doctors')
+        docStore.on('load', function () {
+            store.load();
+            store.on('load', function () {
+                for(var i=0; i <docStore.getData().length;i++ ){
+                    var count = 0;
+                    for(var j=0; j<store.getData().items[0].getData().patients.length;j++){
+                        if(docStore.data.items[i].data.person != null){
+                            if(docStore.data.items[i].data.person.uuid == store.getData().items[0].getData().patients[j].encounters[0].provider){
+                                count = count + 1;
+                            }
+                        }
+                    }
+                    docStore.getAt(i).getData().numpatients  = count
+                }
+                Ext.getCmp('doctorList').setStore(docStore)
+                return docStore
+            })
+        })     
     },
     //function to show screen with pharmacy list
     showPharmacy: function () {
@@ -301,6 +338,45 @@ Ext.define("Screener.controller.Application", {
         }
         Ext.Viewport.add(this.patientSummary);
         Ext.getCmp('patientSummary').setHidden(false);
+    },
+    showDoctorSummary: function (list,item,index) {
+        //   this.getAssignedPatientList(list,item,index);
+        //this.getDoctorList().deselectAll();
+        if (!this.doctorSummary) {
+            this.doctorSummary = Ext.create('Screener.view.DoctorSummary');
+        }
+        Ext.Viewport.add(this.doctorSummary);
+        Ext.getCmp('doctorSummary').setHidden(false);
+        this.getRemoveButton().disable();
+        this.getAssignedPatientList(list,item,index);
+    },
+    //gets a list of all patients assigned to a doctor
+    getAssignedPatientList: function (list,item,index) {
+        store = Ext.create('Screener.store.PatientList');
+        docStore = Ext.create('Screener.store.Doctors')
+        docStore.on('load', function () {
+            store.load();
+            store.on('load', function () {
+                var count = [];
+                for(var j=0; j<store.getData().items[0].getData().patients.length;j++){
+                    if(docStore.data.items[item].data.person != null){
+                        if(docStore.data.items[item].data.person.uuid == store.getData().items[0].getData().patients[j].encounters[0].provider){
+                            count.push({
+                                uuid: store.getData().items[0].getData().patients[j].uuid,                    
+                                name: store.getData().items[0].getData().patients[j].display,
+                                encuuid: store.getData().items[0].getData().patients[j].encounters[0].uuid
+                            });
+                        }
+                    }
+                }
+                pStore = Ext.create('Ext.data.Store', {    
+                    fields: ['uuid','name','encuuid'],
+                    data: count
+                });
+                Ext.getCmp('assignedPatientList').setStore(pStore)
+                return pStore
+            })
+        })
     },
     //keeping track of which patient/doctor is currently selected
     //if both are selected, enable the ASSIGN button
@@ -349,6 +425,42 @@ Ext.define("Screener.controller.Application", {
         this.getAssignButton().disable();
 
     },
+    // unassign a patient assigned to a doctor
+    removePatient: function() {
+        objectRef = this;
+        var uuid = Ext.getCmp('assignedPatientList').getStore().getAt(objectRef.currentPatientIndex).getData().encuuid
+        Ext.Ajax.request({
+            url: HOST + '/ws/rest/v1/encounter/' + uuid + '?!purge',
+            withCredentials: true,
+            useDefaultXhrHeader: false,
+            method: 'DELETE',
+            headers: Util.getBasicAuthHeaders(),
+            success:
+            this.showPatients()
+        });
+        this.getRemoveButton().disable();        
+        return uuid
+    },
+    // unassign all patients assigned to a doctor
+    removeAllPatients: function () {
+        objectRef = this;
+        Ext.Msg.confirm("Confirmation", "Are you sure you want to remove all patients?", function (btn) {
+            if (btn == 'yes') {
+                for (i = 0; i < Ext.getCmp('assignedPatientList').getStore().getCount(); i++) {
+                    var uuid = Ext.getCmp('assignedPatientList').getStore().getAt(i).getData().encuuid
+                    Ext.Ajax.request({
+                        url: HOST + '/ws/rest/v1/encounter/' + uuid + '?!purge',
+                        withCredentials: true,
+                        useDefaultXhrHeader: false,
+                        method: 'DELETE',
+                        headers: Util.getBasicAuthHeaders()
+                    });
+                }
+                objectRef.showPatients()
+            } else {
+            }
+        });
+    },
     //opens the current doctor's waiting list
     expandCurrentDoctor: function (list, index, target, record) {
         this.currentDoctorIndex = index;
@@ -360,40 +472,45 @@ Ext.define("Screener.controller.Application", {
         this.currentPatientIndex = index;
         this.getRemovePatientButton().enable();
     },
-    //removes one patient from the current doctor
-    removePatient: function () {
-        objectRef = this;
-        Ext.Msg.confirm("Confirmation", "Are you sure you want to remove selected patient?", function (btn) {
-            if (btn == 'yes') {
-                objectRef.removeAPatient(Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().getAt(objectRef.currentPatientIndex));
-                numPatients = Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).get('numpatients');
-                Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', numPatients - 1);
-                Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(objectRef.currentPatientIndex);
-                objectRef.getRemovePatientButton().disable();
-            } else {}
-        });
+    expandAssignedPatient: function (list, index, target, record){
+        this.currentPatientIndex = index;
+        this.getRemoveButton().enable();
     },
+    //removes one patient from the current doctor
+    /*removePatient: function () {
+    objectRef = this;
+    Ext.Msg.confirm("Confirmation", "Are you sure you want to remove selected patient?", function (btn) {
+        if (btn == 'yes') {
+            objectRef.removeAPatient(Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().getAt(objectRef.currentPatientIndex));
+            numPatients = Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).get('numpatients');
+            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', numPatients - 1);
+            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(objectRef.currentPatientIndex);
+            objectRef.getRemovePatientButton().disable();
+        } else {}
+    });
+},
+*/
     //helper function to remove a single patient
     removeAPatient: function (patient) {
         patient.set('doctorid', -1);
         Ext.getStore('patientStore').add(patient);
     },
     //removes all patients from the current doctor
-    removeAllPatients: function () {
-        objectRef = this;
-        Ext.Msg.confirm("Confirmation", "Are you sure you want to remove all patients?", function (btn) {
-            if (btn == 'yes') {
-                Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().each(objectRef.removeAPatient);
-                for (i = 0; i < Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).get('numpatients'); i++) {
-                    Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(0);
-                }
-                Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', 0);
-            } else {
-
+    /*removeAllPatients: function () {
+    objectRef = this;
+    Ext.Msg.confirm("Confirmation", "Are you sure you want to remove all patients?", function (btn) {
+        if (btn == 'yes') {
+            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().each(objectRef.removeAPatient);
+            for (i = 0; i < Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).get('numpatients'); i++) {
+                Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(0);
             }
-        });
-    },
+            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', 0);
+        } else {
 
+        }
+    });
+},
+*/
     drugSubmit: function () {
         objectRef = this;
         // changes the button text to 'Confirm' and 'Cancel'

@@ -8,6 +8,7 @@ Ext.define("Screener.view.DoctorView", {
     requires: ['Screener.store.Doctors','Screener.store.Doctors', 'Ext.dataview.List', 'Ext.Panel'],
     extend: 'Ext.Container',
     xtype: 'doctorList',
+    alias: 'widget.doctorList',
     config: {
         fullscreen: true,
         layout: 'hbox',
@@ -17,17 +18,17 @@ Ext.define("Screener.view.DoctorView", {
             id: 'expandDoctorList',
             //regular expression to display doctor information
             //our doctor list uses the Doctors store already instantiated in PatientView
-           itemTpl: new Ext.XTemplate(
-        '<div>({numpatients}){[this.splitter(values.display)]}</div>',
-    {
-         splitter: function(str){
-            var name = str.split("- ")[1]
-            return 'Dr.' + name
+            itemTpl: new Ext.XTemplate(
+                '<div>({numpatients}){[this.splitter(values.display)]}</div>',
+                {
+                    splitter: function(str){
+                        var name = str.split("- ")[1]
+                        return 'Dr.' + name
         
-        }
-    }
-),
-           store: 'doctorStore',
+                    }
+                }
+                ),
+           // store: 'doctorStore',
 
             items: [{
                 xtype: 'titlebar',
@@ -53,7 +54,7 @@ Ext.define("Screener.view.DoctorView", {
                 }, {
                     xtype: 'button',
                     text: 'Remove All',
-                    id: 'removeAllPatientsButton',
+                  //  id: 'removeAllPatientsButton',
                     align: 'left',
                     disabled: 'true'
                 }, ]
