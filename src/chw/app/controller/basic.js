@@ -32,6 +32,7 @@ Ext.define('mUserStories.controller.basic', {
             narwhal: '#narwhal',
             not_vc: '#notButton',
             ok: '#okButton',
+            ok_loc: '#ok_loc',
             resources: '#resourcesButton',
             sch_vc: '#schButton',
             vis_ors: '#vis_ors',
@@ -100,6 +101,11 @@ Ext.define('mUserStories.controller.basic', {
                 tap: function () {
                     this.doOption(true)
                 }
+            },
+            ok_loc:{
+              tap: function(){
+                  this.doLocation(true)
+              }  
             },
             photo: {
                 tap: function () {
@@ -527,7 +533,7 @@ Ext.define('mUserStories.controller.basic', {
             // continue to next page with proper settings
             // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
-            this.toPage(PAGES.PATIENT_LIST);
+            this.toPage(PAGES.LOCATION);
             // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
             // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (USER.type === 'VC') {

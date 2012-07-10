@@ -16,20 +16,21 @@
 // TODO: find a way to set the value in the program
 // See src/app/view/Login.js
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
-var MRSHOST = 'http://192.168.1.6:8080/openmrs';
+var MRSHOST = 'http://emrjss.jelastic.dogado.eu';
 var PAGES = {
     LOGIN_SCREEN: 0,
-    PATIENT_LIST: 1,
-    PATIENT_DET: 2,
-    ADD: 3,
-    ADD_REG: 4,
-    ADD_REM: 5,
-    ADD_APP: 6,
-    INBOX_CHW: 7,
-    RESOURCES: 8,
-    RESOURCE_DET: 9,
-    INBOX_VC: 10,
-    SCHEDULING: 11
+    LOCATION:1,
+    PATIENT_LIST: 2,
+    PATIENT_DET: 3,
+    ADD: 4,
+    ADD_REG: 5,
+    ADD_REM: 6,
+    ADD_APP: 7,
+    INBOX_CHW: 8,
+    RESOURCES: 9,
+    RESOURCE_DET: 10,
+    INBOX_VC: 11,
+    SCHEDULING: 12
 };
 var USER = new Object();
 USER.name = '';
