@@ -6,7 +6,7 @@ Ext.define('RaxaEmr.view.Login', {
         id: 'halo',
         items: [{
             xtype: 'topbar',
-            docked: 'top',
+            docked: 'top'
         }, {
             id: 'logoPanel',
             centered: true,

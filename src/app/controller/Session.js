@@ -51,28 +51,6 @@ Ext.define('RaxaEmr.controller.Session', {
         }
     },
 
-    showDashboard: function () {
-        var privileges = localStorage.getItem("privileges");
-        var allModules = Util.getModules();
-        var allApps = Util.getApps();
-        var userModules = [];
-        //starting at index=1 here, don't need app button for 'login'
-        for (i = 1; i < allModules.length; i++) {
-            //checking if user is allows to view the module
-            /*below check is commented to start login work temporarily
-            it is commented because check was failing as privileges were deleted from role_privileges
-            in the database so as to make the view POSTs successful
-            */
-            //            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
-            userModules[userModules.length] = allModules[i];
-            //            }
-        }
-        Ext.getCmp('appGrid').addModules(userModules);
-        Ext.getCmp('smartApp').addApps(allApps);
-        window.location.hash = 'Dashboard';
-        Ext.getCmp('mainView').setActiveItem(2);
-    },
-
     showLogin: function () {
         window.location.hash = 'Login';
         Ext.getCmp('mainView').setActiveItem(0);
@@ -103,6 +81,11 @@ Ext.define('RaxaEmr.controller.Session', {
                             'name': privilegesJson.privileges[i].name,
                             'description': privilegesJson.privileges[i].description
                         };
+                    }
+                    for (i = 0; i < privilegesJson.roles.length; i++) {
+                        if(privilegesJson.roles[i].name == 'Provider'){
+                            localStorage.setItem('loggedInUser',privilegesJson.person.uuid)
+                        }
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
                     this.loginSuccess();
@@ -148,7 +131,6 @@ Ext.define('RaxaEmr.controller.Session', {
 
         // check for user name validity and privileges
         this.getUserPrivileges(username);
-
         //populating views with all the modules, sending a callback function
         Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
     },
@@ -215,8 +197,40 @@ Ext.define('RaxaEmr.controller.Session', {
         }
     },
 
+    showDashboard: function () {
+        var privileges = localStorage.getItem("privileges");
+        var allModules = Util.getModules();
+        var allApps = Util.getApps();
+        var userModules = [];
+        //starting at index=1 here, don't need app button for 'login'
+        for (i = 1; i < allModules.length; i++) {
+            //checking if user is allows to view the module
+            /*below check is commented to start login work temporarily
+            it is commented because check was failing as privileges were deleted from role_privileges
+            in the database so as to make the view POSTs successful
+            */
+            //            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1){
+            userModules[userModules.length] = allModules[i];
+            //            }
+        }
+        Ext.getCmp('appGrid').addModules(userModules);
+        Ext.getCmp('smartApp').addApps(allApps);
+        window.location.hash = 'Dashboard';
+        Ext.getCmp('mainView').setActiveItem(2);
+    },
+
+    getLoginState: function () {
+        console.log('AJFIDJFI');
+        var loginState = Ext.getCmp('mainView').getActiveItem()._activeItem;
+        if (localStorage.getItem('basicAuthHeader')) {
+        this.loginSuccess();
+        Ext.getCmp('mainView').setActiveItem(2);
+        }
+    },
+
     //on entry point for application, give control to Util.getViews()
     launch: function () {
+        Startup.getResourceUuid();
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,
@@ -228,7 +242,8 @@ Ext.define('RaxaEmr.controller.Session', {
             }, {
                 xclass: 'RaxaEmr.view.AppCarousel'
             }]
-        });
+        }),
+        this.getLoginState();
     },
 
     //once Util.populateViews() is done with AJAX GET calls, it calls this function
@@ -236,7 +251,8 @@ Ext.define('RaxaEmr.controller.Session', {
     //views is the 2-d array of view urls (see Util.populateViews() for more info)
     launchAfterAJAX: function (views) {
         //remove loading mask
+        if(!Util.basicAuthHeader){
         Ext.getCmp('mainView').setMasked(false);
-    }
+    }}
 
 });

@@ -341,8 +341,12 @@ Ext.define("Screener.controller.Application", {
         var PatientStore = Ext.create('Screener.store.NewPatients')
         PatientStore.add(patient);
         PatientStore.sync();
-        PatientStore.on('write', function () {}, this)
+        PatientStore.on('write', function(){
+            console.log('hi')
+            this.sendEncounterData(personUuid,localStorage.regUuidencountertype,localStorage.screenerUuidlocation,localStorage.loggedInUser)
+        } ,this)
     },
+    
     //function to show screen with patient list
     showPatients: function () {
         if (!this.patientView) {
@@ -388,12 +392,26 @@ Ext.define("Screener.controller.Application", {
         }
     },
     // opens form for patient summary
-    showPatientSummary: function () {
+    showPatientSummary: function (list, item, index) {
         if (!this.patientSummary) {
             this.patientSummary = Ext.create('Screener.view.PatientSummary');
         }
+        Ext.getCmp('name').setValue(Ext.getStore('patientStore').getData().all[item].data.display);
         Ext.Viewport.add(this.patientSummary);
         Ext.getCmp('patientSummary').setHidden(false);
+        var uuid = Ext.getStore('patientStore').getData().all[item].data.uuid;
+        var store = Ext.create('Screener.store.PatientSummary');
+        store.getProxy().setUrl(HOST + '/ws/rest/v1/encounter?patient=' + uuid);
+        store.load({
+            callback: function (records, operation, success) {
+                // the operation object contains all of the details of the load operation
+                for(i=1;i<=5;i++) {
+                Ext.getCmp(i).setHtml("");
+                Ext.getCmp(i).setHtml(store.last().raw.obs[i-1].display);
+                }
+            },
+            scope: this
+        });
     },
     //keeping track of which patient/doctor is currently selected
     //if both are selected, enable the ASSIGN button
@@ -434,14 +452,18 @@ Ext.define("Screener.controller.Application", {
     assignPatient: function () {
         currentNumPatients = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
-        Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
+        //Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
         Ext.getStore('patientStore').getAt(this.currentPatientIndex).set('patientid', this.currentDoctorIndex);
-        Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
+        console.log(Ext.getStore('doctorStore'))
+        var patient = Ext.getStore('patientStore').getAt(this.currentPatientIndex).data.uuid
+        var provider = Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).data.person.uuid
+        //Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
-
+        this.sendEncounterData(patient,localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation,provider)
     },
+    
     //opens the current doctor's waiting list
     expandCurrentDoctor: function (list, index, target, record) {
         this.currentDoctorIndex = index;
@@ -486,7 +508,26 @@ Ext.define("Screener.controller.Application", {
             }
         });
     },
-
+    
+    sendEncounterData: function(uuid,encountertype,location,provider){
+        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        var currentDate = new Date();
+        // creates the encounter json object
+        var jsonencounter = Ext.create('Screener.model.encounters',{
+            encounterDatetime: Util.Datetime(currentDate),
+            patient: uuid,//you will get the uuid from ticket 144...pass it here
+            encounterType: encountertype,
+            location: location,
+            provider: provider
+        });
+        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+        var store = Ext.create('Screener.store.encounters');
+        store.add(jsonencounter);
+        store.sync();
+        store.on('write', function () {
+            }, this)
+    },
+	
     drugSubmit: function () {
         objectRef = this;
         // changes the button text to 'Confirm' and 'Cancel'
