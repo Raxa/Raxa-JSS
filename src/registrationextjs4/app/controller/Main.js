@@ -52,9 +52,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
     },
-    
-    
-    
+
     searchPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
@@ -242,21 +240,34 @@ Ext.define('Registration.controller.Main', {
         store.on('write', function () {
             this.getidentifierstype(store.getAt(0).getData().uuid)
         }, this)//Going to BMI Page
-        //I made this funtion return this store because i needed this in jasmine unit test
+        //I made this function return this store because i needed this in jasmine unit test
         return store;
     },
 
-    /* this funtions makes a get call to get the patient identifiers type */
+    /* This function searches for the identifier type specified in idPattern in Util
+     * and makes a get call to get the patient identifiers type */
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Registration.store.identifiersType')
         identifiers.load();
-        // this statement calls getlocation() as soon as the get call is successful
         identifiers.on('load', function () {
-            this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
+            var idIterator;
+            var idNo = -1;
+            for (idIterator = 0; idIterator < identifiers.data.length; idIterator++) {
+                var str = identifiers.data.items[idIterator].raw.display;
+                if (str.match(idPattern)) {
+                    idNo = idIterator;
+                }
+            }
+            if (idNo === -1) {
+                console.log('ERROR: Could not find identifier type \''+ idPattern.source.match(/[\w ]+/g) +'\' in OpenMRS instance.');
+            } else {
+                // this statement calls getlocation() as soon as the get call is successful
+                this.getlocation(personUuid, identifiers.getAt(idNo).getData().uuid);
+            }
         }, this);
     },
 
-    /* this funtions makes a get call to get the location uuid */
+    /* this function makes a get call to get the location uuid */
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Registration.store.location')
         locations.load();
@@ -268,7 +279,7 @@ Ext.define('Registration.controller.Main', {
         }, this)
     },
 
-    /* this funtions makes a post call to creat the patient with three parameter which will sent as person, identifiertype 
+    /* this function makes a post call to creat the patient with three parameter which will sent as person, identifiertype 
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
         localStorage.setItem('uuid',personUuid)
@@ -276,7 +287,7 @@ Ext.define('Registration.controller.Main', {
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
-                identifier: Util.getPatientIdentifier().toString(),
+                identifier: Util.getPatientIdentifier(),
                 identifierType: identifierType,
                 location: location,
                 preferred: true
@@ -287,21 +298,18 @@ Ext.define('Registration.controller.Main', {
         PatientStore.add(patient);
         //makes the post call for creating the patient
         PatientStore.sync();
-        //I made this funtion return this store because i needed this in jasmine unit test
+        //I made this function return this store because i needed this in jasmine unit test
         PatientStore.on('load', function () {
             var l = Ext.getCmp('mainRegArea').getLayout();
             l.setActiveItem(REG_PAGES.REG_BMI.value); 
         }, this)
         return PatientStore;
-        
-        
     },
-    // for now the function is called when the emergency button is pressed since the views were not completed
-    
+
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
     sendEncounterData: function(){
         
-        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        //function to get the date in required format of the openMRS, since the default extjs4 format is not accepted
         function ISODateString(d){
             function pad(n){
                 return n<10 ? '0'+n : n
