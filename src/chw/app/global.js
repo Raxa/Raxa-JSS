@@ -16,7 +16,7 @@
 // TODO: find a way to set the value in the program
 // See src/app/view/Login.js
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
-var MRSHOST = 'http://raxajss.jelastic.servint.net';
+var MRSHOST = 'http://emrjss.jelastic.dogado.eu';
 var PAGES = {
     LOGIN_SCREEN: 0,
     PATIENT_LIST: 1,
@@ -38,6 +38,7 @@ var VIS = {
     ALB: 3,
     BLOOD: 4
 }
+
 var USER = new Object();
 USER.name = '';
 USER.type = 'CHW';

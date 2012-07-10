@@ -32,7 +32,8 @@ Ext.define('mUserStories.controller.basic', {
             Narwhal: '#narwhal',
             not_vc: '#notButton',
             ok: '#okButton',
-            resources: '#resourcesButton'
+            resources: '#resourcesButton',
+            sch_vc: '#schButton'
         },
         control: {
             addApp: {
@@ -113,11 +114,11 @@ Ext.define('mUserStories.controller.basic', {
             fullscreen: true,
             layout: 'card',
             items: [{
-                xclass: 'mUserStories.view.patientDetails'
-            }, {
                 xclass: 'mUserStories.view.loginScreen'
             }, {
                 xclass: 'mUserStories.view.patientList'
+            }, {
+                xclass: 'mUserStories.view.patientDetails'
             }, {
                 xclass: 'mUserStories.view.addOptions'
             }, {
@@ -162,49 +163,41 @@ Ext.define('mUserStories.controller.basic', {
                 var village = Ext.getCmp('village_reg').getValue();
                 var radioform = Ext.getCmp('ext-formpanel-5').saveForm();
                 var gender = radioform.radiogroup.charAt(0);
-                console.log(gender);
                 var bday = Ext.getCmp('bday').getValue();
 
                 if (fname == '' || lname == '' || phone == '' || village == '' || gender == '' || bday == '') {
                     Ext.Msg.alert("Error", "Please fill in all fields")
                 } else {
-                    //                    var up_store = Ext.create('mUserStories.store.upPersonStore');
-                    var offlineRegStore = Ext.getStore('offlineRegisterStore');
-                    if(!offlineRegStore){
-                        offlineRegStore = Ext.create(mUserStories.store.offlineRegisterStore);
-                        console.log('created offline reg store');
+                    
+                    var offlineStore = Ext.getStore('offlineRegisterStore');
+                    if(!offlineStore){
+                        offlineStore = Ext.create('mUserStories.store.offlineRegisterStore')
                     }
-                    var up_Model = Ext.create('mUserStories.model.upPersonModel', {
+                   
+                    var up_Model = Ext.create('mUserStories.model.upPersonModel',{
                         names: [{
-                                givenName: fname,
-                                familyName: lname
-                            }],
+                            givenName: fname,
+                            familyName: lname
+                        }],
                         gender: gender,
                         birthdate: bday,
                         addresses: [{
-                                cityVillage: village
-                            }]
+                            cityVillage: village
+                        }]
                     });
-                    //Adding registration details into local storage (a store)
-                    //                    up_store.add(up_Model);
-                    offlineRegStore.add(up_Model);
-                    offlineRegStore.sync();
-                    console.log('offline Store synced');
+                    
+                    offlineStore.add(up_Model);
+                    offlineStore.sync();
+                    
+                    console.log('stored offline');
+                    
                     Ext.getCmp('ext-formpanel-5').reset();
                     this.doDownload();
-                    Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
-                    
-                    //REST call for creating a Person
-                    //                    up_store.sync();
-                    //                    up_store.on('write', function () {
-                    //                        console.log('Stored locally, calling identifier type');
-                    //                        // Now that Person is created, send request to create Patient
-                    //                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
-                    //                    }, this)
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)    
                 }
             } else if (step === 'reminder') {
-                // TODO: validate all fields
-                // TODO: add 'other' option
+            // TODO: validate all fields
+            // TODO: add 'other' option
             }
         } else {
             // TODO: doReturn()
@@ -255,6 +248,7 @@ Ext.define('mUserStories.controller.basic', {
             this.doExit();
         }
     },
+    // manage navigation based on lower toolbar
     doToolbar: function (arg) {
         if (arg === 'menu') {
             this.toPage(PAGES.ADD)
@@ -263,28 +257,30 @@ Ext.define('mUserStories.controller.basic', {
                 if (resp === 'yes') {
                     // TODO: check for conflicts             
                     // doUpload all information
-                    var up_store = Ext.create('mUserStories.store.upPersonStore');
-                    var offlineRegStore = Ext.getStore('offlineRegisterStore');
-                    up_store.removeAll();
-                    //copy all data from offlineRegStore to up_store
-                    offlineRegStore.each(function (record){
-                        up_store.add(record);
-                        console.log(up_store);
-                        up_store.sync();
-                        console.log('added to up_store')
-                        up_store.on('write', function () {
-                            console.log('Stored locally, calling identifier type');
-                            // Now that Person is created, send request to create Patient
-                            this.getidentifierstype(up_store.getAt(0).getData().uuid)
-                        }, this);
-                        
-                    });
-                    //Empty out the offlineStore
-                    offlineRegStore.removeAll();
                     
-                    console.log('removed from offline and up store');
-                    this.doDownload();
-                    console.log('download complete');
+                    var onlineStore = Ext.create('mUserStories.store.upPersonStore');
+                    var offlineStore = Ext.getStore('offlineRegisterStore')
+                    onlineStore.on('write',function(){
+                        console.log('Syncing');
+                        this.getidentifierstype(onlineStore.getAt(0).getData().uuid)
+                        offlineStore.removeAll();
+                        offlineStore.sync();
+                        this.doDownload();
+                    },this);
+                    
+                    offlineStore.each(function(record){
+                        record.phantom = true;
+                        onlineStore.add(record);
+                        
+                        console.log(offlineStore.getNewRecords());
+                        console.log(offlineStore.getUpdatedRecords());
+                        console.log(offlineStore.getRemovedRecords());
+                        
+                        onlineStore.sync();
+                        
+                    },this);
+                    
+//                    Ext.getCmp('patientlistid').reset();
                 }
             },this)
         } else if (arg === 'inbox') {
@@ -310,7 +306,7 @@ Ext.define('mUserStories.controller.basic', {
         } else {
             this.toPage(PAGES.PATIENT_LIST)
         }
-        /*/ TODO: Best logic for returning to previous page - doReturn()
+    /*/ TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
         if (arg === 'list') {
             this.doDownload();
@@ -442,9 +438,9 @@ Ext.define('mUserStories.controller.basic', {
             // continue to next page with proper settings
             // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
-            this.toPage(PAGES.PATIENT_LIST);
-            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
-            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+            this.toPage(PAGES.LOCATION);
+        // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
+        // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (USER.type === 'VC') {
             this.toPage(PAGES.INBOX_VC)
         }
@@ -455,11 +451,11 @@ Ext.define('mUserStories.controller.basic', {
         var patient = Ext.create('mUserStories.model.upPatientModel', {
             person: personUuid,
             identifiers: [{
-                    identifier: this.getPatientIdentifier().toString(),
-                    identifierType: identifierType,
-                    location: location,
-                    preferred: true
-                }]
+                identifier: this.getPatientIdentifier().toString(),
+                identifierType: identifierType,
+                location: location,
+                preferred: true
+            }]
         });
 
         var PatientStore = Ext.create('mUserStories.store.upPatientStore')
@@ -485,17 +481,17 @@ Ext.define('mUserStories.controller.basic', {
                 return n<10 ? '0'+n : n
             }
             return d.getUTCFullYear()+'-'
-                + pad(d.getUTCMonth()+1)+'-'
-                + pad(d.getUTCDate())+'T'
-                + pad(d.getUTCHours())+':'
-                + pad(d.getUTCMinutes())+':'
-                + pad(d.getUTCSeconds())+'Z'
+            + pad(d.getUTCMonth()+1)+'-'
+            + pad(d.getUTCDate())+'T'
+            + pad(d.getUTCHours())+':'
+            + pad(d.getUTCMinutes())+':'
+            + pad(d.getUTCSeconds())+'Z'
         }
         //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
         var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
             encounterDatetime: ISODateString(new Date()),
             patient: Uuid,
-            encounterType: 'e9897b1e-16af-4b67-9be7-6c89e971d907',
+            encounterType: 'f30845d5-9ec0-4960-8104-a1366db21dc4',
             provider : USER.uuid
         })
         
@@ -561,6 +557,7 @@ Ext.define('mUserStories.controller.basic', {
                 success: function (response) {
                     var userInfo = Ext.decode(response.responseText);
                     USER.uuid = userInfo.person.uuid;
+                    console.log(userInfo);
                     localStorage.setItem('uuid', userInfo.person.uuid)
                 },
                 failure: function () {
