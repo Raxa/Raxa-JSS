@@ -18,7 +18,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             },
             'prescribedDrugs': {
                 render: this.onEditorRender,
-                edit: this.afterMovieEdit,
+                edit: this.afterDrugEdit,
                 drugEdit: this.onDrugEdit,
                 drugDelete: this.onDrugDelete
             },
@@ -68,7 +68,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         this.rowEditor = this.drugsEditor.rowEditor;
     },
 
-    afterMovieEdit: function () {
+    afterDrugEdit: function () {
         var drugStore = this.getStore('orderStore');
         var x = Ext.getCmp('prescribedDrugs').getSelectionModel().getSelection()
         if(x[0].data.unitprice != null && x[0].data.qty != null){
@@ -214,12 +214,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     sendPharmacyEncounter: function(uuid) {
         concept = new Array();
         order = new Array();
-        var k = 0;
+        var k = 0,k1 = 0,k2 = 0;
         var drugs = Ext.getStore('orderStore').data;
         var noofdrugs = drugs.items.length;
         for (var i1 = 0; i1 < drugs.items.length; i1++) {
             // value of Url for get call is made here using name of drug
             if(drugs.items[i1].data.drugname != ""){
+                k2++;
                 var Url = HOST + '/ws/rest/v1/concept?q='
                 Url = Url + drugs.items[i1].data.drugname
                 concept.push(Ext.create('RaxaEmr.Pharmacy.store.drugConcept'))
@@ -258,7 +259,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 // value of k should be equal to the no. of drug forms
                 concept[i1].on('load', function () {
                     console.log(Ext.getStore('orderStore'));
-                    if (i1 == drugs.items.length) {
+                    k1++;
+                    if (k == drugs.items.length && k1 == k2) {
                         for (var j = 0; j < concept.length; j++) {
                             order[j].concept = concept[j].getAt(0).getData().uuid;
                         }
