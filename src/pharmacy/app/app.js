@@ -5,10 +5,8 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'RaxaEmr.Pharmacy',
     
-    views: ['dispense', 'Viewport', 'mainview', 'Groups', 'groupedDrugs', 'alldrugs', 'add', 'add2', 'prescription'],
-    controllers: ['dispense', 'main', 'prescription'],
-    models: ['dispense', 'alldrugsmodel', 'groupmodel', 'drugmodel',],
-    stores: ['dispense', 'alldrugsstore', 'groupstore', 'drugstore',], 
+    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 'reports', 'addPatient'],
+    controllers: ['prescription'],
     
     launch: function() {
         Ext.create('RaxaEmr.Pharmacy.view.Viewport');

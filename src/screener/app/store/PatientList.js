@@ -12,7 +12,6 @@ Ext.define('Screener.store.PatientList', {
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json'
-               // rootProperty: 'results'
             }
         }
     }
