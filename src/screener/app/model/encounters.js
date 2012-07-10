@@ -6,4 +6,4 @@ Ext.define('Screener.model.encounters',{
             persist: false
         },'encounterDatetime', 'patient', 'encounterType', 'location', 'provider']
     }
-}
+});

@@ -190,16 +190,6 @@ describe("pharmacy", function () {
             expect(request.jsonData.orders.instructions).toEqual("after lunch")
         })
         var order = Ext.create('Screener.store.drugEncounter', {
-<<<<<<< HEAD
-            patient: "7bd18c77-4334-4bee-a65b-e29756c0d6e8",
-            encounterType: "2e1df184-8cd5-4879-85b1-9d87e1ea5d77",
-            encounterDatetime: "2012-07-05T07:47:10Z",
-            orders: [{
-                patient: "7bd18c77-4334-4bee-a65b-e29756c0d6e8",
-                drug: "fcb49b42-c27e-11e1-9262-a5fbf9edb8d2",
-                instructions: "after lunch",
-                concept: "fc6f4854-c27e-11e1-9262-a5fbf9edb8d2"
-=======
             patient:"7bd18c77-4334-4bee-a65b-e29756c0d6e8",
             encounterType:"2e1df184-8cd5-4879-85b1-9d87e1ea5d77",
             encounterDatetime:"2012-07-05T07:47:10Z",
@@ -208,7 +198,6 @@ describe("pharmacy", function () {
                 drug:"fcb49b42-c27e-11e1-9262-a5fbf9edb8d2",
                 instructions:"after lunch",
                 concept:"fc6f4854-c27e-11e1-9262-a5fbf9edb8d2"
->>>>>>> 4c5b0f864fb27a155bf8412c2936ceb58b53f145
             }]
         })
         orderstore = Ext.create('Screener.store.drugEncounter')

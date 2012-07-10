@@ -85,20 +85,9 @@ var Util = {
      *Returns the value of TimeoutLimit for login timeout 
      *@return timeoutLimit for timeout in login 
      */
-    Datetime: function (d){
-        function pad(n){
-            return n<10 ? '0'+n : n
-        }
-        return d.getFullYear()+'-'
-        + pad(d.getMonth()+1)+'-'
-        + pad(d.getDate())+'T'
-        + pad(d.getHours())+':'
-        + pad(d.getMinutes())+':'
-        + pad(d.getSeconds())+'Z'
-    },
-    startDatetime: function (d) {
+    Datetime: function (d, hours) {
         var MS_PER_MINUTE = 60000;
-        var k = new Date(d - 1440 * MS_PER_MINUTE);
+        var k = new Date(d - (60*hours) * MS_PER_MINUTE);
 
         function pad(n) {
             return n < 10 ? '0' + n : n
