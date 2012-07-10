@@ -5,7 +5,7 @@
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -13,19 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.titlebar', {
-    extend: 'Ext.TitleBar',
-    // itemId: 'narwhal',
-    id: 'narwhal',
+//the store for an encounter. Sends all filled fields to the server
+Ext.define('Screener.store.PatientSummary', {
+    extend: 'Ext.data.Store',
     config: {
-        docked: 'top',
-        // id: 'narwhal',
-        title: 'CHW Module',
-        items: [{
-            ui: 'back',
-            text: 'Back',
-            id: 'backButton'
-            // hidden: true
-        }]
+        model: 'Screener.model.PatientSummary',
+        Proxy: {
+            type: 'rest',
+            headers: Util.getBasicAuthHeaders(),
+            url: HOST + '/ws/rest/v1/encounter?patient=',
+            reader: {
+                type: 'json',
+				rootProperty: 'results'
+            }
+        }
     }
-})
+});

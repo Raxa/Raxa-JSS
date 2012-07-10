@@ -29,17 +29,11 @@ Ext.define('mUserStories.controller.basic', {
             logout: '#logoutButton',
             logout_vc: '#logoutButton_vc',
             menu: '#menuButton',
-            narwhal: '#narwhal',
+            Narwhal: '#narwhal',
             not_vc: '#notButton',
             ok: '#okButton',
-            ok_loc: '#ok_loc',
             resources: '#resourcesButton',
-            sch_vc: '#schButton',
-            vis_ors: '#vis_ors',
-            vis_rdt: '#vis_rdt',
-            vis_vita: '#vis_vita',
-            vis_alb: '#vis_alb',
-            vis_blood: '#vis_blood'
+            sch_vc: '#schButton'
         },
         control: {
             addApp: {
@@ -102,16 +96,6 @@ Ext.define('mUserStories.controller.basic', {
                     this.doOption(true)
                 }
             },
-            ok_loc:{
-                tap: function(){
-                    this.doLocation(true)
-                }  
-            },
-            photo: {
-                tap: function () {
-                    this.doResources('photo')
-                }
-            },
             resources: {
                 tap: function () {
                     this.doToolbar('resources')
@@ -120,31 +104,6 @@ Ext.define('mUserStories.controller.basic', {
             sch_vc: {
                 tap: function () {
                     this.doToolbar('sch')
-                }
-            },
-            vis_ors: {
-                tap: function () {
-                    this.doVis('ors')
-                }
-            },
-            vis_rdt: {
-                tap: function () {
-                    this.doVis('rdt')
-                }
-            },
-            vis_vita: {
-                tap: function () {
-                    this.doVis('vita')
-                }
-            },
-            vis_alb: {
-                tap: function () {
-                    this.doVis('alb')
-                }
-            },
-            vis_blood: {
-                tap: function () {
-                    this.doVis('blood')
                 }
             }
         }
@@ -155,19 +114,12 @@ Ext.define('mUserStories.controller.basic', {
             fullscreen: true,
             layout: 'card',
             items: [{
-                // log into application
-                xclass: 'mUserStories.view.loginScreen'
-            }, {
-                // daily checkin
-                xclass: 'mUserStories.view.confirmLocation'
-            }, {
-                // display a list of patients
-                xclass: 'mUserStories.view.patientList'
-            }, {
-                // display details of patient
                 xclass: 'mUserStories.view.patientDetails'
             }, {
-                // display options for adding
+                xclass: 'mUserStories.view.loginScreen'
+            }, {
+                xclass: 'mUserStories.view.patientList'
+            }, {
                 xclass: 'mUserStories.view.addOptions'
             }, {
                 xclass: 'mUserStories.view.addPatient'
@@ -176,7 +128,6 @@ Ext.define('mUserStories.controller.basic', {
             }, {
                 xclass: 'mUserStories.view.addAppointment'
             }, {
-                // display inbox/outbox
                 xclass: 'mUserStories.view.notificationInbox'
             }, {
                 xclass: 'mUserStories.view.resources'
@@ -188,6 +139,11 @@ Ext.define('mUserStories.controller.basic', {
                 xclass: 'mUserStories.view.vcScheduling'
             }]
         })
+        /*var visStore = Ext.getStore('visitStore');
+        visStore.load();
+        var t = visStore.getAt(VIS.ORS);
+        console.log(t);*/
+        helper.listDisclose();
     },
     /* SCREEN FUNCTIONS */
     // add registrations and reminders
@@ -291,17 +247,6 @@ Ext.define('mUserStories.controller.basic', {
             this.doExit();
         }
     },
-    // manage resources pages
-    doResources: function (arg) {
-        if (arg === 'video') {
-            this.toPage(PAGES.VIDEO)
-        } else if (arg === 'audio') {
-            this.toPage(PAGES.AUDIO)
-        } else if (arg === 'photo') {
-            this.toPage(PAGES.PHOTO)
-        }
-    },
-    
     // manage navigation based on lower toolbar
     doToolbar: function (arg) {
         if (arg === 'menu') {
@@ -348,37 +293,7 @@ Ext.define('mUserStories.controller.basic', {
         }
     },
     doVis: function (arg) {
-        var reading = '';
-        var title = '';
-        var detail = '';
-        if (arg === 'ors') {
-            title = 'ORS';
-            detail = 'Adminster Oral Rehydration Salts'
-        } else if (arg === 'rdt') {
-            title = 'RDT';
-            detail = 'Adminster Rapid Diagnostic Test for malaria'
-        } else if (arg === 'vita') {
-            title = 'Vitamin A';
-            detail = 'Check if Vitamin A has been administered.'
-        } else if (arg === 'alb') {
-            title = 'Albendazole';
-            detail = 'Check if Albendazole has been administered'
-        } else if (arg === 'blood') {
-            title = 'Blood sample';
-            detail = 'Take a bloodsample for CBC'
-        }
-        // TODO: play recording
-        Ext.getCmp('ping').play();
-        // confirm completion
-        Ext.Msg.confirm('Task', detail, function (resp) {
-            if (resp === 'yes') {
-                // TODO: record that the task has been completed
-                // change button to demonstrate this
-                Ext.getCmp('vis_'+arg).setUi('decline');
-                Ext.getCmp('vis_'+arg).setDisabled(true)
-            }
-        })
-    // TODO: when all buttons are clicked, notify of completion
+        
     },
     /* HELPER FUNCTIONS */
     // deal with backbutton
@@ -438,11 +353,8 @@ Ext.define('mUserStories.controller.basic', {
                 Ext.getCmp('patientlistid').setStore(offlineStore);
             }
         },this)
-        
-       
-        
-    // TODO: set patientcurrid to be subset of above organized by appt time
-    // Do we need a separate store for this?
+        // TODO: set patientcurrid to be subset of above organized by appt time
+        // Do we need a separate store for this?
     },
     // exit the program
     doExit: function () {
@@ -516,15 +428,6 @@ Ext.define('mUserStories.controller.basic', {
             failure: function () {}
         });
     },
-    isEmpty: function (arg) {
-    // TODO: check to see if the select field is empty
-    // TODO: continue to arg if not empty
-    },
-    isOther: function (arg) {
-    // TODO: check to see if the select field is other
-    // TODO: pop up screen prompt
-    // TODO: continue to arg 
-    },
     loginContinue: function () {
         // clear form fields
         Ext.getCmp('username').reset();
@@ -568,7 +471,6 @@ Ext.define('mUserStories.controller.basic', {
         this.doDownload();
         this.toPage(PAGES.PATIENT_LIST)
     },
-    
     sendEncounterData:function(Uuid){
         
         //Function for getting date in correct format
@@ -663,7 +565,8 @@ Ext.define('mUserStories.controller.basic', {
         } else {}
     },
     toPage : function (arg) {
-        var t = Ext.getCmp('narwhal');
+        // var t = Ext.getCmp('narwhal');
+        var t = this.getNarwhal();
         var b = Ext.getCmp('backButton');
         if (arg === PAGES.LOGIN_SCREEN) {
             t.setTitle('Community Health Worker Module');
