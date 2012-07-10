@@ -217,7 +217,7 @@ Ext.define('mUserStories.controller.basic', {
                     if(!offlineStore){
                         offlineStore = Ext.create('mUserStories.store.offlineRegisterStore')
                     }
-                   
+                    
                     var up_Model = Ext.create('mUserStories.model.upPersonModel',{
                         names: [{
                             givenName: fname,
@@ -229,7 +229,6 @@ Ext.define('mUserStories.controller.basic', {
                             cityVillage: village
                         }]
                     });
-                    
                     offlineStore.add(up_Model);
                     offlineStore.sync();
                     
@@ -314,28 +313,27 @@ Ext.define('mUserStories.controller.basic', {
                     // doUpload all information
                     
                     var onlineStore = Ext.create('mUserStories.store.upPersonStore');
-                    var offlineStore = Ext.getStore('offlineRegisterStore')
-                    onlineStore.on('write',function(){
-                        console.log('Syncing');
-                        this.getidentifierstype(onlineStore.getAt(0).getData().uuid)
-                        offlineStore.removeAll();
-                        offlineStore.sync();
-                        this.doDownload();
+                    var offlineStore = Ext.getStore('offlineRegisterStore');
+                    var i = 0;
+                    
+                    onlineStore.onAfter('write',function(){
+                        var data =  onlineStore.getAt(i).getData();
+                        this.getidentifierstype(data.uuid);
+                        i++;
                     },this);
                     
                     offlineStore.each(function(record){
                         record.phantom = true;
                         onlineStore.add(record);
-                        
                         console.log(offlineStore.getNewRecords());
                         console.log(offlineStore.getUpdatedRecords());
                         console.log(offlineStore.getRemovedRecords());
-                        
-                        onlineStore.sync();
-                        
                     },this);
                     
-//                    Ext.getCmp('patientlistid').reset();
+                    onlineStore.sync();
+                    this.doDownload();
+                    offlineStore.removeAll();
+                    offlineStore.sync();
                 }
             },this)
         } else if (arg === 'inbox') {
@@ -591,6 +589,7 @@ Ext.define('mUserStories.controller.basic', {
             patient: Uuid,
             encounterType: 'f30845d5-9ec0-4960-8104-a1366db21dc4',
             provider : USER.uuid
+            
         })
         
         //Create the encounter store and POST the encounter
@@ -655,7 +654,6 @@ Ext.define('mUserStories.controller.basic', {
                 success: function (response) {
                     var userInfo = Ext.decode(response.responseText);
                     USER.uuid = userInfo.person.uuid;
-                    console.log(userInfo);
                     localStorage.setItem('uuid', userInfo.person.uuid)
                 },
                 failure: function () {
@@ -667,7 +665,6 @@ Ext.define('mUserStories.controller.basic', {
     toPage : function (arg) {
         var t = Ext.getCmp('narwhal');
         var b = Ext.getCmp('backButton');
-        console.log(t,b)
         if (arg === PAGES.LOGIN_SCREEN) {
             t.setTitle('Community Health Worker Module');
             b.setHidden(true)

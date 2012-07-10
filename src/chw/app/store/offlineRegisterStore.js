@@ -6,9 +6,9 @@ Ext.define('mUserStories.store.offlineRegisterStore',{
         model:'mUserStories.model.upPersonModel',
 //        id: 'offlineRegisterStore',
         sorters:'familyName',
-        grouper:function(record){
-            return record.get('familyName')[0];
-        },
+//        grouper:function(record){
+//            return record.get('familyName')[0];
+//        },
         proxy: {
             type: 'localstorage',
             id: 'offlineRegisterStoreid'
