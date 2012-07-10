@@ -103,9 +103,9 @@ Ext.define('mUserStories.controller.basic', {
                 }
             },
             ok_loc:{
-              tap: function(){
-                  this.doLocation(true)
-              }  
+                tap: function(){
+                    this.doLocation(true)
+                }  
             },
             photo: {
                 tap: function () {
@@ -318,6 +318,8 @@ Ext.define('mUserStories.controller.basic', {
                     onlineStore.on('write',function(){
                         console.log('Syncing');
                         this.getidentifierstype(onlineStore.getAt(0).getData().uuid)
+                        offlineStore.removeAll();
+                        offlineStore.sync();
                     },this);
                     
                     offlineStore.each(function(record){
@@ -332,8 +334,7 @@ Ext.define('mUserStories.controller.basic', {
                         
                     },this);
                     this.doDownload();
-                    offlineStore.removeAll();
-                    offlineStore.sync();
+                    Ext.getCmp('patientlistid').reset();
                 }
             },this)
         } else if (arg === 'inbox') {
@@ -378,7 +379,7 @@ Ext.define('mUserStories.controller.basic', {
                 Ext.getCmp('vis_'+arg).setDisabled(true)
             }
         })
-        // TODO: when all buttons are clicked, notify of completion
+    // TODO: when all buttons are clicked, notify of completion
     },
     /* HELPER FUNCTIONS */
     // deal with backbutton
@@ -389,7 +390,7 @@ Ext.define('mUserStories.controller.basic', {
         } else {
             this.toPage(PAGES.PATIENT_LIST)
         }
-        /*/ TODO: Best logic for returning to previous page - doReturn()
+    /*/ TODO: Best logic for returning to previous page - doReturn()
         // Hard coded in? Create a list of visited pages?
         if (arg === 'list') {
             this.doDownload();
@@ -534,8 +535,8 @@ Ext.define('mUserStories.controller.basic', {
             // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
             this.toPage(PAGES.LOCATION);
-            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
-            // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+        // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
+        // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (USER.type === 'VC') {
             this.toPage(PAGES.INBOX_VC)
         }
@@ -587,7 +588,7 @@ Ext.define('mUserStories.controller.basic', {
         var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
             encounterDatetime: ISODateString(new Date()),
             patient: Uuid,
-            encounterType: '70a8f272-7978-4713-b8cf-d0a40a46eeb5',
+            encounterType: 'f30845d5-9ec0-4960-8104-a1366db21dc4',
             provider : USER.uuid
         })
         
@@ -653,6 +654,7 @@ Ext.define('mUserStories.controller.basic', {
                 success: function (response) {
                     var userInfo = Ext.decode(response.responseText);
                     USER.uuid = userInfo.person.uuid;
+                    console.log(userInfo);
                     localStorage.setItem('uuid', userInfo.person.uuid)
                 },
                 failure: function () {
