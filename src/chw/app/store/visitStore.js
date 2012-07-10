@@ -18,10 +18,6 @@ Ext.define('mUserStories.store.visitStore', {
     config: {
         model: 'mUserStories.model.visitModel',
         id: 'visStore',
-        /*sorters: 'resourceName',
-        grouper: function (record) {
-            return record.get('resourceName')[0];
-        },*/
         data: [{
             id: 'vis_ors',
             vis_text: 'ORS',

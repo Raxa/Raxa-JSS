@@ -19,14 +19,11 @@ Ext.define('mUserStories.store.upPatientStore', {
     config: {
         model: 'mUserStories.model.upPatientModel',
         proxy: {
-
             type: 'rest',
             url: MRSHOST + '/ws/rest/v1/patient',
             headers: HEADERS,
-
             reader: {
                 type: 'json'
-
             },
             writer: {
                 type: 'json'

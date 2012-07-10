@@ -20,11 +20,7 @@ Ext.define('mUserStories.store.upPersonStore', {
     extend: 'Ext.data.Store',
     config: {
         model: 'mUserStories.model.upPersonModel',
-//        id: 'upPersonStore',
         sorters: 'familyName',
-//        grouper: function (record) {
-//            return record.get('familyName')[0];
-//        },
         proxy: {
             type: 'rest',
             //The REST call here only creates a person
