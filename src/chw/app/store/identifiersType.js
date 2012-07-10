@@ -21,7 +21,7 @@ Ext.define('mUserStories.store.identifiersType', {
     config: {
         fields: [{
             name: 'uuid',
-            //contains just one fiels because we only need uuid
+            //contains just one field because we only need uuid
             type: 'string'
         }],
         proxy: { //proxy for GET rest call
