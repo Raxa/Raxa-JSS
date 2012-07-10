@@ -82,6 +82,11 @@ Ext.define('RaxaEmr.controller.Session', {
                             'description': privilegesJson.privileges[i].description
                         };
                     }
+                    for (i = 0; i < privilegesJson.roles.length; i++) {
+                        if(privilegesJson.roles[i].name == 'Provider'){
+                            localStorage.setItem('loggedInUser',privilegesJson.person.uuid)
+                        }
+                    }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
                     this.loginSuccess();
                 },
@@ -225,6 +230,7 @@ Ext.define('RaxaEmr.controller.Session', {
 
     //on entry point for application, give control to Util.getViews()
     launch: function () {
+        Startup.getResourceUuid();
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,

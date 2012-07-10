@@ -12,7 +12,7 @@ Ext.define('Screener.store.Doctors', {
         model: 'Screener.model.Doctor',
         proxy: {
             type: 'ajax',
-            url: HOST +'/ws/rest/v1/provider',
+            url: HOST +'/ws/rest/v1/provider?v=full',
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json',
