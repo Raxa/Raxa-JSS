@@ -34,7 +34,6 @@ Ext.define('mUserStories.view.resources', {
             onItemDisclosure: function (record, btn, index) {
                 helper.discloseResource(record);
             },
-            //store: 'mUserStories.store.resourceStore',
             itemTpl: '<div>{resourceName}</div>',
             indexBar: true
         }]

@@ -15,7 +15,6 @@
  */
 Ext.define('motechScheduleTracking.view.optionsScreen', {
     extend: 'Ext.Panel',
-
     config: {
         items: [{
             xtype: 'titlebar',
@@ -25,7 +24,6 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
             xtype: 'container',
             centered: true,
             width: '100%',
-            // height : "100%",
             padding: '30px',
             items: [{
                 xtype: 'container',
@@ -41,7 +39,6 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                 }]
             }, {
                 xtype: 'container',
-                //height : "100%",
                 layout: {
                     type: 'vbox',
                     pack: 'center',
@@ -51,24 +48,16 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                     xtype: 'container',
                     layout: 'hbox',
                     width: '100%',
-                    // flex : '1',
-                    // height : "80",
-                    // padding : "0",
                     items: [{
                         xtype: 'button',
-                        //text : 'text',
                         flex: '3',
                         icon: '../lib/touch/resources/themes/images/default/pictos/team.png',
-                        //height : 100,
-                        //width : 100,
-                        // padding : '0'
                         id: 'selectStudy'
                     }, {
                         xype: 'label',
                         flex: '1'
                     }, {
                         xtype: 'button',
-                        // text : 'text',
                         flex: '3',
                         icon: '../lib/touch/resources/themes/images/default/pictos/folder_black.png',
                         id: 'selectForms'
@@ -77,9 +66,6 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                     xtype: 'container',
                     layout: 'hbox',
                     width: '100%',
-                    // flex : '1',
-                    // height : "80",
-                    // padding : "0",
                     items: [{
                         xytpe: 'label',
                         flex: '3',
@@ -96,24 +82,16 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                     xtype: 'container',
                     layout: 'hbox',
                     width: '100%',
-                    // flex : '1',
-                    // height : "80",
-                    // padding : "0",
                     items: [{
                         xtype: 'button',
-                        // text : 'text',
                         flex: '3',
                         icon: '../lib/touch/resources/themes/images/default/pictos/doc_down.png',
-                        // height : 100,
-                        // width : 100,
-                        // padding : '0'
                         id: 'downloadButton'
                     }, {
                         xype: 'label',
                         flex: '1'
                     }, {
                         xtype: 'button',
-                        // text : 'text',
                         flex: '3',
                         icon: '../lib/touch/resources/themes/images/default/pictos/doc_up.png',
                         id: 'uploadButton'
@@ -122,9 +100,6 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                     xtype: 'container',
                     layout: 'hbox',
                     width: '100%',
-                    // flex : '1',
-                    // height : "80",
-                    // padding : "0",
                     items: [{
                         xytpe: 'label',
                         flex: '3',
@@ -140,12 +115,9 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                 }, {
                     xtype: 'container',
                     layout: 'hbox',
-                    // flex : '1',
-                    //height : "20%",
                     width: "100%",
                     items: [{
                         xtype: 'button',
-                        // text : 'text',
                         icon: '../lib/touch/resources/themes/images/default/pictos/settings.png',
                         flex: '3',
                         id: 'settingsButton'
@@ -154,7 +126,6 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                         flex: '1'
                     }, {
                         xtype: 'button',
-                        // text : 'text',
                         icon: '../lib/touch/resources/themes/images/default/pictos/delete_black1.png',
                         flex: '3',
                         id: 'logoutButton'
@@ -162,8 +133,6 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                 }, {
                     xtype: 'container',
                     layout: 'hbox',
-                    // flex : '1',
-                    //height : "20%",
                     width: "100%",
                     items: [{
                         xtype: 'label',
@@ -176,68 +145,10 @@ Ext.define('motechScheduleTracking.view.optionsScreen', {
                         xtype: 'label',
                         html: '<center>Logout</center><br>',
                         flex: '3'
-                    }, ]
-                }
-
-                ]
-            },
-            /*{
-                        xtype: 'container',
-                        // flex : '1',
-                        // height : "20%",
-                        layout : {
-                            type : 'vbox',
-                            pack : 'center',
-                            align : 'middle'
-                        },
-                        items :[
-                            {
-                                xtype: 'container',
-                                // centered: true,
-                                layout: 'hbox',
-                                layout : {
-                                  pack : 'justify',
-                                  align : 'center'
-                                },
-                                // ui: 'aqua',
-                                padding: '10px',
-                                width : "100%",
-                                items: [
-                                    {
-                                        xtype: 'label',
-                                        flex : '4'
-                                    },
-                                    {
-                                        xtype: 'button',
-                                        text: 'Okay',
-                                        ui: 'aqua',
-                                        flex : '3'
-                                    },
-                                    {
-                                        xtype: 'label',
-                                        flex : '1'
-                                    },
-                                    {
-                                        xtype: 'button',
-                                        text: 'Cancel',
-                                        ui: 'aqua',
-                                        flex : '3'
-                                    },
-                                    {
-                                        xtype: 'label',
-                                        flex : '4'
-                                    }
-                                ]
-                            }
-                        ]
-                    }*/
-
-
-            ]
-        }
-
-
-        ]
+                    }]
+                }]
+            }]
+        }]
     }
 
 });

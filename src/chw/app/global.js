@@ -49,10 +49,6 @@ var CONNECTED = true;   //Variable for connectivity status
 var helper = {
     listDisclose: function (record) {
         var CURRENT = true;
-        // set up title
-        // console.log(Ext.getCmp('narwhal'));
-        // Ext.getCmp('narwhal').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
-        // set up visit
         if (CURRENT) {
             // TODO: get type of visit associated with patient
             // var visType = this.getVisitType(record.get('familyName'));
@@ -66,11 +62,12 @@ var helper = {
                 width: '100%',
                 id: 'cont'
             })
+            // get store for visit details
             var visStore = Ext.getStore('visitStore');
             visStore.load();
+            // create buttons for each task
             for (var i = 0; i < taskList.length; i++) {
                 var t = visStore.getAt(taskList[i]);
-                // console.log(t);
                 var u = 'confirm';
                 var d = false;
                 if (t.get('vis_comp')) {
@@ -100,7 +97,6 @@ var helper = {
                 cont.add(cell);
             }
             c.add(cont);
-            // console.log(c);
         } else {
             // TODO: hide visit panel
             Ext.getCmp('vis_panel').hidden(true);
@@ -116,7 +112,6 @@ var helper = {
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
     },
     discloseResource: function (record) {
-        // console.log(Ext.getCmp('narwhal'));
         Ext.getCmp('narwhal').setTitle(record.get('resourceName'));
         if (record.get('resourceType')==='photo') {
             var located = 'resources/' + record.get('resourceLocation') + '.png'
@@ -137,7 +132,7 @@ var helper = {
         var t = visStore.getById(vid)
         Ext.Msg.confirm('Task', t.get('vis_det'), function (resp) {
             if (resp === 'yes') {
-                // set vis_comp as true
+                // TODO: set vis_comp as true
                 Ext.getCmp(t.get('id')).setUi('decline');
                 Ext.getCmp(t.get('id')).setDisabled(true);
                 Ext.getCmp(t.get('id') + '_audio').play();

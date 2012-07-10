@@ -139,13 +139,7 @@ Ext.define('mUserStories.controller.basic', {
                 xclass: 'mUserStories.view.vcScheduling'
             }]
         })
-        /*var visStore = Ext.getStore('visitStore');
-        visStore.load();
-        var t = visStore.getAt(VIS.ORS);
-        console.log(t);*/
-        // helper.listDisclose();
     },
-    /* SCREEN FUNCTIONS */
     // add registrations and reminders
     // TODO: should we add more functionality? ex. place order for sample
     doAdd: function (step, arg) {
@@ -204,119 +198,17 @@ Ext.define('mUserStories.controller.basic', {
             this.toPage(PAGES.PATIENT_LIST)
         }
     },
-    // allow chw to check in
-    doLocation: function (arg) {
-        if (arg) {
-            // TODO: generate close locations based on USER
-            LOCATION = Ext.getCmp('location').getValue();
-            if (LOCATION === 'empty') {
-                Ext.Msg.alert("", 'Please fill in the form')
-            } else {
-                if (LOCATION === "otherlocation") {
-                    Ext.Msg.prompt("", "Please enter other location:", function (btn, text) {
-                        if (btn === 'ok') {
-                            LOCATION = text;
-                        }
-                    })
-                }
-                // TODO: pass LOCATION & CURR_DATE to manager
-                // download all data into local storage
-                this.doDownload();
-                // continue to the next screen
-                this.toPage(PAGES.PATIENT_LIST)
-            }
-        } else {
-            // exit the program
-            this.doExit();
-        }
-    },
-    // login to the application
-    doLogin: function (arg) {
-        if (arg) {
-            // store items
-            USER.name = Ext.getCmp('username').getValue();
-            var pass = Ext.getCmp('password').getValue();
-            if (USER.name === '' || pass === '') {
-                Ext.Msg.alert("Error", "Please fill in all fields")
-            } else {
-                this.getUserInformation(USER.name);
-                this.saveBasicAuthHeader(USER.name,pass);
-            }
-        } else {
-            // exit the program
-            this.doExit();
-        }
-    },
-    // manage navigation based on lower toolbar
-    doToolbar: function (arg) {
-        if (arg === 'menu') {
-            this.toPage(PAGES.ADD)
-        } else if (arg === 'sync') {
-            Ext.Msg.confirm('', 'Sync all information?', function (resp) {
-                if (resp === 'yes') {
-                    // TODO: check for conflicts             
-                    // doUpload all information
-                    
-                    var onlineStore = Ext.create('mUserStories.store.upPersonStore');
-                    var offlineStore = Ext.getStore('offlineRegisterStore');
-                    var i = 0;
-                    
-                    onlineStore.onAfter('write',function(){
-                        var data =  onlineStore.getAt(i).getData();
-                        this.getidentifierstype(data.uuid);
-                        i++;
-                    },this);
-                    
-                    offlineStore.each(function(record){
-                        record.phantom = true;
-                        onlineStore.add(record);
-                        console.log(offlineStore.getNewRecords());
-                        console.log(offlineStore.getUpdatedRecords());
-                        console.log(offlineStore.getRemovedRecords());
-                    },this);
-                    
-                    onlineStore.sync();
-                    this.doDownload();
-                    offlineStore.removeAll();
-                    offlineStore.sync();
-                }
-            },this)
-        } else if (arg === 'inbox') {
-            this.toPage(PAGES.INBOX_CHW)
-        } else if (arg === 'resources') {
-            this.getResources();
-            this.toPage(PAGES.RESOURCES)
-        } else if (arg === 'not') {
-            this.toPage(PAGES.INBOX_VC)
-        } else if (arg === 'sch') {
-            this.toPage(PAGES.SCHEDULING)
-        }
-    },
-    doVis: function (arg) {
-        
-    },
-    /* HELPER FUNCTIONS */
     // deal with backbutton
     doBack: function () {
+        // TODO: Fix this with the Titlebar
         var active = Ext.getCmp('viewPort').getActiveItem();
         if (active.id === 'ext-formpanel-5' || active === 'ext-panel-6' || active === 'ext-panel-7') {
             this.toPage(PAGES.ADD)
         } else {
             this.toPage(PAGES.PATIENT_LIST)
         }
-    /*/ TODO: Best logic for returning to previous page - doReturn()
-        // Hard coded in? Create a list of visited pages?
-        if (arg === 'list') {
-            this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
-        } else if (arg === 'add') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
-        } else if (arg === 'res') {
-            this.getResources();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
-        }*/
     },
-    // Download patient with details
+        // Download patient with details
     doDownload: function () {
         //Initially assuming we are connected
         CONNECTED = true;
@@ -366,6 +258,23 @@ Ext.define('mUserStories.controller.basic', {
         USER.uuid = '';
         this.toPage(PAGES.LOGIN_SCREEN)
     },
+    // login to the application
+    doLogin: function (arg) {
+        if (arg) {
+            // store items
+            USER.name = Ext.getCmp('username').getValue();
+            var pass = Ext.getCmp('password').getValue();
+            if (USER.name === '' || pass === '') {
+                Ext.Msg.alert("Error", "Please fill in all fields")
+            } else {
+                this.getUserInformation(USER.name);
+                this.saveBasicAuthHeader(USER.name,pass);
+            }
+        } else {
+            // exit the program
+            this.doExit();
+        }
+    },
     // distinguish between ok and cancel
     doOption: function (arg) {
         var active = Ext.getCmp('viewPort').getActiveItem();
@@ -381,6 +290,51 @@ Ext.define('mUserStories.controller.basic', {
             
         } else if (active === PAGES.INBOX_VC) {
             
+        }
+    },
+    // manage navigation based on lower toolbar
+    doToolbar: function (arg) {
+        if (arg === 'menu') {
+            this.toPage(PAGES.ADD)
+        } else if (arg === 'sync') {
+            Ext.Msg.confirm('', 'Sync all information?', function (resp) {
+                if (resp === 'yes') {
+                    // TODO: check for conflicts             
+                    // doUpload all information
+                    
+                    var onlineStore = Ext.create('mUserStories.store.upPersonStore');
+                    var offlineStore = Ext.getStore('offlineRegisterStore');
+                    var i = 0;
+                    
+                    onlineStore.onAfter('write',function(){
+                        var data =  onlineStore.getAt(i).getData();
+                        this.getidentifierstype(data.uuid);
+                        i++;
+                    },this);
+                    
+                    offlineStore.each(function(record){
+                        record.phantom = true;
+                        onlineStore.add(record);
+                        console.log(offlineStore.getNewRecords());
+                        console.log(offlineStore.getUpdatedRecords());
+                        console.log(offlineStore.getRemovedRecords());
+                    },this);
+                    
+                    onlineStore.sync();
+                    this.doDownload();
+                    offlineStore.removeAll();
+                    offlineStore.sync();
+                }
+            },this)
+        } else if (arg === 'inbox') {
+            this.toPage(PAGES.INBOX_CHW)
+        } else if (arg === 'resources') {
+            this.getResources();
+            this.toPage(PAGES.RESOURCES)
+        } else if (arg === 'not') {
+            this.toPage(PAGES.INBOX_VC)
+        } else if (arg === 'sch') {
+            this.toPage(PAGES.SCHEDULING)
         }
     },
     /* this funtions makes a get call to get the patient identifiers type */
@@ -433,12 +387,8 @@ Ext.define('mUserStories.controller.basic', {
         Ext.getCmp('username').reset();
         Ext.getCmp('password').reset();
         if (USER.type === 'CHW') {
-            // continue to next page with proper settings
-            // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
             this.toPage(PAGES.PATIENT_LIST);
-        // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST);
-        // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
         } else if (USER.type === 'VC') {
             this.toPage(PAGES.INBOX_VC)
         }
@@ -470,34 +420,6 @@ Ext.define('mUserStories.controller.basic', {
         
         this.doDownload();
         this.toPage(PAGES.PATIENT_LIST)
-    },
-    sendEncounterData:function(Uuid){
-        
-        //Function for getting date in correct format
-        function ISODateString(d){
-            function pad(n){
-                return n<10 ? '0'+n : n
-            }
-            return d.getUTCFullYear()+'-'
-            + pad(d.getUTCMonth()+1)+'-'
-            + pad(d.getUTCDate())+'T'
-            + pad(d.getUTCHours())+':'
-            + pad(d.getUTCMinutes())+':'
-            + pad(d.getUTCSeconds())+'Z'
-        }
-        //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
-        var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
-            encounterDatetime: ISODateString(new Date()),
-            patient: Uuid,
-            encounterType: 'f30845d5-9ec0-4960-8104-a1366db21dc4',
-            provider : USER.uuid
-            
-        })
-        
-        //Create the encounter store and POST the encounter
-        var store = Ext.create('mUserStories.store.encounterStore');
-        store.add(JSONEncounter);
-        store.sync();
     },
     saveBasicAuthHeader: function (username, password) {
         // delete existing logged in sessions
@@ -543,6 +465,34 @@ Ext.define('mUserStories.controller.basic', {
             }
         })
     }, 
+    sendEncounterData:function(Uuid){
+        
+        //Function for getting date in correct format
+        function ISODateString(d){
+            function pad(n){
+                return n<10 ? '0'+n : n
+            }
+            return d.getUTCFullYear()+'-'
+            + pad(d.getUTCMonth()+1)+'-'
+            + pad(d.getUTCDate())+'T'
+            + pad(d.getUTCHours())+':'
+            + pad(d.getUTCMinutes())+':'
+            + pad(d.getUTCSeconds())+'Z'
+        }
+        //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
+        var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
+            encounterDatetime: ISODateString(new Date()),
+            patient: Uuid,
+            encounterType: 'f30845d5-9ec0-4960-8104-a1366db21dc4',
+            provider : USER.uuid
+            
+        })
+        
+        //Create the encounter store and POST the encounter
+        var store = Ext.create('mUserStories.store.encounterStore');
+        store.add(JSONEncounter);
+        store.sync();
+    },
     storeUserInformation: function (userInfo) {
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
@@ -563,9 +513,8 @@ Ext.define('mUserStories.controller.basic', {
                 }
             });
         } else {}
-    },
+    }, 
     toPage : function (arg) {
-        // var t = Ext.getCmp('narwhal');
         var t = this.getNarwhal();
         var b = Ext.getCmp('backButton');
         if (arg === PAGES.LOGIN_SCREEN) {
@@ -575,7 +524,6 @@ Ext.define('mUserStories.controller.basic', {
             t.setTitle('Patient List');
             b.setHidden(true);
         } else if (arg === PAGES.PATIENT_DET) {
-            // title.setTitle('Patient Details');
             b.setHidden(false)
         } else if (arg === PAGES.ADD) {
             t.setTitle('Add Options');
@@ -602,7 +550,6 @@ Ext.define('mUserStories.controller.basic', {
             b.setHidden(false)
         }
         else if (arg === PAGES.RESOURCE_DET) {
-            // title.setTitle('Patient Details');
             b.setHidden(false)
         }
         else if (arg === PAGES.INBOX_VC) {

@@ -26,7 +26,6 @@ Ext.define('mUserStories.view.vcToolbar', {
             align: 'center'
         },
         items: [{
-            // iconCls: 'action',
             iconCls: 'inbox2',
             id: 'notButton'
         }, {

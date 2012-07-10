@@ -35,7 +35,6 @@ Ext.define('mUserStories.view.patientDetails', {
                        id: 'img_vis',
                        html: '<img src="resources/diarrhea.png" height="100%" width="100%"/>',
                        height: '40%',
-                       //width: '20%',
                        flex: 1
                 },{
                     xtype: 'fieldset',

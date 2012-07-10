@@ -30,15 +30,12 @@ Ext.define('mUserStories.view.userToolbar', {
             id: 'menuButton'
         }, {
             iconCls:'inbox2',
-            // iconCls: 'action',
             id: 'inboxButton'
         }, {
-            // iconCls: 'arrow_down',
             iconCls:'cloud_black_upload1',
             id: 'syncButton'
         }, {
             iconCls:'photos2',
-            // iconCls: 'star',
             id: 'resourcesButton'
         }, {
             iconCls: 'delete',
