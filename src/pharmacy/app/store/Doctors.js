@@ -3,16 +3,15 @@ Ext.define('RaxaEmr.Pharmacy.store.Doctors', {
     extend: 'Ext.data.Store',
     //xtype: 'doctorStore',
     //storeId: 'doctorStore',
-        model: 'RaxaEmr.Pharmacy.model.Doctor',
-        proxy: {
-            type: 'ajax',
-            url: HOST +'/ws/rest/v1/provider',
-            headers: Util.getBasicAuthHeaders(),
-            reader: {
-                type: 'json',
-                root: 'results'
-            }
-        },
-        autoLoad: true
+    model: 'RaxaEmr.Pharmacy.model.Doctor',
+    proxy: {
+        type: 'ajax',
+        url: HOST +'/ws/rest/v1/provider',
+        headers: Util.getBasicAuthHeaders(),
+        reader: {
+            type: 'json',
+            root: 'results'
+        }
+    },
+    autoLoad: true
 }); 
-
