@@ -24,6 +24,7 @@ Ext.define('Screener.model.Doctor', {
             name: 'person',
             model: 'Screener.model.Person'
         }]
+    
     }
 });
 /*

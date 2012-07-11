@@ -1,13 +1,11 @@
-Ext.define('Screener.model.encounters', {
+Ext.define('Screener.model.encounterpost', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{
-            name: 'uuid',
-            type: 'string'
-        }, {
-            name: 'display',
-            type: 'string'
-        }, {
+            name: 'patient',
+            type: 'string',
+            mapping: 'patient.uuid'
+        },{
             name: 'encounterType',
             type: 'string'
         }, {
@@ -15,10 +13,11 @@ Ext.define('Screener.model.encounters', {
             type: 'string'
         }, {
             name: 'provider',
-            type: 'string'
+            type: 'string',
+            mapping: 'provider.uuid'
         }, {
-            name: 'obs',
-            model: 'Screener.model.Observation'
+            name: 'location',
+            type: 'string'
         }]
     }
 });

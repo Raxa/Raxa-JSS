@@ -1,4 +1,4 @@
-Ext.define('Screener.model.Encounters', {
+Ext.define('Screener.model.encounters', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{
