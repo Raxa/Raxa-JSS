@@ -13,16 +13,26 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.titlebar', {
+/*Ext.define('mUserStories.view.titlebar', {
     extend: 'Ext.TitleBar',
     id: 'narwhal',
     config: {
         docked: 'top',
         title: 'CHW Module',
         items: [{
+            xtype: 'button',
             ui: 'back',
             text: 'Back',
             id: 'backButton'
         }]
+    }
+})*/
+
+Ext.define('mUserStories.view.titlebar', {
+    extend: 'Ext.Container',
+    id: 'title_cont',
+    config: {
+        docked: 'top',
+        items: []
     }
 })

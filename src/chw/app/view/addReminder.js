@@ -19,8 +19,24 @@ Ext.define('mUserStories.view.addReminder', {
         height: '100%',
         ui: 'neutral',
         scrollable: true,
-        items: [{
+        items: [/*{
             xclass: 'mUserStories.view.titlebar'
+        },*/{
+            xtype: 'titlebar',
+            title: 'Add Reminder',
+            id: 'title_add_rem',
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_add_rem',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('add')
+                    }
+                }
+            }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

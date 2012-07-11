@@ -18,8 +18,24 @@ Ext.define('mUserStories.view.notificationInbox', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [{
+        items: [/*{
             xclass: 'mUserStories.view.titlebar'
+        }, */{
+            xtype: 'titlebar',
+            title: 'Inbox',
+            id: 'title_inb',
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_inb',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('list')
+                    }
+                }
+            }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

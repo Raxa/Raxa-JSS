@@ -186,7 +186,8 @@ Ext.define('mUserStories.controller.basic', {
                     
                     Ext.getCmp('ext-formpanel-5').reset();
                     this.doDownload();
-                    Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)    
+                    this.toPage(PAGES.PATIENT_LIST)
+                    // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST.value)    
                 }
             } else if (step === 'reminder') {
             // TODO: validate all fields
@@ -198,7 +199,7 @@ Ext.define('mUserStories.controller.basic', {
             this.toPage(PAGES.PATIENT_LIST)
         }
     },
-    // deal with backbutton
+    /*/ deal with backbutton
     doBack: function () {
         // TODO: Fix this with the Titlebar
         var active = Ext.getCmp('viewPort').getActiveItem();
@@ -207,8 +208,8 @@ Ext.define('mUserStories.controller.basic', {
         } else {
             this.toPage(PAGES.PATIENT_LIST)
         }
-    },
-        // Download patient with details
+    },*/
+    // Download patient with details
     doDownload: function () {
         //Initially assuming we are connected
         CONNECTED = true;
@@ -278,7 +279,7 @@ Ext.define('mUserStories.controller.basic', {
     // distinguish between ok and cancel
     doOption: function (arg) {
         var active = Ext.getCmp('viewPort').getActiveItem();
-        if (active.getActiveItem() === PAGES.LOGIN_SCREEN) {
+        if (active.getActiveItem() === PAGES.LOGIN_SCREEN.value) {
             this.doLogin(arg)
         } else if (active.id === 'ext-formpanel-5') {
             this.doAdd('register',arg)
@@ -288,7 +289,7 @@ Ext.define('mUserStories.controller.basic', {
             this.doAdd('appointment',arg)
         } else if (active === 'ext-tabpanel-3') {
             
-        } else if (active === PAGES.INBOX_VC) {
+        } else if (active === PAGES.INBOX_VC.value) {
             
         }
     },
@@ -514,8 +515,13 @@ Ext.define('mUserStories.controller.basic', {
             });
         } else {}
     }, 
-    toPage : function (arg) {
-        var t = this.getNarwhal();
+    /*toPage : function (arg) {
+        // var t = this.getNarwhal();
+        //var a = Ext.getCmp('viewPort').getActiveItem();
+        //var aa = Ext.getCmp(a)
+        //var t = a.getComponent('narwhal');
+        var a = Ext.getCmp('title_cont');
+        var t = a.getComponent('title_text');
         var b = Ext.getCmp('backButton');
         if (arg === PAGES.LOGIN_SCREEN) {
             t.setTitle('Community Health Worker Module');
@@ -561,5 +567,30 @@ Ext.define('mUserStories.controller.basic', {
             b.setHidden(true)
         }
         Ext.getCmp('viewPort').setActiveItem(arg);
+    }*/
+    toPage: function (p) {
+        /*var c = Ext.getCmp('title_cont');
+        if (Ext.getCmp('title_bar')) {
+            Ext.getCmp('title_bar').destroy();
+        }
+        if (Ext.getCmp('backButton')) {
+            Ext.getCmp('backButton').destroy();
+        }
+        var cell = Ext.create('Ext.Panel', {
+            items: [{
+                xtype: 'titlebar',
+                title: p.text,
+                docked: 'top',
+                id: 'title_bar',
+                items: [{
+                    xtype: 'button',
+                    ui: 'back',
+                    id: 'backButton',
+                    hidden: p.bb
+                }]
+            }]
+        }) 
+        c.add(cell);*/
+        Ext.getCmp('viewPort').setActiveItem(p.value);
     }
 })

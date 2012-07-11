@@ -16,8 +16,19 @@
 Ext.define('mUserStories.view.loginScreen', {
     extend: 'Ext.Panel',
     config: {
-        items: [{
+        items: [/*{
             xclass: 'mUserStories.view.titlebar'
+        }, */{
+            xtype: 'titlebar',
+            title: 'CHW Module',
+            id: 'title_login',
+            docked: 'top'/*,
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_add_appt'
+            }]*/
         }, {
             xtype: 'container',
             centered: true,

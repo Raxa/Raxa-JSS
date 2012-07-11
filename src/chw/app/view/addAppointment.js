@@ -20,8 +20,24 @@ Ext.define('mUserStories.view.addAppointment', {
         ui: 'neutral',
         scrollable: true,
         items: [{
+            xtype: 'titlebar',
+            title: 'Add Appointment',
+            id: 'title_add_appt',
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_add_appt',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('add')
+                    }
+                }
+            }]
+        }, /*{
             xclass: 'mUserStories.view.titlebar'
-        }, {
+        },*/ {
             xclass: 'mUserStories.view.userToolbar'
         }, {
             xtype: 'container',

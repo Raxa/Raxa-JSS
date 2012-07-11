@@ -18,8 +18,25 @@ Ext.define('mUserStories.view.resourceDetail', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [{
+        items: [/*{
             xclass: 'mUserStories.view.titlebar'
+        }, */
+        {
+            xtype: 'titlebar',
+            // title: '',
+            id: 'title_res_det',
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_res_det',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('resource')
+                    }
+                }
+            }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

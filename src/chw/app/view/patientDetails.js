@@ -18,8 +18,24 @@ Ext.define('mUserStories.view.patientDetails', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [{
+        items: [/*{
             xclass: 'mUserStories.view.titlebar'
+        }, */{
+            xtype: 'titlebar',
+            // title: '',
+            id: 'title_pdet',
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_pdet',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('list')
+                    }
+                }
+            }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

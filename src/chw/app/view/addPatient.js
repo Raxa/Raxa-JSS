@@ -19,8 +19,24 @@ Ext.define('mUserStories.view.addPatient', {
         height: '100%',
         ui: 'neutral',
         scrollable: true,
-        items: [{
+        items: [/*{
             xclass: 'mUserStories.view.titlebar'
+        },*/{
+            xtype: 'titlebar',
+            title: 'Add Patient',
+            id: 'title_add_reg',
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_add_reg',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('add')
+                    }
+                }
+            }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {

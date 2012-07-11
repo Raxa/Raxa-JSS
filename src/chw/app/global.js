@@ -17,19 +17,78 @@
 // See src/app/view/Login.js
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
 var MRSHOST = 'http://emrjss.jelastic.dogado.eu';
-var PAGES = {
+/*var PAGES = {
     LOGIN_SCREEN: 0,
     PATIENT_LIST: 1,
     PATIENT_DET: 2,
     ADD: 3,
     ADD_REG: 4,
     ADD_REM: 5,
-    ADD_APP: 6,
+-    ADD_APP: 6,
     INBOX_CHW: 7,
     RESOURCES: 8,
     RESOURCE_DET: 9,
     INBOX_VC: 10,
     SCHEDULING: 11
+}*/
+var PAGES = {
+    LOGIN_SCREEN: {
+        value: 0,
+        text: 'CHW Module',
+        bb: true
+    }, PATIENT_LIST: {
+        value: 1,
+        text: 'Patient List',
+        bb: true
+    }, PATIENT_DET: {
+        value: 2,
+        text: '',
+        bb: false, 
+        bbb: 'list'
+    }, ADD: {
+        value: 3,
+        text: 'Add Options',
+        bb: false,
+        bbb: 'list'
+    }, ADD_REG: {
+        value: 4,
+        text: 'Register Patient',
+        bb: false,
+        bbb: 'add'
+    }, ADD_REM: {
+        value: 5,
+        text: 'Add Reminder',
+        bb: false,
+        bbb: 'add'
+    }, ADD_APP: {
+        value: 6, 
+        text: 'Add Appointment',
+        bb: false,
+        bbb: 'add'
+    }, INBOX_CHW: {
+        value: 7,
+        text: 'Inbox',
+        bb: false,
+        bbb: 'list'
+    }, RESOURCES: {
+        value: 8,
+        text: 'Resources',
+        bb: false,
+        bbb: 'list'
+    }, RESOURCE_DET: {
+        value: 9,
+        text: '',
+        bb: false,
+        bbb: 'resource'
+    }, INBOX_VC: {
+        value: 10,
+        text: 'Inbox',
+        bb: true
+    }, SCHEDULING: {
+        value: 11,
+        text: 'Scheduling',
+        bb: true
+    }
 }
 var VIS = {
     ORS: 0,
@@ -48,6 +107,7 @@ var LOCATION = "";
 var CONNECTED = true;   //Variable for connectivity status
 var helper = {
     listDisclose: function (record) {
+        Ext.getCmp('title_pdet').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
         var CURRENT = true;
         if (CURRENT) {
             // TODO: get type of visit associated with patient
@@ -108,17 +168,17 @@ var helper = {
         Ext.getCmp('gender_det').setValue(record.get('gender'));
         Ext.getCmp('bday_det').setValue(record.get('birthdate'));
         // change to next page
-        Ext.getCmp('backButton').setHidden(false);
-        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET)
+        // Ext.getCmp('backButton').setHidden(false);
+        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET.value)
     },
     discloseResource: function (record) {
-        Ext.getCmp('narwhal').setTitle(record.get('resourceName'));
+        Ext.getCmp('title_res_det').setTitle(record.get('resourceName'));
         if (record.get('resourceType')==='photo') {
             var located = 'resources/' + record.get('resourceLocation') + '.png'
             Ext.getCmp('resource_label').setHtml('<img src="'+located+'" height="100%" width="100%"/>')
         }
-        Ext.getCmp('backButton').setHidden(false);
-        Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCE_DET)
+        //Ext.getCmp('backButton').setHidden(false);
+        Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCE_DET.value)
     },
     getVisitType: function (person) {
         
@@ -138,6 +198,15 @@ var helper = {
                 Ext.getCmp(t.get('id') + '_audio').play();
             }
         })
+    }, 
+    doBack: function (arg) {
+        if (arg === 'list') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST.value)
+        } else if (arg === 'add') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.ADD.value)
+        } else if (arg === 'resource') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES.value)
+        }
     }
 }
 var HEADERS = {
