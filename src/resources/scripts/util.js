@@ -15,6 +15,15 @@
  *
  * This class provides util methods and constants that are shared by the core, apps and modules
  */
+ 
+/* Phone Number Validation */
+Ext.apply(Ext.form.VTypes,{
+	phone: function(value,field){
+		return value.replace(/[ \-\(\)]/g,'').length == 10;
+	},
+	phoneText: 'Invalid, number must be 10 digits',
+	phoneMask: /[ \d\-\(\)]/
+});
 
 if (localStorage.getItem("host") == null) {
     var HOST = 'http://emrjss.jelastic.dogado.eu';
