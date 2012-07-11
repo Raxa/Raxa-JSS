@@ -170,7 +170,6 @@ Ext.define("Screener.controller.Application", {
     },
     //called on startup
     init: function () {
-        //     this.totalPatients = Ext.getStore('patientStore').getCount();
         form_num = 0;
         lab_num = 0;
         this.getpatientlist();
@@ -196,7 +195,6 @@ Ext.define("Screener.controller.Application", {
             searchQuery: "?encounterType=" + localStorage.outUuidencountertype + "&startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d)
 
         });
-        console.log(list_outEncounter)
         //this.createRegList(list_regEncounter, list_scrEncounter);
         var k = 0;
         this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, k);
@@ -245,17 +243,14 @@ Ext.define("Screener.controller.Application", {
         })
         // Setting the url dynamically for store to store patients list
         store_patientList.getProxy().setUrl(this.getPatientListUrl(store_regEncounter.getData().getAt(0).getData().uuid, store_scrEncounter.getData().getAt(0).getData().uuid, localStorage.regUuidencountertype));
-        console.log(store_assPatientList)
         store_assPatientList.getProxy().setUrl(this.getPatientListUrl(store_scrEncounter.getData().getAt(0).getData().uuid, store_outEncounter.getData().getAt(0).getData().uuid, localStorage.screenerUuidencountertype));
         store_patientList.load();
         store_assPatientList.load();
-        console.log(store_assPatientList)
         store_patientList.on('load', function () {}, this);
         return store_patientList;
     },
     // returns dynamically changed URL for getting patientList
     getPatientListUrl: function (reg_UUID, scr_UUID, encountertype) {
-        console.log(scr_UUID)
         return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + reg_UUID + '&notInList=' + scr_UUID + '&encounterType=' + encountertype);
     },
 
@@ -442,7 +437,6 @@ Ext.define("Screener.controller.Application", {
         PatientStore.add(patient);
         PatientStore.sync();
         PatientStore.on('write', function () {
-            console.log('hi')
             this.sendEncounterData(personUuid, localStorage.regUuidencountertype, localStorage.screenerUuidlocation, localStorage.loggedInUser)
         }, this)
     },
@@ -620,7 +614,6 @@ Ext.define("Screener.controller.Application", {
         currentNumPatients = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('Doctors').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
         //Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
-        console.log(Ext.getStore('Patients'))
         Ext.getStore('Patients').getAt(this.currentPatientIndex).set('patientid', this.currentDoctorIndex);
         console.log(Ext.getStore('Doctors'))
         var patient = Ext.getStore('Patients').getAt(this.currentPatientIndex).data.uuid
