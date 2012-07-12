@@ -278,7 +278,6 @@ Ext.define('mUserStories.controller.basic', {
     // distinguish between ok and cancel
     doOption: function (arg) {
         var active = Ext.getCmp('viewPort').getActiveItem();
-        console.log(active.id);
         if (active.getActiveItem() === PAGES.LOGIN_SCREEN.value) {
             this.doLogin(arg)
         } else if (active.id === 'ext-formpanel-4') {

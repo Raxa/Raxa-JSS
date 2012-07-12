@@ -72,13 +72,13 @@ Ext.define('mUserStories.view.notificationInbox', {
                 }, {
                     xtype: 'textfield',
                     label: 'First',
-                    id: 'first_rep',
+                    itemId: 'first_rep',
                     required: true,
                     placeHolder: 'Ronak'
                 }, {
                     xtype: 'textfield',
                     label: 'Last',
-                    id: 'last_rep',
+                    itemId: 'last_rep',
                     required: true,
                     placeHolder: 'Patel'
                 }, {
@@ -86,7 +86,7 @@ Ext.define('mUserStories.view.notificationInbox', {
                     // What is the best user interface for this--picture buttons?
                     xtype: 'textfield',
                     label: 'Details',
-                    id: 'details_rep',
+                    itemId: 'details_rep',
                     labelAlign: 'top',
                     placeHolder: 'Has malaria.'
                 }, {
