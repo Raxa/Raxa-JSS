@@ -148,9 +148,7 @@ Ext.define("Screener.controller.Application", {
             },
             drugSubmitButton: {
                 tap: 'drugsubmit'
-            /*function(){
-                    this.drugsubmit(0)
-                }*/
+
             }
         }
     },
@@ -613,7 +611,6 @@ Ext.define("Screener.controller.Application", {
     assignPatient: function () {
         currentNumPatients = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('Doctors').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
-        //Ext.getStore('doctorStore').getAt(this.currentDoctorIndex).patients().add(Ext.getStore('patientStore').getAt(this.currentPatientIndex));
         Ext.getStore('Patients').getAt(this.currentPatientIndex).set('patientid', this.currentDoctorIndex);
         console.log(Ext.getStore('Doctors'))
         var patient = Ext.getStore('Patients').getAt(this.currentPatientIndex).data.uuid
@@ -677,41 +674,11 @@ Ext.define("Screener.controller.Application", {
         this.currentPatientIndex = index;
         this.getRemoveButton().enable();
     },
-    //removes one patient from the current doctor
-    /*removePatient: function () {
-    objectRef = this;
-    Ext.Msg.confirm("Confirmation", "Are you sure you want to remove selected patient?", function (btn) {
-        if (btn == 'yes') {
-            objectRef.removeAPatient(Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().getAt(objectRef.currentPatientIndex));
-            numPatients = Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).get('numpatients');
-            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', numPatients - 1);
-            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(objectRef.currentPatientIndex);
-            objectRef.getRemovePatientButton().disable();
-        } else {}
-    });
-},
-*/
     //helper function to remove a single patient
     removeAPatient: function (patient) {
         patient.set('doctorid', - 1);
         Ext.getStore('patientStore').add(patient);
     },
-    //removes all patients from the current doctor
-    /*removeAllPatients: function () {
-    objectRef = this;
-    Ext.Msg.confirm("Confirmation", "Are you sure you want to remove all patients?", function (btn) {
-        if (btn == 'yes') {
-            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().each(objectRef.removeAPatient);
-            for (i = 0; i < Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).get('numpatients'); i++) {
-                Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).patients().removeAt(0);
-            }
-            Ext.getStore('doctorStore').getAt(objectRef.currentDoctorIndex).set('numpatients', 0);
-        } else {
-
-        }
-    });
-},
-*/
 
     sendEncounterData: function (uuid, encountertype, location, provider) {
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
