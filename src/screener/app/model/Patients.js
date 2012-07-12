@@ -15,7 +15,7 @@ Ext.define('Screener.model.Patients', {
             type: 'int'
         }, {
             name: 'encounters',
-            model: 'Screener.model.Encounters'
+            model: 'Screener.model.encounters'
         }]
     }
 });

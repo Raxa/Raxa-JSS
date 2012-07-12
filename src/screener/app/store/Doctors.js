@@ -7,7 +7,7 @@
 Ext.define('Screener.store.Doctors', {
     requires: ['Screener.model.Doctor'],
     extend: 'Ext.data.Store',
-    //xtype: 'doctorStore',
+    storeId: 'doctorStore',
     config: {
         model: 'Screener.model.Doctor',
         proxy: {
