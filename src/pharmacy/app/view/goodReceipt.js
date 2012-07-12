@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodReceipt', {
     id: 'goodReceipt',
     autoScroll: true,
     alias: 'widget.goodReceipt',
-     items:[{
+    items:[{
         xtype: 'allStockPanel',
         x : 400
     },{
