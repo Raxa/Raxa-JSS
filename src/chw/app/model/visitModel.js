@@ -16,6 +16,7 @@
 Ext.define('mUserStories.model.visitModel', {
     extend: 'Ext.data.Model',
     config: {
+        identifier: 'uuid',
         fields: [{
             name: 'vis_id',
             type: 'string'

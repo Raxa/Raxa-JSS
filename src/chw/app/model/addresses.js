@@ -16,6 +16,7 @@
 Ext.define('mUserStories.model.addresses', {
     extend: 'Ext.data.Model',
     config: {
+        identifier: 'uuid',
         fields: [{
             name: 'cityVillage',
             type: 'string'

@@ -17,6 +17,7 @@
 Ext.define('mUserStories.model.downModel',{
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[{
             name:'givenName',
             mapping:'preferredName.givenName',

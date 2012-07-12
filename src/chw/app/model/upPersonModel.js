@@ -19,6 +19,7 @@
 Ext.define('mUserStories.model.upPersonModel', {
     extend: 'Ext.data.Model',
     config: {
+        identifier: 'uuid',
         fields: [
             {
             name: 'id',
