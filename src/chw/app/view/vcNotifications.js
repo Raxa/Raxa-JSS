@@ -66,7 +66,7 @@ Ext.define('mUserStories.view.vcNotifications', {
                 }, {
                     xtype: 'textfield',
                     label: 'First',
-                    id: 'first_rep',
+                    itemId: 'first_rep_vc',
                     required: true
                 }, {
                     xtype: 'textfield',

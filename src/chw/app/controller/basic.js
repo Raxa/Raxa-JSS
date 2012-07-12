@@ -152,7 +152,7 @@ Ext.define('mUserStories.controller.basic', {
                 var lname = Ext.getCmp('last_reg').getValue();
                 var phone = Ext.getCmp('phone_reg').getValue();
                 var village = Ext.getCmp('village_reg').getValue();
-                var radioform = Ext.getCmp('ext-formpanel-5').saveForm();
+                var radioform = Ext.getCmp('ext-formpanel-4').saveForm();
                 var gender = radioform.radiogroup.charAt(0);
                 var bday = Ext.getCmp('bday').getValue();
 
@@ -181,7 +181,7 @@ Ext.define('mUserStories.controller.basic', {
                     
                     console.log('stored offline');
                     
-                    Ext.getCmp('ext-formpanel-5').reset();
+                    Ext.getCmp('ext-formpanel-4').reset();
                     this.doDownload();
                     this.toPage(PAGES.PATIENT_LIST)
                 // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST.value)    
@@ -280,7 +280,7 @@ Ext.define('mUserStories.controller.basic', {
         var active = Ext.getCmp('viewPort').getActiveItem();
         if (active.getActiveItem() === PAGES.LOGIN_SCREEN.value) {
             this.doLogin(arg)
-        } else if (active.id === 'ext-formpanel-5') {
+        } else if (active.id === 'ext-formpanel-4') {
             this.doAdd('register',arg)
         } else if (active === 'ext-panel-6') {
             this.doAdd('reminder',arg)

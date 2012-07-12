@@ -22,7 +22,7 @@ Ext.define('mUserStories.view.loginScreen', {
         }, */{
             xtype: 'titlebar',
             title: 'CHW Module',
-            id: 'title_login',
+//            id: 'title_login',
             docked: 'top'/*,
             items: [{
                 xtype: 'button',
@@ -49,7 +49,7 @@ Ext.define('mUserStories.view.loginScreen', {
                 }]
             }, {
                 xtype: 'fieldset',
-                id: 'loginForm',
+//                id: 'loginForm',
                 items: [{
                     xtype: 'textfield',
                     label: 'Username',
