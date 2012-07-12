@@ -25,19 +25,63 @@ Ext.define('mUserStories.store.resourceStore', {
         data: [{
             resourceType: 'photo',
             resourceName: 'Sharing',
-            resourceLocation: 'sharing'
+            resourceLocation: 'sharing.png'
         }, {
             resourceType: 'photo',
             resourceName: 'Spider Bites',
-            resourceLocation: 'spider'
+            resourceLocation: 'spider.png'
         }, {
             resourceType: 'photo',
             resourceName: 'Wash Your Hands',
-            resourceLocation: 'freeride'
+            resourceLocation: 'freeride.png'
         }, {
             resourceType: 'photo',
             resourceName: 'Cover Your Cough',
-            resourceLocation: 'cough'
+            resourceLocation: 'cough.png'
+        }, {
+            resourceType: 'video',
+            resourceName: 'Hands Together',
+            resourceLocation: 'handwash.webm'
+        }, {
+            resourceType: 'audio',
+            resourceName: 'H1N1',
+            resourceLocation: 'h1n1.mp3'
+        }, {
+            resourceType: 'audio',
+            resourceName: 'HIV Testing',
+            resourceLocation: 'hiv.mp3'
+        }, {
+            resourceType: 'video',
+            resourceName: 'AIDS Awareness, Cricket',
+            resourceLocation: 'aids_cricket.ram'
+        }, {
+            resourceType: 'video',
+            resourceName: 'AIDS Awareness, Mother',
+            resourceLocation: 'aids_mom.ram'
+        }, {
+            resourceType: 'video',
+            resourceName: 'Polio, Part 1',
+            resourceLocation: 'polio_erad1.ram'
+        }, {
+            resourceType: 'video',
+            resourceName: 'Polio, Part 2',
+            resourceLocation: 'polio_erad2.ram'
+        }, {
+            resourceType: 'video',
+            resourceName: 'Polio, Part 3',
+            resourceLocation: 'polio_erad3.ram'
+        }, {
+            resourceType: 'video',
+            resourceName: 'Vitamin A, Part 2',
+            resourceLocation: 'vita2.ram'
+        }, {
+            resourceType: 'video',
+            resourceName: 'Vitamin A, Part 2',
+            resourceLocation: 'vita1.ram'
+        }, {
+            resourceType: 'video',
+            resourceName: 'Vitamin A, Part 3',
+            resourceLocation: 'vita3.ram'
         }]
     }
 })

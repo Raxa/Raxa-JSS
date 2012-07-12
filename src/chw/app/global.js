@@ -104,7 +104,7 @@ USER.type = 'CHW';
 USER.uuid = '';
 var CURR_DATE = new Date();
 var LOCATION = "";
-var CONNECTED = true;   //Variable for connectivity status
+var CONNECTED = true;
 var helper = {
     listDisclose: function (record) {
         Ext.getCmp('title_pdet').setTitle(record.get('familyName') + ', ' + record.get('givenName'))
@@ -168,16 +168,33 @@ var helper = {
         Ext.getCmp('gender_det').setValue(record.get('gender'));
         Ext.getCmp('bday_det').setValue(record.get('birthdate'));
         // change to next page
-        // Ext.getCmp('backButton').setHidden(false);
         Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_DET.value)
     },
     discloseResource: function (record) {
         Ext.getCmp('title_res_det').setTitle(record.get('resourceName'));
+        var l = 'resources/' + record.get('resourceLocation');
+        var c = Ext.getCmp('resource_label')
         if (record.get('resourceType')==='photo') {
-            var located = 'resources/' + record.get('resourceLocation') + '.png'
-            Ext.getCmp('resource_label').setHtml('<img src="'+located+'" height="100%" width="100%"/>')
+            //Ext.getCmp('resource_label').setHtml('<img src="'+ l +'" height="100%" width="100%"/>')
+            var cell = Ext.create('Ext.Img', {
+                src: l,
+                height: '100%',
+                width: '100%'
+            })
+        } else if (record.get('resourceType')==='video') {
+            // Ext.getCmp('resource_label').setHtml('<video controls="controls"><source src="' + l + '"/></video>')
+            var cell = Ext.create('Ext.Video', {
+                url: l,
+                width: '100%',
+                height: '100%'
+            })
+        } else if (record.get('resourceType')==='audio') {
+            // Ext.getCmp('resource_label').setHtml('<audio controls="controls"><source src="' + l + '" type = "audio/mpeg"/>Your browser does not support the audio element</audio>')
+            var cell = Ext.create('Ext.Audio', {
+                url: l
+            })
         }
-        //Ext.getCmp('backButton').setHidden(false);
+        c.add(cell)
         Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCE_DET.value)
     },
     getVisitType: function (person) {
