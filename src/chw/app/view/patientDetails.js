@@ -42,6 +42,7 @@ Ext.define('mUserStories.view.patientDetails', {
             xtype: 'formpanel',
             title: 'Visit',
             id: 'vis_panel',
+            scrollable: true,
             items: [{
                 xtype: 'container',
                 layout: 'hbox',

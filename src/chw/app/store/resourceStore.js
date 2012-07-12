@@ -41,7 +41,7 @@ Ext.define('mUserStories.store.resourceStore', {
         }, {
             resourceType: 'video',
             resourceName: 'Hands Together',
-            resourceLocation: 'handwash.webm'
+            resourceLocation: ['handwash.webm', 'handwash.mov']
         }, {
             resourceType: 'audio',
             resourceName: 'H1N1',

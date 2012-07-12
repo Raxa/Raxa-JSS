@@ -191,7 +191,8 @@ var helper = {
         } else if (record.get('resourceType')==='audio') {
             // Ext.getCmp('resource_label').setHtml('<audio controls="controls"><source src="' + l + '" type = "audio/mpeg"/>Your browser does not support the audio element</audio>')
             var cell = Ext.create('Ext.Audio', {
-                url: l
+                url: l,
+                width: '100%'
             })
         }
         c.add(cell)
