@@ -206,44 +206,6 @@ describe("pharmacy", function () {
     })
 });
 
-describe("PatientList", function () {
-    var mainList = null;
-    var timeOut = 8000;
-    beforeEach(function () {
-        if (!mainList) {
-            mainList = Ext.create('Screener.store.Patients');
-        }
-        expect(mainList).toBeTruthy();
-        waitsFor(
-
-        function () {
-            return !mainList.isLoading();
-        }, "store load not completed (timeout)", timeOut);
-    });
-
-    it(" reading from Patients store & comparing with REST result ", function () {
-
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
-            var response = {
-                responseText: "{\"results\":[" + "{\"uuid\": \"b0763e6d-95e7-11e1-beba-4dc2e8449b3e\",\"display\": \"Mr. Alpha d Gamma\"," + "\"links\":[{\"uri\": \"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/b0763e6d-95e7-11e1-beba-4dc2e8449b3e\",\"rel\": \"self\"}]}," + "{\"uuid\": \"3c0a2629-faa4-41f2-b573-a5afac346a54\",\"display\": \"Mr Beta k Delta\"," + "\"links\":[{\"uri\": \"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/3c0a2629-faa4-41f2-b573-a5afac346a54\",\"rel\": \"self\"}]}," + "{\"uuid\": \"5838ff26-cd81-4885-ac1b-83969e55eb6b\",\"display\": \"Mrs. Epsilon c Tau\"," + "\"links\":[{\"uri\": \"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/5838ff26-cd81-4885-ac1b-83969e55eb6b\",\"rel\": \"self\"}]}]}",
-                status: 200
-            };
-            request.success = 'true';
-            // this callback is loading response(defined above) in store instead of loading a actual reponse from server
-            // Callback method takes options, success and reponse as inputs
-            request.callback(null, true, response);
-        });
-
-        mainList = Ext.create('Screener.store.Patients');
-        expect(mainList.getData().getAt(0).getData().display).toEqual("Mr. Alpha d Gamma");
-        expect(mainList.getData().getAt(1).getData().display).toEqual("Mr Beta k Delta");
-        expect(mainList.getData().getAt(2).getData().display).toEqual("Mrs. Epsilon c Tau");
-        expect(mainList.getData().getAt(0).getData().uuid).toEqual("b0763e6d-95e7-11e1-beba-4dc2e8449b3e");
-        expect(mainList.getData().getAt(1).getData().links[0].uri).toEqual("http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/3c0a2629-faa4-41f2-b573-a5afac346a54");
-        expect(mainList.getData().getAt(2).getData().links[0].rel).toEqual("self");
-    });
-});
-
 describe("DoctorList", function () {
     var store = null;
     var timeout = 10000;
@@ -254,6 +216,7 @@ describe("DoctorList", function () {
         }
         expect(store).toBeTruthy()
         waitsFor(
+
         function () {
             return !store.isLoading();
         }, "load never completed", timeout)
@@ -277,6 +240,77 @@ describe("DoctorList", function () {
         expect(store.getData().getAt(0).getData().display).toEqual("testdoc1");
         expect(store.getData().getAt(1).getData().uuid).toEqual("testuuid2");
         expect(store.getData().getAt(1).getData().display).toEqual("testdoc2");
+    })
+});
+
+
+
+describe("PatientList", function () {
+    var regList = null;
+    var scrList = null;
+    var mainList = null;
+    var ctrl = null;
+    var d = new Date();
+
+
+    beforeEach(function () {
+        if (!ctrl) {
+            ctrl = App.getController('Application');
+        }
+        if (!regList) {
+            regList = Ext.create('Screener.store.PostLists');
+        }
+        if (!scrList) {
+            scrList = Ext.create('Screener.store.PostLists');
+        }
+
+
+    });
+
+    it("Posts Regisration abd Screener Lists", function () {
+
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+            var response = {
+                responseText: "{\"uuid\":\"02b2235a-c209-4000-b4b0-25e0223eaa80\",\"name\":\"Registration Encounter\",\"description\":\"Patients encountered RegistrationstartDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z\"}",
+                status: 201
+            }
+            request.success = 'true';
+            request.callback(null, true, response);
+        })
+        var list_regEncounter = Ext.create('Screener.model.PostList', {
+            name: "Testing Registration Encounter",
+            description: "Patients encountered RegistrationstartDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z",
+            searchQuery: "?encounterType=3d1c19eb-f228-4605-906f-ed80f4a0f63f&startDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z"
+        });
+        var list_scrEncounter = Ext.create('Screener.model.PostList', {
+            name: "Testing Registration Encounter",
+            description: "Patients encountered ScreenerstartDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z",
+            searchQuery: "?encounterType=f9591030-b8cb-4b30-9cc3-3f059494594e&startDate=2012-07-05T09:54:44Z&endDate=2012-07-06T09:54:44Z"
+        });
+		var k = 0;
+        Lists = ctrl.createList(list_regEncounter, list_scrEncounter, k);
+        expect(Lists[0].getData().getAt(0).getData().uuid).toEqual('02b2235a-c209-4000-b4b0-25e0223eaa80');
+		expect(Lists[1].getData().getAt(0).getData().uuid).toEqual('02b2235a-c209-4000-b4b0-25e0223eaa80');
+    });
+
+    
+    it(" Gets patient List", function () {
+
+        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+            var response = {
+                responseText: "{\"patients\":[{\"uuid\":\"969ba9a4-f53d-451f-ab97-0fa8b3e94523\",\"display\":\"Alpha d Beta\",\"gender\":\"M\",\"age\":null,\"encounters\":[{\"uuid\":\"a70e09b5-634b-4f8c-922f-7f9e511fe56b\",\"display\":\"REGISTRATION - 2012-07-05 15:14:00.0\",\"encounterType\":\"3d1c19eb-f228-4605-906f-ed80f4a0f63f\",\"encounterDatetime\":\"2012-07-05T15:14:00.000+0530\",\"provider\":\"68fc795e-50bd-424a-8e4e-7ca426c04953\",\"obs\":[]}]}]}",
+                status: 201
+            }
+            request.success = 'true';
+            request.callback(null, true, response);
+        })
+		patientList = ctrl.finalPatientList(Lists[0], Lists[1]);
+        expect(patientList.getData().getAt(0).getData().display).toEqual("Alpha d Beta");
+        var link = patientList.getProxy().getUrl();
+        var inList = link.indexOf(Lists[0].getData().getAt(0).getData().uuid);
+        var notInList = link.indexOf(Lists[1].getData().getAt(0).getData().uuid);
+        expect(inList).toNotEqual(-1);
+        expect(notInList).toNotEqual(-1);
     });
 });
 
