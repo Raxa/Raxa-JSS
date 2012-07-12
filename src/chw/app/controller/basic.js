@@ -264,8 +264,6 @@ Ext.define('mUserStories.controller.basic', {
             var PasswordRef = Ext.ComponentQuery.query('LoginScreen #passwordIID');
             USER.name = UsernameRef[1].getValue();
             var pass = PasswordRef[1].getValue();
-            console.log(USER.name);
-            console.log(pass);
             if (USER.name === '' || pass === '') {
                 Ext.Msg.alert("Error", "Please fill in all fields")
             } else {

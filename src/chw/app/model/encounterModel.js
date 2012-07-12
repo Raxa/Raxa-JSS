@@ -16,6 +16,7 @@
 Ext.define('mUserStories.model.encounterModel', {
     extend: 'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields: ['encounterDatetime', 'patient', 'encounterType', 'provider',
         {
             name: 'id',

@@ -17,6 +17,7 @@
 Ext.define('mUserStories.model.identifiers', {
     extend: 'Ext.data.Model',
     config: {
+        identifier: 'uuid',
         fields: [{
             name: 'identifier',
             type: 'string'

@@ -19,6 +19,7 @@
 Ext.define('mUserStories.model.names', {
     extend: 'Ext.data.Model',
     config: {
+        identifier: 'uuid',
         fields: [{
             name: 'giveName',
             type: 'string'

@@ -17,6 +17,7 @@
 Ext.define('mUserStories.model.upPatientModel', {
     extend: 'Ext.data.Model',
     config: {
+        identifier: 'uuid',
         fields: [{
             name: 'id',
             persist: false
