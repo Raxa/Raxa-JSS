@@ -46,18 +46,18 @@ Ext.define('mUserStories.view.addOptions', {
                 xtype: 'button',
                 text: 'Person',
                 iconMask:true,
-                id: 'add_reg',
+                action: 'add_reg',
                 iconCls: 'user_add'
             }, {
                 xtype: 'button',
                 text: 'Reminder',
-                id: 'add_rem',
+                action: 'add_rem',
                 iconMask:true,
                 iconCls:'time_repeat'
             }, {
                 xtype: 'button',
                 text: 'Appointment',
-                id: 'add_app',
+                action: 'add_app',
                 iconMask:true,
                 iconCls:'calendar_add'
             }]

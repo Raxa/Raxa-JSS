@@ -21,6 +21,7 @@ Ext.application({
     controllers: ['basic'],
     models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers','encounterModel', 'resourceModel', 'visitModel'],
     stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore','offlineStore','encounterStore','offlineRegisterStore', 'resourceStore', 'visitStore'],
+    views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling','userToolbar','addOptions','addPatient','addReminder','addAppointment','notificationInbox','resources','resourceDetail','vcToolbar','okCancel'],
     launch: function () {
         Ext.create('mUserStories.view.loginScreen');
     }

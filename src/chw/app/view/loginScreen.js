@@ -15,6 +15,7 @@
  */
 Ext.define('mUserStories.view.loginScreen', {
     extend: 'Ext.Panel',
+    alias: 'widget.LoginScreen',
     config: {
         items: [/*{
             xclass: 'mUserStories.view.titlebar'
@@ -52,13 +53,13 @@ Ext.define('mUserStories.view.loginScreen', {
                 items: [{
                     xtype: 'textfield',
                     label: 'Username',
-                    id: 'username',
-                    flex: 2
+                    itemId: 'usernameIID'
+//                    flex: 1
                 }, {
                     xtype: 'passwordfield',
                     label: 'Password',
-                    id: 'password',
-                    flex: 2
+                    itemId: 'passwordIID'
+//                    flex: 1
                 }]
             }, {
                 xclass: 'mUserStories.view.okCancel'
