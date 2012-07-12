@@ -15,93 +15,90 @@
  */
 Ext.define('mUserStories.controller.basic', {
     extend: 'Ext.app.Controller',
-    controllers: ['basic'],
-    views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling'],
+//    controllers: ['basic'],
+//    views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling'],
     config: {
-        refs: {
-            addApp: '#add_app',
-            addReg: '#add_reg',
-            addRem: '#add_rem',
-            back: '#backButton',
-            cancel: '#cancelButton',
-            sync: '#syncButton',
-            inbox: '#inboxButton',
-            logout: '#logoutButton',
-            logout_vc: '#logoutButton_vc',
-            menu: '#menuButton',
-            Narwhal: '#narwhal',
-            not_vc: '#notButton',
-            ok: '#okButton',
-            resources: '#resourcesButton',
-            sch_vc: '#schButton'
-        },
+//        refs: {
+//            UsernameRef: 'LoginScreen #loginForm #usernameIID',
+//            PasswordRef: 'LoginScreen #loginForm #passwordIID'
+//            addApp: '#add_app',
+//            addReg: '#add_reg',
+//            addRem: '#add_rem',
+//            back: '#backButton',
+//            cancel: '#cancelButton',
+//            sync: '#syncButton',
+//            inbox: '#inboxButton',
+//            logout: '#logoutButton',
+//            logout_vc: '#logoutButton_vc',
+//            menu: '#menuButton',
+//            Narwhal: '#narwhal',
+//            not_vc: '#notButton',
+//            ok: '#okButton',
+//            resources: '#resourcesButton',
+//            sch_vc: '#schButton'
+//        },
         control: {
-            addApp: {
+            "button[action=add_app]": {
                 tap: function () {
                     this.doAdd('app', true)
                 }
             },
-            addReg: {
+            "button[action=add_reg]": {
                 tap: function () {
                     this.doAdd('reg', true)
                 }
             },
-            addRem: {
+            "button[action=add_rem]": {
                 tap: function () {
                     this.doAdd('rem', true)
                 }
             },
-            back: {
-                tap: function () {
-                    this.doBack()
-                }
-            },
-            cancel: {
+            "button[action=cancel]": {
                 tap: function () {
                     this.doOption(false)
                 }
             },
-            sync: {
+            "button[action=syncButton]": {
                 tap: function () {
                     this.doToolbar('sync')
                 }
             },
-            inbox: {
+            "button[action=inboxButton]": {
                 tap: function () {
                     this.doToolbar('inbox')
                 }
             },
-            logout: {
+            "button[action=logoutButton]": {
                 tap: function () {
                     this.doExit()
                 }
             },
-            logout_vc: {
+            "button[action=logoutButton_vc]": {
                 tap: function () {
                     this.doExit()
                 }
             },
-            menu: {
+            "button[action=menuButton]": {
                 tap: function () {
                     this.doToolbar('menu')
                 }
             },
-            not_vc: {
+            "button[action=notButton]": {
                 tap: function () {
                     this.doToolbar('not')
                 }
             },
-            ok: {
+            "button[action=okButton]": {
                 tap: function () {
                     this.doOption(true)
                 }
             },
-            resources: {
+            "button[action=resourcesButton]": {
                 tap: function () {
                     this.doToolbar('resources')
                 }
             },
-            sch_vc: {
+            "button[action=schButton]": {
                 tap: function () {
                     this.doToolbar('sch')
                 }
@@ -187,7 +184,7 @@ Ext.define('mUserStories.controller.basic', {
                     Ext.getCmp('ext-formpanel-5').reset();
                     this.doDownload();
                     this.toPage(PAGES.PATIENT_LIST)
-                    // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST.value)    
+                // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST.value)    
                 }
             } else if (step === 'reminder') {
             // TODO: validate all fields
@@ -246,8 +243,8 @@ Ext.define('mUserStories.controller.basic', {
                 Ext.getCmp('patientlistid').setStore(offlineStore);
             }
         },this)
-        // TODO: set patientcurrid to be subset of above organized by appt time
-        // Do we need a separate store for this?
+    // TODO: set patientcurrid to be subset of above organized by appt time
+    // Do we need a separate store for this?
     },
     // exit the program
     doExit: function () {
@@ -263,8 +260,12 @@ Ext.define('mUserStories.controller.basic', {
     doLogin: function (arg) {
         if (arg) {
             // store items
-            USER.name = Ext.getCmp('username').getValue();
-            var pass = Ext.getCmp('password').getValue();
+            var UsernameRef = Ext.ComponentQuery.query('LoginScreen #usernameIID');
+            var PasswordRef = Ext.ComponentQuery.query('LoginScreen #passwordIID');
+            USER.name = UsernameRef[1].getValue();
+            var pass = PasswordRef[1].getValue();
+            console.log(USER.name);
+            console.log(pass);
             if (USER.name === '' || pass === '') {
                 Ext.Msg.alert("Error", "Please fill in all fields")
             } else {
@@ -385,8 +386,8 @@ Ext.define('mUserStories.controller.basic', {
     },
     loginContinue: function () {
         // clear form fields
-        Ext.getCmp('username').reset();
-        Ext.getCmp('password').reset();
+        Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
+        Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
         if (USER.type === 'CHW') {
             this.doDownload();
             this.toPage(PAGES.PATIENT_LIST);
