@@ -4,38 +4,39 @@
 Ext.define("Screener.view.PatientListView", {
     xtype: 'patientListView',
 	extend: 'Ext.Container',
+	alias: 'widget.ListView',
 	
 	
     config: {
         layout: 'hbox',
         title: 'Patient Assignments',
-		id: 'patientListViewId',
-
+		
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
         {
             xtype: 'list',
-            id: 'patientList',
+            itemId: 'patientList',
 			itemTpl: '{display}',
             store:  'patientStore',
             items: [{
                 xtype: 'titlebar',
+				itemId: 'patientsWaiting',
                 docked: 'top',
-                id: 'patientsWaiting',
                 title: 'Patients',
                 items: [{
                     xtype: 'button',
                     text: 'Sort',
-                    id: 'sortButton',
+					action: 'sortList',
                     align: 'left'
                 },{
 					xtype: 'button',
                     text: 'Refresh',
-                    id: 'refreshButton',
-                    align: 'right'
+                    itemId: 'refreshButton',
+					action: 'refreshList',
+					align: 'right'
 				}]
             }],
-            flex: 1
+			flex: 1,
         }]
-    }
+    },
 });

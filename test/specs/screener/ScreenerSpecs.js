@@ -267,7 +267,7 @@ describe("PatientList", function () {
 
     });
 
-    it("Posts Regisration abd Screener Lists", function () {
+    it("Posts Regisration and Screener Lists", function () {
 
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
