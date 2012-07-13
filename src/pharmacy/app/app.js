@@ -5,7 +5,7 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'RaxaEmr.Pharmacy',
     
-    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 'reports', 'addPatient'],
+    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 'reports', 'addPatient', 'patientsGridPanel'],
     controllers: ['prescription'],
     
     launch: function() {

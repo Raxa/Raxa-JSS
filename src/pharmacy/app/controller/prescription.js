@@ -1,6 +1,6 @@
 Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     extend: 'Ext.app.Controller',
-    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 'reports', 'addPatient'],
+    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 'reports', 'addPatient', 'patientsGridPanel'],
 
 
     init: function () {
@@ -55,34 +55,23 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // function updates the todays patient grid
     getTodayPatients: function () {
         var enddate = new Date()
-        //setting up the Url according to the start and end date
-        Url = HOST + "/ws/rest/v1/raxacore/patientlist?startDate=" + enddate.getFullYear()
-        Url = Url + "-" + (enddate.getMonth() + 1) + "-" + enddate.getDate() + "&endDate=" + enddate.getFullYear()
-        Url = Url + "-" + (enddate.getMonth() + 1) + "-" + enddate.getDate()
-        Url = Url + "&encounterType=" + localStorage.prescriptionUuidencountertype
-        Ext.getCmp('todayPatientGrid').getStore().setProxy({
-            type: 'rest',
-            url: Url,
-            headers: Util.getBasicAuthHeaders(),
-            reader: {
-                type: 'json',
-                root: 'patients'
-            }
-        })
-        // get call for patient list
-        Ext.getCmp('todayPatientGrid').getStore().load()
+        this.getPatients(enddate, enddate, 'todayPatientGrid')
+        console.log(Ext.getCmp('todayPatientGrid').getStore().data);
     },
 
     // function updates the 1 week patient grid
     getSevenDaysPatients: function () {
         var enddate = new Date()
         var startdate = new Date(enddate.getFullYear(), enddate.getMonth(), enddate.getDate() - 6)
-        //setting up the Url according to the start and end date
+        this.getPatients(startdate, enddate, 'sevenDaysPatientGrid')
+    },
+    
+    getPatients: function(startdate,enddate,patientGridId){
         Url = HOST + "/ws/rest/v1/raxacore/patientlist?startDate=" + startdate.getFullYear()
         Url = Url + "-" + (startdate.getMonth() + 1) + "-" + startdate.getDate() + "&endDate=" + enddate.getFullYear()
         Url = Url + "-" + (enddate.getMonth() + 1) + "-" + enddate.getDate()
         Url = Url + "&encounterType=" + localStorage.prescriptionUuidencountertype
-        Ext.getCmp('sevenDaysPatientGrid').getStore().setProxy({
+        Ext.getCmp(patientGridId).getStore().setProxy({
             type: 'rest',
             url: Url,
             headers: Util.getBasicAuthHeaders(),
@@ -92,7 +81,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             }
         })
         //get call for patient list
-        Ext.getCmp('sevenDaysPatientGrid').getStore().load()
+        Ext.getCmp(patientGridId).getStore().load()
     },
 
     displayForm: function () {
