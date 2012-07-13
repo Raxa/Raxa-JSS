@@ -68,6 +68,11 @@ Ext.define('mUserStories.controller.basic', {
                     this.doToolbar('inbox')
                 }
             },
+            "button[action=locButton]" :{
+                tap: function () {
+                    this.doLocation()
+                }
+            },
             "button[action=logoutButton]": {
                 tap: function () {
                     this.doExit()
@@ -127,6 +132,8 @@ Ext.define('mUserStories.controller.basic', {
             }, {
                 xclass: 'mUserStories.view.notificationInbox'
             }, {
+                xclass: 'mUserStories.view.mapPanel'
+            }, {
                 xclass: 'mUserStories.view.resources'
             }, {
                 xclass: 'mUserStories.view.resourceDetail'
@@ -136,6 +143,15 @@ Ext.define('mUserStories.controller.basic', {
                 xclass: 'mUserStories.view.vcScheduling'
             }]
         })
+    },
+    addMarker: function (lat,log) {
+        // TODO: wait how does this work?
+        var latLng = new google.maps.LatLng(lat, log);
+        var marker = new google.maps.Marker({
+            map: Ext.getCmp('mapValue').map,
+            position: latLng
+        });
+        // google.maps.event.addListener(marker, "click", function () {})
     },
     // add registrations and reminders
     // TODO: should we add more functionality? ex. place order for sample
@@ -256,6 +272,14 @@ Ext.define('mUserStories.controller.basic', {
         USER.uuid = '';
         this.toPage(PAGES.LOGIN_SCREEN)
     },
+    doLocation: function () {
+        var coords = Ext.getCmp('mapValue').getGeo();
+        CURR_LOC.LAT = coords.getLatitude();
+        CURR_LOC.LOG = coords.getLongitude();
+        Ext.Msg.alert("Location",CURR_LOC.LAT + ', ' + CURR_LOC.LOG);
+        this.addMarker(CURR_LOC.LAT, CURR_LOC.LOG);
+        this.toPage(PAGES.LOCATION);
+    },
     // login to the application
     doLogin: function (arg) {
         if (arg) {
@@ -348,6 +372,9 @@ Ext.define('mUserStories.controller.basic', {
             //Once the identifiers are loaded, fetch location parameters
             this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
         }, this);
+    },
+    getGeoLocation: function () {
+        
     },
     /* this funtions makes a get call to get the location uuid */
     getlocation: function (personUuid, identifierType) {

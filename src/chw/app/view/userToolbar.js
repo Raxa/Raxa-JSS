@@ -35,6 +35,9 @@ Ext.define('mUserStories.view.userToolbar', {
             iconCls:'cloud_black_upload1',
             action: 'syncButton'
         }, {
+            iconCls:'maps',
+            action: 'locButton'
+        }, {
             iconCls:'photos2',
             action: 'resourcesButton'
         }, {

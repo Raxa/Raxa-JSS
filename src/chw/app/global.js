@@ -70,22 +70,27 @@ var PAGES = {
         text: 'Inbox',
         bb: false,
         bbb: 'list'
-    }, RESOURCES: {
+    }, LOCATION: {
         value: 8,
+        text: 'Location',
+        bb: false,
+        bbb: 'list'
+    }, RESOURCES: {
+        value: 9,
         text: 'Resources',
         bb: false,
         bbb: 'list'
     }, RESOURCE_DET: {
-        value: 9,
+        value: 10,
         text: '',
         bb: false,
         bbb: 'resource'
     }, INBOX_VC: {
-        value: 10,
+        value: 11,
         text: 'Inbox',
         bb: true
     }, SCHEDULING: {
-        value: 11,
+        value: 12,
         text: 'Scheduling',
         bb: true
     }
@@ -103,6 +108,10 @@ USER.name = '';
 USER.type = 'CHW';
 USER.uuid = '';
 var CURR_DATE = new Date();
+var CURR_LOC = {
+    LAT : 0,
+    LOG: 0
+}
 var LOCATION = "";
 var CONNECTED = true;
 var helper = {
