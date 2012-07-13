@@ -41,7 +41,7 @@ Ext.define('mUserStories.store.resourceStore', {
         }, {
             resourceType: 'video',
             resourceName: 'Hands Together',
-            resourceLocation: ['handwash.webm', 'handwash.mov']
+            resourceLocation: 'handwash.webm'
         }, {
             resourceType: 'audio',
             resourceName: 'H1N1',
@@ -50,7 +50,7 @@ Ext.define('mUserStories.store.resourceStore', {
             resourceType: 'audio',
             resourceName: 'HIV Testing',
             resourceLocation: 'hiv.mp3'
-        }, {
+        }, /*{
             resourceType: 'video',
             resourceName: 'AIDS Awareness, Cricket',
             resourceLocation: 'aids_cricket.ram'
@@ -82,6 +82,6 @@ Ext.define('mUserStories.store.resourceStore', {
             resourceType: 'video',
             resourceName: 'Vitamin A, Part 3',
             resourceLocation: 'vita3.ram'
-        }]
+        }*/]
     }
 })

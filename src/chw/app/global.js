@@ -175,27 +175,31 @@ var helper = {
         var l = 'resources/' + record.get('resourceLocation');
         var c = Ext.getCmp('resource_label')
         if (record.get('resourceType')==='photo') {
-            //Ext.getCmp('resource_label').setHtml('<img src="'+ l +'" height="100%" width="100%"/>')
-            var cell = Ext.create('Ext.Img', {
+            c.setHtml('<img src="'+ l +'" height="100%" width="100%"/>')
+            /*var cell = Ext.create('Ext.Img', {
                 src: l,
                 height: '100%',
                 width: '100%'
-            })
+            })*/
         } else if (record.get('resourceType')==='video') {
-            // Ext.getCmp('resource_label').setHtml('<video controls="controls"><source src="' + l + '"/></video>')
+            c.setHtml('<video controls="controls" height="100%" width="100%"><source src="' + l + '" type="video/webm" />Your browser does not support the video tag</video>')
+            // TODO: is it really bad practice to just do c.setHtml?
+            /*c.setHtml('')
             var cell = Ext.create('Ext.Video', {
                 url: l,
                 width: '100%',
                 height: '100%'
-            })
+            })*/
         } else if (record.get('resourceType')==='audio') {
-            // Ext.getCmp('resource_label').setHtml('<audio controls="controls"><source src="' + l + '" type = "audio/mpeg"/>Your browser does not support the audio element</audio>')
-            var cell = Ext.create('Ext.Audio', {
+            c.setHtml('<audio controls="controls"><source src="' + l + '" type = "audio/mp3" />Your browser does not support the audio element</audio>')
+            /*var cell = Ext.create('Ext.Audio', {
                 url: l,
                 width: '100%'
-            })
+            })*/
         }
-        c.add(cell)
+        /*if (cell) {
+            c.add(cell)
+        }*/
         Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCE_DET.value)
     },
     getVisitType: function (person) {

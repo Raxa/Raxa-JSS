@@ -42,7 +42,9 @@ Ext.define('mUserStories.view.resourceDetail', {
         }, {
             xtype: 'container',
             id: 'resource_label',
-            centered: true
+            centered: true,
+            height: '90%',
+            width: '90%'
         }]
     }
 })
