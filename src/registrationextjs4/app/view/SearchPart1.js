@@ -34,7 +34,7 @@ Ext.define('Registration.view.SearchPart1', {
                 items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'New Patient Registration (Patient Profile Info)',
+                    title: 'Search Registered Patients',
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
@@ -198,6 +198,7 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'phoneNumberSearch',
                             fieldLabel: 'Phone Number',
                             emptyText: 'Phone Number',
+                            vtype: 'phone',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,

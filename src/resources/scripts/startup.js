@@ -46,6 +46,7 @@ var Startup = {
     },
     
     
+    
     getResourceUuid: function() {
         var x;
         Ext.Ajax.request({

@@ -40,6 +40,10 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             handler: function(){
                 var l = Ext.getCmp('mainarea').getLayout();
                 l.setActiveItem(0);
+                var l1 = Ext.getCmp('addpatientarea').getLayout();
+                l1.setActiveItem(0);
+                var l2 = Ext.getCmp('addpatientgridarea').getLayout();
+                l2.setActiveItem(0);
             }
         }, {
             xtype: 'button',
@@ -54,7 +58,11 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             icon: '../../resources/img/mLogo.png',
             iconAlign: 'top',
             scale: 'large',
-            width: 80
+            width: 80,
+            handler: function(){
+                var l = Ext.getCmp('mainarea').getLayout();
+                l.setActiveItem(4);
+            }
         }, {
             xtype: 'button',
             text: 'Reports',

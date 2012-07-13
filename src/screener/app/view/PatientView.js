@@ -29,9 +29,6 @@ Ext.define("Screener.view.PatientView", {
         }
     }
 ),
-            store: Ext.create('Screener.store.Doctors', {
-                storeId: 'doctorStore'
-            }),
             items: [{
                 xtype: 'titlebar',
                 docked: 'top',

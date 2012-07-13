@@ -2,13 +2,10 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
     extend: 'Ext.form.Panel',
     alias: 'widget.addPatient',
     id: 'addPatient',
-    height: 195,
-    width: 868,
     layout: {
         type: 'absolute'
     },
     bodyPadding: 10,
-    title: 'Add a new Patient',
     items: [{
         xtype: 'datefield',
         id: 'dob',
@@ -20,6 +17,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         xtype: 'textfield',
         id: 'givenName',
         width: 330,
+        allowBlank: false,
         fieldLabel: 'Given Name',
         x: 10,
         y: 60
@@ -27,6 +25,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         xtype: 'textfield',
         id: 'familyName',
         width: 330,
+        allowBlank: false,
         fieldLabel: 'Family Name',
         x: 10,
         y: 90
@@ -41,6 +40,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         xtype: 'radiogroup',
         id: 'sexRadioGroup',
         width: 330,
+        allowBlank: false,
         fieldLabel: 'Gender',
         x: 10,
         y: 150,
@@ -58,35 +58,32 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         xtype: 'textfield',
         fieldLabel: 'Village',
         id: 'village',
+        allowBlank: false,
         x: 480,
         y: 30
     }, {
         xtype: 'textfield',
         fieldLabel: 'Block',
         id: 'block',
+        allowBlank: false,
         x: 480,
         y: 60
     }, {
         xtype: 'textfield',
         fieldLabel: 'District',
         id: 'District',
+        allowBlank: false,
         x: 480,
         y: 90
     }, {
         xtype: 'combobox',
         width: 260,
+        id: 'doctor',
         fieldLabel: 'Doctor Name',
         store: Ext.create('RaxaEmr.Pharmacy.store.Doctors'),
         displayField: 'display',
+        allowBlank: false,
         x: 480,
         y: 120
-
-    }, {
-        xtype: 'button',
-        text: 'ADD',
-        width: 120,
-        x: 480,
-        y: 150,
-        action: 'submit'
     }]
 });
