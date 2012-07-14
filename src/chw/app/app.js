@@ -19,7 +19,7 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'mUserStories',
     controllers: ['basic'],
-    models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers','encounterModel', 'resourceModel', 'visitModel'],
+    models: ['getPerson', 'postPerson', 'name', 'address', 'postPatient', 'identifier','encounter', 'resource', 'visit'],
     stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore','offlineStore','encounterStore','offlineRegisterStore', 'resourceStore', 'visitStore'],
     views: ['loginScreen', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling','userToolbar','addOptions','addPatient','addReminder','addAppointment','notificationInbox','resources','resourceDetail','vcToolbar','okCancel', 'mapPanel'],
     launch: function () {

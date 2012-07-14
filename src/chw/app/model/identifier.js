@@ -14,7 +14,7 @@
  * the License.
  */
 /* model for identifiers to be used in Patient model */
-Ext.define('mUserStories.model.identifiers', {
+Ext.define('mUserStories.model.identifier', {
     extend: 'Ext.data.Model',
     config: {
         identifier: 'uuid',

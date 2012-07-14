@@ -17,20 +17,6 @@
 // See src/app/view/Login.js
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
 var MRSHOST = 'http://emrjss.jelastic.dogado.eu';
-/*var PAGES = {
-    LOGIN_SCREEN: 0,
-    PATIENT_LIST: 1,
-    PATIENT_DET: 2,
-    ADD: 3,
-    ADD_REG: 4,
-    ADD_REM: 5,
--    ADD_APP: 6,
-    INBOX_CHW: 7,
-    RESOURCES: 8,
-    RESOURCE_DET: 9,
-    INBOX_VC: 10,
-    SCHEDULING: 11
-}*/
 var PAGES = {
     LOGIN_SCREEN: {
         value: 0,
@@ -50,22 +36,22 @@ var PAGES = {
         text: 'Add Options',
         bb: false,
         bbb: 'list'
-    }, ADD_REG: {
+    }, ADD_REGISTER: {
         value: 4,
         text: 'Register Patient',
         bb: false,
         bbb: 'add'
-    }, ADD_REM: {
+    }, ADD_REMINDER: {
         value: 5,
         text: 'Add Reminder',
         bb: false,
         bbb: 'add'
-    }, ADD_APP: {
+    }, ADD_APPOINTMENT: {
         value: 6, 
         text: 'Add Appointment',
         bb: false,
         bbb: 'add'
-    }, INBOX_CHW: {
+    }, INBOX: {
         value: 7,
         text: 'Inbox',
         bb: false,

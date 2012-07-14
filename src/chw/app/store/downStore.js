@@ -19,7 +19,7 @@
 Ext.define('mUserStories.store.downStore', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'mUserStories.model.downModel',
+        model: 'mUserStories.model.getPerson',
         id: 'downStore',
         sorters: 'familyName',
         grouper: function (record) {

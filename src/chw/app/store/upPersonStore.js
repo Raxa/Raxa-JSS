@@ -19,7 +19,7 @@
 Ext.define('mUserStories.store.upPersonStore', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'mUserStories.model.upPersonModel',
+        model: 'mUserStories.model.postPerson',
         sorters: 'familyName',
         proxy: {
             type: 'rest',

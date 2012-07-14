@@ -13,20 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/* model for body of post call for creating the patient */
-Ext.define('mUserStories.model.upPatientModel', {
-    extend: 'Ext.data.Model',
-    config: {
+
+Ext.define('mUserStories.model.getPerson',{
+    extend:'Ext.data.Model',
+    config:{
         identifier: 'uuid',
-        fields: [{
-            name: 'id',
-            persist: false
-        }, {
-            name: 'person',
-            type: 'string'
-        }, {
-            name: 'identifiers',
-            model: 'mUserStories.model.identifiers'
+        fields:[{
+            name:'givenName',
+            mapping:'preferredName.givenName',
+            type:'string'
+        },{
+            name:'familyName',
+            mapping:'preferredName.familyName',
+            type:'string'
+        },{
+            name:'gender',
+            type:'string'
+        },{
+            name:'birthdate',
+            type:'date'
+        },{
+            name:'cityVillage',
+            type:'string',
+            mapping:'preferredAddress.cityVillage'
         }]
     }
-});
+})

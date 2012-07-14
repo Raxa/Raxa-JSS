@@ -13,20 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/*
- * Model used for names in upPersonModel
- */
-Ext.define('mUserStories.model.names', {
+Ext.define('mUserStories.model.visit', {
     extend: 'Ext.data.Model',
     config: {
         identifier: 'uuid',
         fields: [{
-            name: 'giveName',
+            name: 'vis_id',
+            type: 'string'
+        }, {
+            name: 'vis_text',
             type: 'string'
 
         }, {
-            name: 'familyName',
+            name: 'vis_det',
             type: 'string'
+        }, {
+            name: 'vis_aud',
+            type: 'string'
+        }, {
+            name: 'vis_comp',
+            type: 'boolean'
+
+        }, {
+            name: 'vis_incl',
+            type: 'boolean'
         }]
     }
 })

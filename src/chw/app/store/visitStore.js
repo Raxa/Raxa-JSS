@@ -16,7 +16,7 @@
 Ext.define('mUserStories.store.visitStore', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'mUserStories.model.visitModel',
+        model: 'mUserStories.model.visit',
         id: 'visStore',
         data: [{
             id: 'vis_ors',

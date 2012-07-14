@@ -13,32 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.model.upModel', {
+/*
+ * Model used for names in getPerson
+ */
+Ext.define('mUserStories.model.name', {
     extend: 'Ext.data.Model',
     config: {
         identifier: 'uuid',
         fields: [{
-            name: 'id',
-            type: 'number',
-            persist: false
-        }, {
-            name: 'names',
-            model: 'mUserStories.model.names'
-
-        }, {
-            name: 'gender',
+            name: 'giveName',
             type: 'string'
-        }, {
-            name: 'birthdate',
-            type: 'date'
-        }, {
-            name: 'addresses',
-            model: 'mUserStories.model.addresses'
 
         }, {
-            name: 'uuid',
-            type: 'number',
-            persist: false
+            name: 'familyName',
+            type: 'string'
         }]
     }
 })

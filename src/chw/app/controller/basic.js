@@ -15,28 +15,7 @@
  */
 Ext.define('mUserStories.controller.basic', {
     extend: 'Ext.app.Controller',
-//    controllers: ['basic'],
-//    views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling'],
     config: {
-//        refs: {
-//            UsernameRef: 'LoginScreen #loginForm #usernameIID',
-//            PasswordRef: 'LoginScreen #loginForm #passwordIID'
-//            addApp: '#add_app',
-//            addReg: '#add_reg',
-//            addRem: '#add_rem',
-//            back: '#backButton',
-//            cancel: '#cancelButton',
-//            sync: '#syncButton',
-//            inbox: '#inboxButton',
-//            logout: '#logoutButton',
-//            logout_vc: '#logoutButton_vc',
-//            menu: '#menuButton',
-//            Narwhal: '#narwhal',
-//            not_vc: '#notButton',
-//            ok: '#okButton',
-//            resources: '#resourcesButton',
-//            sch_vc: '#schButton'
-//        },
         control: {
             "button[action=add_app]": {
                 tap: function () {
@@ -158,11 +137,11 @@ Ext.define('mUserStories.controller.basic', {
     doAdd: function (step, arg) {
         if (arg) {
             if (step === 'app') {
-                this.toPage(PAGES.ADD_APP)
+                this.toPage(PAGES.ADD_APPOINTMENT)
             } else if (step === 'reg') {
-                this.toPage(PAGES.ADD_REG)
+                this.toPage(PAGES.ADD_REGISTER)
             } else if (step === 'rem') {
-                this.toPage(PAGES.ADD_REM)
+                this.toPage(PAGES.ADD_REMINDER)
             } else if (step === 'register') {
                 var fname = Ext.getCmp('first_reg').getValue();
                 var lname = Ext.getCmp('last_reg').getValue();
@@ -181,7 +160,7 @@ Ext.define('mUserStories.controller.basic', {
                         offlineStore = Ext.create('mUserStories.store.offlineRegisterStore')
                     }
                     
-                    var up_Model = Ext.create('mUserStories.model.upPersonModel',{
+                    var up_Model = Ext.create('mUserStories.model.postPerson',{
                         names: [{
                             givenName: fname,
                             familyName: lname
@@ -351,7 +330,7 @@ Ext.define('mUserStories.controller.basic', {
                 }
             },this)
         } else if (arg === 'inbox') {
-            this.toPage(PAGES.INBOX_CHW)
+            this.toPage(PAGES.INBOX)
         } else if (arg === 'resources') {
             this.getResources();
             this.toPage(PAGES.RESOURCES)
@@ -423,7 +402,7 @@ Ext.define('mUserStories.controller.basic', {
     /* this funtions makes a post call to create the patient with three parameter which will sent as person, identifiertype 
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
-        var patient = Ext.create('mUserStories.model.upPatientModel', {
+        var patient = Ext.create('mUserStories.model.postPatient', {
             person: personUuid,
             identifiers: [{
                 identifier: this.getPatientIdentifier().toString(),
@@ -507,7 +486,7 @@ Ext.define('mUserStories.controller.basic', {
             + pad(d.getUTCSeconds())+'Z'
         }
         //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
-        var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
+        var JSONEncounter = Ext.create(mUserStories.model.encounter,{
             encounterDatetime: ISODateString(new Date()),
             patient: Uuid,
             encounterType: 'f30845d5-9ec0-4960-8104-a1366db21dc4',
@@ -541,82 +520,8 @@ Ext.define('mUserStories.controller.basic', {
             });
         } else {}
     }, 
-    /*toPage : function (arg) {
-        // var t = this.getNarwhal();
-        //var a = Ext.getCmp('viewPort').getActiveItem();
-        //var aa = Ext.getCmp(a)
-        //var t = a.getComponent('narwhal');
-        var a = Ext.getCmp('title_cont');
-        var t = a.getComponent('title_text');
-        var b = Ext.getCmp('backButton');
-        if (arg === PAGES.LOGIN_SCREEN) {
-            t.setTitle('Community Health Worker Module');
-            b.setHidden(true)
-        } else if (arg === PAGES.PATIENT_LIST) {
-            t.setTitle('Patient List');
-            b.setHidden(true);
-        } else if (arg === PAGES.PATIENT_DET) {
-            b.setHidden(false)
-        } else if (arg === PAGES.ADD) {
-            t.setTitle('Add Options');
-            b.setHidden(false)
-        }
-        else if (arg === PAGES.ADD_REG) {
-            t.setTitle('Add Patient');
-            b.setHidden(false)
-        }
-        else if (arg === PAGES.ADD_REM) {
-            t.setTitle('Add Reminder');
-            b.setHidden(false)
-        }
-        else if (arg === PAGES.ADD_APP) {
-            t.setTitle('Add Appointment');
-            b.setHidden(false)
-        }
-        else if (arg === PAGES.INBOX_CHW) {
-            t.setTitle('Inbox');
-            b.setHidden(false)
-        }
-        else if (arg === PAGES.RESOURCES) {
-            t.setTitle('Resources');
-            b.setHidden(false)
-        }
-        else if (arg === PAGES.RESOURCE_DET) {
-            b.setHidden(false)
-        }
-        else if (arg === PAGES.INBOX_VC) {
-            t.setTitle('Inbox');
-            b.setHidden(true)
-        }
-        else if (arg === PAGES.SCHEDULING) {
-            t.setTitle('Scheduling');
-            b.setHidden(true)
-        }
-        Ext.getCmp('viewPort').setActiveItem(arg);
-    }*/
+    
     toPage: function (p) {
-        /*var c = Ext.getCmp('title_cont');
-        if (Ext.getCmp('title_bar')) {
-            Ext.getCmp('title_bar').destroy();
-        }
-        if (Ext.getCmp('backButton')) {
-            Ext.getCmp('backButton').destroy();
-        }
-        var cell = Ext.create('Ext.Panel', {
-            items: [{
-                xtype: 'titlebar',
-                title: p.text,
-                docked: 'top',
-                id: 'title_bar',
-                items: [{
-                    xtype: 'button',
-                    ui: 'back',
-                    id: 'backButton',
-                    hidden: p.bb
-                }]
-            }]
-        }) 
-        c.add(cell);*/
-        Ext.getCmp('viewPort').setActiveItem(p.value);
+       Ext.getCmp('viewPort').setActiveItem(p.value);
     }
 })

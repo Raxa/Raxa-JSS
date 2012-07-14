@@ -16,7 +16,7 @@
 Ext.define('mUserStories.store.encounterStore', {
     extend: 'Ext.data.Store',
     config:{
-        model: 'mUserStories.model.encounterModel',
+        model: 'mUserStories.model.encounter',
         proxy: {
             type: 'rest',
             url : MRSHOST + '/ws/rest/v1/encounter',

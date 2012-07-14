@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.model.resourceModel', {
+Ext.define('mUserStories.model.resource', {
     extend: 'Ext.data.Model',
     config: {
         identifier: 'uuid',

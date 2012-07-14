@@ -18,7 +18,7 @@
 Ext.define('mUserStories.store.offlineRegisterStore',{
     extend:'Ext.data.Store',
     config:{
-        model:'mUserStories.model.upPersonModel',
+        model:'mUserStories.model.postPerson',
         sorters:'familyName',
         proxy: {
             type: 'localstorage',

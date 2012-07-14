@@ -16,7 +16,7 @@
 Ext.define('mUserStories.store.offlineStore',{
     extend:'Ext.data.Store',
     config:{
-        model:'mUserStories.model.downModel',
+        model:'mUserStories.model.getPerson',
         id: 'offlineStore',
         sorters:'familyName',
         grouper:function(record){

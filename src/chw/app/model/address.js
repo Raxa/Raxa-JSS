@@ -13,29 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-Ext.define('mUserStories.model.downModel',{
-    extend:'Ext.data.Model',
-    config:{
+Ext.define('mUserStories.model.address', {
+    extend: 'Ext.data.Model',
+    config: {
         identifier: 'uuid',
-        fields:[{
-            name:'givenName',
-            mapping:'preferredName.givenName',
-            type:'string'
-        },{
-            name:'familyName',
-            mapping:'preferredName.familyName',
-            type:'string'
-        },{
-            name:'gender',
-            type:'string'
-        },{
-            name:'birthdate',
-            type:'date'
-        },{
-            name:'cityVillage',
-            type:'string',
-            mapping:'preferredAddress.cityVillage'
+        fields: [{
+            name: 'cityVillage',
+            type: 'string'
+
         }]
     }
 })
