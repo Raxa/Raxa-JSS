@@ -50,7 +50,10 @@ Ext.define('Ext.LoadMask', {
          */
         indicator: true,
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         listeners: {
             painted: 'onPainted',
             erased: 'onErased'

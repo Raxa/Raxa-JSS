@@ -1,21 +1,21 @@
 /**
+ * @aside guide forms
+ *
  * Field is the base class for all form fields used in Sencha Touch. It provides a lot of shared functionality to all
  * field subclasses (for example labels, simple validation, {@link #clearIcon clearing} and tab index management), but
  * is rarely used directly. Instead, it is much more common to use one of the field subclasses:
  *
-<pre>
-xtype            Class
----------------------------------------
-textfield        {@link Ext.field.Text}
-numberfield      {@link Ext.field.Number}
-textareafield    {@link Ext.field.TextArea}
-hiddenfield      {@link Ext.field.Hidden}
-radiofield       {@link Ext.field.Radio}
-checkboxfield    {@link Ext.field.Checkbox}
-selectfield      {@link Ext.field.Select}
-togglefield      {@link Ext.field.Toggle}
-fieldset         {@link Ext.form.FieldSet}
-</pre>
+ *     xtype            Class
+ *     ---------------------------------------
+ *     textfield        {@link Ext.field.Text}
+ *     numberfield      {@link Ext.field.Number}
+ *     textareafield    {@link Ext.field.TextArea}
+ *     hiddenfield      {@link Ext.field.Hidden}
+ *     radiofield       {@link Ext.field.Radio}
+ *     checkboxfield    {@link Ext.field.Checkbox}
+ *     selectfield      {@link Ext.field.Select}
+ *     togglefield      {@link Ext.field.Toggle}
+ *     fieldset         {@link Ext.form.FieldSet}
  *
  * Fields are normally used within the context of a form and/or fieldset. See the {@link Ext.form.Panel FormPanel}
  * and {@link Ext.form.FieldSet FieldSet} docs for examples on how to put those together, or the list of links above
@@ -43,7 +43,10 @@ Ext.define('Ext.field.Field', {
     isFormField: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'field',
 
         /**
@@ -66,6 +69,13 @@ Ext.define('Ext.field.Field', {
          * @accessor
          */
         labelWidth: '30%',
+
+        /**
+         * @cfg {Boolean} labelWrap True to allow the label to wrap. If set to false, the label will be truncated with
+         * an ellipsis.
+         * @accessor
+         */
+        labelWrap: false,
 
         /**
          * @cfg {Boolean} clearIcon True to use a clear icon in this field
@@ -145,7 +155,9 @@ Ext.define('Ext.field.Field', {
         /**
          * @cfg {String} inputCls CSS class to add to the input element of this fields {@link #component}
          */
-        inputCls: null
+        inputCls: null,
+
+        bubbleEvents: ['action']
     },
 
     /**
@@ -198,7 +210,7 @@ Ext.define('Ext.field.Field', {
         if (newLabelAlign) {
             renderElement.addCls(prefix + 'label-align-' + newLabelAlign);
 
-            if (newLabelAlign == "top") {
+            if (newLabelAlign == "top" || newLabelAlign == "bottom") {
                 this.label.setWidth('100%');
             } else {
                 this.updateLabelWidth(this.getLabelWidth());
@@ -223,12 +235,25 @@ Ext.define('Ext.field.Field', {
 
     // @private
     updateLabelWidth: function(newLabelWidth) {
+        var labelAlign = this.getLabelAlign();
+
         if (newLabelWidth) {
-            if (this.getLabelAlign() == "top") {
+            if (labelAlign == "top" || labelAlign == "bottom") {
                 this.label.setWidth('100%');
             } else {
                 this.label.setWidth(newLabelWidth);
             }
+        }
+    },
+
+    // @private
+    updateLabelWrap: function(newLabelWrap, oldLabelWrap) {
+        var cls = Ext.baseCSSPrefix + 'form-label-nowrap';
+
+        if (!newLabelWrap) {
+            this.addCls(cls);
+        } else {
+            this.removeCls(cls);
         }
     },
 

@@ -4,16 +4,16 @@
         <title>RaXa EMR - Hospital Information System</title>
         <link rel="stylesheet" href="lib/touch/resources/css/sencha-touch.css" type="text/css">
         <link rel="stylesheet" href="resources/css/app.css" type="text/css">
-        <!-- TODO: Using Debug with comments for development -->
-        <script type="text/javascript" src="lib/touch/sencha-touch-debug.js"></script>
+        <!-- TODO: Using Debug all with comments for development -->
+        <script type="text/javascript" src="lib/touch/sencha-touch-all-debug.js"></script>
         <script type="text/javascript" src="app/app.js"></script>
-
-        <script type="text/javascript">
-            if(localStorage.getItem("host") == null){
-                var host = 'http://raxaemr.jelastic.servint.net/openmrs';
-            } else
-            host = localStorage.getItem("host");
-        </script> 
+        
+        <script type="text/javascript" src="resources/scripts/startup.js"></script>       
+        <script type="text/javascript" src="resources/scripts/util.js"></script>
+        <script type="text/javascript" src="resources/common/topbar/view/UrlSettingsPanel.js"></script>
+        <script type="text/javascript" src="resources/common/topbar/view/UrlSettingsButton.js"></script>
+        <script type="text/javascript" src="resources/common/topbar/view/LogoutConfirmPanel.js"></script>
+        <script type="text/javascript" src="resources/common/topbar/view/TopToolbar.js"></script>
     </head>
     <body>
     </body>

@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * Simple Select field wrapper. Example usage:
  *
  *     @example
@@ -33,7 +35,7 @@ Ext.define('Ext.field.Select', {
         'Ext.picker.Picker',
         'Ext.data.Store',
         'Ext.data.StoreManager',
-        'Ext.List'
+        'Ext.dataview.List'
     ],
 
     /**
@@ -45,7 +47,10 @@ Ext.define('Ext.field.Select', {
      */
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         ui: 'select',
 
         /**
@@ -133,20 +138,10 @@ Ext.define('Ext.field.Select', {
         defaultTabletPickerConfig: null,
 
         /**
-         * @inherit
+         * @cfg
+         * @inheritdoc
          */
         name: 'picker'
-    },
-
-    // @private
-    constructor: function(config) {
-        config = config || {};
-
-        if (!config.store) {
-            config.store = true;
-        }
-
-        this.callParent([config]);
     },
 
     // @private
@@ -204,20 +199,22 @@ Ext.define('Ext.field.Select', {
      */
     applyValue: function(value) {
         var record = value,
-            index;
+            index, store;
 
         //we call this so that the options configruation gets intiailized, so that a store exists, and we can
         //find the correct value
         this.getOptions();
 
-        if (!(value instanceof Ext.data.Model)) {
-            index = this.getStore().find(this.getValueField(), value, null, null, null, true);
+        store = this.getStore();
+
+        if ((value && !value.isModel) && store) {
+            index = store.find(this.getValueField(), value, null, null, null, true);
 
             if (index == -1) {
-                index = this.getStore().find(this.getDisplayField(), value, null, null, null, true);
+                index = store.find(this.getDisplayField(), value, null, null, null, true);
             }
 
-            record = this.getStore().getAt(index);
+            record = store.getAt(index);
         }
 
         return record;
@@ -227,16 +224,12 @@ Ext.define('Ext.field.Select', {
         this.previousRecord = oldValue;
         this.record = newValue;
 
-        this.callParent([newValue ? newValue.get(this.getDisplayField()) : '']);
-
-        if (oldValue !== newValue && this.initialized) {
-            this.fireEvent('change', this, newValue, oldValue);
-        }
+        this.callParent([(newValue && newValue.isModel) ? newValue.get(this.getDisplayField()) : '']);
     },
 
     getValue: function() {
         var record = this.record;
-        return (record) ? record.get(this.getValueField()) : null;
+        return (record && record.isModel) ? record.get(this.getValueField()) : null;
     },
 
     /**
@@ -285,7 +278,7 @@ Ext.define('Ext.field.Select', {
                 items: {
                     xtype: 'list',
                     store: this.getStore(),
-                    itemTpl: '<span class="x-list-label">{' + this.getDisplayField() + '}</span>',
+                    itemTpl: '<span class="x-list-label">{' + this.getDisplayField() + ':htmlEncode}</span>',
                     listeners: {
                         select : this.onListSelect,
                         itemtap: this.onListTap,
@@ -314,8 +307,9 @@ Ext.define('Ext.field.Select', {
      * {@link Ext.List list}.
      */
     showPicker: function() {
+        var store = this.getStore();
         //check if the store is empty, if it is, return
-        if (this.getStore().getCount() === 0) {
+        if (!store || store.getCount() === 0) {
             return;
         }
 
@@ -383,6 +377,17 @@ Ext.define('Ext.field.Select', {
         me.setValue(record);
     },
 
+    onChange: function(component, newValue, oldValue) {
+        var me = this,
+            store = me.getStore(),
+            index = (store) ? store.find(me.getDisplayField(), oldValue) : -1,
+            valueField = me.getValueField(),
+            record = (store) ? store.getAt(index) : null,
+            oldValue = (record) ? record.get(valueField) : null;
+
+        me.fireEvent('change', me, me.getValue(), oldValue);
+    },
+
     /**
      * Updates the underlying &lt;options&gt; list with new values.
      * @param {Array} options An array of options configurations to insert or append.
@@ -399,6 +404,11 @@ selectBox.setOptions(
      */
     updateOptions: function(newOptions) {
         var store = this.getStore();
+
+        if (!store) {
+            this.setStore(true);
+            store = this._store;
+        }
 
         if (!newOptions) {
             store.clearData();

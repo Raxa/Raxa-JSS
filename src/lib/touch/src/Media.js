@@ -15,8 +15,8 @@ Ext.define('Ext.Media', {
      */
 
     /**
-     * @event paused
-     * Fires whenever the media is pause
+     * @event pause
+     * Fires whenever the media is paused
      * @param {Ext.Media} this
      * @param {Number} time The time at which the media was paused at in seconds
      */
@@ -109,9 +109,6 @@ Ext.define('Ext.Media', {
          */
         media: null,
 
-        // @private
-        playing: false,
-
         /**
          * @cfg {Number} volume
          * The volume of the media from 0.0 to 1.0. Default is 1.
@@ -139,6 +136,7 @@ Ext.define('Ext.Media', {
         });
 
         me.addMediaListener({
+            canplay      : 'onCanPlay',
             play         : 'onPlay',
             pause        : 'onPause',
             ended        : 'onEnd',
@@ -175,6 +173,10 @@ Ext.define('Ext.Media', {
         this.fireEvent('play', this);
     },
 
+    onCanPlay: function() {
+        this.fireEvent('canplay', this);
+    },
+
     onPause: function() {
         this.fireEvent('pause', this, this.getCurrentTime());
     },
@@ -196,7 +198,7 @@ Ext.define('Ext.Media', {
      * @return {Boolean} playing True if the media is playing
      */
     isPlaying: function() {
-        return this.getPlaying();
+        return !Boolean(this.media.dom.paused);
     },
 
     // @private
@@ -228,9 +230,12 @@ Ext.define('Ext.Media', {
         //http://developer.apple.com/library/safari/#documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/ControllingMediaWithJavaScript/ControllingMediaWithJavaScript.html
 
         dom.src = newUrl;
-        dom.load();
 
-        if (this.getPlaying()) {
+        if ('load' in dom) {
+            dom.load();
+        }
+
+        if (this.isPlaying()) {
             this.play();
         }
     },
@@ -253,16 +258,25 @@ Ext.define('Ext.Media', {
      * Starts or resumes media playback
      */
     play: function() {
-        this.media.dom.play();
-        this.setPlaying(true);
+        var dom = this.media.dom;
+
+        if ('play' in dom) {
+            dom.play();
+            setTimeout(function() {
+                dom.play();
+            }, 10);
+        }
     },
 
     /**
      * Pauses media playback
      */
     pause: function() {
-        this.media.dom.pause();
-        this.setPlaying(false);
+        var dom = this.media.dom;
+
+        if ('pause' in dom) {
+            dom.pause();
+        }
     },
 
     /**

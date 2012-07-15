@@ -1,0 +1,24 @@
+Ext.define('Screener.model.encounterpost', {
+    extend: 'Ext.data.Model',
+    config: {
+        fields: [{
+            name: 'patient',
+            type: 'string',
+            mapping: 'patient.uuid'
+        },{
+            name: 'encounterType',
+            type: 'string'
+        }, {
+            name: 'encounterDatetime',
+            type: 'string'
+        }, {
+            name: 'provider',
+            type: 'string',
+            mapping: 'provider.uuid'
+        }, {
+            name: 'location',
+            type: 'string'
+        }]
+    }
+});
+

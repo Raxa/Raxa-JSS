@@ -1,5 +1,12 @@
 target
 nbproject
 .project
+.sass-cache
 /src/lib/touch/docs
 /src/lib/touch/examples
+WEB-INF
+META-INF
+build.xml
+pom.xml
+/build/
+/dist/

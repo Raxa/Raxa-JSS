@@ -1,4 +1,6 @@
 /**
+ * @aside video tabs-toolbars
+ *
  * {@link Ext.Toolbar}s are most commonly used as docked items as within a {@link Ext.Container}. They can be docked either `top` or `bottom` using the {@link #docked} configuration.
  *
  * They allow you to insert items (normally {@link Ext.Button buttons}) and also add a {@link #title}.
@@ -94,7 +96,10 @@ Ext.define('Ext.Toolbar', {
     isToolbar: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'toolbar',
 
         /**

@@ -127,7 +127,7 @@ Ext.define('Ext.util.translatable.Abstract', {
 
         this.stopAnimation();
 
-        if (animation !== undefined) {
+        if (animation) {
             return this.translateAnimated(x, y, animation);
         }
 

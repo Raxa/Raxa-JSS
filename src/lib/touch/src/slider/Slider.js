@@ -14,7 +14,7 @@ Ext.define('Ext.slider.Slider', {
     /**
     * @event change
     * Fires when the value changes
-    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} this
     * @param {Ext.slider.Thumb} thumb The thumb being changed
     * @param {Number} newValue The new value
     * @param {Number} oldValue The old value
@@ -23,7 +23,7 @@ Ext.define('Ext.slider.Slider', {
     /**
     * @event dragstart
     * Fires when the slider thumb starts a drag
-    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} this
     * @param {Ext.slider.Thumb} thumb The thumb being dragged
     * @param {Array} value The start value
     * @param {Ext.EventObject} e
@@ -32,7 +32,7 @@ Ext.define('Ext.slider.Slider', {
     /**
     * @event drag
     * Fires when the slider thumb starts a drag
-    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} this
     * @param {Ext.slider.Thumb} thumb The thumb being dragged
     * @param {Ext.EventObject} e
     */
@@ -40,7 +40,7 @@ Ext.define('Ext.slider.Slider', {
     /**
     * @event dragend
     * Fires when the slider thumb starts a drag
-    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} this
     * @param {Ext.slider.Thumb} thumb The thumb being dragged
     * @param {Array} value The end value
     * @param {Ext.EventObject} e
@@ -255,7 +255,7 @@ Ext.define('Ext.slider.Slider', {
 
         draggable.setOffset(value * offsetValueRatio, null, animation);
 
-        values[index] = this.constrainValue(draggable.getOffset().x / offsetValueRatio);
+        values[index] = value;
     },
 
     onThumbDragEnd: function(thumb, e) {

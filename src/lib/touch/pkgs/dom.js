@@ -191,7 +191,7 @@ Ext.EventManager.un = Ext.EventManager.removeListener;
  *
  * [getting_started]: #!/guide/getting_started
  */
-Ext.setVersion('touch', '2.0.0.rc2');
+Ext.setVersion('touch', '2.0.1');
 
 Ext.apply(Ext, {
     /**
@@ -496,82 +496,124 @@ function(el){
     },
 
     /**
-     * Ext.setup is used to launch a basic application. It handles creating an {@link Ext.Viewport} instance for you.
+     * Ext.setup() is the entry-point to initialize a Sencha Touch application. Note that if your application makes
+     * use of MVC architecture, use {@link Ext#application} instead.
+     *
+     * This method accepts one single argument in object format. The most basic use of Ext.setup() is as follows:
      *
      *     Ext.setup({
      *         onReady: function() {
-     *             Ext.Viewport.add({
-     *                 xtype: 'component',
-     *                 html: 'Hello world!'
-     *             });
+     *             // ...
+     *         }
+     *     });
+     *
+     * This sets up the viewport, initializes the event system, instantiates a default animation runner, and a default
+     * logger (during development). When all of that is ready, it invokes the callback function given to the `onReady` key.
+     *
+     * The default scope (`this`) of `onReady` is the main viewport. By default the viewport instance is stored in
+     * {@link Ext.Viewport}. For example, this snippet adds a 'Hello World' button that is centered on the screen:
+     *
+     *     Ext.setup({
+     *         onReady: function() {
+     *             this.add({
+     *                 xtype: 'button',
+     *                 centered: true,
+     *                 text: 'Hello world!'
+     *             }); // Equivalent to Ext.Viewport.add(...)
      *         }
      *     });
      *
      * @param {Object} config An object with the following config options:
      *
      * @param {Function} config.onReady
-     * A function to be called when the application is ready. Your application logic should be here. Please see the example above.
+     * A function to be called when the application is ready. Your application logic should be here.
      *
      * @param {Object} config.viewport
-     * An object to be used when creating the global {@link Ext.Viewport} instance. Please refer to the {@link Ext.Viewport}
-     * documentation for more information.
+     * A custom config object to be used when creating the global {@link Ext.Viewport} instance. Please refer to the
+     * {@link Ext.Viewport} documentation for more information.
      *
      *     Ext.setup({
      *         viewport: {
-     *             layout: 'vbox'
+     *             width: 500,
+     *             height: 500
      *         },
      *         onReady: function() {
-     *             Ext.Viewport.add({
-     *                 flex: 1,
-     *                 html: 'top (flex: 1)'
-     *             });
-     *
-     *             Ext.Viewport.add({
-     *                 flex: 4,
-     *                 html: 'bottom (flex: 4)'
-     *             });
+     *             // ...
      *         }
      *     });
      *
      * @param {String/Object} config.icon
-     * A icon configuration for this application. This will only apply to iOS applications which are saved to the homescreen.
-     *
-     * You can either pass a string which will be applied to all different sizes:
-     *
-     *     Ext.setup({
-     *         icon: 'icon.png',
-     *         onReady: function() {
-     *             console.log('Launch...');
-     *         }
-     *     });
-     *
-     * Or an object which has a location for different sizes:
+     * Specifies a set of URLs to the application icon for different device form factors. This icon is displayed
+     * when the application is added to the device's Home Screen.
      *
      *     Ext.setup({
      *         icon: {
-     *             '57': 'icon57.png',
-     *             '77': 'icon77.png',
-     *             '114': 'icon114.png'
+     *             57: 'resources/icons/Icon.png',
+     *             72: 'resources/icons/Icon~ipad.png',
+     *             114: 'resources/icons/Icon@2x.png',
+     *             144: 'resources/icons/Icon~ipad@2x.png'
      *         },
      *         onReady: function() {
-     *             console.log('Launch...');
+     *             // ...
      *         }
      *     });
      *
-     * @param {String} config.icon.57 The icon to be used on non-retna display devices (iPhone 3GS and below).
-     * @param {String} config.icon.77 The icon to be used on the iPad.
-     * @param {String} config.icon.114 The icon to be used on retna display devices (iPhone 4 and above).
+     * Each key represents the dimension of the icon as a square shape. For example: '57' is the key for a 57 x 57
+     * icon image. Here is the breakdown of each dimension and its device target:
      *
-     * @param {Boolean} glossOnIcon
-     * True to add a gloss effect to the icon.
+     * - 57: Non-retina iPhone, iPod touch, and all Android devices
+     * - 72: Retina iPhone and iPod touch
+     * - 114: Non-retina iPad (first and second generation)
+     * - 144: Retina iPad (third generation)
      *
-     * @param {String} phoneStartupScreen
-     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on phones.
-     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+     * Note that the dimensions of the icon images must be exactly 57x57, 72x72, 114x114 and 144x144 respectively.
      *
-     * @param {String} tabletStartupScreen
-     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on tablets.
-     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+     * It is highly recommended that you provide all these different sizes to accomodate a full range of
+     * devices currently available. However if you only have one icon in one size, make it 57x57 in size and
+     * specify it as a string value. This same icon will be used on all supported devices.
+     *
+     *     Ext.setup({
+     *         icon: 'resources/icons/Icon.png',
+     *         onReady: function() {
+     *             // ...
+     *         }
+     *     });
+     *
+     * @param {Object} config.startupImage
+     * Specifies a set of URLs to the application startup images for different device form factors. This image is
+     * displayed when the application is being launched from the Home Screen icon. Note that this currently only applies
+     * to iOS devices.
+     *
+     *     Ext.setup({
+     *         startupImage: {
+     *             '320x460': 'resources/startup/320x460.jpg',
+     *             '640x920': 'resources/startup/640x920.png',
+     *             '768x1004': 'resources/startup/768x1004.png',
+     *             '748x1024': 'resources/startup/748x1024.png',
+     *             '1536x2008': 'resources/startup/1536x2008.png',
+     *             '1496x2048': 'resources/startup/1496x2048.png'
+     *         },
+     *         onReady: function() {
+     *             // ...
+     *         }
+     *     });
+     *
+     * Each key represents the dimension of the image. For example: '320x460' is the key for a 320px x 460px image.
+     * Here is the breakdown of each dimension and its device target:
+     *
+     * - 320x460: Non-retina iPhone, iPod touch, and all Android devices
+     * - 640x920: Retina iPhone and iPod touch
+     * - 768x1004: Non-retina iPad (first and second generation) in portrait orientation
+     * - 748x1024: Non-retina iPad (first and second generation) in landscape orientation
+     * - 1536x2008: Retina iPad (third generation) in portrait orientation
+     * - 1496x2048: Retina iPad (third generation) in landscape orientation
+     *
+     * Please note that there's no automatic fallback machanism for the startup images. In other words, if you don't specify
+     * a valid image for a certain device, nothing will be displayed while the application is being launched on that device.
+     *
+     * @param {Boolean} isIconPrecomposed
+     * True to not having a glossy effect added to the icon by the OS, which will preserve its exact look. This currently
+     * only applies to iOS devices.
      *
      * @param {String} statusBarStyle
      * The style of status bar to be shown on applications added to the iOS homescreen. Valid options are:
@@ -581,8 +623,8 @@ function(el){
      * * `black-translucent`
      *
      * @param {String[]} config.requires
-     * An array of required classes for your application which will be automatically loaded if {@link Ext.Loader#enabled} is set
-     * to `true`. Please refer to {@link Ext.Loader} and {@link Ext.Loader#require} for more information.
+     * An array of required classes for your application which will be automatically loaded before 'onReady' is invoked.
+     * Please refer to {@link Ext.Loader} and {@link Ext.Loader#require} for more information.
      *
      *     Ext.setup({
      *         requires: ['Ext.Button', 'Ext.tab.Panel'],
@@ -593,7 +635,8 @@ function(el){
      *
      * @param {Object} config.eventPublishers
      * Sencha Touch, by default, includes various {@link Ext.event.recognizer.Recognizer} subclasses to recognise events fired
-     * in your application. The list of default recognisers can be found in the documentation for {@link Ext.event.recognizer.Recognizer}.
+     * in your application. The list of default recognisers can be found in the documentation for
+     * {@link Ext.event.recognizer.Recognizer}.
      *
      * To change the default recognisers, you can use the following syntax:
      *
@@ -632,11 +675,13 @@ function(el){
      */
     setup: function(config) {
         var defaultSetupConfig = Ext.defaultSetupConfig,
-            onReady = config.onReady || Ext.emptyFn,
+            emptyFn = Ext.emptyFn,
+            onReady = config.onReady || emptyFn,
+            onUpdated = config.onUpdated || emptyFn,
             scope = config.scope,
             requires = Ext.Array.from(config.requires),
             extOnReady = Ext.onReady,
-            icon = config.icon,
+            head = Ext.getHead(),
             callback, viewport, precomposed;
 
         Ext.setup = function() {
@@ -645,9 +690,10 @@ function(el){
 
         delete config.requires;
         delete config.onReady;
+        delete config.onUpdated;
         delete config.scope;
 
-        Ext.require(['Ext.event.Dispatcher', 'Ext.MessageBox']);
+        Ext.require(['Ext.event.Dispatcher']);
 
         callback = function() {
             var listeners = Ext.setupListeners,
@@ -666,6 +712,7 @@ function(el){
             Ext.onReady(onReady, scope);
         };
 
+        Ext.onUpdated = onUpdated;
         Ext.onReady = function(fn, scope) {
             var origin = onReady;
 
@@ -706,70 +753,129 @@ function(el){
             });
         });
 
-        /*
-         * Note: previously we only added these icon meta tags to iOS devices but as Android 2.1+ reads the same tags
-         * we now add them if they're defined
-         */
-        if (!document.body) {
-            var phoneIcon = config.phoneIcon,
-                tabletIcon = config.tabletIcon,
-                tabletStartupScreen = config.tabletStartupScreen,
-                statusBarStyle = config.statusBarStyle,
-                phoneStartupScreen = config.phoneStartupScreen,
-                isIpad = Ext.os.is.iPad,
-                retina = window.devicePixelRatio > 1 ? true : false;
+        function addMeta(name, content) {
+            var meta = document.createElement('meta');
+            meta.setAttribute('name', name);
+            meta.setAttribute('content', content);
+            head.append(meta);
+        }
 
-            // Inject meta viewport tag
-            document.write(
-                '<meta id="extViewportMeta" ' +
-                       'name="viewport" ' +
-                       'content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">');
-            document.write('<meta name="apple-mobile-web-app-capable" content="yes">');
-            document.write('<meta name="apple-touch-fullscreen" content="yes">');
-
-            //status bar style
-            if (Ext.isString(statusBarStyle)) {
-                document.write('<meta name="apple-mobile-web-app-status-bar-style" content="' + statusBarStyle + '">');
+        function addIcon(href, sizes, precomposed) {
+            var link = document.createElement('link');
+            link.setAttribute('rel', 'apple-touch-icon' + (precomposed ? '-precomposed' : ''));
+            link.setAttribute('href', href);
+            if (sizes) {
+                link.setAttribute('sizes', sizes);
             }
+            head.append(link);
+        }
 
-            //startup screens
-            if (tabletStartupScreen && isIpad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + tabletStartupScreen + '">');
+        function addStartupImage(href, media) {
+            var link = document.createElement('link');
+            link.setAttribute('rel', 'apple-touch-startup-image');
+            link.setAttribute('href', href);
+            if (media) {
+                link.setAttribute('media', media);
             }
+            head.append(link);
+        }
 
-            if (phoneStartupScreen && !isIpad) {
-                document.write('<link rel="apple-touch-startup-image" href="' + phoneStartupScreen + '">');
-            }
+        var icon = config.icon,
+            isIconPrecomposed = Boolean(config.isIconPrecomposed),
+            startupImage = config.startupImage || {},
+            statusBarStyle = config.statusBarStyle,
+            devicePixelRatio = window.devicePixelRatio || 1;
 
-            // icon
-            if (Ext.isString(icon) || Ext.isString(phoneIcon) || Ext.isString(tabletIcon)) {
-                icon = {
-                    '57': phoneIcon || tabletIcon || icon,
-                    '72': tabletIcon || phoneIcon || icon,
-                    '114': phoneIcon || tabletIcon || icon
-                };
-            }
+        addMeta('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no');
+        addMeta('apple-mobile-web-app-capable', 'yes');
+        addMeta('apple-touch-fullscreen', 'yes');
 
-            precomposed = (config.glossOnIcon === false) ? '-precomposed' : '';
+        // status bar style
+        if (statusBarStyle) {
+            addMeta('apple-mobile-web-app-status-bar-style', statusBarStyle);
+        }
 
-            if (icon) {
-                var icon72 = icon['72'],
-                    icon57 = icon['57'],
-                    icon114 = icon['114'],
-                    iconString = '<link rel="apple-touch-icon' + precomposed;
+        if (Ext.isString(icon)) {
+            icon = {
+                57: icon
+            };
+        }
+        else if (!icon) {
+            icon = {};
+        }
 
-                // If we are on an iPad and we have a 72px icon defined, use it
-                if (isIpad && (icon72 || icon57 || icon114)) {
-                    document.write(iconString + '" sizes="72x72" href="' + (icon72 || icon114 || icon57) + '">');
-                } else {
-                    if (retina && (icon72 || icon114)) {
-                        // Other wise, check if we are a retina device and we have a 114 icon
-                        document.write(iconString + '" sizes="114x114" href="' + (icon114 || icon72) + '">');
-                    } else {
-                        // And resort to the default 57px icon
-                        document.write(iconString + '" href="' + icon57 + '">');
-                    }
+        //<deprecated product=touch since=2.0.1>
+        if ('phoneStartupScreen' in config) {
+            //<debug warn>
+            Ext.Logger.deprecate("[Ext.setup()] 'phoneStartupScreen' config is deprecated, please use 'startupImage' " +
+                "config instead. Refer to the latest API docs for more details");
+            //</debug>
+            config['320x460'] = config.phoneStartupScreen;
+        }
+
+        if ('tabletStartupScreen' in config) {
+            //<debug warn>
+            Ext.Logger.deprecate("[Ext.setup()] 'tabletStartupScreen' config is deprecated, please use 'startupImage' " +
+                "config instead. Refer to the latest API docs for more details");
+            //</debug>
+            config['768x1004'] = config.tabletStartupScreen;
+        }
+
+        if ('glossOnIcon' in config) {
+            //<debug warn>
+            Ext.Logger.deprecate("[Ext.setup()] 'glossOnIcon' config is deprecated, please use 'isIconPrecomposed' " +
+                "config instead. Refer to the latest API docs for more details");
+            //</debug>
+            isIconPrecomposed = Boolean(config.glossOnIcon);
+        }
+        //</deprecated>
+
+        // Non-Retina iPhone, iPod touch, and Android devices
+        if ('57' in icon) {
+            addIcon(icon['57'], null, isIconPrecomposed);
+        }
+        // Non-Retina iPad
+        if ('72' in icon) {
+            addIcon(icon['72'], '72x72', isIconPrecomposed);
+        }
+        // Retina iPhone and iPod touch
+        if ('114' in icon) {
+            addIcon(icon['114'], '114x114', isIconPrecomposed);
+        }
+        // Retina iPad
+        if ('144' in icon) {
+            addIcon(icon['144'], '144x144', isIconPrecomposed);
+        }
+
+        if (Ext.os.is.iPad) {
+            if (devicePixelRatio >= 2) {
+                // Retina iPad - Landscape
+                if ('1496x2048' in startupImage) {
+                    addStartupImage(startupImage['1496x2048'], '(orientation: landscape)');
                 }
+                // Retina iPad - Portrait
+                if ('1536x2008' in startupImage) {
+                    addStartupImage(startupImage['1536x2008'], '(orientation: portrait)');
+                }
+            }
+            else {
+                // Non-Retina iPad - Landscape
+                if ('748x1024' in startupImage) {
+                    addStartupImage(startupImage['748x1024'], '(orientation: landscape)');
+                }
+                // Non-Retina iPad - Portrait
+                if ('768x1004' in startupImage) {
+                    addStartupImage(startupImage['768x1004'], '(orientation: portrait)');
+                }
+            }
+        }
+        else {
+            // Retina iPhone, iPod touch with iOS version >= 4.3
+            if (devicePixelRatio >= 2 && Ext.os.version.gtEq('4.3')) {
+                addStartupImage(startupImage['640x920']);
+            }
+            else {
+                addStartupImage(startupImage['320x460']);
             }
         }
     },
@@ -833,27 +939,21 @@ function(el){
      *         icon: {
      *             '57': 'icon57.png',
      *             '77': 'icon77.png',
-     *             '114': 'icon114.png'
+     *             '114': 'icon114.png',
+     *             '144': 'icon144.png'
      *         },
      *         onReady: function() {
      *             console.log('Launch...');
      *         }
      *     });
      *
-     * @param {String} config.icon.57 The icon to be used on non-retna display devices (iPhone 3GS and below).
+     * @param {String} config.icon.57 The icon to be used on non-retina display devices (iPhone 3GS and below).
      * @param {String} config.icon.77 The icon to be used on the iPad.
-     * @param {String} config.icon.114 The icon to be used on retna display devices (iPhone 4 and above).
+     * @param {String} config.icon.114 The icon to be used on retina display devices (iPhone 4 and iPod Touch Gen 4).
+     * @param {String} config.icon.144 The icon to be used on retina display devices (iPad Gen 3).
      *
      * @param {Boolean} glossOnIcon
      * True to add a gloss effect to the icon.
-     *
-     * @param {String} phoneStartupScreen
-     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on phones.
-     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
-     *
-     * @param {String} tabletStartupScreen
-     * Sets the apple-touch-icon `<meta>` tag so your home screen application can have a startup screen on tablets.
-     * Please look here for more information: http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
      *
      * @param {String} statusBarStyle
      * The style of status bar to be shown on applications added to the iOS homescreen. Valid options are:
@@ -914,7 +1014,7 @@ function(el){
      */
     application: function(config) {
         var appName = config.name,
-            onReady, scope;
+            onReady, scope, requires;
 
         if (!config) {
             config = {};
@@ -924,13 +1024,14 @@ function(el){
             Ext.Loader.setPath(appName, config.appFolder || 'app');
         }
 
-        config.requires = Ext.Array.from(config.requires);
-        config.requires.push('Ext.app.Application');
+        requires = Ext.Array.from(config.requires);
+        config.requires = ['Ext.app.Application'];
 
         onReady = config.onReady;
         scope = config.scope;
 
         config.onReady = function() {
+            config.requires = requires;
             new Ext.app.Application(config);
 
             if (onReady) {
@@ -1023,9 +1124,21 @@ function(el){
     },
 
     /**
-     * @private
-     * @param config
-     * @param classReference
+     * A global factory method to instatiate a class from a config object. For example, these two calls are equivalent:
+     *
+     *     Ext.factory({ text: 'My Button' }, 'Ext.Button');
+     *     Ext.create('Ext.Button', { text: 'My Button' });
+     *
+     * If an existing instance is also specified, it will be updated with the supplied config object. This is useful
+     * if you need to either create or update an object, depending on if an instance already exists. For example:
+     *
+     *     var button;
+     *     button = Ext.factory({ text: 'New Button' }, 'Ext.Button', button);     // Button created
+     *     button = Ext.factory({ text: 'Updated Button' }, 'Ext.Button', button); // Button updated
+     *
+     * @param {Object} config  The config object to instantiate or update an instance with
+     * @param {String} classReference  The class to instantiate from
+     * @param {Object} [instance]  The instance to update
      * @member Ext
      */
     factory: function(config, classReference, instance, aliasNamespace) {
@@ -1043,7 +1156,7 @@ function(el){
         }
 
         if (aliasNamespace) {
-             // If config is a string value, treat is as an alias
+             // If config is a string value, treat it as an alias
             if (typeof config == 'string') {
                 return manager.instantiateByAlias(aliasNamespace + '.' + config);
             }
@@ -1052,17 +1165,9 @@ function(el){
                 return manager.instantiateByAlias(aliasNamespace + '.' + config.type, config);
             }
         }
-        else if (typeof config == 'string') {
-            return Ext.getCmp(config);
-        }
 
         if (config === true) {
-            if (instance) {
-                return instance;
-            }
-            else {
-                return manager.instantiate(classReference);
-            }
+            return instance || manager.instantiate(classReference);
         }
 
         //<debug error>
@@ -1074,8 +1179,7 @@ function(el){
         if ('xtype' in config) {
             newInstance = manager.instantiateByAlias('widget.' + config.xtype, config);
         }
-
-        if ('xclass' in config) {
+        else if ('xclass' in config) {
             newInstance = manager.instantiate(config.xclass, config);
         }
 
@@ -1265,6 +1369,7 @@ function(el){
      * True when the document is fully initialized and ready for action
      * @type Boolean
      * @member Ext
+     * @private
      */
     isReady : false,
 
@@ -1347,6 +1452,22 @@ function(el){
         }
     }
 });
+
+//<debug>
+Ext.Object.defineProperty(Ext, 'Msg', {
+    get: function() {
+        Ext.Logger.error("Using Ext.Msg without requiring Ext.MessageBox");
+        return null;
+    },
+    set: function(value) {
+        Ext.Object.defineProperty(Ext, 'Msg', {
+            value: value
+        });
+        return value;
+    },
+    configurable: true
+});
+//</debug>
 
 //<deprecated product=touch since=2.0>
 Ext.deprecateMethod(Ext, 'getOrientation', function() {
@@ -1479,6 +1600,8 @@ Ext.deprecateMethod(Ext, 'regLayout', null, "Ext.regLayout() has been removed");
 //</deprecated>
 
 /**
+ * @aside guide environment_package
+ *
  * Provides useful information about the current browser. Should not be manually instantiated unless for unit-testing;
  * access the global instance stored in Ext.browser instead. Example:
  *
@@ -1707,7 +1830,7 @@ Ext.define('Ext.env.Browser', {
 
         this.setFlag('Standalone', !!navigator.standalone);
 
-        if (typeof window.PhoneGap != 'undefined') {
+        if (typeof window.PhoneGap != 'undefined' || typeof window.Cordova != 'undefined' || typeof window.cordova != 'undefined') {
             isWebView = true;
             this.setFlag('PhoneGap');
         }
@@ -1778,6 +1901,8 @@ Ext.define('Ext.env.Browser', {
 });
 
 /**
+ * @aside guide environment_package
+ *
  * Provide useful information about the current operating system environment. Access the global instance stored in
  * Ext.os. Example:
  *
@@ -1838,7 +1963,7 @@ Ext.define('Ext.env.OS', {
      *
      * Note that only {@link Ext.Version#getMajor major component} and {@link Ext.Version#getShortVersion simplified}
      * value of the version are available via direct property checking. Supported values are: iOS, iPad, iPhone, iPod,
-     * Android, WebOS, BlackBerry, Bada, MacOSX, Windows, Linux and Other
+     * Android, WebOS, BlackBerry, Bada, MacOS, Windows, Linux and Other
      * @param {String} value The OS name to check
      * @return {Boolean}
      */
@@ -1847,7 +1972,7 @@ Ext.define('Ext.env.OS', {
     /**
      * @property {String} [name=null]
      * Read-only - the full name of the current operating system Possible values are: iOS, Android, WebOS, BlackBerry,
-     * MacOSX, Windows, Linux and Other
+     * MacOS, Windows, Linux and Other
      */
     name: null,
 
@@ -2016,6 +2141,8 @@ Ext.define('Ext.env.OS', {
 });
 
 /**
+ * @aside guide environment_package
+ *
  * A class to detect if the current browser supports various features.
  *
  * Please refer to the documentation of {@link Ext.feature.has} on how to use it.
@@ -2174,7 +2301,7 @@ Ext.define('Ext.env.Feature', {
          * True if the current device supports touch events (`touchstart`).
          */
         Touch: function() {
-            return this.isEventSupported('touchstart') && !(Ext.os && Ext.os.name.match(/Windows|MacOSX|Linux/));
+            return this.isEventSupported('touchstart') && !(Ext.os && Ext.os.name.match(/Windows|MacOS|Linux/));
         },
 
         /**
@@ -3397,7 +3524,8 @@ Ext.define('Ext.dom.Element', {
     },
 
     isPainted: function() {
-        return Boolean(this.dom.offsetParent);
+        var dom = this.dom;
+        return Boolean(dom && dom.offsetParent);
     },
 
     /**
@@ -3518,7 +3646,8 @@ Ext.define('Ext.dom.Element', {
          */
         fly: function(element, named) {
             var fly = null,
-                flyweights = Element._flyweights;
+                flyweights = Element._flyweights,
+                cachedElement;
 
             named = named || '_global';
 
@@ -3528,6 +3657,10 @@ Ext.define('Ext.dom.Element', {
                 fly = flyweights[named] || (flyweights[named] = new Element.Fly());
                 fly.dom = element;
                 fly.isSynchronized = false;
+                cachedElement = Ext.cache[element.id];
+                if (cachedElement && cachedElement.isElement) {
+                    cachedElement.isSynchronized = false;
+                }
             }
 
             return fly;
@@ -3673,6 +3806,7 @@ Ext.define('Ext.dom.Element', {
  * @class Ext.dom.Element
  */
 Ext.dom.Element.addStatics({
+    numberRe: /\d+$/,
     unitRe: /\d+(px|em|%|en|ex|pt|in|cm|mm|pc)$/i,
     camelRe: /(-[a-z])/gi,
     cssRe: /([a-z0-9-]+)\s*:\s*([^;\s]+(?:\s*[^;\s]+)*);?/gi,
@@ -3691,23 +3825,22 @@ Ext.dom.Element.addStatics({
      * @static
      */
     addUnits: function(size, units) {
-        // Most common case first: Size is set to a number
-        if (Ext.isNumber(size)) {
-            return size + (units || this.defaultUnit || 'px');
-        }
-
         // Size set to a value which means "auto"
         if (size === "" || size == "auto" || size === undefined || size === null) {
             return size || '';
         }
 
         // Otherwise, warn if it's not a valid CSS measurement
-        if (!this.unitRe.test(size)) {
+        if (Ext.isNumber(size) || this.numberRe.test(size)) {
+            return size + (units || this.defaultUnit || 'px');
+        }
+        else if (!this.unitRe.test(size)) {
             //<debug>
-            Ext.Logger.warn("Warning, size detected as NaN on Element.addUnits.");
+            Ext.Logger.warn("Warning, size detected (" + size + ") not a valid property value on Element.addUnits.");
             //</debug>
             return size || '';
         }
+
         return size;
     },
 
@@ -3739,7 +3872,7 @@ Ext.dom.Element.addStatics({
      * (e.g. 10, "10", "10 10", "10 10 10" and "10 10 10 10" are all valid options and would return the same result)
      * @static
      * @param {Number/String} box The encoded margins
-     * @return {Object} An object with margin sizes for top, right, bottom and left
+     * @return {Object} An object with margin sizes for top, right, bottom and left containing the unit
      */
     parseBox: function(box) {
         if (typeof box != 'string') {
@@ -3761,10 +3894,10 @@ Ext.dom.Element.addStatics({
         }
 
         return {
-            top: parseFloat(parts[0]) || 0,
-            right: parseFloat(parts[1]) || 0,
-            bottom: parseFloat(parts[2]) || 0,
-            left: parseFloat(parts[3]) || 0
+            top: parts[0] || 0,
+            right: parts[1] || 0,
+            bottom: parts[2] || 0,
+            left: parts[3] || 0
         };
     },
 
@@ -3777,14 +3910,13 @@ Ext.dom.Element.addStatics({
      * @return {String} An string with unitized (px if units is not specified) metrics for top, right, bottom and left
      */
     unitizeBox: function(box, units) {
-        var a = this.addUnits,
-            b = this.parseBox(box);
+        var me = this;
+        box = me.parseBox(box);
 
-        return a(b.top, units) + ' ' +
-            a(b.right, units) + ' ' +
-            a(b.bottom, units) + ' ' +
-            a(b.left, units);
-
+        return me.addUnits(box.top, units) + ' ' +
+               me.addUnits(box.right, units) + ' ' +
+               me.addUnits(box.bottom, units) + ' ' +
+               me.addUnits(box.left, units);
     },
 
     // private
@@ -5207,23 +5339,7 @@ Ext.dom.Element.addMembers({
      * Uses display mode to determine whether to use "display" or "visibility". See {@link #setVisible}.
      */
     hide: function() {
-        var dom = this.dom,
-            domStyle = dom.style,
-            needsRedraw = Ext.os.is.iOS;
-
-        if (domStyle.getPropertyValue('display') !== 'none') {
-            // iOS sometimes has a long delay before redrawing elements with their CSS 'display' set to 'none'
-            // This force a redraw to make sure the element is hidden instantly
-            if (needsRedraw) {
-                domStyle.setProperty('display', 'none', 'important');
-                dom.offsetHeight;
-                domStyle.removeProperty('display');
-                dom.offsetHeight;
-            }
-
-            domStyle.setProperty('display', 'none', 'important');
-        }
-
+        this.dom.style.setProperty('display', 'none', 'important');
     },
 
     setVisibility: function(isVisible) {
@@ -5300,7 +5416,7 @@ Ext.dom.Element.addMembers({
             return null;
         }
         if (!hook) {
-            me.styleHooks[prop] = hook = { name: this.self.normalize(prop) };
+            me.styleHooks[prop] = hook = { name: Ext.dom.Element.normalize(prop) };
         }
         if (hook.get) {
             return hook.get(dom, me);
@@ -5943,7 +6059,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
         for (i = 0; i < len; i++) {
             e = els[i];
             if (e) {
-                Ext.EventManager.on(e, eventName, handler, scope || e, opt);
+                e.on(eventName, handler, scope || e, opt);
             }
         }
         return this;

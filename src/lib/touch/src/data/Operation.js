@@ -16,7 +16,6 @@ Ext.define('Ext.data.Operation', {
          * True if this Operation is to be executed synchronously. This property is inspected by a
          * {@link Ext.data.Batch Batch} to see if a series of Operations can be executed in parallel or not.
          * @accessor
-         * @private
          */
         synchronous: true,
 
@@ -31,7 +30,6 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Ext.util.Filter[]} filters
          * Optional array of filter objects. Only applies to 'read' actions.
          * @accessor
-         * @private
          */
         filters: null,
 
@@ -39,7 +37,6 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Ext.util.Sorter[]} sorters
          * Optional array of sorter objects. Only applies to 'read' actions.
          * @accessor
-         * @private
          */
         sorters: null,
 
@@ -47,7 +44,6 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Ext.util.Grouper} grouper
          * Optional grouping configuration. Only applies to 'read' actions where grouping is desired.
          * @accessor
-         * @private
          */
         grouper: null,
 
@@ -55,7 +51,6 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Number} start
          * The start index (offset), used in paging when running a 'read' action.
          * @accessor
-         * @private
          */
         start: null,
 
@@ -63,7 +58,6 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Number} limit
          * The number of records to load. Used on 'read' actions when paging is being used.
          * @accessor
-         * @private
          */
         limit: null,
 
@@ -71,7 +65,6 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Ext.data.Batch} batch
          * The batch that this Operation is a part of.
          * @accessor
-         * @private
          */
         batch: null,
 
@@ -80,9 +73,7 @@ Ext.define('Ext.data.Operation', {
          * Function to execute when operation completed.
          * @cfg {Ext.data.Model[]} callback.records Array of records.
          * @cfg {Ext.data.Operation} callback.operation The Operation itself.
-         * @cfg {Boolean} callback.success True when operation completed successfully.
          * @accessor
-         * @private
          */
         callback: null,
 
@@ -90,7 +81,6 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Object} scope
          * Scope for the {@link #callback} function.
          * @accessor
-         * @private
          */
         scope: null,
 
@@ -130,6 +120,7 @@ Ext.define('Ext.data.Operation', {
         /**
          * @cfg {Boolean} withCredentials
          * This field is necessary when using cross-origin resource sharing.
+         * @accessor
          */
         withCredentials: null,
 
@@ -148,6 +139,7 @@ Ext.define('Ext.data.Operation', {
          * @cfg {Ext.data.Model} model
          * The Model that this Operation will be dealing with. This configuration is required when defining any Operation.
          * Since Operations take care of creating, updating, destroying and reading records, it needs access to the Model.
+         * @accessor
          */
         model: undefined,
 

@@ -55,7 +55,10 @@ Ext.define('Ext.navigation.View', {
     requires: ['Ext.navigation.Bar'],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'navigationview',
 
         /**
@@ -186,15 +189,9 @@ Ext.define('Ext.navigation.View', {
 
     /**
      * @private
-     * Disable all animations on Android
      */
     applyLayout: function(config) {
         config = config || {};
-
-        // TODO: This should be a configuration
-        if (Ext.os.is.Android) {
-            config.animation = false;
-        }
 
         return config;
     },
@@ -326,6 +323,7 @@ Ext.define('Ext.navigation.View', {
         }
 
         config.view = this;
+        config.useTitleForBackButtonText = this.getUseTitleForBackButtonText();
 
         return Ext.factory(config, Ext.navigation.Bar, this.getNavigationBar());
     },

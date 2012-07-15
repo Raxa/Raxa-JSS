@@ -1,0 +1,26 @@
+{ 
+    "success": true,
+    "total": 3,
+    "drug": [{
+        "drugname": "Acetaminophen",
+        "dosage": "400mg",
+        "disp": "<disp>",
+        "instock": "yes",
+        "labels": "<label>",
+        "inhand": "<inhand>"
+    }, {
+        "drugname": "Paracitamol",
+        "dosage": "100mg",
+        "disp": "<disp>",
+        "instock": "no",
+        "labels": "<label>",
+        "inhand": "<inhand>"
+    }, {
+        "drugname": "crosin",
+        "dosage": "200mg",
+        "disp": "<disp>",
+        "instock": "yes",
+        "labels": "<label>",
+        "inhand": "<inhand>"
+    }]
+}

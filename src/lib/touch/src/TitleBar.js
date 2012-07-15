@@ -94,10 +94,16 @@ Ext.define('Ext.TitleBar', {
     isToolbar: true,
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'toolbar',
 
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'navigation-bar',
 
         /**
@@ -160,73 +166,66 @@ Ext.define('Ext.TitleBar', {
     initialize: function() {
         delete this.applyItems;
 
-        this.doAdd = this.doBoxAdd;
-        this.remove = this.doBoxRemove;
-        this.doInsert = this.doBoxInsert;
-
         this.add(this.initialItems);
         delete this.initialItems;
 
         this.on({
-            painted: 'onPainted',
-            erased: 'onErased'
+            painted: 'refreshTitlePosition',
+            single: true
         });
     },
 
     applyInitialItems: function(items) {
-        var SizeMonitor = Ext.util.SizeMonitor,
-            defaults = this.getDefaults() || {},
-            leftBox, rightBox, spacer;
+        var me = this,
+            defaults = me.getDefaults() || {};
 
-        this.initialItems = items;
+        me.initialItems = items;
 
-        this.leftBox = leftBox = this.add({
+        me.leftBox = me.add({
             xtype: 'container',
             style: 'position: relative',
             layout: {
                 type: 'hbox',
                 align: 'center'
+            },
+            listeners: {
+                resize: 'refreshTitlePosition',
+                scope: me
             }
         });
 
-        this.spacer = spacer = this.add({
+        me.spacer = me.add({
             xtype: 'component',
             style: 'position: relative',
-            flex: 1
+            flex: 1,
+            listeners: {
+                resize: 'refreshTitlePosition',
+                scope: me
+            }
         });
 
-        this.rightBox = rightBox = this.add({
+        me.rightBox = me.add({
             xtype: 'container',
             style: 'position: relative',
             layout: {
                 type: 'hbox',
                 align: 'center'
+            },
+            listeners: {
+                resize: 'refreshTitlePosition',
+                scope: me
             }
         });
 
-        this.titleComponent = this.add({
+        me.titleComponent = me.add({
             xtype: 'title',
             hidden: defaults.hidden,
             centered: true
         });
 
-        this.sizeMonitors = {
-            leftBox: new SizeMonitor({
-                element: leftBox.renderElement,
-                callback: this.refreshTitlePosition,
-                scope: this
-            }),
-            spacer: new SizeMonitor({
-                element: spacer.renderElement,
-                callback: this.refreshTitlePosition,
-                scope: this
-            }),
-            rightBox: new SizeMonitor({
-                element: rightBox.renderElement,
-                callback: this.refreshTitlePosition,
-                scope: this
-            })
-        };
+        me.doAdd = me.doBoxAdd;
+        me.remove = me.doBoxRemove;
+        me.doInsert = me.doBoxInsert;
     },
 
     doBoxAdd: function(item) {
@@ -235,10 +234,6 @@ Ext.define('Ext.TitleBar', {
         }
         else {
             this.leftBox.add(item);
-        }
-
-        if (this.painted) {
-            this.refreshTitlePosition();
         }
     },
 
@@ -249,10 +244,6 @@ Ext.define('Ext.TitleBar', {
         else {
             this.leftBox.remove(item);
         }
-
-        if (this.painted) {
-            this.refreshTitlePosition();
-        }
     },
 
     doBoxInsert: function(index, item) {
@@ -262,21 +253,6 @@ Ext.define('Ext.TitleBar', {
         else {
             this.leftBox.add(item);
         }
-    },
-
-    onPainted: function() {
-        var sizeMonitors = this.sizeMonitors;
-
-        this.painted = true;
-        this.refreshTitlePosition();
-
-        sizeMonitors.leftBox.refresh();
-        sizeMonitors.spacer.refresh();
-        sizeMonitors.rightBox.refresh();
-    },
-
-    onErased: function() {
-        this.painted = false;
     },
 
     getMaxButtonWidth: function() {
@@ -346,20 +322,8 @@ Ext.define('Ext.TitleBar', {
     updateTitle: function(newTitle) {
         this.titleComponent.setTitle(newTitle);
 
-        this.titleBox = null;
-
-        if (this.painted) {
+        if (this.isPainted()) {
             this.refreshTitlePosition();
         }
-    },
-
-    destroy: function() {
-        this.callParent();
-
-        var sizeMonitors = this.sizeMonitors;
-
-        sizeMonitors.leftBox.destroy();
-        sizeMonitors.spacer.destroy();
-        sizeMonitors.rightBox.destroy();
     }
 });

@@ -144,11 +144,30 @@
             "files": [
                 {
                     "path": "bootstrap/",
+                    "name": "prefix.js"
+                },
+                {
+                    "path": "bootstrap/",
                     "name": "data-release.js"
                 },
                 {
                     "path": "",
-                    "name": "sencha-touch-release.js"
+                    "name": "sencha-touch-debug-suffix.js"
+                },
+                {
+                    "path": "bootstrap/",
+                    "name": "suffix.js"
+                }
+            ]
+        },
+        {
+            "name": "All Manifest",
+            "target": "pkgs/all_manifest.js",
+            "id": "all_manifest",
+            "files": [
+                {
+                    "path": "",
+                    "name": "sencha-touch-all-debug-suffix.js"
                 }
             ]
         },
@@ -894,8 +913,8 @@
                 },
                 {
                     "path": "src/util/",
-                    "name": "GeoLocation.js",
-                    "clsName": "Ext.util.GeoLocation"
+                    "name": "Geolocation.js",
+                    "clsName": "Ext.util.Geolocation"
                 },
                 {
                     "path": "src/util/",
@@ -1184,11 +1203,6 @@
                 },
                 {
                     "path": "src/field/",
-                    "name": "Hidden.js",
-                    "clsName": "Ext.field.Hidden"
-                },
-                {
-                    "path": "src/field/",
                     "name": "Radio.js",
                     "clsName": "Ext.field.Radio"
                 },
@@ -1201,6 +1215,11 @@
                     "path": "src/field/",
                     "name": "Email.js",
                     "clsName": "Ext.field.Email"
+                },
+                {
+                    "path": "src/field/",
+                    "name": "Hidden.js",
+                    "clsName": "Ext.field.Hidden"
                 },
                 {
                     "path": "src/field/",
@@ -1494,7 +1513,7 @@
         {
             "name": "All - production",
             "usage": "This is the build people should use in production if they don't want to go through making their own app-specific build",
-            "target": "builds/sencha-touch-all.js",
+            "target": "sencha-touch-all.js",
             "compress": true,
             "options": {
                 "product": "touch",
@@ -1544,7 +1563,7 @@
         {
             "name": "All - production debug",
             "usage": "This is the build people should use if they need to debug production-specific issues with their app",
-            "target": "builds/sencha-touch-all-debug.js",
+            "target": "sencha-touch-all-debug.js",
             "compress": false,
             "options": {
                 "product": "touch",
@@ -1555,7 +1574,8 @@
             "packages": [
                 "foundation",
                 "dom",
-                "classes"
+                "classes",
+                "all_manifest"
             ]
         },
         {
@@ -1574,12 +1594,52 @@
                 "dom",
                 "classes"
             ]
+        },
+        {
+            "name": "Blink Development",
+            "usage": "Blink Development",
+            "target": "microloader/development.js",
+            "compress": false,
+            "files": [
+                {
+                    "path": "microloader/",
+                    "name": "development.js"
+                }
+            ]
+        },
+        {
+            "name": "Blink Production",
+            "usage": "Blink Production",
+            "target": "microloader/production.js",
+            "compress": true,
+            "files": [
+                {
+                    "path": "microloader/",
+                    "name": "production.js"
+                }
+            ]
+        },
+        {
+            "name": "Blink Testing",
+            "usage": "Blink Testing",
+            "target": "microloader/testing.js",
+            "compress": true,
+            "files": [
+                {
+                    "path": "microloader/",
+                    "name": "testing.js"
+                }
+            ]
         }
     ],
     "resources": [
         {
             "src": "src/",
             "dest": "src"
+        },
+        {
+            "src": "command/",
+            "dest": "command/"
         },
         {
             "src": "index.html",
@@ -1596,6 +1656,14 @@
         {
             "src": "touch.jsb3",
             "dest": "touch.jsb3"
+        },
+        {
+            "src": "version.txt",
+            "dest": "version.txt"
+        },
+        {
+            "src": ".senchasdk",
+            "dest": ".senchasdk"
         },
         {
             "src": "license.txt",

@@ -1,4 +1,6 @@
 /**
+ * @aside guide environment_package
+ *
  * Provide useful information about the current operating system environment. Access the global instance stored in
  * Ext.os. Example:
  *
@@ -59,7 +61,7 @@ Ext.define('Ext.env.OS', {
      *
      * Note that only {@link Ext.Version#getMajor major component} and {@link Ext.Version#getShortVersion simplified}
      * value of the version are available via direct property checking. Supported values are: iOS, iPad, iPhone, iPod,
-     * Android, WebOS, BlackBerry, Bada, MacOSX, Windows, Linux and Other
+     * Android, WebOS, BlackBerry, Bada, MacOS, Windows, Linux and Other
      * @param {String} value The OS name to check
      * @return {Boolean}
      */
@@ -68,7 +70,7 @@ Ext.define('Ext.env.OS', {
     /**
      * @property {String} [name=null]
      * Read-only - the full name of the current operating system Possible values are: iOS, Android, WebOS, BlackBerry,
-     * MacOSX, Windows, Linux and Other
+     * MacOS, Windows, Linux and Other
      */
     name: null,
 

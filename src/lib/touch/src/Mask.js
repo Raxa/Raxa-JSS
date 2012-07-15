@@ -22,7 +22,10 @@ Ext.define('Ext.Mask', {
     xtype: 'mask',
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'mask',
 
         /**

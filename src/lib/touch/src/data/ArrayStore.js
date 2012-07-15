@@ -1,5 +1,6 @@
 /**
  * @author Ed Spencer
+ * @aside guide stores
  *
  * Small helper class to make creating {@link Ext.data.Store}s from Array data easier. An ArrayStore will be
  * automatically configured with a {@link Ext.data.reader.Array}.

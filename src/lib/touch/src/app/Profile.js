@@ -230,19 +230,15 @@ Ext.define('Ext.app.Profile', {
 
             Ext.each(map[classType], function(className) {
                 if (Ext.isString(className)) {
-
-                    //if there is a '.' anywhere in the string we treat it as fully qualified, if not compute the
-                    //namespaced classname below
-                    if (className.match("\\.")) {
-                        fullyQualified = className;
-                    } else {
-                        fullyQualified = format('{0}.{1}.{2}.{3}', appName, classType, namespace, className);
+                    //we check name === appName to allow MyApp.profile.MyApp to exist
+                    if (Ext.isString(className) && (Ext.Loader.getPrefix(className) === "" || className === appName)) {
+                        className = appName + '.' + classType + '.' + namespace + '.' + className;
                     }
 
-                    classNames.push(fullyQualified);
-                    allClasses.push(fullyQualified);
+                    classNames.push(className);
+                    allClasses.push(className);
                 }
-            });
+            }, this);
 
             map[classType] = classNames;
         }

@@ -97,7 +97,20 @@ Ext.define('Ext.data.Connection', {
 
         useDefaultHeader : true,
         defaultPostHeader : 'application/x-www-form-urlencoded; charset=UTF-8',
+
+        /**
+         * @cfg {Boolean} useDefaultXhrHeader
+         * Set this to false to not send the default Xhr header (X-Requested-With) with every request.
+         * This should be set to false when making CORS (cross-domain) requests.
+         * @accessor
+         */
         useDefaultXhrHeader : true,
+
+        /**
+         * @cfg {String} defaultXhrHeader
+         * The value of the default Xhr header (X-Requested-With). This is only used when {@link #useDefaultXhrHeader}
+         * is set to true.
+         */
         defaultXhrHeader : 'XMLHttpRequest',
 
         autoAbort: false
@@ -610,7 +623,7 @@ Ext.define('Ext.data.Connection', {
             headers['Content-Type'] = contentType;
         }
 
-        if (me.getUseDefaultXhrHeader() && !headers['X-Requested-With']) {
+        if (((me.getUseDefaultXhrHeader() && options.useDefaultXhrHeader !== false) || options.useDefaultXhrHeader) && !headers['X-Requested-With']) {
             headers['X-Requested-With'] = me.getDefaultXhrHeader();
         }
         // set up all the request headers on the xhr object
@@ -761,7 +774,7 @@ Ext.define('Ext.data.Connection', {
             response;
 
         try {
-            result = me.parseStatus(request.xhr.status);
+            result = me.parseStatus(request.xhr.status, request.xhr);
 
             if (request.timedout) {
                 result.success = false;
@@ -798,11 +811,11 @@ Ext.define('Ext.data.Connection', {
      * @param {Number} status The status code
      * @return {Object} An object containing success/status state
      */
-    parseStatus: function(status) {
+    parseStatus: function(status, xhr) {
         // see: https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
         status = status == 1223 ? 204 : status;
 
-        var success = (status >= 200 && status < 300) || status == 304 || status == 0,
+        var success = (status >= 200 && status < 300) || status == 304 || (status == 0 && xhr.responseText.length > 0),
             isException = false;
 
         if (!success) {

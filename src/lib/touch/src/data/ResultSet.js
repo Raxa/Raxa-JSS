@@ -35,7 +35,13 @@ Ext.define('Ext.data.ResultSet', {
          * @cfg {Ext.data.Model[]} records (required)
          * The array of record instances.
          */
-        records: null
+        records: null,
+
+        /**
+         * @cfg {String} message
+         * The message that was read in from the data
+         */
+        message: null
     },
 
     /**

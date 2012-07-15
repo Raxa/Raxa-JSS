@@ -137,17 +137,16 @@ Ext.define('Ext.picker.Date', {
         this.callParent([value, animated]);
     },
 
-    getValue: function() {
+    getValue: function(useDom) {
         var values = {},
-            daysInMonth, day, month, year,
             items = this.getItems().items,
             ln = items.length,
-            item, i;
+            daysInMonth, day, month, year, item, i;
 
         for (i = 0; i < ln; i++) {
             item = items[i];
             if (item instanceof Ext.picker.Slot) {
-                values[item.getName()] = item.getValue();
+                values[item.getName()] = item.getValue(useDom);
             }
         }
 
@@ -340,12 +339,11 @@ Ext.define('Ext.picker.Date', {
     },
 
     onSlotPick: function() {
-        var value = this.getValue(),
+        var value = this.getValue(true),
             slot = this.getDaySlot(),
             year = value.getFullYear(),
             month = value.getMonth(),
             days = [],
-            selected = slot,
             daysInMonth, i;
 
         if (!value || !Ext.isDate(value) || !slot) {
@@ -384,7 +382,7 @@ Ext.define('Ext.picker.Date', {
         slot.selectedIndex = index;
         slot.scrollToItem(item);
 
-        slot._value = value;
+//        slot._value = value;
     },
 
     getDaySlot: function() {
@@ -420,9 +418,17 @@ Ext.define('Ext.picker.Date', {
 
     onDoneButtonTap: function() {
         var oldValue = this._value,
-            newValue = this.getValue();
+            newValue = this.getValue(true),
+            testValue = newValue;
 
-        if (newValue.toDateString() != oldValue.toDateString()) {
+        if (Ext.isDate(newValue)) {
+            testValue = newValue.toDateString();
+        }
+        if (Ext.isDate(oldValue)) {
+            oldValue = oldValue.toDateString();
+        }
+
+        if (testValue != oldValue) {
             this.fireEvent('change', this, newValue);
         }
 

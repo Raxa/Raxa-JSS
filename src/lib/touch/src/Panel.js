@@ -1,41 +1,38 @@
 /**
- * Panel is a container that has specific functionality and structural components that make it the perfect building
- * block for application-oriented user interfaces.
+ * @aside guide floating_components
  *
- * Panels are, by virtue of their inheritance from {@link Ext.Container}, capable of being configured with a {@link
- * Ext.Container#layout layout}, and containing child Components.
+ * Panels are most useful as Overlays - containers that float over your application. They contain extra styling such
+ * that when you {@link #showBy} another component, the container will appear in a rounded black box with a 'tip'
+ * pointing to a reference component.
  *
- * When either specifying child {@link Ext.Container#cfg-items items} of a Panel, or dynamically {@link Ext.Container#method-add
- * adding} Components to a Panel, remember to consider how you wish the Panel to arrange those child elements, and
- * whether those child elements need to be sized using one of Ext's built-in `**{@link Ext.Container#layout layout}**`
- * schemes.
+ * If you don't need this extra functionality, you should use {@link Ext.Container} instead. See the
+ * [Overlays example](#!/example/overlays) for more use cases.
  *
- * ## Example:
+ *      @example miniphone preview
  *
- *     @example miniphone preview
- *     var panel = Ext.create('Ext.Panel', {
- *         fullscreen: true,
+ *      var button = Ext.create('Ext.Button', {
+ *           text: 'Button',
+ *           id: 'rightButton'
+ *      });
  *
- *         items: [
- *             {
- *                 docked: 'top',
- *                 xtype: 'toolbar',
- *                 title: 'Standard Titlebar'
- *             },
- *             {
- *                 docked: 'top',
- *                 xtype: 'toolbar',
- *                 ui   : 'light',
- *                 items: [
- *                     {
- *                         text: 'Test Button'
- *                     }
- *                 ]
- *             }
- *         ],
+ *      Ext.create('Ext.Container', {
+ *          fullscreen: true,
+ *          items: [
+ *              {
+ *                   docked: 'top',
+ *                   xtype: 'titlebar',
+ *                   items: [
+ *                       button
+ *                   ]
+ *               }
+ *          ]
+ *      });
  *
- *         html: 'Testing'
- *     });
+ *      Ext.create('Ext.Panel', {
+ *          html: 'Floating Panel',
+ *          left: 0,
+ *          padding: 10
+ *      }).showBy(button);
  *
  */
 Ext.define('Ext.Panel', {
@@ -93,7 +90,9 @@ Ext.define('Ext.Panel', {
             bodyPadding = 5;
         }
 
-        bodyPadding = Ext.dom.Element.unitizeBox(bodyPadding);
+        if (bodyPadding) {
+            bodyPadding = Ext.dom.Element.unitizeBox(bodyPadding);
+        }
 
         return bodyPadding;
     },
@@ -107,7 +106,9 @@ Ext.define('Ext.Panel', {
             bodyMargin = 5;
         }
 
-        bodyMargin = Ext.dom.Element.unitizeBox(bodyMargin);
+        if (bodyMargin) {
+            bodyMargin = Ext.dom.Element.unitizeBox(bodyMargin);
+        }
 
         return bodyMargin;
     },
@@ -121,7 +122,9 @@ Ext.define('Ext.Panel', {
             bodyBorder = 1;
         }
 
-        bodyBorder = Ext.dom.Element.unitizeBox(bodyBorder);
+        if (bodyBorder) {
+            bodyBorder = Ext.dom.Element.unitizeBox(bodyBorder);
+        }
 
         return bodyBorder;
     },

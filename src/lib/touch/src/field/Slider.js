@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * The slider is a way to allow the user to select a value from a given numerical range. You might use it for choosing
  * a percentage, combine two of them to get min and max values, or use three of them to specify the hex values for a
  * color. Each slider contains a single 'thumb' that can be dragged along the slider's length to change the value.
@@ -67,18 +69,52 @@ Ext.define('Ext.field.Slider', {
     /**
      * @event change
      * Fires when an option selection has changed.
-     * @param {Ext.field.Select} me
+     * @param {Ext.field.Slider} me
+     * @param {Ext.slider.Slider} Slider Component
      * @param {Ext.slider.Thumb} thumb
      * @param {Number} newValue the new value of this thumb
      * @param {Number} oldValue the old value of this thumb
      */
 
+    /**
+    * @event dragstart
+    * Fires when the slider thumb starts a drag
+    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} Slider Component
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged
+    * @param {Array} value The start value
+    * @param {Ext.EventObject} e
+    */
+
+    /**
+    * @event drag
+    * Fires when the slider thumb starts a drag
+    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} Slider Component
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged
+    * @param {Ext.EventObject} e
+    */
+
+    /**
+    * @event dragend
+    * Fires when the slider thumb starts a drag
+    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} Slider Component
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged
+    * @param {Array} value The end value
+    * @param {Ext.EventObject} e
+    */
+
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         cls: Ext.baseCSSPrefix + 'slider-field',
 
         /**
-         * @inherit
+         * @cfg
+         * @inheritdoc
          */
         tabIndex: -1
     },
@@ -129,7 +165,10 @@ Ext.define('Ext.field.Slider', {
 
         this.getComponent().on({
             scope: this,
-            change: 'onSliderChange'
+            change: 'onSliderChange',
+            dragstart: 'onSliderDragStart',
+            drag: 'onSliderDrag',
+            dragend: 'onSliderDragEnd'
         });
     },
 
@@ -138,8 +177,20 @@ Ext.define('Ext.field.Slider', {
         return Ext.factory(config, Ext.slider.Slider);
     },
 
-    onSliderChange: function(me, thumb, newValue, oldValue) {
-        this.fireEvent('change', this, thumb, newValue, oldValue);
+    onSliderChange: function() {
+        this.fireEvent.apply(this, [].concat('change', this, Array.prototype.slice.call(arguments)));
+    },
+
+    onSliderDragStart: function() {
+        this.fireEvent.apply(this, [].concat('dragstart', this, Array.prototype.slice.call(arguments)));
+    },
+
+    onSliderDrag: function() {
+        this.fireEvent.apply(this, [].concat('drag', this, Array.prototype.slice.call(arguments)));
+    },
+
+    onSliderDragEnd: function() {
+        this.fireEvent.apply(this, [].concat('dragend', this, Array.prototype.slice.call(arguments)));
     },
 
     /**
@@ -156,7 +207,6 @@ Ext.define('Ext.field.Slider', {
         return this.getValue();
     },
 
-    // @inherit
     reset: function() {
         var config = this.config,
             initialValue = (this.config.hasOwnProperty('values')) ? config.values : config.value;

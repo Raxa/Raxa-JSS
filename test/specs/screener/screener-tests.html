@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title id="page-title">Module Tester</title>
+        <link rel="stylesheet" type="text/css" href="../../lib/jasmine-1.1.0/jasmine.css">
+        <script type="text/javascript" src="../../../src/lib/touch/sencha-touch-all-debug.js"></script>
+        <script type="text/javascript" src="../../lib/jasmine-1.1.0/jasmine.js"></script>
+        <script type="text/javascript" src="../../lib/jasmine-1.1.0/jasmine-html.js"></script>
+        <!-- Source files -->
+        <script type="text/javascript" src="../../../src/resources/scripts/util.js"></script>
+        <script type="text/javascript" src="../../../src/resources/scripts/startup.js"></script>
+        <!-- include specs here -->
+		<script type="text/javascript" src="ScreenerSpecs.js"></script>
+        <!-- load application here -->
+        <script type="text/javascript">
+            Ext.Loader.setConfig({
+                enabled: true
+            });
+            Ext.require('Ext.app.Application');
+            var App = null;
+            Ext.onReady(function() {
+                App = Ext.create('Ext.app.Application', {
+                    //fill in details for your module
+                    name: 'Screener',
+                    appFolder: '../../../src/screener/app',
+                        models: ['Doctor', 'Patient', 'Patients', 'Links', 'Person', 'NewPatient', 'PatientSummary', 'Obs', 'druglist', 'drugEncounter', 'PostList','PatientList','encounters'],
+                        stores: ['Doctors', 'Patients', 'IdentifierType', 'Location', 'PatientSummary', 'drugEncounter', 'PostLists','encounters'],
+                        views: ['NewPatient','DrugStore','DoctorSummary','Main','TopMenu','PatientView'],
+                        controllers: ['Application'],
+
+                    launch: function() {
+                        //include the tests in the test.html head
+                        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                        jasmine.getEnv().execute();
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

@@ -53,6 +53,8 @@ Ext.define('Ext.data.identifier.Uuid', {
 
     alias: 'data.identifier.uuid',
 
+    isUnique: true,
+
     config: {
         /**
          * The id for this generator instance. By default all model instances share the same

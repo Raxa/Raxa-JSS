@@ -1,4 +1,6 @@
 /**
+ * @aside guide forms
+ *
  * A FieldSet is a great way to visually separate elements of a form. It's normally used when you have a form with
  * fields that can be divided into groups - for example a customer's billing details in one fieldset and their shipping
  * address in another. A fieldset can be used inside a form or on its own elsewhere in your app. Fieldsets can
@@ -40,7 +42,10 @@ Ext.define('Ext.form.FieldSet', {
     requires: ['Ext.Title'],
 
     config: {
-        // @inherit
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         baseCls: Ext.baseCSSPrefix + 'form-fieldset',
 
         /**
