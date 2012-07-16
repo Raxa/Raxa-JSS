@@ -22,4 +22,3 @@ Ext.define('Screener.model.encounters', {
         }]
     }
 });
-

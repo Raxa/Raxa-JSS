@@ -308,3 +308,23 @@ var Util = {
         });
     }
 }
+
+
+if (localStorage.heightUuidconcept == undefined) {
+    var heightUuidConcept = Util.getAttributeFromREST('concept', 'height', 'HEIGHT (CM)');
+}
+if (localStorage.weightUuidconcept == undefined) {
+    var weightUuidConcept = Util.getAttributeFromREST('concept', 'weight', 'WEIGHT (KG)');
+}
+if (localStorage.bmiUuidconcept == undefined) {
+    var bmiUuidConcept = Util.getAttributeFromREST('concept', 'bmi', 'BODY MASS INDEX');
+}
+if (localStorage.regfeeUuidconcept == undefined) {
+    var regfeeUuidConcept = Util.getAttributeFromREST('concept', 'regfee', 'Registration Fee');
+}
+if (localStorage.basicUuidform == undefined) {
+    var basicUuidform = Util.getAttributeFromREST('form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms');
+}
+if(localStorage.prescriptionUuidencountertype == undefined){ 
+	var prescriptionUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescription', 'PRESCRIPTION - Prescription encounter');
+}
