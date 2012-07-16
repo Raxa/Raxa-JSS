@@ -310,7 +310,6 @@ var Util = {
 }
 
 
-
 if (localStorage.heightUuidconcept == undefined) {
     var heightUuidConcept = Util.getAttributeFromREST('concept', 'height', 'HEIGHT (CM)');
 }

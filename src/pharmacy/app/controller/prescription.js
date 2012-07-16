@@ -54,10 +54,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     Ext.getCmp('drugOrderASearchGrid').on('cellClick', function () {
                         this.DrugOrderSelect(Ext.getCmp('drugOrderASearchGrid').getSelectionModel().getSelection()[0])
                     }, this)
-                    //set the proxy for todays patient list and make the get call
-                    this.getTodayPatients();
                     //set the proxy for 1 week patient list and make the get call
                     this.getSevenDaysPatients();
+                    //set the proxy for todays patient list and make the get call
+                    this.getTodayPatients();
                 }
             },
             // show patient search results when pressed
@@ -76,22 +76,19 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // function updates the todays patient grid
     getTodayPatients: function () {
         var enddate = new Date()
-        this.getPatients(enddate, enddate, 'todayPatientGrid')
-        console.log(Ext.getCmp('todayPatientGrid').getStore().data);
+        this.getPatients(enddate, 12, -12 , 'todayPatientGrid')
     },
 
     // function updates the 1 week patient grid
     getSevenDaysPatients: function () {
         var enddate = new Date()
-        var startdate = new Date(enddate.getFullYear(), enddate.getMonth(), enddate.getDate() - 6)
-        this.getPatients(startdate, enddate, 'sevenDaysPatientGrid')
+        this.getPatients(enddate, 24*7 , -12, 'sevenDaysPatientGrid')
     },
     
-    getPatients: function(startdate,enddate,patientGridId){
-        Url = HOST + "/ws/rest/v1/raxacore/patientlist?startDate=" + startdate.getFullYear()
-        Url = Url + "-" + (startdate.getMonth() + 1) + "-" + startdate.getDate() + "&endDate=" + enddate.getFullYear()
-        Url = Url + "-" + (enddate.getMonth() + 1) + "-" + enddate.getDate()
-        Url = Url + "&encounterType=" + localStorage.prescriptionUuidencountertype
+    // function that set proxy for the store of given patientGridID 
+    getPatients: function(enddate, backwardtime, forwardtime, patientGridId){
+        var Url = HOST + "/ws/rest/v1/raxacore/patientlist?startDate=" + Util.Datetime(enddate, backwardtime) +"&endDate="
+            + Util.Datetime(enddate,forwardtime) + "&encounterType=" + localStorage.prescriptionUuidencountertype;
         Ext.getCmp(patientGridId).getStore().setProxy({
             type: 'rest',
             url: Url,
@@ -115,7 +112,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             items: [{
                 xtype: 'addPatient'
             }]
-        }).show();
+        }).show()
+    },
     afterDrugEdit: function () {
         var drugStore = this.getStore('orderStore');
         var x = Ext.getCmp('prescribedDrugs').getSelectionModel().getSelection()
@@ -165,44 +163,44 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 
     savePerson: function () {
         if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid() && (Ext.getCmp('dob').getValue() != null || Ext.getCmp('age').getValue() != null)){
-        var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
-            gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
-            addresses: [{
-                address1: Ext.getCmp('block').value,
-                cityVillage: Ext.getCmp('village').value,
-                countyDistrict: Ext.getCmp('District').value
-            }],
-            names: [{
-                givenName: Ext.getCmp('givenName').value,
-                familyName: Ext.getCmp('familyName').value
-            }]
-        })
-        //this if else statement change the persist property of age field in Person model so that if its
-        //empty it should not be sent to server in the body of post call
-        if (Ext.getCmp('age').getValue()!= null) {
-            jsonperson.data.age = Ext.getCmp('age').value;
-            RaxaEmr.Pharmacy.model.Person.getFields()[2].persist = true;
-        } else {
-            RaxaEmr.Pharmacy.model.Person.getFields()[2].persist = false;
-        }
-        if (Ext.getCmp('dob').getValue()!= null) {
-            jsonperson.data.birthdate = Ext.getCmp('dob').value;
-            RaxaEmr.Pharmacy.model.Person.getFields()[3].persist = true;
-        } else {
-            RaxaEmr.Pharmacy.model.Person.getFields()[3].persist = false;
-        }
+            var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
+                gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
+                addresses: [{
+                    address1: Ext.getCmp('block').value,
+                    cityVillage: Ext.getCmp('village').value,
+                    countyDistrict: Ext.getCmp('District').value
+                }],
+                names: [{
+                    givenName: Ext.getCmp('givenName').value,
+                    familyName: Ext.getCmp('familyName').value
+                }]
+            })
+            //this if else statement change the persist property of age field in Person model so that if its
+            //empty it should not be sent to server in the body of post call
+            if (Ext.getCmp('age').getValue()!= null) {
+                jsonperson.data.age = Ext.getCmp('age').value;
+                RaxaEmr.Pharmacy.model.Person.getFields()[2].persist = true;
+            } else {
+                RaxaEmr.Pharmacy.model.Person.getFields()[2].persist = false;
+            }
+            if (Ext.getCmp('dob').getValue()!= null) {
+                jsonperson.data.birthdate = Ext.getCmp('dob').value;
+                RaxaEmr.Pharmacy.model.Person.getFields()[3].persist = true;
+            } else {
+                RaxaEmr.Pharmacy.model.Person.getFields()[3].persist = false;
+            }
 
-        var store = Ext.create('RaxaEmr.Pharmacy.store.Persons');
-        store.add(jsonperson);
-        // this statement makes the post call to make the person
-        store.sync();
-        // this statement calls getifentifiers() as soon as the post call is successful
-        store.on('write', function () {
-            this.getidentifierstype(store.getAt(0).getData().uuid)
-        }, this)
-        Ext.getCmp('addPatient').getForm().reset();
-        //I made this funtion return this store because i needed this in jasmine unit test
-        return store;
+            var store = Ext.create('RaxaEmr.Pharmacy.store.Persons');
+            store.add(jsonperson);
+            // this statement makes the post call to make the person
+            store.sync();
+            // this statement calls getifentifiers() as soon as the post call is successful
+            store.on('write', function () {
+                this.getidentifierstype(store.getAt(0).getData().uuid)
+            }, this)
+            Ext.getCmp('addPatient').getForm().reset();
+            //I made this funtion return this store because i needed this in jasmine unit test
+            return store;
         }
         else{
             Ext.Msg.alert('fields invalid');

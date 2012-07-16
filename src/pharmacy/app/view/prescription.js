@@ -265,7 +265,9 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         id: 'todayPatientGrid',
                         height: 270,
                         width: 190,
-                        title: 'Today',
+                        title: 'Today', 
+                        store: Ext.create('RaxaEmr.Pharmacy.store.raxacorePatient'),
+   
                         y: 70
                     }
                     ],
@@ -273,7 +275,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         // as this panal exapands it make the get call for todays patient list to update the list
                         expand: {
                             fn: function(){
-                                console.log(Ext.getCmp('todayPatientGrid').getStore())
                                 Ext.getCmp('todayPatientGrid').getStore().load()
                             }
                         }
@@ -283,6 +284,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     xtype: 'patientsgridpanel',
                     id : 'sevenDaysPatientGrid',
                     title: 'Last 7 Days(145)',
+                     store: Ext.create('RaxaEmr.Pharmacy.store.raxacorePatient'),
                     listeners: {
                         // as this panal exapands it make the get call for 1 week patient list to update the list
                         expand: {
