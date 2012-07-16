@@ -21,19 +21,16 @@ Ext.application({
     requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Screener.store.Doctors', 'Ext.navigation.View'],
 
     //we will use a Patient and Doctor class
-
-    models: ['Patient', 'Doctor', 'Links', 'druglist', 'drugOrder', 'drugEncounter'],
-
+    models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'encounters', 'Observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
 
     //here we declare the visual components
-    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary'],
+    views: ['Main', 'TopMenu', 'PatientView', 'DoctorView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary', 'DoctorSummary'],
 
     //here we declare our controller that will perform actions
     controllers: ['Application'],
 
     //the stores will hold our data in a local cache
-
-    stores: ['Patients', 'Doctors', 'druglist', 'drugEncounter'],
+    stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary','AssignedPatientList'],
 
     //entry point
     launch: function () {

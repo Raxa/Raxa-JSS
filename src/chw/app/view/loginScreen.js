@@ -52,44 +52,7 @@ Ext.define('mUserStories.view.loginScreen', {
                     flex: 2
                 }]
             }, {
-                xtype: 'container',
-                layout: {
-                    type: 'vbox',
-                    pack: 'center',
-                    align: 'middle'
-                },
-                items: [{
-                    xtype: 'container',
-                    layout: 'hbox',
-                    padding: '10px',
-                    width: "100%",
-                    items: [{
-                        xtype: 'label',
-                        flex: '2'
-                    }, {
-                        xtype: 'button',
-                        id: 'ok_login',
-                        ui: 'confirm-round',
-                        icon: 'resources/rsz_check2.png',
-                        width: '45px',
-                        height: '45px',
-                        padding: '0px 0px 0px 3px'
-                    }, {
-                        xtype: 'label',
-                        flex: '2'
-                    }, {
-                        xtype: 'button',
-                        id: 'cancel_login',
-                        ui: 'decline-round',
-                        icon: 'resources/rsz_delete1.png',
-                        width: '45px',
-                        height: '45px',
-                        padding: '0px 0px 0px 3px'
-                    }, {
-                        xtype: 'label',
-                        flex: '2'
-                    }]
-                }]
+                xclass: 'mUserStories.view.okCancel'
             }]
         }]
     }

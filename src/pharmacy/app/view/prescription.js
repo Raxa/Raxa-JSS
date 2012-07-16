@@ -20,63 +20,124 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             layout: {
                 type: 'absolute'
             },
-            items: [
-            {
-                xtype: 'gridpanel',
-                id: 'drugASearchGrid',
-                height: 380,
-                styleHtmlContent: false,
-                width: 780,
-                autoScroll: true,
-                columnLines: true,
-                x: 190,
-                y: 180,
-                viewConfig: {
-                    stripeRows: false
-                },
-                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
-                columns: [
-                {
-                    xtype: 'gridcolumn',
-                    width: 117,
-                    text: 'Name Of drug',
-                    dataIndex: 'drugname'
-                },
-                {
-                    xtype: 'gridcolumn',
-                    width: 67,
-                    text: 'Dosage',
-                    dataIndex: 'dosage'
-                },
-                {
-                    xtype: 'gridcolumn',
-                    width: 73,
-                    text: 'Duration',
-                    // gets the duration using start and end date of prescription
-                    renderer: function(value, metadata, record){
-                        console.log(record)
-                        var temp = record.getData().endDate - record.getData().startDate
-                        temp = temp/(86400000)
-                        temp = parseInt(temp) + 1
-                        return temp + ' days'
-                    }
-                },
-                {
-                    xtype: 'numbercolumn',
-                    width: 38,
-                    text: 'Qty',
-                    dataIndex: 'quantity'
-                },
-                {
-                    xtype: 'numbercolumn',
-                    text: 'Unit Price'
-                },
-                {
-                    xtype: 'numbercolumn',
-                    width: 103,
-                    text: 'Item Price'
-                }
-                ]
+            items: [{
+                layout: 'card',
+                id: 'addpatientgridarea',
+                border: false,
+                activeItem: 0,
+                items: [{
+                    xtype: 'container',
+                    layout: 'absolute',
+                    border: false,
+                    items:[{
+                        xtype: 'gridpanel',
+                        id: 'drugASearchGrid',
+                        height: 380,
+                        styleHtmlContent: false,
+                        width: 770,
+                        autoScroll: true,
+                        columnLines: true,
+                        x: 190,
+                        y: 180,
+                        viewConfig: {
+                            stripeRows: false
+                        },
+                        store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
+                        columns: [
+                        {
+                            xtype: 'gridcolumn',
+                            width: 220,
+                            text: 'Name Of drug',
+                            dataIndex: 'drugname',
+                            resizable: false
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            width: 90,
+                            text: 'Dosage',
+                            dataIndex: 'dosage',
+                            resizable: false
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            width: 93,
+                            text: 'Duration',
+                            // gets the duration using start and end date of prescription
+                            renderer: function(value, metadata, record){
+                                console.log(record)
+                                var temp = record.getData().endDate - record.getData().startDate
+                                temp = temp/(86400000)
+                                temp = parseInt(temp) + 1
+                                return temp + ' days'
+                            },
+                            resizable: false
+                        },
+                        {
+                            xtype: 'numbercolumn',
+                            width: 65,
+                            text: 'Qty',
+                            dataIndex: 'quantity',
+                            resizable: false
+                        },
+                        {
+                            xtype: 'numbercolumn',
+                            text: 'Unit Price',
+                            width: 130,
+                            resizable: false
+                        },
+                        {
+                            xtype: 'numbercolumn',
+                            width: 170,
+                            text: 'Item Price',
+                            resizable: false
+                        }
+                        ]
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Review Prescription',
+                        x: 420,
+                        y: 580
+                    },
+                    {
+                        xtype: 'button',
+                        width: 60,
+                        text: 'Done',
+                        action: 'done',
+                        x: 330,
+                        y: 580
+                    },
+                    {
+                        xtype: 'button',
+                        width: 60,
+                        text: 'Print',
+                        x: 560,
+                        y: 580
+                    }]
+                },{
+                    xtype: 'container',
+                    layout: 'absolute',
+                    border: false,
+                    items:[{
+                        xtype: 'prescribedDrugs',
+                        x: 190,
+                        y: 270,
+                    },{
+                        xtype: 'button',
+                        width: 60,
+                        text: 'Done',
+                        action: 'done2',
+                        x: 330,
+                        y: 580
+                    },{
+                        xtype: 'button',
+                        width: 60,
+                        text: 'Print',
+                        action: 'print2',
+                        x: 460,
+                        y: 580
+                    }]
+                }]
             },{
                 xtype: 'button',
                 width: 180,
@@ -249,128 +310,132 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'gridcolumn',
                         width: 146,
                         text: 'Patient Name'
-                    }
-                    ],
-                    viewConfig: {
-
-                }
-                }
-                ]
-            },
-            {
-                xtype: 'button',
-                text: 'Review Prescription',
-                x: 320,
-                y: 580
-            },
-            {
-                xtype: 'button',
-                width: 60,
-                text: 'Done',
-                action: 'done',
-                x: 230,
-                y: 580
-            },
-            {
-                xtype: 'button',
-                width: 60,
-                text: 'Print',
-                x: 460,
-                y: 580
-            },
-            {
-                xtype: 'panel',
-                height: 110,
-                width: 110,
-                x: 190,
-                y: 60,
-                items:[{
-                    html: "<img border=\"0\" src=\"../../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"
+                    }]
                 }]
             //TODO: patient image
             },
             {
-                xtype: 'panel',
-                height: 110,
-                width: 330,
-                layout: {
-                    type: 'absolute'
-                },
-                items: [{
-                    xtype: 'textfield',
-                    fieldLabel: 'Patient Name',
-                    id: 'prescriptionPatientName',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 05
+                xtype: 'container',
+                layout: 'card',
+                id: 'addpatientarea',
+                activeItem: 0,
+                items:[{
+                    xtype: 'container',
+                    layout: 'absolute',
+                    items:[
+                    {
+                        xtype: 'panel',
+                        height: 110,
+                        width: 110,
+                        x: 190,
+                        y: 60,
+                        items:[{
+                            html: "<img border=\"0\" src=\"../../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"
+                        }]
+                    //TODO: patient image
+                    },
+                    {
+                        xtype: 'panel',
+                        height: 110,
+                        width: 330,
+                        layout: {
+                            type: 'absolute'
+                        },
+                        items: [{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Patient Name',
+                            id: 'prescriptionPatientName',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 05
+                        },{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Patient ID',
+                            id: 'prescriptionPatientId',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 30
+                        },{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Age',
+                            id: 'prescriptionPatientAge',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 55
+                        },{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Gender',
+                            id: 'prescriptionPatientGender',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 80
+                        }],
+                        x: 300,
+                        y: 60
+                    },
+                    {
+                        xtype: 'panel',
+                        height: 110,
+                        width: 330,
+                        layout: {
+                            type: 'absolute'
+                        },
+                        items: [{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Doctor\'s Name',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 05
+                        },{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Department',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 30
+                        },{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Prescription ID',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 55
+                        },{
+                            xtype: 'displayfield',
+                            fieldLabel: 'Prescription Date',
+                            id: 'prescriptionDate',
+                            readOnly: true,
+                            value: '',
+                            width: 300,
+                            x: 10,
+                            y: 80
+                        }],
+                        x: 630,
+                        y: 60
+                    }]
                 },{
-                    xtype: 'textfield',
-                    fieldLabel: 'Patient ID',
-                    id: 'prescriptionPatientId',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 30
-                },{
-                    xtype: 'textfield',
-                    fieldLabel: 'Age',
-                    id: 'prescriptionPatientAge',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 55
-                },{
-                    xtype: 'textfield',
-                    id: 'prescriptionPatientGender',
-                    fieldLabel: 'Gender',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 80
-                }],
-                x: 300,
-                y: 60
-            },
-            {
-                xtype: 'panel',
-                height: 110,
-                width: 330,
-                layout: {
-                    type: 'absolute'
-                },
-                items: [{
-                    xtype: 'textfield',
-                    fieldLabel: 'Doctor\'s Name',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 05
-                },{
-                    xtype: 'textfield',
-                    fieldLabel: 'Department',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 30
-                },{
-                    xtype: 'textfield',
-                    fieldLabel: 'Prescription ID',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 55
-                },{
-                    xtype: 'textfield',
-                    fieldLabel: 'Prescription Date',
-                    id: 'prescriptionDate',
-                    readOnly: true,
-                    width: 300,
-                    x: 10,
-                    y: 80
-                }],
-                x: 630,
-                y: 60
+                    xtype: 'container',
+                    layout: 'absolute',
+                    items:[{
+                        xtype: 'addPatient',
+                        height: 195,
+                        width: 770,
+                        x: 190,
+                        y: 60
+                    }]
+                }]
             }]
         }]
     }]

@@ -36,7 +36,7 @@ USER.name = '';
 USER.type = 'CHW';
 var CURR_DATE = new Date();
 var LOCATION = "";
-var CONNECTED = false;
+var CONNECTED = true;   //Variable for connectivity status
 var helper = {
     listDisclose: function (record) {
         Ext.getCmp('title_det').setTitle(record.get('familyName') + ', ' + record.get('givenName'))

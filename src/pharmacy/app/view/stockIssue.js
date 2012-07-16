@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.Pharmacy.view.stockIssue', {
     id: 'stockIssue',
     autoScroll: true,
     alias: 'widget.stockIssue',
-     items:[{
+    items:[{
         xtype: 'allStockPanel',
         x : 400
     },{

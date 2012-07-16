@@ -7,12 +7,12 @@
 Ext.define('Screener.store.Doctors', {
     requires: ['Screener.model.Doctor'],
     extend: 'Ext.data.Store',
-    //xtype: 'doctorStore',
+    storeId: 'doctorStore',
     config: {
         model: 'Screener.model.Doctor',
         proxy: {
             type: 'ajax',
-            url: HOST +'/ws/rest/v1/provider',
+            url: HOST +'/ws/rest/v1/provider?v=full',
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json',
