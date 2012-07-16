@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.okCancel', {
+Ext.define('chw.view.okCancel', {
     extend: 'Ext.Container',
     config: {
         layout: {

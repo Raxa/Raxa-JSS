@@ -13,23 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.loginScreen', {
+Ext.define('chw.view.loginScreen', {
     extend: 'Ext.Panel',
     alias: 'widget.LoginScreen',
     config: {
-        items: [/*{
-            xclass: 'mUserStories.view.titlebar'
-        }, */{
+        items: [{
             xtype: 'titlebar',
             title: 'CHW Module',
-//            id: 'title_login',
-            docked: 'top'/*,
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                id: 'back_add_appt'
-            }]*/
+            docked: 'top'
         }, {
             xtype: 'container',
             centered: true,
@@ -49,20 +40,17 @@ Ext.define('mUserStories.view.loginScreen', {
                 }]
             }, {
                 xtype: 'fieldset',
-//                id: 'loginForm',
                 items: [{
                     xtype: 'textfield',
                     label: 'Username',
                     itemId: 'usernameIID'
-//                    flex: 1
                 }, {
                     xtype: 'passwordfield',
                     label: 'Password',
                     itemId: 'passwordIID'
-//                    flex: 1
                 }]
             }, {
-                xclass: 'mUserStories.view.okCancel'
+                xclass: 'chw.view.okCancel'
             }]
         }]
     }

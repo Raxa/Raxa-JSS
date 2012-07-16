@@ -17,12 +17,12 @@ Ext.Loader.setConfig({
     enabled: true
 });
 Ext.application({
-    name: 'mUserStories',
+    name: 'chw',
     controllers: ['basic'],
-    models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers','encounterModel', 'resourceModel', 'visitModel'],
-    stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore','offlineStore','encounterStore','offlineRegisterStore', 'resourceStore', 'visitStore'],
-    views: ['loginScreen', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling','userToolbar','addOptions','addPatient','addReminder','addAppointment','notificationInbox','resources','resourceDetail','vcToolbar','okCancel', 'mapPanel'],
+    models: [],
+    stores: [],
+    views: ['loginScreen'],
     launch: function () {
-        Ext.create('mUserStories.view.loginScreen');
+        Ext.create('chw.view.loginScreen');
     }
 });
