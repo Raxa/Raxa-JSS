@@ -15,6 +15,7 @@
  */
 Ext.define('chw.view.loginScreen', {
     extend: 'Ext.Panel',
+    requires: ['chw.view.okCancel'],
     alias: 'widget.LoginScreen',
     config: {
         items: [{

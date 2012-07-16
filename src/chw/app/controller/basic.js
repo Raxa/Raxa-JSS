@@ -16,7 +16,18 @@
 Ext.define('chw.controller.basic', {
     extend: 'Ext.app.Controller',
     config: {
-        control: {}
+        control: {
+            "button[action=cancelButton]": {
+                tap: function () {
+                    this.doOption(false)
+                }
+            },
+            "button[action=okButton]": {
+                tap: function () {
+                    this.doOption(true)
+                }
+            }
+        }
     },
     launch: function () {
         Ext.create('Ext.Container', {
@@ -25,7 +36,32 @@ Ext.define('chw.controller.basic', {
             layout: 'card',
             items: [{
                 xclass: 'chw.view.loginScreen'
+            }, {
+                xclass: 'chw.view.familyList'
+            }, {
+                xclass: 'chw.view.diseaseList'
+            }, {
+                xclass: 'chw.view.familyDetails'
+            }, {
+                xclass: 'chw.view.patientDetails'
+            }, {
+                xclass: 'chw.view.visitDetails'
+            }, {
+                xclass: 'chw.view.inventoryList'
+            }, {
+                xclass: 'chw.view.inventoryDetails'
             }]
         })
+    },
+    doExit: function () {
+        USER.name = '';
+        USER.uuid = '';
+        Ext.getCmp('viewPort').setActiveItem(PAGES.fam_lst)
+    },
+    doOption: function (arg) {
+        var active = Ext.getCmp('viewPort').getActiveItem();
+        if (active.getActiveItem()===PAGES.login) {
+            this.doLogin(arg)
+        }
     }
 })

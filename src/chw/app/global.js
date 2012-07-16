@@ -18,15 +18,14 @@
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
 var MRSHOST = 'http://emrjss.jelastic.dogado.eu';
 var PAGES = {
-    login: 0,
-    fam_lst: 1,
-    dis_lst: 2,
-    fam_det: 3,
-    pat_det: 4,
-    vis_det: 5,
-    inventory: 6,
-    reg_fam: 7,
-    reg_pat: 8
+    loginScreen: 0,
+    familyList: 1,
+    diseaseList: 2,
+    familyDetails: 3,
+    patientDetails: 4,
+    visitDetails: 5,
+    inventoryList: 6,
+    inventoryDetails: 7
 }
 var USER = new Object();
 USER.name = '';

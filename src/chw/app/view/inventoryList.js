@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.patientDetails', {
+Ext.define('chw.view.inventoryList', {
     extend: 'Ext.Panel',
     requires: 'chw.view.userToolbar',
     config: {
@@ -21,7 +21,7 @@ Ext.define('chw.view.patientDetails', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Patient Details',
+            title: 'Inventory List',
             docked: 'top',
             items: [{
                 xtype: 'button',
