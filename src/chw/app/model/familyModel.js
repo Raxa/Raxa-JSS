@@ -21,6 +21,9 @@ Ext.define('chw.model.familyModel', {
         fields: [{
             name: 'familyName',
             type: 'string'
+        },{
+            name: 'familyAddress',
+            type: 'string'
         }, {
             name: 'familyLatitude',
             type: 'int'

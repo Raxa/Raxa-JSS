@@ -25,13 +25,15 @@ Ext.define('chw.store.patientStore', {
         data: [{
             firstName: 'Ronak',
             familyName: 'Patel',
+            familyId: '003',
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
             // patientIllnesses: ''
         }, {
             firstName: 'Bansi',
-            familyName: 'Patel',
+            familyName: 'Desai',
+            familyId: '001',
             patientAge: 19,
             patientGender: 'Male',
             patientImage: 'resources/user.png'

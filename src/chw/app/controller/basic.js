@@ -34,7 +34,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: 3,
+            activeItem: 1,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -60,7 +60,7 @@ Ext.define('chw.controller.basic', {
         Ext.getCmp('viewPort').setActiveItem(PAGES.loginScreen)
     },
     doList: function (arg) {
-        if (arg==='family') {
+        if (arg==='familyList') {
             var store = Ext.getStore('familyStore');
             if (!store) {
                 Ext.create('chw.store.familyStore')
@@ -68,14 +68,25 @@ Ext.define('chw.controller.basic', {
             // console.log(store);
             store.load();
             Ext.getCmp('familyLists').setStore(store)
+        }else if(arg==='familyDetails'){
+            var store = Ext.getStore('patientStore');
+            if(!store){
+                Ext.create('chw.store.familyDetails')
+            }
+            console.log(store)
+            store.load();
+            Ext.getCmp('familyMembersLIst').setStore(store);
         }
     },
     doOption: function (arg) {
         if (arg) {
             var active = Ext.getCmp('viewPort').getActiveItem();
             if (active.getActiveItem()===PAGES.loginScreen) {
-                this.doList('family');
+                this.doList('familyList');
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
+            }else if(active.getActiveItem()===PAGES.familyList){
+                this.doList('familyDetails')
+                Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
             }
         }
     }

@@ -24,6 +24,8 @@ Ext.define('chw.store.familyStore', {
         },
         data: [{
             familyName: 'Desai',
+            familyId: '001',
+            familyAddress: 'Desai Place',
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resoures/home.png',
@@ -31,6 +33,8 @@ Ext.define('chw.store.familyStore', {
             familyDistance: 50
         }, {
             familyName: 'Eppanapally',
+            familyId: '002',
+            familyAddress: 'Eppanapally Villa',
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resoures/home.png',
@@ -38,6 +42,8 @@ Ext.define('chw.store.familyStore', {
             familyDistance: 20
         }, {
             familyName: 'Patel',
+            familyId: '003',
+            familyAddress: 'Patels Home',
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resoures/home.png',
@@ -45,6 +51,8 @@ Ext.define('chw.store.familyStore', {
             familyDistance: 30
         }, {
             familyName: 'Vaidya',
+            familyId: '004',
+            familyAddress: 'Vaidya Nagar',
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resoures/home.png',
