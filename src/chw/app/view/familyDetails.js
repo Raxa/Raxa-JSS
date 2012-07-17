@@ -141,23 +141,8 @@ Ext.define('chw.view.familyDetails', {
                 }
                 ]
             },{
-                xtype: 'container',
-                items: [
-                {
-                    xtype: 'map',
-                    height: 300
-                }
-                ]
-            },
-            
-            ]
-        },
-        {
-            xtype: 'container',
-            title: 'Members',
-            items: [
-            {
-                xtype: 'container',
+                xtype: 'map',
+                height: '100%',
                 items: [
                 {
                     xtype: 'list',
@@ -172,7 +157,19 @@ Ext.define('chw.view.familyDetails', {
                 ui: 'action-round',
                 text: 'Start Visit'
             }
+            
             ]
+        },
+        {
+            xtype: 'container',
+            layout: {
+                type: 'fit'
+            },
+            title: 'Map',
+            items: [{
+                xtype: 'map',
+                height: '100%'
+            }]
         }, {
             xclass: 'chw.view.userToolbar'
         }
