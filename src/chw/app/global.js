@@ -38,3 +38,8 @@ var CURR_LOC = {
 }
 var LOCATION = "";
 var CONNECTED = true;
+var helper = {
+    doBack: function () {
+        Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
+    }
+}

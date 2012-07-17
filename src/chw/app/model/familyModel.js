@@ -36,6 +36,9 @@ Ext.define('chw.model.familyModel', {
         }, */{
             name: 'familyDistance',
             type: 'int'
+        }, {
+            name: 'familyDescrip',
+            type: 'string'
         }]
     }
 })

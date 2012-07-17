@@ -20,36 +20,40 @@ Ext.define('chw.store.familyStore', {
         id: 'familyStore',
         sorters: 'familyDistance',
         grouper: function (record) {
-            return record.get('familyDistance')[0];
+            return record.get('familyDistance');
         },
         data: [{
             familyName: 'Desai',
             familyLatitude: 25,
             familyLongitude: 25,
-            familyImage: 'resoures/home.png',
+            familyImage: 'resources/home.png',
             // familyMembers: 'chw.store.patientStore',
-            familyDistance: 50
+            familyDistance: 50,
+            familyDescrip: 'Pointy roof'
         }, {
             familyName: 'Eppanapally',
             familyLatitude: 25,
             familyLongitude: 25,
-            familyImage: 'resoures/home.png',
+            familyImage: 'resources/home.png',
             // familyMembers: 'chw.store.patientStore',
-            familyDistance: 20
+            familyDistance: 20,
+            familyDescrip: 'Three stories'
         }, {
             familyName: 'Patel',
             familyLatitude: 25,
             familyLongitude: 25,
-            familyImage: 'resoures/home.png',
+            familyImage: 'resources/home.png',
             // familyMembers: 'chw.store.patientStore',
-            familyDistance: 30
+            familyDistance: 30,
+            familyDescrip: 'Large complex'
         }, {
             familyName: 'Vaidya',
             familyLatitude: 25,
             familyLongitude: 25,
-            familyImage: 'resoures/home.png',
+            familyImage: 'resources/home.png',
             // familyMembers: 'chw.store.patientStore',
-            familyDistance: 40
+            familyDistance: 40,
+            familyDescrip: 'Near lake'
         }]
     }
 })
