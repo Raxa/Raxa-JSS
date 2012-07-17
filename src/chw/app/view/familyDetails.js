@@ -143,6 +143,9 @@ Ext.define('chw.view.familyDetails', {
                 ]
             }
             ]
+        },{
+            xtype: 'map',
+            height: 200
         },
         {
             xtype: 'button',
