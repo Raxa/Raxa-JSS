@@ -41,13 +41,23 @@ var CONNECTED = true;
 var helper = {
     listDisclose: function (list,record) {
         if(list==='family'){
+            // set all family details before transition
             Ext.ComponentQuery.query('familyDetails #familyNameLabel')[0].setHtml('<div style="font-size:13px;">'+record.get('familyName')+'</div>');
             Ext.ComponentQuery.query('familyDetails #familyAddress')[0].setHtml('<div style="font-size:13px;">'+record.get('familyAddress')+'</div>');
             Ext.ComponentQuery.query('familyDetails #familyTitle')[0].setTitle(record.get('familyName'));
             Ext.ComponentQuery.query('familyDetails #familyDescripLabel')[0].setHtml('<div style="text-align:center;"><i>'+record.get('familyDescrip')+'</i></div>');
-            //Add other fields here
-            console.log(record);
-            Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
+            // loading family member list
+            var pstore = Ext.getStore('patients');
+            if (!pstore) {
+                Ext.create('chw.store.patients')
+            }
+            console.log(pstore)
+            pstore.onAfter('load',function(){
+                console.log('loaded') 
+                Ext.getCmp('familyMembersList').setStore(pstore);
+                Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
+            });
+            pstore.load();
         } else if (list==='illness'){
             // filter and fetch a list of all patients with that illness
             // display all patients with that illness

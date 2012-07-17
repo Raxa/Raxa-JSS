@@ -17,7 +17,7 @@ Ext.define('chw.store.patients', {
     extend: 'Ext.data.Store',
     config: {
         model: 'chw.model.patient',
-        id: 'patients',
+        id: 'patientStore',
         sorters: 'familyName',
         grouper: function (record) {
             return record.get('familyName')[0];

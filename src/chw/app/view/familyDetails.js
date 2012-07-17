@@ -38,7 +38,11 @@ Ext.define('chw.view.familyDetails', {
             xtype: 'container',
             scrollable: true,
             title: 'Summary',
-            items: [{
+            layout:{
+                type:'vbox'
+            },
+            items: [
+            {
                 xtype: 'label',
                 itemId: 'familyDescripLabel'
             }, {
@@ -131,21 +135,38 @@ Ext.define('chw.view.familyDetails', {
                             itemId: 'lastVisit',
                             html: '<div style="font-size:13px;">10/7/12</div>',
                             flex: 1
-                        }]
-                    }]
-                }]
-            }, {
-                xtype: 'map',
-                height: '100%',
-                items: [{
-                    xtype: 'list',
-                    id: 'familyMembersList',
-                    itemTpl: ['<div>List Item {string}</div>']
-                }]
-            }, {
-                xtype: 'button',
-                ui: 'action-round',
-                text: 'Start Visit'
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            },{ 
+                xtype: 'list',
+                id: 'familyMembersList',
+                scrollable:false,
+                width:'100%',
+//                flex: 1,
+//                minHeight: '15%',
+                centered: true,
+                itemTpl: [
+                '<div>{firstName} {familyName}</div>'
+                ]   
+            },
+            {
+//                xtype:'container',
+//                layout: {
+//                    type: 'fit'
+//                },
+//                items: [{
+                    xtype: 'button',
+                    docked: 'bottom',
+                    width:'10',
+                    ui: 'action-round',
+                    text: 'Start Visit'
+//                    flex:1
+//                }]
+                
             }
 
             ]
