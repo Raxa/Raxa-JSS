@@ -4,8 +4,22 @@ Ext.define('chw.view.familyDetails', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [
-        {
+        items: [{
+            xtype: 'titlebar',
+            title: 'Patel',
+            id: 'family_title',
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                listeners: {
+                    tap: function () {
+                        helper.doBack()
+                    }
+                }
+            }]
+        }, {
             xtype: 'container',
             scrollable: true,
             title: 'Summary',
@@ -25,7 +39,7 @@ Ext.define('chw.view.familyDetails', {
                 {
                     xtype: 'image',
                     height: 201,
-                    src: 'somesrc',
+                    src: 'resources/home.png',
                     flex: 1
                 },
                 {
