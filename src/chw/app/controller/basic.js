@@ -59,16 +59,112 @@ Ext.define('chw.controller.basic', {
         USER.uuid = '';
         Ext.getCmp('viewPort').setActiveItem(PAGES.loginScreen)
     },
+    doLogin: function (arg) {
+        if (arg) {
+            // fetch and store items
+            USER.name = Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].getValue();
+            var pass = Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].getValue(); 
+            if (USER.name===''||pass==='') {
+                Ext.Msg.alert("Error","Please fill in all fields.")
+            } else {
+                // get user information
+                Ext.Ajax.request({
+                    scope: this,
+                    withCredentials: true,
+                    useDefaultXhrHeader: false,
+                    url: MRSHOST + '/ws/rest/v1/user?q=' + USER.name,
+                    method: 'GET',
+                    headers: HEADERS,
+                    success: function (resp) {
+                        var userInfo = Ext.decode(resp.responseText);
+                        if (userInfo.results.length!==0) {
+                            Ext.Ajax.request({
+                                scope: this,
+                                url: userInfo.results[0].links[0].uri + '?v=full',
+                                method: 'GET',
+                                withCredentials: true,
+                                useDefaultXhrHeader: false,
+                                headers: HEADERS,
+                                success: function (resp) {
+                                    var userInf = Ext.decode(resp.responseText);
+                                    localStorage.setItem('uuid',userInf.person.uuid)
+                                },
+                                failure: function () {}
+                            })
+                            USER.uuid = localStorage.getItem('uuid')
+                        } else {}
+                    },
+                    failure: function () {}
+                })
+                // save basic auth header
+                // delete existing logged in sessions
+                Ext.Ajax.request({
+                    url: MRSHOST + '/ws/rest/v1/session',
+                    withCredentials: true,
+                    useDefaultXhrHeader: false,
+                    method: 'DELETE',
+                    success: function () {}
+                })
+                // check login and save to localStorage if valid
+                Ext.Ajax.request({
+                    scope:this,
+                    url: MRSHOST + '/ws/rest/v1/session',
+                    withCredentials: true,
+                    useDefaultXhrHeader: false,
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": "Basic " + window.btoa(USER.name + ":" + pass)
+                    },
+                    success: function (response) {
+                        CONNECTED = true;
+                        var authenticated = Ext.decode(response.responseText).authenticated;
+                        if (authenticated) {
+                            localStorage.setItem("basicAuthHeader", "Basic " + window.btoa(USER.name + ":" + pass));
+                            Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
+                            Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
+                            this.doList('familyList');
+                            Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
+                        } else {
+                            localStorage.removeItem("basicAuthHeader");
+                            Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
+                            Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
+                            Ext.Msg.alert("Error", "Please try again")
+                        }
+                    },
+                    failure: function () {
+                        CONNECTED = false;
+                        // hash user/pass
+                        var hashPass = 'Basic ' + window.btoa(USER.name + ":" + pass);
+                        var hashStored = localStorage.getItem('basicAuthHeader');
+                        // compare hashPass to hashStored
+                        if (hashPass === hashStored) {
+                            Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
+                            Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
+                            this.doList('familyList');
+                            Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
+                        } else {
+                            Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
+                            Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
+                            Ext.Msg.alert("Error", "Please try again")
+                        }
+                    }
+                })
+            }
+        } else {
+            // exit the program
+            this.doExit();
+        }
+    },
     doList: function (arg) {
         if (arg==='familyList') {
-            
+            // set up store for list organized by family
             var fstore = Ext.getStore('families');
             if (!fstore) {
                 Ext.create('chw.store.families')
             }
             fstore.load();
             Ext.getCmp('familyLists').setStore(fstore)
-            
+            // set up store for list organized by illness
             var istore = Ext.getStore('illnesses');
             if (!istore) {
                 Ext.create('chw.store.illnesses')
@@ -81,8 +177,7 @@ Ext.define('chw.controller.basic', {
         if (arg) {
             var active = Ext.getCmp('viewPort').getActiveItem();
             if (active.getActiveItem()===PAGES.loginScreen) {
-                this.doList('familyList');
-                Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
+                this.doLogin(arg);
             }
         }
     }

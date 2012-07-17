@@ -48,9 +48,17 @@ var helper = {
             //Add other fields here
             console.log(record);
             Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
+        } else if (list==='illness'){
+            // filter and fetch a list of all patients with that illness
+            // display all patients with that illness
         }
     },     
     doBack: function () {
         Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
     }
+}
+var HEADERS = {
+    "Authorization": localStorage.getItem("basicAuthHeader"),
+    "Accept": "application/json",
+    "Content-Type": "application/json"
 }

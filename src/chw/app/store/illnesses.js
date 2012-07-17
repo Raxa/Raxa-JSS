@@ -32,7 +32,7 @@ Ext.define('chw.store.illnesses', {
             illnessName: 'Dehydration',
             illnessImage: ''
         }, {
-            illnessName: 'Sickle Cell Anaemia',
+            illnessName: 'Sickle Cell Anemia',
             illnessImage: ''
         }, {
             illnessName: 'Worms',

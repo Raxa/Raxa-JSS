@@ -57,24 +57,20 @@ Ext.define('chw.view.familyList', {
             title: 'Illness',
             cls: 'demo-list',
             items: [{
-                title: 'Family',
-                cls: 'demo-list',
-                items: [{
-                    xtype: 'list',
-                    ui: 'round',
-                    grouped: true,
-                    pinHeaders: false,
-                    id: 'illnessNames',
-                    store: 'illnesses',
-                    width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-                    height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-                    centered: true,
-                    indexBar: true,
-                    itemTpl: ['<div>{illnessName}</div>'],
-                    onItemDisclosure: function (record) {
-                        helper.listDisclose('illness', record)
-                    }
-                }]
+                xtype: 'list',
+                ui: 'round',
+                grouped: true,
+                pinHeaders: false,
+                id: 'illnessNames',
+                store: 'illnesses',
+                width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                centered: true,
+                indexBar: true,
+                itemTpl: ['<div>{illnessName}</div>'],
+                onItemDisclosure: function (record) {
+                    helper.listDisclose('illness', record)
+                }
             }]
         }]
     }
