@@ -23,16 +23,7 @@ Ext.define('chw.view.familyList', {
             xtype: 'titlebar',
             title: 'Family List',
             docked: 'top',
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
-            }]
+            items: []
         }, {
             xclass: 'chw.view.userToolbar'
         }, {
@@ -58,10 +49,10 @@ Ext.define('chw.view.familyList', {
 //                ],
                 itemTpl: [
                     // '<div style="background-image:url({familyImage});"</div>',
-                    //'<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>',
+                    '<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>',
                     '<div style="float:left;width:70%">',
-                    '<div class="list-item-title">{familyName}</div>',
-                    '<div class="list-item-narrative">{familyDescrip}</div>',
+                    '<div class="list-item-title" style="font-size:15px;">{familyName}</div>',
+                    '<div class="list-item-narrative" style="font-size:11px;">{familyDescrip}</div>',
                     //'<div>{familyName}</div>',
                     //'<div style="font-size:12px">{familyDescrip}</div>',
                     '</div>',

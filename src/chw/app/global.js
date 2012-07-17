@@ -43,6 +43,8 @@ var helper = {
         if(list==='family'){
             Ext.ComponentQuery.query('familyDetails #familyNameLabel')[0].setHtml('<div style="font-size:13px;">'+record.get('familyName')+'</div>');
             Ext.ComponentQuery.query('familyDetails #familyAddress')[0].setHtml('<div style="font-size:13px;">'+record.get('familyAddress')+'</div>');
+            Ext.ComponentQuery.query('familyDetails #familyTitle')[0].setTitle(record.get('familyName'));
+            Ext.ComponentQuery.query('familyDetails #familyDescripLabel')[0].setHtml('<div style="text-align:center;"><i>'+record.get('familyDescrip')+'</i></div>');
             //Add other fields here
             console.log(record);
             Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
