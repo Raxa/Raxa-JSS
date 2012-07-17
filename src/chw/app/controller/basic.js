@@ -34,7 +34,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: 1,
+            activeItem: 0,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -61,16 +61,20 @@ Ext.define('chw.controller.basic', {
     },
     doList: function (arg) {
         if (arg==='familyList') {
-            var store = Ext.getStore('familyStore');
-            if (!store) {
-                Ext.create('chw.store.familyStore')
-            }  
-            // console.log(store);
-            store.load();
             
-            Ext.getCmp('familyLists').setStore(store);
+            var fstore = Ext.getStore('families');
+            if (!fstore) {
+                Ext.create('chw.store.families')
+            }
+            fstore.load();
+            Ext.getCmp('familyLists').setStore(fstore)
             
-            
+            var istore = Ext.getStore('illnesses');
+            if (!istore) {
+                Ext.create('chw.store.illnesses')
+            }
+            istore.load();
+            Ext.getCmp('illnessNames').setStore(istore)
         }
     },
     doOption: function (arg) {

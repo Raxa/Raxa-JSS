@@ -13,35 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.model.familyModel', {
+Ext.define('chw.model.illness', {
     extend: 'Ext.data.Model',
-    id: 'familyModel',
     config: {
-        // identifier: 'uuid',
+        identifier: 'uuid',
         fields: [{
-            name: 'familyName',
-            type: 'string'
-        },{
-            name: 'familyAddress',
+            name: 'illnessName',
             type: 'string'
         }, {
-            name: 'familyLatitude',
-            type: 'int'
-        }, {
-            name: 'familyLongitude',
-            type: 'int'
-        }, {
-            name: 'familyImage',
+            name: 'illnessImage',
             type: 'string'
-        }, /*{
-            name: 'familyMembers',
-            model: 'chw.model.patientModel'
-        }, */{
-            name: 'familyDistance',
-            type: 'int'
-        }, {
-            name: 'familyDescrip',
-            type: 'string'
-        }]
+        }/*, {
+            name: 'illnessPatients',
+            type: ''
+        }*/]
     }
 })

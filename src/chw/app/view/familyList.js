@@ -23,16 +23,7 @@ Ext.define('chw.view.familyList', {
             xtype: 'titlebar',
             title: 'Family List',
             docked: 'top',
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
-            }]
+            items: []
         }, {
             xclass: 'chw.view.userToolbar'
         }, {
@@ -41,25 +32,29 @@ Ext.define('chw.view.familyList', {
             items: [{
                 xtype: 'list',
                 ui: 'round',
+                layout: 'fit',
                 grouped: true,
                 pinHeaders: false,
                 id: 'familyLists',
-                store: 'familyStore',
+                store: 'families',
                 width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
                 height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
                 centered: true,
-                indexBar: true,
                 loadingTest: 'Loading List...',
                 emptyText: '</pre><div class="notes-list-empty-text">No patients found.</div><pre>',
-                itemTpl: ['<div class="headshot" style="background-image:url({familyImage});></div>',
-                '</div><div class="list-item-title">{familyName}</div>',
-                '<div class="list-item-narrative">{familyDesrip}</div>'].join(''),
+                itemTpl: [
+                    '<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>',
+                    '<div style="float:left;width:70%">',
+                    '<div class="list-item-title" style="font-size:15px;">{familyName}</div>',
+                    '<div class="list-item-narrative" style="font-size:11px;">{familyDescrip}</div>',
+                    '</div>'
+                ].join(''),
                 onItemDisclosure: function (record) {
                     helper.listDisclose('family', record)
                 }
             }]
         }, {
-            title: 'Disease',
+            title: 'Illness',
             cls: 'demo-list',
             items: [{
                 title: 'Family',
@@ -69,14 +64,15 @@ Ext.define('chw.view.familyList', {
                     ui: 'round',
                     grouped: true,
                     pinHeaders: false,
-                    id: 'diseaseNames',
+                    id: 'illnessNames',
+                    store: 'illnesses',
                     width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
                     height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
                     centered: true,
                     indexBar: true,
-                    itemTpl: ['<div>{diseaseName}</div>'],
+                    itemTpl: ['<div>{illnessName}</div>'],
                     onItemDisclosure: function (record) {
-                        helper.listDisclose('disease', record)
+                        helper.listDisclose('illness', record)
                     }
                 }]
             }]

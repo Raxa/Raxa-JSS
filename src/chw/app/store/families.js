@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.store.familyStore', {
+Ext.define('chw.store.families', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'chw.model.familyModel',
-        id: 'familyStore',
+        model: 'chw.model.family',
+        id: 'families',
         sorters: 'familyDistance',
         grouper: function (record) {
             return record.get('familyDistance');
@@ -29,7 +29,7 @@ Ext.define('chw.store.familyStore', {
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patientStore',
+            // familyMembers: 'chw.store.patients',
             familyDistance: 50,
             familyDescrip: 'Pointy roof'
         }, {
@@ -39,7 +39,7 @@ Ext.define('chw.store.familyStore', {
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patientStore',
+            // familyMembers: 'chw.store.patients',
             familyDistance: 20,
             familyDescrip: 'Three stories'
         }, {
@@ -49,7 +49,7 @@ Ext.define('chw.store.familyStore', {
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patientStore',
+            // familyMembers: 'chw.store.patients',
             familyDistance: 30,
             familyDescrip: 'Large complex'
         }, {
@@ -59,9 +59,19 @@ Ext.define('chw.store.familyStore', {
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patientStore',
+            // familyMembers: 'chw.store.patients',
             familyDistance: 40,
             familyDescrip: 'Near lake'
+        }, {
+            familyName: 'Sharma',
+            familyId: '005',
+            familyAddress: 'Sharma Hauz',
+            familyLatitude: 25,
+            familyLongitude: 25,
+            familyImage: 'resources/home.png',
+            // familyMembers: 'chw.store.patients',
+            familyDistance: 40,
+            familyDescrip: 'On top of a hill'
         }]
     }
 })

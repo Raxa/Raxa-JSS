@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.model.familyModel', {
+Ext.define('chw.model.family', {
     extend: 'Ext.data.Model',
     id: 'familyModel',
     config: {
