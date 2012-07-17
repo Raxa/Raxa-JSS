@@ -56,12 +56,23 @@ Ext.define('chw.controller.basic', {
     doExit: function () {
         USER.name = '';
         USER.uuid = '';
-        Ext.getCmp('viewPort').setActiveItem(PAGES.fam_lst)
+        Ext.getCmp('viewPort').setActiveItem(PAGES.loginScreen)
+    },
+    doList: function (arg) {
+        if (arg==='family') {
+            var store = Ext.getStore('patientStore');
+            // console.log(store);
+            store.load();
+            Ext.getCmp('familyLists').setStore(store)
+        }
     },
     doOption: function (arg) {
-        var active = Ext.getCmp('viewPort').getActiveItem();
-        if (active.getActiveItem()===PAGES.login) {
-            this.doLogin(arg)
+        if (arg) {
+            var active = Ext.getCmp('viewPort').getActiveItem();
+            if (active.getActiveItem()===PAGES.loginScreen) {
+                this.doList('family');
+                Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
+            }
         }
     }
 })

@@ -19,9 +19,9 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'chw',
     controllers: ['basic'],
-    models: [],
-    stores: [],
-    views: ['loginScreen'],
+    models: ['familyModel', 'patientModel'],
+    stores: ['familyStore', 'patientStore'],
+    views: ['loginScreen', 'familyList'],
     launch: function () {
         Ext.create('chw.view.loginScreen');
     }
