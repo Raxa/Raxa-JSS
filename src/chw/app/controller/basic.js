@@ -68,14 +68,6 @@ Ext.define('chw.controller.basic', {
             // console.log(store);
             store.load();
             Ext.getCmp('familyLists').setStore(store)
-        }else if(arg==='familyDetails'){
-            var store = Ext.getStore('patientStore');
-            if(!store){
-                Ext.create('chw.store.familyDetails')
-            }
-            console.log(store)
-            store.load();
-            Ext.getCmp('familyMembersLIst').setStore(store);
         }
     },
     doOption: function (arg) {
@@ -84,9 +76,6 @@ Ext.define('chw.controller.basic', {
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doList('familyList');
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
-            }else if(active.getActiveItem()===PAGES.familyList){
-                this.doList('familyDetails')
-                Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
             }
         }
     }
