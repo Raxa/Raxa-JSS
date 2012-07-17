@@ -27,7 +27,6 @@ Ext.define('chw.view.visitDetails', {
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                id: 'back_add',
                 listeners: {
                     tap: function () {
                         helper.doBack()

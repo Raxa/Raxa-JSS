@@ -32,10 +32,10 @@ Ext.define('chw.view.userToolbar', {
             iconCls:'cloud_black_upload1',
             action: 'syncButton'
         }, {
-            iconCls: 'location',
+            iconCls: 'maps',
             action: 'locButton'
         }, {
-            iconCls: '',
+            iconCls: 'shop2',
             action: 'inventoryButton'
         }, {
             iconCls: 'delete',

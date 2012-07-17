@@ -13,28 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.inventoryList', {
-    extend: 'Ext.Panel',
-    requires: 'chw.view.userToolbar',
+Ext.define('chw.model.resource', {
+    extend: 'Ext.data.Model',
     config: {
-        height: '100%',
-        ui: 'neutral',
-        items: [{
-            xtype: 'titlebar',
-            title: 'Inventory List',
-            docked: 'top',
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
-            }]
+        identifier: 'uuid',
+        fields: [{
+            name: 'resourceType',
+            type: 'string'
         }, {
-            xclass: 'chw.view.userToolbar'
+            name: 'resourceName',
+            type: 'string',
+            isUnique: true
+        }, {
+            name: 'resourceLocation',
+            type: 'string'
         }]
     }
 })

@@ -13,28 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.inventoryList', {
-    extend: 'Ext.Panel',
-    requires: 'chw.view.userToolbar',
+Ext.define('chw.model.familyModel', {
+    extend: 'Ext.data.Model',
+    id: 'familyModel',
     config: {
-        height: '100%',
-        ui: 'neutral',
-        items: [{
-            xtype: 'titlebar',
-            title: 'Inventory List',
-            docked: 'top',
-            items: [{
-                xtype: 'button',
-                ui: 'back',
-                text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
-            }]
+        // identifier: 'uuid',
+        fields: [{
+            name: 'familyName',
+            //type: 'string'
         }, {
-            xclass: 'chw.view.userToolbar'
+            name: 'familyLatitude',
+            //type: 'int'
+        }, {
+            name: 'familyLongitude',
+            //type: 'int'
+        }, {
+            name: 'familyImage',
+            //type: 'string'
+        }, /*{
+            name: 'familyMembers',
+            model: 'chw.model.patientModel'
+        }, */{
+            name: 'familyDistance',
+            // type: 'int'
         }]
     }
 })

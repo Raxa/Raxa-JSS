@@ -27,7 +27,6 @@ Ext.define('chw.view.diseaseList', {
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                id: 'back_add',
                 listeners: {
                     tap: function () {
                         helper.doBack()
