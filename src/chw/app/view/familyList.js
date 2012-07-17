@@ -51,7 +51,9 @@ Ext.define('chw.view.familyList', {
                 indexBar: true,
                 loadingTest: 'Loading List...',
                 emptyText: '</pre><div class="notes-list-empty-text">No patients found.</div><pre>',
-                itemTpl: '</pre><div class="list-item-title">{familyName}</div><div class="list-item-narrative">{familyDescrip}</div><pre>',
+                itemTpl: ['<div class="headshot" style="background-image:url({familyImage});></div>',
+                '</div><div class="list-item-title">{familyName}</div>',
+                '<div class="list-item-narrative">{familyDesrip}</div>'].join(''),
                 onItemDisclosure: function (record) {
                     helper.listDisclose('family', record)
                 }

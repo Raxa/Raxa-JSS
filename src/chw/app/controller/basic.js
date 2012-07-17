@@ -60,7 +60,10 @@ Ext.define('chw.controller.basic', {
     },
     doList: function (arg) {
         if (arg==='family') {
-            var store = Ext.getStore('patientStore');
+            var store = Ext.getStore('familyStore');
+            if (!store) {
+                Ext.create('chw.store.familyStore')
+            }  
             // console.log(store);
             store.load();
             Ext.getCmp('familyLists').setStore(store)

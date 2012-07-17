@@ -20,22 +20,22 @@ Ext.define('chw.model.familyModel', {
         // identifier: 'uuid',
         fields: [{
             name: 'familyName',
-            //type: 'string'
+            type: 'string'
         }, {
             name: 'familyLatitude',
-            //type: 'int'
+            type: 'int'
         }, {
             name: 'familyLongitude',
-            //type: 'int'
+            type: 'int'
         }, {
             name: 'familyImage',
-            //type: 'string'
+            type: 'string'
         }, /*{
             name: 'familyMembers',
             model: 'chw.model.patientModel'
         }, */{
             name: 'familyDistance',
-            // type: 'int'
+            type: 'int'
         }]
     }
 })
