@@ -1,5 +1,6 @@
 Ext.define('chw.view.familyDetails', {
     extend: 'Ext.tab.Panel',
+    alias: 'widget.familyDetails',
     requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
@@ -60,6 +61,7 @@ Ext.define('chw.view.familyDetails', {
                         },
                         {
                             xtype: 'label',
+                            itemId: 'familyNameLabel',
                             html: '<div style="font-size:13px;">Patel</div>',
                             flex: 1
                         }
@@ -73,11 +75,12 @@ Ext.define('chw.view.familyDetails', {
                         items: [
                         {
                             xtype: 'label',
-                            html: '<div style="font-size:13px;"><b>Village</b>:</div>',
+                            html: '<div style="font-size:13px;"><b>Address</b>:</div>',
                             flex: 1
                         },
                         {
                             xtype: 'label',
+                            itemId: 'familyAddress',
                             html: '<div style="font-size:13px;">Hogwarts</div>',
                             flex: 1
                         }
@@ -96,6 +99,7 @@ Ext.define('chw.view.familyDetails', {
                         },
                         {
                             xtype: 'label',
+                            itemId: 'familyMemberNumber',
                             html: '<div style="font-size:13px;">4</div>',
                             flex: 1
                         }
@@ -114,6 +118,7 @@ Ext.define('chw.view.familyDetails', {
                         },
                         {
                             xtype: 'label',
+                            itemId: 'familyChildrenNumber',
                             html: '<div style="font-size:13px;">2</div>',
                             flex: 1
                         }
@@ -132,6 +137,7 @@ Ext.define('chw.view.familyDetails', {
                         },
                         {
                             xtype: 'label',
+                            itemId: 'lastVisit',
                             html: '<div style="font-size:13px;">10/7/12</div>',
                             flex: 1
                         }
@@ -141,26 +147,12 @@ Ext.define('chw.view.familyDetails', {
                 }
                 ]
             },{
-                xtype: 'container',
-                items: [
-                {
-                    xtype: 'map',
-                    height: 300
-                }
-                ]
-            },
-            
-            ]
-        },
-        {
-            xtype: 'container',
-            title: 'Members',
-            items: [
-            {
-                xtype: 'container',
+                xtype: 'map',
+                height: '100%',
                 items: [
                 {
                     xtype: 'list',
+                    id: 'familyMembersList',
                     itemTpl: [
                     '<div>List Item {string}</div>'
                     ]
@@ -172,7 +164,19 @@ Ext.define('chw.view.familyDetails', {
                 ui: 'action-round',
                 text: 'Start Visit'
             }
+            
             ]
+        },
+        {
+            xtype: 'container',
+            layout: {
+                type: 'fit'
+            },
+            title: 'Map',
+            items: [{
+                xtype: 'map',
+                height: '100%'
+            }]
         }, {
             xclass: 'chw.view.userToolbar'
         }

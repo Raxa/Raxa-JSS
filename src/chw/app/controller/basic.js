@@ -60,7 +60,7 @@ Ext.define('chw.controller.basic', {
         Ext.getCmp('viewPort').setActiveItem(PAGES.loginScreen)
     },
     doList: function (arg) {
-        if (arg==='family') {
+        if (arg==='familyList') {
             var store = Ext.getStore('familyStore');
             if (!store) {
                 Ext.create('chw.store.familyStore')
@@ -74,7 +74,7 @@ Ext.define('chw.controller.basic', {
         if (arg) {
             var active = Ext.getCmp('viewPort').getActiveItem();
             if (active.getActiveItem()===PAGES.loginScreen) {
-                this.doList('family');
+                this.doList('familyList');
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
             }
         }
