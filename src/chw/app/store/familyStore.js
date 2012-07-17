@@ -19,9 +19,9 @@ Ext.define('chw.store.familyStore', {
         model: 'chw.model.familyModel',
         id: 'familyStore',
         sorters: 'familyDistance',
-        /*grouper: function (record) {
+        grouper: function (record) {
             return record.get('familyDistance')[0];
-        },*/
+        },
         data: [{
             familyName: 'Desai',
             familyLatitude: 25,
