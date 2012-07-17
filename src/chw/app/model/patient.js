@@ -13,16 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.Loader.setConfig({
-    enabled: true
-});
-Ext.application({
-    name: 'chw',
-    controllers: ['basic'],
-    models: ['family', 'patient', 'illness'],
-    stores: ['families', 'patients', 'illnesses'],
-    views: ['loginScreen', 'familyList','familyDetails'],
-    launch: function () {
-        Ext.create('chw.view.loginScreen');
+Ext.define('chw.model.patient', {
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [{
+            name: 'firstName',
+            type: 'string'
+        }, {
+            name: 'familyName',
+            type: 'string'
+        }, {
+            name: 'patientAge',
+            type: 'number'
+        }, {
+            name: 'patientGender',
+            type: 'string'
+        }, {
+            name: 'patientImage',
+            type: 'string'
+        }/*, {
+            name: 'patientIllnesses',
+            type: 'chw.model.illnessModel'
+        }*/]
     }
-});
+})
