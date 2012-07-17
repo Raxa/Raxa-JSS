@@ -20,7 +20,7 @@ Ext.application({
     name: 'chw',
     controllers: ['basic'],
     models: ['familyModel', 'patientModel'],
-    stores: ['familyStore', 'patientStore'],
+    stores: ['familyStore', 'patients'],
     views: ['loginScreen', 'familyList','familyDetails'],
     launch: function () {
         Ext.create('chw.view.loginScreen');

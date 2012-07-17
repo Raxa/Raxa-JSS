@@ -45,8 +45,19 @@ var helper = {
             Ext.ComponentQuery.query('familyDetails #familyNameLabel')[0].setHtml('<div style="font-size:13px;">'+record.get('familyName')+'</div>');
             Ext.ComponentQuery.query('familyDetails #familyAddress')[0].setHtml('<div style="font-size:13px;">'+record.get('familyAddress')+'</div>');
             //Add other fields here
-            console.log(record);
-            Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
+            var store = Ext.getStore('patients');
+            if (!store) {
+                Ext.create('chw.store.patients')
+            }  
+            console.log(store);
+            store.onAfter('load',function(){
+                console.log('loaded') 
+                Ext.getCmp('familyMembersList').setStore(store);
+                Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
+            });
+            store.load();
+            
+            
         }
         
     }

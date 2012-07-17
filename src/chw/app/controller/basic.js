@@ -67,7 +67,10 @@ Ext.define('chw.controller.basic', {
             }  
             // console.log(store);
             store.load();
-            Ext.getCmp('familyLists').setStore(store)
+            
+            Ext.getCmp('familyLists').setStore(store);
+            
+            
         }
     },
     doOption: function (arg) {

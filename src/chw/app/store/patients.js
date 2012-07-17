@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.store.patientStore', {
+Ext.define('chw.store.patients', {
     extend: 'Ext.data.Store',
     config: {
         model: 'chw.model.patientModel',
