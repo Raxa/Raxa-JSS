@@ -28,38 +28,15 @@ Ext.define('chw.view.userToolbar', {
         items: [{
             iconCls: 'add',
             action: 'addButton'
-//            listeners: {
-//                tap: function () {
-//                    helper.doToolbar('add')
-//                }
-//            }
         }, {
             iconCls:'cloud_black_upload1',
             action: 'syncButton'
-//            listeners: {
-//                tap: function () {
-//                    helper.doToolbar('sync')
-//                }
-//            }
-        }, /*{
-            iconCls: 'maps',
-            action: 'locButton'
-        }, */{
+        }, {
             iconCls: 'shop2',
             action: 'inventoryButton'
-//            listeners: {
-//                tap: function () {
-//                    helper.doToolbar('inventory')
-//                }
-//            }
         }, {
             iconCls: 'delete',
             action: 'logoutButton'
-//            listeners: {
-//                tap: function () {
-//                    helper.doToolbar('logout')
-//                }
-//            }
         }]
     }
 })

@@ -63,9 +63,9 @@ Ext.define('chw.store.families', {
             familyDistance: 40,
             familyDescrip: 'Near lake'
         }, {
-            familyName: 'Sharma',
+            familyName: 'Mital',
             familyId: '005',
-            familyAddress: 'Sharma Hauz',
+            familyAddress: 'Mital Hauz',
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resources/home.png',

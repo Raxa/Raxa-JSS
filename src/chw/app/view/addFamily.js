@@ -35,6 +35,39 @@ Ext.define('chw.view.addFamily', {
             }]
         }, {
             xclass: 'chw.view.userToolbar'
+        }, {
+            xtype: 'container',
+            padding: '10px',
+            items: [{
+                xtype: 'fieldset',
+                defaults: {
+                    labelWidth: '35%'
+                },
+                items: [{
+                    xtype: 'textfield',
+                    label: 'Family Name',
+                    placeHolder: 'Goel',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    label: 'Address',
+                    placeHolder: 'Goel House',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    label: 'Description',
+                    placeHolder: 'Many cows',
+                    required: true,
+                    clearIcon: true
+                }]
+            }, {
+                xtype: 'button',
+                text: 'Select picture'
+            }, {
+                xclass: 'chw.view.okCancel'
+            }]
         }]
     }
 })

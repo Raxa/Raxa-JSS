@@ -35,6 +35,51 @@ Ext.define('chw.view.addPatient', {
             }]
         }, {
             xclass: 'chw.view.userToolbar'
+        }, {
+            xtype: 'container',
+            padding: '10px',
+            items: [{
+                xtype: 'fieldset',
+                defaults: {
+                    labelWidth: '35%'
+                },
+                items: [{
+                    xtype: 'textfield',
+                    label: 'First',
+                    placeHolder: 'Vikram',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    label: 'First',
+                    placeHolder: 'Vikram',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    label: 'Last',
+                    placeHolder: 'Rathore',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    label: 'First',
+                    placeHolder: 'Vikram',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    label: 'First',
+                    placeHolder: 'Vikram',
+                    required: true,
+                    clearIcon: true
+                }]
+            }, {
+                xtype: 'button',
+                text: 'Select picture'
+            }, {
+                xclass: 'chw.view.okCancel'
+            }]
         }]
     }
 })

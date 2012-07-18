@@ -31,11 +31,51 @@ Ext.define('chw.store.patients', {
             patientImage: 'resources/user.png'
             // patientIllnesses: ''
         }, {
-            firstName: 'Bansi',
+            firstName: 'Ishaan',
             familyName: 'Desai',
             familyId: '001',
             patientAge: 19,
             patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Pooja',
+            familyName: 'Eppanapally',
+            familyId: '002',
+            patientAge: 19,
+            patientGender: 'Female',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Bansi',
+            familyName: 'Patel',
+            familyId: '003',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Udayan',
+            familyName: 'Vaidya',
+            familyId: '004',
+            patientAge: 21,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Pulak',
+            familyName: 'Mital',
+            familyId: '005',
+            patientAge: 19,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Priya',
+            familyName: 'Mital',
+            familyId: '005',
+            patientAge: 19,
+            patientGender: 'Female',
             patientImage: 'resources/user.png'
             // patientIllnesses: ''
         }]
