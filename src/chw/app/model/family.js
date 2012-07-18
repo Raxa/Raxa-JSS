@@ -19,6 +19,9 @@ Ext.define('chw.model.family', {
     config: {
         // identifier: 'uuid',
         fields: [{
+            name: 'familyId',
+            type: 'string'
+        },{
             name: 'familyName',
             type: 'string'
         },{
