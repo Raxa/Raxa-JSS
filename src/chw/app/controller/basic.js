@@ -60,7 +60,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: 1,
+            activeItem: 0,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -118,13 +118,13 @@ Ext.define('chw.controller.basic', {
                     
                     familyStore.add(familyModel);
                     familyStore.sync();
-                    familyStore.onAfter('write',function(){
+//                    familyStore.on('write',function(){
                         console.log('Added family locally');
                         Ext.getCmp('familyName').reset();
                         Ext.getCmp('address').reset();
                         Ext.getCmp('description').reset();
-                        Ext.getCmp('viewPort').setActiveItem(PAGES.familyList.value);
-                    })
+                        Ext.getCmp('viewPort').setActiveItem(PAGES.familyList);
+//                    })
                 }
             }else if(step==='patient'){
                 //add patient
@@ -132,6 +132,7 @@ Ext.define('chw.controller.basic', {
         }
     },
     doBack: function () {
+        this.doList('familyList');
         Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
     },
     doExit: function () {
