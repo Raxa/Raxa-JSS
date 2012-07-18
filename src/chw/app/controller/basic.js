@@ -55,7 +55,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.familyList,
+            activeItem: 0,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {

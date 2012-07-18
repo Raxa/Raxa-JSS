@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.familyDetails', {
+Ext.define('chw.view.familyDetails1', {
     extend: 'Ext.tab.Panel',
     alias: 'widget.familyDetails',
     requires: 'chw.view.userToolbar',
@@ -87,7 +87,7 @@ Ext.define('chw.view.familyDetails', {
                             flex: 1
                         }, {
                             xtype: 'label',
-                            itemId: 'familyAddress',
+                            itemId: 'familyAddressLabel',
                             html: '<div style="font-size:13px;">Hogwarts</div>',
                             flex: 1
                         }]

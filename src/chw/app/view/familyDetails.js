@@ -35,68 +35,96 @@ Ext.define('chw.view.familyDetails', {
                 }
             }]
         }, {
-            title: 'Summary',
             xtype: 'container',
             height: '100%',
             width: '100%',
             scrollable: true,
-            layout: 'vbox',
+            title: 'Summary',
+            layout:{
+                type:'vbox'
+            },
             items: [{
                 xtype: 'label',
-                itemId: 'familyDescripLabel'
+                html: '<center><img src="resources/home.png"/></center>',
+                height: '20%',
+                width: '100%',
+                padding: '10px'
             }, {
                 xtype: 'container',
-                layout: {
-                    pack: 'center',
-                    type: 'hbox',
-                    height: '30%',
-                    width: '100%',
-                    docked: 'top'
-                }, 
-                scrollable: false,
+                padding: '10px',
                 items: [{
-                    xtype: 'image',
-                    height: '100%',
-                    width: '30%',
-                    src: 'resources/home.png'
-                }, {
-                    xtype: 'container',
-                    layout: 'hbox',
+                    xtype: 'fieldset',
+                    title: 'Family Description',
+                    defaults: {
+                        labelWidth: '35%'
+                    },
                     items: [{
-                        xtype: 'container'
+                        xtype: 'textfield',
+                        disabled: true,
+                        label: 'Address',
+                        placeHolder: 'Hogwarts'
+                    }, {
+                        xtype: 'textfield',
+                        disabled: true,
+                        label: 'Child/total',
+                        placeHolder: '2/4'
+                    }, {
+                        xtype: 'textfield',
+                        disabled: true,
+                        label: 'Last Visit',
+                        placeHolder: '12/7/2012'
                     }]
                 }]
             }, {
-                xtype: 'container',
-                height: '50%',
-                scrollable: true,
-                items: [{
-                    xtype: 'list',
-                    id: 'familyMembersList',
-                    // scrollable: false,
-                    width: '100%',
-                    itemTpl: ['<div>{firstName} {familyName}</div>']
-                }]
+                xtype: 'button',
+                text: 'Start Visit',
+                ui: 'confirm-round'
             }, {
-                xtype: 'container',
-                height: '20%',
-                items: [{
-                    xtype: 'button',
-                    centered: true,
-                    width: '80%',
-                    ui: 'action-round',
-                    text: 'Start Visit'
-                }]
+                xtype: 'label',
+                html: ' <br><br>'
             }]
         }, {
-            title: 'Map',
+            title: 'Members',
+            cls: 'demo-list',
+            items: [{
+                title: 'Family Members',
+                xtype: 'list',
+                ui: 'round',
+                pinHeaders: false,
+                id: 'familyMembersList',
+                width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                centered: true,
+                indexBar: true,
+                itemTpl: ['<div>{firstName} {familyName}</div>'].join(''),
+                onItemDisclosure: function (record) {
+                    helper.listDisclose('patient',record)
+                }
+            }, {
+                xtype: 'button',
+                text: 'Patient',
+                iconMask: true,
+                iconCls: 'user_add',
+                listeners: {
+                    tap: function () {
+                        // TODO: need to remember which family it is
+                        Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
+                    }
+                }
+            }]
+        },{
             xtype: 'container',
-            layout: 'fit',
+            layout: {
+                type: 'fit'
+            },
+            title: 'Map',
             items: [{
                 xtype: 'map',
                 height: '100%'
             }]
+        }, {
+            xclass: 'chw.view.userToolbar'
         }]
     }
-})
-	
+
+});
