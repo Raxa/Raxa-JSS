@@ -97,7 +97,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Ashsish',
             familyName: 'Sharma',
-            familyId: '002',
+            familyId: '005',
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'

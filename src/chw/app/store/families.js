@@ -73,7 +73,7 @@ Ext.define('chw.store.families', {
             familyDistance: 40,
             familyDescrip: 'On top of a hill'
         }, {
-            familyId: '005',
+            familyId: '006',
             familyName: 'Mittal',
             familyAddress: 'Mittal Place',
             familyLatitude: 25,
