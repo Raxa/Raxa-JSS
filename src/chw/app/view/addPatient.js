@@ -44,10 +44,14 @@ Ext.define('chw.view.addPatient', {
                     labelWidth: '35%'
                 },
                 items: [{
-                    xtype: 'textfield',
+                    xtype: 'selectfield',
                     label: 'Family',
                     required: true,
-                    // SELECTOR
+                    // TODO: how do you randomly generate this?
+                    options: [{
+                        text: '',
+                        value: 'empty'
+                    }]
                 }, {
                     xtype: 'textfield',
                     label: 'First',

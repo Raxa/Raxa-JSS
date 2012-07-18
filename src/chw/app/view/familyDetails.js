@@ -35,154 +35,68 @@ Ext.define('chw.view.familyDetails', {
                 }
             }]
         }, {
-            xtype: 'container',
-            scrollable: true,
             title: 'Summary',
-            layout:{
-                type:'vbox'
-            },
-            items: [
-            {
+            xtype: 'container',
+            height: '100%',
+            width: '100%',
+            scrollable: true,
+            layout: 'vbox',
+            items: [{
                 xtype: 'label',
                 itemId: 'familyDescripLabel'
             }, {
                 xtype: 'container',
                 layout: {
                     pack: 'center',
-                    type: 'hbox'
-                },
+                    type: 'hbox',
+                    height: '30%',
+                    width: '100%',
+                    docked: 'top'
+                }, 
                 scrollable: false,
                 items: [{
                     xtype: 'image',
-                    height: 201,
-                    src: 'resources/home.png',
-                    flex: 1
+                    height: '100%',
+                    width: '30%',
+                    src: 'resources/home.png'
                 }, {
                     xtype: 'container',
-                    margin: 5,
-                    flex: 1,
+                    layout: 'hbox',
                     items: [{
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        items: [{
-                            xtype: 'label',
-                            html: '<div style="font-size:13px;"><b>Family</b>:</div>',
-                            flex: 1
-                        }, {
-                            xtype: 'label',
-                            itemId: 'familyNameLabel',
-                            html: '<div style="font-size:13px;">Patel</div>',
-                            flex: 1
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        items: [{
-                            xtype: 'label',
-                            html: '<div style="font-size:13px;"><b>Address</b>:</div>',
-                            flex: 1
-                        }, {
-                            xtype: 'label',
-                            itemId: 'familyAddress',
-                            html: '<div style="font-size:13px;">Hogwarts</div>',
-                            flex: 1
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        items: [{
-                            xtype: 'label',
-                            html: '<div style="font-size:13px;"><b>Members</b>:</div>',
-                            flex: 1
-                        }, {
-                            xtype: 'label',
-                            itemId: 'familyMemberNumber',
-                            html: '<div style="font-size:13px;">4</div>',
-                            flex: 1
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        items: [{
-                            xtype: 'label',
-                            html: '<div style="font-size:13px;"><b>Children</b>:</div>',
-                            flex: 1
-                        }, {
-                            xtype: 'label',
-                            itemId: 'familyChildrenNumber',
-                            html: '<div style="font-size:13px;">2</div>',
-                            flex: 1
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        items: [{
-                            xtype: 'label',
-                            html: '<div style="font-size:13px;"><b>Last Visit</b>:</div>',
-                            flex: 1
-                        }, {
-                            xtype: 'label',
-                            itemId: 'lastVisit',
-                            html: '<div style="font-size:13px;">10/7/12</div>',
-                            flex: 1
-                        }
-                        ]
-                    }
-                    ]
-                }
-                ]
-            },{ 
-                xtype: 'list',
-                id: 'familyMembersList',
-                scrollable:false,
-                width:'100%',
-//                flex: 1,
-//                minHeight: '15%',
-                centered: true,
-                itemTpl: [
-                '<div>{firstName} {familyName}</div>'
-                ]   
-            },
-            {
-//                xtype:'container',
-//                layout: {
-//                    type: 'fit'
-//                },
-//                items: [{
+                        xtype: 'container'
+                    }]
+                }]
+            }, {
+                xtype: 'container',
+                height: '50%',
+                scrollable: true,
+                items: [{
+                    xtype: 'list',
+                    id: 'familyMembersList',
+                    // scrollable: false,
+                    width: '100%',
+                    itemTpl: ['<div>{firstName} {familyName}</div>']
+                }]
+            }, {
+                xtype: 'container',
+                height: '20%',
+                items: [{
                     xtype: 'button',
-                    docked: 'bottom',
-                    width:'10',
+                    centered: true,
+                    width: '80%',
                     ui: 'action-round',
                     text: 'Start Visit'
-//                    flex:1
-//                }]
-                
-            }
-
-            ]
+                }]
+            }]
         }, {
-            xtype: 'container',
-            layout: {
-                type: 'fit'
-            },
             title: 'Map',
+            xtype: 'container',
+            layout: 'fit',
             items: [{
                 xtype: 'map',
                 height: '100%'
             }]
-        }, {
-            xclass: 'chw.view.userToolbar'
         }]
     }
-
-});
+})
+	
