@@ -35,7 +35,7 @@ Ext.define('chw.model.family', {
             type: 'string'
         }, /*{
             name: 'familyMembers',
-            model: 'chw.model.patientModel'
+            model: 'chw.model.patient'
         }, */{
             name: 'familyDistance',
             type: 'int'
