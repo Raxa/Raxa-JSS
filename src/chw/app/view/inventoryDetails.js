@@ -27,11 +27,7 @@ Ext.define('chw.view.inventoryDetails', {
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
+                action: 'goback'
             }]
         }, {
             xclass: 'chw.view.userToolbar'

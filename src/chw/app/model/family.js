@@ -20,7 +20,7 @@ Ext.define('chw.model.family', {
         // identifier: 'uuid',
         fields: [{
             name: 'familyId',
-            type: 'string'
+            type: 'number'
         },{
             name: 'familyName',
             type: 'string'

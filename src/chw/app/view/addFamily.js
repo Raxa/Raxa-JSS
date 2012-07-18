@@ -25,13 +25,9 @@ Ext.define('chw.view.addFamily', {
             docked: 'top',
             items: [{
                 xtype: 'button',
+                action: 'goback',
                 ui: 'back',
-                text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
+                text: 'Back'
             }]
         }, {
             xclass: 'chw.view.userToolbar'
@@ -45,18 +41,21 @@ Ext.define('chw.view.addFamily', {
                 },
                 items: [{
                     xtype: 'textfield',
+                    id:'familyName',
                     label: 'Family Name',
                     placeHolder: 'Goel',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
+                    id:'address',
                     label: 'Address',
                     placeHolder: 'Goel House',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
+                    id:'description',
                     label: 'Description',
                     placeHolder: 'Many cows',
                     required: true,

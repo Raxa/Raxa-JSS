@@ -43,11 +43,11 @@ Ext.define('chw.view.familyList', {
                 loadingTest: 'Loading List...',
                 emptyText: '</pre><div class="notes-list-empty-text">No patients found.</div><pre>',
                 itemTpl: [
-                    '<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>',
-                    '<div style="float:left;width:70%">',
-                    '<div class="list-item-title" style="font-size:15px;">{familyName}</div>',
-                    '<div class="list-item-narrative" style="font-size:11px;">{familyDescrip}</div>',
-                    '</div>'
+                '<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>',
+                '<div style="float:left;width:70%">',
+                '<div class="list-item-title" style="font-size:15px;">{familyName}</div>',
+                '<div class="list-item-narrative" style="font-size:11px;">{familyDescrip}</div>',
+                '</div>'
                 ].join(''),
                 onItemDisclosure: function (record) {
                     helper.listDisclose('family', record)
@@ -63,8 +63,8 @@ Ext.define('chw.view.familyList', {
                 pinHeaders: false,
                 id: 'illnessNames',
                 store: 'illnesses',
-                width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-                height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                width: '100%',
+                height:'100%',
                 centered: true,
                 indexBar: true,
                 itemTpl: ['<div>{illnessName}</div>'],

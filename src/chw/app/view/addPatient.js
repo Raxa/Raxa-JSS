@@ -27,11 +27,7 @@ Ext.define('chw.view.addPatient', {
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
+                action: 'goback'
             }]
         }, {
             xclass: 'chw.view.userToolbar'
