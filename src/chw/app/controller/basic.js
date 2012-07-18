@@ -17,16 +17,37 @@ Ext.define('chw.controller.basic', {
     extend: 'Ext.app.Controller',
     config: {
         control: {
+            "button[action=addButton]": {
+                tap: function () {
+                    this.doToolbar('add')
+                }
+            },
             "button[action=cancelButton]": {
                 tap: function () {
                     this.doOption(false)
+                }
+            },
+            "button[action=inventoryButton]": {
+                tap: function () {
+                    this.doToolbar('inventory')
+                }
+            },
+            "button[action=logoutButton]": {
+                tap: function () {
+                    this.doToolbar('logout')
                 }
             },
             "button[action=okButton]": {
                 tap: function () {
                     this.doOption(true)
                 }
+            },
+            "button[action=syncButton]": {
+                tap: function () {
+                    this.doToolbar('sync')
+                }
             }
+            
         }
     },
     launch: function () {
@@ -51,6 +72,12 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.inventoryList'
             }, {
                 xclass: 'chw.view.inventoryDetails'
+            }, {
+                xclass: 'chw.view.addOptions'
+            }, {
+                xclass: 'chw.view.addFamily'
+            }, {
+                xclass: 'chw.view.addPatient'
             }]
         })
     },
@@ -179,6 +206,19 @@ Ext.define('chw.controller.basic', {
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doLogin(arg);
             }
+        }
+    }, 
+    doToolbar: function (arg) {
+        if (arg==='add') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.addOptions)
+        } else if (arg==='sync') {
+            Ext.Msg.confirm('','Sync all information?', function (resp) {
+                if (resp==='yes') {}
+            })
+        } else if (arg==='inventory') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList)
+        } else if (arg==='logout') {
+            this.doExit()
         }
     }
 })
