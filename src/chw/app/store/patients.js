@@ -128,7 +128,7 @@ Ext.define('chw.store.patients', {
             // patientIllnesses: ''
         }, {
             firstName: 'Pulak',
-            familyName: 'Mital',
+            familyName: 'Mittal',
             familyId: '006',
             patientAge: 19,
             patientGender: 'Male',
@@ -136,7 +136,7 @@ Ext.define('chw.store.patients', {
             // patientIllnesses: ''
         }, {
             firstName: 'Priya',
-            familyName: 'Mital',
+            familyName: 'Mittal',
             familyId: '006',
             patientAge: 38,
             patientGender: 'Female',

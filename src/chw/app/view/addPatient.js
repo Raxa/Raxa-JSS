@@ -45,10 +45,9 @@ Ext.define('chw.view.addPatient', {
                 },
                 items: [{
                     xtype: 'textfield',
-                    label: 'First',
-                    placeHolder: 'Vikram',
+                    label: 'Family',
                     required: true,
-                    clearIcon: true
+                    // SELECTOR
                 }, {
                     xtype: 'textfield',
                     label: 'First',
@@ -62,17 +61,39 @@ Ext.define('chw.view.addPatient', {
                     required: true,
                     clearIcon: true
                 }, {
-                    xtype: 'textfield',
-                    label: 'First',
-                    placeHolder: 'Vikram',
-                    required: true,
-                    clearIcon: true
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch',
+                        padding: 0
+                    },
+                    items: [{
+                        xtype: 'radiofield',
+                        name: 'radiogroup',
+                        value: 'Female',
+                        label: 'Female',
+                        labelWidth: '70%',
+                        flex: 1
+                    }, {
+                        xtype: 'radiofield',
+                        name: 'radiogroup',
+                        value: 'Male',
+                        label: 'Male',
+                        labelWidth: '70%',
+                        flex: 1
+                    }]
                 }, {
-                    xtype: 'textfield',
-                    label: 'First',
-                    placeHolder: 'Vikram',
+                    // Also include option for current age?
+                    xtype: 'datepickerfield',
+                    destroyPickerOnHide: true,
+                    name: 'bday',
+                    id: 'bday',
+                    label: 'Birthday',
                     required: true,
-                    clearIcon: true
+                    value: new Date(),
+                    picker: {
+                        yearFrom: 1900
+                    }
                 }]
             }, {
                 xtype: 'button',

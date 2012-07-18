@@ -74,8 +74,8 @@ Ext.define('chw.store.families', {
             familyDescrip: 'On top of a hill'
         }, {
             familyId: '005',
-            familyName: 'Mital',
-            familyAddress: 'Mital Place',
+            familyName: 'Mittal',
+            familyAddress: 'Mittal Place',
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resources/home.png',
