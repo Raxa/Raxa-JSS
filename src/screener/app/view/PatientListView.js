@@ -16,7 +16,7 @@ Ext.define("Screener.view.PatientListView", {
         {
             xtype: 'list',
             itemId: 'patientList',
-			itemTpl: '{display}',
+			itemTpl: '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',
             store:  'patientStore',
             items: [{
                 xtype: 'titlebar',
@@ -25,8 +25,21 @@ Ext.define("Screener.view.PatientListView", {
                 title: 'Patients',
                 items: [{
                     xtype: 'button',
-                    text: 'Sort',
-					action: 'sortList',
+                    text: 'BMI',
+					itemId: 'sortBMI',
+					action: 'sortByBMI',
+                    align: 'left'
+                },{
+                    xtype: 'button',
+                    text: 'FIFO',
+					itemId: 'sortFIFO',
+					action: 'sortByFIFO',
+                    align: 'left'
+                },{
+                    xtype: 'button',
+                    text: 'Name',
+					itemId: 'sortName',
+					action: 'sortByName',
                     align: 'left'
                 },{
 					xtype: 'button',
