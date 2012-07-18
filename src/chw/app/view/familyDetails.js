@@ -28,11 +28,7 @@ Ext.define('chw.view.familyDetails', {
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
+                action: 'goback'
             }]
         }, {
             xtype: 'container',

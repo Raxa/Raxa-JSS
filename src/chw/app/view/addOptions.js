@@ -27,11 +27,7 @@ Ext.define('chw.view.addOptions', {
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
+                action: 'goback'
             }]
         }, {
             xclass: 'chw.view.userToolbar'

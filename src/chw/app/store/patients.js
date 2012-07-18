@@ -25,7 +25,7 @@ Ext.define('chw.store.patients', {
         data: [{
             firstName: 'Ronak',
             familyName: 'Patel',
-            familyId: '003',
+            familyId: 3,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -33,7 +33,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Vishesh',
             familyName: 'Patel',
-            familyId: '003',
+            familyId: 3,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -41,7 +41,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Jignesh',
             familyName: 'Patel',
-            familyId: '003',
+            familyId: 3,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -49,7 +49,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Ishaan',
             familyName: 'Desai',
-            familyId: '001',
+            familyId: 1,
             patientAge: 19,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -57,7 +57,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Isha',
             familyName: 'Desai',
-            familyId: '001',
+            familyId: 1,
             patientAge: 21,
             patientGender: 'Female',
             patientImage: 'resources/user.png'
@@ -65,7 +65,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Ashish',
             familyName: 'Eppanapally',
-            familyId: '002',
+            familyId: 2,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -73,7 +73,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Pranav',
             familyName: 'Vaidya',
-            familyId: '004',
+            familyId: 4,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -81,7 +81,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Girish',
             familyName: 'Vaidya',
-            familyId: '004',
+            familyId: 4,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -89,7 +89,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Vijay',
             familyName: 'Sharma',
-            familyId: '005',
+            familyId: 5,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -97,7 +97,7 @@ Ext.define('chw.store.patients', {
         },{
             firstName: 'Ashsish',
             familyName: 'Sharma',
-            familyId: '005',
+            familyId: 5,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -105,7 +105,7 @@ Ext.define('chw.store.patients', {
         }, {
             firstName: 'Pooja',
             familyName: 'Eppanapally',
-            familyId: '002',
+            familyId: 2,
             patientAge: 19,
             patientGender: 'Female',
             patientImage: 'resources/user.png'
@@ -113,7 +113,7 @@ Ext.define('chw.store.patients', {
         }, {
             firstName: 'Bansi',
             familyName: 'Patel',
-            familyId: '003',
+            familyId: 3,
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -121,7 +121,7 @@ Ext.define('chw.store.patients', {
         }, {
             firstName: 'Udayan',
             familyName: 'Vaidya',
-            familyId: '004',
+            familyId: 4,
             patientAge: 21,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -129,7 +129,7 @@ Ext.define('chw.store.patients', {
         }, {
             firstName: 'Pulak',
             familyName: 'Mittal',
-            familyId: '006',
+            familyId: 6,
             patientAge: 19,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -137,7 +137,7 @@ Ext.define('chw.store.patients', {
         }, {
             firstName: 'Priya',
             familyName: 'Mittal',
-            familyId: '006',
+            familyId: 6,
             patientAge: 38,
             patientGender: 'Female',
             patientImage: 'resources/user.png'

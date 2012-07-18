@@ -22,6 +22,10 @@ Ext.define('chw.store.families', {
         grouper: function (record) {
             return record.get('familyDistance');
         },
+        proxy: {
+            type: 'localstorage',
+            id: 'familyStore'
+        },
         data: [{
             familyId: '001',
             familyName: 'Desai',

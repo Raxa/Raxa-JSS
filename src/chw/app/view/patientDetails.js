@@ -26,12 +26,8 @@ Ext.define('chw.view.patientDetails', {
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
-                listeners: {
-                    tap: function () {
-                        helper.doBack()
-                    }
-                }
+                action: 'goback',
+                text: 'Back'
             }]
         }, {
             xclass: 'chw.view.userToolbar'
