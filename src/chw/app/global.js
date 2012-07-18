@@ -57,6 +57,7 @@ var helper = {
             
             var familyId = record.get('familyId');
             console.log(familyId);
+            //Filtering the list by family id
             patientStore.filter('familyId',familyId)
             patientStore.onAfter('load',function(){
                 console.log(patientStore)
