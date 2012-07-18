@@ -25,7 +25,10 @@ var PAGES = {
     patientDetails: 4,
     visitDetails: 5,
     inventoryList: 6,
-    inventoryDetails: 7
+    inventoryDetails: 7,
+    addOptions: 8,
+    addFamily: 9,
+    addPatient: 10
 }
 var USER = new Object();
 USER.name = '';
@@ -51,9 +54,7 @@ var helper = {
             if (!pstore) {
                 Ext.create('chw.store.patients')
             }
-            console.log(pstore)
             pstore.onAfter('load',function(){
-                console.log('loaded') 
                 Ext.getCmp('familyMembersList').setStore(pstore);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
             });
