@@ -92,7 +92,16 @@ Ext.define('chw.view.familyDetails', {
                 height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
                 centered: true,
                 indexBar: true,
-                itemTpl: ['<div>{firstName} {familyName}</div>'].join(''),
+                itemTpl: [
+                    '<div style="float:left;width:32px;height:32px"><img src="{patientImage}" height="80%" width="80%"/></div>',
+                    '<div style="float:left;width:60%">',
+                        '<div class="list-item-title" style="font-size:15px;">{firstName} {familyName}</div>',
+                        '<div class="list-item-narrative" style="font-size:10px;">Age: {patientAge} Gender: {patientGender}</div>',
+                    '</div>',
+                    '<div style="float:left;width:32px;height:32px">',
+                        '<img src=resources/circle.png height="80%" width="80%"/>',
+                    '</div>'
+                ].join(''),
                 onItemDisclosure: function (record) {
                     helper.listDisclose('patient',record)
                 }
