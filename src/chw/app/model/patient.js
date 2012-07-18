@@ -18,6 +18,9 @@ Ext.define('chw.model.patient', {
     config: {
         identifier: 'uuid',
         fields: [{
+            name: 'familyId',
+            type: 'string'
+        },{
             name: 'firstName',
             type: 'string'
         }, {

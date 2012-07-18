@@ -23,8 +23,8 @@ Ext.define('chw.store.families', {
             return record.get('familyDistance');
         },
         data: [{
-            familyName: 'Desai',
             familyId: '001',
+            familyName: 'Desai',
             familyAddress: 'Desai Place',
             familyLatitude: 25,
             familyLongitude: 25,
@@ -33,8 +33,8 @@ Ext.define('chw.store.families', {
             familyDistance: 50,
             familyDescrip: 'Pointy roof'
         }, {
-            familyName: 'Eppanapally',
             familyId: '002',
+            familyName: 'Eppanapally',
             familyAddress: 'Eppanapally Villa',
             familyLatitude: 25,
             familyLongitude: 25,
@@ -43,8 +43,8 @@ Ext.define('chw.store.families', {
             familyDistance: 20,
             familyDescrip: 'Three stories'
         }, {
-            familyName: 'Patel',
             familyId: '003',
+            familyName: 'Patel',
             familyAddress: 'Patels Home',
             familyLatitude: 25,
             familyLongitude: 25,
@@ -53,8 +53,8 @@ Ext.define('chw.store.families', {
             familyDistance: 30,
             familyDescrip: 'Large complex'
         }, {
-            familyName: 'Vaidya',
             familyId: '004',
+            familyName: 'Vaidya',
             familyAddress: 'Vaidya Nagar',
             familyLatitude: 25,
             familyLongitude: 25,
@@ -63,15 +63,25 @@ Ext.define('chw.store.families', {
             familyDistance: 40,
             familyDescrip: 'Near lake'
         }, {
-            familyName: 'Mital',
             familyId: '005',
-            familyAddress: 'Mital Hauz',
+            familyName: 'Sharma',
+            familyAddress: 'Sharma Hauz',
             familyLatitude: 25,
             familyLongitude: 25,
             familyImage: 'resources/home.png',
             // familyMembers: 'chw.store.patients',
             familyDistance: 40,
             familyDescrip: 'On top of a hill'
-        }]
+        }, {
+            familyId: '005',
+            familyName: 'Mital',
+            familyAddress: 'Mital Place',
+            familyLatitude: 25,
+            familyLongitude: 25,
+            familyImage: 'resources/home.png',
+            // familyMembers: 'chw.store.patients',
+            familyDistance: 40,
+            familyDescrip: 'By the coast'
+        },]
     }
 })

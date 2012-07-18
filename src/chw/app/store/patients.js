@@ -29,12 +29,76 @@ Ext.define('chw.store.patients', {
             patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        }, {
+        // patientIllnesses: ''
+        },{
+            firstName: 'Vishesh',
+            familyName: 'Patel',
+            familyId: '003',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+        // patientIllnesses: ''
+        },{
+            firstName: 'Jignesh',
+            familyName: 'Patel',
+            familyId: '003',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+        // patientIllnesses: ''
+        },{
             firstName: 'Ishaan',
             familyName: 'Desai',
             familyId: '001',
             patientAge: 19,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+        // patientIllnesses: ''
+        },{
+            firstName: 'Isha',
+            familyName: 'Desai',
+            familyId: '001',
+            patientAge: 21,
+            patientGender: 'Female',
+            patientImage: 'resources/user.png'
+        // patientIllnesses: ''
+        },{
+            firstName: 'Ashish',
+            familyName: 'Eppanapally',
+            familyId: '002',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        },{
+            firstName: 'Pranav',
+            familyName: 'Vaidya',
+            familyId: '004',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        },{
+            firstName: 'Girish',
+            familyName: 'Vaidya',
+            familyId: '004',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        },{
+            firstName: 'Vijay',
+            familyName: 'Sharma',
+            familyId: '005',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        },{
+            firstName: 'Ashsish',
+            familyName: 'Sharma',
+            familyId: '002',
+            patientAge: 20,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
             // patientIllnesses: ''
@@ -65,7 +129,7 @@ Ext.define('chw.store.patients', {
         }, {
             firstName: 'Pulak',
             familyName: 'Mital',
-            familyId: '005',
+            familyId: '006',
             patientAge: 19,
             patientGender: 'Male',
             patientImage: 'resources/user.png'
@@ -73,8 +137,8 @@ Ext.define('chw.store.patients', {
         }, {
             firstName: 'Priya',
             familyName: 'Mital',
-            familyId: '005',
-            patientAge: 19,
+            familyId: '006',
+            patientAge: 38,
             patientGender: 'Female',
             patientImage: 'resources/user.png'
             // patientIllnesses: ''
