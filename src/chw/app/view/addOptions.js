@@ -35,6 +35,33 @@ Ext.define('chw.view.addOptions', {
             }]
         }, {
             xclass: 'chw.view.userToolbar'
+        }, {
+            xtype: 'container',
+            layout: 'vbox',
+            centered: true,
+            items: [{
+                xtype: 'button',
+                text: 'Family',
+                // action: 'add_rem',
+                iconMask: true,
+                iconCls: 'team',
+                listeners: {
+                    tap: function () {
+                        Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
+                    }
+                }
+            }, {
+                xtype: 'button',
+                text: 'Patient',
+                iconMask: true,
+                // action: 'add_reg',
+                iconCls: 'user_add',
+                listeners: {
+                    tap: function () {
+                        Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
+                    }
+                }
+            }]
         }]
     }
 })

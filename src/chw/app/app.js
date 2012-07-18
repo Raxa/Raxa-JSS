@@ -21,7 +21,19 @@ Ext.application({
     controllers: ['basic'],
     models: ['family', 'patient', 'illness'],
     stores: ['families', 'patients', 'illnesses'],
-    views: ['loginScreen', 'familyList','familyDetails'],
+    views: [
+        'loginScreen', 
+        'familyList', 
+        'diseaseList', 
+        'familyDetails', 
+        'patientDetails', 
+        'visitDetails', 
+        'inventoryList', 
+        'inventoryDetails', 
+        'addOptions', 
+        'addFamily', 
+        'addPatient'
+    ],
     launch: function () {
         Ext.create('chw.view.loginScreen');
     }

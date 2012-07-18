@@ -72,6 +72,16 @@ Ext.define('chw.store.families', {
             // familyMembers: 'chw.store.patients',
             familyDistance: 40,
             familyDescrip: 'On top of a hill'
-        }]
+        }, {
+            familyId: '005',
+            familyName: 'Mital',
+            familyAddress: 'Mital Place',
+            familyLatitude: 25,
+            familyLongitude: 25,
+            familyImage: 'resources/home.png',
+            // familyMembers: 'chw.store.patients',
+            familyDistance: 40,
+            familyDescrip: 'By the coast'
+        },]
     }
 })

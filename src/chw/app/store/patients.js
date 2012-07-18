@@ -47,7 +47,7 @@ Ext.define('chw.store.patients', {
             patientImage: 'resources/user.png'
         // patientIllnesses: ''
         },{
-            firstName: 'Bansi',
+            firstName: 'Ishaan',
             familyName: 'Desai',
             familyId: '001',
             patientAge: 19,
@@ -55,11 +55,11 @@ Ext.define('chw.store.patients', {
             patientImage: 'resources/user.png'
         // patientIllnesses: ''
         },{
-            firstName: 'Karan',
+            firstName: 'Isha',
             familyName: 'Desai',
             familyId: '001',
             patientAge: 21,
-            patientGender: 'Male',
+            patientGender: 'Female',
             patientImage: 'resources/user.png'
         // patientIllnesses: ''
         },{
@@ -100,6 +100,46 @@ Ext.define('chw.store.patients', {
             familyId: '005',
             patientAge: 20,
             patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Pooja',
+            familyName: 'Eppanapally',
+            familyId: '002',
+            patientAge: 19,
+            patientGender: 'Female',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Bansi',
+            familyName: 'Patel',
+            familyId: '003',
+            patientAge: 20,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Udayan',
+            familyName: 'Vaidya',
+            familyId: '004',
+            patientAge: 21,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Pulak',
+            familyName: 'Mital',
+            familyId: '006',
+            patientAge: 19,
+            patientGender: 'Male',
+            patientImage: 'resources/user.png'
+            // patientIllnesses: ''
+        }, {
+            firstName: 'Priya',
+            familyName: 'Mital',
+            familyId: '006',
+            patientAge: 38,
+            patientGender: 'Female',
             patientImage: 'resources/user.png'
             // patientIllnesses: ''
         }]
