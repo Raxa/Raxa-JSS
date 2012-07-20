@@ -37,7 +37,7 @@ Ext.define('chw.view.inventoryList', {
             layout: 'fit',
             grouped: true,
             pinHeaders: false,
-            id: 'inventoryList',
+            id: 'inventoryLists',
             store: 'pills',
             width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
             height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',

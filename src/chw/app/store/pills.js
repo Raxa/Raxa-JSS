@@ -23,8 +23,8 @@ Ext.define('chw.store.pills', {
             return record.get('pillName')[0];
         },
         proxy: {
-            type: 'localStorage',
-            id: 'inventoryList'
+            type: 'localstorage',
+            id: 'inventoryStore'
         },
         data: [{
             pillName: 'Medicine #1',

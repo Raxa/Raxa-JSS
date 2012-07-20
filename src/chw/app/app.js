@@ -19,8 +19,8 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'chw',
     controllers: ['basic'],
-    models: ['family', 'patient', 'illness'],
-    stores: ['families', 'patients', 'illnesses'],
+    models: ['family', 'patient', 'illness', 'pill'],
+    stores: ['families', 'patients', 'illnesses', 'pills'],
     views: [
         'loginScreen', 
         'familyList', 

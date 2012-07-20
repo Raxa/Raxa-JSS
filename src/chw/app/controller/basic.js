@@ -277,7 +277,7 @@ Ext.define('chw.controller.basic', {
                 Ext.create('chw.store.pills')
             }
             nstore.load();
-            Ext.getCmp('inventoryList').setStore(nstore)
+            Ext.getCmp('inventoryLists').setStore(nstore)
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList)
         } else if (arg==='logout') {
             this.doExit()

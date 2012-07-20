@@ -15,7 +15,7 @@
  */
 Ext.define('chw.model.family', {
     extend: 'Ext.data.Model',
-    id: 'familyModel',
+    id: 'family',
     config: {
         // identifier: 'uuid',
         fields: [{
