@@ -1,7 +1,12 @@
 Ext.define('Screener.model.encounterpost', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [{
+        fields: [
+		{
+			name: 'id',
+			persist: false
+		
+		}, {
             name: 'patient',
             type: 'string',
             mapping: 'patient.uuid'
@@ -17,7 +22,8 @@ Ext.define('Screener.model.encounterpost', {
             mapping: 'provider.uuid'
         }, {
             name: 'location',
-            type: 'string'
+            type: 'string',
+			persist: false
         }]
     }
 });
