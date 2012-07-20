@@ -131,6 +131,7 @@ Ext.define('chw.controller.basic', {
         }
     },
     doBack: function () {
+        // TODO: why doesn't the list refresh when using back button?
         this.doList('familyList');
         Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
     },
@@ -272,6 +273,7 @@ Ext.define('chw.controller.basic', {
                 if (resp==='yes') {}
             })
         } else if (arg==='inventory') {
+            // TODO: why doesn't the list load?
             var nstore = Ext.getStore('pills')
             if (!nstore) {
                 Ext.create('chw.store.pills')
