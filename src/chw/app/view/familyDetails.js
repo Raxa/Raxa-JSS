@@ -83,39 +83,47 @@ Ext.define('chw.view.familyDetails', {
             title: 'Members',
             cls: 'demo-list',
             items: [{
-                title: 'Family Members',
-                xtype: 'list',
-                ui: 'round',
-                pinHeaders: false,
-                id: 'familyMembersList',
-                width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-                height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-                centered: true,
-                indexBar: true,
-                itemTpl: [
+                xtype: 'panel',
+                layout:{
+                    type:'fit'
+                } ,
+                items: [{
+                    title: 'Family Members',
+                    xtype: 'list',
+                    height: '100%',
+                    ui: 'round',
+                    pinHeaders: false,
+                    id: 'familyMembersList',
+                    width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                    height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                    centered: true,
+                    indexBar: true,
+                    itemTpl: [
                     '<div style="float:left;width:32px;height:32px"><img src="{patientImage}" height="80%" width="80%"/></div>',
                     '<div style="float:left;width:60%">',
-                        '<div class="list-item-title" style="font-size:15px;">{firstName} {familyName}</div>',
-                        '<div class="list-item-narrative" style="font-size:10px;">Age: {patientAge} Gender: {patientGender}</div>',
+                    '<div class="list-item-title" style="font-size:15px;">{firstName} {familyName}</div>',
+                    '<div class="list-item-narrative" style="font-size:10px;">Age: {patientAge} Gender: {patientGender}</div>',
                     '</div>',
                     '<div style="float:left;width:32px;height:32px">',
-                        '<img src=resources/circle.png height="80%" width="80%"/>',
+                    '<img src=resources/circle.png height="80%" width="80%"/>',
                     '</div>'
-                ].join(''),
-                onItemDisclosure: function (record) {
-                    helper.listDisclose('patient',record)
-                }
-            }, {
-                xtype: 'button',
-                text: 'Patient',
-                iconMask: true,
-                iconCls: 'user_add',
-                listeners: {
-                    tap: function () {
-                        // TODO: need to remember which family it is
-                        Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
+                    ].join(''),
+                    onItemDisclosure: function (record) {
+                        helper.listDisclose('patient',record)
                     }
-                }
+                },{
+                    xtype: 'button',
+                    text: 'Patient',
+                    iconMask: true,
+                    docked: 'bottom',
+                    action: 'add_reg',
+                    iconCls: 'user_add',
+                    listeners: {
+                        tap: function () {
+                            Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
+                        }
+                    }
+                }]
             }]
         },{
             xtype: 'container',

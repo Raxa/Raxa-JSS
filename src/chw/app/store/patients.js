@@ -21,8 +21,8 @@ Ext.define('chw.store.patients', {
         sorters: 'familyName',
         grouper: function (record) {
             return record.get('familyName')[0];
-        },
-        data: [{
+        }
+    /*    data: [{
             firstName: 'Ronak',
             familyName: 'Patel',
             familyId: 3,
@@ -142,6 +142,6 @@ Ext.define('chw.store.patients', {
             patientGender: 'Female',
             patientImage: 'resources/user.png'
             // patientIllnesses: ''
-        }]
+        }]*/
     }
 })
