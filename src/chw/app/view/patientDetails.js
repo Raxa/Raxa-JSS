@@ -14,7 +14,8 @@
  * the License.
  */
 Ext.define('chw.view.patientDetails', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.tab.Panel',
+    alias: 'widget.patientDetails',
     requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
@@ -31,6 +32,72 @@ Ext.define('chw.view.patientDetails', {
             }]
         }, {
             xclass: 'chw.view.userToolbar'
+        }, {
+            title: 'Basic',
+            xtype: 'container',
+            height: '100%',
+            width: '100%',
+            scrollable: true,
+            layout: 'vbox',
+            items: [{
+                xtype: 'label',
+                html: '<center><img src="resources/user.png"/></center>',
+                height: '20%',
+                width: '100%',
+                padding: '10px'
+            }, {
+                xtype: 'container',
+                padding: '10px',
+                items: [{
+                    xtype: 'fieldset',
+                    title: 'Basic details',
+                    defaults: {
+                        labelWidth: '35%',
+                        disabled: true
+                    },
+                    items: [{
+                        xtype: 'textfield',
+                        label: 'First',
+                        placeHolder: 'First',
+                        itemId: 'firstNameLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: 'Last',
+                        placeHolder: 'Last',
+                        itemId: 'familyNameLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: 'Gender',
+                        placeHolder: 'Gender',
+                        itemId: 'patientGenderLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: 'Age',
+                        placeHolder: 'Age',
+                        itemId: 'patientAgeLabel'
+                    }]
+                }]
+            }]
+        }, {
+            title: 'History',
+            cls: 'demo-list',
+            items: [{
+                title: 'Family Members',
+                xtype: 'list',
+                ui: 'round',
+                pinHeaders: false,
+                id: 'familyMemberslist',
+                width: '100%',
+                height: '100%',
+                centered: true,
+                indexBar: true,
+                itemTpl: [
+                    '<div>{illnessName}</div>'
+                ].join('')
+//                onItemDisclosure: function (record) {
+//                    helper.listDisclose('illness',record)
+//                }
+            }]
         }]
     }
 })

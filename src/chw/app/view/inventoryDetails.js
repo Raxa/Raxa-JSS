@@ -16,6 +16,7 @@
 Ext.define('chw.view.inventoryDetails', {
     extend: 'Ext.Panel',
     requires: 'chw.view.userToolbar',
+    alias: 'widget.inventoryDetails',
     config: {
         height: '100%',
         ui: 'neutral',
@@ -31,6 +32,52 @@ Ext.define('chw.view.inventoryDetails', {
             }]
         }, {
             xclass: 'chw.view.userToolbar'
+        }, {
+            itemId: 'pillTitleLabel',
+            xtype: 'container',
+            height: '100%',
+            width: '100%',
+            scrollable: true,
+            layout: 'vbox',
+            items: [{
+                xtype: 'label',
+                html: '<center><img src="resources/circle.png"/></center>',
+                height: '20%',
+                width: '100%',
+                padding: '10px'
+            }, {
+                xtype: 'container',
+                padding: '10px',
+                items: [{
+                    xtype: 'fieldset',
+                    title: 'About the drug',
+                    defaults: {
+                        labelAlign: 'top',
+                        disabled: true
+                    },
+                    items: [{
+                        xtype: 'textfield',
+                        label: 'Description',
+                        placeHolder: 'Description',
+                        itemId: 'pillDescripLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: 'Amount left',
+                        placeHolder: 'Amount left',
+                        itemId: 'pillAmountLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: 'Frequency',
+                        placeHolder: 'Frequency',
+                        itemId: 'pillFrequencyLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: 'Administration Notes',
+                        placeHolder: 'Administration Notes',
+                        itemId: 'pillNotesLabel'
+                    }]
+                }]
+            }]
         }]
     }
 })

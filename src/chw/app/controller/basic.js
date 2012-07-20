@@ -60,7 +60,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: 0,
+            activeItem: PAGES.familyList,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -86,7 +86,6 @@ Ext.define('chw.controller.basic', {
             }]
         })
     },
-    
     doAdd: function(step,arg){
         if(arg){
             if(step==='family'){
@@ -273,6 +272,12 @@ Ext.define('chw.controller.basic', {
                 if (resp==='yes') {}
             })
         } else if (arg==='inventory') {
+            var nstore = Ext.getStore('pills')
+            if (!nstore) {
+                Ext.create('chw.store.pills')
+            }
+            nstore.load();
+            Ext.getCmp('inventoryList').setStore(nstore)
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList)
         } else if (arg==='logout') {
             this.doExit()

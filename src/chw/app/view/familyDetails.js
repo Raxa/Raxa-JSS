@@ -50,23 +50,22 @@ Ext.define('chw.view.familyDetails', {
                 padding: '10px',
                 items: [{
                     xtype: 'fieldset',
+                    itemId: 'familyDescripLabel',
                     title: 'Family Description',
                     defaults: {
-                        labelWidth: '35%'
+                        labelWidth: '35%',
+                        disabled: true
                     },
                     items: [{
                         xtype: 'textfield',
-                        disabled: true,
                         label: 'Address',
                         placeHolder: 'Hogwarts'
                     }, {
                         xtype: 'textfield',
-                        disabled: true,
                         label: 'Child/total',
                         placeHolder: '2/4'
                     }, {
                         xtype: 'textfield',
-                        disabled: true,
                         label: 'Last Visit',
                         placeHolder: '12/7/2012'
                     }]
@@ -81,24 +80,17 @@ Ext.define('chw.view.familyDetails', {
             }]
         }, {
             title: 'Members',
-            cls: 'demo-list',
+            xtype: 'container',
             items: [{
-                xtype: 'panel',
-                layout:{
-                    type:'fit'
-                } ,
-                items: [{
-                    title: 'Family Members',
-                    xtype: 'list',
-                    height: '100%',
-                    ui: 'round',
-                    pinHeaders: false,
-                    id: 'familyMembersList',
-                    width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-                    height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-                    centered: true,
-                    indexBar: true,
-                    itemTpl: [
+                title: 'Family Members',
+                xtype: 'list',
+                ui: 'round',
+                pinHeaders: false,
+                id: 'familyMembersList',
+                width: '100%',
+                height: '80%',
+                centered: true,
+                itemTpl: [
                     '<div style="float:left;width:32px;height:32px"><img src="{patientImage}" height="80%" width="80%"/></div>',
                     '<div style="float:left;width:60%">',
                     '<div class="list-item-title" style="font-size:15px;">{firstName} {familyName}</div>',
@@ -107,19 +99,23 @@ Ext.define('chw.view.familyDetails', {
                     '<div style="float:left;width:32px;height:32px">',
                     '<img src=resources/circle.png height="80%" width="80%"/>',
                     '</div>'
-                    ].join(''),
-                    onItemDisclosure: function (record) {
-                        helper.listDisclose('patient',record)
-                    }
-                },{
+                ].join(''),
+                onItemDisclosure: function (record) {
+                    helper.listDisclose('patient',record)
+                }
+            }, {
+                xtype: 'container',
+                height: '20%',
+                docked: 'bottom',
+                padding: '0px 80px 20px 80px',
+                items: [{
                     xtype: 'button',
                     text: 'Patient',
                     iconMask: true,
-                    docked: 'bottom',
-                    action: 'add_reg',
                     iconCls: 'user_add',
                     listeners: {
                         tap: function () {
+                            // TODO: need to remember which family it is
                             Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
                         }
                     }
