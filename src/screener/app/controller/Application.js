@@ -31,21 +31,36 @@ var patientUpdate = {
         var i;
         for (i = 0; i < store_patientList.getCount(); i++) {
             store_patientList.getAt(i).getData().time = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].encounterDatetime;
-            store_patientList.getAt(i).getData().bmi = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsBMI(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;
+            if (store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs.length != 0) {
+                console.log(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)
+                store_patientList.getAt(i).getData().bmi = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsBMI(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;
+            }
         }
         Ext.getStore('patientStore').sort('display');
         console.log(store_patientList)
     },
     getObsBMI: function (obs) {
-        var i, ind;
+        var i;
         //console.log(obs)
         for (i = 0; i < obs.length; i++) {
             if (obs[i].display.indexOf('BODY MASS INDEX') != -1) {
                 ind = i;
-                return ind;
+                return i;
             }
         }
     },
+	setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
+        this.setCompQuery(string1_decline,'decline');
+		this.setCompQuery(string2_decline,'normal');
+		this.setCompQuery(string3_decline,'normal');
+	},
+	setCompQuery : function (string1,uiType) {
+		var i;
+        for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
+            Ext.ComponentQuery.query(string1)[i].setUi(uiType);
+        }
+	}
+		
 
 };
 Ext.define("Screener.controller.Application", {
@@ -275,12 +290,11 @@ Ext.define("Screener.controller.Application", {
         store_patientList.load();
         store_assPatientList.load();
         store_patientList.on('load', function () {
-            patientUpdate.setBMITime(store_patientList);
             Ext.getCmp('loadMask').setHidden(true);
+            patientUpdate.setBMITime(store_patientList);
         }, this);
-        setInterval('patientUpdate.updatePatientsWaitingTitle()', 120000);
-        setInterval('Ext.getStore(\'patientStore\').load()', 120000);
-        //this.refreshList()
+        setInterval('patientUpdate.updatePatientsWaitingTitle()', Util.getUiTime());
+        setInterval('Ext.getStore(\'patientStore\').load()', Util.getUiTime());
         return store_patientList;
     },
     // returns dynamically changed URL for getting patientList
@@ -471,7 +485,6 @@ Ext.define("Screener.controller.Application", {
         PatientStore.add(patient);
         PatientStore.sync();
         PatientStore.on('write', function () {
-            console.log(localStorage.loggedInUser)
             this.sendEncounterData(personUuid, localStorage.regUuidencountertype, localStorage.screenerUuidlocation, localStorage.loggedInUser)
         }, this)
     },
@@ -635,46 +648,15 @@ Ext.define("Screener.controller.Application", {
     },
     sortByName: function () {
         Ext.getStore('patientStore').sort('display');
-        var i;
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortName').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortName')[i].setUi('decline');
-        }
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortBMI').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortBMI')[i].setUi('normal');
-        }
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortFIFO').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortFIFO')[i].setUi('normal');
-        }
-
-        console.log(Ext.ComponentQuery.query('ListView #sortName'))
+		patientUpdate.setSortButtonUi('ListView #sortName', 'ListView #sortBMI', 'ListView #sortFIFO');
     },
     sortByFIFO: function () {
         Ext.getStore('patientStore').sort('time');
-        var i;
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortName').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortName')[i].setUi('normal');
-        }
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortBMI').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortBMI')[i].setUi('normal');
-        }
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortFIFO').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortFIFO')[i].setUi('decline');
-        }
-
+		patientUpdate.setSortButtonUi('ListView #sortFIFO', 'ListView #sortName', 'ListView #sortBMI');
     },
     sortByBMI: function () {
         Ext.getStore('patientStore').sort('bmi');
-        var i;
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortName').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortName')[i].setUi('normal');
-        }
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortBMI').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortBMI')[i].setUi('decline');
-        }
-        for (i = 0; i < Ext.ComponentQuery.query('ListView #sortFIFO').length; i++) {
-            Ext.ComponentQuery.query('ListView #sortFIFO')[i].setUi('normal');
-        }
-
+		patientUpdate.setSortButtonUi('ListView #sortBMI', 'ListView #sortFIFO', 'ListView #sortName');
     },
     refreshList: function () {
         Ext.getStore('patientStore').load();
@@ -764,7 +746,7 @@ Ext.define("Screener.controller.Application", {
         var currentDate = new Date();
         // creates the encounter json object
         var jsonencounter = Ext.create('Screener.model.encounterpost', {
-            encounterDatetime: Util.Datetime(currentDate, 5.5),
+            encounterDatetime: Util.Datetime(currentDate, Util.getUTCGMTdiff()),
             patient: uuid, //you will get the uuid from ticket 144...pass it here
             encounterType: encountertype,
             //location: location,

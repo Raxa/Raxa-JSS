@@ -242,21 +242,34 @@ Ext.define('Registration.controller.Main', {
         store.on('write', function () {
             this.getidentifierstype(store.getAt(0).getData().uuid)
         }, this)//Going to BMI Page
-        //I made this funtion return this store because i needed this in jasmine unit test
+        //I made this function return this store because i needed this in jasmine unit test
         return store;
     },
 
-    /* this funtions makes a get call to get the patient identifiers type */
+    /* this functions makes a get call to get the patient identifiers type */
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Registration.store.identifiersType')
         identifiers.load();
         // this statement calls getlocation() as soon as the get call is successful
         identifiers.on('load', function () {
-            this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
+			var idIterator;
+            var idNo = -1;
+            for (idIterator = 0; idIterator < identifiers.data.length; idIterator++) {
+                var str = identifiers.data.items[idIterator].raw.display;
+                if (str.match(idPattern)) {
+                    idNo = idIterator;
+                }
+            }
+            if (idNo === -1) {
+                console.log('ERROR: Could not find identifier type \''+ idPattern.source.match(/[\w ]+/g) +'\' in OpenMRS instance.');
+            } else {
+                // this statement calls getlocation() as soon as the get call is successful
+                this.getlocation(personUuid, identifiers.getAt(idNo).getData().uuid);
+            }
         }, this);
     },
 
-    /* this funtions makes a get call to get the location uuid */
+    /* this functions makes a get call to get the location uuid */
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Registration.store.location')
         locations.load();
@@ -268,15 +281,15 @@ Ext.define('Registration.controller.Main', {
         }, this)
     },
 
-    /* this funtions makes a post call to creat the patient with three parameter which will sent as person, identifiertype 
+    /* this functions makes a post call to creat the patient with three parameter which will sent as person, identifiertype 
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
-        localStorage.setItem('uuid',personUuid)
+        localStorage.setItem('newPatientUuid',personUuid)
         console.log(personUuid)
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
-                identifier: Util.getPatientIdentifier().toString(),
+                identifier: Util.getPatientIdentifier(),
                 identifierType: identifierType,
                 location: location,
                 preferred: true
@@ -287,7 +300,7 @@ Ext.define('Registration.controller.Main', {
         PatientStore.add(patient);
         //makes the post call for creating the patient
         PatientStore.sync();
-        //I made this funtion return this store because i needed this in jasmine unit test
+        //I made this function return this store because i needed this in jasmine unit test
         PatientStore.on('load', function () {
             var l = Ext.getCmp('mainRegArea').getLayout();
             l.setActiveItem(REG_PAGES.REG_BMI.value); 
@@ -317,12 +330,11 @@ Ext.define('Registration.controller.Main', {
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel',{
             encounterDatetime : ISODateString(currentDate),
-            patient: localStorage.uuid,//you will get the uuid from ticket 144...pass it here
+            patient: localStorage.newPatientUuid,//you will get the uuid from ticket 144...pass it here
             encounterType: localStorage.regUuidencountertype//need to pass the type depending on the type of encounter
         });
         // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
         var location ="Registration Desk";
-        //var form = localStorage.basicUuidform;
         var provider1 = "";
         var orders1 = "";
         jsonencounter.data.obs = [];
@@ -330,20 +342,14 @@ Ext.define('Registration.controller.Main', {
         jsonencounter.data.orders = [];
         // the variables above are hard coded...will get them from somewhere else
         // the if statement is to check whether the field is null or not..persist false does not pass that field details into the server. this is done to avoid 500 error
-        if(location != ""){
+        // here I am checking that if a field is null then It should not be send in request payload in post call so I am dynamically changing persist to false
+		if(location != ""){
             jsonencounter.data.location = location;
             Registration.model.encounterModel.getFields()[3].persist = true;
         }
         else{
             Registration.model.encounterModel.getFields()[3].persist = false;
         }
-        /*if(form != ""){
-            jsonencounter.data.form = form;
-            Registration.model.encounterModel.getFields()[4].persist = true;
-        }
-        else{
-            Registration.model.encounterModel.getFields()[4].persist = false;
-        }*/
         if(provider1 != ""){
             jsonencounter.data.provider = provider1;
             Registration.model.encounterModel.getFields()[4].persist = true;
@@ -371,7 +377,7 @@ Ext.define('Registration.controller.Main', {
         if(Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value != null){
             var jsonencounterheight = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.uuid,
+                person: localStorage.newPatientUuid,
                 concept: localStorage.heightUuidconcept,
                 value: parseInt(Ext.getCmp('heightIDcm').getValue())
             });
@@ -380,7 +386,7 @@ Ext.define('Registration.controller.Main', {
         if(Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value != null){
             var jsonencounterweight = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.uuid,
+                person: localStorage.newPatientUuid,
                 concept: localStorage.weightUuidconcept,
                 value: parseFloat(Ext.getCmp('weightIDkg').getValue())
             });
@@ -389,7 +395,7 @@ Ext.define('Registration.controller.Main', {
         if(Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value != null){
             var jsonencounterbmi = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.uuid,
+                person: localStorage.newPatientUuid,
                 concept: localStorage.BMIUuidconcept,
                 value: parseFloat(Ext.getCmp('bmiNumberfieldID').getValue())
             });
@@ -398,7 +404,7 @@ Ext.define('Registration.controller.Main', {
         if(Ext.getCmp('registrationfeespaid').isValid() && Ext.getCmp('registrationfeespaid').value != null){
             var jsonencounterregfee = Ext.create('Registration.model.obsModel',{
                 obsDatetime : ISODateString(currentDate),
-                person: localStorage.uuid,
+                person: localStorage.newPatientUuid,
                 concept: localStorage.regfeeUuidconcept,
                 value: Ext.getCmp('registrationfeespaid').value
             });
