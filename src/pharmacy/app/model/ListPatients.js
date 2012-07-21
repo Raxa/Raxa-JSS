@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Pharmacy.model.raxacorePatient', {
+Ext.define('RaxaEmr.Pharmacy.model.ListPatients', {
     extend: 'Ext.data.Model',
     fields: [{
         name: 'uuid',
@@ -14,6 +14,6 @@ Ext.define('RaxaEmr.Pharmacy.model.raxacorePatient', {
         type: 'string'
     }, {
         name: 'encounters',
-        model: 'RaxaEmr.Pharmacy.model.raxacoreEncounter'
+        model: 'RaxaEmr.Pharmacy.model.Encounter'
     }]
 })

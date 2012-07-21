@@ -328,3 +328,6 @@ if (localStorage.basicUuidform == undefined) {
 if(localStorage.prescriptionUuidencountertype == undefined){ 
 	var prescriptionUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescription', 'PRESCRIPTION - Prescription encounter');
 }
+if(localStorage.prescriptionfillUuidencountertype == undefined){ 
+	var prescriptionfillUuidencountertype = Util.getAttributeFromREST('encountertype', 'prescriptionfill', 'PRESCRIPTIONFILL - Prescriptionfill encounter');
+}

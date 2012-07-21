@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Pharmacy.model.raxacoreEncounter', {
+Ext.define('RaxaEmr.Pharmacy.model.Encounter', {
     extend: 'Ext.data.Model',
     fields: [{
         name: 'uuid',

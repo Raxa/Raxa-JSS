@@ -266,7 +266,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         height: 270,
                         width: 190,
                         title: 'Today', 
-                        store: Ext.create('RaxaEmr.Pharmacy.store.raxacorePatient'),
+                        store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
    
                         y: 70
                     }
@@ -284,7 +284,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     xtype: 'patientsgridpanel',
                     id : 'sevenDaysPatientGrid',
                     title: 'Last 7 Days(145)',
-                     store: Ext.create('RaxaEmr.Pharmacy.store.raxacorePatient'),
+                     store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
                     listeners: {
                         // as this panal exapands it make the get call for 1 week patient list to update the list
                         expand: {

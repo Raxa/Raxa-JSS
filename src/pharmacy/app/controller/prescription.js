@@ -76,30 +76,74 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // function updates the todays patient grid
     getTodayPatients: function () {
         var enddate = new Date()
-        this.getPatients(enddate, 12, -12 , 'todayPatientGrid')
+        this.getpatientlist(enddate, 12, -12, 'todayPatientGrid');
     },
 
     // function updates the 1 week patient grid
     getSevenDaysPatients: function () {
         var enddate = new Date()
-        this.getPatients(enddate, 24*7 , -12, 'sevenDaysPatientGrid')
+        this.getpatientlist(enddate, 24*7 , -12, 'sevenDaysPatientGrid');
     },
-    
-    // function that set proxy for the store of given patientGridID 
-    getPatients: function(enddate, backwardtime, forwardtime, patientGridId){
-        var Url = HOST + "/ws/rest/v1/raxacore/patientlist?startDate=" + Util.Datetime(enddate, backwardtime) +"&endDate="
-            + Util.Datetime(enddate,forwardtime) + "&encounterType=" + localStorage.prescriptionUuidencountertype;
+
+    getpatientlist: function (enddate, backwardtime, forwardtime, patientGridId) {
+        var d = new Date();
+        var list_preEncounter = Ext.create('RaxaEmr.Pharmacy.model.PostList', {
+            name: "Prescription Encounter",
+            
+            searchQuery: "?encounterType=" + localStorage.prescriptionUuidencountertype + "&startDate=" + Util.Datetime(enddate, backwardtime) + "&endDate=" + Util.Datetime(enddate,forwardtime)
+        });
+        var list_prefillEncounter = Ext.create('RaxaEmr.Pharmacy.model.PostList', {
+            name: "Priscriptionfill Encounter",
+            
+            searchQuery: "?encounterType=" + localStorage.prescriptionfillUuidencountertype + "&startDate=" + Util.Datetime(enddate, backwardtime) + "&endDate=" + Util.Datetime(enddate,forwardtime)
+
+        });
+        //this.createRegList(list_regEncounter, list_scrEncounter);
+        var k = 0;
+        this.createList(list_preEncounter, list_prefillEncounter, k, patientGridId);
+
+    },
+    // Creates two different List of Patients Registered and Patients Screened within last 24 hours
+    createList: function (list_pre, list_prefill, k, patientGridId) {
+        var store_pre = Ext.create('RaxaEmr.Pharmacy.store.PostLists');
+        var store_prefill = Ext.create('RaxaEmr.Pharmacy.store.PostLists');
+        store_pre.add(list_pre);
+        store_prefill.add(list_prefill);
+        store_pre.sync();
+        store_prefill.sync();
+        store_pre.on('write', function () {
+            k = k + 1;
+            if (k == 2) {
+                this.finalPatientList(store_pre, store_prefill, patientGridId);
+            }
+        }, this);
+        store_prefill.on('write', function () {
+            k = k + 1;
+            if (k == 2) {
+                this.finalPatientList(store_pre, store_prefill, patientGridId);
+            }
+        }, this);
+        var a = [store_pre, store_prefill];
+        return a;
+    },
+
+    // Creates List of Patients registered but not screened in last 24 hours
+    finalPatientList: function (store_preEncounter, store_prefillEncounter, patientGridId) {
+        // Setting the url dynamically for store to store patients list
         Ext.getCmp(patientGridId).getStore().setProxy({
             type: 'rest',
-            url: Url,
+            url: this.getPatientListUrl(store_preEncounter.getAt(0).getData().uuid, store_prefillEncounter.getAt(0).getData().uuid, localStorage.prescriptionUuidencountertype),
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json',
                 root: 'patients'
             }
         })
-        //get call for patient list
-        Ext.getCmp(patientGridId).getStore().load()
+        Ext.getCmp(patientGridId).getStore().load();
+    },
+    // returns dynamically changed URL for getting patientList
+    getPatientListUrl: function (reg_UUID, scr_UUID, encountertype) {
+        return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + reg_UUID + '&notInList=' + scr_UUID + '&encounterType=' + encountertype);
     },
 
     displayForm: function () {
