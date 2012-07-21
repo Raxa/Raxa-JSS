@@ -65,5 +65,227 @@
                                  referencedTableName="users" 
                                  referencedColumnNames="user_id"/>
     </changeSet>    
+    
+    
+    
+ 	  
+ 	   
+ 	     <changeSet id="2012-07-18_create_drug_purchase_order" author="Abhishek,Jatin,Praneet">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="drug_purchase_order"/>
+            </not>
+        </preConditions>
+        <comment>
+            Schema for drug_purchase_order table
+        </comment>
+        <createTable tableName="drug_purchase_order">
+            <column name="PO_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="PO_name" type="varchar(255)"/>
+            <column name="PO_description" type="varchar(2000)"/>
+            
+            
+            <column defaultValueBoolean="false" name="Received" type="boolean">
+                 <constraints nullable="false"/>
+             </column>
+            
+            
+            
+            <column name="Provider" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Location" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PO_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            
+            
+            
+          
+            
+            <column name="creator" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="DATETIME"/>
+            <column defaultValueBoolean="false" name="retired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="retired_by" type="int"/>
+            <column name="date_retired" type="DATETIME"/>
+            <column name="retire_reason" type="varchar(255)"/>
+            <column name="uuid" type="char(38)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+     </changeSet> 
+ 	   <changeSet id="2012-07-18_add_constraints_to_drug_purchase_order" author="Abhishek,Jatin,Praneet">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="drug_purchase_order"/>
+        </preConditions>
+        <comment>
+            Adding constraints for drug_purchase_order.
+        </comment>
+        
+          
+        <addForeignKeyConstraint baseTableName="drug_purchase_order" 
+                                 baseColumnNames="provider" 
+                                 constraintName="FK_drug_purchase_order_provider_provider_provider_id" 
+                                 referencedTableName="provider" 
+                                 referencedColumnNames="provider_id"/>
+        
+      
+        
+          <addForeignKeyConstraint baseTableName="drug_purchase_order" 
+                                 baseColumnNames="location" 
+                                 constraintName="FK_drug_purchase_order_location_location_location_id" 
+                                 referencedTableName="location" 
+                                 referencedColumnNames="location_id"/>
+        
+    </changeSet>
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+    
+    
+    
+    
+    
+    
+    
+    
+     <changeSet id="2012-07-18_create_drug_inventory_resource" author="Abhishek,Jatin,Praneet">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="drug_inventory_resource"/>
+            </not>
+        </preConditions>
+        <comment>
+            Schema for drug_inventory_resource table
+        </comment>
+        <createTable tableName="drug_inventory_resource">
+            <column name="DI_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="DI_name" type="varchar(255)"/>
+            <column name="DI_description" type="varchar(2000)"/>
+           
+            
+            <column name="Drug" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Expiry_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            
+             <column name="Batch" type="varchar(255)"/>
+             
+              <column name="Value" type="int">
+                <constraints nullable="false"/>
+            </column>
+            
+                          <column name="Status" type="varchar(255)"/>
+              
+              
+            <column name="Provider" type="int">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column name="Drug_PO" type="int">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column name="Location" type="int">
+                <constraints nullable="false"/>
+            </column>
+            
+            
+           
+            
+           
+             <column name="creator" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="DATETIME"/>
+            <column defaultValueBoolean="false" name="retired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="retired_by" type="int"/>
+            <column name="date_retired" type="DATETIME"/>
+            <column name="retire_reason" type="varchar(255)"/>
+            <column name="uuid" type="char(38)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+     </changeSet> 
+ 	   <changeSet id="2012-07-18_add_constraints_to_drug_inventory_resource" author="Abhishek,Jatin,Praneet">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="drug_inventory_resource"/>
+        </preConditions>
+        <comment>
+            Adding constraints for drug_inventory_resource.
+        </comment>
+     
+        
+         <addForeignKeyConstraint baseTableName="drug_inventory_resource" 
+                                 baseColumnNames="Provider_recepient" 
+                                 constraintName="FK_drug_inventory_resource_Provider_provider_provider_id" 
+                                 referencedTableName="provider" 
+                                 referencedColumnNames="provider_id"/>
+        
+      
+        
+          <addForeignKeyConstraint baseTableName="drug_inventory_resource" 
+                                 baseColumnNames="location" 
+                                 constraintName="FK_drug_inventory_resource_location_location_location_id" 
+                                 referencedTableName="location" 
+                                 referencedColumnNames="location_id"/>
+          
+          
+           <addForeignKeyConstraint baseTableName="drug_inventory_resource" 
+                                 baseColumnNames="Drug_PO" 
+                                 constraintName="FK_drug_inventory_resource_Drug_PO_drug_purchase_order_PO_id" 
+                                 referencedTableName="drug_purchase_order" 
+                                 referencedColumnNames="PO_id"/>
+           
+           
+            
+           <addForeignKeyConstraint baseTableName="drug_inventory_resource" 
+                                 baseColumnNames="Drug" 
+                                 constraintName="FK_drug_inventory_Drug_Drug_Drug_id" 
+                                 referencedTableName="drug" 
+                                 referencedColumnNames="drug_id"/>
+    </changeSet>
  
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
+ 	   
 </databaseChangeLog>

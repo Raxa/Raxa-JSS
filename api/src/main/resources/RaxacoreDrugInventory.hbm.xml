@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="org.raxa.module.raxacore">
+    
+    <class name="DrugInventory" table="drug_inventory_resource">
+        <id name="drugInventoryId" column="DI_id" >
+            <generator class="native"/>
+        </id>
+        <property name="drugInventoryName"           type="java.lang.String"     column="DI_name" length="255"/>
+        <property name="drugInventoryDescription"    type="java.lang.String"     column="DI_description" length="2000"/>
+        <many-to-one name="drugId"    type="java.lang.Integer"     column="Drug" not-null="true"/>
+        <property name="quantity"    type="java.lang.Integer"     column="Quantity" not-null="true"/>
+        <property name="expiryDate"    type="java.util.Date"     column="Expiry_date" not-null="true"/>
+        <property name="batch"    type="java.lang.String"     column="Batch" length="250"/>
+        <property name="value"    type="java.lang.Integer"     column="Value" not-null="true" />
+        <property name="status"    type="java.lang.String"     column="Status" length="250"/>
+        <many-to-one name="providerId"    type="java.lang.Integer"     column="Provider" not-null="true"/>
+        <many-to-one name="locationId"    type="java.lang.Integer"     column="Location" not-null="true"/>
+        <many-to-one name="drugPurchaseOrderId"    type="java.lang.Integer"     column="Drug_PO" not-null="true"/>
+        <property name="uuid"           type="java.lang.String"     column="uuid" length="38" not-null="true" unique="true"/>
+        <many-to-one name="creator"     class="org.openmrs.User"    column="creator" not-null="true"/>
+        <property name="dateCreated"    type="java.util.Date"       column="date_created" not-null="true" length="19"/>
+        <property name="retired"        type="java.lang.Boolean"    column="retired" length="1" not-null="true"/>
+        <many-to-one name="retiredBy"   class="org.openmrs.User"    column="retired_by"/>
+        <property name="dateRetired"    type="java.util.Date"       column="date_retired"/>
+        <property name="retireReason"   type="java.lang.String"     column="retire_reason" length="255"/>
+        <many-to-one name="changedBy"   class="org.openmrs.User"    column="changed_by"/>
+        <property name="dateChanged"    type="java.util.Date"       column="date_changed" length="19"/>
+    </class>
+</hibernate-mapping>
