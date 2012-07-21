@@ -45,9 +45,10 @@ var helper = {
     listDisclose: function (list,record) {
         if(list==='family'){
             // set all family details before transition
-            // Ext.ComponentQuery.query('familyDetails #familyAddressLabel')[0].setHtml('<div style="font-size:13px;">'+record.get('familyAddress')+'</div>');
+            // set all family details before transition
+            Ext.ComponentQuery.query('familyDetails #familyAddressLabel')[0].setValue(record.get('familyAddress'));
             Ext.ComponentQuery.query('familyDetails #familyTitle')[0].setTitle(record.get('familyName'));
-            // Ext.ComponentQuery.query('familyDetails #familyDescripLabel')[0].setHtml('<div style="text-align:center;"><br><i>'+record.get('familyDescrip')+'</i></div>');
+            Ext.ComponentQuery.query('familyDetails #familyDescripLabel')[0].setTitle(record.get('familyDescrip'));
             // loading family member list
             var patientStore = Ext.getStore('patients');
             if (!patientStore) {
@@ -65,10 +66,23 @@ var helper = {
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
             });
             patientStore.load();
-        } else if (list==='illness'){
+        } else if (list==='illness') {
             // filter and fetch a list of all patients with that illness
             // display all patients with that illness
-            
+        } else if (list==='patient') {
+            Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
+            Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(record.get('familyName'));
+            Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
+            Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(record.get('patientAge'));
+            Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+        } else if (list==='inventory') {
+            Ext.ComponentQuery.query('inventoryDetails #pillDescripLabel')[0].setValue(record.get('pillDescrip'));
+            Ext.ComponentQuery.query('inventoryDetails #pillAmountLabel')[0].setValue(record.get('pillAmount'));
+            Ext.ComponentQuery.query('inventoryDetails #pillFrequencyLabel')[0].setValue(record.get('pillFrequency'));
+            Ext.ComponentQuery.query('inventoryDetails #pillNotesLabel')[0].setValue(record.get('pillNotes'));
+            Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0].setTitle(record.get('pillName'));
+            // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
+            Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
         }
     }
     

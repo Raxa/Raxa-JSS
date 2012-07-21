@@ -15,7 +15,6 @@
  */
 Ext.define('chw.model.pill', {
     extend: 'Ext.data.Model',
-    id: 'pill',
     config: {
         fields: [{
             name: 'pillName',

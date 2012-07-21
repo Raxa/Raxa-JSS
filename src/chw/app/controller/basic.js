@@ -106,11 +106,11 @@ Ext.define('chw.controller.basic', {
                     count = count+1;
                     var familyModel = Ext.create('chw.model.family',{
                         familyName: name,
-                        familyAddress:address ,
-                        familyDescrip:description,
+                        familyAddress: address,
+                        familyDescrip: description,
                         familyId: count,
-                        familyLatitude:25,
-                        familyLongitude:25,
+                        familyLatitude: 25,
+                        familyLongitude: 25,
                         familyImage: 'resources/home.png',
                         familyDistance: 30
                     });
@@ -267,7 +267,7 @@ Ext.define('chw.controller.basic', {
     }, 
     doToolbar: function (arg) {
         if (arg==='add') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.addOptions)
+            Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
         } else if (arg==='sync') {
             Ext.Msg.confirm('','Sync all information?', function (resp) {
                 if (resp==='yes') {}
@@ -280,6 +280,7 @@ Ext.define('chw.controller.basic', {
             }
             nstore.load();
             Ext.getCmp('inventoryLists').setStore(nstore)
+            console.log(Ext.getCmp('inventoryLists').getStore())
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList)
         } else if (arg==='logout') {
             this.doExit()

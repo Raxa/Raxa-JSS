@@ -21,11 +21,7 @@ Ext.define('chw.store.pills', {
         sorters: 'pillName',
         grouper: function (record) {
             return record.get('pillName')[0];
-        },
-        proxy: {
-            type: 'localstorage',
-            id: 'inventoryStore'
-        },
+        }, 
         data: [{
             pillName: 'Medicine #1',
             pillDescrip: 'What the medicine is used for',

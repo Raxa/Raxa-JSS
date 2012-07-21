@@ -47,10 +47,10 @@ Ext.define('chw.view.inventoryList', {
             itemTpl: [
                     '<div style="float:left;width:32px;height:32px"><img src="{pillImage}" height="80%" width="80%"/></div>',
                     '<div style="float:left;width:60%">',
-                        '<div class="list-item-title" style="font-size:15px;">{pillName}</div>',
+                        '<div class="list-item-title"">{pillName}</div>',
                     '</div>',
                     '<div style="float:left;width:32px;height:32px">',
-                        '<div class="list-item-title" style="font-size:15px;">{pillAmount}</div>',
+                        '<div class="list-item-title">{pillAmount}</div>',
                     '</div>'
                 ].join(''),
             onItemDisclosure: function (record) {

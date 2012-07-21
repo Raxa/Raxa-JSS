@@ -24,8 +24,8 @@ Ext.define('chw.store.families', {
         },
         proxy: {
             type: 'localstorage',
-            id: 'familyStore'
-        },
+            id: 'families'
+        }/*,
         data: [{
             familyId: '001',
             familyName: 'Desai',
@@ -86,6 +86,6 @@ Ext.define('chw.store.families', {
             // familyMembers: 'chw.store.patients',
             familyDistance: 40,
             familyDescrip: 'By the coast'
-        },]
+        }]*/
     }
 })

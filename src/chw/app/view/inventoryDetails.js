@@ -22,6 +22,7 @@ Ext.define('chw.view.inventoryDetails', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
+            itemId: 'pillTitleLabel',
             title: 'Inventory Details',
             docked: 'top',
             items: [{
@@ -33,7 +34,6 @@ Ext.define('chw.view.inventoryDetails', {
         }, {
             xclass: 'chw.view.userToolbar'
         }, {
-            itemId: 'pillTitleLabel',
             xtype: 'container',
             height: '100%',
             width: '100%',
