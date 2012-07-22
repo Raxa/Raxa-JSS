@@ -42,9 +42,21 @@ Ext.define('Laboratory.view.PaperEntry1', {
                     var pos = grid.getSelectionModel().selected.length;
                     selectedLabOrderId = grid.store.data.items[pos - 1].raw.labOrderId;
                     selectedPatientDisplay = grid.store.data.items[pos - 1].raw.patient.display;
+		    selectedLabOrderIdUuid = grid.store.data.items[pos - 1].raw.uuid;
                     Ext.getCmp('LabOrderNoPaperEntry4Panel').setValue(selectedLabOrderId);
                     Ext.getCmp('patientDisplayPaperEntry4Panel').setValue(selectedPatientDisplay);
-                },
+		    console.log(selectedLabOrderIdUuid);
+		   
+
+//		    Ext.getCmp('PaperEntryController').getLabOrder(selectedLabOrderIdUuid,  Ext.getCmp('PaperEntryController').getConcept);
+	
+//	    Ext.getCmp('PaperEntryController').getLabOrder(selectedLabOrderIdUuid,'this.getConcept');
+//console.log(this.getApplication());
+//console.log(Ext.getApplication('Laboratory').getController('PaperEntry'));
+//(Ext.getCmp('PaperEntryController'));
+//console.log(this.getController('PaperEntryController'));    
+	console.log(this);
+              },
             }
         }
 
