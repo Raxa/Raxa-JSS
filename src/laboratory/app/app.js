@@ -23,7 +23,7 @@ Ext.application({
     name: 'Laboratory',
     models: ['LabOrderSearch'],
     controllers: ['Main'],
-    stores:['LabOrderSearch'],
+    stores:['LabOrderSearch','concept'],
     views: [
 'Viewport',
 'Home',

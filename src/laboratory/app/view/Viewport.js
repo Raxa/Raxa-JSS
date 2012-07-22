@@ -195,7 +195,7 @@ Ext.define('Laboratory.view.Viewport', {
                 xtype: 'ReportApproval3'
             }, {
                 xtype: 'ReportApproval4'
-            } ]
+            }]
         };
         this.callParent();
     }

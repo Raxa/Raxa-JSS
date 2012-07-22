@@ -26,18 +26,28 @@ Ext.define('Laboratory.view.PaperEntry1', {
     },
 
     items: [{
-        xtype: 'gridpanel',
+        xtype: 'laborderlistgrid',
         id: 'labOrderListPaperEntry',
         title: 'List of Lab Orders',
-        maxWidth: 200,
+        width: 200,
         height: 400,
         store: Ext.create('Laboratory.store.LabOrderSearch'),
-        columns: [{
-            xtype: 'gridcolumn',
-            text: 'Order List',
-            dataIndex: 'orderlist',
-            width: 200,
-        }]
+        listeners: {
+            click: {
+                element: 'el', //bind to the underlying el property on the panel
+                fn: function () {
+                    var l = Ext.getCmp('mainLabArea').getLayout();
+                    l.setActiveItem(LAB_PAGES.PAPER_ENTRY_ENTER_DATA.value);
+                    var grid = Ext.getCmp('labOrderListPaperEntry');
+                    var pos = grid.getSelectionModel().selected.length;
+                    selectedLabOrderId = grid.store.data.items[pos - 1].raw.labOrderId;
+                    selectedPatientDisplay = grid.store.data.items[pos - 1].raw.patient.display;
+                    Ext.getCmp('LabOrderNoPaperEntry4Panel').setValue(selectedLabOrderId);
+                    Ext.getCmp('patientDisplayPaperEntry4Panel').setValue(selectedPatientDisplay);
+                },
+            }
+        }
+
     }, {
         xtype: 'button',
         margin: '10 50 0 270',

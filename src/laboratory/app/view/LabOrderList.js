@@ -21,7 +21,7 @@ Ext.define('Laboratory.view.LabOrderList', {
     layout: 'fit',
     columns: [{
         xtype: 'gridcolumn',
-        maxWidth: 200,
+        width: 200,
         text: 'Order List',
         dataIndex: 'orderlist',
     }]

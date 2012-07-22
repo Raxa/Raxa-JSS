@@ -26,24 +26,15 @@ Ext.define('Laboratory.view.PaperEntry4', {
     },
 
     items: [{
-        xtype: 'gridpanel',
+        xtype: 'laborderlistgrid',
+        id: 'labOrderListPaperEntry4',
+        title: 'List of Lab Orders',
+        width: 200,
         height: 400,
-        width: 210,
-        autoScroll: true,
-        title: 'Lab Orders waiting results',
-        columns: [{
-            xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: ''
-        }],
-        viewConfig: {
-
-        },
-        features: [{
-            ftype: 'grouping'
-        }]
+        store: Ext.create('Laboratory.store.LabOrderSearch'),
     }, {
         xtype: 'displayfield',
+        id: 'LabOrderNoPaperEntry4Panel',
         fieldLabel: 'Lab Order No.',
         x: 230,
         y: -1
@@ -52,7 +43,7 @@ Ext.define('Laboratory.view.PaperEntry4', {
         fieldLabel: 'Patient',
         labelAlign: 'top',
         x: 240,
-        y: 40
+        y: 40,
     }, {
         xtype: 'displayfield',
         fieldLabel: 'Provider',
@@ -61,7 +52,8 @@ Ext.define('Laboratory.view.PaperEntry4', {
         y: 40
     }, {
         xtype: 'displayfield',
-        width: 70,
+        id: 'patientDisplayPaperEntry4Panel',
+        labelWidth: 50,
         fieldLabel: 'Name',
         x: 240,
         y: 70
@@ -87,33 +79,57 @@ Ext.define('Laboratory.view.PaperEntry4', {
         y: 130
     }, {
         xtype: 'panel',
-        height: 150,
         width: 450,
         autoScroll: true,
-        title: 'Test',
+
         x: 230,
         y: 170,
         items: [{
             xtype: 'gridpanel',
-            height: 129,
+
+            id: 'results',
             autoScroll: true,
-            title: 'My Grid Panel',
             columnLines: true,
+            store: Ext.create('Laboratory.store.concept'),
             columns: [{
                 xtype: 'gridcolumn',
                 dataIndex: 'string',
-                text: 'Test'
+                text: 'Test',
+                dataIndex: 'Test'
             }, {
                 xtype: 'gridcolumn',
-                text: 'Result'
+                text: 'Result',
+                id: 'resultsColumn',
+                dataIndex: 'Result'
             }, {
                 xtype: 'gridcolumn',
                 width: 49,
-                text: 'Units'
+                text: 'Units',
+                dataIndex: 'Units'
             }, {
                 xtype: 'gridcolumn',
                 width: 31,
-                text: 'Flag'
+                text: 'Flag',
+                dataIndex: 'Flag',
+                editor: {
+                    xtype: 'combobox',
+                    allowBlank: false,
+                    editable: false,
+                    store: new Ext.data.Store({
+                        fields: ['value'],
+                        data: [{
+                            value: 'A'
+                        }, {
+                            value: 'B'
+                        }, {
+                            value: 'C'
+                        }, {
+                            value: 'D'
+                        }]
+                    }),
+                    displayField: 'value',
+                    forceSelection: true
+                }
             }, {
                 xtype: 'actioncolumn',
                 altText: 'Notes',
@@ -121,9 +137,13 @@ Ext.define('Laboratory.view.PaperEntry4', {
 
                 }]
             }],
-            viewConfig: {
-
-            }
+            plugins: [{
+                ptype: 'cellediting',
+                clicksToEdit: 1
+            }],
+            features: [{
+                ftype: 'grouping'
+            }]
         }]
     }]
 });
