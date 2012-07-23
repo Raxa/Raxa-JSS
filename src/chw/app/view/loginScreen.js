@@ -38,7 +38,7 @@ Ext.define('chw.view.loginScreen', {
                 padding: '30px',
                 items: [{
                     xtype: 'label',
-                    html: 'Login Please<br>'
+                    html: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label')
                     // html: 'कृपया लॉगिन'
                     
                 }]
