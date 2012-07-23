@@ -20,6 +20,7 @@ Ext.define('chw.view.inventoryDetails', {
     config: {
         height: '100%',
         ui: 'neutral',
+        scrollable: true,
         items: [{
             xtype: 'titlebar',
             itemId: 'pillTitleLabel',
@@ -34,101 +35,46 @@ Ext.define('chw.view.inventoryDetails', {
         }, {
             xclass: 'chw.view.userToolbar'
         }, {
-            xtype: 'container',
-            height: '100%',
+            xtype: 'label',
+            html: '<center><img src="resources/circle.png"/></center>',
+            height: '20%',
             width: '100%',
-            scrollable: true,
-            title: 'Summary',
-            layout:{
-                type:'vbox'
-            },
-            items: [{
-                    xtype: 'label',
-                    html: 'derp'
-            }, {
-                xtype: 'label',
-                html: '<center><img src="resources/home.png"/></center>',
-                height: '20%',
-                width: '100%',
-                padding: '10px'
-            }, {
-                xtype: 'container',
-                padding: '10px',
-                items: [{
-                    xtype: 'fieldset',
-                    itemId: 'familyDescripLabel',
-                    title: 'Family Description',
-                    defaults: {
-                        labelWidth: '35%',
-                        disabled: true
-                    },
-                    items: [{
-                        xtype: 'textfield',
-                        label: 'Address',
-                        placeHolder: 'Hogwarts'
-                    }, {
-                        xtype: 'textfield',
-                        label: 'Child/total',
-                        placeHolder: '2/4'
-                    }, {
-                        xtype: 'textfield',
-                        label: 'Last Visit',
-                        placeHolder: '12/7/2012'
-                    }]
-                }]
-            }, {
-                xtype: 'button',
-                text: 'Start Visit',
-                ui: 'confirm-round'
-            }, {
-                xtype: 'label',
-                html: ' <br><br>'
-            }]
-        }/* {
+            padding: '10px'
+        }, {
             xtype: 'container',
-            height: '100%',
-            width: '100%',
-            scrollable: true,
-            layout: 'vbox',
+            padding: '10px',
             items: [{
-                xtype: 'label',
-                html: '<center><img src="resources/circle.png"/></center>',
-                height: '20%',
-                width: '100%',
-                padding: '10px'
-            }, {
-                xtype: 'container',
-                padding: '10px',
+                xtype: 'fieldset',
+                title: 'About the drug',
+                defaults: {
+                    disabled: true
+                },
                 items: [{
-                    xtype: 'fieldset',
-                    title: 'About the drug',
-                    defaults: {
-                        labelAlign: 'top',
-                        disabled: true
-                    },
-                    items: [{
-                        xtype: 'textfield',
-                        label: 'Description',
-                        placeHolder: 'Description',
-                        itemId: 'pillDescripLabel'
-                    }, {
-                        xtype: 'textfield',
-                        label: 'Amount left',
-                        placeHolder: 'Amount left',
-                        itemId: 'pillAmountLabel'
-                    }, {
-                        xtype: 'textfield',
-                        label: 'Frequency',
-                        placeHolder: 'Frequency',
-                        itemId: 'pillFrequencyLabel'
-                    }, {
-                        xtype: 'textfield',
-                        label: 'Administration Notes',
-                        placeHolder: 'Administration Notes',
-                        itemId: 'pillNotesLabel'
-                    }]
+                    xtype: 'textfield',
+                    label: 'Description',
+                    placeHolder: 'Description',
+                    itemId: 'pillDescripLabel',
+                    labelAlign: 'top'
+                }, {
+                    xtype: 'textfield',
+                    label: 'Administration Notes',
+                    placeHolder: 'Administration Notes',
+                    itemId: 'pillNotesLabel',
+                    labelAlign: 'top'
+                }, {
+                    xtype: 'textfield',
+                    label: 'Amount left',
+                    placeHolder: 'Amount left',
+                    itemId: 'pillAmountLabel',
+                    labelWidth: '35%'
+                }, {
+                    xtype: 'textfield',
+                    label: 'Frequency',
+                    placeHolder: 'Frequency',
+                    itemId: 'pillFrequencyLabel',
+                    labelWidth: '35%'
                 }]
             }]
-        }*/]
+        }]
     }
 })
