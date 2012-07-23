@@ -21,6 +21,7 @@ Ext.define('chw.view.loginScreen', {
         items: [{
             xtype: 'titlebar',
             title: 'CHW Module',
+            // title: 'सामुदायिक स्वास्थ्य कार्यकर्ता',
             docked: 'top'
         }, {
             xtype: 'container',
@@ -38,16 +39,20 @@ Ext.define('chw.view.loginScreen', {
                 items: [{
                     xtype: 'label',
                     html: 'Login Please<br>'
+                    // html: 'कृपया लॉगिन'
+                    
                 }]
             }, {
                 xtype: 'fieldset',
                 items: [{
                     xtype: 'textfield',
                     label: 'Username',
+                    // label: 'नाम',
                     itemId: 'usernameIID'
                 }, {
                     xtype: 'passwordfield',
                     label: 'Password',
+                    // label: 'पासवर्ड',
                     itemId: 'passwordIID'
                 }]
             }, {
