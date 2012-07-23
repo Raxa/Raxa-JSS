@@ -61,6 +61,11 @@ Ext.define('chw.controller.basic', {
                 tap:function(){
                     this.doBack();
                 }
+            },
+            "button[action=addPatient]":{
+                tap:function(){
+                    this.doAdd('patient',true);
+                }
             }
             
         }
@@ -135,7 +140,10 @@ Ext.define('chw.controller.basic', {
                 //                    })
                 }
             }else if(step==='patient'){
-            //add patient
+                //add patient
+                console.log(Ext.ComponentQuery.query('familyDetails #familyTitle')[0].getTitle())
+                Ext.ComponentQuery.query('AddPatient #familyField')[0].setValue(Ext.ComponentQuery.query('familyDetails #familyTitle')[0].getTitle())
+                Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient);
             }
         }
     },

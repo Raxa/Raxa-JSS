@@ -13,9 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 Ext.Loader.setConfig({
-    enabled: true
+    enabled: true,
+    paths: {
+        'Ext.i18n': '../lib/i18n'  //Mention the relevant path to the i18n library over here.
+    }
 });
+
 Ext.application({
     name: 'chw',
     controllers: ['basic'],
@@ -37,4 +42,13 @@ Ext.application({
     launch: function () {
         Ext.create('chw.view.loginScreen');
     }
+});
+
+Ext.require('Ext.i18n.Bundle', function(){
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+        bundle: 'RaxaEmrChw',
+        lang: 'en-US',
+        path: 'app/view',
+        noCache: true
+    });
 });

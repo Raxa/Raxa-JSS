@@ -112,14 +112,15 @@ Ext.define('chw.view.familyDetails', {
                 items: [{
                     xtype: 'button',
                     text: 'Patient',
+                    action: 'addPatient',
                     iconMask: true,
-                    iconCls: 'user_add',
-                    listeners: {
-                        tap: function () {
-                            // TODO: need to remember which family it is
-                            Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
-                        }
-                    }
+                    iconCls: 'user_add'
+//                    listeners: {
+//                        tap: function () {
+//                            // TODO: need to remember which family it is
+//                            Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
+//                        }
+//                    }
                 }]
             }]
         },{
