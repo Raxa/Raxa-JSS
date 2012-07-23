@@ -90,7 +90,7 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	}
 	
 	public void setDrugId(Integer drugd) {
-		this.drugId = drugId;
+		this.drugId = drugd;
 	}
 	
 	public Integer getQuantity() {

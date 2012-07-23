@@ -10,7 +10,10 @@
         <id name="drugPurchaseOrderId" column="PO_id" >
             <generator class="native"/>
         </id>
-        <property name="received"           type="java.lang.Boolean"     column="DI_name" length="255"/>     
+        <property name="name"           type="java.lang.String"     column="PO_name" length="255"/>
+        <property name="description"    type="java.lang.String"     column="PO_description" length="2000"/>
+        
+        <property name="received"           type="java.lang.Boolean"     column="Received" length="255"/>     
         <many-to-one name="providerId"    type="java.lang.Integer"     column="Provider" not-null="true"/>
         <many-to-one name="locationId"    type="java.lang.Integer"     column="Location" not-null="true"/>
         <many-to-one name="drugPurchaseOrderDate"    type="java.util.Date"     column="PO_Date" not-null="true" insert="false" />

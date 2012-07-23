@@ -12,7 +12,7 @@
         </id>
         <property name="drugInventoryName"           type="java.lang.String"     column="DI_name" length="255"/>
         <property name="drugInventoryDescription"    type="java.lang.String"     column="DI_description" length="2000"/>
-        <many-to-one name="drugId"    type="java.lang.Integer"     column="Drug" not-null="true"/>
+        <many-to-one name="drugId"    type="java.lang.Integer"     column="Drug_ID" not-null="true"/>
         <property name="quantity"    type="java.lang.Integer"     column="Quantity" not-null="true"/>
         <property name="expiryDate"    type="java.util.Date"     column="Expiry_date" not-null="true"/>
         <property name="batch"    type="java.lang.String"     column="Batch" length="250"/>
