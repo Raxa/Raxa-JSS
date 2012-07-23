@@ -75,7 +75,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.addIllness,
+            activeItem: PAGES.loginScreen,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -148,13 +148,13 @@ Ext.define('chw.controller.basic', {
                 var firstNameVal = Ext.ComponentQuery.query('AddPatient #firstName')[0].getValue();
                 var lastNameVal = Ext.ComponentQuery.query('AddPatient #lastName')[0].getValue();
                 var radioform = Ext.getCmp('ext-AddPatient-1').saveForm();
-                var genderVal = radioform.radiogroup.charAt(0);
                 var birthDay = Ext.ComponentQuery.query('AddPatient #bday')[0].getValue();
                 
-                if(firstName=='' || lastName== '' || gender==''){
+                if(firstNameVal=='' || lastNameVal== '' || !radioform.radiogroup){
                     Ext.Msg.alert("Error", "Please fill in all fields");
                 }else{
                     //Move ahead with adding the patient
+                    var gender = radioform.radiogroup.charAt(0);
                     var patientStore = Ext.getStore('patients');
                     if(!patientStore){
                         Ext.create('chw.store.patients');
@@ -164,12 +164,14 @@ Ext.define('chw.controller.basic', {
                         familyId: familyIdVal,
                         firstName: firstNameVal,
                         familyName: lastNameVal,
-                        patientGender: genderVal,
+                        patientGender: gender,
                         birthDate: birthDay
                     });
                     
                     patientStore.add(patientModel);
                     patientStore.sync();
+                    Ext.getCmp('ext-AddPatient-1').reset();
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails);
                 }
             } else if (step==='illness') {}
         }
