@@ -88,7 +88,7 @@ Ext.define('chw.view.patientDetails', {
                 pinHeaders: false,
                 id: 'familyMemberslist',
                 width: '100%',
-                height: '100%',
+                height: '80%',
                 centered: true,
                 indexBar: true,
                 itemTpl: [
@@ -97,6 +97,14 @@ Ext.define('chw.view.patientDetails', {
 //                onItemDisclosure: function (record) {
 //                    helper.listDisclose('illness',record)
 //                }
+            }, {
+                xtype: 'container',
+                padding: '0px 60px 20px 60px',
+                items: [{
+                    xtype: 'button',
+                    text: 'Add an Illness',
+                    itemId: 'illnessAdd'
+                }]
             }]
         }]
     }

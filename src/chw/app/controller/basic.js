@@ -75,7 +75,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.familyList,
+            activeItem: PAGES.addIllness,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -98,8 +98,11 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.addFamily'
             }, {
                 xclass: 'chw.view.addPatient'
+            }, {
+                xclass: 'chw.view.addIllness'
             }]
         })
+        console.log(Ext.getCmp('viewPort').getActiveItem());
     },
     doAdd: function(step,arg){
         if(arg){
@@ -139,7 +142,7 @@ Ext.define('chw.controller.basic', {
                     Ext.getCmp('viewPort').setActiveItem(PAGES.familyList);
                 //                    })
                 }
-            }else if(step==='patient'){
+            } else if(step==='patient') {
                 //add patient
                 var familyIdVal = Ext.ComponentQuery.query('AddPatient #familyId')[0].getValue();
                 var firstNameVal = Ext.ComponentQuery.query('AddPatient #firstName')[0].getValue();
@@ -168,7 +171,7 @@ Ext.define('chw.controller.basic', {
                     patientStore.add(patientModel);
                     patientStore.sync();
                 }
-            }
+            } else if (step==='illness') {}
         }
     },
     doBack: function () {
@@ -331,15 +334,16 @@ Ext.define('chw.controller.basic', {
             console.log(active.id);
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doLogin(arg);
-            }else if(active.id==='ext-panel-5'){ //add a Family
-                this.doAdd('family',arg);
-            }else if(active.id==='ext-familyDetails-1'){ //Go to adding patient page. Here the family name and family id is being forwarded
+            } else if (active.id==='ext-panel-5'){ //add a Family
+                this.doAdd('family', arg);
+            } else if (active.id==='ext-familyDetails-1'){ //Go to adding patient page. Here the family name and family id is being forwarded
                 Ext.ComponentQuery.query('AddPatient #familyField')[0].setValue(Ext.ComponentQuery.query('familyDetails #familyTitle')[0].getTitle());
                 Ext.ComponentQuery.query('AddPatient #familyId')[0].setValue(Ext.ComponentQuery.query('familyDetails #familyIdLabel')[0].getValue())
                 Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient);
-            }else if(active.id=='ext-AddPatient-1'){ //Add a patient
-                console.log('here')
-                this.doAdd('patient',arg);
+            } else if (active.id==='ext-AddPatient-1'){ //Add a patient
+                this.doAdd('patient', arg);
+            } else if (active.id==='ext-AddIllness-1'){
+                this.doAdd('illness', arg)
             }
         }
     }, 

@@ -81,22 +81,29 @@ Ext.define('chw.view.inventoryDetails', {
         }, {
             xtype: 'container',
             layout: 'hbox',
-            padding: '0px 100px 20px 100px',
+            padding: '10px',
+            width: "100%",
             items: [{
+                xtype: 'label',
+                flex: '2'
+            }, {
                 xtype: 'button',
-                flex: 3,
-                text: '+',
-                itemId: 'inventoryAdd',
-                ui: 'confirm-round'
+                iconMask: true,
+                iconCls: 'add',
+                action: 'inventoryAdd',
+                ui: 'confirm'
             }, {
                 xtype: 'label',
-                flex: 5
+                flex: '2'
             }, {
                 xtype: 'button',
-                flex: 3,
-                text: '-',
-                itemId: 'inventoryReduce',
-                ui: 'decline-round'
+                iconMask: true,
+                iconCls: 'delete1',
+                action: 'inventoryReduce',
+                ui: 'decline'
+            }, {
+                xtype: 'label',
+                flex: '2'
             }]
         }]
     }
