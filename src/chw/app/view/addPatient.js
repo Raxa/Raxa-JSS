@@ -98,7 +98,7 @@ Ext.define('chw.view.addPatient', {
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
                     name: 'bday',
-                    id: 'bday',
+                    itemId: 'bday',
                     label: 'Birthday',
                     required: true,
                     value: new Date(),

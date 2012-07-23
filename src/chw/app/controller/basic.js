@@ -146,6 +146,7 @@ Ext.define('chw.controller.basic', {
                 var lastNameVal = Ext.ComponentQuery.query('AddPatient #lastName')[0].getValue();
                 var radioform = Ext.getCmp('ext-AddPatient-1').saveForm();
                 var genderVal = radioform.radiogroup.charAt(0);
+                var birthDay = Ext.ComponentQuery.query('AddPatient #bday')[0].getValue();
                 
                 if(firstName=='' || lastName== '' || gender==''){
                     Ext.Msg.alert("Error", "Please fill in all fields");
@@ -160,9 +161,12 @@ Ext.define('chw.controller.basic', {
                         familyId: familyIdVal,
                         firstName: firstNameVal,
                         familyName: lastNameVal,
-                        patientGender: genderVal
+                        patientGender: genderVal,
+                        birthDate: birthDay
                     });
                     
+                    patientStore.add(patientModel);
+                    patientStore.sync();
                 }
             }
         }
@@ -334,6 +338,7 @@ Ext.define('chw.controller.basic', {
                 Ext.ComponentQuery.query('AddPatient #familyId')[0].setValue(Ext.ComponentQuery.query('familyDetails #familyIdLabel')[0].getValue())
                 Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient);
             }else if(active.id=='ext-AddPatient-1'){ //Add a patient
+                console.log('here')
                 this.doAdd('patient',arg);
             }
         }

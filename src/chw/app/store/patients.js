@@ -21,6 +21,10 @@ Ext.define('chw.store.patients', {
         sorters: 'familyName',
         grouper: function (record) {
             return record.get('familyName')[0];
+        },
+         proxy: {
+            type: 'localstorage',
+            id: 'patients'
         }/*,
         data: [{
             firstName: 'Ronak',
