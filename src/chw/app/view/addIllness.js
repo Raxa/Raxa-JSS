@@ -45,7 +45,8 @@ Ext.define('chw.view.addIllness', {
                     label: 'Type',
                     required: true,
                     itemId: 'illnessTypeField',
-                    store: 'chw.store.illnesses'
+                    store: 'illnesses',
+                    displayField: 'illnessName'
                 }, {
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
