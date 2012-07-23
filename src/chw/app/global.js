@@ -49,6 +49,7 @@ var helper = {
             Ext.ComponentQuery.query('familyDetails #familyAddressLabel')[0].setValue(record.get('familyAddress'));
             Ext.ComponentQuery.query('familyDetails #familyTitle')[0].setTitle(record.get('familyName'));
             Ext.ComponentQuery.query('familyDetails #familyDescripLabel')[0].setTitle(record.get('familyDescrip'));
+            Ext.ComponentQuery.query('familyDetails #familyIdLabel')[0].setValue(record.get('familyId'));
             // loading family member list
             var patientStore = Ext.getStore('patients');
             if (!patientStore) {

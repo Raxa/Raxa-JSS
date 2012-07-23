@@ -14,7 +14,7 @@
  * the License.
  */
 Ext.define('chw.view.addPatient', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.form.Panel',
     alias: 'widget.AddPatient',
     requires: 'chw.view.userToolbar',
     config: {
@@ -41,6 +41,12 @@ Ext.define('chw.view.addPatient', {
                     labelWidth: '35%'
                 },
                 items: [{
+                    xtype:'textfield',
+                    hidden:true,
+                    required:true,
+                    itemId: 'familyId',
+                    disabled: true
+                },{
                     xtype: 'textfield',
                     label: 'Family',
                     disabled: true,
@@ -54,12 +60,14 @@ Ext.define('chw.view.addPatient', {
                 }, {
                     xtype: 'textfield',
                     label: 'First',
+                    itemId: 'firstName',
                     placeHolder: 'Vikram',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
                     label: 'Last',
+                    itemId: 'lastName',
                     placeHolder: 'Rathore',
                     required: true,
                     clearIcon: true
@@ -105,5 +113,8 @@ Ext.define('chw.view.addPatient', {
                 xclass: 'chw.view.okCancel'
             }]
         }]
+    },
+    saveForm: function () {
+        return this.getValues();
     }
 })
