@@ -97,7 +97,7 @@ Ext.define('chw.controller.basic', {
                 if(familyName=='' || address==''){
                     Ext.Msg.alert("Error", "Please fill in all fields");
                 }else{
-                    
+                    console.log('adding fami');
                     var familyStore = Ext.getStore('families');
                     if(!familyStore){
                         familyStore = Ext.create('chw.store.families');
@@ -117,16 +117,16 @@ Ext.define('chw.controller.basic', {
                     
                     familyStore.add(familyModel);
                     familyStore.sync();
-//                    familyStore.on('write',function(){
-                        console.log('Added family locally');
-                        Ext.getCmp('familyName').reset();
-                        Ext.getCmp('address').reset();
-                        Ext.getCmp('description').reset();
-                        Ext.getCmp('viewPort').setActiveItem(PAGES.familyList);
-//                    })
+                    //                    familyStore.on('write',function(){
+                    console.log('Added family locally');
+                    Ext.getCmp('familyName').reset();
+                    Ext.getCmp('address').reset();
+                    Ext.getCmp('description').reset();
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.familyList);
+                //                    })
                 }
             }else if(step==='patient'){
-                //add patient
+            //add patient
             }
         }
     },
@@ -260,7 +260,7 @@ Ext.define('chw.controller.basic', {
             console.log(active.id);
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doLogin(arg);
-            }else if(active.id==='ext-panel-7'){
+            }else if(active.id==='ext-panel-5'){
                 this.doAdd('family',arg);
             }
         }
