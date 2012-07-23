@@ -62,9 +62,9 @@ Ext.define('chw.controller.basic', {
                     this.doBack();
                 }
             },
-            "button[action=addPatient]":{
+            "button[action=goToAddPatient]":{
                 tap:function(){
-                    this.doAdd('patient',true);
+                    this.doOption(true);
                 }
             }
             
@@ -143,9 +143,29 @@ Ext.define('chw.controller.basic', {
                 }
             }else if(step==='patient'){
                 //add patient
-                console.log(Ext.ComponentQuery.query('familyDetails #familyTitle')[0].getTitle())
-                Ext.ComponentQuery.query('AddPatient #familyField')[0].setValue(Ext.ComponentQuery.query('familyDetails #familyTitle')[0].getTitle())
-                Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient);
+                var familyIdVal = Ext.ComponentQuery.query('AddPatient #familyId')[0].getValue();
+                var firstNameVal = Ext.ComponentQuery.query('AddPatient #firstName')[0].getValue();
+                var lastNameVal = Ext.ComponentQuery.query('AddPatient #lastName')[0].getValue();
+                var radioform = Ext.getCmp('ext-AddPatient-1').saveForm();
+                var genderVal = radioform.radiogroup.charAt(0);
+                
+                if(firstName=='' || lastName== '' || gender==''){
+                    Ext.Msg.alert("Error", "Please fill in all fields");
+                }else{
+                    //Move ahead with adding the patient
+                    var patientStore = Ext.getStore('patients');
+                    if(!patientStore){
+                        Ext.create('chw.store.patients');
+                    }
+                    
+                    var patientModel = Ext.create('chw.model.patient',{
+                        familyId: familyIdVal,
+                        firstName: firstNameVal,
+                        familyName: lastNameVal,
+                        patientGender: genderVal
+                    });
+                    
+                }
             }
         }
     },
@@ -309,8 +329,14 @@ Ext.define('chw.controller.basic', {
             console.log(active.id);
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doLogin(arg);
-            }else if(active.id==='ext-panel-5'){
+            }else if(active.id==='ext-panel-5'){ //add a Family
                 this.doAdd('family',arg);
+            }else if(active.id==='ext-familyDetails-1'){ //Go to adding patient page. Here the family name and family id is being forwarded
+                Ext.ComponentQuery.query('AddPatient #familyField')[0].setValue(Ext.ComponentQuery.query('familyDetails #familyTitle')[0].getTitle());
+                Ext.ComponentQuery.query('AddPatient #familyId')[0].setValue(Ext.ComponentQuery.query('familyDetails #familyIdLabel')[0].getValue())
+                Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient);
+            }else if(active.id=='ext-AddPatient-1'){ //Add a patient
+                this.doAdd('patient',arg);
             }
         }
     }, 

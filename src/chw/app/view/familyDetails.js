@@ -58,6 +58,10 @@ Ext.define('chw.view.familyDetails', {
                     },
                     items: [{
                         xtype: 'textfield',
+                        label: 'Family ID',
+                        itemId: 'familyIdLabel'
+                    }, {
+                        xtype: 'textfield',
                         itemId: 'familyAddressLabel',
                         label: 'Address',
                         placeHolder: 'Hogwarts'
@@ -112,7 +116,7 @@ Ext.define('chw.view.familyDetails', {
                 items: [{
                     xtype: 'button',
                     text: 'Patient',
-                    action: 'addPatient',
+                    action: 'goToAddPatient',
                     iconMask: true,
                     iconCls: 'user_add'
 //                    listeners: {
