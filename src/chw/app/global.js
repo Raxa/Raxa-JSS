@@ -28,7 +28,8 @@ var PAGES = {
     inventoryDetails: 7,
     addOptions: 8,
     addFamily: 9,
-    addPatient: 10
+    addPatient: 10,
+    addIllness: 11
 }
 var USER = new Object();
 USER.name = '';

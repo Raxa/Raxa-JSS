@@ -98,6 +98,8 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.addFamily'
             }, {
                 xclass: 'chw.view.addPatient'
+            }, {
+                xclass: 'chw.view.addIllness'
             }]
         })
     },
