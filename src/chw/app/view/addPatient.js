@@ -15,6 +15,7 @@
  */
 Ext.define('chw.view.addPatient', {
     extend: 'Ext.Panel',
+    alias: 'widget.AddPatient',
     requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
@@ -40,9 +41,11 @@ Ext.define('chw.view.addPatient', {
                     labelWidth: '35%'
                 },
                 items: [{
-                    xtype: 'selectfield',
+                    xtype: 'textfield',
                     label: 'Family',
+                    disabled: true,
                     required: true,
+                    itemId: 'familyField',
                     // TODO: how do you randomly generate this?
                     options: [{
                         text: '',
