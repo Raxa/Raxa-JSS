@@ -23,9 +23,9 @@ Ext.define('chw.model.illness', {
         }, {
             name: 'illnessImage',
             type: 'string'
-        }/*, {
-            name: 'illnessPatients',
-            type: ''
-        }*/]
+        }, {
+            name: 'illnessId',
+            type: 'int'
+        }]
     }
 })

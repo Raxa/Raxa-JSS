@@ -23,40 +23,32 @@ Ext.define('chw.store.pills', {
             return record.get('pillName')[0];
         }, 
         data: [{
-            pillName: 'Medicine #1',
-            pillDescrip: 'What the medicine is used for',
-            pillFrequency: 'How often it is taken',
-            pillNotes: 'Any additional instructions',
-            pillAmount: 100,
-            pillImage: 'resources/circle.png'
+            pillName: 'Ciprofloxacin',
+            pillDescrip: 'Antibiotic for bowel issues',
+            pillFrequency: 'Take on onset of symptoms',
+            pillNotes: 'Not necessary to complete cycle',
+            pillAmount: 97,
+            pillImage: 'resources/ciprofloxacin.png',
+            pillMin: 100,
+            pillColor: 'red'
         }, {
-            pillName: 'Medicine #2',
-            pillDescrip: 'What the medicine is used for',
-            pillFrequency: 'How often it is taken',
-            pillNotes: 'Any additional instructions',
-            pillAmount: 100,
-            pillImage: 'resources/circle.png'
+            pillName: 'Paracetamol',
+            pillDescrip: 'Pain reliever and fever reducer',
+            pillFrequency: 'Use only when needed',
+            pillNotes: 'Acute overdose can cause liver damage',
+            pillAmount: 563,
+            pillImage: 'resources/paracetamol.png',
+            pillMin: 100,
+            pillColor: 'black'
         }, {
-            pillName: 'Medicine #3',
-            pillDescrip: 'What the medicine is used for',
-            pillFrequency: 'How often it is taken',
-            pillNotes: 'Any additional instructions',
-            pillAmount: 100,
-            pillImage: 'resources/circle.png'
-        }, {
-            pillName: 'Medicine #4',
-            pillDescrip: 'What the medicine is used for',
-            pillFrequency: 'How often it is taken',
-            pillNotes: 'Any additional instructions',
-            pillAmount: 100,
-            pillImage: 'resources/circle.png'
-        }, {
-            pillName: 'Medicine #5',
-            pillDescrip: 'What the medicine is used for',
-            pillFrequency: 'How often it is taken',
-            pillNotes: 'Any additional instructions',
-            pillAmount: 100,
-            pillImage: 'resources/circle.png'
+            pillName: 'Malarone',
+            pillDescrip: 'Malaria prevention and treatment',
+            pillFrequency: 'Once a day',
+            pillNotes: 'Take with food',
+            pillAmount: 212,
+            pillImage: 'resources/malarone.png',
+            pillMin: 100,
+            pillColor: 'black'
         }]
     }
 })
