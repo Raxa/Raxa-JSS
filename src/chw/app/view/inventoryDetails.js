@@ -17,7 +17,9 @@ Ext.define('chw.view.inventoryDetails', {
     extend: 'Ext.Panel',
     requires: 'chw.view.userToolbar',
     alias: 'widget.inventoryDetails',
+    id: 'inventoryDetails',
     config: {
+        hidden: false,
         height: '100%',
         ui: 'neutral',
         scrollable: true,
@@ -36,6 +38,7 @@ Ext.define('chw.view.inventoryDetails', {
             xclass: 'chw.view.userToolbar'
         }, {
             xtype: 'label',
+            itemId: 'pillImageLabel',
             html: '<center><img src="resources/circle.png"/></center>',
             height: '20%',
             width: '100%',
@@ -74,6 +77,26 @@ Ext.define('chw.view.inventoryDetails', {
                     itemId: 'pillFrequencyLabel',
                     labelWidth: '35%'
                 }]
+            }]
+        }, {
+            xtype: 'container',
+            layout: 'hbox',
+            padding: '0px 100px 20px 100px',
+            items: [{
+                xtype: 'button',
+                flex: 3,
+                text: '+',
+                itemId: 'inventoryAdd',
+                ui: 'confirm-round'
+            }, {
+                xtype: 'label',
+                flex: 5
+            }, {
+                xtype: 'button',
+                flex: 3,
+                text: '-',
+                itemId: 'inventoryReduce',
+                ui: 'decline-round'
             }]
         }]
     }

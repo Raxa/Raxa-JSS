@@ -27,9 +27,19 @@ Ext.define('chw.controller.basic', {
                     this.doOption(false)
                 }
             },
+            "button[action=inventoryAdd]": {
+                tap: function () {
+                    this.doInventory('add')
+                }
+            },
             "button[action=inventoryButton]": {
                 tap: function () {
                     this.doToolbar('inventory')
+                }
+            },
+            "button[action=inventoryReduce]": {
+                tap: function () {
+                    this.doInventory('reduce')
                 }
             },
             "button[action=logoutButton]": {
@@ -60,7 +70,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.loginScreen,
+            activeItem: PAGES.familyList,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -134,6 +144,36 @@ Ext.define('chw.controller.basic', {
         this.doList('familyList');
         Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
     },
+    doInventory: function (arg, amt) {
+        // prompt user to input amount of pills to decrease or increase
+        // TODO: do we need to document to whom this interaction is being made?
+        if (!amt) {
+            if (arg==='add') {
+                Ext.Msg.prompt('Add', 'How many pills would you like to add?', function (resp, input) {
+                    if (resp==='ok') {
+                        this.doInventory('add', input)
+                    }
+                })
+            } else if (arg==='reduce') {
+                Ext.Msg.prompt('Reduce', 'How many pills would you like to reduce?', function (resp, input) {
+                    if (resp==='ok') {
+                        this.doInventory('reduce', input)
+                    }
+                })
+            }
+        } else {
+            // TODO: increase the pill amount
+            if (arg==='add') {
+                
+            }
+            // TODO: decrease the pill amount
+            else if (arg==='reduce') {
+                
+            }
+            // TODO: refresh the page
+            // TODO: pass this amount to the ganiyari
+        }
+    }, 
     doExit: function () {
         USER.name = '';
         USER.uuid = '';
@@ -279,7 +319,7 @@ Ext.define('chw.controller.basic', {
             }
             nstore.load();
             Ext.getCmp('inventoryLists').setStore(nstore)
-            console.log(Ext.getCmp('inventoryLists').getStore())
+            // console.log(Ext.getCmp('inventoryLists').getStore())
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList)
         } else if (arg==='logout') {
             this.doExit()

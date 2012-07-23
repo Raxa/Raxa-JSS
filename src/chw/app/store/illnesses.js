@@ -24,19 +24,24 @@ Ext.define('chw.store.illnesses', {
         },
         data: [{
             illnessName: 'Malaria',
-            illnessImage: ''
+            illnessImage: 'resources/malaria.png',
+            illnessId: 001
         }, {
             illnessName: 'Antenatal Care',
-            illnessImage: ''
+            illnessImage: 'resources/antenatal.png',
+            illnessId: 002
         }, {
             illnessName: 'Dehydration',
-            illnessImage: ''
+            illnessImage: 'resources/dehydration.png',
+            illnessId: 003
         }, {
             illnessName: 'Sickle Cell Anemia',
-            illnessImage: ''
+            illnessImage: 'resources/sicklecell.png',
+            illnessId: 004
         }, {
-            illnessName: 'Worms',
-            illnessImage: ''
+            illnessName: 'Diarrhea',
+            illnessImage: 'resources/diarrhea.png',
+            illnessId: 005
         }]
     }
 })

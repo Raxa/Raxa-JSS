@@ -76,11 +76,13 @@ var helper = {
             Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(record.get('patientAge'));
             Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
         } else if (list==='inventory') {
+            Ext.getCmp('inventoryDetails').setHidden(false);
             Ext.ComponentQuery.query('inventoryDetails #pillDescripLabel')[0].setValue(record.get('pillDescrip'));
             Ext.ComponentQuery.query('inventoryDetails #pillAmountLabel')[0].setValue(record.get('pillAmount'));
             Ext.ComponentQuery.query('inventoryDetails #pillFrequencyLabel')[0].setValue(record.get('pillFrequency'));
             Ext.ComponentQuery.query('inventoryDetails #pillNotesLabel')[0].setValue(record.get('pillNotes'));
             Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0].setTitle(record.get('pillName'));
+            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'+record.get('pillImage')+'" width="80%"/></center>');
             // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
         }

@@ -69,7 +69,7 @@ Ext.define('chw.view.familyList', {
                 indexBar: true,
                 itemTpl: [
                     '<div style="float:left;width:32px;height:32px">',
-                        '<img src=resources/circle.png height="80%" width="80%"/>',
+                        '<img src="{illnessImage}" height="80%" width="80%"/>',
                     '</div>',
                     '<div>&nbsp&nbsp{illnessName}</div>'
                 ].join(''),
