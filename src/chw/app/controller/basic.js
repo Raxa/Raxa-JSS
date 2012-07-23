@@ -60,7 +60,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.familyList,
+            activeItem: 0,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -97,7 +97,6 @@ Ext.define('chw.controller.basic', {
                 if(familyName=='' || address==''){
                     Ext.Msg.alert("Error", "Please fill in all fields");
                 }else{
-                    console.log('adding fami');
                     var familyStore = Ext.getStore('families');
                     if(!familyStore){
                         familyStore = Ext.create('chw.store.families');
@@ -112,7 +111,7 @@ Ext.define('chw.controller.basic', {
                         familyLatitude: 25,
                         familyLongitude: 25,
                         familyImage: 'resources/home.png',
-                        familyDistance: 30
+                        familyDistance: 20
                     });
                     
                     familyStore.add(familyModel);

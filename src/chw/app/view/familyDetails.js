@@ -58,6 +58,7 @@ Ext.define('chw.view.familyDetails', {
                     },
                     items: [{
                         xtype: 'textfield',
+                        itemId: 'familyAddressLabel',
                         label: 'Address',
                         placeHolder: 'Hogwarts'
                     }, {
