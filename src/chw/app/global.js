@@ -44,11 +44,13 @@ var CURR_LOC = {
 }
 var LOCATION = "";
 var CONNECTED = true;
+var savedFamilyRecord
+var savedResourcesRecord
 var helper = {
     listDisclose: function (list,record) {
         if(list==='family'){
             // set all family details before transition
-            // set all family details before transition
+            savedFamilyRecord=record
             Ext.ComponentQuery.query('familyDetails #familyAddressLabel')[0].setValue(record.get('familyAddress'));
             Ext.ComponentQuery.query('familyDetails #familyTitle')[0].setTitle(record.get('familyName'));
             Ext.ComponentQuery.query('familyDetails #familyDescripLabel')[0].setTitle(record.get('familyDescrip'));
@@ -74,6 +76,7 @@ var helper = {
             // filter and fetch a list of all patients with that illness
             // display all patients with that illness
         } else if (list==='patient') {
+            savedPatientRecord=record
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(record.get('familyName'));
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
@@ -90,6 +93,7 @@ var helper = {
             // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
         } else if (list==='resources') {
+            savedResourcesRecord=record
             Ext.ComponentQuery.query('resourceDetail #resourceNameTitle')[0].setTitle(record.get('resourceName'));
             var type = record.get('resourceType')
             var location = record.get('resourceLocation');
