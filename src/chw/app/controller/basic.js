@@ -134,13 +134,13 @@ Ext.define('chw.controller.basic', {
                     if(!familyStore){
                         familyStore = Ext.create('chw.store.families');
                     }
-                    var count = familyStore.getCount();
-                    count = count+1;
+                    var familyCount = familyStore.getCount();
+                    familyCount = familyCount+1;
                     var familyModel = Ext.create('chw.model.family',{
                         familyName: name,
                         familyAddress: address,
                         familyDescrip: description,
-                        familyId: count,
+                        familyId: familyCount,
                         familyLatitude: 25,
                         familyLongitude: 25,
                         familyImage: 'resources/home.png',
@@ -174,9 +174,11 @@ Ext.define('chw.controller.basic', {
                     if(!patientStore){
                         Ext.create('chw.store.patients');
                     }
-                    
+                    var patientCount = patientStore.getCount();
+                    patientCount = patientCount+1;
                     var patientModel = Ext.create('chw.model.patient',{
                         familyId: familyIdVal,
+                        patientId: patientCount,
                         firstName: firstNameVal,
                         familyName: lastNameVal,
                         patientGender: gender,
