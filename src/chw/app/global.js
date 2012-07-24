@@ -29,7 +29,8 @@ var PAGES = {
     addOptions: 8,
     addFamily: 9,
     addPatient: 10,
-    addIllness: 11
+    addIllness: 11,
+    resourceList: 12
 }
 var USER = new Object();
 USER.name = '';
