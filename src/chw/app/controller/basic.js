@@ -39,8 +39,8 @@ Ext.define('chw.controller.basic', {
             },
             "button[action=illnessAdd]": {
                 tap: function () {
-                    var pid = Ext.ComponentQuery.query('patientDetails #patientIdLabel').getValue();
-                    Ext.ComponentQuery.query('addIllness #patientIdLabel').setValue(pid);
+                    var pid = Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].getValue();
+                    Ext.ComponentQuery.query('addIllness #patientIdField')[0].setValue(pid);
                     Ext.getCmp('viewPort').setActiveItem(PAGES.addIllness)
                 }
             },
@@ -217,8 +217,9 @@ Ext.define('chw.controller.basic', {
                     });
                     piStore.add(piModel);
                     piStore.sync();
-                    console.log(Ext.getCmp('ext-addIllness-1'))
-                    Ext.getCmp('ext-addIllness-1').reset();
+                    // TODO: reset
+                    // console.log(Ext.getCmp('ext-addIllness-1'))
+                    // Ext.getCmp('ext-addIllness-1').reset();
                     Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
                 }
             }
