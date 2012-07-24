@@ -27,6 +27,16 @@ Ext.define('chw.controller.basic', {
                     this.doOption(false)
                 }
             },
+            "button[action=goback]":{
+                tap:function(){
+                    this.doBack();
+                }
+            },
+            "button[action=goToAddPatient]":{
+                tap:function(){
+                    this.doOption(true);
+                }
+            },
             "button[action=inventoryAdd]": {
                 tap: function () {
                     this.doInventory('add')
@@ -52,22 +62,16 @@ Ext.define('chw.controller.basic', {
                     this.doOption(true)
                 }
             },
+            "button[action=resourceButton]": {
+                tap: function () {
+                    this.doToolbar('resources')
+                }
+            },
             "button[action=syncButton]": {
                 tap: function () {
                     this.doToolbar('sync')
                 }
-            },
-            "button[action=goback]":{
-                tap:function(){
-                    this.doBack();
-                }
-            },
-            "button[action=goToAddPatient]":{
-                tap:function(){
-                    this.doOption(true);
-                }
             }
-            
         }
     },
     launch: function () {
@@ -75,7 +79,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.loginScreen,
+            activeItem: PAGES.familyList,
             items: [{
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -100,6 +104,10 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.addPatient'
             }, {
                 xclass: 'chw.view.addIllness'
+            }, {
+                xclass: 'chw.view.resourceList'
+            }, {
+                xclass: 'chw.view.resourceDetail'
             }]
         })
         console.log(Ext.getCmp('viewPort').getActiveItem());
@@ -368,6 +376,8 @@ Ext.define('chw.controller.basic', {
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList)
         } else if (arg==='logout') {
             this.doExit()
+        } else if (arg==='resources') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.resourceList)
         }
     }
 })

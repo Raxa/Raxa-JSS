@@ -29,7 +29,9 @@ var PAGES = {
     addOptions: 8,
     addFamily: 9,
     addPatient: 10,
-    addIllness: 11
+    addIllness: 11,
+    resourceList: 12,
+    resourceDetail: 13
 }
 var USER = new Object();
 USER.name = '';
@@ -87,6 +89,19 @@ var helper = {
             Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'+record.get('pillImage')+'" width="80%"/></center>');
             // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
+        } else if (list==='resources') {
+            Ext.ComponentQuery.query('resourceDetail #resourceNameTitle')[0].setTitle(record.get('resourceName'));
+            var type = record.get('resourceType')
+            var location = record.get('resourceLocation');
+            var container = Ext.ComponentQuery.query('resourceDetail #resourceLocationLabel')[0];
+            if (type==='photo') {
+                container.setHtml('<img src="'+ location +'" height="100%" width="100%"/>')
+            } else if (type === 'video') {
+                container.setHtml('<video controls="controls" height="100%" width="100%"><source src="' + location + '" type="video/webm" />Your browser does not support the video tag</video>')
+            } else if (type === 'audio') {
+                container.setHtml('<audio controls="controls"><source src="' + location + '" type = "audio/mp3" />Your browser does not support the audio element</audio>')
+            }
+            Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
         }
     }
     

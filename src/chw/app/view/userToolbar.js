@@ -35,6 +35,9 @@ Ext.define('chw.view.userToolbar', {
             iconCls: 'shop2',
             action: 'inventoryButton'
         }, {
+            iconCls: 'photos2',
+            action: 'resourceButton'
+        }, {
             iconCls: 'delete',
             action: 'logoutButton'
         }]
