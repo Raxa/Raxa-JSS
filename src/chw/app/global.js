@@ -73,8 +73,8 @@ var helper = {
             });
             patientStore.load();
         } else if (list==='illness') {
-            // filter and fetch a list of all patients with that illness
-            // display all patients with that illness
+        // filter and fetch a list of all patients with that illness
+        // display all patients with that illness
         } else if (list==='patient') {
             savedPatientRecord=record
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
@@ -92,11 +92,9 @@ var helper = {
             console.log(pid)
             console.log(pistore)
             pistore.filter('patientId',pid)
-            pistore.onAfter('load', function () {
-                console.log(pistore)
-                Ext.getCmp('patientIllnessList').setStore(pistore);
-                Ext.getCmp('viewPort').setActiveitem(PAGES.patientDetails)
-            })
+            console.log(pistore)
+            Ext.getCmp('patientIllnessList').setStore(pistore);
+            Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
         } else if (list==='inventory') {
             Ext.getCmp('inventoryDetails').setHidden(false);
             Ext.ComponentQuery.query('inventoryDetails #pillDescripLabel')[0].setValue(record.get('pillDescrip'));
