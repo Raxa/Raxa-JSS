@@ -55,7 +55,7 @@ public class DrugPurchaseOrder extends BaseOpenmrsMetadata implements Serializab
 		this.drugPurchaseOrderId = drugPurchaseOrderId;
 	}
 	
-	public boolean getReceived() {
+	public boolean isReceived() {
 		return received;
 	}
 	
