@@ -25,31 +25,31 @@ Ext.define('chw.store.resources', {
         data: [{
             resourceType: 'photo',
             resourceName: 'Sharing',
-            resourceLocation: 'sharing.png'
+            resourceLocation: 'resources/sharing.png'
         }, {
             resourceType: 'photo',
             resourceName: 'Spider Bites',
-            resourceLocation: 'spider.png'
+            resourceLocation: 'resources/spider.png'
         }, {
             resourceType: 'photo',
             resourceName: 'Wash Your Hands',
-            resourceLocation: 'freeride.png'
+            resourceLocation: 'resources/freeride.png'
         }, {
             resourceType: 'photo',
             resourceName: 'Cover Your Cough',
-            resourceLocation: 'cough.png'
+            resourceLocation: 'resources/cough.png'
         }, {
             resourceType: 'video',
             resourceName: 'Hands Together',
-            resourceLocation: 'handwash.webm'
+            resourceLocation: 'resources/handwash.webm'
         }, {
             resourceType: 'audio',
             resourceName: 'H1N1',
-            resourceLocation: 'h1n1.mp3'
+            resourceLocation: 'resources/h1n1.mp3'
         }, {
             resourceType: 'audio',
             resourceName: 'HIV Testing',
-            resourceLocation: 'hiv.mp3'
+            resourceLocation: 'resources/hiv.mp3'
         }]
     }
 })

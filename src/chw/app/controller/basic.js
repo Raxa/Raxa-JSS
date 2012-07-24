@@ -106,6 +106,8 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.addIllness'
             }, {
                 xclass: 'chw.view.resourceList'
+            }, {
+                xclass: 'chw.view.resourceDetail'
             }]
         })
         console.log(Ext.getCmp('viewPort').getActiveItem());

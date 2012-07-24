@@ -13,15 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.resourceList', {
-    extend: 'Ext.tab.Panel',
+Ext.define('chw.view.resourceDetail', {
+    extend: 'Ext.Panel',
+    alias: 'widget.resourceDetail',
     config: {
         height: '100%',
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Resources',
-            id: 'title_res',
+            itemId: 'resourceNameTitle',
             docked: 'top',
             items: [{
                 xtype: 'button',
@@ -32,21 +32,11 @@ Ext.define('chw.view.resourceList', {
         }, {
             xclass: 'chw.view.userToolbar'
         }, {
-            width: '100%',
-            height: '100%',
-            xtype: 'list',
-            ui: 'round',
-            grouped: true,
+            xtype: 'container',
+            itemId: 'resourceLocationLabel',
             centered: true,
-            id: 'resourceList',
-            pinHeaders: false,
-            store: 'resources',
-            loadingText: 'Loading List...',
-            emptyText: '</pre><div class="notes-list-empty-text"><center><br>No resources found.<br></center></div><pre>',
-            onItemDisclosure: function (record) {
-                helper.listDisclose('resources',record);
-            },
-            itemTpl: '<div>{resourceName}</div>'
+            height: '90%',
+            width: '90%'
         }]
     }
 })
