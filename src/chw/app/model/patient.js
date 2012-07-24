@@ -21,6 +21,9 @@ Ext.define('chw.model.patient', {
             name: 'familyId',
             type: 'string'
         },{
+            name: 'patientId',
+            type: 'string'
+        },{
             name: 'firstName',
             type: 'string'
         }, {
