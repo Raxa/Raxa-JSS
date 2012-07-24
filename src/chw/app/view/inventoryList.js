@@ -21,12 +21,12 @@ Ext.define('chw.view.inventoryList', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Inventory List',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.inventory'),
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action: 'goback'
             }]
         }, {
@@ -42,8 +42,8 @@ Ext.define('chw.view.inventoryList', {
             width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
             height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
             centered: true,
-            loadingTest: 'Loading List...',
-            emptyText: '</pre><div class="notes-list-empty-text"><center><br>No inventory found.<br></center></div><pre>',
+            loadingText: 'Loading List...',
+            emptyText: '</pre><div class="notes-list-empty-text"><center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.inventoryEmpty')+'<br></center></div><pre>',
             itemTpl: [
                     '<div style="float:left;width:32px;height:32px"><img src="{pillImage}" height="80%" width="80%"/></div>',
                     '<div style="float:left;width:60%">',

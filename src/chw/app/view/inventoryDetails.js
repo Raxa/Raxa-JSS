@@ -26,12 +26,12 @@ Ext.define('chw.view.inventoryDetails', {
         items: [{
             xtype: 'titlebar',
             itemId: 'pillTitleLabel',
-            title: 'Inventory Details',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.inventoryDetails'),
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action: 'goback'
             }]
         }, {
@@ -48,31 +48,31 @@ Ext.define('chw.view.inventoryDetails', {
             padding: '10px',
             items: [{
                 xtype: 'fieldset',
-                title: 'About the drug',
+                title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.aboutDrug'),
                 defaults: {
                     disabled: true
                 },
                 items: [{
                     xtype: 'textfield',
-                    label: 'Description',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.description'),
                     placeHolder: 'Description',
                     itemId: 'pillDescripLabel',
                     labelAlign: 'top'
                 }, {
                     xtype: 'textfield',
-                    label: 'Administration Notes',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.adminNotes'),
                     placeHolder: 'Administration Notes',
                     itemId: 'pillNotesLabel',
                     labelAlign: 'top'
                 }, {
                     xtype: 'textfield',
-                    label: 'Amount left',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.amountRemaining'),
                     placeHolder: 'Amount left',
                     itemId: 'pillAmountLabel',
                     labelWidth: '35%'
                 }, {
                     xtype: 'textfield',
-                    label: 'Frequency',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.frequency'),
                     placeHolder: 'Frequency',
                     itemId: 'pillFrequencyLabel',
                     labelWidth: '35%'

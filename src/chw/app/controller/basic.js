@@ -121,7 +121,7 @@ Ext.define('chw.controller.basic', {
                 var description = Ext.getCmp('description').getValue();
                 
                 if(familyName=='' || address==''){
-                    Ext.Msg.alert("Error", "Please fill in all fields");
+                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
                 }else{
                     var familyStore = Ext.getStore('families');
                     if(!familyStore){
@@ -159,7 +159,7 @@ Ext.define('chw.controller.basic', {
                 var birthDay = Ext.ComponentQuery.query('AddPatient #bday')[0].getValue();
                 
                 if(firstNameVal=='' || lastNameVal== '' || !radioform.radiogroup){
-                    Ext.Msg.alert("Error", "Please fill in all fields");
+                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
                 }else{
                     //Move ahead with adding the patient
                     var gender = radioform.radiogroup.charAt(0);
@@ -230,7 +230,7 @@ Ext.define('chw.controller.basic', {
             USER.name = Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].getValue();
             var pass = Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].getValue(); 
             if (USER.name===''||pass==='') {
-                Ext.Msg.alert("Error","Please fill in all fields.")
+                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'),Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'))
             } else {
                 // get user information
                 Ext.Ajax.request({
@@ -293,7 +293,7 @@ Ext.define('chw.controller.basic', {
                             localStorage.removeItem("basicAuthHeader");
                             Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
                             Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
-                            Ext.Msg.alert("Error", "Please try again")
+                            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
                         }
                     },
                     failure: function () {
@@ -310,7 +310,7 @@ Ext.define('chw.controller.basic', {
                         } else {
                             Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
                             Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
-                            Ext.Msg.alert("Error", "Please try again")
+                            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
                         }
                     }
                 })
@@ -361,7 +361,7 @@ Ext.define('chw.controller.basic', {
         if (arg==='add') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
         } else if (arg==='sync') {
-            Ext.Msg.confirm('','Sync all information?', function (resp) {
+            Ext.Msg.confirm('',Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.sync'), function (resp) {
                 if (resp==='yes') {}
             })
         } else if (arg==='inventory') {

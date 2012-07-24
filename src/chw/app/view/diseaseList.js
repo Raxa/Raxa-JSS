@@ -21,12 +21,12 @@ Ext.define('chw.view.diseaseList', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Disease List',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.diseaseList'),
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action: 'goback'
             }]
         }, {

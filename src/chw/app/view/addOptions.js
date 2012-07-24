@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//THIS FILE IS PROBABLY NOT USED. CONSIDER DELETING.
 Ext.define('chw.view.addOptions', {
     extend: 'Ext.Panel',
     requires: 'chw.view.userToolbar',

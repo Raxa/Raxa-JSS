@@ -22,12 +22,12 @@ Ext.define('chw.view.addPatient', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Add Patient',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newPatient'),
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action: 'goback'
             }]
         }, {
@@ -48,7 +48,7 @@ Ext.define('chw.view.addPatient', {
                     disabled: true
                 },{
                     xtype: 'textfield',
-                    label: 'Family',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.family'),
                     disabled: true,
                     required: true,
                     itemId: 'familyField',
@@ -59,14 +59,14 @@ Ext.define('chw.view.addPatient', {
                     }]
                 }, {
                     xtype: 'textfield',
-                    label: 'First',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.name'),
                     itemId: 'firstName',
                     placeHolder: 'Vikram',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
-                    label: 'Last',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.surname'),
                     itemId: 'lastName',
                     placeHolder: 'Rathore',
                     required: true,
@@ -82,14 +82,14 @@ Ext.define('chw.view.addPatient', {
                         xtype: 'radiofield',
                         name: 'radiogroup',
                         value: 'Female',
-                        label: 'Female',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.female'),
                         labelWidth: '70%',
                         flex: 1
                     }, {
                         xtype: 'radiofield',
                         name: 'radiogroup',
                         value: 'Male',
-                        label: 'Male',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.male'),
                         labelWidth: '70%',
                         flex: 1
                     }]
@@ -99,7 +99,7 @@ Ext.define('chw.view.addPatient', {
                     destroyPickerOnHide: true,
                     name: 'bday',
                     itemId: 'bday',
-                    label: 'Birthday',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.bday'),
                     required: true,
                     value: new Date(),
                     picker: {
@@ -108,7 +108,7 @@ Ext.define('chw.view.addPatient', {
                 }]
             }, {
                 xtype: 'button',
-                text: 'Select picture'
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.selectImage')
             }, {
                 xclass: 'chw.view.okCancel'
             }]

@@ -21,12 +21,12 @@ Ext.define('chw.view.visitDetails', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Visit Details',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.visitDetails'),
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action:'goback'
             }]
         }, {
