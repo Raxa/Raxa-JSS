@@ -24,8 +24,8 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'chw',
     controllers: ['basic'],
-    models: ['family', 'patient', 'illness', 'pill', 'patientIllness'],
-    stores: ['families', 'patients', 'illnesses', 'pills', 'patientsIllnesses'],
+    models: ['family', 'patient', 'illness', 'pill', 'patientIllness', 'resource'],
+    stores: ['families', 'patients', 'illnesses', 'pills', 'patientsIllnesses', 'resources'],
     views: [
         'loginScreen', 
         'familyList', 
@@ -47,7 +47,7 @@ Ext.application({
 Ext.require('Ext.i18n.Bundle', function(){
     Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
         bundle: 'RaxaEmrChw',
-        lang: 'en-US',
+        lang: 'hi-IN',
         path: 'app/view',
         noCache: true
     });

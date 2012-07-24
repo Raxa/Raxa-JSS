@@ -20,7 +20,7 @@ Ext.define('chw.view.loginScreen', {
     config: {
         items: [{
             xtype: 'titlebar',
-            title: 'CHW Module',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.chw'),
             // title: 'सामुदायिक स्वास्थ्य कार्यकर्ता',
             docked: 'top'
         }, {
@@ -46,12 +46,12 @@ Ext.define('chw.view.loginScreen', {
                 xtype: 'fieldset',
                 items: [{
                     xtype: 'textfield',
-                    label: 'Username',
-                    // label: 'नाम',
+//                    label: 'Username',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.username'),
                     itemId: 'usernameIID'
                 }, {
                     xtype: 'passwordfield',
-                    label: 'Password',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.password'),
                     // label: 'पासवर्ड',
                     itemId: 'passwordIID'
                 }]
