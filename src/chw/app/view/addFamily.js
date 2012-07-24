@@ -21,7 +21,7 @@ Ext.define('chw.view.addFamily', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Add Family',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newFamily'),
             docked: 'top',
             items: [{
                 xtype: 'button',
