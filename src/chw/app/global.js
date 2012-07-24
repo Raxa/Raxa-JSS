@@ -95,7 +95,7 @@ var helper = {
             pistore.onAfter('load', function () {
                 console.log(pistore)
                 Ext.getCmp('patientIllnessList').setStore(pistore);
-                Ext.getCmp('viewPort').setActiveitem(PAGES.patientDetails)
+                Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
             })
         } else if (list==='inventory') {
             Ext.getCmp('inventoryDetails').setHidden(false);
