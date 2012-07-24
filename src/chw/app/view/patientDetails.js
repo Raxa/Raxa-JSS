@@ -57,6 +57,11 @@ Ext.define('chw.view.patientDetails', {
                     },
                     items: [{
                         xtype: 'textfield',
+                        label: 'Patient Id',
+                        itemId: 'patientIdLabel'
+                            
+                    }, {
+                        xtype: 'textfield',
                         label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.name'),
                         placeHolder: 'First',
                         itemId: 'firstNameLabel'
@@ -87,11 +92,10 @@ Ext.define('chw.view.patientDetails', {
                 xtype: 'list',
                 ui: 'round',
                 pinHeaders: false,
-                id: 'familyMemberslist',
+                id: 'patientIllnessList',
                 width: '100%',
                 height: '80%',
                 centered: true,
-                indexBar: true,
                 itemTpl: [
                     '<div>{illnessName}</div>'
                 ].join('')
@@ -100,11 +104,12 @@ Ext.define('chw.view.patientDetails', {
 //                }
             }, {
                 xtype: 'container',
+                docked: 'bottom',
                 padding: '0px 60px 20px 60px',
                 items: [{
                     xtype: 'button',
                     text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newIllness'),
-                    itemId: 'illnessAdd'
+                    action: 'illnessAdd'
                 }]
             }]
         }]

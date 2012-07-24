@@ -37,6 +37,13 @@ Ext.define('chw.controller.basic', {
                     this.doOption(true);
                 }
             },
+            "button[action=illnessAdd]": {
+                tap: function () {
+                    var pid = Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].getValue();
+                    Ext.ComponentQuery.query('addIllness #patientIdField')[0].setValue(pid);
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.addIllness)
+                }
+            },
             "button[action=inventoryAdd]": {
                 tap: function () {
                     this.doInventory('add')
@@ -79,8 +86,8 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.loginScreen,
-            items: [{
+            activeItem: PAGES.patientDetails,
+            items: [{   
                 xclass: 'chw.view.loginScreen'
             }, {
                 xclass: 'chw.view.familyList'
@@ -183,7 +190,39 @@ Ext.define('chw.controller.basic', {
                     Ext.getCmp('ext-AddPatient-1').reset();
                     Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails);
                 }
-            } else if (step==='illness') {}
+            } else if (step==='illness') {
+                // TODO: get patient ID -- how do i pass this?
+                // get all information from form
+                var patientIdVal = Ext.ComponentQuery.query('addIllness #patientIdField')[0].getValue();
+                var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
+                var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
+                var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
+                var illnessTreatmentVal = Ext.ComponentQuery.query('addIllness #illnessTreatmentField')[0].getValue();
+                var illnessNotesVal = Ext.ComponentQuery.query('addIllness #illnessNotesField')[0].getValue();
+                // console.log(illnessNameVal,illnessStartVal,illnessEndVal,illnessTreatmentVal,illnessNotesVal)
+                if (illnessNameVal===''||illnessStartVal===''||illnessEndVal===''||illnessTreatmentVal===''||illnessNotesVal==='') {
+                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
+                } else {
+                    var piStore = Ext.getStore('patientsIllnesses');
+                    if (!piStore) {
+                        Ext.create('chw.store.patientIllnesses')
+                    }
+                    var piModel = Ext.create('chw.model.patientIllness', {
+                        patientId: patientIdVal,
+                        illnessId: illnessNameVal,
+                        illnessStartDate: illnessStartVal,
+                        illnessEndDate: illnessEndVal,
+                        illnessTreatment: illnessTreatmentVal,
+                        illnessNotes: illnessNotesVal
+                    });
+                    piStore.add(piModel);
+                    piStore.sync();
+                    // TODO: reset
+                    // console.log(Ext.getCmp('ext-addIllness-1'))
+                    // Ext.getCmp('ext-addIllness-1').reset();
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+                }
+            }
         }
     },
     doBack: function () {
@@ -356,7 +395,7 @@ Ext.define('chw.controller.basic', {
     doOption: function (arg) {
         if (arg) {
             var active = Ext.getCmp('viewPort').getActiveItem();
-            console.log(active.id);
+            // console.log(active.id);
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doLogin(arg);
             } else if (active.id==='ext-panel-5'){ //add a Family
@@ -367,7 +406,7 @@ Ext.define('chw.controller.basic', {
                 Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient);
             } else if (active.id==='ext-AddPatient-1'){ //Add a patient
                 this.doAdd('patient', arg);
-            } else if (active.id==='ext-AddIllness-1'){
+            } else if (active.id==='ext-addIllness-1'){
                 this.doAdd('illness', arg)
             }
         }

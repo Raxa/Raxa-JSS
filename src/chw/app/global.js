@@ -81,7 +81,22 @@ var helper = {
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(record.get('familyName'));
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
             Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(record.get('patientAge'));
-            Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+            Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].setValue(record.get('patientId'));
+            // Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+            
+            var pistore = Ext.getStore('patientsIllnesses');
+            if (!pistore) {
+                Ext.create('chw.store.patientsIllnesses')
+            }
+            var pid = record.get('patientId')
+            console.log(pid)
+            console.log(pistore)
+            pistore.filter('patientId',pid)
+            pistore.onAfter('load', function () {
+                console.log(pistore)
+                Ext.getCmp('patientIllnessList').setStore(pistore);
+                Ext.getCmp('viewPort').setActiveitem(PAGES.patientDetails)
+            })
         } else if (list==='inventory') {
             Ext.getCmp('inventoryDetails').setHidden(false);
             Ext.ComponentQuery.query('inventoryDetails #pillDescripLabel')[0].setValue(record.get('pillDescrip'));
