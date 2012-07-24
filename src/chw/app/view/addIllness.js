@@ -15,11 +15,12 @@
  */
 Ext.define('chw.view.addIllness', {
     extend: 'Ext.Panel',
-    alias: 'widget.AddIllness',
+    alias: 'widget.addIllness',
     requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
         ui: 'neutral',
+        scrollable: true,
         items: [{
             xtype: 'titlebar',
             title: 'Add Illness',
@@ -44,7 +45,7 @@ Ext.define('chw.view.addIllness', {
                     xtype: 'selectfield',
                     label: 'Type',
                     required: true,
-                    itemId: 'illnessTypeField',
+                    itemId: 'illnessNameField',
                     store: 'illnesses',
                     displayField: 'illnessName'
                 }, {
@@ -66,6 +67,16 @@ Ext.define('chw.view.addIllness', {
                     picker: {
                         yearFrom: 1900
                     }
+                }, {
+                    xtype: 'textareafield',
+                    itemId: 'illnessTreatmentField',
+                    label: 'Treatment',
+                    labelAlign: 'top'
+                }, {
+                    xtype: 'textareafield',
+                    itemId: 'illnessNotesField',
+                    label: 'Notes',
+                    labelAlign: 'top'
                 }]
             }, {
                 xclass: 'chw.view.okCancel'

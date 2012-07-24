@@ -187,7 +187,13 @@ Ext.define('chw.controller.basic', {
                     Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails);
                 }
             } else if (step==='illness') {
-                
+                /*/ get all information from form
+                var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getValue();
+                var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
+                var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
+                var illnessTreatmentVal = Ext.ComponentQuery.query('addIllness #illnessTreatmentField')[0].getValue();
+                var illnessNotesVal = Ext.ComponentQuery.query('addIllness #illnessNotesField')[0].getValue();
+                console.log(illnessNameVal,illnessStartVal,illnessEndVal,illnessTreatmentVal,illnessNotesVal)*/
             }
         }
     },
@@ -349,6 +355,8 @@ Ext.define('chw.controller.basic', {
         if (arg) {
             var active = Ext.getCmp('viewPort').getActiveItem();
             console.log(active.id);
+            console.log(active);
+            console.log('heree');
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doLogin(arg);
             } else if (active.id==='ext-panel-5'){ //add a Family
@@ -360,7 +368,8 @@ Ext.define('chw.controller.basic', {
             } else if (active.id==='ext-AddPatient-1'){ //Add a patient
                 this.doAdd('patient', arg);
             } else if (active.id==='ext-AddIllness-1'){
-                this.doAdd('illness', arg)
+                // this.doAdd('illness', arg)
+                console.log('here')
             }
         }
     }, 
