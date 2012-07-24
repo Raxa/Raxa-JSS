@@ -18,9 +18,7 @@ Ext.define('chw.view.resourceList', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [/*{
-            xclass: 'mUserStories.view.titlebar'
-        }, */{
+        items: [{
             xtype: 'titlebar',
             title: 'Resources',
             id: 'title_res',
