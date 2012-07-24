@@ -42,6 +42,10 @@ Ext.define('chw.view.addIllness', {
                     labelWidth: '35%'
                 },
                 items: [{
+                    xtype: 'textfield',
+                    label: 'Patient Id',
+                    itemId: 'patientIdField'
+                }, {
                     xtype: 'selectfield',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.type'),
                     required: true,

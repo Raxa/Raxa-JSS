@@ -39,6 +39,8 @@ Ext.define('chw.controller.basic', {
             },
             "button[action=illnessAdd]": {
                 tap: function () {
+                    var pid = Ext.ComponentQuery.query('patientDetails #patientIdLabel').getValue();
+                    Ext.ComponentQuery.query('addIllness #patientIdLabel').setValue(pid);
                     Ext.getCmp('viewPort').setActiveItem(PAGES.addIllness)
                 }
             },
@@ -189,6 +191,7 @@ Ext.define('chw.controller.basic', {
             } else if (step==='illness') {
                 // TODO: get patient ID -- how do i pass this?
                 // get all information from form
+                var patientIdVal = Ext.ComponentQuery.query('addIllness #patientIdField')[0].getValue();
                 var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
                 var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
                 var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
@@ -203,7 +206,7 @@ Ext.define('chw.controller.basic', {
                         Ext.create('chw.store.patientIllnesses')
                     }
                     var piModel = Ext.create('chw.model.patientIllness', {
-                        patientId: '',
+                        patientId: patientIdVal,
                         illnessId: illnessNameVal,
                         illnessStartDate: illnessStartVal,
                         illnessEndDate: illnessEndVal,

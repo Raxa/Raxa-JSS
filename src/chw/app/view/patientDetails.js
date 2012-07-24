@@ -56,9 +56,9 @@ Ext.define('chw.view.patientDetails', {
                         disabled: true
                     },
                     items: [{
-                            xtype: 'textfield',
-                            label: 'Patient Id',
-                            itemId: 'patientIdLabel'
+                        xtype: 'textfield',
+                        label: 'Patient Id',
+                        itemId: 'patientIdLabel'
                             
                     }, {
                         xtype: 'textfield',
