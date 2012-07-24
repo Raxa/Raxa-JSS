@@ -92,7 +92,7 @@ Ext.define('chw.view.patientDetails', {
                 xtype: 'list',
                 ui: 'round',
                 pinHeaders: false,
-                id: 'familyMemberslist',
+                id: 'patientIllnessList',
                 width: '100%',
                 height: '80%',
                 centered: true,
