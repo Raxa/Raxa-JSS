@@ -24,6 +24,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
+import org.openmrs.User;
+import org.openmrs.Provider;
+import org.openmrs.Person;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.raxa.module.raxacore.PatientList;
@@ -140,6 +143,8 @@ public class PatientListServiceImpl implements PatientListService {
 		EncounterType encType = null;
 		Date startDate = null;
 		Date endDate = null;
+		Provider provid = null;
+		String uuid = null;
 		//the return value can only choose encounters from this list (if not null)
 		List<Encounter> inListEncounters = null;
 		//the return value can not contain any patients from this list
@@ -165,12 +170,23 @@ public class PatientListServiceImpl implements PatientListService {
 				for (int k = 0; k < notInListUuids.length; k++) {
 					notInListPatients.addAll(getPatientsInPatientList(getPatientListByUuid(notInListUuids[k])));
 				}
+			} else if (queryFields[i].indexOf("provider=") != -1) {
+				uuid = queryFields[i].substring(9);
+				provid = Context.getProviderService().getProviderByUuid(uuid);
 			}
 		}
 		List<EncounterType> encTypes = new ArrayList<EncounterType>();
+		List<Provider> provids = new ArrayList<Provider>();
+		List<Encounter> encs = new ArrayList<Encounter>();
 		encTypes.add(encType);
-		List<Encounter> encs = Context.getEncounterService().getEncounters(null, null, startDate, endDate, null, encTypes,
-		    null, Boolean.FALSE);
+		provids.add(provid);
+		if (uuid != null) {
+			encs = Context.getEncounterService().getEncounters(null, null, startDate, endDate, null, encTypes, provids,
+			    null, null, Boolean.FALSE);
+		} else {
+			encs = Context.getEncounterService().getEncounters(null, null, startDate, endDate, null, encTypes, null, null,
+			    null, Boolean.FALSE);
+		}
 		if (inListEncounters != null) {
 			Iterator<Encounter> iter = encs.iterator();
 			//if encounter is not in inListEncounters, remove it

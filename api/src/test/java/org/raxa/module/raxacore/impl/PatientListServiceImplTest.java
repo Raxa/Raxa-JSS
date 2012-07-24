@@ -339,6 +339,22 @@ public class PatientListServiceImplTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
+	 * Test of GetEncountersInPatientList method, of class PatientListServiceImpl given provider uuid.
+	 */
+	@Test
+	public void testGetEncountersInPatientListShouldReturnEncountersOfRequiredProvider() {
+		PatientList p = new PatientList();
+		p.setCreator(new User());
+		p.setName("GetPatientsTestList");
+		p.setSearchQuery("?encounterType=61ae96f4-6afe-4351-b6f8-cd4fc383ctyr"
+		        + "&provider=3effc802-12dd-4539-87f6-4065ca8e992c");
+		List<Encounter> encs = s.getEncountersInPatientList(p);
+		//testing encounterType
+		
+		assertEquals(encs.size(), 1);
+	}
+	
+	/**
 	 * Test of getPatientsInPatientList method, of class PatientListServiceImpl.
 	 */
 	@Test
