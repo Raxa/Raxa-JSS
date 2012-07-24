@@ -22,12 +22,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.EncounterType;
 import org.openmrs.api.db.DAOException;
-import org.raxa.module.raxacore.DrugInventory;
+
 import org.raxa.module.raxacore.DrugPurchaseOrder;
 import org.raxa.module.raxacore.PatientList;
 import org.raxa.module.raxacore.db.DrugPurchaseOrderDAO;
 
 public class HibernateDrugPurchaseOrderDAO implements DrugPurchaseOrderDAO {
+	
+	protected final Log log = LogFactory.getLog(getClass());
 	
 	private SessionFactory sessionFactory;
 	

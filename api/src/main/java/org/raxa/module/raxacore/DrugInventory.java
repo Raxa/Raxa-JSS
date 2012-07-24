@@ -25,10 +25,6 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	
 	private Integer drugInventoryId;
 	
-	private String drugInventoryName;
-	
-	private String drugInventoryDescription;
-	
 	private Integer drugId;
 	
 	private Integer quantity;
@@ -67,22 +63,6 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	
 	public void setDrugInventoryId(Integer drugInventoryId) {
 		this.drugInventoryId = drugInventoryId;
-	}
-	
-	public String getDrugInventoryName() {
-		return drugInventoryName;
-	}
-	
-	public void setDrugInventoryName(String drugInventoryName) {
-		this.drugInventoryName = drugInventoryName;
-	}
-	
-	public String getDrugInventoryDescription() {
-		return drugInventoryDescription;
-	}
-	
-	public void setDrugInventoryDescription(String drugInventoryDescription) {
-		this.drugInventoryDescription = drugInventoryDescription;
 	}
 	
 	public Integer getDrugId() {
@@ -147,6 +127,7 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	
 	public void setLocationId(Integer locationId) {
 		this.locationId = locationId;
+		
 	}
 	
 	public Integer getDrugPurchaseOrderId() {

@@ -70,7 +70,7 @@
     
       
  	   
- 	     <changeSet id="2012-07-18_create_drug_purchase_order" author="Abhishek,Jatin,Praneet">
+ 	     <changeSet id="2012-07-24_create_drug_purchase_order" author="Abhishek,Jatin,Praneet">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="drug_purchase_order"/>
@@ -126,7 +126,7 @@
             </column>
         </createTable>
      </changeSet> 
- 	   <changeSet id="2012-07-18_add_constraints_to_drug_purchase_order" author="Abhishek,Jatin,Praneet">
+ 	   <changeSet id="2012-07-24_add_constraints_to_drug_purchase_order" author="Abhishek,Jatin,Praneet">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="drug_purchase_order"/>
         </preConditions>
@@ -137,16 +137,16 @@
           
         <addForeignKeyConstraint baseTableName="drug_purchase_order" 
                                  baseColumnNames="Provider" 
-                                 constraintName="FK_drug_purchase_order_Provider_provider_provider_id" 
-                                 referencedTableName="provider" 
+                                 constraintName="FK_drug_purchase_order_Provider_Provider_provider_id" 
+                                 referencedTableName="Provider" 
                                  referencedColumnNames="provider_id"/>
         
       
         
           <addForeignKeyConstraint baseTableName="drug_purchase_order" 
                                  baseColumnNames="Location" 
-                                 constraintName="FK_drug_purchase_order_Location_location_location_id" 
-                                 referencedTableName="location" 
+                                 constraintName="FK_drug_purchase_order_Location_Location_location_id" 
+                                 referencedTableName="Location" 
                                  referencedColumnNames="location_id"/>
           
           
@@ -178,15 +178,11 @@
  	   
  	   
  	   
-    
-    
-    
-    
-    
-    
-    
-    
-     <changeSet id="2012-07-18_create_drug_inventory_resource" author="Abhishek,Jatin,Praneet">
+ 	   
+ 	   
+ 	   
+ 	    
+     <changeSet id="2012-07-26_create_drug_inventory_resource" author="Abhishek,Jatin,Praneet">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="drug_inventory_resource"/>
@@ -257,7 +253,7 @@
             </column>
         </createTable>
      </changeSet> 
- 	   <changeSet id="2012-07-18_add_constraints_to_drug_inventory_resource" author="Abhishek,Jatin,Praneet">
+ 	   <changeSet id="2012-07-26_add_constraints_to_drug_inventory_resource" author="Abhishek,Jatin,Praneet">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="drug_inventory_resource"/>
         </preConditions>
@@ -331,7 +327,8 @@
  	   
     
     
- 	
+ 	   
+    
  	   
  	   
 </databaseChangeLog>

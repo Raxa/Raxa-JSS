@@ -39,23 +39,23 @@ public class DrugPurchaseOrder extends BaseOpenmrsMetadata implements Serializab
 	
 	public Integer getId() {
 		// TODO Auto-generated method stub
-		return getDrugPurchaseOrder();
+		return getDrugPurchaseOrderId();
 	}
 	
 	public void setId(Integer arg0) {
-		setDrugPurchaseOrder(arg0);
+		setDrugPurchaseOrderId(arg0);
 		
 	}
 	
-	public Integer getDrugPurchaseOrder() {
+	public Integer getDrugPurchaseOrderId() {
 		return drugPurchaseOrderId;
 	}
 	
-	public void setDrugPurchaseOrder(Integer drugPurchaseOrderId) {
+	public void setDrugPurchaseOrderId(Integer drugPurchaseOrderId) {
 		this.drugPurchaseOrderId = drugPurchaseOrderId;
 	}
 	
-	public boolean getReceived() {
+	public boolean isReceived() {
 		return received;
 	}
 	

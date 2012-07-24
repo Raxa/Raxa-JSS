@@ -44,6 +44,7 @@ public class HibernatePatientListDAO implements PatientListDAO {
 	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+		
 	}
 	
 	/**

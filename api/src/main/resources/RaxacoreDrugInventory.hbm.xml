@@ -10,17 +10,17 @@
         <id name="drugInventoryId" column="DI_id" >
             <generator class="native"/>
         </id>
-        <property name="drugInventoryName"           type="java.lang.String"     column="DI_name" length="255"/>
-        <property name="drugInventoryDescription"    type="java.lang.String"     column="DI_description" length="2000"/>
-        <many-to-one name="drugId"    type="java.lang.Integer"     column="Drug_ID" not-null="true"/>
+        <property name="name"           type="java.lang.String"     column="DI_name" length="255"/>
+        <property name="description"    type="java.lang.String"     column="DI_description" length="2000"/>
+        <many-to-one name="drugId"    class="org.openmrs.Drug"     column="Drug_ID" not-null="true"/>
         <property name="quantity"    type="java.lang.Integer"     column="Quantity" not-null="true"/>
         <property name="expiryDate"    type="java.util.Date"     column="Expiry_date" not-null="true"/>
         <property name="batch"    type="java.lang.String"     column="Batch" length="250"/>
         <property name="value"    type="java.lang.Integer"     column="Value" not-null="true" />
         <property name="status"    type="java.lang.String"     column="Status" length="250"/>
-        <many-to-one name="providerId"    type="java.lang.Integer"     column="Provider" not-null="true"/>
-        <many-to-one name="locationId"    type="java.lang.Integer"     column="Location" not-null="true"/>
-        <many-to-one name="drugPurchaseOrderId"    type="java.lang.Integer"     column="Drug_PO" not-null="true"/>
+        <many-to-one name="providerId"    class="org.openmrs.Provider"     column="Provider" not-null="true"/>
+        <many-to-one name="locationId"    class="org.openmrs.Location"     column="Location" not-null="true"/>
+        <many-to-one name="drugPurchaseOrderId"    class="org.raxa.module.raxacore.DrugPurchaseOrder"     column="Drug_PO" not-null="true"/>
         <property name="uuid"           type="java.lang.String"     column="uuid" length="38" not-null="true" unique="true"/>
         <many-to-one name="creator"     class="org.openmrs.User"    column="creator" not-null="true"/>
         <property name="dateCreated"    type="java.util.Date"       column="date_created" not-null="true" length="19"/>

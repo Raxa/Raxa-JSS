@@ -29,14 +29,19 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.raxa.module.raxacore.DrugPurchaseOrder;
 import org.raxa.module.raxacore.DrugPurchaseOrderService;
-import org.raxa.module.raxacore.db.DrugInventoryDAO;
 import org.raxa.module.raxacore.db.DrugPurchaseOrderDAO;
+import org.raxa.module.raxacore.db.PatientListDAO;
 
 public class DrugPurchaseOrderServiceImpl implements DrugPurchaseOrderService {
 	
 	private DrugPurchaseOrderDAO dao;
 	
 	private Log log = LogFactory.getLog(this.getClass());
+	
+	public void setDrugPurchaseOrderDAO(DrugPurchaseOrderDAO dao) {
+		this.dao = dao;
+		
+	}
 	
 	public void onShutdown() {
 		

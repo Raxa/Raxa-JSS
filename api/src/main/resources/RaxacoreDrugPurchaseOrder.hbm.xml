@@ -10,13 +10,14 @@
         <id name="drugPurchaseOrderId" column="PO_id" >
             <generator class="native"/>
         </id>
+        
         <property name="name"           type="java.lang.String"     column="PO_name" length="255"/>
         <property name="description"    type="java.lang.String"     column="PO_description" length="2000"/>
         
         <property name="received"           type="java.lang.Boolean"     column="Received" length="255"/>     
-        <many-to-one name="providerId"    type="java.lang.Integer"     column="Provider" not-null="true"/>
-        <many-to-one name="locationId"    type="java.lang.Integer"     column="Location" not-null="true"/>
-        <many-to-one name="drugPurchaseOrderDate"    type="java.util.Date"     column="PO_Date" not-null="true" insert="false" />
+        <many-to-one name="providerId"    class="org.openmrs.Provider"    column="Provider" not-null="true"/>
+        <many-to-one name="locationId"    class="org.openmrs.Location"     column="Location" not-null="true"/>
+        <property name="drugPurchaseOrderDate"  type="java.util.Date"     column="PO_Date" not-null="true" insert="false" />
         <property name="uuid"           type="java.lang.String"     column="uuid" length="38" not-null="true" unique="true"/>
         <many-to-one name="creator"     class="org.openmrs.User"    column="creator" not-null="true"/>
         <property name="dateCreated"    type="java.util.Date"       column="date_created" not-null="true" length="19"/>

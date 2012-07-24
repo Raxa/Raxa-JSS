@@ -30,12 +30,18 @@ import org.openmrs.api.context.Context;
 import org.raxa.module.raxacore.DrugInventory;
 import org.raxa.module.raxacore.DrugInventoryService;
 import org.raxa.module.raxacore.db.DrugInventoryDAO;
+import org.raxa.module.raxacore.db.DrugPurchaseOrderDAO;
 
 public class DrugInventoryServiceImpl implements DrugInventoryService {
 	
 	private DrugInventoryDAO dao;
 	
 	private Log log = LogFactory.getLog(this.getClass());
+	
+	public void setDrugInventoryDAO(DrugInventoryDAO dao) {
+		this.dao = dao;
+		
+	}
 	
 	@Override
 	public void onShutdown() {

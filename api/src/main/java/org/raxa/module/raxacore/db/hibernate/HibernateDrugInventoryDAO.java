@@ -29,6 +29,8 @@ import org.raxa.module.raxacore.db.PatientListDAO;
 
 public class HibernateDrugInventoryDAO implements DrugInventoryDAO {
 	
+	protected final Log log = LogFactory.getLog(getClass());
+	
 	private SessionFactory sessionFactory;
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {

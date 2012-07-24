@@ -24,6 +24,16 @@
     <bean id="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO" class="org.raxa.module.raxacore.db.hibernate.HibernatePatientListDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+     <bean id="org.raxa.module.raxacore.db.hibernate.HibernateDrugInventoryDAO" class="org.raxa.module.raxacore.db.hibernate.HibernateDrugInventoryDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    
+     <bean id="org.raxa.module.raxacore.db.hibernate.HibernateDrugPurchaseOrderDAO" class="org.raxa.module.raxacore.db.hibernate.HibernateDrugPurchaseOrderDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+     
 
     <bean parent="serviceContext">
         <property name="moduleService">
@@ -54,4 +64,79 @@
             </list>
         </property>
     </bean>
+    
+    
+   
+    
+    <!--third service bean for DrugPurchaseOrder -->
+    
+    
+    
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.raxa.module.raxacore.DrugPurchaseOrderService</value>
+                <bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+                    <property name="transactionManager">
+                        <ref bean="transactionManager"/>
+                    </property>
+                    <property name="target">
+                        <bean class="org.raxa.module.raxacore.impl.DrugPurchaseOrderServiceImpl"> 
+                            <property name="DrugPurchaseOrderDAO"> 
+                                <bean class="org.raxa.module.raxacore.db.hibernate.HibernateDrugPurchaseOrderDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory"/>
+                                    </property>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="preInterceptors">
+                        <ref bean="serviceInterceptors" />
+                    </property>
+                    <property name="transactionAttributeSource">
+                        <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    
+    
+     <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.raxa.module.raxacore.DrugInventoryService</value>
+                <bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+                    <property name="transactionManager">
+                        <ref bean="transactionManager"/>
+                    </property>
+                    <property name="target">
+                        <bean class="org.raxa.module.raxacore.impl.DrugInventoryServiceImpl"> 
+                            <property name="DrugInventoryDAO"> 
+                                <bean class="org.raxa.module.raxacore.db.hibernate.HibernateDrugInventoryDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory"/>
+                                    </property>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="preInterceptors">
+                        <ref bean="serviceInterceptors" />
+                    </property>
+                    <property name="transactionAttributeSource">
+                        <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    
+    
+    
+    
+    
 </beans>
