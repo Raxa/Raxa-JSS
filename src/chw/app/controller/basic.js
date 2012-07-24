@@ -37,6 +37,11 @@ Ext.define('chw.controller.basic', {
                     this.doOption(true);
                 }
             },
+            "button[action=illnessAdd]": {
+                tap: function () {
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.addIllness)
+                }
+            },
             "button[action=inventoryAdd]": {
                 tap: function () {
                     this.doInventory('add')
@@ -79,8 +84,8 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.loginScreen,
-            items: [{
+            activeItem: PAGES.patientDetails,
+            items: [{   
                 xclass: 'chw.view.loginScreen'
             }, {
                 xclass: 'chw.view.familyList'
@@ -181,7 +186,9 @@ Ext.define('chw.controller.basic', {
                     Ext.getCmp('ext-AddPatient-1').reset();
                     Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails);
                 }
-            } else if (step==='illness') {}
+            } else if (step==='illness') {
+                
+            }
         }
     },
     doBack: function () {

@@ -90,7 +90,6 @@ Ext.define('chw.view.patientDetails', {
                 width: '100%',
                 height: '80%',
                 centered: true,
-                indexBar: true,
                 itemTpl: [
                     '<div>{illnessName}</div>'
                 ].join('')
@@ -99,11 +98,12 @@ Ext.define('chw.view.patientDetails', {
 //                }
             }, {
                 xtype: 'container',
+                docked: 'bottom',
                 padding: '0px 60px 20px 60px',
                 items: [{
                     xtype: 'button',
                     text: 'Add an Illness',
-                    itemId: 'illnessAdd'
+                    action: 'illnessAdd'
                 }]
             }]
         }]
