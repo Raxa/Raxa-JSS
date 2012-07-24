@@ -27,7 +27,7 @@ Ext.define('chw.view.familyDetails', {
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action: 'goback'
             }]
         }, {
@@ -35,7 +35,7 @@ Ext.define('chw.view.familyDetails', {
             height: '100%',
             width: '100%',
             scrollable: true,
-            title: 'Summary',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.summary'),
             layout:{
                 type:'vbox'
             },
@@ -51,40 +51,40 @@ Ext.define('chw.view.familyDetails', {
                 items: [{
                     xtype: 'fieldset',
                     itemId: 'familyDescripLabel',
-                    title: 'Family Description',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.familyDescription'),
                     defaults: {
                         labelWidth: '35%',
                         disabled: true
                     },
                     items: [{
                         xtype: 'textfield',
-                        label: 'Family ID',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.familyID'),
                         itemId: 'familyIdLabel'
                     }, {
                         xtype: 'textfield',
                         itemId: 'familyAddressLabel',
-                        label: 'Address',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.address'),
                         placeHolder: 'Hogwarts'
                     }, {
                         xtype: 'textfield',
-                        label: 'Child/total',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.childTotal'),
                         placeHolder: '2/4'
                     }, {
                         xtype: 'textfield',
-                        label: 'Last Visit',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.lastVisit'),
                         placeHolder: '12/7/2012'
                     }]
                 }]
             }, {
                 xtype: 'button',
-                text: 'Start Visit',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.startCheckup'),
                 ui: 'confirm-round'
             }, {
                 xtype: 'label',
                 html: ' <br><br>'
             }]
         }, {
-            title: 'Members',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.members'),
             xtype: 'container',
             items: [{
                 title: 'Family Members',
@@ -115,7 +115,7 @@ Ext.define('chw.view.familyDetails', {
                 padding: '0px 80px 20px 80px',
                 items: [{
                     xtype: 'button',
-                    text: 'Patient',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newPatient'),
                     action: 'goToAddPatient',
                     iconMask: true,
                     iconCls: 'user_add'
@@ -132,7 +132,7 @@ Ext.define('chw.view.familyDetails', {
             layout: {
                 type: 'fit'
             },
-            title: 'Map',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.map'),
             items: [{
                 xtype: 'map',
                 height: '100%'

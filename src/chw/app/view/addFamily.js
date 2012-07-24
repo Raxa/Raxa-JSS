@@ -27,7 +27,7 @@ Ext.define('chw.view.addFamily', {
                 xtype: 'button',
                 action: 'goback',
                 ui: 'back',
-                text: 'Back'
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back')
             }]
         }, {
             xclass: 'chw.view.userToolbar'
@@ -42,28 +42,28 @@ Ext.define('chw.view.addFamily', {
                 items: [{
                     xtype: 'textfield',
                     id:'familyName',
-                    label: 'Family Name',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.family'),
                     placeHolder: 'Goel',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
                     id:'address',
-                    label: 'Address',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.address'),
                     placeHolder: 'Goel House',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
                     id:'description',
-                    label: 'Description',
-                    placeHolder: 'Many cows',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.description'),
+                    placeHolder: 'Near Temple',
                     required: true,
                     clearIcon: true
                 }]
             }, {
                 xtype: 'button',
-                text: 'Select picture'
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.selectImage')
             }, {
                 xclass: 'chw.view.okCancel'
             }]

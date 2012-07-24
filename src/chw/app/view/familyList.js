@@ -73,7 +73,7 @@ Ext.define('chw.view.familyList', {
                     '</div>',
                     '<div>&nbsp&nbsp{illnessName}</div>'
                 ].join(''),
-                emptyText: '<center><br>No illnesses recorded<br></center>',
+                emptyText: '<center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noIllness')+'<br></center>',
                 onItemDisclosure: function (record) {
                     helper.listDisclose('illness', record)
                 }

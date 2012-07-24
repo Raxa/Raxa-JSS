@@ -23,12 +23,12 @@ Ext.define('chw.view.addIllness', {
         scrollable: true,
         items: [{
             xtype: 'titlebar',
-            title: 'Add Illness',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newIllness'),
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action: 'goback'
             }]
         }, {
@@ -43,7 +43,7 @@ Ext.define('chw.view.addIllness', {
                 },
                 items: [{
                     xtype: 'selectfield',
-                    label: 'Type',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.type'),
                     required: true,
                     itemId: 'illnessNameField',
                     store: 'illnesses',
@@ -52,7 +52,7 @@ Ext.define('chw.view.addIllness', {
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
                     itemId: 'illnessStartDate',
-                    label: 'Start',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.startDate'),
                     required: true,
                     value: new Date(),
                     picker: {
@@ -62,7 +62,7 @@ Ext.define('chw.view.addIllness', {
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
                     itemId: 'illnessEndDate',
-                    label: 'End',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.endDate'),
                     value: new Date(),
                     picker: {
                         yearFrom: 1900

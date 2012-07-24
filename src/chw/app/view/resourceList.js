@@ -20,13 +20,13 @@ Ext.define('chw.view.resourceList', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Resources',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.resources'),
             id: 'title_res',
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
                 action: 'goback'
             }]
         }, {
@@ -42,7 +42,7 @@ Ext.define('chw.view.resourceList', {
             pinHeaders: false,
             store: 'resources',
             loadingText: 'Loading List...',
-            emptyText: '</pre><div class="notes-list-empty-text"><center><br>No resources found.<br></center></div><pre>',
+            emptyText: '</pre><div class="notes-list-empty-text"><center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noResources')+'<br></center></div><pre>',
             onItemDisclosure: function (record) {
                 helper.listDisclose('resources',record);
             },

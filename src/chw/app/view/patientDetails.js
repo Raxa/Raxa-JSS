@@ -22,18 +22,18 @@ Ext.define('chw.view.patientDetails', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Patient Details',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.patientDetails'),
             docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
                 action: 'goback',
-                text: 'Back'
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back')
             }]
         }, {
             xclass: 'chw.view.userToolbar'
         }, {
-            title: 'Basic',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.basic'),
             xtype: 'container',
             height: '100%',
             width: '100%',
@@ -50,39 +50,45 @@ Ext.define('chw.view.patientDetails', {
                 padding: '10px',
                 items: [{
                     xtype: 'fieldset',
-                    title: 'Basic details',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.basicDetails'),
                     defaults: {
                         labelWidth: '35%',
                         disabled: true
                     },
                     items: [{
+                            xtype: 'textfield',
+                            label: 'Patient Id',
+                            itemId: 'patientIdLabel'
+                            
+                    }, {
                         xtype: 'textfield',
-                        label: 'First',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.name'),
                         placeHolder: 'First',
                         itemId: 'firstNameLabel'
                     }, {
                         xtype: 'textfield',
-                        label: 'Last',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.surname'),
                         placeHolder: 'Last',
                         itemId: 'familyNameLabel'
                     }, {
                         xtype: 'textfield',
-                        label: 'Gender',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.gender'),
                         placeHolder: 'Gender',
                         itemId: 'patientGenderLabel'
                     }, {
+                        //TODO: Change from Age to Bday
                         xtype: 'textfield',
-                        label: 'Age',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.age'),
                         placeHolder: 'Age',
                         itemId: 'patientAgeLabel'
                     }]
                 }]
             }]
         }, {
-            title: 'History',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.history'),
             cls: 'demo-list',
             items: [{
-                title: 'Family Members',
+                title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.members'),
                 xtype: 'list',
                 ui: 'round',
                 pinHeaders: false,
@@ -102,7 +108,7 @@ Ext.define('chw.view.patientDetails', {
                 padding: '0px 60px 20px 60px',
                 items: [{
                     xtype: 'button',
-                    text: 'Add an Illness',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newIllness'),
                     action: 'illnessAdd'
                 }]
             }]

@@ -78,6 +78,7 @@ var helper = {
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(record.get('familyName'));
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
             Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(record.get('patientAge'));
+            Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].setValue(record.get('patientId'));
             Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
         } else if (list==='inventory') {
             Ext.getCmp('inventoryDetails').setHidden(false);

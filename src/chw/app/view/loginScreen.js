@@ -21,7 +21,6 @@ Ext.define('chw.view.loginScreen', {
         items: [{
             xtype: 'titlebar',
             title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.chw'),
-            // title: 'सामुदायिक स्वास्थ्य कार्यकर्ता',
             docked: 'top'
         }, {
             xtype: 'container',
@@ -39,20 +38,16 @@ Ext.define('chw.view.loginScreen', {
                 items: [{
                     xtype: 'label',
                     html: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label')
-                    // html: 'कृपया लॉगिन'
-                    
                 }]
             }, {
                 xtype: 'fieldset',
                 items: [{
                     xtype: 'textfield',
-//                    label: 'Username',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.username'),
                     itemId: 'usernameIID'
                 }, {
                     xtype: 'passwordfield',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.password'),
-                    // label: 'पासवर्ड',
                     itemId: 'passwordIID'
                 }]
             }, {
