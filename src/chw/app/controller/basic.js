@@ -15,136 +15,76 @@
  */
 Ext.define('mUserStories.controller.basic', {
     extend: 'Ext.app.Controller',
-    controllers: ['basic'],
-    views: ['loginScreen', 'confirmLocation', 'patientList', 'patientDetails', 'vcNotifications', 'vcScheduling'],
     config: {
-        refs: {
-            add_app: '#add_app',
-            add_reg: '#add_reg',
-            add_rem: '#add_rem',
-            back_add: '#back_add',
-            back_add_app: '#back_add_app',
-            back_add_reg: '#back_add_reg',
-            back_add_rem: '#back_add_rem',
-            back_det: '#back_det',
-            back_inb: '#back_inb',
-            back_res: '#back_res',
-            cancelButton: '#cancelButton',
-            downButton: '#downButton',
-            inboxButton: '#inboxButton',
-            logoutButton: '#logoutButton',
-            logoutButton_vc: '#logoutButton_vc',
-            menuButton: '#menuButton',
-            notButton: '#notButton',
-            okButton: '#okButton',
-            resourcesButton: '#resourcesButton',
-            schButton: '#schButton',
-            upButton: '#upButton'
-        },
         control: {
-            add_app: {
+            "button[action=add_app]": {
                 tap: function () {
                     this.doAdd('app', true)
                 }
             },
-            add_reg: {
+            "button[action=add_reg]": {
                 tap: function () {
                     this.doAdd('reg', true)
                 }
             },
-            add_rem: {
+            "button[action=add_rem]": {
                 tap: function () {
                     this.doAdd('rem', true)
                 }
             },
-            back_add: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_add_app: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_add_reg: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_add_rem: {
-                tap: function () {
-                    this.doBack('add')
-                }
-            },
-            back_det: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_inb: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            back_res: {
-                tap: function () {
-                    this.doBack('list')
-                }
-            },
-            cancelButton: {
+            "button[action=cancel]": {
                 tap: function () {
                     this.doOption(false)
                 }
             },
-            downButton: {
+            "button[action=syncButton]": {
                 tap: function () {
-                    this.doToolbar('down')
+                    this.doToolbar('sync')
                 }
             },
-            inboxButton: {
+            "button[action=inboxButton]": {
                 tap: function () {
                     this.doToolbar('inbox')
                 }
             },
-            logoutButton: {
+            "button[action=locButton]" :{
+                tap: function () {
+                    this.doLocation()
+                }
+            },
+            "button[action=logoutButton]": {
                 tap: function () {
                     this.doExit()
                 }
             },
-            logoutButton_vc: {
+            "button[action=logoutButton_vc]": {
                 tap: function () {
                     this.doExit()
                 }
             },
-            menuButton: {
+            "button[action=menuButton]": {
                 tap: function () {
                     this.doToolbar('menu')
                 }
             },
-            notButton: {
+            "button[action=notButton]": {
                 tap: function () {
                     this.doToolbar('not')
                 }
             },
-            okButton: {
+            "button[action=okButton]": {
                 tap: function () {
                     this.doOption(true)
                 }
             },
-            resourcesButton: {
+            "button[action=resourcesButton]": {
                 tap: function () {
                     this.doToolbar('resources')
                 }
             },
-            schButton: {
+            "button[action=schButton]": {
                 tap: function () {
                     this.doToolbar('sch')
-                }
-            },
-            upButton: {
-                tap: function () {
-                    this.doToolbar('up')
                 }
             }
         }
@@ -155,19 +95,12 @@ Ext.define('mUserStories.controller.basic', {
             fullscreen: true,
             layout: 'card',
             items: [{
-                // log into application
                 xclass: 'mUserStories.view.loginScreen'
             }, {
-                // daily checkin
-                xclass: 'mUserStories.view.confirmLocation'
-            }, {
-                // display a list of patients
                 xclass: 'mUserStories.view.patientList'
             }, {
-                // display details of patient
                 xclass: 'mUserStories.view.patientDetails'
             }, {
-                // display options for adding
                 xclass: 'mUserStories.view.addOptions'
             }, {
                 xclass: 'mUserStories.view.addPatient'
@@ -176,10 +109,13 @@ Ext.define('mUserStories.controller.basic', {
             }, {
                 xclass: 'mUserStories.view.addAppointment'
             }, {
-                // display inbox/outbox
                 xclass: 'mUserStories.view.notificationInbox'
             }, {
+                xclass: 'mUserStories.view.mapPanel'
+            }, {
                 xclass: 'mUserStories.view.resources'
+            }, {
+                xclass: 'mUserStories.view.resourceDetail'
             }, {
                 xclass: 'mUserStories.view.vcNotifications'
             }, {
@@ -187,32 +123,44 @@ Ext.define('mUserStories.controller.basic', {
             }]
         })
     },
-    /* SCREEN FUNCTIONS */
+    addMarker: function (lat,log) {
+        // TODO: wait how does this work?
+        var latLng = new google.maps.LatLng(lat, log);
+        var marker = new google.maps.Marker({
+            map: Ext.getCmp('mapValue').map,
+            position: latLng
+        });
+        // google.maps.event.addListener(marker, "click", function () {})
+    },
     // add registrations and reminders
     // TODO: should we add more functionality? ex. place order for sample
     doAdd: function (step, arg) {
         if (arg) {
             if (step === 'app') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_APP)
+                this.toPage(PAGES.ADD_APPOINTMENT)
             } else if (step === 'reg') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REG)
+                this.toPage(PAGES.ADD_REGISTER)
             } else if (step === 'rem') {
-                Ext.getCmp('viewPort').setActiveItem(PAGES.ADD_REM)
+                this.toPage(PAGES.ADD_REMINDER)
             } else if (step === 'register') {
                 var fname = Ext.getCmp('first_reg').getValue();
                 var lname = Ext.getCmp('last_reg').getValue();
                 var phone = Ext.getCmp('phone_reg').getValue();
                 var village = Ext.getCmp('village_reg').getValue();
-                // var radioform = Ext.getCmp('radiogroup');
-                // var gender = radioform.getValues().radiogroup.charAt(0);
-                var gender = 'Male';
+                var radioform = Ext.getCmp('ext-formpanel-4').saveForm();
+                var gender = radioform.radiogroup.charAt(0);
                 var bday = Ext.getCmp('bday').getValue();
 
                 if (fname == '' || lname == '' || phone == '' || village == '' || gender == '' || bday == '') {
                     Ext.Msg.alert("Error", "Please fill in all fields")
                 } else {
-                    var up_store = Ext.create('mUserStories.store.upPersonStore');
-                    var up_Model = Ext.create('mUserStories.model.upPersonModel', {
+                    
+                    var offlineStore = Ext.getStore('offlineRegisterStore');
+                    if(!offlineStore){
+                        offlineStore = Ext.create('mUserStories.store.offlineRegisterStore')
+                    }
+                    
+                    var up_Model = Ext.create('mUserStories.model.postPerson',{
                         names: [{
                             givenName: fname,
                             familyName: lname
@@ -223,15 +171,15 @@ Ext.define('mUserStories.controller.basic', {
                             cityVillage: village
                         }]
                     });
-                    //Adding registration details into local storage (a store)
-                    up_store.add(up_Model);
-                    //REST call for creating a Person
-                    up_store.sync();
-                    up_store.on('write', function () {
-                        console.log('Stored locally, calling identifier type');
-                        // Now that Person is created, send request to create Patient
-                        this.getidentifierstype(up_store.getAt(0).getData().uuid)
-                    }, this)
+                    offlineStore.add(up_Model);
+                    offlineStore.sync();
+                    
+                    console.log('stored offline');
+                    
+                    Ext.getCmp('ext-formpanel-4').reset();
+                    this.doDownload();
+                    this.toPage(PAGES.PATIENT_LIST)
+                // Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST.value)    
                 }
             } else if (step === 'reminder') {
             // TODO: validate all fields
@@ -240,86 +188,19 @@ Ext.define('mUserStories.controller.basic', {
         } else {
             // TODO: doReturn()
             this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+            this.toPage(PAGES.PATIENT_LIST)
         }
     },
-    // allow chw to check in
-    doLocation: function (arg) {
-        if (arg) {
-            // TODO: generate close locations based on USER
-            LOCATION = Ext.getCmp('location').getValue();
-            if (LOCATION === 'empty') {
-                Ext.Msg.alert("", 'Please fill in the form')
-            } else {
-                if (LOCATION === "otherlocation") {
-                    Ext.Msg.prompt("", "Please enter other location:", function (btn, text) {
-                        if (btn === 'ok') {
-                            LOCATION = text;
-                        }
-                    })
-                }
-                // TODO: pass LOCATION & CURR_DATE to manager
-                // download all data into local storage
-                this.doDownload();
-                // continue to the next screen
-                Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
-            }
+    /*/ deal with backbutton
+    doBack: function () {
+        // TODO: Fix this with the Titlebar
+        var active = Ext.getCmp('viewPort').getActiveItem();
+        if (active.id === 'ext-formpanel-5' || active === 'ext-panel-6' || active === 'ext-panel-7') {
+            this.toPage(PAGES.ADD)
         } else {
-            // exit the program
-            this.doExit();
+            this.toPage(PAGES.PATIENT_LIST)
         }
-    },
-    // login to the application
-    doLogin: function (arg) {
-        if (arg) {
-            // store items
-            USER.name = Ext.getCmp('username').getValue();
-            var pass = Ext.getCmp('password').getValue();
-            if (USER.name === '' || pass === '') {
-                Ext.Msg.alert("Error", "Please fill in all fields")
-            } else {
-                this.saveBasicAuthHeader(USER.name,pass);
-            }
-        } else {
-            // exit the program
-            this.doExit();
-        }
-    },
-    // manage navigation based on lower toolbar
-    doToolbar: function (arg) {
-        if (arg === 'menu') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
-        } else if (arg === 'down') {
-            Ext.Msg.confirm('', 'Sync all information?', function (resp) {
-                if (resp === 'yes') {
-                    // TODO: check for conflicts
-                    // doDownload information in localStorage
-                    this.doDownload();
-                // doUpload all information
-                }
-            },this)
-        } else if (arg === 'inbox') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_CHW)
-        } else if (arg === 'resources') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.RESOURCES)
-        } else if (arg === 'not') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
-        } else if (arg === 'sch') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.SCHEDULING)
-        }
-    },
-    /* HELPER FUNCTIONS */
-    // deal with backbutton
-    doBack: function (arg) {
-        // TODO: Best logic for returning to previous page - doReturn()
-        // Hard coded in? Create a list of visited pages?
-        if (arg === 'list') {
-            this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
-        } else if (arg === 'add') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.ADD)
-        }
-    },
+    },*/
     // Download patient with details
     doDownload: function () {
         //Initially assuming we are connected
@@ -357,9 +238,6 @@ Ext.define('mUserStories.controller.basic', {
                 Ext.getCmp('patientlistid').setStore(offlineStore);
             }
         },this)
-        
-       
-        
     // TODO: set patientcurrid to be subset of above organized by appt time
     // Do we need a separate store for this?
     },
@@ -367,19 +245,45 @@ Ext.define('mUserStories.controller.basic', {
     doExit: function () {
         // TODO: make sure all information is uploaded
         // TODO: delete/save necessary information
-        Ext.getCmp('location').reset();
+        // Ext.getCmp('location').reset();
         // return to login screen
-        Ext.getCmp('viewPort').setActiveItem(PAGES.LOGIN_SCREEN)
+        USER.name = '';
+        USER.uuid = '';
+        this.toPage(PAGES.LOGIN_SCREEN)
+    },
+    doLocation: function () {
+        var coords = Ext.getCmp('mapValue').getGeo();
+        CURR_LOC.LAT = coords.getLatitude();
+        CURR_LOC.LOG = coords.getLongitude();
+        Ext.Msg.alert("Location",CURR_LOC.LAT + ', ' + CURR_LOC.LOG);
+        this.addMarker(CURR_LOC.LAT, CURR_LOC.LOG);
+        this.toPage(PAGES.LOCATION);
+    },
+    // login to the application
+    doLogin: function (arg) {
+        if (arg) {
+            // store items
+            var UsernameRef = Ext.ComponentQuery.query('LoginScreen #usernameIID');
+            var PasswordRef = Ext.ComponentQuery.query('LoginScreen #passwordIID');
+            USER.name = UsernameRef[1].getValue();
+            var pass = PasswordRef[1].getValue();
+            if (USER.name === '' || pass === '') {
+                Ext.Msg.alert("Error", "Please fill in all fields")
+            } else {
+                this.getUserInformation(USER.name);
+                this.saveBasicAuthHeader(USER.name,pass);
+            }
+        } else {
+            // exit the program
+            this.doExit();
+        }
     },
     // distinguish between ok and cancel
     doOption: function (arg) {
         var active = Ext.getCmp('viewPort').getActiveItem();
-        console.log(active);
-        console.log(active.id);
-        // console.log(Ext.getCmp('viewPort').getActiveItem().getActiveIndex());
-        if (active.getActiveItem() === PAGES.LOGIN_SCREEN) {
+        if (active.getActiveItem() === PAGES.LOGIN_SCREEN.value) {
             this.doLogin(arg)
-        } else if (active.id === 'ext-panel-5') {
+        } else if (active.id === 'ext-formpanel-4') {
             this.doAdd('register',arg)
         } else if (active === 'ext-panel-6') {
             this.doAdd('reminder',arg)
@@ -387,8 +291,53 @@ Ext.define('mUserStories.controller.basic', {
             this.doAdd('appointment',arg)
         } else if (active === 'ext-tabpanel-3') {
             
-        } else if (active === PAGES.INBOX_VC) {
+        } else if (active === PAGES.INBOX_VC.value) {
             
+        }
+    },
+    // manage navigation based on lower toolbar
+    doToolbar: function (arg) {
+        if (arg === 'menu') {
+            this.toPage(PAGES.ADD)
+        } else if (arg === 'sync') {
+            Ext.Msg.confirm('', 'Sync all information?', function (resp) {
+                if (resp === 'yes') {
+                    // TODO: check for conflicts             
+                    // doUpload all information
+                    
+                    var onlineStore = Ext.create('mUserStories.store.upPersonStore');
+                    var offlineStore = Ext.getStore('offlineRegisterStore');
+                    var i = 0;
+                    
+                    onlineStore.onAfter('write',function(){
+                        var data =  onlineStore.getAt(i).getData();
+                        this.getidentifierstype(data.uuid);
+                        i++;
+                    },this);
+                    
+                    offlineStore.each(function(record){
+                        record.phantom = true;
+                        onlineStore.add(record);
+                        console.log(offlineStore.getNewRecords());
+                        console.log(offlineStore.getUpdatedRecords());
+                        console.log(offlineStore.getRemovedRecords());
+                    },this);
+                    
+                    onlineStore.sync();
+                    this.doDownload();
+                    offlineStore.removeAll();
+                    offlineStore.sync();
+                }
+            },this)
+        } else if (arg === 'inbox') {
+            this.toPage(PAGES.INBOX)
+        } else if (arg === 'resources') {
+            this.getResources();
+            this.toPage(PAGES.RESOURCES)
+        } else if (arg === 'not') {
+            this.toPage(PAGES.INBOX_VC)
+        } else if (arg === 'sch') {
+            this.toPage(PAGES.SCHEDULING)
         }
     },
     /* this funtions makes a get call to get the patient identifiers type */
@@ -402,6 +351,9 @@ Ext.define('mUserStories.controller.basic', {
             //Once the identifiers are loaded, fetch location parameters
             this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
         }, this);
+    },
+    getGeoLocation: function () {
+        
     },
     /* this funtions makes a get call to get the location uuid */
     getlocation: function (personUuid, identifierType) {
@@ -419,32 +371,38 @@ Ext.define('mUserStories.controller.basic', {
         // TODO: writen a  ramdom no for patient identufier but it should be a unique id
         return Math.floor(Math.random() * 1000000000);
     },
-    isEmpty: function (arg) {
-    // TODO: check to see if the select field is empty
-    // TODO: continue to arg if not empty
+    getResources : function () {
+        var resource_store = Ext.getStore('resourceStore');
+        resource_store.load();
+        Ext.getCmp('resourceList').setStore(resource_store)
     },
-    isOther: function (arg) {
-    // TODO: check to see if the select field is other
-    // TODO: pop up screen prompt
-    // TODO: continue to arg 
+    getUserInformation: function (username) {
+        Ext.Ajax.request({
+            scope: this,
+            withCredentials: true,
+            useDefaultXhrHeader: false,
+            url: MRSHOST + '/ws/rest/v1/user?q=' + username,
+            method: 'GET',
+            headers: HEADERS,
+            success: this.storeUserInformation,
+            failure: function () {}
+        });
     },
     loginContinue: function () {
         // clear form fields
-        Ext.getCmp('username').reset();
-        Ext.getCmp('password').reset();
+        Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
+        Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
         if (USER.type === 'CHW') {
-            // continue to next page with proper settings
-            // Ext.getCmp('welcome_label').setHtml("Welcome, "+USER.name+"<br>"+"This is your check in for "+CURR_DATE)
             this.doDownload();
-            Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+            this.toPage(PAGES.PATIENT_LIST);
         } else if (USER.type === 'VC') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.INBOX_VC)
+            this.toPage(PAGES.INBOX_VC)
         }
     },
     /* this funtions makes a post call to create the patient with three parameter which will sent as person, identifiertype 
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
-        var patient = Ext.create('mUserStories.model.upPatientModel', {
+        var patient = Ext.create('mUserStories.model.postPatient', {
             person: personUuid,
             identifiers: [{
                 identifier: this.getPatientIdentifier().toString(),
@@ -464,44 +422,11 @@ Ext.define('mUserStories.controller.basic', {
             this.sendEncounterData(personUuid);
         }, this);
         
-        Ext.getCmp('first_reg').reset();
-        Ext.getCmp('last_reg').reset();
-        Ext.getCmp('phone_reg').reset();
-        Ext.getCmp('village_reg').reset();
-        Ext.getCmp('bday').reset();
-        Ext.getCmp('reg_form').reset();
+        Ext.getCmp('ext-formpanel-5').reset();
+        
         this.doDownload();
-        Ext.getCmp('viewPort').setActiveItem(PAGES.PATIENT_LIST)
+        this.toPage(PAGES.PATIENT_LIST)
     },
-    
-    sendEncounterData:function(Uuid){
-        
-        //Function for getting date in correct format
-        function ISODateString(d){
-            function pad(n){
-                return n<10 ? '0'+n : n
-            }
-            return d.getUTCFullYear()+'-'
-            + pad(d.getUTCMonth()+1)+'-'
-            + pad(d.getUTCDate())+'T'
-            + pad(d.getUTCHours())+':'
-            + pad(d.getUTCMinutes())+':'
-            + pad(d.getUTCSeconds())+'Z'
-        }
-        //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
-        var JSONEncounter = Ext.create(mUserStories.model.encounterModel,{
-            encounterDatetime: ISODateString(new Date()),
-            patient: Uuid,
-            encounterType: 'e9897b1e-16af-4b67-9be7-6c89e971d907',
-            provider : 'fcd0f2cc-c27e-11e1-9262-a5fbf9edb8d2'
-        })
-        
-        //Create the encounter store and POST the encounter
-        var store = Ext.create('mUserStories.store.encounterStore');
-        store.add(JSONEncounter);
-        store.sync();
-    },
-    
     saveBasicAuthHeader: function (username, password) {
         // delete existing logged in sessions
         Ext.Ajax.request({
@@ -545,5 +470,58 @@ Ext.define('mUserStories.controller.basic', {
                 }
             }
         })
+    }, 
+    sendEncounterData:function(Uuid){
+        
+        //Function for getting date in correct format
+        function ISODateString(d){
+            function pad(n){
+                return n<10 ? '0'+n : n
+            }
+            return d.getUTCFullYear()+'-'
+            + pad(d.getUTCMonth()+1)+'-'
+            + pad(d.getUTCDate())+'T'
+            + pad(d.getUTCHours())+':'
+            + pad(d.getUTCMinutes())+':'
+            + pad(d.getUTCSeconds())+'Z'
+        }
+        //Creating the encounter model and hard-coding the encounter type uuid and provider uuid
+        var JSONEncounter = Ext.create(mUserStories.model.encounter,{
+            encounterDatetime: ISODateString(new Date()),
+            patient: Uuid,
+            encounterType: 'f30845d5-9ec0-4960-8104-a1366db21dc4',
+            provider : USER.uuid
+            
+        })
+        
+        //Create the encounter store and POST the encounter
+        var store = Ext.create('mUserStories.store.encounterStore');
+        store.add(JSONEncounter);
+        store.sync();
+    },
+    storeUserInformation: function (userInfo) {
+        var userInfoJson = Ext.decode(userInfo.responseText);
+        if (userInfoJson.results.length !== 0) {
+            Ext.Ajax.request({
+                scope: this,
+                url: userInfoJson.results[0].links[0].uri + '?v=full',
+                method: 'GET',
+                withCredentials: true,
+                useDefaultXhrHeader: false,
+                headers: HEADERS,
+                success: function (response) {
+                    var userInfo = Ext.decode(response.responseText);
+                    USER.uuid = userInfo.person.uuid;
+                    localStorage.setItem('uuid', userInfo.person.uuid)
+                },
+                failure: function () {
+                    USER.uuid = localStorage.getItem('uuid')
+                }
+            });
+        } else {}
+    }, 
+    
+    toPage: function (p) {
+       Ext.getCmp('viewPort').setActiveItem(p.value);
     }
 })

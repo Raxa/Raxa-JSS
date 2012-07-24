@@ -27,22 +27,22 @@ Ext.define('mUserStories.view.userToolbar', {
         },
         items: [{
             iconCls: 'add',
-            id: 'menuButton'
+            action: 'menuButton'
         }, {
             iconCls:'inbox2',
-            // iconCls: 'action',
-            id: 'inboxButton'
+            action: 'inboxButton'
         }, {
-            // iconCls: 'arrow_down',
             iconCls:'cloud_black_upload1',
-            id: 'downButton'
+            action: 'syncButton'
+        }, {
+            iconCls:'maps',
+            action: 'locButton'
         }, {
             iconCls:'photos2',
-            // iconCls: 'star',
-            id: 'resourcesButton'
+            action: 'resourcesButton'
         }, {
             iconCls: 'delete',
-            id: 'logoutButton'
+            action: 'logoutButton'
         }]
     }
 })

@@ -18,15 +18,23 @@ Ext.define('mUserStories.view.notificationInbox', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [{
+        items: [/*{
+            xclass: 'mUserStories.view.titlebar'
+        }, */{
             xtype: 'titlebar',
-            docked: 'top',
             title: 'Inbox',
+            id: 'title_inb',
+            docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                id: 'back_inb'
+                id: 'back_inb',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('list')
+                    }
+                }
             }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
@@ -64,13 +72,13 @@ Ext.define('mUserStories.view.notificationInbox', {
                 }, {
                     xtype: 'textfield',
                     label: 'First',
-                    id: 'first_rep',
+                    itemId: 'first_rep',
                     required: true,
                     placeHolder: 'Ronak'
                 }, {
                     xtype: 'textfield',
                     label: 'Last',
-                    id: 'last_rep',
+                    itemId: 'last_rep',
                     required: true,
                     placeHolder: 'Patel'
                 }, {
@@ -78,7 +86,7 @@ Ext.define('mUserStories.view.notificationInbox', {
                     // What is the best user interface for this--picture buttons?
                     xtype: 'textfield',
                     label: 'Details',
-                    id: 'details_rep',
+                    itemId: 'details_rep',
                     labelAlign: 'top',
                     placeHolder: 'Has malaria.'
                 }, {

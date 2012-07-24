@@ -19,21 +19,13 @@
 Ext.define('mUserStories.store.upPersonStore', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'mUserStories.model.upPersonModel',
-        id: 'searchpatientup',
+        model: 'mUserStories.model.postPerson',
         sorters: 'familyName',
-        grouper: function (record) {
-            return record.get('familyName')[0];
-        },
         proxy: {
             type: 'rest',
             //The REST call here only creates a person
             url: MRSHOST + '/ws/rest/v1/person',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: HEADERS,
             reader: {
                 type: 'json'
 

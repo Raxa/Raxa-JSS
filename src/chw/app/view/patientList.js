@@ -18,10 +18,19 @@ Ext.define('mUserStories.view.patientList', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [{
+        items: [/*{
+            xclass: 'mUserStories.view.titlebar'
+        }, */{
             xtype: 'titlebar',
-            docked: 'top',
-            title: 'Patient List'
+            title: 'Patient List',
+            id: 'title_plist',
+            docked: 'top'/*,
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_add_appt'
+            }]*/
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
@@ -33,8 +42,8 @@ Ext.define('mUserStories.view.patientList', {
                 grouped: true,
                 pinHeaders: false,
                 id: 'patientlistid',
-                width: Ext.os.deviceType == 'Phone' ? null : '80%',
-                height: Ext.os.deviceType == 'Phone' ? null : '100%',
+                width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+                height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
                 centered: true,
                 indexBar: true,
                 itemTpl: ['<div>{familyName}, {givenName}</div>'],
@@ -51,8 +60,8 @@ Ext.define('mUserStories.view.patientList', {
                 grouped: true,
                 pinHeaders: false,
                 id: 'patientcurrid',
-                width: Ext.os.deviceType == 'Phone' ? null : '80%',
-                height: Ext.os.deviceType == 'Phone' ? null : '100%',
+                width: Ext.os.deviceType === 'Phone' ? null : '100%',
+                height: Ext.os.deviceType === 'Phone' ? null : '100%',
                 centered: true,
                 itemTpl: ['<div>{familyName}, {givenName}</div>'],
                 onItemDisclosure: function (record, btn, index) {

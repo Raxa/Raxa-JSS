@@ -15,11 +15,21 @@
  */
 Ext.define('mUserStories.view.loginScreen', {
     extend: 'Ext.Panel',
+    alias: 'widget.LoginScreen',
     config: {
-        items: [{
+        items: [/*{
+            xclass: 'mUserStories.view.titlebar'
+        }, */{
             xtype: 'titlebar',
-            docked: 'top',
-            title: 'Mobile User Stories'
+            title: 'CHW Module',
+//            id: 'title_login',
+            docked: 'top'/*,
+            items: [{
+                xtype: 'button',
+                ui: 'back',
+                text: 'Back',
+                id: 'back_add_appt'
+            }]*/
         }, {
             xtype: 'container',
             centered: true,
@@ -39,17 +49,17 @@ Ext.define('mUserStories.view.loginScreen', {
                 }]
             }, {
                 xtype: 'fieldset',
-                id: 'loginForm',
+//                id: 'loginForm',
                 items: [{
                     xtype: 'textfield',
                     label: 'Username',
-                    id: 'username',
-                    flex: 2
+                    itemId: 'usernameIID'
+//                    flex: 1
                 }, {
                     xtype: 'passwordfield',
                     label: 'Password',
-                    id: 'password',
-                    flex: 2
+                    itemId: 'passwordIID'
+//                    flex: 1
                 }]
             }, {
                 xclass: 'mUserStories.view.okCancel'

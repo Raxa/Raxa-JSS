@@ -14,38 +14,44 @@
  * the License.
  */
 Ext.define('mUserStories.view.resources', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.tab.Panel',
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [{
+        items: [/*{
+            xclass: 'mUserStories.view.titlebar'
+        }, */{
             xtype: 'titlebar',
-            docked: 'top',
             title: 'Resources',
+            id: 'title_res',
+            docked: 'top',
             items: [{
                 xtype: 'button',
-                id: 'back_res',
                 ui: 'back',
-                text: 'Back'
+                text: 'Back',
+                id: 'back_res',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('list')
+                    }
+                }
             }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
-            title: 'All',
-            cls: 'demo-list',
-            items: [{
-                xtype: 'list',
-                ui: 'round',
-                grouped: true,
-                pinHeaders: false,
-                id: 'resourceslist',
-                width: Ext.os.deviceType === 'Phone' ? null : '80%',
-                height: Ext.os.deviceType === 'Phone' ? null : '100%',
-                centered: true,
-                indexBar: true,
-                itemTpl: [],
-                onItemDisclosure: function (record, btn, index) {}
-            }]
+            width: Ext.os.deviceType === 'Phone' ? null : '100%',
+            height: Ext.os.deviceType === 'Phone' ? null : '100%',
+            xtype: 'list',
+            ui: 'round',
+            grouped: true,
+            centered: true,
+            id: 'resourceList',
+            pinHeaders: false,
+            onItemDisclosure: function (record, btn, index) {
+                helper.discloseResource(record);
+            },
+            itemTpl: '<div>{resourceName}</div>',
+            indexBar: true
         }]
     }
 })

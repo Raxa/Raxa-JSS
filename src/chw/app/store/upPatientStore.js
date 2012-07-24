@@ -17,20 +17,13 @@
 Ext.define('mUserStories.store.upPatientStore', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'mUserStories.model.upPatientModel',
+        model: 'mUserStories.model.postPatient',
         proxy: {
-
             type: 'rest',
             url: MRSHOST + '/ws/rest/v1/patient',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-
+            headers: HEADERS,
             reader: {
                 type: 'json'
-
             },
             writer: {
                 type: 'json'

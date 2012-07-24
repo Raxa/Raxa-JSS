@@ -18,64 +18,63 @@ Ext.define('mUserStories.view.patientDetails', {
     config: {
         height: '100%',
         ui: 'neutral',
-        items: [{
+        items: [/*{
+            xclass: 'mUserStories.view.titlebar'
+        }, */{
             xtype: 'titlebar',
+            // title: '',
+            id: 'title_pdet',
             docked: 'top',
-            id: 'title_det',
-            title: 'Mobile User Stories',
             items: [{
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                id: 'back_det'
+                id: 'back_pdet',
+                listeners: {
+                    tap: function () {
+                        helper.doBack('list')
+                    }
+                }
             }]
         }, {
             xclass: 'mUserStories.view.userToolbar'
         }, {
             xtype: 'formpanel',
             title: 'Visit',
+            id: 'vis_panel',
+            scrollable: true,
             items: [{
-                xtype: 'fieldset',
+                xtype: 'container',
+                layout: 'hbox',
                 title: 'Visit Details',
-                defaults: {
-                    labelWidth: '35%',
-                    labelAlign: 'top'
-                },
                 items: [{
-                    xtype: 'textfield',
-                    disabled: true,
-                    label: 'Symptom Description',
-                    id: 'info_vis',
-                    placeHolder: 'Has had diarrhea for more than 2 days and is having trouble swallowing solid foods.'
+                       xtype: 'container',
+                       id: 'img_vis',
+                       html: '<img src="resources/diarrhea.png" height="100%" width="100%"/>',
+                       height: '40%',
+                       flex: 1
+                },{
+                    xtype: 'fieldset',
+                    defaults: {
+                        labelWidth: '35%',
+                        labelAlign: 'top'
+                    },
+                    flex: 2,
+                    items: [{
+                        xtype: 'textfield',
+                        disabled: true,
+                        label: 'Symptom',
+                        id: 'info_vis',
+                        placeHolder: 'Diarrhea'
+                    }]
                 }]
-            }, { // maybe this should be a list not checklist?
-                // how much detail is necessary?
-                xtype: 'fieldset',
-                title: 'Suggested Tasks',
-                defaults: {
-                    labelWidth: '80%'
-                },
-                items: [{
-                    xtype: 'checkboxfield',
-                    name: 'task1',
-                    label: 'Oral Rehydration Salts'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task2',
-                    label: 'Rapid Diagnostic Test malaria'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task3',
-                    label: 'Check Vitamin A'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task4',
-                    label: 'Check albendazole'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task5',
-                    label: 'Blood sample for CBC'
-                }]
+            }, {
+                xtype: 'container',
+                id: 'check_vis',
+                padding: '10px',
+                height: '80%',
+                width: '100%',
+                items: []
             }]
         }, {
             xtype: 'formpanel',

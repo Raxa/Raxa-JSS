@@ -33,7 +33,7 @@ Ext.define('mUserStories.view.okCancel', {
                 xtype: 'button',
                 iconMask: true,
                 iconCls: 'check2',
-                id: 'okButton',
+                action: 'okButton',
                 ui: 'confirm'
             }, {
                 xtype: 'label',
@@ -42,7 +42,7 @@ Ext.define('mUserStories.view.okCancel', {
                 xtype: 'button',
                 iconMask: true,
                 iconCls: 'delete1',
-                id: 'cancelButton',
+                action: 'cancelButton',
                 ui: 'decline'
             }, {
                 xtype: 'label',

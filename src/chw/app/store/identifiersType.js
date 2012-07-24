@@ -21,17 +21,13 @@ Ext.define('mUserStories.store.identifiersType', {
     config: {
         fields: [{
             name: 'uuid',
-            //contains just one fiels because we only need uuid
+            //contains just one field because we only need uuid
             type: 'string'
         }],
         proxy: { //proxy for GET rest call
             type: 'rest',
             url: MRSHOST + '/ws/rest/v1/patientidentifiertype',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: HEADERS,
             reader: {
                 type: 'json',
                 rootProperty: 'results'

@@ -26,15 +26,14 @@ Ext.define('mUserStories.view.vcToolbar', {
             align: 'center'
         },
         items: [{
-            // iconCls: 'action',
             iconCls: 'inbox2',
-            id: 'notButton'
+            action: 'notButton'
         }, {
             iconCls: 'compose',
-            id: 'schButton'
+            action: 'schButton'
         }, {
             iconCls: 'delete',
-            id: 'logoutButton_vc'
+            action: 'logoutButton_vc'
         }]
     }
 })

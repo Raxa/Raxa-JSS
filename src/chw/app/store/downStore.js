@@ -19,7 +19,7 @@
 Ext.define('mUserStories.store.downStore', {
     extend: 'Ext.data.Store',
     config: {
-        model: 'mUserStories.model.downModel',
+        model: 'mUserStories.model.getPerson',
         id: 'downStore',
         sorters: 'familyName',
         grouper: function (record) {
@@ -30,11 +30,7 @@ Ext.define('mUserStories.store.downStore', {
             //Hard-coding the host URL searching for patient name 'john'
             // TODO: check out cohort class in OpenMRS
             url: MRSHOST + '/ws/rest/v1/patient?q=john&v=full',
-            headers: {
-                "Authorization": localStorage.getItem('basicAuthHeader'),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: HEADERS,
             reader: {
                 type: 'json',
                 rootProperty: 'results'
