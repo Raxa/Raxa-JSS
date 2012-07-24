@@ -40,7 +40,7 @@ Ext.define('chw.view.familyList', {
                 width: '100%',
                 height: '100%',
                 centered: true,
-                loadingTest: 'Loading List...',
+                loadingText: 'Loading List...',
                 emptyText: '</pre><div class="notes-list-empty-text"><center><br>No patients found.<br></center></div><pre>',
                 itemTpl: [
                     '<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>',

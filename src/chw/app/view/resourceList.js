@@ -39,19 +39,21 @@ Ext.define('chw.view.resourceList', {
         }, {
             xclass: 'chw.view.userToolbar'
         }, {
-            width: Ext.os.deviceType === 'Phone' ? null : '100%',
-            height: Ext.os.deviceType === 'Phone' ? null : '100%',
+            width: '100%',
+            height: '100%',
             xtype: 'list',
             ui: 'round',
             grouped: true,
             centered: true,
             id: 'resourceList',
             pinHeaders: false,
-            onItemDisclosure: function (record, btn, index) {
-                helper.discloseResource(record);
+            store: 'resources',
+            loadingText: 'Loading List...',
+            emptyText: '</pre><div class="notes-list-empty-text"><center><br>No resources found.<br></center></div><pre>',
+            onItemDisclosure: function (record) {
+                helper.listDisclose('resources',record);
             },
-            itemTpl: '<div>{resourceName}</div>',
-            indexBar: true
+            itemTpl: '<div>{resourceName}</div>'
         }]
     }
 })
