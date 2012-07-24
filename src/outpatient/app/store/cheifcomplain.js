@@ -14,23 +14,11 @@
  * the License.
  */
 
-Ext.Loader.setPath({
-    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid'
-});
+Ext.define('RaxaEmr.Outpatient.store.cheifcomplain', {
+    extend: 'Ext.data.Store',
 
-Ext.Loader.setConfig({
-    enabled: true
-});
-
-Ext.application({
-    name: 'RaxaEmr.Outpatient',
-
-    models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
-    stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
-    views: ['Viewport'],
-    controllers: ['patientlist'],
-
-    launch: function () {
-        Ext.create('RaxaEmr.Outpatient.view.Viewport');
+    config: {
+        model: 'RaxaEmr.Outpatient.model.cheifcomplain',
+        autoLoad: true,
     }
 });

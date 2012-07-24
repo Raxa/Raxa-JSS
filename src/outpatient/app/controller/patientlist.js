@@ -29,11 +29,15 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             lastvisit: '#lastvisit',
             mainTabs: '#maintabs',
             medicationHistory: '#medicationhistory',
+            medicationHistory2: '#medicationhistory2',
             refToDocButton: '#reftodocbutton',
             confirmLabResultHistoryButton: '#confirmlabresulthistory',
             confirmMedicationHistoryButton: '#confirmmedicationhistory',
             confirmReferToDocButton: '#confirmrefertodoc',
-            labinfo: '#labinfo'
+			cheifcomplain: '#cheifComplain',
+            labinfo: '#labinfo',
+			examlist: '#examList',
+			deletecomlain: '#deleteComlain'
         },
 
         control: {
@@ -44,6 +48,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             contacts: {
                 itemtap: 'onContactSelect'
             },
+			examlist: {
+				itemtap: 'onExamListSelect'
+			},
             name: {
                 tap: 'sortByName'
             },
@@ -59,6 +66,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             medicationHistory: {
                 tap: 'medicationHistoryAction'
             },
+            medicationHistory2: {
+                tap: 'medicationHistoryAction'
+            },
             refToDocButton: {
                 tap: 'refToDocButton'
             },
@@ -68,7 +78,14 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             searchfield: {
                 clearicontap: 'onSearchClearIconTap',
                 keyup: 'onSearchKeyUp'
-            }
+            },
+			cheifcomplain:{
+				change:'addChiefComplain',
+			},
+			deletecomlain:{
+				tap: 'deleteComlain',
+			},
+			
         }
     },
 
@@ -96,6 +113,24 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.getMain().push(this.showContact);
         myRecord = record;
     },
+	
+	addChiefComplain: function(){
+		var combo = Ext.getCmp('cheifComplain');
+		examlist = Ext.getCmp('examList');
+		examlist.getStore().add({complain:combo.getValue()});
+		Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION);
+	},
+	
+	onExamListSelect: function(list,index,node,record){
+		Ext.getCmp('deleteComlain').setHidden(false);
+		Ext.getCmp('addduration').setHidden(false);
+	},
+	
+	deleteComlain: function(){
+		var examlist = Ext.getCmp('examList');
+		selectedRecord = examlist.getSelection();
+        examlist.getStore().remove(selectedRecord);
+	},
 
     buttonAction: function (obj, obj2) {
         if (!this.obj1) {

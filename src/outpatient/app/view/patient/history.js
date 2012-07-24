@@ -197,13 +197,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     xtype: 'button',
                     docked: 'top',
                     height: 40,
+                    id: 'medicationhistory2',
                     margin: '65 20 0 0',
                     width: 40,
                     icon: '../outpatient/resources/images/medicationhistory.png',
-                    padding: '0 10 10 0',
-                    handler: function () {
-                        Ext.getCmp('working-area').setActiveItem(HISTORY.SOCIAL)
-                    }
+                    padding: '0 10 10 0'
                 }]
             }]
         }]

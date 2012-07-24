@@ -39,6 +39,7 @@
 .x-contacts .headshot{float:left;height:50px;width:50px;margin-right:10px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 2px rgba(0, 0, 0, 0.6)}
 .x-contacts .property{float:left;height:56px;margin-right:2px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:0px;border-radius:4px;-webkit-box-shadow:inset 0 0 5px rgba(0, 0, 0, 0.8)}
 .x-contacts .x-item-pressed,.x-contacts .x-item-selected{border-top-color:#D1D1D1 !important}
+
 .x-show-contact{background:#EEEEEE}
 .x-show-contact.x-list-item{background:#EEEEEE}
 .x-show-contact .top{padding:15px;height:80px}
@@ -53,7 +54,12 @@
 .x-show-contact .top .name_right{width:195px;padding-top:10px;font-size:22px;font-weight:bold;text-align:right}
 .x-show-contact .top .name_right span{display:block;font-size:14px;font-weight:normal;color:#666}
 .x-show-contact .top .name_right a:link{color:#3f9b26;text-decoration:none}
-.x-map{position:relative}.x-map:before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:999;-webkit-box-shadow:inset 0 3px 3px rgba(0, 0, 0, 0.4)}.x-toolbar-inner .x-layout-hbox{position:relative}.x-toolbar-inner .x-layout-hbox #editButton,.x-toolbar-inner .x-layout-hbox #saveButton{position:absolute;right:0;top:.4em}
+
+.x-exam .x-item-pressed,.x-exam .x-item-selected{border-top-color:#D1D1D1 !important}
+.x-exam .x-list-item .x-list-item-label{min-height:2em;padding:0.65em 0.8em}
+.x-exam .x-list-item.x-item-selected .x-list-item-label{background-image:none;background-color:white;background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(3%, #ffffff), color-stop(100%, #f2f2f2));background-image:-webkit-linear-gradient(top, #1C6BCF,#1C6BCF 3%,#1C6BCF);background-image:linear-gradient(top, #ffffff,#ffffff 3%,#f2f2f2);color:#262626;text-shadow:rgba(255, 255, 255, 0.25) 0 0.08em 0}
+
+.x-map{position:relative}.x-map:before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:999;-webkit-box-shadow:inset 0 3px 3px rgba(0, 0, 0, 0.4)}
 .horizontalDiv{float:left}
 .x-form-fieldset-mod .x-form-fieldset-inner{border:0px solid #dddddd;border-bottom-width: 1px;background:#fff;padding:0;-webkit-border-radius:0.4em;border-radius:0em;overflow:hidden}
 .x-segmentedbutton-vertical .x-button.x-first {
@@ -78,7 +84,7 @@ background-position: center;
 display: block;
 }
 
-.x-button-vikas.x-button-pressing, .x-button-vikas.x-button-pressing::after, .x-button-vikas.x-button-pressed, .x-button-vikas.x-button-pressed::after, .x-button-vikas.x-button-active, .x-button-vikas.x-button-active::after, .x-toolbar .x-button-vikas.x-button-pressing, .x-toolbar .x-button-vikas.x-button-pressing::after, .x-toolbar .x-button-vikas.x-button-pressed, .x-toolbar .x-button-vikas.x-button-pressed::after, .x-toolbar .x-button-vikas.x-button-active, .x-toolbar .x-button-vikas.x-button-active::after {
+.x-button-vikas.x-button-pressing, .x-button-vikas.x-button-pressing::after, .x-button-vikas.x-button-pressed, .x-button-vikas.x-button-pressed::after, .x-button-vikas.x-button-active, .x-button-vikas.x-button-active::after{
 background-image: none;
 background-color: #C4C4C4;
 background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ABABAB), color-stop(10%, #B8B8B8), color-stop(65%, #C4C4C4),color-stop(100%, #C6C6C6));
