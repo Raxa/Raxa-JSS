@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.Outpatient.store.cheifcomplain', {
     extend: 'Ext.data.Store',
 

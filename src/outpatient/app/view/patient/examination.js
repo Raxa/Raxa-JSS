@@ -13,14 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-var TREATMENT = {
-    ADD : 0,
-    INSTRUCTIONS : 1,
-    DRUGPANEL : 2,
-    SUMMERY : 3
-}
-
 Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
     extend: 'Ext.Container',
     xtype: 'examination-panel',
@@ -32,37 +24,65 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
         },
         title: 'Examination',
         activeItem: 0,
-        items: [
-		{
+        items: [{
             xtype: 'container',
             layout: {
                 type: 'hbox'
             },
-            items: [
-				{
-					xtype: 'container',
-					flex: 1
-				},
-				{
-					xtype: 'container',
-					flex: 1,
-					margin: '20 20 20 20',
-					items: [{
-						xtype: 'container',
-						margin: '0 0 20 0',
-						border: '1 1 1 1',
-						style: 'border:solid #DADADA;',
-						height: 436,
-						layout: {
-							type: 'fit'
-						},
-						items: [{
-							xtype: 'Examination-List'
-						}]
-					}]
-				}
-			]
-        }
-		]
+            items: [{
+                xtype: 'container',
+                flex: 1
+            }, {
+                xtype: 'container',
+                flex: 1,
+                margin: '20 20 20 20',
+                items: [{
+                    xtype: 'container',
+                    margin: '0 0 20 0',
+                    border: '1 1 1 1',
+                    style: 'border:solid #DADADA;',
+                    height: 436,
+                    layout: {
+                        type: 'fit'
+                    },
+                    items: [{
+                        xtype: 'Examination-List'
+                    }, {
+                        xtype: 'actionsheet',
+                        id: 'durationPicker',
+                        // layout: {
+                        // type: 'fit',
+                        // },
+                        hidden: true,
+                        items: [{
+                            xtype: 'formpanel',
+                            height: 100,
+                            width: '100%',
+                            items: [{
+                                xtype: 'numberfield',
+                                label: 'Duration',
+                                id: 'durationfield'
+                            }]
+                        }, {
+                            xtype: 'toolbar',
+                            docked: 'top',
+                            items: [{
+                                xtype: 'button',
+                                text: 'Save',
+                                id: 'saveDuration'
+                            }, {
+                                xtype: 'spacer'
+                            }, {
+                                xtype: 'button',
+                                text: 'Cancle',
+                                handler: function () {
+                                    Ext.getCmp('durationPicker').setHidden(true);
+                                }
+                            }]
+                        }]
+                    }]
+                }]
+            }]
+        }]
     }
 });

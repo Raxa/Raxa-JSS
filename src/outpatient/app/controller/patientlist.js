@@ -29,15 +29,16 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             lastvisit: '#lastvisit',
             mainTabs: '#maintabs',
             medicationHistory: '#medicationhistory',
-            medicationHistory2: '#medicationhistory2',
             refToDocButton: '#reftodocbutton',
             confirmLabResultHistoryButton: '#confirmlabresulthistory',
             confirmMedicationHistoryButton: '#confirmmedicationhistory',
             confirmReferToDocButton: '#confirmrefertodoc',
-			cheifcomplain: '#cheifComplain',
+            cheifcomplain: '#cheifComplain',
             labinfo: '#labinfo',
-			examlist: '#examList',
-			deletecomlain: '#deleteComlain'
+            examlist: '#examList',
+            deletecomlain: '#deleteComlain',
+            addduration: '#addDuration',
+            saveduration: '#saveDuration',
         },
 
         control: {
@@ -48,9 +49,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             contacts: {
                 itemtap: 'onContactSelect'
             },
-			examlist: {
-				itemtap: 'onExamListSelect'
-			},
+            examlist: {
+                itemtap: 'onExamListSelect'
+            },
             name: {
                 tap: 'sortByName'
             },
@@ -66,9 +67,6 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             medicationHistory: {
                 tap: 'medicationHistoryAction'
             },
-            medicationHistory2: {
-                tap: 'medicationHistoryAction'
-            },
             refToDocButton: {
                 tap: 'refToDocButton'
             },
@@ -79,13 +77,19 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 clearicontap: 'onSearchClearIconTap',
                 keyup: 'onSearchKeyUp'
             },
-			cheifcomplain:{
-				change:'addChiefComplain',
-			},
-			deletecomlain:{
-				tap: 'deleteComlain',
-			},
-			
+            cheifcomplain: {
+                change: 'addChiefComplain',
+            },
+            deletecomlain: {
+                tap: 'deleteComplain',
+            },
+            saveduration: {
+                tap: 'saveduration',
+            },
+            addduration: {
+                tap: 'addduration',
+            },
+
         }
     },
 
@@ -113,24 +117,42 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.getMain().push(this.showContact);
         myRecord = record;
     },
-	
-	addChiefComplain: function(){
-		var combo = Ext.getCmp('cheifComplain');
-		examlist = Ext.getCmp('examList');
-		examlist.getStore().add({complain:combo.getValue()});
-		Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION);
-	},
-	
-	onExamListSelect: function(list,index,node,record){
-		Ext.getCmp('deleteComlain').setHidden(false);
-		Ext.getCmp('addduration').setHidden(false);
-	},
-	
-	deleteComlain: function(){
-		var examlist = Ext.getCmp('examList');
-		selectedRecord = examlist.getSelection();
+
+    addChiefComplain: function () {
+        var combo = Ext.getCmp('cheifComplain');
+        examlist = Ext.getCmp('examList');
+        examlist.getStore().add({
+            complain: combo.getValue(),
+            id: combo.getValue()
+        });
+        Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION);
+    },
+
+    onExamListSelect: function (list, index, node, record) {
+        Ext.getCmp('deleteComlain').setHidden(false);
+        Ext.getCmp('addDuration').setHidden(false);
+    },
+
+    deleteComplain: function () {
+        var examlist = Ext.getCmp('examList');
+        selectedRecord = examlist.getSelection();
         examlist.getStore().remove(selectedRecord);
-	},
+    },
+
+    addduration: function () {
+        this.getMain().push(Ext.getCmp('durationPicker'));
+        Ext.getCmp('durationPicker').setHidden(false);
+    },
+
+    saveduration: function () {
+        var duration = Ext.getCmp('durationfield').getValue();
+        var examlist = Ext.getCmp('examList');
+        var selectedRecord = examlist.getSelection();
+        var duration = Ext.getCmp('durationfield').getValue();
+        var listdata = selectedRecord[0].set('duration', ' : ' + duration + ' days');
+        Ext.getCmp('durationPicker').setHidden(true);
+        Ext.getCmp('durationfield').reset();
+    },
 
     buttonAction: function (obj, obj2) {
         if (!this.obj1) {

@@ -13,48 +13,37 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.Outpatient.view.patient.examinationlist', {
     extend: 'Ext.dataview.List',
     xtype: 'Examination-List',
     config: {
-		cls: 'x-exam',
-		id: 'examList',
+        cls: 'x-exam',
+        id: 'examList',
         store: 'cheifcomplain',
-        itemTpl: [
-			'<div id="{id}">',
-			'<strong>{complain}</strong>',
-			'</div>'
-		],
-		items:[
-            {
-                xtype: 'toolbar',
-                docked: 'top',
-				items:[
-					{
-                        xtype: 'spacer'
-                    },
-					{
-                        xtype: 'button',
-                        ui: 'plain',
-                        iconCls: 'locate',
-                        iconMask: true,
-						hidden : true,
-						id: 'addduration'
-                    },
-					{
-                        xtype: 'button',
-                        ui: 'plain',
-                        iconCls: 'trash',
-                        iconMask: true,
-						hidden : true,
-						id: 'deleteComlain'
-                    }
-				]
-            }
-		]
+        itemTpl: ['<div id="{id}">', '<strong>{complain}{duration}</strong>', '</div>'],
+        items: [{
+            xtype: 'toolbar',
+            docked: 'top',
+            items: [{
+                xtype: 'spacer'
+            }, {
+                xtype: 'button',
+                ui: 'plain',
+                iconCls: 'locate',
+                iconMask: true,
+                hidden: true,
+                id: 'addDuration'
+            }, {
+                xtype: 'button',
+                ui: 'plain',
+                iconCls: 'trash',
+                iconMask: true,
+                hidden: true,
+                id: 'deleteComlain'
+            }]
+        }]
     },
-	// vikas: function (){
-		// alert('vikas');
-	// }
+    // vikas: function (){
+    // alert('vikas');
+    // }
 });

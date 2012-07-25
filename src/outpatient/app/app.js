@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.Loader.setPath({
     'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid'
 });

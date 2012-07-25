@@ -13,10 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 var HISTORY = {
-    PERSONAL : 0,
-    SOCIAL : 1
+    PERSONAL: 0,
+    SOCIAL: 1
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.history', {

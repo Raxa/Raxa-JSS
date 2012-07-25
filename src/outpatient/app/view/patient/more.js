@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
 Ext.define('RaxaEmr.Outpatient.view.patient.more', {
     extend: 'Ext.Container',
     xtype: 'patientlist-show',
@@ -52,8 +51,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                         type: 'hbox'
                     },
                     scrollable: 'false',
-                    items: [
-					{
+                    items: [{
                         xtype: 'fieldset',
                         height: 75,
                         margin: '-10 20 0 -3',
@@ -62,37 +60,36 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                         },
                         flex: 1,
                         items: [{
-							xtype: 'selectfield',
-							label: 'Cheif Complain',
-							id:'cheifComplain',
-							valueField: 'cheifComplain',
-							displayField: 'title',
-							autoComplete: true,
-							flex:1,
-							store: {
-								data: [{
-									cheifComplain: 'Complain 1',
-									title: 'Complain 1'
-								}, {
-									cheifComplain: 'Complain 2',
-									title: 'Complain 2'
-								}, {
-									cheifComplain: 'Complain 6',
-									title: 'Complain 6'
-								}, {
-									cheifComplain: 'Complain 3',
-									title: 'Complain 3'
-								}, {
-									cheifComplain: 'Complain 4',
-									title: 'Complain 4'
-								}, {
-									cheifComplain: 'Complain 5',
-									title: 'Complain 5'
-								}]
-							}
-						}]
-                    },
-					{
+                            xtype: 'selectfield',
+                            label: 'Cheif Complain',
+                            id: 'cheifComplain',
+                            valueField: 'cheifComplain',
+                            displayField: 'title',
+                            autoComplete: true,
+                            flex: 1,
+                            store: {
+                                data: [{
+                                    cheifComplain: 'Complain 1',
+                                    title: 'Complain 1'
+                                }, {
+                                    cheifComplain: 'Complain 2',
+                                    title: 'Complain 2'
+                                }, {
+                                    cheifComplain: 'Complain 6',
+                                    title: 'Complain 6'
+                                }, {
+                                    cheifComplain: 'Complain 3',
+                                    title: 'Complain 3'
+                                }, {
+                                    cheifComplain: 'Complain 4',
+                                    title: 'Complain 4'
+                                }, {
+                                    cheifComplain: 'Complain 5',
+                                    title: 'Complain 5'
+                                }]
+                            }
+                        }]
+                    }, {
                         xtype: 'fieldset',
                         height: 75,
                         margin: '-10 0 0 0',
