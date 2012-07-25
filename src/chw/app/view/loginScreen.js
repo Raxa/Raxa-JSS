@@ -69,14 +69,14 @@ Ext.define('chw.view.loginScreen', {
                     flex: 1
                 },{
                     xtype: 'selectfield',
-                    label:'Language',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.language'),
                     action: 'langfield',
                     flex: 0,
                     options: [{
                         text:'',
                         value:'empty'
                     },{
-                        text: 'Hindi',
+                        text: '\u0939\u093f\u0902\u0926\u0940',
                         value: 'hi-IN'
                     },{
                         text: 'English',
