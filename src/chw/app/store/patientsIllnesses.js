@@ -18,6 +18,10 @@ Ext.define('chw.store.patientsIllnesses', {
     config: {
         model: 'chw.model.patientIllness',
         id: 'patientsIllnesses',
+        proxy: {
+            type: 'localstorage',
+            id: 'patientIllnesses'
+        },
         /*sorters: 'illnessName',
         grouper: function (record) {
             return record.get('illnessName')[0];

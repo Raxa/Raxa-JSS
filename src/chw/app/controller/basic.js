@@ -92,7 +92,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.loginScreen,
+            activeItem: PAGES.illnessDetails,
             items: [{   
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -121,9 +121,11 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.resourceList'
             }, {
                 xclass: 'chw.view.resourceDetail'
+            }, {
+                xclass: 'chw.view.illnessDetails'
             }]
         })
-        console.log(Ext.getCmp('viewPort').getActiveItem());
+        // console.log(Ext.getCmp('viewPort').getActiveItem());
     },
     doAdd: function(step,arg){
         if(arg){
@@ -156,7 +158,7 @@ Ext.define('chw.controller.basic', {
                     familyStore.add(familyModel);
                     familyStore.sync();
                     //                    familyStore.on('write',function(){
-                    console.log('Added family locally');
+                    // console.log('Added family locally');
                     Ext.getCmp('familyName').reset();
                     Ext.getCmp('address').reset();
                     Ext.getCmp('description').reset();
@@ -200,7 +202,8 @@ Ext.define('chw.controller.basic', {
                 // TODO: get patient ID -- how do i pass this?
                 // get all information from form
                 var patientIdVal = Ext.ComponentQuery.query('addIllness #patientIdField')[0].getValue();
-                var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
+                var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data;
+                // console.log(illnessNameVal);
                 var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
                 var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
                 var illnessTreatmentVal = Ext.ComponentQuery.query('addIllness #illnessTreatmentField')[0].getValue();
@@ -215,7 +218,7 @@ Ext.define('chw.controller.basic', {
                     }
                     var piModel = Ext.create('chw.model.patientIllness', {
                         patientId: patientIdVal,
-                        illnessId: illnessNameVal,
+                        illnessDetails: illnessNameVal,
                         illnessStartDate: illnessStartVal,
                         illnessEndDate: illnessEndVal,
                         illnessTreatment: illnessTreatmentVal,
@@ -246,7 +249,7 @@ Ext.define('chw.controller.basic', {
         }else if(active.id=='ext-resourceDetail-1'){
             this.doToolbar('resources')
         }else{
-            console.log(active.id);
+           console.log(active.id);
         }
     },
     doInventory: function (arg, amt) {

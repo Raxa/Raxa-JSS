@@ -31,7 +31,8 @@ var PAGES = {
     addPatient: 10,
     addIllness: 11,
     resourceList: 12,
-    resourceDetail: 13
+    resourceDetail: 13,
+    illnessDetails: 14
 }
 var USER = new Object();
 USER.name = '';
@@ -62,13 +63,14 @@ var helper = {
             }
             
             var familyId = record.get('familyId');
-            console.log(familyId);
+            // console.log(familyId);
             //Filtering the list by family id
             patientStore.filter('familyId',familyId)
             patientStore.onAfter('load',function(){
-                console.log(patientStore)
-                console.log('loaded') 
+                // console.log(patientStore)
+                // console.log('loaded') 
                 Ext.getCmp('familyMembersList').setStore(patientStore);
+                // Ext.ComponentQuery.query('fmailyDetails #familyNumberLabel')[0].setValue(patientStore.getCount())
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
             });
             patientStore.load();
@@ -83,18 +85,17 @@ var helper = {
             Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(record.get('patientAge'));
             Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].setValue(record.get('patientId'));
             // Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
-            
             var pistore = Ext.getStore('patientsIllnesses');
             if (!pistore) {
                 Ext.create('chw.store.patientsIllnesses')
             }
             var pid = record.get('patientId')
-            console.log(pid)
-            console.log(pistore)
             pistore.filter('patientId',pid)
-            console.log(pistore)
-            Ext.getCmp('patientIllnessList').setStore(pistore);
-            Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+            pistore.onAfter('load',function () {
+                Ext.getCmp('patientIllnessList').setStore(pistore);
+                Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+            });
+            pistore.load();
         } else if (list==='inventory') {
             Ext.getCmp('inventoryDetails').setHidden(false);
             Ext.ComponentQuery.query('inventoryDetails #pillDescripLabel')[0].setValue(record.get('pillDescrip'));
@@ -119,6 +120,8 @@ var helper = {
                 container.setHtml('<audio controls="controls"><source src="' + location + '" type = "audio/mp3" />Your browser does not support the audio element</audio>')
             }
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
+        } else if (list==='patientIllness') {
+            Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         }
     }
     
@@ -128,3 +131,16 @@ var HEADERS = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
+//var DATE_PATTERNS = {
+//    ISO8601Long : "Y-m-d H:i:s",
+//    ISO8601Short : "Y-m-d",
+//    ShortDate : "n/j/Y",
+//    LongDate : "l, F d, Y",
+//    FullDateTime : "l, F d, Y g:i:s A",
+//    MonthDay : "F d",
+//    ShortTime : "g:i A",
+//    LongTime : "g:i:s A",
+//    SortableDateTime : "Y-m-d\\TH:i:s",
+//    UniversalSortableDateTime : "Y-m-d H:i:sO",
+//    YearMonth : "F, Y"
+//};
