@@ -104,7 +104,7 @@ Ext.define('chw.view.patientDetails', {
                     '<div style="float:left;width:50%">',
                         '<div class="list-item-title"">{illnessDetails.illnessName}</div>',
                     '</div>',
-                    // '<div style="float:left;width:32px;height:32px">',
+                    '<div style="float:left;width:32px;height:32px">',
                     '<div>',
                         '<div class="list-item-title" style="font-size:10px;">',
                         '{illnessStartDate}-<br>{illnessEndDate}</div>',

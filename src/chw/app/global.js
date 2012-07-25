@@ -72,16 +72,16 @@ var helper = {
             });
             patientStore.load();
         } else if (list==='illness') {
-            // filter and fetch a list of all patients with that illness
-            // display all patients with that illness
             var pistored = Ext.getStore('patientsIllnesses')
             if (!pistored) {
                 Ext.create('chw.store.patientsIllnesses')
             }
-            // console.log('first',pistored)
             var iid = record.get('illnessId')
+            // console.log(iid)
+            // console.log(pistored)
+            // TODO: Something is definitely wrong with the filter
             pistored.filter('illnessDetails.illnessId',iid)
-            // pistored.filter('patientDetails.patientId',1)
+            // pistored.filter('patientId',1)
             pistored.onAfter('load', function () {
                 // console.log('second',pistored)
                 Ext.getCmp('illnessList').setStore(pistored);
@@ -147,7 +147,7 @@ var helper = {
             Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="'+record.get('illnessDetails').illnessImage+'" width="80%"/></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
-            
+            Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
         }
     }
     
