@@ -39,6 +39,7 @@ Ext.define('chw.view.illnessList', {
             width: '100%',
             height: '80%',
             centered: true,
+            indexBar: true,
             itemTpl: [
                 '<div style="float:left;width:32px;height:32px"><img src="{patientImage}" height="80%" width="80%"/></div>',
                 '<div style="float:left;width:60%">',

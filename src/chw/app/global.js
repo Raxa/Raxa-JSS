@@ -80,13 +80,16 @@ var helper = {
             if (!pistored) {
                 Ext.create('chw.store.patientsIllnesses')
             }
+            console.log('first',pistored)
             var iid = record.get('illnessId')
-            pistored.filter('illnessDetails.Id',iid)
+            // pistored.filter('illnessDetails.illnessId',iid)
+            pistored.filter('patientDetails.patientId',1)
             pistored.onAfter('load', function () {
+                console.log('second',pistored)
                 Ext.getCmp('illnessList').setStore(pistored);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
             })
-            pistore.load();
+            pistored.load();
         } else if (list==='patient') {
             savedPatientRecord=record
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
