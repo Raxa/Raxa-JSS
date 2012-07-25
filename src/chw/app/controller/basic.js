@@ -86,7 +86,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.loginScreen,
+            activeItem: PAGES.illnessDetails,
             items: [{   
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -115,6 +115,8 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.resourceList'
             }, {
                 xclass: 'chw.view.resourceDetail'
+            }, {
+                xclass: 'chw.view.illnessDetails'
             }]
         })
         // console.log(Ext.getCmp('viewPort').getActiveItem());

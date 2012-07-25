@@ -31,7 +31,8 @@ var PAGES = {
     addPatient: 10,
     addIllness: 11,
     resourceList: 12,
-    resourceDetail: 13
+    resourceDetail: 13,
+    illnessDetails: 14
 }
 var USER = new Object();
 USER.name = '';
@@ -120,7 +121,7 @@ var helper = {
             }
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
         } else if (list==='patientIllness') {
-            
+            Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         }
     }
     
