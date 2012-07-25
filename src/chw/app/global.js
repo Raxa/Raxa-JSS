@@ -61,7 +61,6 @@ var helper = {
             if (!patientStore) {
                 Ext.create('chw.store.patients')
             }
-            
             var familyId = record.get('familyId');
             // console.log(familyId);
             //Filtering the list by family id
@@ -77,6 +76,17 @@ var helper = {
         } else if (list==='illness') {
             // filter and fetch a list of all patients with that illness
             // display all patients with that illness
+            var pistored = Ext.getStore('patientsIllnesses')
+            if (!pistored) {
+                Ext.create('chw.store.patientsIllnesses')
+            }
+            var iid = record.get('illnessId')
+            pistored.filter('illnessDetails.Id',iid)
+            pistored.onAfter('load', function () {
+                Ext.getCmp('illnessList').setStore(pistored);
+                Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
+            })
+            pistore.load();
         } else if (list==='patient') {
             savedPatientRecord=record
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));

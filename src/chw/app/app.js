@@ -29,7 +29,7 @@ Ext.application({
     views: [
         'loginScreen', 
         'familyList', 
-        'diseaseList', 
+        'illnessList', 
         'familyDetails', 
         'patientDetails', 
         'visitDetails', 
