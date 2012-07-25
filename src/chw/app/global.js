@@ -80,12 +80,12 @@ var helper = {
             if (!pistored) {
                 Ext.create('chw.store.patientsIllnesses')
             }
-            console.log('first',pistored)
+            // console.log('first',pistored)
             var iid = record.get('illnessId')
             pistored.filter('illnessDetails.illnessId',iid)
             // pistored.filter('patientDetails.patientId',1)
             pistored.onAfter('load', function () {
-                console.log('second',pistored)
+                // console.log('second',pistored)
                 Ext.getCmp('illnessList').setStore(pistored);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
             })
