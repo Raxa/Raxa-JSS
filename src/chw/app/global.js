@@ -20,7 +20,7 @@ var MRSHOST = 'http://test.raxa.org:8080/openmrs';
 var PAGES = {
     loginScreen: 0,
     familyList: 1,
-    diseaseList: 2,
+    illnessList: 2,
     familyDetails: 3,
     patientDetails: 4,
     visitDetails: 5,
@@ -75,8 +75,8 @@ var helper = {
             });
             patientStore.load();
         } else if (list==='illness') {
-        // filter and fetch a list of all patients with that illness
-        // display all patients with that illness
+            // filter and fetch a list of all patients with that illness
+            // display all patients with that illness
         } else if (list==='patient') {
             savedPatientRecord=record
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
@@ -122,6 +122,8 @@ var helper = {
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
         } else if (list==='patientIllness') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
+        } else if (list==='ipatient') {
+            
         }
     }
     
