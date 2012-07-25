@@ -78,6 +78,12 @@ Ext.define('chw.controller.basic', {
                 tap: function () {
                     this.doToolbar('sync')
                 }
+            },
+            "selectfield[action=langfield]":{
+                change:function(option){
+                    localStorage.setItem('lang',option.getValue());
+                    window.location = "."
+                }
             }
         }
     },
