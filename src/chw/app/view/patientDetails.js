@@ -96,12 +96,22 @@ Ext.define('chw.view.patientDetails', {
                 width: '100%',
                 height: '80%',
                 centered: true,
+                /*itemTpl: [
+                    '<div>{illnessDetails}</div>'
+                ].join('')*/
                 itemTpl: [
-                    '<div>{illnessName}</div>'
-                ].join('')
-//                onItemDisclosure: function (record) {
-//                    helper.listDisclose('illness',record)
-//                }
+                    '<div style="float:left;width:32px;height:32px"><img src="{illnessDetails.illnessImage}" height="80%" width="80%"/></div>',
+                    '<div style="float:left;width:50%">',
+                        '<div class="list-item-title"">{illnessDetails.illnessName}</div>',
+                    '</div>',
+                    // '<div style="float:left;width:32px;height:32px">',
+//                    '<div>',
+//                        '<div class="list-item-title"">{illnessStartDate.format(DATE_PATTERNS.ISO8601Short)}-{illnessEndDate.format(DATE_PATTERNS.ShortTime)}</div>',
+//                    '</div>'
+                ].join(''),
+                onItemDisclosure: function (record) {
+                    helper.listDisclose('patientIllness',record)
+                }
             }, {
                 xtype: 'container',
                 docked: 'bottom',

@@ -194,7 +194,8 @@ Ext.define('chw.controller.basic', {
                 // TODO: get patient ID -- how do i pass this?
                 // get all information from form
                 var patientIdVal = Ext.ComponentQuery.query('addIllness #patientIdField')[0].getValue();
-                var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
+                var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data;
+                console.log(illnessNameVal);
                 var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
                 var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
                 var illnessTreatmentVal = Ext.ComponentQuery.query('addIllness #illnessTreatmentField')[0].getValue();
@@ -209,7 +210,7 @@ Ext.define('chw.controller.basic', {
                     }
                     var piModel = Ext.create('chw.model.patientIllness', {
                         patientId: patientIdVal,
-                        illnessId: illnessNameVal,
+                        illnessDetails: illnessNameVal,
                         illnessStartDate: illnessStartVal,
                         illnessEndDate: illnessEndVal,
                         illnessTreatment: illnessTreatmentVal,

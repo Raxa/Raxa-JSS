@@ -45,14 +45,14 @@ Ext.define('chw.view.inventoryList', {
             loadingText: 'Loading List...',
             emptyText: '</pre><div class="notes-list-empty-text"><center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.inventoryEmpty')+'<br></center></div><pre>',
             itemTpl: [
-                    '<div style="float:left;width:32px;height:32px"><img src="{pillImage}" height="80%" width="80%"/></div>',
-                    '<div style="float:left;width:60%">',
-                        '<div class="list-item-title"">{pillName}</div>',
-                    '</div>',
-                    '<div style="float:left;width:32px;height:32px">',
-                        '<div class="list-item-title" style="color:{pillColor};">{pillAmount}</div>',
-                    '</div>'
-                ].join(''),
+                '<div style="float:left;width:32px;height:32px"><img src="{pillImage}" height="80%" width="80%"/></div>',
+                '<div style="float:left;width:60%">',
+                    '<div class="list-item-title"">{pillName}</div>',
+                '</div>',
+                '<div style="float:left;width:32px;height:32px">',
+                    '<div class="list-item-title" style="color:{pillColor};">{pillAmount}</div>',
+                '</div>'
+            ].join(''),
             onItemDisclosure: function (record) {
                 helper.listDisclose('inventory', record)
             }
