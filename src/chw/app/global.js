@@ -66,8 +66,6 @@ var helper = {
             //Filtering the list by family id
             patientStore.filter('familyId',familyId)
             patientStore.onAfter('load',function(){
-                // console.log(patientStore)
-                // console.log('loaded') 
                 Ext.getCmp('familyMembersList').setStore(patientStore);
                 // Ext.ComponentQuery.query('fmailyDetails #familyNumberLabel')[0].setValue(patientStore.getCount())
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
