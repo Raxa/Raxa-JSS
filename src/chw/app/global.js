@@ -97,7 +97,6 @@ var helper = {
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
             Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(record.get('patientAge'));
             Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].setValue(record.get('patientId'));
-            // Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
             var pistore = Ext.getStore('patientsIllnesses');
             if (!pistore) {
                 Ext.create('chw.store.patientsIllnesses')
@@ -116,7 +115,7 @@ var helper = {
             Ext.ComponentQuery.query('inventoryDetails #pillFrequencyLabel')[0].setValue(record.get('pillFrequency'));
             Ext.ComponentQuery.query('inventoryDetails #pillNotesLabel')[0].setValue(record.get('pillNotes'));
             Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0].setTitle(record.get('pillName'));
-            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'+record.get('pillImage')+'" width="80%"/></center>');
+            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'+record.get('pillImage')+'" width="80px" height="80px"/></center>');
             // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
         } else if (list==='resources') {
@@ -134,6 +133,20 @@ var helper = {
             }
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
         } else if (list==='patientIllness') {
+//            var pid = record.get('patientId');
+//            var pstore = Ext.getStore('patients')
+//            pstore.load();
+//            var pname = pstore.getAt(pid);
+            Ext.getCmp('illnessDetails').setHidden(false);
+            var pfname = Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].getValue();
+            var plname = Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].getValue();
+            Ext.ComponentQuery.query('illnessDetails #patientIdField')[0].setValue(pfname + ' ' + plname)
+            Ext.ComponentQuery.query('illnessDetails #illnessNameField')[0].setValue(record.get('illnessDetails').illnessName);
+            Ext.ComponentQuery.query('illnessDetails #illnessStartDate')[0].setValue(record.get('illnessStartDate'));
+            Ext.ComponentQuery.query('illnessDetails #illnessEndDate')[0].setValue(record.get('illnessEndDate'));
+            Ext.ComponentQuery.query('illnessDetails #illnessTreatmentField')[0].setValue(record.get('illnessTreatment'));
+            Ext.ComponentQuery.query('illnessDetails #illnessNotesField')[0].setValue(record.get('illnessNotes'));
+            Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="'+record.get('illnessDetails').illnessImage+'" width="80%"/></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
             

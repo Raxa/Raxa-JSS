@@ -38,7 +38,7 @@ Ext.define('chw.view.illnessDetails', {
             xclass: 'chw.view.userToolbar'
         }, {
             xtype: 'label',
-            itemId: 'illnessDetailsImageLabel',
+            itemId: 'illnessImageLabel',
             html: '<center><img src="resources/circle.png"/></center>',
             height: '20%',
             width: '100%',
@@ -57,31 +57,17 @@ Ext.define('chw.view.illnessDetails', {
                     label: 'Patient Id',
                     itemId: 'patientIdField'
                 }, {
-                    xtype: 'selectfield',
+                    xtype: 'textfield',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.type'),
-                    required: true,
-                    itemId: 'illnessNameField',
-                    store: 'illnesses',
-                    displayField: 'illnessName'
+                    itemId: 'illnessNameField'
                 }, {
-                    xtype: 'datepickerfield',
-                    destroyPickerOnHide: true,
+                    xtype: 'textfield',
                     itemId: 'illnessStartDate',
-                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.startDate'),
-                    required: true,
-                    value: new Date(),
-                    picker: {
-                        yearFrom: 1900
-                    }
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.startDate')
                 }, {
-                    xtype: 'datepickerfield',
-                    destroyPickerOnHide: true,
+                    xtype: 'textfield',
                     itemId: 'illnessEndDate',
-                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.endDate'),
-                    value: new Date(),
-                    picker: {
-                        yearFrom: 1900
-                    }
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.endDate')
                 }, {
                     xtype: 'textareafield',
                     itemId: 'illnessTreatmentField',
@@ -93,8 +79,6 @@ Ext.define('chw.view.illnessDetails', {
                     label: 'Notes',
                     labelAlign: 'top'
                 }]
-            }, {
-                xclass: 'chw.view.okCancel'
             }]
         }]
     }
