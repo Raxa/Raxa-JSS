@@ -125,7 +125,7 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.illnessDetails'
             }]
         })
-        // console.log(Ext.getCmp('viewPort').getActiveItem());
+    // console.log(Ext.getCmp('viewPort').getActiveItem());
     },
     doAdd: function(step,arg){
         if(arg){
@@ -182,8 +182,14 @@ Ext.define('chw.controller.basic', {
                     if(!patientStore){
                         Ext.create('chw.store.patients');
                     }
+                    
+                    var saveFilter= patientStore.getFilters();
+                    patientStore.clearFilter()
                     var patientCount = patientStore.getCount();
                     patientCount = patientCount+1;
+                    patientStore.setFilters(saveFilter);
+                    patientStore.load();
+                    
                     var patientModel = Ext.create('chw.model.patient',{
                         familyId: familyIdVal,
                         patientId: patientCount,
@@ -250,7 +256,7 @@ Ext.define('chw.controller.basic', {
         }else if(active.id=='ext-resourceDetail-1'){
             this.doToolbar('resources')
         }else{
-           console.log(active.id);
+            console.log(active.id);
         }
     },
     doInventory: function (arg, amt) {
@@ -279,8 +285,8 @@ Ext.define('chw.controller.basic', {
             else if (arg==='reduce') {
                 
             }
-            // TODO: refresh the page
-            // TODO: pass this amount to the ganiyari
+        // TODO: refresh the page
+        // TODO: pass this amount to the ganiyari
         }
     }, 
     doExit: function () {
