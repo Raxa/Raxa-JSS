@@ -33,7 +33,11 @@ Ext.define('Laboratory.model.Concept', {
         }, {
             name: 'Flag',
             type: 'string'
-        }],
+        },{
+	    	name: 'Uuid',
+	  		type: 'string',
+	    	mapping: 'uuid'	
+	}],
 
 });
 

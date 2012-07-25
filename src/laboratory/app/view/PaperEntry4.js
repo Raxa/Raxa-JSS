@@ -78,6 +78,14 @@ Ext.define('Laboratory.view.PaperEntry4', {
         x: 240,
         y: 130
     }, {
+        xtype: 'button',
+        width: 60,
+        action: 'submitPaperEntry',
+        id: 'submitPaperEntry4',
+        text: 'Submit',
+        x: 600,
+        y: 600
+    }, {
         xtype: 'panel',
         width: 450,
         autoScroll: true,
@@ -96,7 +104,7 @@ Ext.define('Laboratory.view.PaperEntry4', {
                 dataIndex: 'string',
                 text: 'Test',
                 dataIndex: 'Test',
-		width: 200
+                width: 200
             }, {
                 xtype: 'gridcolumn',
                 text: 'Result',
@@ -108,7 +116,7 @@ Ext.define('Laboratory.view.PaperEntry4', {
                 width: 49,
                 text: 'Units',
                 dataIndex: 'Units',
-		editor: 'textfield',
+                editor: 'textfield',
             }, {
                 xtype: 'gridcolumn',
                 width: 31,
@@ -120,8 +128,7 @@ Ext.define('Laboratory.view.PaperEntry4', {
                     editable: false,
                     store: new Ext.data.Store({
                         fields: ['value'],
-                        data: [
-			{
+                        data: [{
                             value: 'A'
                         }, {
                             value: '>'

@@ -42,70 +42,58 @@ Ext.define('Laboratory.controller.PaperEntry', {
         LAB_USERNAME = 'admin';
         LAB_PASSWORD = 'Admin123';
 
-        //	  Below function call is used to test the result 
-        //     this.getLabOrder('ee8b270c-49b9-11e1-812a-0024e8c61285', this.getConcept);
+        this.control({
+            'PaperEntry4 button[action=submitPaperEntry]': {
+                click: this.sendLabObs
+            }
+        })
     },
 
-    /*  Lab order records which share the same LabOrderID. The LabOrderID is what will be listed in the panel and 
-     *  what the user will select. Each lab order has a concept field, which is the lab panel concept, 
-     *  which is also in the LabPanel table  
-     */
-    getLabOrder: function (orderId, callback) {
-
-        Ext.Ajax.request({
-            url: LAB_HOST + '/ws/rest/v1/order/' + orderId,
-            method: 'GET',
-            disableCaching: false,
-            headers: {
-                "Accept": "application/json",
-                "Authorization": "Basic " + window.btoa(LAB_USERNAME + ":" + LAB_PASSWORD),
-                "Content-Type": "application/json"
-            },
-            failure: function (response) {
-                console.log('GET failed with response status: ' + response.status);
-            },
-            success: function (response) {
-                console.log(JSON.parse(response.responseText));
-                var JSONResult = JSON.parse(response.responseText)
-                callback(JSONResult.concept, this.setStore);
+/* 
+ * This method uses the value entered in "results" grid (on PaperEntry4 view) and POSTs them as obs
+ * TO-DO: Add validation to the entered fields 
+ */
+    sendLabObs: function () {
+        //function to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        function ISODateString(d) {
+            function pad(n) {
+                return n < 10 ? '0' + n : n
             }
+            return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
+        }
+        var currentDate = new Date();
 
-        });
+        for (i = 0; i < Ext.getCmp('results').store.totalCount; i++) {
 
-    },
-    getConcept: function (concept, callback) {
-        Ext.Ajax.request({
-            url: LAB_HOST + '/ws/rest/v1/concept/' + concept.uuid,
-            method: 'GET',
-            disableCaching: false,
-            headers: {
-                "Accept": "application/json",
-                "Authorization": "Basic " + window.btoa(LAB_USERNAME + ":" + LAB_PASSWORD),
-                "Content-Type": "application/json"
-            },
-            failure: function (response) {
-                console.log('GET failed with response status: ' + response.status);
-            },
-            success: function (response) {
-                console.log(JSON.parse(response.responseText));
-                var JSONResult = JSON.parse(response.responseText);
-/*
-                for (i = 0; i < JSONResult.setMembers.length; i++) {
+            var jsonLabObs = {
+                "obsDatetime": ISODateString(currentDate),
+                "person": selectedPatientUuid,
+                "concept": Ext.getCmp('results').store.data.items[i].data.Uuid,
+                "value": Ext.getCmp('results').store.data.items[i].data.Result,
+            };
 
-                    Ext.getStore('concept').insert(0, {
-                        Specimen: JSONResult.display,
-                        Test: JSONResult.setMembers[i].display,
-                        Flag: 'A',
-                        Units: 'gm/l',
-                        Result: 23,
-                    });
+            //Ajax Request to POST json Object containing name+URL
+            Ext.Ajax.request({
+                url: LAB_HOST + '/ws/rest/v1/obs',
+                method: 'POST',
+                disableCaching: false,
+                jsonData: jsonLabObs,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Basic " + window.btoa(LAB_USERNAME + ":" + LAB_PASSWORD),
+                    "Content-Type": "application/json"
+                },
 
-                };
-                var grid = Ext.getCmp('labOrderListPaperEntry');
-                grid.store.sync();
-                console.log(Ext.getStore('concept'));
-*/
-            }
-        });
+                failure: function (response) {
+                    console.log('Lab Paper Entry for' + Ext.getCmp('results').store.data.items[i].data.Result + 'POST failed with response status' + response.status);
+                },
+
+                success: function (response) {
+                    console.log('Lab Paper Entry for' + Ext.getCmp('results').store.data.items[i].data.Result + 'POST successful with response status' + response.status);
+
+                }
+            });
+
+        }
     }
 });
