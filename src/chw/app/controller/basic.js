@@ -226,6 +226,7 @@ Ext.define('chw.controller.basic', {
                     });
                     piStore.add(piModel);
                     piStore.sync();
+                    // console.log(localStorage)
                     // TODO: reset
                     // console.log(Ext.getCmp('ext-addIllness-1'))
                     // Ext.getCmp('ext-addIllness-1').reset();
