@@ -52,6 +52,42 @@ Ext.define('chw.view.loginScreen', {
                 }]
             }, {
                 xclass: 'chw.view.okCancel'
+            },{
+                xtype:'spacer',
+                flex:'1',
+                docked:'bottom'
+            },{
+                xtype: 'container',
+                docked:'bottom',
+                //                    height: '10%',
+                layout: {
+                    type: 'hbox'
+                },
+                items: [
+                {
+                    xtype: 'label',
+                    flex: 1
+                },{
+                    xtype: 'selectfield',
+                    label:'Language',
+                    action: 'langfield',
+                    flex: 0,
+                    options: [{
+                        text:'',
+                        value:'empty'
+                    },{
+                        text: 'Hindi',
+                        value: 'hi-IN'
+                    },{
+                        text: 'English',
+                        value: 'en-US'
+                    }]
+                },{
+                    xtype: 'label',
+                    flex: 1
+                }
+                ]
+                
             }]
         }]
     }

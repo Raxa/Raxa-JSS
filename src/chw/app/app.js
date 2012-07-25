@@ -48,7 +48,7 @@ Ext.require('Ext.i18n.Bundle', function(){
     Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
         bundle: 'RaxaEmrChw',
         // lang: 'hi-IN',
-        lang: 'en-US',
+        lang: localStorage.getItem('lang'),
         path: 'app/view',
         noCache: true
     });
