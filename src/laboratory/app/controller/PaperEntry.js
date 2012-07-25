@@ -42,7 +42,8 @@ Ext.define('Laboratory.controller.PaperEntry', {
         LAB_USERNAME = 'admin';
         LAB_PASSWORD = 'Admin123';
 
-        this.getLabOrder('ee8b270c-49b9-11e1-812a-0024e8c61285', this.getConcept);
+        //	  Below function call is used to test the result 
+        //     this.getLabOrder('ee8b270c-49b9-11e1-812a-0024e8c61285', this.getConcept);
     },
 
     /*  Lab order records which share the same LabOrderID. The LabOrderID is what will be listed in the panel and 
@@ -88,12 +89,22 @@ Ext.define('Laboratory.controller.PaperEntry', {
             success: function (response) {
                 console.log(JSON.parse(response.responseText));
                 var JSONResult = JSON.parse(response.responseText);
+/*
                 for (i = 0; i < JSONResult.setMembers.length; i++) {
-                    Ext.getStore('concept').add({
-                        'Specimen': JSONResult.display,
-                        'Test': JSONResult.setMembers[i].display
+
+                    Ext.getStore('concept').insert(0, {
+                        Specimen: JSONResult.display,
+                        Test: JSONResult.setMembers[i].display,
+                        Flag: 'A',
+                        Units: 'gm/l',
+                        Result: 23,
                     });
+
                 };
+                var grid = Ext.getCmp('labOrderListPaperEntry');
+                grid.store.sync();
+                console.log(Ext.getStore('concept'));
+*/
             }
         });
     }

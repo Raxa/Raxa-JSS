@@ -21,7 +21,7 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Laboratory',
-    models: ['LabOrderSearch'],
+    models: ['LabOrderSearch','Concept'],
     controllers: ['Main','PaperEntry'],
     stores:['LabOrderSearch','concept'],
     views: [

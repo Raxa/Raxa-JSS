@@ -95,17 +95,20 @@ Ext.define('Laboratory.view.PaperEntry4', {
                 xtype: 'gridcolumn',
                 dataIndex: 'string',
                 text: 'Test',
-                dataIndex: 'Test'
+                dataIndex: 'Test',
+		width: 200
             }, {
                 xtype: 'gridcolumn',
                 text: 'Result',
                 id: 'resultsColumn',
-                dataIndex: 'Result'
+                dataIndex: 'Result',
+                editor: 'textfield',
             }, {
                 xtype: 'gridcolumn',
                 width: 49,
                 text: 'Units',
-                dataIndex: 'Units'
+                dataIndex: 'Units',
+		editor: 'textfield',
             }, {
                 xtype: 'gridcolumn',
                 width: 31,
@@ -117,14 +120,27 @@ Ext.define('Laboratory.view.PaperEntry4', {
                     editable: false,
                     store: new Ext.data.Store({
                         fields: ['value'],
-                        data: [{
+                        data: [
+			{
                             value: 'A'
                         }, {
-                            value: 'B'
+                            value: '>'
                         }, {
-                            value: 'C'
+                            value: 'H'
                         }, {
-                            value: 'D'
+                            value: 'HH'
+                        }, {
+                            value: 'AC'
+                        }, {
+                            value: '<'
+                        }, {
+                            value: 'L'
+                        }, {
+                            value: 'LL'
+                        }, {
+                            value: 'QCF'
+                        }, {
+                            value: 'AA'
                         }]
                     }),
                     displayField: 'value',

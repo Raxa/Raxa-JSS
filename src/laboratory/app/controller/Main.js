@@ -34,6 +34,9 @@ Ext.define('Laboratory.controller.Main', {
 
     init: function () {
         console.log('lab controller loaded');
+	LAB_HOME= 'http://openmrs.gielow.me/openmrs-1.8.4';
+	LAB_USERNAME='Admin';
+	LAB_PASSWORD='Admin123';
     }
 
 });

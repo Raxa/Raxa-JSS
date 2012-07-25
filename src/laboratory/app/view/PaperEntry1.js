@@ -42,24 +42,39 @@ Ext.define('Laboratory.view.PaperEntry1', {
                     var pos = grid.getSelectionModel().selected.length;
                     selectedLabOrderId = grid.store.data.items[pos - 1].raw.labOrderId;
                     selectedPatientDisplay = grid.store.data.items[pos - 1].raw.patient.display;
-		    selectedLabOrderIdUuid = grid.store.data.items[pos - 1].raw.uuid;
+                    selectedLabOrderIdUuid = grid.store.data.items[pos - 1].raw.uuid;
+		
+		    //Sets the LabOrderId and Patient's Name in the view
                     Ext.getCmp('LabOrderNoPaperEntry4Panel').setValue(selectedLabOrderId);
                     Ext.getCmp('patientDisplayPaperEntry4Panel').setValue(selectedPatientDisplay);
-		    console.log(selectedLabOrderIdUuid);
-		   
 
-//		    Ext.getCmp('PaperEntryController').getLabOrder(selectedLabOrderIdUuid,  Ext.getCmp('PaperEntryController').getConcept);
-	
-//	    Ext.getCmp('PaperEntryController').getLabOrder(selectedLabOrderIdUuid,'this.getConcept');
-//console.log(this.getApplication());
-//console.log(Ext.getApplication('Laboratory').getController('PaperEntry'));
-//(Ext.getCmp('PaperEntryController'));
-//console.log(this.getController('PaperEntryController'));    
-	console.log(this);
-              },
+                    var resultGrid = Ext.getCmp('results');
+
+		    //This Ajax call gets the uuid of LabSpecimen concept which is used to set the proxy of concept store
+                    Ext.Ajax.request({
+                        url: LAB_HOST + '/ws/rest/v1/order/' + selectedLabOrderIdUuid + '?v=full',
+                        method: 'GET',
+                        disableCaching: false,
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": "Basic " + window.btoa(LAB_USERNAME + ":" + LAB_PASSWORD),
+                            "Content-Type": "application/json"
+                        },
+                        failure: function (response) {
+                            console.log('GET failed with response status: ' + response.status);
+                        },
+                        success: function (response) {
+                            var JSONResult = JSON.parse(response.responseText);
+                            conceptUuid = JSONResult.concept.uuid;
+                            console.log('concept url is:' + conceptUuid);
+			// This is to change the proxy by getting corresponding concept uuid from order
+                            resultGrid.store.getProxy().url = LAB_HOME + '/ws/rest/v1/concept/' + conceptUuid + '?v=full';
+                            resultGrid.store.load();
+                        }
+                    });
+                }
             }
         }
-
     }, {
         xtype: 'button',
         margin: '10 50 0 270',

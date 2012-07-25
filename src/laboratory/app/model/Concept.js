@@ -13,25 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This file is store for labconcepts (Test Specimens & Tests)
+ * This file is model for labconcepts (Test Specimens & Tests)
  */
-Ext.define('Laboratory.store.concept', {
-    extend: 'Ext.data.Store',
-    model: 'Laboratory.model.Concept',
- //groupField: 'Specimen',
-    proxy: {
-        type: 'rest',
-        url: '',
-        headers: {
-            "Accept": "application/json",
-            "Authorization": "Basic " + window.btoa("admin:Admin123"),
-            "Content-Type": "application/json"
-        },
-        reader: {
-            type: 'json',
-            root: 'setMembers'
-        }
-    },
-    autoLoad: true,
-})
+Ext.define('Laboratory.model.Concept', {
+    extend: 'Ext.data.Model',
+      fields: [{
+            name: 'Specimen',
+            type: 'string',
+//	    mapping: 'display',
+        }, {
+            name: 'Test',
+            type: 'string',
+	    mapping: 'display',
+        }, {
+            name: 'Result'
+        }, {
+            name: 'Units',
+            type: 'string'
+        }, {
+            name: 'Flag',
+            type: 'string'
+        }],
+
+});
 
