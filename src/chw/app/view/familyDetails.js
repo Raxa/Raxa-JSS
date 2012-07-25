@@ -67,6 +67,7 @@ Ext.define('chw.view.familyDetails', {
                         placeHolder: 'Hogwarts'
                     }, {
                         xtype: 'textfield',
+                        itemId: 'familyNumberLabel',
                         label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.childTotal'),
                         placeHolder: '2/4'
                     }, {

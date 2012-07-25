@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.inventoryList', {
+Ext.define('chw.view.illnessList', {
     extend: 'Ext.Panel',
     requires: 'chw.view.userToolbar',
     config: {
@@ -21,7 +21,7 @@ Ext.define('chw.view.inventoryList', {
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.inventory'),
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.diseaseList'),
             docked: 'top',
             items: [{
                 xtype: 'button',
@@ -34,27 +34,23 @@ Ext.define('chw.view.inventoryList', {
         }, {
             xtype: 'list',
             ui: 'round',
-            layout: 'fit',
-            grouped: true,
             pinHeaders: false,
-            id: 'inventoryLists',
-            store: 'pills',
-            width: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
-            height: Ext.os.deviceType === 'Phone' ? '100%' : '100%',
+            id: 'illnessList',
+            width: '100%',
+            height: '80%',
             centered: true,
-            loadingText: 'Loading List...',
-            emptyText: '</pre><div class="notes-list-empty-text"><center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.inventoryEmpty')+'<br></center></div><pre>',
             itemTpl: [
-                '<div style="float:left;width:32px;height:32px"><img src="{pillImage}" height="80%" width="80%"/></div>',
+                '<div style="float:left;width:32px;height:32px"><img src="{patientImage}" height="80%" width="80%"/></div>',
                 '<div style="float:left;width:60%">',
-                    '<div class="list-item-title"">{pillName}</div>',
+                '<div class="list-item-title" style="font-size:15px;">{firstName} {familyName}</div>',
+                '<div class="list-item-narrative" style="font-size:10px;">Age: {patientAge} Gender: {patientGender}</div>',
                 '</div>',
                 '<div style="float:left;width:32px;height:32px">',
-                    '<div class="list-item-title" style="color:{pillColor};">{pillAmount}</div>',
+                '<img src=resources/circle.png height="80%" width="80%"/>',
                 '</div>'
             ].join(''),
             onItemDisclosure: function (record) {
-                helper.listDisclose('inventory', record)
+                helper.listDisclose('ipatient',record)
             }
         }]
     }

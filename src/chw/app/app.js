@@ -29,7 +29,7 @@ Ext.application({
     views: [
         'loginScreen', 
         'familyList', 
-        'diseaseList', 
+        'illnessList', 
         'familyDetails', 
         'patientDetails', 
         'visitDetails', 
@@ -37,7 +37,8 @@ Ext.application({
         'inventoryDetails', 
         'addOptions', 
         'addFamily', 
-        'addPatient'
+        'addPatient',
+        'illnessDetails'
     ],
     launch: function () {
         Ext.create('chw.view.loginScreen');
