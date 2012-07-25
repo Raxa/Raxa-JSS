@@ -105,9 +105,10 @@ Ext.define('chw.view.patientDetails', {
                         '<div class="list-item-title"">{illnessDetails.illnessName}</div>',
                     '</div>',
                     // '<div style="float:left;width:32px;height:32px">',
-//                    '<div>',
-//                        '<div class="list-item-title"">{illnessStartDate.format(DATE_PATTERNS.ISO8601Short)}-{illnessEndDate.format(DATE_PATTERNS.ShortTime)}</div>',
-//                    '</div>'
+                    '<div>',
+                        '<div class="list-item-title" style="font-size:10px;">',
+                        '{illnessStartDate}-<br>{illnessEndDate}</div>',
+                    '</div>'
                 ].join(''),
                 onItemDisclosure: function (record) {
                     helper.listDisclose('patientIllness',record)

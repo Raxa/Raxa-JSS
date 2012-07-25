@@ -157,7 +157,7 @@ Ext.define('chw.controller.basic', {
                     
                     familyStore.add(familyModel);
                     familyStore.sync();
-                    //                    familyStore.on('write',function(){
+                    // familyStore.on('write',function(){
                     // console.log('Added family locally');
                     Ext.getCmp('familyName').reset();
                     Ext.getCmp('address').reset();
