@@ -45,9 +45,11 @@ var CURR_LOC = {
 }
 var LOCATION = "";
 var CONNECTED = true;
+var toHistoryFrom = '' //This var is used to determine from which view the illness history of a patient is being reached.
+//Either from the patient details page of the disease list page
 var savedFamilyRecord
 var savedPatientRecord
-var savedResourcesRecord
+var savedIllnessRecord
 var helper = {
     listDisclose: function (list,record) {
         if(list==='family'){
@@ -73,6 +75,8 @@ var helper = {
             });
             patientStore.load();
         } else if (list==='illness') {
+            console.log('===Illness===')
+            savedIllnessRecord = record
             var pistored = Ext.getStore('patientsIllnesses')
             if (!pistored) {
                 Ext.create('chw.store.patientsIllnesses')
@@ -139,6 +143,8 @@ var helper = {
             }
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
         } else if (list==='patientIllness') {
+            //Going to illness history from patient details
+            toHistoryFrom = 'patientDetails'
 //            var pid = record.get('patientId');
 //            var pstore = Ext.getStore('patients')
 //            pstore.load();
@@ -156,12 +162,14 @@ var helper = {
                 + record.get('illnessDetails').illnessImage+'" width="100px" /></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
+            console.log('===ipatient===')
+            //Going to illness history from disease list
+            toHistoryFrom = 'diseaseList'
             // get the patient information
             var patid = record.get('patientId') - 1;
             var pStore = Ext.getStore('patients');
             pStore.load();
             var pName = pStore.getAt(patid).getData();
-            console.log(pName)
             // populate patient fields in patient details
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(pName.firstName);
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(pName.familyName);

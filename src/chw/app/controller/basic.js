@@ -246,7 +246,7 @@ Ext.define('chw.controller.basic', {
     },
     doBack: function () {
         var active = Ext.getCmp('viewPort').getActiveItem();
-        
+        console.log(active.id);
         if(active.id=='ext-panel-5' || active.id=='ext-familyDetails-1' || active.id=='ext-panel-3' || active.id=='ext-tabpanel-2' || active.id=='ext-panel-1'){
             this.doList('familyList');
             Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
@@ -259,9 +259,15 @@ Ext.define('chw.controller.basic', {
         }else if(active.id=='ext-resourceDetail-1'){
             this.doToolbar('resources')
         }else if(active.id=='illnessDetails'){
-            //go back to patient details
-            helper.listDisclose('patient', savedPatientRecord)
-            //or disease list
+            if(toHistoryFrom == 'patientDetails'){
+                //go back to patient details
+                console.log('going to patient details')
+                helper.listDisclose('patient', savedPatientRecord)
+            }else if(toHistoryFrom == 'ipatient'){
+                //or disease list
+                console.log('going to illness list')
+                helper.listDisclose('illness', savedIllnessRecord)
+            }
         }else{
             console.log(active.id);
         }
@@ -308,7 +314,7 @@ Ext.define('chw.controller.basic', {
             var pass = Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].getValue(); 
             if (USER.name===''||pass==='') {
                 Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'),
-                Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'))
+                    Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'))
             } else {
                 // get user information
                 Ext.Ajax.request({
@@ -372,7 +378,7 @@ Ext.define('chw.controller.basic', {
                             Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
                             Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
                             Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), 
-                            Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
+                                Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
                         }
                     },
                     failure: function () {
@@ -390,7 +396,7 @@ Ext.define('chw.controller.basic', {
                             Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
                             Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
                             Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), 
-                            Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
+                                Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
                         }
                     }
                 })
