@@ -156,16 +156,19 @@ var helper = {
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
             // get the patient information
-            var patid = record.get('patientId');
+            var patid = record.get('patientId') - 1;
             var pStore = Ext.getStore('patients');
             pStore.load();
             var pName = pStore.getAt(patid).getData();
+            console.log(pName)
             // populate patient fields in patient details
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(pName.firstName);
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(pName.familyName);
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(pName.patientGender);
             Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(pName.patientAge);
             Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].setValue(pName.patientId);
+            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="'
+                +pName.patientImage+'" width="150px" /></center>')
             // show history
             var patillstore = Ext.getStore('patientsIllnesses');
             if (!patillstore) {
