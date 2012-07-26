@@ -258,6 +258,10 @@ Ext.define('chw.controller.basic', {
             this.doToolbar('inventory')
         }else if(active.id=='ext-resourceDetail-1'){
             this.doToolbar('resources')
+        }else if(active.id=='illnessDetails'){
+            //go back to patient details
+            helper.listDisclose('patient', savedPatientRecord)
+            //or disease list
         }else{
             console.log(active.id);
         }

@@ -46,6 +46,7 @@ var CURR_LOC = {
 var LOCATION = "";
 var CONNECTED = true;
 var savedFamilyRecord
+var savedPatientRecord
 var savedResourcesRecord
 var helper = {
     listDisclose: function (list,record) {
