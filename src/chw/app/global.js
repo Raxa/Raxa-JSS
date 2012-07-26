@@ -81,7 +81,7 @@ var helper = {
             // console.log(pistored)
             // console.log(record)
             // TODO: Something is definitely wrong with the filter
-            pistored.filter('illnessDetails',record.data)
+            pistored.filter('illnessId',record.get('illnessId'))
             // pistored.filter('patientId',1)
             pistored.onAfter('load', function () {
                 // console.log('second',pistored)
@@ -146,13 +146,17 @@ var helper = {
             var pfname = Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].getValue();
             var plname = Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].getValue();
             Ext.ComponentQuery.query('illnessDetails #patientIdField')[0].setValue(pfname + ' ' + plname)
-            Ext.ComponentQuery.query('illnessDetails #illnessNameField')[0].setValue(record.get('illnessDetails').illnessName);
+            var illId = record.get('illnessId')
+            var iStore = Ext.getStore('illnesses');
+            iStore.load();
+            var illnessDetails = iStore.getAt(illId).getData();
+            Ext.ComponentQuery.query('illnessDetails #illnessNameField')[0].setValue(illnessDetails.illnessName);
             Ext.ComponentQuery.query('illnessDetails #illnessStartDate')[0].setValue(record.get('illnessStartDate'));
             Ext.ComponentQuery.query('illnessDetails #illnessEndDate')[0].setValue(record.get('illnessEndDate'));
             Ext.ComponentQuery.query('illnessDetails #illnessTreatmentField')[0].setValue(record.get('illnessTreatment'));
             Ext.ComponentQuery.query('illnessDetails #illnessNotesField')[0].setValue(record.get('illnessNotes'));
             Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="' 
-                + record.get('illnessDetails').illnessImage+'" width="100px" /></center>');
+                + illnessDetails.illnessImage+'" width="100px" /></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
             // get the patient information

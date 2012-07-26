@@ -101,6 +101,7 @@ Ext.define('chw.view.patientDetails', {
                     '<div>{illnessDetails}</div>'
                 ].join('')*/
                 itemTpl: [
+                    // TODO: 
                     '<div style="float:left;width:32px;height:32px"><img src="{illnessDetails.illnessImage}" height="80%" width="80%"/></div>',
                     '<div style="float:left;width:40%">',
                         '<div class="list-item-title"">{illnessDetails.illnessName}</div>',
