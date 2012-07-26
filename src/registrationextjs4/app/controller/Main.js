@@ -252,7 +252,7 @@ Ext.define('Registration.controller.Main', {
         identifiers.load();
         // this statement calls getlocation() as soon as the get call is successful
         identifiers.on('load', function () {
-            var idIterator;
+			var idIterator;
             var idNo = -1;
             for (idIterator = 0; idIterator < identifiers.data.length; idIterator++) {
                 var str = identifiers.data.items[idIterator].raw.display;
@@ -261,7 +261,7 @@ Ext.define('Registration.controller.Main', {
                 }
             }
             if (idNo === -1) {
-                this.getlocation(personUuid, identifiers.getAt(0).getData().uuid);
+                console.log('ERROR: Could not find identifier type \''+ idPattern.source.match(/[\w ]+/g) +'\' in OpenMRS instance.');
             } else {
                 // this statement calls getlocation() as soon as the get call is successful
                 this.getlocation(personUuid, identifiers.getAt(idNo).getData().uuid);
@@ -285,6 +285,7 @@ Ext.define('Registration.controller.Main', {
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
         localStorage.setItem('newPatientUuid',personUuid)
+        console.log(personUuid)
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
@@ -312,10 +313,23 @@ Ext.define('Registration.controller.Main', {
     
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
     sendEncounterData: function(){
-        var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
+        
+        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        function ISODateString(d){
+            function pad(n){
+                return n<10 ? '0'+n : n
+            }
+            return d.getUTCFullYear()+'-'
+            + pad(d.getUTCMonth()+1)+'-'
+            + pad(d.getUTCDate())+'T'
+            + pad(d.getUTCHours())+':'
+            + pad(d.getUTCMinutes())+':'
+            + pad(d.getUTCSeconds())+'Z'
+        }
+        var currentDate = new Date();
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel',{
-            encounterDatetime : t,
+            encounterDatetime : ISODateString(currentDate),
             patient: localStorage.newPatientUuid,//you will get the uuid from ticket 144...pass it here
             encounterType: localStorage.regUuidencountertype//need to pass the type depending on the type of encounter
         });
@@ -326,9 +340,10 @@ Ext.define('Registration.controller.Main', {
         jsonencounter.data.obs = [];
         jsonencounter.data.provider = [];
         jsonencounter.data.orders = [];
+        // the variables above are hard coded...will get them from somewhere else
         // the if statement is to check whether the field is null or not..persist false does not pass that field details into the server. this is done to avoid 500 error
         // here I am checking that if a field is null then It should not be send in request payload in post call so I am dynamically changing persist to false
-        if(location != ""){
+		if(location != ""){
             jsonencounter.data.location = location;
             Registration.model.encounterModel.getFields()[3].persist = true;
         }
@@ -361,7 +376,7 @@ Ext.define('Registration.controller.Main', {
         //get the values of each obs from the bmi or registration field
         if(Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value != null){
             var jsonencounterheight = Ext.create('Registration.model.obsModel',{
-                obsDatetime : t,
+                obsDatetime : ISODateString(currentDate),
                 person: localStorage.newPatientUuid,
                 concept: localStorage.heightUuidconcept,
                 value: parseInt(Ext.getCmp('heightIDcm').getValue())
@@ -370,7 +385,7 @@ Ext.define('Registration.controller.Main', {
         }
         if(Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value != null){
             var jsonencounterweight = Ext.create('Registration.model.obsModel',{
-                obsDatetime : t,
+                obsDatetime : ISODateString(currentDate),
                 person: localStorage.newPatientUuid,
                 concept: localStorage.weightUuidconcept,
                 value: parseFloat(Ext.getCmp('weightIDkg').getValue())
@@ -379,16 +394,16 @@ Ext.define('Registration.controller.Main', {
         }
         if(Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value != null){
             var jsonencounterbmi = Ext.create('Registration.model.obsModel',{
-                obsDatetime : t,
+                obsDatetime : ISODateString(currentDate),
                 person: localStorage.newPatientUuid,
-                concept: localStorage.bmiUuidconcept,
+                concept: localStorage.BMIUuidconcept,
                 value: parseFloat(Ext.getCmp('bmiNumberfieldID').getValue())
             });
             jsonencounter.data.obs.push(jsonencounterbmi.data);
         }
         if(Ext.getCmp('registrationfeespaid').isValid() && Ext.getCmp('registrationfeespaid').value != null){
             var jsonencounterregfee = Ext.create('Registration.model.obsModel',{
-                obsDatetime : t,
+                obsDatetime : ISODateString(currentDate),
                 person: localStorage.newPatientUuid,
                 concept: localStorage.regfeeUuidconcept,
                 value: Ext.getCmp('registrationfeespaid').value
