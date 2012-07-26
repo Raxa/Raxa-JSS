@@ -41,6 +41,7 @@ Ext.define('chw.view.patientDetails', {
             layout: 'vbox',
             items: [{
                 xtype: 'label',
+                itemId: 'patientDetailsImage',
                 html: '<center><img src="resources/user.png"/></center>',
                 height: '20%',
                 width: '100%',

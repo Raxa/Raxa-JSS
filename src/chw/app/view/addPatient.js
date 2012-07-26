@@ -105,10 +105,14 @@ Ext.define('chw.view.addPatient', {
                     picker: {
                         yearFrom: 1900
                     }
+                }, {
+                    xtype: 'textfield',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.selectImage'),
+                    itemId: 'imageField',
+                    placeHolder: 'amir.jpg',
+                    required: true,
+                    clearIcon: true
                 }]
-            }, {
-                xtype: 'button',
-                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.selectImage')
             }, {
                 xclass: 'chw.view.okCancel'
             }]

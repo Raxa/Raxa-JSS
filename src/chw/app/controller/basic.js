@@ -172,8 +172,10 @@ Ext.define('chw.controller.basic', {
                 var lastNameVal = Ext.ComponentQuery.query('AddPatient #lastName')[0].getValue();
                 var radioform = Ext.getCmp('ext-AddPatient-1').saveForm();
                 var birthDay = Ext.ComponentQuery.query('AddPatient #bday')[0].getValue();
+                var imageLocation = Ext.ComponentQuery.query('AddPatient #imageField')[0].getValue();
+                imageLocation = '/Raxa-JSS/chw/resources/'+imageLocation
                 
-                if(firstNameVal=='' || lastNameVal== '' || !radioform.radiogroup){
+                if(firstNameVal=='' || lastNameVal== '' || !radioform.radiogroup || imageLocation==''){
                     Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
                 }else{
                     //Move ahead with adding the patient
@@ -196,7 +198,8 @@ Ext.define('chw.controller.basic', {
                         firstName: firstNameVal,
                         familyName: lastNameVal,
                         patientGender: gender,
-                        birthDate: birthDay
+                        birthDate: birthDay,
+                        patientImage: imageLocation
                     });
                     
                     patientStore.add(patientModel);
