@@ -136,7 +136,8 @@ Ext.define('chw.controller.basic', {
                 var description = Ext.getCmp('description').getValue();
                 
                 if(familyName=='' || address==''){
-                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
+                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), 
+                    Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
                 }else{
                     var familyStore = Ext.getStore('families');
                     if(!familyStore){
@@ -211,14 +212,18 @@ Ext.define('chw.controller.basic', {
                 // TODO: get patient ID -- how do i pass this?
                 // get all information from form
                 var patientIdVal = Ext.ComponentQuery.query('addIllness #patientIdField')[0].getValue();
-                var illnessNameVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data;
+                var patientStore = Ext.getStore('patients')
+                patientStore.load();
+                var patientDetailsVal = patientStore.getAt(patientIdVal - 1).getData();
+                var illnessIdVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
+                var illnessDetailsVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data;
                 // console.log(illnessNameVal);
                 var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
                 var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
                 var illnessTreatmentVal = Ext.ComponentQuery.query('addIllness #illnessTreatmentField')[0].getValue();
                 var illnessNotesVal = Ext.ComponentQuery.query('addIllness #illnessNotesField')[0].getValue();
                 // console.log(illnessNameVal,illnessStartVal,illnessEndVal,illnessTreatmentVal,illnessNotesVal)
-                if (illnessNameVal===''||illnessStartVal===''||illnessEndVal===''||illnessTreatmentVal===''||illnessNotesVal==='') {
+                if (illnessDetailsVal===''||illnessStartVal===''||illnessEndVal===''||illnessTreatmentVal===''||illnessNotesVal==='') {
                     Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
                 } else {
                     var piStore = Ext.getStore('patientsIllnesses');
@@ -227,11 +232,13 @@ Ext.define('chw.controller.basic', {
                     }
                     var piModel = Ext.create('chw.model.patientIllness', {
                         patientId: patientIdVal,
-                        illnessDetails: illnessNameVal,
+                        illnessId: illnessIdVal,
+                        illnessDetails: illnessDetailsVal,
                         illnessStartDate: illnessStartVal,
                         illnessEndDate: illnessEndVal,
                         illnessTreatment: illnessTreatmentVal,
-                        illnessNotes: illnessNotesVal
+                        illnessNotes: illnessNotesVal,
+                        patientDetails: patientDetailsVal
                     });
                     piStore.add(piModel);
                     piStore.sync();

@@ -21,8 +21,14 @@ Ext.define('chw.model.patientIllness', {
             name: 'patientId',
             type: 'int'
         }, {
+            name: 'patientDetails',
+            model: 'chw.model.patient'
+        }, {
             name: 'illnessDetails',
             model: 'chw.model.illness'
+        }, {
+           name: 'illnessId',
+           type: 'int'
         }, {
             name: 'illnessStartDate',
             type: 'date'
@@ -37,6 +43,12 @@ Ext.define('chw.model.patientIllness', {
         }, {
             name: 'illnessNotes',
             type: 'string'
-        }]
+        }/*, {
+            name: 'illnessIncident',
+            type: 'int'
+        }*//*, {
+            name: 'illnessActive',
+            type: 'bool'
+        }*/]
     }
 })
