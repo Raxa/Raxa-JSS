@@ -76,21 +76,24 @@ var helper = {
             if (!pistored) {
                 Ext.create('chw.store.patientsIllnesses')
             }
-            var iid = record.get('illnessId')
+            // var iid = record.get('illnessId')
             // console.log(iid)
             console.log(pistored)
+            console.log(record)
             // TODO: Something is definitely wrong with the filter
-            // pistored.filter('illnessDetails.illnessId',iid)
-            pistored.filter('patientId',1)
+            pistored.filter('illnessDetails',record.getData())
+            // pistored.filter('patientId',1)
             pistored.onAfter('load', function () {
                 // console.log('second',pistored)
+                console.log(pistored.getFilters())
                 Ext.getCmp('illnessList').setStore(pistored);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
             })
             pistored.load();
         } else if (list==='patient') {
             savedPatientRecord=record
-            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="'+record.get('patientImage')+'" width="150px" /></center>')
+            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="'
+                +record.get('patientImage')+'" width="150px" /></center>')
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(record.get('familyName'));
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
@@ -114,7 +117,8 @@ var helper = {
             Ext.ComponentQuery.query('inventoryDetails #pillFrequencyLabel')[0].setValue(record.get('pillFrequency'));
             Ext.ComponentQuery.query('inventoryDetails #pillNotesLabel')[0].setValue(record.get('pillNotes'));
             Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0].setTitle(record.get('pillName'));
-            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'+record.get('pillImage')+'" width="100px"/></center>');
+            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'
+                +record.get('pillImage')+'" width="100px"/></center>');
             // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
         } else if (list==='resources') {
@@ -126,9 +130,11 @@ var helper = {
             if (type==='photo') {
                 container.setHtml('<img src="'+ location +'" height="100%" width="100%"/>')
             } else if (type === 'video') {
-                container.setHtml('<video controls="controls" height="100%" width="100%"><source src="' + location + '" type="video/webm" />Your browser does not support the video tag</video>')
+                container.setHtml('<video controls="controls" height="100%" width="100%"><source src="' 
+                    + location + '" type="video/webm" />Your browser does not support the video tag</video>')
             } else if (type === 'audio') {
-                container.setHtml('<audio controls="controls"><source src="' + location + '" type = "audio/mp3" />Your browser does not support the audio element</audio>')
+                container.setHtml('<audio controls="controls"><source src="' + location 
+                    + '" type = "audio/mp3" />Your browser does not support the audio element</audio>')
             }
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
         } else if (list==='patientIllness') {
@@ -145,7 +151,8 @@ var helper = {
             Ext.ComponentQuery.query('illnessDetails #illnessEndDate')[0].setValue(record.get('illnessEndDate'));
             Ext.ComponentQuery.query('illnessDetails #illnessTreatmentField')[0].setValue(record.get('illnessTreatment'));
             Ext.ComponentQuery.query('illnessDetails #illnessNotesField')[0].setValue(record.get('illnessNotes'));
-            Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="'+record.get('illnessDetails').illnessImage+'" width="100px" /></center>');
+            Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="' 
+                + record.get('illnessDetails').illnessImage+'" width="100px" /></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
             // get the patient information

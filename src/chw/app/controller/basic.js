@@ -303,7 +303,8 @@ Ext.define('chw.controller.basic', {
             USER.name = Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].getValue();
             var pass = Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].getValue(); 
             if (USER.name===''||pass==='') {
-                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'),Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'))
+                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'),
+                Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'))
             } else {
                 // get user information
                 Ext.Ajax.request({
@@ -366,7 +367,8 @@ Ext.define('chw.controller.basic', {
                             localStorage.removeItem("basicAuthHeader");
                             Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
                             Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
-                            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
+                            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), 
+                            Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
                         }
                     },
                     failure: function () {
@@ -383,7 +385,8 @@ Ext.define('chw.controller.basic', {
                         } else {
                             Ext.ComponentQuery.query('LoginScreen #usernameIID')[1].reset();
                             Ext.ComponentQuery.query('LoginScreen #passwordIID')[1].reset();
-                            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
+                            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), 
+                            Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.tryAgainError'))
                         }
                     }
                 })
