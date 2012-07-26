@@ -78,14 +78,14 @@ var helper = {
             }
             // var iid = record.get('illnessId')
             // console.log(iid)
-            console.log(pistored)
-            console.log(record)
+            // console.log(pistored)
+            // console.log(record)
             // TODO: Something is definitely wrong with the filter
-            pistored.filter('illnessDetails',record.getData())
+            pistored.filter('illnessDetails',record.data)
             // pistored.filter('patientId',1)
             pistored.onAfter('load', function () {
                 // console.log('second',pistored)
-                console.log(pistored.getFilters())
+                // console.log(pistored.getFilters())
                 Ext.getCmp('illnessList').setStore(pistored);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
             })
