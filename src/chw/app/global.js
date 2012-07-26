@@ -78,10 +78,10 @@ var helper = {
             }
             var iid = record.get('illnessId')
             // console.log(iid)
-            // console.log(pistored)
+            console.log(pistored)
             // TODO: Something is definitely wrong with the filter
-            pistored.filter('illnessDetails.illnessId',iid)
-            // pistored.filter('patientId',1)
+            // pistored.filter('illnessDetails.illnessId',iid)
+            pistored.filter('patientId',1)
             pistored.onAfter('load', function () {
                 // console.log('second',pistored)
                 Ext.getCmp('illnessList').setStore(pistored);
@@ -113,7 +113,7 @@ var helper = {
             Ext.ComponentQuery.query('inventoryDetails #pillFrequencyLabel')[0].setValue(record.get('pillFrequency'));
             Ext.ComponentQuery.query('inventoryDetails #pillNotesLabel')[0].setValue(record.get('pillNotes'));
             Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0].setTitle(record.get('pillName'));
-            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'+record.get('pillImage')+'" width="80px" height="80px"/></center>');
+            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'+record.get('pillImage')+'" width="100px"/></center>');
             // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
         } else if (list==='resources') {
@@ -144,10 +144,31 @@ var helper = {
             Ext.ComponentQuery.query('illnessDetails #illnessEndDate')[0].setValue(record.get('illnessEndDate'));
             Ext.ComponentQuery.query('illnessDetails #illnessTreatmentField')[0].setValue(record.get('illnessTreatment'));
             Ext.ComponentQuery.query('illnessDetails #illnessNotesField')[0].setValue(record.get('illnessNotes'));
-            Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="'+record.get('illnessDetails').illnessImage+'" width="80%"/></center>');
+            Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="'+record.get('illnessDetails').illnessImage+'" width="100px" /></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
-            Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+            // get the patient information
+            var patid = record.get('patientId');
+            var pStore = Ext.getStore('patients');
+            pStore.load();
+            var pName = pStore.getAt(patid).getData();
+            // populate patient fields in patient details
+            Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(pName.firstName);
+            Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(pName.familyName);
+            Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(pName.patientGender);
+            Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(pName.patientAge);
+            Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].setValue(pName.patientId);
+            // show history
+            var patillstore = Ext.getStore('patientsIllnesses');
+            if (!patillstore) {
+                Ext.create('chw.store.patientsIllnesses')
+            }
+            patillstore.filter('patientId',patid)
+            patillstore.onAfter('load',function () {
+                Ext.getCmp('patientIllnessList').setStore(patillstore);
+                Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
+            });
+            patillstore.load();
         }
     }
     

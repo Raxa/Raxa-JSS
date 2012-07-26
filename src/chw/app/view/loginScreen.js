@@ -59,12 +59,10 @@ Ext.define('chw.view.loginScreen', {
             },{
                 xtype: 'container',
                 docked:'bottom',
-                //                    height: '10%',
                 layout: {
                     type: 'hbox'
                 },
-                items: [
-                {
+                items: [{
                     xtype: 'label',
                     flex: 1
                 },{
@@ -85,8 +83,7 @@ Ext.define('chw.view.loginScreen', {
                 },{
                     xtype: 'label',
                     flex: 1
-                }
-                ]
+                }]
                 
             }]
         }]
