@@ -102,10 +102,10 @@ Ext.define('chw.view.patientDetails', {
                 ].join('')*/
                 itemTpl: [
                     '<div style="float:left;width:32px;height:32px"><img src="{illnessDetails.illnessImage}" height="80%" width="80%"/></div>',
-                    '<div style="float:left;width:50%">',
+                    '<div style="float:left;width:40%">',
                         '<div class="list-item-title"">{illnessDetails.illnessName}</div>',
                     '</div>',
-                    '<div style="float:left;width:32px;height:32px">',
+                    // '<div style="float:left;width:32px;height:32px"></div>',
                     '<div>',
                         '<div class="list-item-title" style="font-size:10px;">',
                         '{illnessStartDate}-<br>{illnessEndDate}</div>',
