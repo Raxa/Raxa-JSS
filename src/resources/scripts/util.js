@@ -107,6 +107,11 @@ var REG_PAGES = {
 
 var UITIME = 120000;
 var diffinUTC_GMT = 5.5;
+//number of hours for everything to be before now
+//OpenMRS checks whether encounters are ahead of current time --
+//if a system clock is ahead of OpenMRS clock, some things can't be posted
+//therefore, we need to fudge our time a few mins behind
+var TIME_BEFORE_NOW = .05;
 
 // The Util class provids several methods that are shared by the core, apps and modules
 var Util = {
@@ -135,6 +140,8 @@ var Util = {
         if (typeof hours == 'undefined') {
             hours = 0;
         }
+        //subtracting time in case our clock is ahead of OpenMRS clock
+        hours = hours+TIME_BEFORE_NOW;
         var MS_PER_MINUTE = 60000;
         var k = new Date(d - (60 * hours) * MS_PER_MINUTE);
 
@@ -250,16 +257,18 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        var patientIDRequest = new XMLHttpRequest();
-        patientIDRequest.open("GET", HOST + '/module/idgen/generateIdentifier.form?source=1&comment=New%20Patient', false);
-        patientIDRequest.setRequestHeader("Accept", "*/*");
-        patientIDRequest.send();
-        if (patientIDRequest.status = "200") {
-            var pid = patientIDRequest.responseText;
-            return pid;
-        } else {
-            console.log('ERROR Code on creating patient identifier: ' + patientIDRequest.status);
-        }
+        //TODO: add this back in once ID Gen is working properly
+//        var patientIDRequest = new XMLHttpRequest();
+//        patientIDRequest.open("GET", HOST + '/module/idgen/generateIdentifier.form?source=1&comment=New%20Patient', false);
+//        patientIDRequest.setRequestHeader("Accept", "*/*");
+//        patientIDRequest.send();
+//        if (patientIDRequest.status = "200") {
+//            var pid = patientIDRequest.responseText;
+//            return pid;
+//        } else {
+//            console.log('ERROR Code on creating patient identifier: ' + patientIDRequest.status);
+//        }
+        return (Math.floor(Math.random()*1000000)).toString();
     },
 
     //Function to help share Models between ExtJS and Sencha Touch 2.
