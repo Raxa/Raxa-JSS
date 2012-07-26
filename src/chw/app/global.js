@@ -90,6 +90,7 @@ var helper = {
             pistored.load();
         } else if (list==='patient') {
             savedPatientRecord=record
+            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="'+record.get('patientImage')+'" width="150px" /></center>')
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(record.get('familyName'));
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
