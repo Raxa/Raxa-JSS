@@ -7,6 +7,7 @@
 Ext.define("Screener.view.TopMenu", {
     extend: 'Ext.Container',
     xtype: 'topmenu',
+    id: 'mainView',
     config: {
         fullscreen: true,
         layout: 'vbox',
@@ -46,6 +47,10 @@ Ext.define("Screener.view.TopMenu", {
             ui: 'round',
             height: 80,
             width: 300
+        }, {
+            xtype: 'loadmask',
+            message: 'Loading',
+            id: 'loadMask'	
         }]
     }
 });
