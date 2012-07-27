@@ -26,12 +26,12 @@ Ext.define('chw.view.userToolbar', {
             align: 'center'
         },
         items: [{
-            iconCls: 'add',
-            action: 'addButton'
-        }, {
+            iconCls: 'list',
+            action: 'listButton'
+        }/*, {
             iconCls:'cloud_black_upload1',
             action: 'syncButton'
-        }, {
+        }*/, {
             iconCls: 'shop2',
             action: 'inventoryButton'
         }, {

@@ -19,7 +19,7 @@ Ext.define('chw.controller.basic', {
         control: {
             "button[action=addButton]": {
                 tap: function () {
-                    this.doToolbar('add')
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
                 }
             },
             "button[action=cancelButton]": {
@@ -65,6 +65,11 @@ Ext.define('chw.controller.basic', {
                     window.location = "."
                 }
             },
+            "button[action=listButton]": {
+                tap: function () {
+                    this.doToolbar('list')
+                }
+            },
             "button[action=logoutButton]": {
                 tap: function () {
                     this.doToolbar('logout')
@@ -88,7 +93,7 @@ Ext.define('chw.controller.basic', {
             "button[action=visitStart]": {
                 tap: function () {
                     Ext.getCmp('viewPort').setActiveItem(PAGES.visitDetails)
-                    this.doVisit()
+                    this.doVisit('start')
                 }
             }
         }
@@ -478,9 +483,8 @@ Ext.define('chw.controller.basic', {
     }, 
     doToolbar: function (arg) {
         //Toolbar button functionalities
-        if (arg==='add') {
-            //Adding a family
-            Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
+        if (arg==='list'){
+            Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
         } else if (arg==='sync') {
             //Syncing data
             Ext.Msg.confirm('',Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.sync'), function (resp) {
@@ -506,6 +510,53 @@ Ext.define('chw.controller.basic', {
         }
     },
     doVisit: function (arg) {
-        
+        if (arg==='start') {
+            // TODO: get type of visit
+            // TODO: get list of tasks associated with visit type
+            var taskList = [VIS.ORS, VIS.RDT, VIS.VITA, VIS.ALB, VIS.BLOOD]
+            // get container for task buttons
+            var c = Ext.ComponentQuery.query('visitDetails #visitChecklist')[0]
+            var cont = Ext.create('Ext.Container', {
+                centered: true,
+                width: '100%',
+                itemId: 'cont'
+            });
+            // get store for visit details
+            var visitStore = Ext.getStore('visits');
+            visitStore.load();
+            // create buttons for each task
+            for (var i = 0; i < taskList.length; i++) {
+                var t = visitStore.getAt(taskList[i]);
+                var u = 'confirm';
+                var d = false;
+                if (t.get('visitComplete')) {
+                    u = 'decline',
+                    d = true
+                }
+                var cell = Ext.create('Ext.Panel', {
+                    padding: '0px 20px 0px 20px',
+                    items: [{
+                        layout: 'vbox',
+                        xtype: 'button',
+                        id: t.get('id'),
+                        text: t.get('visitText'),
+                        ui: u,
+                        disabled: d,
+                        listeners: {
+                            tap: function () {
+                                helper.doVis(this.id)
+                            }
+                        }
+                    }, {
+                        xtype: 'audio',
+                        id: t.get('id') + '_audio',
+                        url: t.get('visitAudio'),
+                        hidden: true
+                    }]
+                })
+                cont.add(cell);
+            }
+            c.add(cont)
+        }
     }
 })
