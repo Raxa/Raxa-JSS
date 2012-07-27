@@ -177,6 +177,19 @@ var helper = {
             });
             patillstore.load();
         }
+    },
+    doVis: function (arg) {
+        var visitStore = Ext.getStore('visits');
+        visitStore.load();
+        var t = visitStore.getById(arg)
+        Ext.Msg.confirm('Task', t.get('visitDetail'), function (resp) {
+            if (resp==='yes') {
+                var comp = Ext.getCmp(arg);
+                comp.setUi('decline');
+                comp.setDisabled(true);
+                Ext.ComponentQuery.query('visitDetails #'+arg+'_audio')[0].play();
+            }
+        })
     }
     
 }
@@ -184,4 +197,11 @@ var HEADERS = {
     "Authorization": localStorage.getItem("basicAuthHeader"),
     "Accept": "application/json",
     "Content-Type": "application/json"
+}
+var VIS = {
+    ORS: 0,
+    RDT: 1,
+    VITA: 2,
+    ALB: 3,
+    BLOOD: 4
 }
