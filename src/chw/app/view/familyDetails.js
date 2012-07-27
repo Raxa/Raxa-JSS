@@ -79,7 +79,8 @@ Ext.define('chw.view.familyDetails', {
             }, {
                 xtype: 'button',
                 text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.startCheckup'),
-                ui: 'confirm-round'
+                ui: 'confirm-round',
+                action: 'visitStart'
             }, {
                 xtype: 'label',
                 html: ' <br><br>'

@@ -19,6 +19,7 @@ Ext.define('chw.view.visitDetails', {
     config: {
         height: '100%',
         ui: 'neutral',
+        scrollable: true,
         items: [{
             xtype: 'titlebar',
             title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.visitDetails'),
@@ -31,6 +32,66 @@ Ext.define('chw.view.visitDetails', {
             }]
         }, {
             xclass: 'chw.view.userToolbar'
-        }]
+        }, {
+            xtype: 'label',
+            itemId: 'illnessImageLabel',
+            html: '<center><img src="resources/diarrhea.png" width="100px"/></center>',
+            height: '20%',
+            width: '100%',
+            padding: '10px'
+        }, {
+            xtype: 'container',
+            padding: '10px',
+            items: [{
+                xtype: 'fieldset',
+                defaults: {
+                    labelWidth: '35%',
+                    disabled: true
+                },
+                items: [{
+                        xtype: 'textfield',
+                        disabled: true,
+                        label: 'Visit Type',
+                        placeHolder: 'Diarrhea check up',
+                        labelAlign: 'top'
+                }]
+            }]
+        }, {
+            xtype: 'container',
+            id: 'check_vis',
+            padding: '10px',
+            height: '80%',
+            width: '100%',
+            items: []
+        }
+//        , {
+//                xtype: 'container',
+//                layout: 'hbox',
+//                title: 'Visit Details',
+//                padding: '10px',
+//                items: [{
+//                       xtype: 'container',
+//                       id: 'img_vis',
+//                       html: '<img src="resources/diarrhea.png" height="100%" width="100%"/>',
+//                       height: '40%',
+//                       flex: 1
+//                },{
+//                    xtype: 'fieldset',
+//                    padding: '10px',
+//                    defaults: {
+//                        labelWidth: '35%',
+//                        labelAlign: 'top'
+//                    },
+//                    flex: 2,
+//                    items: [{
+//                        xtype: 'textfield',
+//                        disabled: true,
+//                        label: 'Symptom',
+//                        id: 'info_vis',
+//                        placeHolder: 'Diarrhea'
+//                    }]
+//                }]
+//            }, 
+        ]
     }
 })
