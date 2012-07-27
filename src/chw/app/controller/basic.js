@@ -19,7 +19,7 @@ Ext.define('chw.controller.basic', {
         control: {
             "button[action=addButton]": {
                 tap: function () {
-                    this.doToolbar('add')
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
                 }
             },
             "button[action=cancelButton]": {
@@ -63,6 +63,11 @@ Ext.define('chw.controller.basic', {
                 change:function(option){
                     localStorage.setItem('lang',option.getValue());
                     window.location = "."
+                }
+            },
+            "button[action=listButton]": {
+                tap: function () {
+                    this.doToolbar('list')
                 }
             },
             "button[action=logoutButton]": {
@@ -478,9 +483,8 @@ Ext.define('chw.controller.basic', {
     }, 
     doToolbar: function (arg) {
         //Toolbar button functionalities
-        if (arg==='add') {
-            //Adding a family
-            Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
+        if (arg==='list'){
+            Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
         } else if (arg==='sync') {
             //Syncing data
             Ext.Msg.confirm('',Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.sync'), function (resp) {
@@ -553,19 +557,6 @@ Ext.define('chw.controller.basic', {
                 cont.add(cell);
             }
             c.add(cont)
-        } 
-//        else {
-//            var visitStore = Ext.getStore('visits');
-//            visitStore.load();
-//            var t = visitStore.getById(arg)
-//            Ext.Msg.confirm('Task', t.get('visitDetail'), function (resp) {
-//                if (resp==='yes') {
-//                    var comp = Ext.ComponentQuery.query('visitDetails #'+arg)[0];
-//                    comp.setUi('decline');
-//                    comp.setDisabled(true);
-//                    Ext.ComponentQuery.query('visitDetails #'+arg+'_audio').play();
-//                }
-//            }) 
-//        }
+        }
     }
 })
