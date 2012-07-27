@@ -37,7 +37,7 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'tbfill'
                 }, {
                     xtype: 'tbtext',
-                    text: 'You are logged in as ' + username
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + username
                 }, {
                     xtype: 'tbseparator'
                 }, {

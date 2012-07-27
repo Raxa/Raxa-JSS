@@ -34,13 +34,13 @@ Ext.define('Registration.view.SearchPart1', {
                 items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'Search Registered Patients',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.title'),
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
                     items: [{
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Old Patient Registration Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.OPRN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -56,12 +56,12 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'OldPatientIdentifierSearch',
                             fieldLabel: 'Old Patient Identifier',
                             flex: 1,
-                            emptyText: 'Old Patient Identifier',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.OPRN.emptytext'),
                             allowBlank: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Patient Registration Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PRN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -77,12 +77,12 @@ Ext.define('Registration.view.SearchPart1', {
                             id: 'PatientIdentifierSearch',
                             fieldLabel: 'Patient Identifier',
                             flex: 1,
-                            emptyText: 'Patient Identifier',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PRN.emptytext'),
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Patient Name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -95,20 +95,20 @@ Ext.define('Registration.view.SearchPart1', {
                         },
                         items: [{
                             name: 'firstName',
-                            emptyText: 'Patient\'s First Name',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN.emptytext.1'),
                             id: 'patientFirstNameSearch',
                             flex: 1,
                             allowBlank: false
                         }, {
                             name: 'lastName',
-                            emptyText: 'Patient\'s Last Name',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN.emptytext.2'),
                             id: 'patientLastNameSearch',
                             flex: 1,
                             margins: '0 0 0 6'
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Father/Husband\'s name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.FHN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -121,19 +121,19 @@ Ext.define('Registration.view.SearchPart1', {
                         },
                         items: [{
                             name: 'firstName',
-                            emptyText: 'Father/Husband\'sFirst Name',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.FHN.emptytext.1'),
                             id: 'relativeFirstNameSearch',
                             flex: 1
                         }, {
                             name: 'lastName',
-                            emptyText: 'Last Name',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.FHN.emptytext.2'),
                             id: 'relativeLastSearch',
                             flex: 1,
                             margins: '0 0 0 6',
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Date of Birth',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.DOB'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -148,7 +148,7 @@ Ext.define('Registration.view.SearchPart1', {
                             xtype: 'datefield',
                             fieldLabel: 'DOB',
                             id: 'DOBSearch',
-                            emptyText: 'MM/DD/YYYY',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.DOB.emptytext'),
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
@@ -157,7 +157,7 @@ Ext.define('Registration.view.SearchPart1', {
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Town/Village/City',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Town'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -172,7 +172,7 @@ Ext.define('Registration.view.SearchPart1', {
                             xtype: 'textfield',
                             name: 'townSearch',
                             fieldLabel: 'Town/Village/City',
-                            emptyText: 'Town/Village/City',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Town'),
                             id: 'Town/Village/CitySearch',
                             labelAlign: 'right',
                             labelPad: 20,
@@ -181,7 +181,7 @@ Ext.define('Registration.view.SearchPart1', {
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Phone Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -197,7 +197,7 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'phoneNumberSearch',
                             id: 'phoneNumberSearch',
                             fieldLabel: 'Phone Number',
-                            emptyText: 'Phone Number',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN'),
                             vtype: 'phone',
                             labelAlign: 'right',
                             labelPad: 20,
@@ -208,13 +208,13 @@ Ext.define('Registration.view.SearchPart1', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 60,
-                        text: 'Search',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Search'),
                         action: 'search'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
-                        text: 'Reset',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Reset'),
                         action: 'reset'
                     }]
                 }]
