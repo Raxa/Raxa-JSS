@@ -19,7 +19,7 @@ Ext.define('Registration.view.RegistrationPart1', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.registrationpart1',
     border: 0,
-    padding: 10,
+    padding: 50,
     autoScroll: true,
     layout: {
         type: 'auto'
@@ -30,11 +30,13 @@ Ext.define('Registration.view.RegistrationPart1', {
             items: [{
                 xtype: 'panel',
                 border: 0,
-                bodyPadding: 10,
+                bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
-                    padding: 10,
-                    title: 'New Patient Registration (Patient Profile Info)',
+                    //first element in bodyStyle is not working, passing it twice
+                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
+                    padding: 5,
+                    title: 'Primary Information',
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
@@ -45,7 +47,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         combineErrors: true,
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -55,7 +57,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'Old Patient Identifier',
                             id: 'oldPatientIdentifier',
                             fieldLabel: 'Old Patient Identifier',
-                            flex: 1,
+                            width: 353,
                             emptyText: 'Old Patient Identifier',
                             allowBlank: true
 
@@ -68,7 +70,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -77,13 +79,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'firstName',
                             id: 'patientFirstName',
                             emptyText: 'Patient\'s First Name',
-                            flex: 1,
+                            width:172,
                             allowBlank: false
                         }, {
                             name: 'lastName',
                             emptyText: 'Patient\'s Last Name',
                             id: 'patientLastName',
-                            flex: 1,
+                            width: 172,
                             margins: '0 0 0 6',
                             allowBlank: false
                         }]
@@ -95,7 +97,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -104,14 +106,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'firstName',
                             emptyText: 'Father/Husband\'sFirst Name',
                             id: 'relativeFirstName',
-                            flex: 1,
+                            width:172,
 
                             allowBlank: false
                         }, {
                             name: 'lastName',
                             emptyText: 'Last Name',
                             id: 'relativeLastName',
-                            flex: 1,
+                            width:172,
                             margins: '0 0 0 6',
 
                             allowBlank: false
@@ -124,7 +126,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -136,16 +138,17 @@ Ext.define('Registration.view.RegistrationPart1', {
                             emptyText: 'MM/DD/YYYY',
                             labelAlign: 'right',
                             labelPad: 20,
-                            labelWidth: 250,
+                            labelWidth: 200,
                             anchor: '75%',
+                            width:172,
                             allowBlank: false
                         }, {
                             name: 'Age',
                             xtype: 'numberfield',
                             fieldLabel: 'Current Patient Age',
                             id: 'patientAge',
-                            flex: 1,
-                            margins: '0 0 0 36',
+                            width:172,
+                            margins: '0 0 0 6',
                             emptyText: 'Patient\'s Current Age',
                             allowBlank: false
                         },
@@ -157,7 +160,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                         id: 'sexRadioGroup',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
+                        width: 570,
                         allowBlank: false,
                         items: [{
                             xtype: 'radiofield',
@@ -173,7 +177,124 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'sex',
                             boxLabel: 'Other'
                         }]
+                    }]
+                }]
+            },{
+                xtype: 'panel',
+                border: 0,
+                bodyPadding: 0,
+                items: [{
+                    xtype: 'fieldset',
+                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
+                    padding: 5,
+                    title: 'Address and Contact Details',
+                    items: [{
+                        xtype: 'textfield',
+                        id: 'block',
+                        fieldLabel: 'Block/House/Door Number',
+                        emptyText: 'Block/House/Door Number',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        width: 573,
+                        allowBlank: false,
+                        //anchor: '95%'
                     }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Street/Area/Locality/Mohala/Road',
+                        emptyText: 'Street/Area/Locality/Mohala/Road',
+                        labelAlign: 'right',
+                        id: 'street',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        allowBlank: false,
+                        width: 573
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Town/Village/City',
+                        emptyText: 'Town/Village/City',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        allowBlank: false,
+                        id: 'town',
+                        labelWidth: 200,
+                        width: 573
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Tehsil/Taluka/Mandal/Thana',
+                        emptyText: 'Tehsil/Taluka/Mandal/Thana',
+                        id: 'tehsil',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        width: 573
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'District',
+                        emptyText: 'District',
+                        id: 'district',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        hideTrigger: true,
+                        width: 573
+                    }, {
+                        xtype: 'radiogroup',
+                        fieldLabel: 'Contact me via phone',
+                        id: 'phoneContactInformation',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        allowBlank: true,
+                        width: 573,
+                        items: [{
+                            xtype: 'radiofield',
+                            name: 'contact',
+                            boxLabel: 'Yes'
+                        }, {
+                            xtype: 'radiofield',
+                            name: 'contact',
+                            boxLabel: 'No'
+                        }]
+                    }, {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Contact Number',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'numberfield',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            name: 'primaryContact',
+                            emptyText: 'Primary Contact',
+                            id: 'patientPrimaryContact',
+                            width:172,
+                            allowBlank: true
+                        }, {
+                            name: 'lastName',
+                            emptyText: 'Secondary Contact',
+                            id: 'patientSecondaryContact',
+                            width:172,
+                            margins: '0 0 0 6',
+                            allowBlank: true
+                        }]
+                    }]
+                }]
+            },{
+                xtype: 'panel',
+                border: 0,
+                bodyPadding: 0,
+                items: [{
+                    xtype: 'fieldset',
+                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
+                    padding: 5,
+                    title: 'Secondary Information',
+                    items: [{
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Education Details',
                         layout: 'hbox',
@@ -181,7 +302,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -192,6 +313,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             label: 'Education Details',
                             id: 'education',
                             layout: 'hbox',
+                            width: 172,
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
                                 data: [
@@ -212,7 +334,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -223,6 +345,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             label: 'Caste',
                             id: 'caste',
                             layout: 'hbox',
+                            width: 172,
                             store: new Ext.data.SimpleStore({
                                 fields: ['caste'],
                                 data: [
@@ -243,7 +366,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 200,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -253,6 +376,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'occupation',
                             id: 'occupation',
                             layout: 'hbox',
+                            width: 172,
                             store: new Ext.data.SimpleStore({
                                 fields: ['occupation'],
                                 data: [
@@ -266,21 +390,29 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 ]
                             }),
                             displayField: 'occupation'
-
-
                         }]
                     }, {
-                        xtype: 'button',
-                        margin: '10 50 0 270',
-                        width: 60,
-                        text: 'Next',
-                        action: 'next'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
-                        text: 'Reset',
-                        action: 'reset'
+                        xtype: 'panel',
+                        layout: {
+                            type: 'hbox',
+                            pack: 'end'
+                        },
+                        border: 0,
+                        padding: 0,
+                        width: 580,
+                        items: [{
+                            xtype: 'button',
+                            margin: '30 0 0 30',
+                            width: 60,
+                            text: 'Cancel',
+                            action: 'cancel'
+                        }, {
+                            xtype: 'button',
+                            margin: '30 0 0 30',
+                            width: 60,
+                            text: 'Next',
+                            action: 'continue'
+                        }]
                     }]
                 }]
             }]

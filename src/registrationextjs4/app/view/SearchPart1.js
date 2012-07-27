@@ -46,7 +46,7 @@ Ext.define('Registration.view.SearchPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 180,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -55,7 +55,7 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'Old Patient Identifier',
                             id: 'OldPatientIdentifierSearch',
                             fieldLabel: 'Old Patient Identifier',
-                            flex: 1,
+                            width: 303,
                             emptyText: 'Old Patient Identifier',
                             allowBlank: true
                         }]
@@ -65,7 +65,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -76,7 +76,7 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'Patient Identifier',
                             id: 'PatientIdentifierSearch',
                             fieldLabel: 'Patient Identifier',
-                            flex: 1,
+                            width: 303,
                             emptyText: 'Patient Identifier',
                             allowBlank: false
                         }]
@@ -86,7 +86,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -97,13 +97,13 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'firstName',
                             emptyText: 'Patient\'s First Name',
                             id: 'patientFirstNameSearch',
-                            flex: 1,
+                            width: 147,
                             allowBlank: false
                         }, {
                             name: 'lastName',
                             emptyText: 'Patient\'s Last Name',
                             id: 'patientLastNameSearch',
-                            flex: 1,
+                            width: 147,
                             margins: '0 0 0 6'
                         }]
                     }, {
@@ -112,7 +112,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -123,12 +123,12 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'firstName',
                             emptyText: 'Father/Husband\'sFirst Name',
                             id: 'relativeFirstNameSearch',
-                            flex: 1
+                            width: 147
                         }, {
                             name: 'lastName',
                             emptyText: 'Last Name',
                             id: 'relativeLastSearch',
-                            flex: 1,
+                            width: 147,
                             margins: '0 0 0 6',
                         }]
                     }, {
@@ -137,7 +137,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -161,7 +161,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -177,6 +177,7 @@ Ext.define('Registration.view.SearchPart1', {
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
+                            width: 147,
                             anchor: '75%',
                         }]
                     }, {
@@ -185,7 +186,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -202,6 +203,7 @@ Ext.define('Registration.view.SearchPart1', {
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
+                            width: 147,
                             anchor: '75%'
                         }]
                     }, {

@@ -84,6 +84,7 @@ Ext.define('Registration.controller.Search', {
             success: function (response) {
                 var string = JSON.parse(response.responseText).identifiers[0].display;
                 Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
+                Ext.getCmp('bmiPatientName').setValue(string.substring(string.indexOf('=')+2,string.length));
                 var l = Ext.getCmp('mainRegArea').getLayout();
                 l.setActiveItem(REG_PAGES.REG_BMI.value); 
             }

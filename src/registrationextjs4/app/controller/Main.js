@@ -1,32 +1,20 @@
 Ext.define('Registration.controller.Main', {
     extend: 'Ext.app.Controller',
     id: 'main', 
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore'],
     models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel'],
         
     init: function () {
         this.control({
-            //clicking next button on registraion form 1 calls next()
-            "registrationpart1 button[action=next]": {
-                click: this.next
-            },
-            //clicking reset button on registraion form 1 calls reset()
-            "registrationpart1 button[action=reset]": {
-                click: this.reset
-            },
             //clicking continue button on registraion form 2 calls continue()
-            "registrationpart2 button[action=continue]": {
+            "registrationpart1 button[action=continue]": {
                 click: this.Continue
             },
             //clicking cancel button on registraion form 2 calls cancel()
-            "registrationpart2 button[action=cancel]": {
+            "registrationpart1 button[action=cancel]": {
                 click: this.cancel
-            },
-            //clicking back button on registraion form 2 calls back()
-            "registrationpart2 button[action=back]": {
-                click: this.back
             },
             //clicking cancel button on confirmation screen calls cancel()
             "registrationconfirm button[action=cancel]": {
@@ -57,50 +45,13 @@ Ext.define('Registration.controller.Main', {
     
     searchPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
+        console.log(REG_PAGES.SEARCH_1.value);
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
-    },
-    /* next function checks whether the fields are valid(like some of them which are reuired should not be empty)
-     and then 2nd screen of form is shown otherwise it gives an alert "fields invlaid" */
-    next: function () {
-        var l = Ext.getCmp('mainRegArea').getLayout();
-        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid() && Ext.getCmp('sexRadioGroup').isValid() && Ext.getCmp('education').isValid() && (Ext.getCmp('dob').isValid() || Ext.getCmp('patientAge').isValid())) {
-            l.setActiveItem(REG_PAGES.REG_2.value)
-        } else alert("Fields invalid");
-    },
-
-    back: function () {
-        var l = Ext.getCmp('mainRegArea').getLayout();
-        l.setActiveItem(REG_PAGES.REG_1.value)
-    },
-
-    /*reset function reset all the components of both screen of form to empty fields*/
-    reset: function () {
-        Ext.getCmp('patientFirstName').reset()
-        Ext.getCmp('patientLastName').reset()
-        Ext.getCmp('relativeFirstName').reset()
-        Ext.getCmp('relativeLastName').reset()
-        Ext.getCmp('sexRadioGroup').reset()
-        Ext.getCmp('education').reset()
-        Ext.getCmp('dob').reset()
-        Ext.getCmp('patientAge').reset()
-        Ext.getCmp('caste').reset()
-        Ext.getCmp('occupation').reset()
-        Ext.getCmp('block').reset()
-        Ext.getCmp('street').reset()
-        Ext.getCmp('town').reset()
-        Ext.getCmp('pincode').reset()
-        Ext.getCmp('postoffice').reset()
-        Ext.getCmp('tehsil').reset()
-        Ext.getCmp('district').reset()
-        Ext.getCmp('phoneContactInformation').reset()
-        Ext.getCmp('patientPrimaryContact').reset()
-        Ext.getCmp('patientSecondaryContact').reset()
-        Ext.getCmp('oldPatientIdentifier').reset()
     },
     /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
     Continue: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
-        if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('pincode').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
+        if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
             l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
         } else alert("Fields invalid");
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
@@ -117,9 +68,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('patientPrimaryContactNumberConfirm').setValue(Ext.getCmp('patientPrimaryContact').value);
         Ext.getCmp('patientSecondaryContactNumberConfirm').setValue(Ext.getCmp('patientSecondaryContact').value);
         Ext.getCmp('townConfirm').setValue(Ext.getCmp('town').value);
-        Ext.getCmp('pinConfirm').setValue(Ext.getCmp('pincode').value);
         Ext.getCmp('tehsilConfirm').setValue(Ext.getCmp('tehsil').value);
-        Ext.getCmp('postOfficeConfirm').setValue(Ext.getCmp('postoffice').value);
         Ext.getCmp('districtConfirm').setValue(Ext.getCmp('district').value);
     },
 
@@ -127,6 +76,25 @@ Ext.define('Registration.controller.Main', {
     cancel: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
+        Ext.getCmp('patientFirstName').reset()
+        Ext.getCmp('patientLastName').reset()
+        Ext.getCmp('relativeFirstName').reset()
+        Ext.getCmp('relativeLastName').reset()
+        Ext.getCmp('sexRadioGroup').reset()
+        Ext.getCmp('education').reset()
+        Ext.getCmp('dob').reset()
+        Ext.getCmp('patientAge').reset()
+        Ext.getCmp('caste').reset()
+        Ext.getCmp('occupation').reset()
+        Ext.getCmp('block').reset()
+        Ext.getCmp('street').reset()
+        Ext.getCmp('town').reset()
+        Ext.getCmp('tehsil').reset()
+        Ext.getCmp('district').reset()
+        Ext.getCmp('phoneContactInformation').reset()
+        Ext.getCmp('patientPrimaryContact').reset()
+        Ext.getCmp('patientSecondaryContact').reset()
+        Ext.getCmp('oldPatientIdentifier').reset()
     },
 
     /* this function makes the post call for making the person */
@@ -142,7 +110,6 @@ Ext.define('Registration.controller.Main', {
                 address1: Ext.getCmp('block').value,
                 address2: Ext.getCmp('street').value,
                 cityVillage: Ext.getCmp('town').value,
-                postalCode: Ext.getCmp('pincode').value
             }]
         //right now there is bug in openmrs server due to which sending attributes with body of 
         //post call leads to 500 response status so right now I am commenting it for
@@ -399,7 +366,7 @@ Ext.define('Registration.controller.Main', {
         store.add(jsonencounter);
         store.sync();
         store.on('write', function () {
-            this.reset();
+            this.cancel();
         }, this)
         return store;
     }

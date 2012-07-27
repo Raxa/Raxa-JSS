@@ -19,7 +19,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.registrationconfirm',
     border: 0,
-    padding: 10,
+    padding: 50,
     autoScroll: true,
     layout: {
         type: 'auto'

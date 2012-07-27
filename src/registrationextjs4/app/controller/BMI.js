@@ -17,7 +17,7 @@
  */
 Ext.define('Registration.controller.BMI', {
     extend: 'Ext.app.Controller',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     controllers: ['BMI'],
     init: function () {

@@ -30,22 +30,30 @@ Ext.define('Registration.view.RegistrationBMI', {
             items: [{
                 xtype: 'panel',
                 border: 0,
-                bodyPadding: 10,
+                bodyPadding: 50,
                 items: [{
+                    xtype: 'displayfield',
+                    fieldLabel: 'Patient Identifier',
+                    value: 'Patient ID comes here', 
+                    id: 'bmiPatientID',
+                    readOnly: true,
+                    labeAlign: 'right'
+                },{
+                    xtype: 'displayfield',
+                    fieldLabel: 'Patient Name',
+                    value: 'Patient Name comes here',
+                    readOnly: true,
+                    id: 'bmiPatientName',
+                    labeAlign: 'right'
+                },{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'BMI Calculator',
+                    title: 'Enter Measures for Body Mass Index',
+                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
                     items: [{
-                        xtype: 'displayfield',
-                        fieldLabel: 'Patient Identifier',
-//                      TODO: Patient Identifier Comes Here
-                        value: 'Patient ID comes here',
-                        id: 'bmiPatientID',
-                        readOnly: true,
-                        labelAlign: 'right'
-                    }, {
                         xtype: 'label',
-                        text: 'BMI Value'
+                        text: 'BMI Value',
+                        labelAlign: 'right'
                     }, {
                         xtype: 'form',
                         id: 'heightWeightID',

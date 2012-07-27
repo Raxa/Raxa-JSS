@@ -45,19 +45,6 @@ Ext.define('Registration.view.Viewport', {
                     width: 60,
                     text: 'Log Out',
                 }]
-            }, {
-                dock: 'bottom',
-                xtype: 'toolbar',
-                height: 40,
-                items: [{
-                    xtype: 'tbspacer',
-                    width: 380
-                }, {
-                    xtype: 'image',
-                    height: 35,
-                    width: 40,
-                    src: '../resources/img/icon.png'
-                }]
             }],
             width: 800,
             id: 'mainRegArea',
@@ -71,8 +58,6 @@ Ext.define('Registration.view.Viewport', {
                 xtype: REG_PAGES.HOME.name
             }, {
                 xtype: REG_PAGES.REG_1.name
-            }, {
-                xtype: REG_PAGES.REG_2.name
             }, {
                 xtype: REG_PAGES.REG_CONFIRM.name
             }, {

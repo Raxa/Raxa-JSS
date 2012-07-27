@@ -79,28 +79,24 @@ var REG_PAGES = {
         value: 1,
         name: "registrationpart1"
     },
-    REG_2: {
-        value: 2,
-        name: "registrationpart2"
-    },
     REG_CONFIRM: {
-        value: 3,
+        value: 2,
         name: "registrationconfirm"
     },
     REG_BMI: {
-        value: 4,
+        value: 3,
         name: "registrationbmi"
     },
     SEARCH_1: {
-        value: 5,
+        value: 4,
         name: "searchpart1"
     },
     SEARCH_2: {
-        value: 6,
+        value: 5,
         name: "searchpart2"
     },
     SEARCH_CONFIRM: {
-        value: 7,
+        value: 6,
         name: "searchconfirm"
     }
 };
@@ -214,16 +210,12 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient'];
-    //TO DO:Add the line below instead the above one 
-    //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
+        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory'];
     },
 
     getApps: function () {
         //always keep login at first position as its app path is different
         return ['gotStatins', 'problemList'];
-    //TO DO:Add the line below instead the above one 
-    //return ['login', 'screener', 'registration','opd','inpatient','pharmacy','radiology','laboratory','billing'];
     },
     /**
      *Generate six digit randomly generated Device Id  
@@ -258,6 +250,7 @@ var Util = {
      */
     getPatientIdentifier: function () {
         //TODO: add this back in once ID Gen is working properly
+        //https://raxaemr.atlassian.net/browse/JLM-45 (is accidentally a JLM issue)
         //        var patientIDRequest = new XMLHttpRequest();
         //        patientIDRequest.open("GET", HOST + '/module/idgen/generateIdentifier.form?source=1&comment=New%20Patient', false);
         //        patientIDRequest.setRequestHeader("Accept", "*/*");

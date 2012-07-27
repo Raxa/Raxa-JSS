@@ -3,13 +3,15 @@
 $include-default: false;
 
 // Insert your custom variables here.
-$panel-body-font-size: 18px !default;
-$base-color: #3C89C4;
-$base-gradient: #70B8F4;
-$panel-body-background-color: #bababd;
+$window-base-color: #ececec;
+//$panel-body-font-size: 18px !default;
+$base-color: #5d6f7c;
+//$base-gradient: #70B8F4;
+$panel-body-background-color: #c9cdd0;
 //$panel-border-radius: 4px;
-$toolbar-background-color: #3C89C4;
-$toolbar-background-gradient: color_stops(#70B8F4, #3C89C4);
+$toolbar-background-color: #5D6F7C;
+//$toolbar-background-gradient: color_stops(#70B8F4, #5D6F7C);
+
 
 //base colors for the default button
 /*
@@ -51,10 +53,31 @@ $button-default-color-disabled: lighten($button-default-color, 35) !default;
 */
 
 
-$button-default-base-color: #6CB5F1;
-$button-default-background-gradient: color_stops(#4491CC, #6CB5F1);
-//$button-default-background-color-over: #FFFFFF;
+//$button-default-border-color: #ec855c;
+//$button-default-background-color: #ec855c;
+$button-default-base-color: #5d6f7c;
+$button-default-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
+$button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
+//$button-default-background-gradient-pressed: 'glossy-button-pressed' !default;
 
+//$button-default-background-color-over: #FFFFFF;
+$button-medium-font-size: 20px;
+$button-small-font-size: ceil 20px;
+$button-large-font-size: ceil 20px;
+
+//fieldset sizes
+$fieldset-header-font-size: 17px;
+//$form-fieldset-radius: 8px;
+//$form-field-font-weight: bold;
+
+//$font-family: helvetica neue;
+
+//$toolbar-text-font-family: $font-family;
+//$toolbar-text-font-size: ceil($font-size * .9) !default; //11px
+//$toolbar-text-font-weight: normal !default;
+$toolbar-text-color: #FFFFFF;
+//$toolbar-text-padding: 3px 4px 0 4px !default;
+//$toolbar-text-line-height: 16px !default;
 
 
 @import 'ext4/default/all';
