@@ -17,7 +17,7 @@
 Ext.Loader.setConfig({
     enabled: true,
     paths: {
-        'Ext.i18n': '../lib/i18n'  //Mention the relevant path to the i18n library over here.
+        'Ext.i18n': '../lib/i18n' //Path to i18n library for localization
     }
 });
 
@@ -48,7 +48,6 @@ Ext.application({
 Ext.require('Ext.i18n.Bundle', function(){
     Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
         bundle: 'RaxaEmrChw',
-        // lang: 'hi-IN',
         lang: localStorage.getItem('lang'),
         path: 'app/view',
         noCache: true

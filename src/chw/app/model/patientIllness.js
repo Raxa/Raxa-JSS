@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//Model for mapping patients with  illnesses
 Ext.define('chw.model.patientIllness', {
     extend: 'Ext.data.Model',
     config: {

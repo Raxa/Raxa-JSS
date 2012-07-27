@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//Store for illnesses. Illness data are hard-coded currently
 Ext.define('chw.store.illnesses', {
     extend: 'Ext.data.Store',
     config: {

@@ -121,12 +121,6 @@ Ext.define('chw.view.familyDetails', {
                     action: 'goToAddPatient',
                     iconMask: true,
                     iconCls: 'user_add'
-//                    listeners: {
-//                        tap: function () {
-//                            // TODO: need to remember which family it is
-//                            Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
-//                        }
-//                    }
                 }]
             }]
         },{

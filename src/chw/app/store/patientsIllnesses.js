@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//Store for mapping patients with illnesses
 Ext.define('chw.store.patientsIllnesses', {
     extend: 'Ext.data.Store',
     config: {
@@ -22,10 +24,6 @@ Ext.define('chw.store.patientsIllnesses', {
             type: 'localstorage',
             id: 'patientIllnesses'
         },
-        /*sorters: 'illnessName',
-        grouper: function (record) {
-            return record.get('illnessName')[0];
-        },*/
         data: []
     }
 })
