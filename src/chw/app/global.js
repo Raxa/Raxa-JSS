@@ -13,8 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-// TODO: find a way to set the value in the program
-// See src/app/view/Login.js
 var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
 var MRSHOST = 'http://test.raxa.org:8080/openmrs';
 var PAGES = {
@@ -65,12 +63,10 @@ var helper = {
                 Ext.create('chw.store.patients')
             }
             var familyId = record.get('familyId');
-            // console.log(familyId);
             //Filtering the list by family id
             patientStore.filter('familyId',familyId)
             patientStore.onAfter('load',function(){
                 Ext.getCmp('familyMembersList').setStore(patientStore);
-                // Ext.ComponentQuery.query('fmailyDetails #familyNumberLabel')[0].setValue(patientStore.getCount())
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
             });
             patientStore.load();
@@ -81,16 +77,9 @@ var helper = {
             if (!pistored) {
                 Ext.create('chw.store.patientsIllnesses')
             }
-            // var iid = record.get('illnessId')
-            // console.log(iid)
-            // console.log(pistored)
-            // console.log(record)
             // TODO: Something is definitely wrong with the filter
             pistored.filter('illnessId',record.get('illnessId'))
-            // pistored.filter('patientId',1)
             pistored.onAfter('load', function () {
-                // console.log('second',pistored)
-                // console.log(pistored.getFilters())
                 Ext.getCmp('illnessList').setStore(pistored);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
             })
@@ -124,7 +113,6 @@ var helper = {
             Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0].setTitle(record.get('pillName'));
             Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'
                 +record.get('pillImage')+'" width="100px"/></center>');
-            // console.log(Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0])
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
         } else if (list==='resources') {
             savedResourcesRecord=record
@@ -145,10 +133,6 @@ var helper = {
         } else if (list==='patientIllness') {
             //Going to illness history from patient details
             toHistoryFrom = 'patientDetails'
-//            var pid = record.get('patientId');
-//            var pstore = Ext.getStore('patients')
-//            pstore.load();
-//            var pname = pstore.getAt(pid);
             Ext.getCmp('illnessDetails').setHidden(false);
             var pfname = Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].getValue();
             var plname = Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].getValue();
@@ -166,7 +150,6 @@ var helper = {
                 + illnessDetails.illnessImage+'" width="100px" /></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
         } else if (list==='ipatient') {
-            console.log('===ipatient===')
             //Going to illness history from disease list
             toHistoryFrom = 'diseaseList'
             // get the patient information
@@ -202,16 +185,3 @@ var HEADERS = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-//var DATE_PATTERNS = {
-//    ISO8601Long : "Y-m-d H:i:s",
-//    ISO8601Short : "Y-m-d",
-//    ShortDate : "n/j/Y",
-//    LongDate : "l, F d, Y",
-//    FullDateTime : "l, F d, Y g:i:s A",
-//    MonthDay : "F d",
-//    ShortTime : "g:i A",
-//    LongTime : "g:i:s A",
-//    SortableDateTime : "Y-m-d\\TH:i:s",
-//    UniversalSortableDateTime : "Y-m-d H:i:sO",
-//    YearMonth : "F, Y"
-//};

@@ -40,7 +40,6 @@ Ext.define('chw.view.addOptions', {
             items: [{
                 xtype: 'button',
                 text: 'Family',
-                // action: 'add_rem',
                 iconMask: true,
                 iconCls: 'team',
                 listeners: {
@@ -52,7 +51,6 @@ Ext.define('chw.view.addOptions', {
                 xtype: 'button',
                 text: 'Patient',
                 iconMask: true,
-                // action: 'add_reg',
                 iconCls: 'user_add',
                 listeners: {
                     tap: function () {
