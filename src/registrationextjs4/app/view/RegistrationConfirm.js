@@ -34,10 +34,10 @@ Ext.define('Registration.view.RegistrationConfirm', {
                 items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'New Patient Registration (Confirmation Screen)',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.title1'),
                     items: [{
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Old Patient Registration Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.OPRN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -54,13 +54,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             id: 'oldPatientIdentifierConfirm',
                             readOnly: true,
-                            emptyText: 'Old Patient Identifier as filled in form (READ ONLY)'
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.OPRN.emptytext'),
                         }]
                     },
  
                     {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Patient Name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -74,13 +74,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'patientName',
                             id: 'patientNameConfirm',
-                            emptyText: 'Patient\'s Name as filled in form (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PN.emptytext'),
                             flex: 1,
                             readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Father/Husband\'s name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.FHN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -94,13 +94,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'relativeNameConfirm',
                             id: 'relativeNameConfirm',
-                            emptyText: 'Father/Husband\'s Name (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.FHN.emptytext'),
                             flex: 1,
                             readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Age',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Age'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -114,13 +114,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'age',
                             id: 'ageConfirm',
-                            emptyText: 'Age (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Age.emptytext'),
                             flex: 1,
                             readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Sex',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Gender'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -134,13 +134,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'sex',
                             id: 'sexConfirm',
-                            emptyText: 'Sex (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Gender.emptytext'),
                             flex: 1,
                             readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Education Details',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ED'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -154,13 +154,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'age',
                             id: 'educationConfirm',
-                            emptyText: 'Education Details (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ED.emptytext'),
                             flex: 1,
                             readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Caste',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Caste'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -174,13 +174,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'caste',
                             id: 'casteConfirm',
-                            emptyText: 'Caste (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Caste.emptytext'),
                             flex: 1,
                             readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Occuption',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Occupation'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -194,7 +194,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'occuption',
                             id: 'occupationConfirm',
-                            emptyText: 'Occupation (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Occupation.emptytext'),
  
                             readOnly: true,
                             flex: 1
@@ -202,9 +202,9 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'blockConfirm',
-                        fieldLabel: 'Block/House/Door Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Block'),
                         labelAlign: 'right',
-                        emptyText: 'Block/House/Door Number (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Block.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -213,9 +213,9 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'stretConfirm',
-                        fieldLabel: 'Street/Area/Locality/Mohala/Road',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Street'),
                         labelAlign: 'right',
-                        emptyText: 'Street/Area/Locality/Mohala/Road (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Street.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -224,9 +224,9 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'townConfirm',
-                        fieldLabel: 'Town/Village/City',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Town'),
                         labelAlign: 'right',
-                        emptyText: 'Town/Village/City (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Town.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -235,9 +235,9 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'postOfficeConfirm',
-                        fieldLabel: 'Post Office',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PO'),
                         labelAlign: 'right',
-                        emptyText: 'Post Office (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PO.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -246,9 +246,9 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'pinConfirm',
-                        fieldLabel: 'Pin Code',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PC'),
                         labelAlign: 'right',
-                        emptyText: 'Pin Code (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PC.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -257,9 +257,9 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'tehsilConfirm',
-                        fieldLabel: 'Tehsil/Taluka/Mandal/Thana',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Tehsil'),
                         labelAlign: 'right',
-                        emptyText: 'Tehsil/Taluka/Mandal/Thana (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Tehsil.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -267,9 +267,9 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         anchor: '95%'
                     }, {
                         xtype: 'textfield',
-                        fieldLabel: 'District',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.District'),
                         id: 'districtConfirm',
-                        emptyText: 'District (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.District.emptytext'),
  
                         readOnly: true,
                         labelAlign: 'right',
@@ -279,7 +279,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         anchor: '95%'
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Contact via phone',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CM'),
                         combineErrors: true,
                         defaultType: 'textfield',
                         labelAlign: 'right',
@@ -292,13 +292,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'phone',
                             id: 'phoneConfirm',
-                            emptyText: 'Yes/No (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CM.emptytext'),
                             flex: 1,
                             readOnly: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Contact Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -311,14 +311,14 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         },
                         items: [{
                             name: 'primaryContact',
-                            emptyText: 'Primary Contact',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CN.emptytext1'),
                             id: 'patientPrimaryContactNumberConfirm',
  
                             readOnly: true,
                             flex: 1
                         }, {
                             name: 'lastName',
-                            emptyText: 'Secondary Contact',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CN.emptytext2'),
                             id: 'patientSecondaryContactNumberConfirm',
  
                             readOnly: true,
@@ -341,10 +341,10 @@ Ext.define('Registration.view.RegistrationConfirm', {
                 },{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'New Registration',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.title2'),
                     items:[{
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Registration Fees',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.RF'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -359,7 +359,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             xtype: 'numberfield',
                             fieldLabel: 'Registration Fees Paid',
                             id: 'registrationfeespaid',
-                            emptyText: 'Registration fees',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.RF'),
                             defaultValue: 0,
                             labelPad: 20,
                             labelWidth: 70,
@@ -380,13 +380,13 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
-                        text: 'Submit and Confirm',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.SC'),
                         action: 'submit'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
-                        text: 'Cancel',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Cancel'),
                         action: 'cancel'
                     }]  
                     

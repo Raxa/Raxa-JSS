@@ -34,10 +34,10 @@ Ext.define('Registration.view.SearchConfirm', {
                 items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'Returning Patient Registration Page',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.title'),
                     items: [{
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Old Patient Registration Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.OPRN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -50,16 +50,16 @@ Ext.define('Registration.view.SearchConfirm', {
                         },
                         items: [{
                             name: 'Old Patient Identifier',
-                            fieldLabel: 'Old Patient Identifier',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.OPI'),
                             flex: 1,
                             id: 'oldPatientIdentifierSearchedPatient',
                             readOnly: true,
-                            emptyText: 'Old Patient Identifier as filled in form (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.OPI.emptytext'),
                             allowBlank: true
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Patient Name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -73,14 +73,14 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'patientName',
                             id: 'patientNameSearchedPatient',
-                            emptyText: 'Patient\'s Name as filled in form (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PN.emptytext'),
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Father/Husband\'s name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.FHN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -94,14 +94,14 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'relativeNameSearchedPatient',
                             id: 'relativeNameSearchedPatient',
-                            emptyText: 'Father/Husband\'s Name (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.FHN.emptytext'),
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Age',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Age'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -115,14 +115,14 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'age',
                             id: 'ageSearchedPatient',
-                            emptyText: 'Age (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Age.emptytext'),
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Sex',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Gender'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -136,14 +136,14 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'sex',
                             id: 'sexSearchedPatient',
-                            emptyText: 'Sex (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Gender.emptytext'),
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Education Details',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.ED'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -157,14 +157,14 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'age',
                             id: 'educationSearchedPatient',
-                            emptyText: 'Education Details (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.ED.emptytext'),
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Caste',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -178,14 +178,14 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'caste',
                             id: 'casteSearchedPatient',
-                            emptyText: 'Caste (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste.emptytext'),
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Occuption',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -199,7 +199,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'occuption',
                             id: 'occuptionSearchedPatient',
-                            emptyText: 'Occupation (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation.emptytext'),
 
                             readOnly: true,
                             flex: 1,
@@ -208,9 +208,9 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'blockSearchedPatient',
-                        fieldLabel: 'Block/House/Door Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Block'),
                         labelAlign: 'right',
-                        emptyText: 'Block/House/Door Number (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Block.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,
@@ -219,9 +219,9 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'stretSearchedPatient',
-                        fieldLabel: 'Street/Area/Locality/Mohala/Road',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Street'),
                         labelAlign: 'right',
-                        emptyText: 'Street/Area/Locality/Mohala/Road (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Street.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,
@@ -230,9 +230,9 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'townSearchedPatient',
-                        fieldLabel: 'Town/Village/City',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Town'),
                         labelAlign: 'right',
-                        emptyText: 'Town/Village/City (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Town.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,
@@ -241,9 +241,9 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'postOfficeSearchedPatient',
-                        fieldLabel: 'Post Office',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PO'),
                         labelAlign: 'right',
-                        emptyText: 'Post Office (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PO.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,
@@ -252,9 +252,9 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'pinSearchedPatient',
-                        fieldLabel: 'Pin Code',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PC'),
                         labelAlign: 'right',
-                        emptyText: 'Pin Code (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PC.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,
@@ -263,9 +263,9 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'textfield',
                         id: 'tehsilSearchedPatient',
-                        fieldLabel: 'Tehsil/Taluka/Mandal/Thana',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Tehsil'),
                         labelAlign: 'right',
-                        emptyText: 'Tehsil/Taluka/Mandal/Thana (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Tehsil.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,
@@ -273,9 +273,9 @@ Ext.define('Registration.view.SearchConfirm', {
                         anchor: '95%'
                     }, {
                         xtype: 'numberfield',
-                        fieldLabel: 'District',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.District'),
                         id: 'districtSearchedPatient',
-                        emptyText: 'District (READ ONLY)',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.District.emptytext'),
 
                         readOnly: true,
                         labelAlign: 'right',
@@ -285,7 +285,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         anchor: '95%'
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Contact via phone',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CM'),
                         combineErrors: true,
                         defaultType: 'textfield',
                         labelAlign: 'right',
@@ -298,14 +298,14 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'phoneNo.',
                             id: 'phoneSearchedPatient',
-                            emptyText: 'Yes/No (READ ONLY)',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CM.emptytext'),
                             flex: 1,
                             readOnly: true,
                             allowBlank: false
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Contact Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -318,7 +318,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         },
                         items: [{
                             name: 'primaryContact',
-                            emptyText: 'Primary Contact',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN.emptytext1'),
                             id: 'patientPrimaryContactNumberSearchedPatient',
 
                             readOnly: true,
@@ -326,7 +326,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             allowBlank: false
                         }, {
                             name: 'lastName',
-                            emptyText: 'Secondary Contact',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN.emptytext2'),
                             id: 'patientSecondaryContactNumberSearchedPatient',
 
                             readOnly: true,
@@ -338,7 +338,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         xtype: 'button',
                         margin: '10 10 0 200',
                         width: 120,
-                        text: 'Cancel Search',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
@@ -347,7 +347,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 160,
-                        text: 'Return to Search Results',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Return'),
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Screen (Result List)
@@ -356,7 +356,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         xtype: 'button',
                         margin: '10 0 0 10',
                         width: 160,
-                        text: 'Continue to Submit BMI',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.BMI'),
                         action: 'bmipage'
                     }]
                 }]

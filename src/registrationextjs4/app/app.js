@@ -15,8 +15,21 @@
  * 
  * This script initiates the registration module
  */
+
 Ext.Loader.setConfig({
-    enabled: true
+    enabled: true,
+    paths: {
+        'Ext.i18n': '../lib/i18n'
+    }
+});
+
+Ext.require('Ext.i18n.Bundle', function(){
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+        bundle: 'RaxaEmrReg',
+        lang: 'en-US',
+        path: 'app/view',
+        noCache: true
+    });
 });
 
 Ext.application({
