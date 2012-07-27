@@ -42,7 +42,7 @@ var CURR_LOC = {
     LOG: 0
 }
 var LOCATION = "";
-var CONNECTED = true;
+var CONNECTED = true; //This global var is probably not used anymore.
 var toHistoryFrom = '' //This var is used to determine from which view the illness history of a patient is being reached.
 //Either from the patient details page of the disease list page
 var savedFamilyRecord

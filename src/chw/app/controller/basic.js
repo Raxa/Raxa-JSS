@@ -387,7 +387,7 @@ Ext.define('chw.controller.basic', {
                         "Authorization": "Basic " + window.btoa(USER.name + ":" + pass)
                     },
                     success: function (response) {
-                        CONNECTED = true;
+                        CONNECTED = true; //TODO: This global var is probably not used anymore.
                         var authenticated = Ext.decode(response.responseText).authenticated;
                         if (authenticated) {
                             //Once the credentials are verified by the server, we now save the auth headers in local storage.
@@ -407,6 +407,7 @@ Ext.define('chw.controller.basic', {
                     failure: function () {
                         //We were not able connect to the server.Now process to verifiy credentails against locally
                         //stored values.
+                        //TODO: This global var is probably not used anymore.
                         CONNECTED = false;
                         // Hashing user/pass
                         var hashPass = 'Basic ' + window.btoa(USER.name + ":" + pass);
