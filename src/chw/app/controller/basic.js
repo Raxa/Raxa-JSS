@@ -59,6 +59,12 @@ Ext.define('chw.controller.basic', {
                     this.doInventory('reduce')
                 }
             },
+            "selectfield[action=langfield]":{
+                change:function(option){
+                    localStorage.setItem('lang',option.getValue());
+                    window.location = "."
+                }
+            },
             "button[action=logoutButton]": {
                 tap: function () {
                     this.doToolbar('logout')
@@ -79,10 +85,10 @@ Ext.define('chw.controller.basic', {
                     this.doToolbar('sync')
                 }
             },
-            "selectfield[action=langfield]":{
-                change:function(option){
-                    localStorage.setItem('lang',option.getValue());
-                    window.location = "."
+            "button[action=visitStart]": {
+                tap: function () {
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.visitDetails)
+                    this.doVisit()
                 }
             }
         }
@@ -462,5 +468,8 @@ Ext.define('chw.controller.basic', {
         } else if (arg==='resources') {
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceList)
         }
+    },
+    doVisit: function (arg) {
+        
     }
 })
