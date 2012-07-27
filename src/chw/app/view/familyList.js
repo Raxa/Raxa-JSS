@@ -52,6 +52,18 @@ Ext.define('chw.view.familyList', {
                 onItemDisclosure: function (record) {
                     helper.listDisclose('family', record)
                 }
+            },{
+                xtype: 'container',
+                height: '20%',
+                docked: 'bottom',
+                padding: '0px 80px 20px 80px',
+                items: [{
+                    xtype: 'button',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newFamily'),
+                    action: 'goToAddPatient',
+                    iconMask: true,
+                    iconCls: 'user_add'
+                }]
             }]
         }, {
             title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.illness'),
