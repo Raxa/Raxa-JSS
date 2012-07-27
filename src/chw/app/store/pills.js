@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//Pills store. Pills are hard-coded currently
 Ext.define('chw.store.pills', {
     extend: 'Ext.data.Store',
     config: {

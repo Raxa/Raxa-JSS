@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//Storing family details
 Ext.define('chw.store.families', {
     extend: 'Ext.data.Store',
     config: {
@@ -25,67 +27,6 @@ Ext.define('chw.store.families', {
         proxy: {
             type: 'localstorage',
             id: 'families'
-        }/*,
-        data: [{
-            familyId: '001',
-            familyName: 'Desai',
-            familyAddress: 'Desai Place',
-            familyLatitude: 25,
-            familyLongitude: 25,
-            familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patients',
-            familyDistance: 50,
-            familyDescrip: 'Pointy roof'
-        }, {
-            familyId: '002',
-            familyName: 'Eppanapally',
-            familyAddress: 'Eppanapally Villa',
-            familyLatitude: 25,
-            familyLongitude: 25,
-            familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patients',
-            familyDistance: 20,
-            familyDescrip: 'Three stories'
-        }, {
-            familyId: '003',
-            familyName: 'Patel',
-            familyAddress: 'Patels Home',
-            familyLatitude: 25,
-            familyLongitude: 25,
-            familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patients',
-            familyDistance: 30,
-            familyDescrip: 'Large complex'
-        }, {
-            familyId: '004',
-            familyName: 'Vaidya',
-            familyAddress: 'Vaidya Nagar',
-            familyLatitude: 25,
-            familyLongitude: 25,
-            familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patients',
-            familyDistance: 40,
-            familyDescrip: 'Near lake'
-        }, {
-            familyId: '005',
-            familyName: 'Sharma',
-            familyAddress: 'Sharma Hauz',
-            familyLatitude: 25,
-            familyLongitude: 25,
-            familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patients',
-            familyDistance: 40,
-            familyDescrip: 'On top of a hill'
-        }, {
-            familyId: '006',
-            familyName: 'Mittal',
-            familyAddress: 'Mittal Place',
-            familyLatitude: 25,
-            familyLongitude: 25,
-            familyImage: 'resources/home.png',
-            // familyMembers: 'chw.store.patients',
-            familyDistance: 40,
-            familyDescrip: 'By the coast'
-        }]*/
+        }
     }
 })

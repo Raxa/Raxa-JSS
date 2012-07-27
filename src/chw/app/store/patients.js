@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//Storing patient info
 Ext.define('chw.store.patients', {
     extend: 'Ext.data.Store',
     config: {
@@ -25,127 +27,6 @@ Ext.define('chw.store.patients', {
          proxy: {
             type: 'localstorage',
             id: 'patients'
-        }/*,
-        data: [{
-            firstName: 'Ronak',
-            familyName: 'Patel',
-            familyId: 3,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-        // patientIllnesses: ''
-        },{
-            firstName: 'Vishesh',
-            familyName: 'Patel',
-            familyId: 3,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-        // patientIllnesses: ''
-        },{
-            firstName: 'Jignesh',
-            familyName: 'Patel',
-            familyId: 3,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-        // patientIllnesses: ''
-        },{
-            firstName: 'Ishaan',
-            familyName: 'Desai',
-            familyId: 1,
-            patientAge: 19,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-        // patientIllnesses: ''
-        },{
-            firstName: 'Isha',
-            familyName: 'Desai',
-            familyId: 1,
-            patientAge: 21,
-            patientGender: 'Female',
-            patientImage: 'resources/user.png'
-        // patientIllnesses: ''
-        },{
-            firstName: 'Ashish',
-            familyName: 'Eppanapally',
-            familyId: 2,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        },{
-            firstName: 'Pranav',
-            familyName: 'Vaidya',
-            familyId: 4,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        },{
-            firstName: 'Girish',
-            familyName: 'Vaidya',
-            familyId: 4,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        },{
-            firstName: 'Vijay',
-            familyName: 'Sharma',
-            familyId: 5,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        },{
-            firstName: 'Ashsish',
-            familyName: 'Sharma',
-            familyId: 5,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        }, {
-            firstName: 'Pooja',
-            familyName: 'Eppanapally',
-            familyId: 2,
-            patientAge: 19,
-            patientGender: 'Female',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        }, {
-            firstName: 'Bansi',
-            familyName: 'Patel',
-            familyId: 3,
-            patientAge: 20,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        }, {
-            firstName: 'Udayan',
-            familyName: 'Vaidya',
-            familyId: 4,
-            patientAge: 21,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        }, {
-            firstName: 'Pulak',
-            familyName: 'Mittal',
-            familyId: 6,
-            patientAge: 19,
-            patientGender: 'Male',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        }, {
-            firstName: 'Priya',
-            familyName: 'Mittal',
-            familyId: 6,
-            patientAge: 38,
-            patientGender: 'Female',
-            patientImage: 'resources/user.png'
-            // patientIllnesses: ''
-        }]*/
+        }
     }
 })

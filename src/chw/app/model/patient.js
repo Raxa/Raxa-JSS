@@ -13,6 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//Model for storing  patient info
 Ext.define('chw.model.patient', {
     extend: 'Ext.data.Model',
     config: {
