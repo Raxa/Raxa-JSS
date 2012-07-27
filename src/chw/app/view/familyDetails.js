@@ -129,7 +129,8 @@ Ext.define('chw.view.familyDetails', {
             title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.map'),
             items: [{
                 xtype: 'map',
-                height: '100%'
+                height: '100%',
+                itemId: 'familyMap'
             }]
         }, {
             xclass: 'chw.view.userToolbar'

@@ -70,6 +70,11 @@ Ext.define('chw.controller.basic', {
                     this.doToolbar('list')
                 }
             },
+//            "button[action=locateButton]": {
+//                tap: function () {
+//                    this.doToolbar('locate')
+//                }
+//            },
             "button[action=logoutButton]": {
                 tap: function () {
                     this.doToolbar('logout')
@@ -507,7 +512,13 @@ Ext.define('chw.controller.basic', {
         } else if (arg==='resources') {
             //Show resources
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceList)
-        }
+        } /*else if (arg==='locate') {
+            var coords = Ext.ComponentQuery.query('familyDetails #familyMap')[0].getGeo();
+            console.log(coords)
+            var lat = ''
+            var lng = ''
+            Ext.Msg.confirm('Confirm','Use')
+        }*/
     },
     doVisit: function (arg) {
         if (arg==='start') {
