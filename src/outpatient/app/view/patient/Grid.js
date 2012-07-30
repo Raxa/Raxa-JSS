@@ -51,6 +51,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '15%',
             cls: 'centered-cell',
             renderer: function (value) {
+                // TODO: Determine how to pass 2 BMI values into one grid panel
                 var bmi = 68;
                 return Ext.String.format('{0}/{1}', value, bmi);
             }

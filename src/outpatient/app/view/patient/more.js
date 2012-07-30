@@ -62,7 +62,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                         flex: 1,
                         items: [{
                             xtype: 'textareafield',
-                            label: 'Cheif Complaint',
+                            label: 'Chief Complaint',
                             flex: 1
                         }]
                     }, {
