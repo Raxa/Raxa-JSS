@@ -214,12 +214,14 @@ Ext.define('Registration.view.SearchPart1', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 60,
+                        ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Search'),
                         action: 'search'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
+                        ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Reset'),
                         action: 'reset'
                     }]

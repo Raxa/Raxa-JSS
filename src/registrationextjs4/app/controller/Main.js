@@ -262,7 +262,7 @@ Ext.define('Registration.controller.Main', {
             }]
         });
         Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
-        Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').getValue);
+        Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').getValue());
         var PatientStore = Ext.create('Registration.store.patient')
         PatientStore.add(patient);
         //makes the post call for creating the patient

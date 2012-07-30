@@ -3,18 +3,11 @@
 $include-default: false;
 
 // Insert your custom variables here.
-//$window-base-color: #ececec;
-//$panel-body-font-size: 18px !default;
 $base-color: #5d6f7c;
-//$base-gradient: #70B8F4;
 $panel-body-background-color: #ececec;
-//$panel-border-radius: 4px;
 $toolbar-background-color: #5D6F7C;
-//$toolbar-background-gradient: color_stops(#70B8F4, #5D6F7C);
 
 
-//$button-default-border-color: #ec855c;
-//$button-default-background-color: #ec855c;
 $button-default-base-color: #5d6f7c;
 $button-default-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
 $button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
@@ -76,17 +69,106 @@ $toolbar-text-color: #FFFFFF;
 @include extjs-drawcomponent;
 @include extjs-viewport;
 
-//button for aqua ui: 009682
-//button for aqua scales: 5bbba8
-//$button-default-base-color: #5d6f7c;
-//$button-default-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
-//$button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
-//$button-default-color: #FFFFFF;
+
+@include extjs-button-ui(
+    'raxa-orange-small',
+
+    $border-radius: $button-small-border-radius,
+    $border-width: $button-small-border-width,  
+    $border-color: #ee7136,
+    $border-color-over: #ee7136,
+    $border-color-focus: #ee7136,
+    $border-color-pressed: #ee7136,
+    $border-color-disabled: black,
+    $padding: $button-small-padding,
+    $text-padding: $button-small-text-padding,
+
+    $background-color: #ee7136,
+    $background-color-over: #ee7136,
+    $background-color-focus: #ee7136,
+    $background-color-pressed: #ee7136,
+    $background-color-disabled: black,
+
+    $background-gradient: color_stops(#e8a795, #ee7136, #e8a795),
+    $background-gradient-over: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-focus: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-pressed: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-disabled: $button-default-background-gradient-disabled,
+
+    $color: $button-default-color,
+    $color-over: $button-default-color-over,
+    $color-focus: $button-default-color-focus,
+    $color-pressed: $button-default-color-pressed,
+    $color-disabled: $button-default-color-disabled,
+
+    $font-size: $button-small-font-size,
+    $font-size-over: $button-small-font-size-over,
+    $font-size-focus: $button-small-font-size-focus,
+    $font-size-pressed: $button-small-font-size-pressed,
+    $font-size-disabled: $button-small-font-size-disabled,
+    $font-weight: $button-small-font-weight,
+    $font-weight-over: $button-small-font-weight-over,
+    $font-weight-focus: $button-small-font-weight-focus,
+    $font-weight-pressed: $button-small-font-weight-pressed,
+    $font-weight-disabled: $button-small-font-weight-disabled,
+    $font-family: $button-small-font-family,
+    $font-family-over: $button-small-font-family-over,
+    $font-family-focus: $button-small-font-family-focus,
+    $font-family-pressed: $button-small-font-family-pressed,
+    $font-family-disabled: $button-small-font-family-disabled,
+    $icon-size: $button-small-icon-size
+);
+
+
 
 
 @include extjs-button-ui(
-    'raxa-aqua',
-    $ui-button-default-base-color: #009682
+    'raxa-aqua-small',
+
+    $border-radius: $button-small-border-radius,
+    $border-width: $button-small-border-width,  
+    $border-color: #009682,
+    $border-color-over: #009682,
+    $border-color-focus: #009682,
+    $border-color-pressed: #009682,
+    $border-color-disabled: black,
+    $padding: $button-small-padding,
+    $text-padding: $button-small-text-padding,
+
+    $background-color: #009682,
+    $background-color-over: #009682,
+    $background-color-focus: #009682,
+    $background-color-pressed: #009682,
+    $background-color-disabled: black,
+
+    $background-gradient: color_stops(#5bbba8, #009682, #5bbba8),
+    $background-gradient-over: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-focus: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-pressed: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-disabled: $button-default-background-gradient-disabled,
+
+    $color: $button-default-color,
+    $color-over: $button-default-color-over,
+    $color-focus: $button-default-color-focus,
+    $color-pressed: $button-default-color-pressed,
+    $color-disabled: $button-default-color-disabled,
+
+    $font-size: $button-small-font-size,
+    $font-size-over: $button-small-font-size-over,
+    $font-size-focus: $button-small-font-size-focus,
+    $font-size-pressed: $button-small-font-size-pressed,
+    $font-size-disabled: $button-small-font-size-disabled,
+    $font-weight: $button-small-font-weight,
+    $font-weight-over: $button-small-font-weight-over,
+    $font-weight-focus: $button-small-font-weight-focus,
+    $font-weight-pressed: $button-small-font-weight-pressed,
+    $font-weight-disabled: $button-small-font-weight-disabled,
+    $font-family: $button-small-font-family,
+    $font-family-over: $button-small-font-family-over,
+    $font-family-focus: $button-small-font-family-focus,
+    $font-family-pressed: $button-small-font-family-pressed,
+    $font-family-disabled: $button-small-font-family-disabled,
+    $icon-size: $button-small-icon-size
 );
 
 @include extjs-panel-ui(
@@ -102,6 +184,13 @@ $toolbar-text-color: #FFFFFF;
     $ui-body-background-color: #c9cdd0,
     $ui-body-font-size: 16px
 );
+
+
+#custom-slider {
+    width:214px;
+    padding-top:6px;
+    background-image:url(img/ticks.gif);
+}
 
 .raxa-form-field{
   -webkit-border-radius: 5px 5px;
