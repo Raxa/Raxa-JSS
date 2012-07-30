@@ -106,7 +106,7 @@ Ext.define('RaxaEmr.controller.Session', {
     // the view to dashboard
     doLogin: function () {
         var username = Ext.getCmp('userName').getValue();
-        localStorage.setItem("Username", username);
+        localStorage.setItem("username", username);
 
         if (username === "") {
             Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankusername'))
