@@ -35,7 +35,7 @@ Ext.require('Ext.i18n.Bundle', function(){
 
 Ext.application({
     name: 'Registration',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     controllers: ['Main', 'BMI','Search'],
 

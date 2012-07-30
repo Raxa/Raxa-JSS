@@ -16,19 +16,23 @@
  * This script defines the view RegistrationConfirm of the registration module
  */
 Ext.define('Registration.view.RegistrationConfirm', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.registrationconfirm',
     border: 0,
-    padding: 10,
+    padding: 50,
     autoScroll: true,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -158,7 +162,8 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             readOnly: true
                         }]
-                    }, {
+                    }, /* TODO: add back in caste
+                        {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Caste'),
                         layout: 'hbox',
@@ -178,7 +183,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             readOnly: true
                         }]
-                    }, {
+                    }, */{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Occupation'),
                         layout: 'hbox',
@@ -227,28 +232,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Town'),
                         labelAlign: 'right',
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Town.emptytext'),
- 
-                        readOnly: true,
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%'
-                    }, {
-                        xtype: 'textfield',
-                        id: 'postOfficeConfirm',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PO'),
-                        labelAlign: 'right',
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PO.emptytext'),
- 
-                        readOnly: true,
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%'
-                    }, {
-                        xtype: 'textfield',
-                        id: 'pinConfirm',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PC'),
-                        labelAlign: 'right',
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PC.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -325,19 +308,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             margins: '0 0 0 6'
                         }]
-                    }/*, {
-                        xtype: 'button',
-                        margin: '10 50 0 270',
-                        width: 120,
-                        text: 'Submit and Confirm',
-                        action: 'submit'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
-                        text: 'Cancel',
-                        action: 'cancel'
-                    }*/]
+                    }]
                 },{
                     xtype: 'fieldset',
                     padding: 10,
@@ -379,13 +350,15 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     items:[{
                         xtype: 'button',
                         margin: '10 50 0 270',
-                        width: 120,
+                        width: 130,
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.SC'),
+                        ui: 'raxa-aqua-small',
                         action: 'submit'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
+                        ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Cancel'),
                         action: 'cancel'
                     }]  

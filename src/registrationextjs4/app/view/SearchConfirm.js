@@ -16,19 +16,23 @@
  * This script defines the view SearchConfirm of the registration module
  */
 Ext.define('Registration.view.SearchConfirm', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.searchconfirm',
     autoScroll: true,
     border: 0,
     padding: 10,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -162,7 +166,8 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, {
+                    }, /* TODO: add back in caste
+                        {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste'),
                         layout: 'hbox',
@@ -183,7 +188,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, {
+                    }, */{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation'),
                         layout: 'hbox',
@@ -338,6 +343,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         xtype: 'button',
                         margin: '10 10 0 200',
                         width: 120,
+                        ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
@@ -348,6 +354,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         margin: '10 0 0 0',
                         width: 160,
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Return'),
+                        ui: 'raxa-orange-small',
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Screen (Result List)
@@ -357,6 +364,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         margin: '10 0 0 10',
                         width: 160,
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.BMI'),
+                        ui: 'raxa-aqua-small',
                         action: 'bmipage'
                     }]
                 }]

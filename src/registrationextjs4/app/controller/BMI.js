@@ -17,7 +17,7 @@
  */
 Ext.define('Registration.controller.BMI', {
     extend: 'Ext.app.Controller',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationPart2', 'RegistrationConfirm', 'RegistrationBMI',
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     controllers: ['BMI'],
     init: function () {
@@ -48,17 +48,17 @@ Ext.define('Registration.controller.BMI', {
         var bmiErrorWeight = 0; //Varibale to check for weight error
         if (height_cm <= BMI_HEIGHT_MIN || height_cm > BMI_HEIGHT_MAX) {
             //If only weight is illegal
-            status = 'Illegal Value of Height! Please Check the Value Entered';
+            status = 'Illegal Value of Height!';
             bmiErrorHeight = 1;
         }
         if (weight_kg <= BMI_WEIGHT_MIN || weight_kg > BMI_WEIGHT_MAX) {
             bmiErrorWeight = 1;
             if (bmiErrorHeight == 1) {
                 //If both height and weight are illegal
-                status = 'Illegal Value of Height and Weight! Please Check the Value Entered';
+                status = 'Illegal Value of Height and Weight!';
             } else {
                 //If only weight is illegal
-                status = 'Illegal Value of Weight! Please Check the Value Entered';
+                status = 'Illegal Value of Weight!';
             }
         }
         if (bmiErrorHeight == 1 || bmiErrorWeight == 1) {

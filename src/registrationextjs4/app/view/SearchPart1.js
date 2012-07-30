@@ -16,19 +16,23 @@
  * This script defines the view SearchPart1 of the registration module
  */
 Ext.define('Registration.view.SearchPart1', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.searchpart1',
     border: 0,
     padding: 10,
     autoScroll: true,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -46,7 +50,7 @@ Ext.define('Registration.view.SearchPart1', {
                         defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
-                        labelWidth: 250,
+                        labelWidth: 180,
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -55,7 +59,7 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'Old Patient Identifier',
                             id: 'OldPatientIdentifierSearch',
                             fieldLabel: 'Old Patient Identifier',
-                            flex: 1,
+                            width: 303,
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.OPRN.emptytext'),
                             allowBlank: true
                         }]
@@ -65,7 +69,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -76,7 +80,7 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'Patient Identifier',
                             id: 'PatientIdentifierSearch',
                             fieldLabel: 'Patient Identifier',
-                            flex: 1,
+                            width: 303,
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PRN.emptytext'),
                             allowBlank: false
                         }]
@@ -86,7 +90,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -97,13 +101,13 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'firstName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN.emptytext.1'),
                             id: 'patientFirstNameSearch',
-                            flex: 1,
+                            width: 147,
                             allowBlank: false
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN.emptytext.2'),
                             id: 'patientLastNameSearch',
-                            flex: 1,
+                            width: 147,
                             margins: '0 0 0 6'
                         }]
                     }, {
@@ -112,7 +116,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -123,13 +127,13 @@ Ext.define('Registration.view.SearchPart1', {
                             name: 'firstName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.FHN.emptytext.1'),
                             id: 'relativeFirstNameSearch',
-                            flex: 1
+                            width: 147
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.FHN.emptytext.2'),
                             id: 'relativeLastSearch',
-                            flex: 1,
-                            margins: '0 0 0 6',
+                            width: 147,
+                            margins: '0 0 0 6'
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -137,7 +141,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -161,7 +165,7 @@ Ext.define('Registration.view.SearchPart1', {
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -177,15 +181,16 @@ Ext.define('Registration.view.SearchPart1', {
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
+                            width: 147,
                             anchor: '75%',
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN'),
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PHN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
-                        labelAlign: 'left',
+                        labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 180,
                         anchor: '95%',
@@ -202,18 +207,21 @@ Ext.define('Registration.view.SearchPart1', {
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 180,
+                            width: 147,
                             anchor: '75%'
                         }]
                     }, {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 60,
+                        ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Search'),
                         action: 'search'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
                         width: 60,
+                        ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Reset'),
                         action: 'reset'
                     }]

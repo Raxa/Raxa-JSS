@@ -2,6 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     extend: 'Ext.container.Container',
     alias: 'widget.pharmacytopbar',
     autoScroll: true,
+    width: 960,
     layout: {
         type: 'hbox',
         align: 'stretch'
@@ -26,13 +27,16 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         height: 65,
         dock: 'top',
         items: [{
-            xtype: 'tbtext',
-            text: Util.getHospitalName()
+            xtype: 'image',
+            height: 35,
+            width: 40,
+            src: '../../resources/img/iconWhite.png'
         },
 
         {
             xtype: 'button',
             text: 'Patient Queue',
+            //TODO: determine why we need different path for local vs. external host
             icon: '../../resources/img/mLogo.png',
             iconAlign: 'top',
             scale: 'large',
