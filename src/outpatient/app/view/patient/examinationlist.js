@@ -31,19 +31,16 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examinationlist', {
                 ui: 'plain',
                 iconCls: 'locate',
                 iconMask: true,
-                hidden: true,
+                hidden: false,
                 id: 'addDuration'
             }, {
                 xtype: 'button',
                 ui: 'plain',
                 iconCls: 'trash',
                 iconMask: true,
-                hidden: true,
+                hidden: false,
                 id: 'deleteComlain'
             }]
         }]
     },
-    // vikas: function (){
-    // alert('vikas');
-    // }
 });

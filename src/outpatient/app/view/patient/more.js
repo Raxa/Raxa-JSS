@@ -18,14 +18,38 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
     xtype: 'patientlist-show',
     requires: ['RaxaEmr.Outpatient.view.patient.Grid', 'RaxaEmr.Outpatient.view.patient.medicationhistory', 'RaxaEmr.Outpatient.view.patient.refertodoc', 'RaxaEmr.Outpatient.view.patient.work', 'RaxaEmr.Outpatient.view.patient.labresulthistory'],
     config: {
-        title: 'Information',
+        title: 'Outpatient Department',
         cls: 'x-show-contact',
         ui: 'round',
         id: 'more',
         layout: 'vbox',
         items: [{
             id: 'content',
-            tpl: ['<div class="top">', '<div style="float:left;width:50%;">', '<div class="headshot" style="float:left;background-image:url(resources/images/headshots/pic.gif);">', '</div>', '<div class="name" style="float:left;width:80%;">', '{firstName} {lastName}', '</br>', '<span>From : {city}, {state}</span>', '</br>', '</div>', '</div>', '<div style="float:left;width:50%;">', '<div class="name_small" style="float:left;width:50%;">', '<span> Age: {age} </span>', '<span>ID : {id}</span>', '</br>', '</div>', '<div class="name_right" style="float:left;width:50%;">', '<span> {nameofdoc} </span>', '<span></span>', '</div>', '</div>', '</div>'].join('')
+            tpl: [
+                '<div class="top">', 
+                    '<div style="float:left;width:50%;">', 
+                        '<div class="headshot" style="float:left;background-image:url({image});">', 
+                        '</div>', 
+                        '<div class="name" style="float:left;width:80%;">', 
+                            '{firstName} {lastName}', 
+                            '</br>', 
+                            '<span>From : {city}, {state}</span>', 
+                            '</br>', 
+                        '</div>', 
+                    '</div>', 
+                    '<div style="float:left;width:50%;">', 
+                        '<div class="name_small" style="float:left;width:50%;">', 
+                            '<span> Age : {age} </span>', 
+                            '<span>ID : {id}</span>', 
+                            '</br>', 
+                        '</div>', 
+                        '<div class="name_right" style="float:left;width:50%;">', 
+                            '<span> {nameofdoc} </span>', 
+                            '<span></span>', 
+                        '</div>', 
+                    '</div>', 
+                '</div>'
+            ].join('')
         }, {
             xtype: 'container',
             layout: {
@@ -61,7 +85,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                         flex: 1,
                         items: [{
                             xtype: 'selectfield',
-                            label: 'Cheif Complain',
+                            label: 'Chief Complain',
                             id: 'cheifComplain',
                             valueField: 'cheifComplain',
                             displayField: 'title',
@@ -69,23 +93,20 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                             flex: 1,
                             store: {
                                 data: [{
-                                    cheifComplain: 'Complain 1',
-                                    title: 'Complain 1'
+                                    cheifComplain: 'Abdominal Pain',
+                                    title: 'Abdominal Pain',
                                 }, {
-                                    cheifComplain: 'Complain 2',
-                                    title: 'Complain 2'
+                                    cheifComplain: 'Fever',
+                                    title: 'Fever',
                                 }, {
-                                    cheifComplain: 'Complain 6',
-                                    title: 'Complain 6'
+                                    cheifComplain: 'Nausea',
+                                    title: 'Nausea',
                                 }, {
-                                    cheifComplain: 'Complain 3',
-                                    title: 'Complain 3'
+                                    cheifComplain: 'Vomiting',
+                                    title: 'Vomiting',
                                 }, {
-                                    cheifComplain: 'Complain 4',
-                                    title: 'Complain 4'
-                                }, {
-                                    cheifComplain: 'Complain 5',
-                                    title: 'Complain 5'
+                                    cheifComplain: 'Weakness',
+                                    title: 'Weakness',
                                 }]
                             }
                         }]
