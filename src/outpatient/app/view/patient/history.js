@@ -99,6 +99,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         displayField: 'title',
                         store: {
                             data: [{
+                                alcoholFrequency: '',
+                                title: ''
+                            }, {
+                                alcoholFrequency: 'none',
+                                title: 'None'
+                            }, {
                                 alcoholFrequency: 'daily',
                                 title: 'Daily'
                             }, {
@@ -107,9 +113,6 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             }, {
                                 alcoholFrequency: 'experiencedWithdrawal',
                                 title: 'Experienced Withdrawal'
-                            }, {
-                                alcoholFrequency: 'none',
-                                title: 'None'
                             }]
                         }
                     }, {
@@ -129,14 +132,17 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             displayField: 'title',
                             store: {
                                 data: [{
-                                    time: 'past',
-                                    title: 'Past'
+                                    time: '',
+                                    title: ''
+                                }, {
+                                    time: 'never',
+                                    title: 'Never'
                                 }, {
                                     time: 'present',
                                     title: 'Present'
                                 }, {
-                                    time: 'never',
-                                    title: 'Never'
+                                    time: 'past',
+                                    title: 'Past'
                                 }]
                             }
                         }, {
@@ -147,6 +153,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             displayField: 'title',
                             store: {
                                 data: [{
+                                    way: '',
+                                    title: ''
+                                }, {
+                                    way: 'Neither',
+                                    title: 'Neither'
+                                }, {
                                     way: 'oral',
                                     title: 'Oral'
                                 }, {
@@ -165,11 +177,17 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             displayField: 'title',
                             store: {
                                 data: [{
-                                    amount: 'heavy',
-                                    title: 'Heavy'
+                                    amount: '',
+                                    title: ''
+                                }, {
+                                    amount: 'None',
+                                    title: 'None'
                                 }, {
                                     amount: 'occasional',
                                     title: 'Occasional'
+                                }, {
+                                    amount: 'heavy',
+                                    title: 'Heavy'
                                 }]
                             }
                         }]
@@ -197,13 +215,13 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         handler: function () {
                             Ext.getCmp('history-panel').setActiveItem(HISTORY.PERSONAL)
                         }
-                    }, {
-                        xtype: 'button',
-                        ui: 'confirm',
-                        margin: '0 10 0 10',
-                        text: 'OK',
-                        id: 'submit-history',
-                        flex: 1
+                               /*}, {*/
+                           /*xtype: 'button',*/
+                           /*ui: 'confirm',*/
+                           /*margin: '0 10 0 10',*/
+                           /*text: 'OK',*/
+                           /*id: 'submit-history',*/
+                           /*flex: 1*/
                     }]
                 }]
             }, {

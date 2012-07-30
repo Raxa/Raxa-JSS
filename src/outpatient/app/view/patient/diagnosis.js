@@ -97,22 +97,22 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                     pack: 'center',
                     type: 'hbox'
                 },
-                items: [{
-                    xtype: 'button',
-                    ui: 'decline',
-                    text: 'Cancel',
-                    flex: 1
-                }, {
-                    xtype: 'button',
-                    margin: '0 10 0 10',
-                    text: 'Clear',
-                    flex: 1
-                }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Done',
-                    flex: 1
-                }]
+                /*items: [{*/
+                /*xtype: 'button',*/
+                /*ui: 'decline',*/
+                /*text: 'Cancel',*/
+                /*flex: 1*/
+                /*}, {*/
+                /*xtype: 'button',*/
+                /*margin: '0 10 0 10',*/
+                /*text: 'Clear',*/
+                /*flex: 1*/
+                /*}, {*/
+                /*xtype: 'button',*/
+                /*ui: 'confirm',*/
+                /*text: 'Done',*/
+                /*flex: 1*/
+                /*}]*/
             }]
         }, {
             xtype: 'container',

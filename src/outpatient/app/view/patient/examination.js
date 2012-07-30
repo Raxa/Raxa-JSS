@@ -30,18 +30,19 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                 type: 'hbox'
             },
             items: [{
-                xtype: 'container',
-                flex: 1
+                xtype: 'image',
+                height: 480, // 476
+                width: 443, // 441
+                src: 'resources/images/theman.png',
             }, {
                 xtype: 'container',
                 flex: 1,
-                margin: '20 20 20 20',
                 items: [{
                     xtype: 'container',
                     margin: '0 0 20 0',
                     border: '1 1 1 1',
                     style: 'border:solid #DADADA;',
-                    height: 436,
+                    height: 576,
                     layout: {
                         type: 'fit'
                     },
@@ -74,7 +75,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                                 xtype: 'spacer'
                             }, {
                                 xtype: 'button',
-                                text: 'Cancle',
+                                text: 'Cancel',
                                 handler: function () {
                                     Ext.getCmp('durationPicker').setHidden(true);
                                 }

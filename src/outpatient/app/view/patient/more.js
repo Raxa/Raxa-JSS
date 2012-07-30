@@ -18,7 +18,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
     xtype: 'patientlist-show',
     requires: ['RaxaEmr.Outpatient.view.patient.Grid', 'RaxaEmr.Outpatient.view.patient.medicationhistory', 'RaxaEmr.Outpatient.view.patient.refertodoc', 'RaxaEmr.Outpatient.view.patient.work', 'RaxaEmr.Outpatient.view.patient.labresulthistory'],
     config: {
-        title: 'Information',
+        title: 'Outpatient Department',
         cls: 'x-show-contact',
         ui: 'round',
         id: 'more',
@@ -93,23 +93,20 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                             flex: 1,
                             store: {
                                 data: [{
-                                    cheifComplain: 'Complain 1',
-                                    title: 'Complain 1'
+                                    cheifComplain: 'Abdominal Pain',
+                                    title: 'Abdominal Pain',
                                 }, {
-                                    cheifComplain: 'Complain 2',
-                                    title: 'Complain 2'
+                                    cheifComplain: 'Fever',
+                                    title: 'Fever',
                                 }, {
-                                    cheifComplain: 'Complain 6',
-                                    title: 'Complain 6'
+                                    cheifComplain: 'Nausea',
+                                    title: 'Nausea',
                                 }, {
-                                    cheifComplain: 'Complain 3',
-                                    title: 'Complain 3'
+                                    cheifComplain: 'Vomiting',
+                                    title: 'Vomiting',
                                 }, {
-                                    cheifComplain: 'Complain 4',
-                                    title: 'Complain 4'
-                                }, {
-                                    cheifComplain: 'Complain 5',
-                                    title: 'Complain 5'
+                                    cheifComplain: 'Weakness',
+                                    title: 'Weakness',
                                 }]
                             }
                         }]

@@ -20,7 +20,7 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
     id: 'contact',
 
     config: {
-        title: 'Medical Records',
+        title: 'Outpatient Department',
         cls: 'x-contacts',
         ui: 'round',
         store: 'patientlist',

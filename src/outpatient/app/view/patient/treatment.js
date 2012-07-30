@@ -168,7 +168,8 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     ui: 'confirm',
                     text: 'Done',
                     handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.INSTRUCTIONS)
+                        /*Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.INSTRUCTIONS)*/
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.SUMMERY)
                     }
                 }]
             }, {
