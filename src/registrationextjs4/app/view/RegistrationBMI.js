@@ -169,6 +169,7 @@ Ext.define('Registration.view.RegistrationBMI', {
                             margin: '30 0 0 30',
                             align: 'right',
                             width: 60,
+                            ui: 'raxa-aqua-small',
                             action: 'bmiSubmit',
                             id: 'submitBMI',
                             text: 'Submit' //Going Back to Home Page - BMI to be Posted Here
