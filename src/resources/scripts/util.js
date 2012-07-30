@@ -191,6 +191,7 @@ var Util = {
     saveBasicAuthHeader: function (username, password) {
         Util.logoutUser(); //Delete existing logged in sessions
         //Check login and save to localStorage if valid
+        //We are using a synchronous XMLHttp Request instead of an Asynchronous AJAX request
         var xmlReq = new XMLHttpRequest();
         xmlReq.open("GET", HOST + '/ws/rest/v1/session', false);
         xmlReq.setRequestHeader("Accept", "application/json");
@@ -266,7 +267,7 @@ var Util = {
         return (Math.floor(Math.random()*1000000)).toString();
     },
 
-    //Function to help share Models between ExtJS and Sencha Touch 2.
+    //Function to help share Models between ExtJS and Sencha Touch 2
     platformizeModelConfig: function (extJsModelConfig) {
         if (Ext.versions.extjs) {
             return extJsModelConfig; // nothing to change, we are on ext

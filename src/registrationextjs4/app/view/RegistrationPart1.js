@@ -47,7 +47,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                     },
                     items: [{
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Old Patient Registration Number',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),
                         layout: 'hbox',
                         combineErrors: true,
                         labelAlign: 'right',
@@ -63,14 +63,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'Old Patient Identifier',
                             id: 'oldPatientIdentifier',
                             fieldLabel: 'Old Patient Identifier',
-                            width: 353,
-                            emptyText: 'Old Patient Identifier',
+                            flex: 1,
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPI.emptytext'),
                             allowBlank: true
 
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Patient Name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -85,12 +85,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                             cls: 'raxa-form-panel',    
                             name: 'firstName',
                             id: 'patientFirstName',
-                            emptyText: 'Patient\'s First Name',
-                            width:172,
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
+                            flex: 1,
                             allowBlank: false
                         }, {
                             name: 'lastName',
-                            emptyText: 'Patient\'s Last Name',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PLN.emptytext'),
                             id: 'patientLastName',
                             width: 172,
                             margins: '0 0 0 6',
@@ -98,7 +98,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Father/Husband\'s name',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -111,14 +111,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                         },
                         items: [{
                             name: 'firstName',
-                            emptyText: 'Father/Husband\'sFirst Name',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
                             id: 'relativeFirstName',
                             width:172,
 
                             allowBlank: false
                         }, {
                             name: 'lastName',
-                            emptyText: 'Last Name',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHLN.emptytext'),
                             id: 'relativeLastName',
                             width:172,
                             margins: '0 0 0 6',
@@ -127,7 +127,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Age (Enter DOB or Current Age)',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
@@ -142,7 +142,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             xtype: 'datefield',
                             fieldLabel: 'DOB',
                             id: 'dob',
-                            emptyText: 'MM/DD/YYYY',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext1'),
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 200,
@@ -154,16 +154,16 @@ Ext.define('Registration.view.RegistrationPart1', {
                             xtype: 'numberfield',
                             fieldLabel: 'Current Patient Age',
                             id: 'patientAge',
-                            width:172,
-                            margins: '0 0 0 6',
-                            emptyText: 'Patient\'s Current Age',
+                            flex: 1,
+                            margins: '0 0 0 36',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext2'),
                             allowBlank: false
                         },
 
                         ]
                     }, {
                         xtype: 'radiogroup',
-                        fieldLabel: 'Sex',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender'),
                         id: 'sexRadioGroup',
                         labelAlign: 'right',
                         labelPad: 20,
@@ -173,16 +173,16 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'radiofield',
                             name: 'sex',
-                            boxLabel: 'Male',
+                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Male'),
                             checked: true
                         }, {
                             xtype: 'radiofield',
                             name: 'sex',
-                            boxLabel: 'Female'
+                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female'),
                         }, {
                             xtype: 'radiofield',
                             name: 'sex',
-                            boxLabel: 'Other'
+                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other'),
                         }]
                     }]
                 }]
@@ -328,11 +328,11 @@ Ext.define('Registration.view.RegistrationPart1', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
                                 data: [
-                                ['Uneducated'],
-                                ['5th Pass or Less'],
-                                ['6th - 9th Class'],
-                                ['10th and above'],
-                                ['Graduate and above']
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.1')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.2')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.3')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.4')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.5')]
                                 ]
                             }),
                             displayField: 'education'
@@ -353,25 +353,25 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'combo',
                             name: 'caste',
-                            label: 'Caste',
+                            label: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Caste'),
                             id: 'caste',
                             layout: 'hbox',
                             width: 172,
                             store: new Ext.data.SimpleStore({
                                 fields: ['caste'],
                                 data: [
-                                ['First'],
-                                ['Second'],
-                                ['Third'],
-                                ['Fourth'],
-                                ['Not Mentioned', 'Not Mentioned']
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Caste.1')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Caste.2')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Caste.3')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Caste.4')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Caste.5')]
                                 ]
                             }),
                             displayField: 'caste'
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: 'Occupation',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
