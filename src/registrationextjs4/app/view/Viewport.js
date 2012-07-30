@@ -35,6 +35,15 @@ Ext.define('Registration.view.Viewport', {
                     src: '../../resources/img/iconWhite.png'
                 }, {
                     xtype: 'tbfill'
+                },{
+                      xtype: 'button',
+                      height: 35,
+                      width: 200,
+                      text: 'Registration Home Page',
+                      handler: function () {
+                          var l = Ext.getCmp('mainRegArea').getLayout();
+                          l.setActiveItem(LAB_PAGES.HOME.name);
+                      }
                 }, {
                     xtype: 'tbtext',
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + username
