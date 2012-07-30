@@ -324,7 +324,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                         items: [{
                             xtype: 'datepickerfield',
                             label: 'Follow Up',
-                            placeHolder: 'mm/dd/yyyy',
+                            value: new Date(),
                             flex: 1
                         }]
                     }, {

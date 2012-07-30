@@ -1,6 +1,6 @@
 [{
     "drugname": "Ciprofloxacin (Cipro)",
-    "strength": "500mg",
+    "strength": "500",
     "instruction": "With Meals",
     "dosage": "Twice Daily",
     "routeofadministration": "Oral",

@@ -39,7 +39,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                     '</div>', 
                     '<div style="float:left;width:50%;">', 
                         '<div class="name_small" style="float:left;width:50%;">', 
-                            '<span> Age: {age} </span>', 
+                            '<span> Age : {age} </span>', 
                             '<span>ID : {id}</span>', 
                             '</br>', 
                         '</div>', 
