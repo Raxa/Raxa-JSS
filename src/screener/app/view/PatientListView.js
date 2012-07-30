@@ -16,7 +16,16 @@ Ext.define("Screener.view.PatientListView", {
         {
             xtype: 'list',
             itemId: 'patientList',
-            itemTpl: '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',
+            itemTpl: [
+                '<table>',
+                '<tr><td>',
+                '<img src="resources/pic.gif" />',
+                '</td>',
+                '<td>',
+                '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',
+                '</td></tr>',
+                '</table>',
+            ].join(''),
             store: 'patientStore',
             items: [{
                 xtype: 'titlebar',
