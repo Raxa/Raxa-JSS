@@ -266,47 +266,38 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         y: 30
                     },
                     {
-                        xtype: 'gridpanel',
+                        xtype: 'patientsgridpanel',
+                        id: 'todayPatientGrid',
                         height: 270,
                         width: 190,
-                        title: 'Today',
-                        x: -2,
-                        y: 70,
-                        columns: [
-                        {
-                            xtype: 'numbercolumn',
-                            width: 40,
-                            dataIndex: 'number',
-                            text: 'Sl. No'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 146,
-                            text: 'Patient Name'
-                        }
-                        ]
+                        title: 'Today', 
+                        store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
+   
+                        y: 70
                     }
-                    ]
+                    ],
+                    listeners: {
+                        // as this panal exapands it make the get call for todays patient list to update the list
+                        expand: {
+                            fn: function(){
+                                Ext.getCmp('todayPatientGrid').getStore().load()
+                            }
+                        }
+                    }
                 },
                 {
-                    xtype: 'gridpanel',
-                    collapsed: true,
+                    xtype: 'patientsgridpanel',
+                    id : 'sevenDaysPatientGrid',
                     title: 'Last 7 Days(145)',
-                    columnLines: false,
-                    columns: [
-                    {
-                        xtype: 'numbercolumn',
-                        draggable: false,
-                        width: 42,
-                        dataIndex: 'number',
-                        text: 'Sl. No'
-                    },
-                    {
-                        xtype: 'gridcolumn',
-                        width: 146,
-                        text: 'Patient Name'
+                     store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
+                    listeners: {
+                        // as this panal exapands it make the get call for 1 week patient list to update the list
+                        expand: {
+                            fn: function(){
+                                Ext.getCmp('sevenDaysPatientGrid').getStore().load()
+                            }
+                        }
                     }
-                    ]
                 },
                 {
                     xtype: 'gridpanel',
