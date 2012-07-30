@@ -32,7 +32,7 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'image',
                     height: 35,
                     width: 40,
-                    src: '../resources/img/icon.png'
+                    src: '../../resources/img/iconWhite.png'
                 }, {
                     xtype: 'tbfill'
                 }, {
@@ -46,7 +46,7 @@ Ext.define('Registration.view.Viewport', {
                     text: 'Log Out',
                 }]
             }],
-            width: 800,
+            width: 960,
             id: 'mainRegArea',
             activeItem: REG_PAGES.HOME.value,
             layout: {

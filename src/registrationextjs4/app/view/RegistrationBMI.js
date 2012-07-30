@@ -16,95 +16,99 @@
  * This script defines the view RegistrationBMI of the registration module
  */
 Ext.define('Registration.view.RegistrationBMI', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.registrationbmi',
     border: 0,
     padding: 10,
     autoScroll: true,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             border: 0,
             items: [{
-                xtype: 'panel',
-                border: 0,
-                bodyPadding: 50,
+                xtype: 'container',
                 items: [{
                     xtype: 'displayfield',
                     fieldLabel: 'Patient Identifier',
                     value: 'Patient ID comes here', 
                     id: 'bmiPatientID',
                     readOnly: true,
-                    labeAlign: 'right'
                 },{
                     xtype: 'displayfield',
                     fieldLabel: 'Patient Name',
                     value: 'Patient Name comes here',
                     readOnly: true,
                     id: 'bmiPatientName',
-                    labeAlign: 'right'
+                    padding: '0 0 40 0'
                 },{
                     xtype: 'fieldset',
-                    padding: 10,
                     title: 'Enter Measures for Body Mass Index',
-                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
+                    style:{
+                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    },
                     items: [{
-                        xtype: 'label',
-                        text: 'BMI Value',
-                        labelAlign: 'right'
-                    }, {
                         xtype: 'form',
                         id: 'heightWeightID',
+                        ui: 'raxa-panel',
                         border: 0,
                         layout: {
                             align: 'stretch',
                             type: 'hbox'
                         },
-                        bodyPadding: 10,
                         items: [{
                             xtype: 'numberfield',
-                            fieldLabel: 'Height',
+                            fieldLabel: 'Height (cm)',
                             id: 'heightIDcm',
                             emptyText: 'Enter Height in cm',
                             labelPad: 20,
                             labelWidth: 70,
                             labelAlign: 'right',
                             anchor: '95%',
+                            width: 172,
                             margin: '0 10 0 0',
                             hideTrigger: true,
                             keyNavEnabled: false,
                             mouseWheelEnabled: false,
                             nanText: 'Invalid Input'
                         }, {
-                            xtype: 'label',
-                            text: 'cm'
-                        }, {
                             xtype: 'numberfield',
-                            fieldLabel: 'Weight',
+                            fieldLabel: 'Weight (kg)',
                             id: 'weightIDkg',
                             emptyText: 'Enter Weight in Kg',
                             labelPad: 20,
-                            labelWidth: 70,
+                            labelWidth: 95,
                             labelAlign: 'right',
+                            width: 200,
                             anchor: '95%',
                             margin: '0 10 0 0',
                             hideTrigger: true,
                             keyNavEnabled: false,
                             mouseWheelEnabled: false,
-                            nanText: 'Invalid Input'
-                        }, {
-                            xtype: 'label',
-                            text: 'Kg'
+                            nanText: 'Invalid Input',
+                            padding: '20 0 40 0'
                         }]
-                    }, {
+                    }]
+                },{
+                    xtype: 'fieldset',
+                    title: 'BMI',
+                    style:{
+                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    },
+                    items: [{
                         xtype: 'numberfield',
-                        width: 140,
+                        labelPad: 20,
                         fieldLabel: 'BMI',
                         emptyText: 'BMI Value',
                         id: 'bmiNumberfieldID',
                         readOnly: true,
+                        width: 172,
                         labelAlign: 'right',
                         labelWidth: 70,
                         hideTrigger: true,
@@ -112,18 +116,7 @@ Ext.define('Registration.view.RegistrationBMI', {
                         mouseWheelEnabled: false,
                         nanText: 'Invalid Input'
                     }, {
-                        xtype: 'fieldcontainer',
-                        maintainFlex: true,
-                        layout: {
-                            pack: 'center',
-                            type: 'hbox'
-                        },
-                        items: [{
-                            xtype: 'label',
-                            text: 'BMI Chart'
-                        }]
-                    }, {
-                        xtype: 'panel',
+                        xtype: 'container',
                         height: 40,
                         border: 0,
                         layout: {
@@ -158,17 +151,28 @@ Ext.define('Registration.view.RegistrationBMI', {
                             id: 'bmiStatusID',
                             fieldLabel: 'BMI Status',
                             readOnly: true,
-                            flex: 1,
+                            width: 295,
                             emptyText: 'BMI Status Value',
                             allowBlank: true
                         }
                     }, {
-                        xtype: 'button',
-                        margin: '30 0 0 30',
-                        width: 60,
-                        action: 'bmiSubmit',
-                        id: 'submitBMI',
-                        text: 'Submit' //Going Back to Home Page - BMI to be Posted Here
+                        xtype: 'container',
+                        layout: {
+                            type: 'hbox',
+                            pack: 'end'
+                        },
+                        border: 0,
+                        padding: 0,
+                        width: 580,
+                        items: [{
+                            xtype: 'button',
+                            margin: '30 0 0 30',
+                            align: 'right',
+                            width: 60,
+                            action: 'bmiSubmit',
+                            id: 'submitBMI',
+                            text: 'Submit' //Going Back to Home Page - BMI to be Posted Here
+                        }]
                     }]
                 }]
             }]

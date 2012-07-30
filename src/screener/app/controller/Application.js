@@ -322,19 +322,13 @@ Ext.define("Screener.controller.Application", {
         }
         store.getData().getAt(0).getData().uuid
     },
-    ISODateString: function (d) {
-        function pad(n) {
-            return n < 10 ? '0' + n : n
-        }
-        return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
-    },
     //function for posting the drug order
     /* steps - get the drugs form server using get call on drugs
      *       - get call on cencept to search for the concept related to drug with query as drug name selected
      *       - post the order with "concept", "patient", "drug", and most important "type" as "drugtype" */
     drugsubmit: function () {
         // one of the patient should be selected for posting drug order
-        if (Ext.getCmp('patientList').getSelection()[0] != null) {
+        if (this.getPatientList().getSelection()[0] != null) {
             concept = new Array();
             order = new Array();
             var k = 0,
@@ -362,7 +356,7 @@ Ext.define("Screener.controller.Application", {
                 if (Ext.getCmp('form' + i).getValues().duration == "2m") enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 2, startdate.getDate());
                 // model for drug order is created here
                 order.push({
-                    patient: Ext.getCmp('patientList').getSelection()[0].getData().uuid,
+                    patient: this.getPatientList().getSelection()[0].getData().uuid,
                     drug: Ext.getCmp('form' + i).getValues().drug,
                     startDate: startdate,
                     autoExpireDate: enddate,
@@ -385,10 +379,10 @@ Ext.define("Screener.controller.Application", {
                         for (var j = 0; j <= form_num; j++) {
                             order[j].concept = concept[j].getAt(0).getData().uuid
                         }
-                        var time = this.ISODateString(startdate)
+                        var time = Util.Datetime(startdate, Util.getUTCGMTdiff());
                         // model for posting the encounter for given drug orders
                         var encounter = Ext.create('Screener.model.drugEncounter', {
-                            patient: Ext.getCmp('patientList').getSelection()[0].getData().uuid,
+                            patient: this.getPatientList().getSelection()[0].getData().uuid,
                             // this is the encounter for the prescription encounterType
                             encounterType: localStorage.prescriptionUuidencountertype,
                             encounterDatetime: time,
@@ -660,8 +654,8 @@ Ext.define("Screener.controller.Application", {
     assignPatient: function () {
         var currentNumPatients = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('Doctors').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
-        Ext.getStore('patientStore').getAt(this.currentPatientIndex).set('patientid', this.currentDoctorIndex);
-        var patient = Ext.getStore('patientStore').getAt(this.currentPatientIndex).data.uuid
+        this.getPatientList().getSelection()[0].set('patientid', this.currentDoctorIndex);
+        var patient = this.getPatientList().getSelection()[0].data.uuid
         var provider = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).data.person.uuid
         Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
         this.getPatientList().deselectAll();

@@ -16,25 +16,30 @@
  * This script defines the view RegistrationPart1 of the registration module
  */
 Ext.define('Registration.view.RegistrationPart1', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.registrationpart1',
     border: 0,
     padding: 50,
     autoScroll: true,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
-                border: 0,
+                xtype: 'container',
                 bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
                     //first element in bodyStyle is not working, passing it twice
-                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
+                    style:{
+                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    },
                     padding: 5,
                     title: 'Primary Information',
                     fieldDefaults: {
@@ -54,6 +59,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         },
                         items: [{
                             xtype: 'numberfield',
+                            cls: 'raxa-form-panel',    
                             name: 'Old Patient Identifier',
                             id: 'oldPatientIdentifier',
                             fieldLabel: 'Old Patient Identifier',
@@ -76,6 +82,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             hideLabel: 'true'
                         },
                         items: [{
+                            cls: 'raxa-form-panel',    
                             name: 'firstName',
                             id: 'patientFirstName',
                             emptyText: 'Patient\'s First Name',
@@ -180,12 +187,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                     }]
                 }]
             },{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
-                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
+                    style:{
+                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    },
                     padding: 5,
                     title: 'Address and Contact Details',
                     items: [{
@@ -198,7 +207,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelWidth: 200,
                         width: 573,
                         allowBlank: false,
-                        //anchor: '95%'
+                    //anchor: '95%'
                     }, {
                         xtype: 'textfield',
                         fieldLabel: 'Street/Area/Locality/Mohala/Road',
@@ -286,12 +295,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                     }]
                 }]
             },{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
-                    style:{bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'},
+                    style:{
+                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    },
                     padding: 5,
                     title: 'Secondary Information',
                     items: [{
@@ -317,11 +328,11 @@ Ext.define('Registration.view.RegistrationPart1', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
                                 data: [
-                                    ['Uneducated'],
-                                    ['5th Pass or Less'],
-                                    ['6th - 9th Class'],
-                                    ['10th and above'],
-                                    ['Graduate and above']
+                                ['Uneducated'],
+                                ['5th Pass or Less'],
+                                ['6th - 9th Class'],
+                                ['10th and above'],
+                                ['Graduate and above']
                                 ]
                             }),
                             displayField: 'education'
@@ -349,11 +360,11 @@ Ext.define('Registration.view.RegistrationPart1', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['caste'],
                                 data: [
-                                    ['First'],
-                                    ['Second'],
-                                    ['Third'],
-                                    ['Fourth'],
-                                    ['Not Mentioned', 'Not Mentioned']
+                                ['First'],
+                                ['Second'],
+                                ['Third'],
+                                ['Fourth'],
+                                ['Not Mentioned', 'Not Mentioned']
                                 ]
                             }),
                             displayField: 'caste'
@@ -380,19 +391,19 @@ Ext.define('Registration.view.RegistrationPart1', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['occupation'],
                                 data: [
-                                    ['Unemployed'],
-                                    ['Student'],
-                                    ['Agriculture Related'],
-                                    ['Bank Related'],
-                                    ['Medical Related'],
-                                    ['Engineering Related'],
-                                    ['Not Mentioned']
+                                ['Unemployed'],
+                                ['Student'],
+                                ['Agriculture Related'],
+                                ['Bank Related'],
+                                ['Medical Related'],
+                                ['Engineering Related'],
+                                ['Not Mentioned']
                                 ]
                             }),
                             displayField: 'occupation'
                         }]
                     }, {
-                        xtype: 'panel',
+                        xtype: 'container',
                         layout: {
                             type: 'hbox',
                             pack: 'end'

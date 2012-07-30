@@ -40,6 +40,8 @@ var resourceUuid = [
 ['encountertype', 'reg', 'REGISTRATION - Registration encounter'],
 ['encountertype', 'screener', 'SCREENER - Screener encounter'],
 ['encountertype', 'out', 'OUTPATIENT - Outpatient encounter'],
+['encountertype', 'prescription', 'PRESCRIPTION - Prescription encounter'],
+['encountertype', 'prescriptionfill', 'PRESCRIPTIONFILL - Prescriptionfill encounter'],
 ['location', 'screener', 'Screener Registration Disk - registration desk in a screener module'],
 ['location', 'waiting', 'Waiting Patient: Screener - patients assigned to a doctor']
 ];
@@ -107,7 +109,7 @@ var diffinUTC_GMT = 5.5;
 //OpenMRS checks whether encounters are ahead of current time --
 //if a system clock is ahead of OpenMRS clock, some things can't be posted
 //therefore, we need to fudge our time a few mins behind
-var TIME_BEFORE_NOW = .05;
+var TIME_BEFORE_NOW = .1;
 
 // The Util class provids several methods that are shared by the core, apps and modules
 var Util = {

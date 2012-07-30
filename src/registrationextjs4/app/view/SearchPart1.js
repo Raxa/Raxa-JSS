@@ -16,19 +16,23 @@
  * This script defines the view SearchPart1 of the registration module
  */
 Ext.define('Registration.view.SearchPart1', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.searchpart1',
     border: 0,
     padding: 10,
     autoScroll: true,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -121,7 +125,7 @@ Ext.define('Registration.view.SearchPart1', {
                         },
                         items: [{
                             name: 'firstName',
-                            emptyText: 'Father/Husband\'sFirst Name',
+                            emptyText: 'First Name',
                             id: 'relativeFirstNameSearch',
                             width: 147
                         }, {
@@ -129,7 +133,7 @@ Ext.define('Registration.view.SearchPart1', {
                             emptyText: 'Last Name',
                             id: 'relativeLastSearch',
                             width: 147,
-                            margins: '0 0 0 6',
+                            margins: '0 0 0 6'
                         }]
                     }, {
                         xtype: 'fieldcontainer',

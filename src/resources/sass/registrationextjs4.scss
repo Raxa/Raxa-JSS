@@ -3,54 +3,14 @@
 $include-default: false;
 
 // Insert your custom variables here.
-$window-base-color: #ececec;
+//$window-base-color: #ececec;
 //$panel-body-font-size: 18px !default;
 $base-color: #5d6f7c;
 //$base-gradient: #70B8F4;
-$panel-body-background-color: #c9cdd0;
+$panel-body-background-color: #ececec;
 //$panel-border-radius: 4px;
 $toolbar-background-color: #5D6F7C;
 //$toolbar-background-gradient: color_stops(#70B8F4, #5D6F7C);
-
-
-//base colors for the default button
-/*
-$button-default-base-color: adjust-color($neutral-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
-$button-default-base-color-over: adjust-color($base-color, $hue: -6.667deg, $saturation: 44.444%, $lightness: 10.588%) !default; //E4F3FF
-$button-default-base-color-focus: $button-default-base-color-over !default;
-$button-default-base-color-pressed: adjust-color($base-color, $hue: -0.725deg, $saturation: -9.556%, $lightness: -3.725%) !default; //B6CBE4
-$button-default-base-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
-
-$button-default-border-color: adjust-color($button-default-base-color, $hue: 0deg, $saturation: 0%, $lightness: -18.039%) !default;
-$button-default-border-color-over: adjust-color($button-default-base-color-over, $hue: 8.177deg, $saturation: -28.283%, $lightness: -12.745%) !default;
-$button-default-border-color-focus: $button-default-border-color-over !default;
-$button-default-border-color-pressed: adjust-color($button-default-base-color-pressed, $hue: 2.317deg, $saturation: 6.756%, $lightness: -5.294%) !default;
-$button-default-border-color-disabled: adjust-color($button-default-base-color-disabled, $hue: 0deg, $saturation: 0%, $lightness: -8.627%) !default;
-
-$button-default-background-color: $button-default-base-color !default;
-$button-default-background-color-over: $button-default-base-color-over !default;
-$button-default-background-color-focus: $button-default-background-color-over !default;
-$button-default-background-color-pressed: $button-default-base-color-pressed !default;
-$button-default-background-color-disabled: $button-default-base-color-disabled !default;
-
-$button-default-background-gradient: 'glossy-button' !default;
-$button-default-background-gradient-over: 'glossy-button-over' !default;
-$button-default-background-gradient-focus: $button-default-background-gradient-over !default;
-$button-default-background-gradient-pressed: 'glossy-button-pressed' !default;
-$button-default-background-gradient-disabled: 'glossy-button-disabled' !default;
-
-$button-default-background-gradient-color-stops: null !default;
-$button-default-background-gradient-color-stops-over: $button-default-background-gradient-color-stops !default;
-$button-default-background-gradient-color-stops-focus: $button-default-background-gradient-color-stops-over !default;
-$button-default-background-gradient-color-stops-pressed: $button-default-background-gradient-color-stops !default;
-$button-default-background-gradient-color-stops-disabled: $button-default-background-gradient-color-stops !default;
-
-$button-default-color: #333 !default;
-$button-default-color-over: $button-default-color !default;
-$button-default-color-focus: $button-default-color-over !default;
-$button-default-color-pressed: $button-default-color !default;
-$button-default-color-disabled: lighten($button-default-color, 35) !default;
-*/
 
 
 //$button-default-border-color: #ec855c;
@@ -58,7 +18,11 @@ $button-default-color-disabled: lighten($button-default-color, 35) !default;
 $button-default-base-color: #5d6f7c;
 $button-default-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
 $button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
-//$button-default-background-gradient-pressed: 'glossy-button-pressed' !default;
+$button-default-color: #FFFFFF;
+
+//button color toolbar: 2c4d84
+
+
 
 //$button-default-background-color-over: #FFFFFF;
 $button-medium-font-size: 20px;
@@ -67,7 +31,7 @@ $button-large-font-size: ceil 20px;
 
 //fieldset sizes
 $fieldset-header-font-size: 17px;
-//$form-fieldset-radius: 8px;
+//$form-field-border-radius: 4px;
 //$form-field-font-weight: bold;
 
 //$font-family: helvetica neue;
@@ -111,6 +75,42 @@ $toolbar-text-color: #FFFFFF;
 @include extjs-tree;
 @include extjs-drawcomponent;
 @include extjs-viewport;
+
+//button for aqua ui: 009682
+//button for aqua scales: 5bbba8
+//$button-default-base-color: #5d6f7c;
+//$button-default-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
+//$button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
+//$button-default-color: #FFFFFF;
+
+
+@include extjs-button-ui(
+    'raxa-aqua',
+    $ui-button-default-base-color: #009682
+);
+
+@include extjs-panel-ui(
+    'raxa-panel-not-rounded',
+    $ui-body-background-color: #c9cdd0,
+    $ui-body-font-size: 16px
+);
+
+
+@include extjs-panel-ui(
+    'raxa-panel',
+    $ui-border-radius: 4px,
+    $ui-body-background-color: #c9cdd0,
+    $ui-body-font-size: 16px
+);
+
+.raxa-form-field{
+  -webkit-border-radius: 5px 5px;
+  -moz-border-radius: 5px 5px;
+  -ms-border-radius: 5px 5px;
+  -o-border-radius: 5px 5px;
+  border-radius: 5px 5px;
+
+};
 
 // This line changes the location of your images when creating UIs to be relative instead of within the ExtJS directory.
 // You MUST set this to true/string value if you are creating new UIs + supporting legacy browsers.
