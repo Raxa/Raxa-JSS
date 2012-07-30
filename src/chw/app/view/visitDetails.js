@@ -17,6 +17,7 @@ Ext.define('chw.view.visitDetails', {
     extend: 'Ext.Panel',
     requires: 'chw.view.userToolbar',
     alias: 'widget.visitDetails',
+    id: 'visitDetailsPanel',
     config: {
         height: '100%',
         ui: 'neutral',

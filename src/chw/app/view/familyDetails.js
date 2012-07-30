@@ -79,7 +79,7 @@ Ext.define('chw.view.familyDetails', {
                 }]
             }, {
                 xtype: 'button',
-                padding: '20px',
+                //padding: '20px',
                 text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.startCheckup'),
                 ui: 'confirm-round',
                 action: 'visitStart'
