@@ -14,6 +14,12 @@ Ext.define('Screener.model.Patients', {
             name: 'age',
             type: 'int'
         }, {
+			name: 'bmi',
+			persist: false
+		}, {
+			name: 'time',
+			persist: false
+		}, {
             name: 'encounters',
             model: 'Screener.model.encounters'
         }]
