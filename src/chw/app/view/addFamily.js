@@ -16,6 +16,7 @@
 Ext.define('chw.view.addFamily', {
     extend: 'Ext.Panel',
     requires: 'chw.view.userToolbar',
+    alias: 'widget.addFamily',
     config: {
         height: '100%',
         ui: 'neutral',
@@ -58,6 +59,12 @@ Ext.define('chw.view.addFamily', {
                     id:'description',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.description'),
                     placeHolder: 'Near Temple',
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    id: 'familyImage',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.familyImage'),
+                    placeHolder: 'family.png',
                     required: true,
                     clearIcon: true
                 }]

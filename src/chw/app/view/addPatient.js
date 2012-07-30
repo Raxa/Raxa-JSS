@@ -107,6 +107,13 @@ Ext.define('chw.view.addPatient', {
                     }
                 }, {
                     xtype: 'textfield',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.age'),
+                    itemId: 'patientAge',
+                    placeHolder: '32',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.selectImage'),
                     itemId: 'imageField',
                     placeHolder: 'amir.jpg',

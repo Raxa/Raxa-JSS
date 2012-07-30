@@ -41,6 +41,7 @@ Ext.define('chw.view.familyDetails', {
             },
             items: [{
                 xtype: 'label',
+                itemId: 'familyImageLabel',
                 html: '<center><img src="resources/home.png"/></center>',
                 height: '20%',
                 width: '100%',

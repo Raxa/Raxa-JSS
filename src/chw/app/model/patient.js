@@ -35,6 +35,9 @@ Ext.define('chw.model.patient', {
             name: 'birthDate',
             type: 'number'
         }, {
+            name: 'patientAge',
+            type: 'number'
+        }, {
             name: 'patientGender',
             type: 'string'
         }, {

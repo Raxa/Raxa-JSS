@@ -150,8 +150,9 @@ Ext.define('chw.controller.basic', {
                 var name = Ext.getCmp('familyName').getValue();
                 var address = Ext.getCmp('address').getValue();
                 var description = Ext.getCmp('description').getValue();
+                var familyImageVal = Ext.getCmp('familyImage').getValue();
                 
-                if(familyName=='' || address==''){
+                if(name=='' || address==''){
                     Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), 
                     Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
                 }else{
@@ -172,7 +173,7 @@ Ext.define('chw.controller.basic', {
                         familyLongitude: 25,
                         //Hard-coded image of family. This is where the image location would
                         //be inserted when the user takes the image using the camera.
-                        familyImage: 'resources/home.png', 
+                        familyImage: 'resources/'+familyImageVal, 
                         //Calculate distance using GPS and insert here
                         familyDistance: 20
                     });
@@ -192,6 +193,7 @@ Ext.define('chw.controller.basic', {
                 var radioform = Ext.getCmp('ext-AddPatient-1').saveForm();
                 var birthDay = Ext.ComponentQuery.query('AddPatient #bday')[0].getValue();
                 var imageLocation = Ext.ComponentQuery.query('AddPatient #imageField')[0].getValue();
+                var patientAgeVal = Ext.ComponentQuery.query('AddPatient #patientAge')[0].getValue();
                 imageLocation = '/Raxa-JSS/chw/resources/'+imageLocation
                 
                 if(firstNameVal=='' || lastNameVal== '' || !radioform.radiogroup || imageLocation==''){
@@ -222,6 +224,7 @@ Ext.define('chw.controller.basic', {
                         familyName: lastNameVal,
                         patientGender: gender,
                         birthDate: birthDay,
+                        patientAge: patientAgeVal,
                         //Currenty, image needs to be specified by user. In the future
                         //this will be replaced by letting the user take a picture, after
                         //which the location should be inserted here
@@ -238,7 +241,10 @@ Ext.define('chw.controller.basic', {
                 var patientIdVal = Ext.ComponentQuery.query('addIllness #patientIdField')[0].getValue();
                 var patientStore = Ext.getStore('patients')
                 patientStore.load();
-                var patientDetailsVal = patientStore.getAt(patientIdVal - 1).getData();
+                // console.log(patientStore.data.all[patientIdVal - 1].getData())
+                // console.log(patientStore)
+                // var patientDetailsVal = patientStore.getAt(patientIdVal - 1).getData();
+                var patientDetailsVal = patientStore.data.all[patientIdVal-1].getData()
                 var illnessIdVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
                 var illnessDetailsVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data;
                 var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
@@ -463,9 +469,10 @@ Ext.define('chw.controller.basic', {
     doOption: function (arg) {
         if (arg) {
             var active = Ext.getCmp('viewPort').getActiveItem();
+            console.log(active.id)
             if (active.getActiveItem()===PAGES.loginScreen) {
                 this.doLogin(arg);
-            } else if (active.id==='ext-panel-5'){ 
+            } else if (active.id==='ext-panel-4'||active.id==='ext-addFamily-1'){ 
                 //Proceed to add a Family
                 this.doAdd('family', arg);
             } else if (active.id==='ext-familyDetails-1'){ 
