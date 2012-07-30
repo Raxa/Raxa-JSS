@@ -12,7 +12,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             type: 'auto',
             align: 'center'
         },
-        margin: '-10 0 0 100',
+        margin: '-10 0 0 0',
         items:[{
             xtype: 'container',
             border: 0,
@@ -34,7 +34,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         id: 'drugASearchGrid',
                         height: 380,
                         styleHtmlContent: false,
-                        width: 770,
+                        width: 750,
                         autoScroll: true,
                         columnLines: true,
                         x: 190,
@@ -46,7 +46,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         columns: [
                         {
                             xtype: 'gridcolumn',
-                            width: 220,
+                            width: 200,
                             text: 'Name Of drug',
                             dataIndex: 'drugname',
                             resizable: false
@@ -153,6 +153,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                 layout: {
                     type: 'accordion'
                 },
+                border: 0,
                 x: 0,
                 y: 60,
                 items: [
@@ -161,6 +162,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     layout: {
                         type: 'absolute'
                     },
+                    ui: 'raxa-panel',
                     collapsed: false,
                     title: 'Advanced Search',
                     items:[
@@ -188,6 +190,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     },
                     {
                         xtype: 'panel',
+                        border: 0,
                         layout: 'card',
                         height: 200,
                         width: 180,
@@ -198,6 +201,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         items: [{
                             xtype: 'gridpanel',
                             id: 'patientASearchGrid',
+                            border: 0,
                             title: 'Search Results',
                             store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderPatient'),
                             columns: [
@@ -217,6 +221,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         }, {
                             xtype: 'gridpanel',
                             title: 'prescriptions',
+                            border: 0,
                             id: 'drugOrderASearchGrid',
                             store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
                             columns: [
@@ -348,7 +353,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     {
                         xtype: 'panel',
                         height: 110,
-                        width: 330,
+                        width: 300,
                         layout: {
                             type: 'absolute'
                         },
@@ -395,7 +400,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     {
                         xtype: 'panel',
                         height: 110,
-                        width: 330,
+                        width: 340,
                         layout: {
                             type: 'absolute'
                         },
@@ -433,7 +438,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             x: 10,
                             y: 80
                         }],
-                        x: 630,
+                        x: 600,
                         y: 60
                     }]
                 },{
