@@ -16,7 +16,7 @@
  * This script defines the view Home of the registration module
  */
 Ext.define('Registration.view.Home', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.home',
     border: 0,
     padding: 10,

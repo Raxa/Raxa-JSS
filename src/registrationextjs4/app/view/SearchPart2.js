@@ -16,19 +16,23 @@
  * This script defines the view SearchPart2 of the registration module
  */
 Ext.define('Registration.view.SearchPart2', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.searchpart2',
     border: 0,
     autoScroll: true,
     padding: 10,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -88,7 +92,7 @@ Ext.define('Registration.view.SearchPart2', {
                             cellClick: {
                                 fn: function () {
                                     var temp = this.getSelectionModel().getSelection()[0].getData()
-                                    localStorage.setItem('uuid',temp.uuid)
+                                    localStorage.setItem('searchUuid',temp.uuid)
                                     Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)
                                     Ext.getCmp('sexSearchedPatient').setValue(temp.gender)
@@ -116,6 +120,7 @@ Ext.define('Registration.view.SearchPart2', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
+                        ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.MS'),
                         action: 'modifySearch'
                     }]

@@ -16,19 +16,23 @@
  * This script defines the view RegistrationConfirm of the registration module
  */
 Ext.define('Registration.view.RegistrationConfirm', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.registrationconfirm',
     border: 0,
-    padding: 10,
+    padding: 50,
     autoScroll: true,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 10,
                 items: [{
@@ -325,19 +329,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             margins: '0 0 0 6'
                         }]
-                    }/*, {
-                        xtype: 'button',
-                        margin: '10 50 0 270',
-                        width: 120,
-                        text: 'Submit and Confirm',
-                        action: 'submit'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
-                        text: 'Cancel',
-                        action: 'cancel'
-                    }*/]
+                    }]
                 },{
                     xtype: 'fieldset',
                     padding: 10,
