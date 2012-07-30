@@ -166,7 +166,8 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, {
+                    }, /* TODO: add back in caste
+                        {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste'),
                         layout: 'hbox',
@@ -187,7 +188,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, {
+                    }, */{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation'),
                         layout: 'hbox',

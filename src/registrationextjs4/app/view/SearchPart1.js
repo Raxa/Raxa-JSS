@@ -186,7 +186,7 @@ Ext.define('Registration.view.SearchPart1', {
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PN'),
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PHN'),
                         layout: 'hbox',
                         combineErrors: true,
                         defaultType: 'textfield',
