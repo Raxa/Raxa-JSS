@@ -59,21 +59,21 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         fieldLabel: 'Village',
         id: 'village',
         allowBlank: false,
-        x: 480,
+        x: 400,
         y: 30
     }, {
         xtype: 'textfield',
         fieldLabel: 'Block',
         id: 'block',
         allowBlank: false,
-        x: 480,
+        x: 400,
         y: 60
     }, {
         xtype: 'textfield',
         fieldLabel: 'District',
         id: 'District',
         allowBlank: false,
-        x: 480,
+        x: 400,
         y: 90
     }, {
         xtype: 'combobox',
@@ -83,7 +83,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         store: Ext.create('RaxaEmr.Pharmacy.store.Doctors'),
         displayField: 'display',
         allowBlank: false,
-        x: 480,
+        x: 400,
         y: 120
     }]
 });

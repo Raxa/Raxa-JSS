@@ -195,17 +195,6 @@ Ext.define("Screener.controller.Application", {
             }
         }
     },
-    //adds the patient to the doctor using 'hasmany' association
-    addToDoctor: function (patient) {
-        doctorid = patient.get('doctorid');
-        if (Ext.getStore('doctorStore').getAt(doctorid)) {
-            //first we add the association to the patient model is linked to this doctor
-            Ext.getStore('doctorStore').getAt(doctorid).patients().add(patient);
-            //now we call function to increment number of patients
-            Ext.getStore('doctorStore').getAt(doctorid).addPatient();
-            Ext.getStore('patientStore').remove(patient);
-        }
-    },
 
     //called on startup
     init: function () {
@@ -289,6 +278,17 @@ Ext.define("Screener.controller.Application", {
         store_patientList.on('load', function () {
             Ext.getCmp('loadMask').setHidden(true);
             patientUpdate.setBMITime(store_patientList);
+            store_patientList.each(function (record) {
+                if(record.get('display')==="Pinky Singh")
+                    record.set('image', '../../resources/img/pinky.png');
+                else if(record.get('display')==="Ram Singh")
+                    record.set('image', '../../resources/img/ram.png');
+                else if(record.get('display')==="Sita Kumari")
+                    record.set('image', '../../resources/img/sita.png');
+                else
+                    record.set('image', 'resources/pic.gif');
+                console.log(record.get('image'));
+            });
         }, this);
         setInterval('patientUpdate.updatePatientsWaitingTitle()', Util.getUiTime());
         setInterval('Ext.getStore(\'patientStore\').load()', Util.getUiTime());
@@ -662,7 +662,7 @@ Ext.define("Screener.controller.Application", {
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
         this.sendEncounterData(patient, localStorage.screenerUuidencountertype, localStorage.waitingUuidlocation, provider)
-        this.getDoctorList().refresh();
+        this.countPatients();
     },
     // unassign a patient assigned to a doctor
     removePatient: function () {

@@ -17,6 +17,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "prescription button[action=done2]": {
                 click: this.savePerson
             },
+            'prescription button[action=print]': {
+                click: this.fillPrescription
+            },
             'prescribedDrugs': {
                 render: this.onEditorRender,
                 edit: this.afterDrugEdit,
@@ -48,7 +51,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     }, this)
                     // listner on patient search results to show drugorders when a patient is selected
                     Ext.getCmp('patientASearchGrid').on('cellClick', function () {
-                        this.patientSelect(Ext.getCmp('patientASearchGrid').getSelectionModel().getSelection()[0].getData())
+                        console.log('hi');
+                        this.patientSelect(Ext.getCmp('patientASearchGrid').getSelectionModel().getSelection()[0].getData());
+                       Ext.getCmp('image').getEl().update("<img border=\"0\" src=\"../../resources/img/pinky.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"); 
                     }, this)
                     // listner on perscription grid to show drugorder on main grid with more details
                     Ext.getCmp('drugOrderASearchGrid').on('cellClick', function () {
@@ -203,6 +208,23 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         l.setActiveItem(1);
         var l1 = Ext.getCmp('addpatientgridarea').getLayout();
         l1.setActiveItem(1);
+    },
+
+    fillPrescription: function() {
+        console.log('hi');
+        Ext.Msg.confirm("Confirmation", "Are you sure you want to fill prescription?", function (btn) {
+            if (btn == 'yes') {
+                var l = Ext.getCmp('mainarea').getLayout();
+                l.setActiveItem(0);
+                var l1 = Ext.getCmp('addpatientarea').getLayout();
+                l1.setActiveItem(0);
+                var l2 = Ext.getCmp('addpatientgridarea').getLayout();
+                l2.setActiveItem(0);
+                Ext.getCmp('drugASearchGrid').getStore().removeAll();
+                Ext.getCmp('prescriptionDate').setValue('');
+                Ext.getCmp('image').getEl().update("<img border=\"0\" src=\"../../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"); 
+            } else {}
+        });
     },
 
     savePerson: function () {
