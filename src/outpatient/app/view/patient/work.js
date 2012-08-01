@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 var TABS = {
     HISTORY: 0,
     EXAMINATION: 1,
@@ -24,7 +23,7 @@ var TABS = {
 Ext.define('RaxaEmr.Outpatient.view.patient.work', {
     extend: 'Ext.Container',
     xtype: 'work',
-    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
+    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.examination', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
     config: {
         layout: {
             type: 'hbox'
@@ -40,8 +39,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
             items: [{
                 xtype: 'history-panel'
             }, {
-                xtype: 'container',
-                title: 'Examination'
+                xtype: 'examination-panel'
             }, {
                 xtype: 'diagnosis-panel'
             }, {
@@ -76,6 +74,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 xtype: 'button',
                 width: 40,
                 flex: 1,
+                id: 'examtabbutton',
                 cls: 'x-button-vikas',
                 icon: '../outpatient/resources/images/examination.png',
                 padding: '0 0 0 0',

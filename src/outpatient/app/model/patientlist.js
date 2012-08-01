@@ -21,7 +21,7 @@ Ext.define('RaxaEmr.Outpatient.model.patientlist', {
         fields: ['firstName', 'lastName', 'city', 'state', 'disease', 'noofvisits',
         {
             name: 'lastvisit',
-            type: 'date'
-        }, 'nameofdoc', 'id', 'age', 'urgency']
+            type: 'date',
+        }, 'nameofdoc', 'id', 'age', 'urgency', 'image']
     }
 });

@@ -13,10 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 var HISTORY = {
-    PERSONAL : 0,
-    SOCIAL : 1
+    PERSONAL: 0,
+    SOCIAL: 1
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.history', {
@@ -47,7 +46,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         label: 'Patient History'
                     }, {
                         xtype: 'textareafield',
-                        label: 'Family History'
+                        label: 'Past Medical History',
                     }]
                 }, {
                     xtype: 'button',
@@ -95,11 +94,17 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     title: 'Social History',
                     items: [{
                         xtype: 'selectfield',
-                        label: 'Alcohol Frequency',
+                        label: 'Alcohol',
                         valueField: 'alcoholFrequency',
                         displayField: 'title',
                         store: {
                             data: [{
+                                alcoholFrequency: '',
+                                title: ''
+                            }, {
+                                alcoholFrequency: 'none',
+                                title: 'None'
+                            }, {
                                 alcoholFrequency: 'daily',
                                 title: 'Daily'
                             }, {
@@ -108,9 +113,6 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             }, {
                                 alcoholFrequency: 'experiencedWithdrawal',
                                 title: 'Experienced Withdrawal'
-                            }, {
-                                alcoholFrequency: 'none',
-                                title: 'None'
                             }]
                         }
                     }, {
@@ -130,14 +132,17 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             displayField: 'title',
                             store: {
                                 data: [{
-                                    time: 'past',
-                                    title: 'Past'
+                                    time: '',
+                                    title: ''
+                                }, {
+                                    time: 'never',
+                                    title: 'Never'
                                 }, {
                                     time: 'present',
                                     title: 'Present'
                                 }, {
-                                    time: 'never',
-                                    title: 'Never'
+                                    time: 'past',
+                                    title: 'Past'
                                 }]
                             }
                         }, {
@@ -148,6 +153,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             displayField: 'title',
                             store: {
                                 data: [{
+                                    way: '',
+                                    title: ''
+                                }, {
+                                    way: 'Neither',
+                                    title: 'Neither'
+                                }, {
                                     way: 'oral',
                                     title: 'Oral'
                                 }, {
@@ -166,17 +177,23 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             displayField: 'title',
                             store: {
                                 data: [{
-                                    amount: 'heavy',
-                                    title: 'Heavy'
+                                    amount: '',
+                                    title: ''
+                                }, {
+                                    amount: 'None',
+                                    title: 'None'
                                 }, {
                                     amount: 'occasional',
                                     title: 'Occasional'
+                                }, {
+                                    amount: 'heavy',
+                                    title: 'Heavy'
                                 }]
                             }
                         }]
                     }, {
                         xtype: 'textareafield',
-                        label: 'Others'
+                        label: 'Other'
                     }]
                 }, {
                     xtype: 'fieldset',
@@ -185,10 +202,27 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         label: 'Family History'
                     }]
                 }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'OK',
-                    id: 'submit-history'
+                    xtype: 'container',
+                    layout: {
+                        pack: 'center',
+                        type: 'hbox'
+                    },
+                    items: [{
+                        xtype: 'button',
+                        margin: '0 10 0 10',
+                        text: 'Back',
+                        flex: 1,
+                        handler: function () {
+                            Ext.getCmp('history-panel').setActiveItem(HISTORY.PERSONAL)
+                        }
+                               /*}, {*/
+                           /*xtype: 'button',*/
+                           /*ui: 'confirm',*/
+                           /*margin: '0 10 0 10',*/
+                           /*text: 'OK',*/
+                           /*id: 'submit-history',*/
+                           /*flex: 1*/
+                    }]
                 }]
             }, {
                 xtype: 'container',
@@ -197,11 +231,13 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     xtype: 'button',
                     docked: 'top',
                     height: 40,
+                    id: 'medicationhistory2',
                     margin: '65 20 0 0',
                     width: 40,
                     icon: '../outpatient/resources/images/medicationhistory.png',
                     padding: '0 10 10 0',
                     handler: function () {
+                        // TODO: Should redirect to medication history, not social history
                         Ext.getCmp('working-area').setActiveItem(HISTORY.SOCIAL)
                     }
                 }]

@@ -1,15 +1,17 @@
 Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     extend: 'Ext.container.Viewport',
     autoScroll: true,
+    width: 960,
     layout: {
-        type: 'auto',
-        align: 'stretch'
+        type: 'vbox',
+        align: 'center'
     },
     items:[{
-        xtype: 'pharmacytopbar'
+        xtype: 'pharmacytopbar',
     },{
         autoScroll: true,
         layout: 'auto',
+        width:960,
         items:[{
             layout: 'card',
             id: 'mainarea',

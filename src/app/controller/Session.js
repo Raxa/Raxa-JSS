@@ -106,7 +106,7 @@ Ext.define('RaxaEmr.controller.Session', {
     // the view to dashboard
     doLogin: function () {
         var username = Ext.getCmp('userName').getValue();
-        localStorage.setItem("Username", username);
+        localStorage.setItem("username", username);
 
         if (username === "") {
             Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankusername'))
@@ -219,8 +219,9 @@ Ext.define('RaxaEmr.controller.Session', {
         Ext.getCmp('mainView').setActiveItem(2);
     },
 
+    //This function determines the login state
+    //If already logged in, it redirects to the dashboard
     getLoginState: function () {
-        console.log('AJFIDJFI');
         var loginState = Ext.getCmp('mainView').getActiveItem()._activeItem;
         if (localStorage.getItem('basicAuthHeader')) {
         this.loginSuccess();
