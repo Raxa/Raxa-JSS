@@ -1,39 +1,32 @@
 Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     extend: 'Ext.container.Viewport',
-    id: 'mainarea',
     autoScroll: true,
-    alias: 'widget.viewport',
-    layout: 'card',
-    activeItem: 0,
-    items:[{ 
-        layout: 'auto', 
-        items:[{   
-            xtype: 'button',
-            text: 'Dispensed Drugs',
-            margin: '200 0 0 200',
-            height: 90,
-            width: 160,
-            action: 'dispensepage'
-        },{
-            xtype: 'button',
-            text: 'Groups',
-            margin: '200 0 0 200',
-            height: 90,
-            width: 160,
-            action: 'groupmain'
-        },{
-            xtype: 'button',
-            text: 'Prescription',
-            margin: '200 0 0 200',
-            height: 90,
-            width: 160,
-            action: 'prescription'
+    width: 960,
+    layout: {
+        type: 'vbox',
+        align: 'center'
+    },
+    items:[{
+        xtype: 'pharmacytopbar',
+    },{
+        autoScroll: true,
+        layout: 'auto',
+        width:960,
+        items:[{
+            layout: 'card',
+            id: 'mainarea',
+            activeItem: 0,
+            items:[{
+                xtype: 'prescription'
+            },{
+                xtype: 'goodsdetails'
+            },{
+                xtype: 'reports'
+            },{
+                xtype: 'drugGroups'
+            },{
+                xtype: 'allStock'
+            }]
         }]
-    },{
-        xtype: 'Dispense'
-    },{
-        xtype: 'groupdrugs'
-    },{
-        xtype: 'prescription'
     }]
 })

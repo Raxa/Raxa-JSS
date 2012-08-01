@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+var myRecord;
 
 Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     extend: 'Ext.app.Controller',
@@ -26,15 +27,30 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             docname: '#docname',
             urgency: '#urgency',
             lastvisit: '#lastvisit',
-            showContact: 'patientlist-show'
+            mainTabs: '#maintabs',
+            medicationHistory: '#medicationhistory',
+            refToDocButton: '#reftodocbutton',
+            confirmLabResultHistoryButton: '#confirmlabresulthistory',
+            confirmMedicationHistoryButton: '#confirmmedicationhistory',
+            confirmReferToDocButton: '#confirmrefertodoc',
+            cheifcomplain: '#cheifComplain',
+            labinfo: '#labinfo',
+            examlist: '#examList',
+            deletecomlain: '#deleteComlain',
+            addduration: '#addDuration',
+            saveduration: '#saveDuration',
         },
 
         control: {
             main: {
-                push: 'onMainPush'
+                push: 'onMainPush',
+                pop: 'onMainPop'
             },
             contacts: {
                 itemtap: 'onContactSelect'
+            },
+            examlist: {
+                itemtap: 'onExamListSelect'
             },
             name: {
                 tap: 'sortByName'
@@ -48,10 +64,32 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             lastvisit: {
                 tap: 'sortByLastVisit'
             },
+            medicationHistory: {
+                tap: 'medicationHistoryAction'
+            },
+            refToDocButton: {
+                tap: 'refToDocButton'
+            },
+            labinfo: {
+                tap: 'labInfoAction'
+            },
             searchfield: {
                 clearicontap: 'onSearchClearIconTap',
                 keyup: 'onSearchKeyUp'
-            }
+            },
+            cheifcomplain: {
+                change: 'addChiefComplain',
+            },
+            deletecomlain: {
+                tap: 'deleteComplain',
+            },
+            saveduration: {
+                tap: 'saveduration',
+            },
+            addduration: {
+                tap: 'addduration',
+            },
+
         }
     },
 
@@ -63,6 +101,12 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
     },
 
+    onMainPop: function (view, item) {
+        this.buttonHide('confirmlabresulthistory');
+        this.buttonHide('confirmmedicationhistory');
+        this.buttonHide('confirmrefertodoc');
+    },
+
     onContactSelect: function (list, index, node, record) {
 
         if (!this.showContact) {
@@ -71,28 +115,106 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
         this.showContact.setRecord(record);
         this.getMain().push(this.showContact);
+        myRecord = record;
     },
-    sortByName: function () {
+
+    addChiefComplain: function () {
+        var combo = Ext.getCmp('cheifComplain');
+        examlist = Ext.getCmp('examList');
+        examlist.getStore().add({
+            complain: combo.getValue(),
+            id: combo.getValue()
+        });
+        Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION);
+    },
+
+    onExamListSelect: function (list, index, node, record) {
+        Ext.getCmp('deleteComlain').setHidden(false);
+        Ext.getCmp('addDuration').setHidden(false);
+    },
+
+    deleteComplain: function () {
+        var examlist = Ext.getCmp('examList');
+        selectedRecord = examlist.getSelection();
+        examlist.getStore().remove(selectedRecord);
+    },
+
+    addduration: function () {
+        this.getMain().push(Ext.getCmp('durationPicker'));
+        Ext.getCmp('durationPicker').setHidden(false);
+    },
+
+    saveduration: function () {
+        var duration = Ext.getCmp('durationfield').getValue();
+        var examlist = Ext.getCmp('examList');
+        var selectedRecord = examlist.getSelection();
+        var duration = Ext.getCmp('durationfield').getValue();
+        var listdata = selectedRecord[0].set('duration', ' : ' + duration + ' days');
+        Ext.getCmp('durationPicker').setHidden(true);
+        Ext.getCmp('durationfield').reset();
+    },
+
+    buttonAction: function (obj, obj2) {
+        if (!this.obj1) {
+            this.obj1 = Ext.create(obj);
+        }
+        this.obj1.setRecord(myRecord);
+        this.getMain().push(this.obj1);
+        this.buttonShow(obj2);
+    },
+
+    buttonShow: function (obj) {
+        var button = Ext.getCmp(obj);
+
+        if (!button.isHidden()) {
+            return;
+        }
+
+        button.setHidden(false);
+    },
+
+    buttonHide: function (obj) {
+        var button = Ext.getCmp(obj);
+
+        if (button.isHidden()) {
+            return;
+        }
+
+        button.setHidden(true);
+    },
+
+    labInfoAction: function () {
+        this.buttonAction('RaxaEmr.Outpatient.view.patient.labresulthistorypanel', 'confirmlabresulthistory');
+    },
+
+    medicationHistoryAction: function () {
+        this.buttonAction('RaxaEmr.Outpatient.view.patient.medicationhistorypanel', 'confirmmedicationhistory');
+    },
+
+    refToDocButton: function () {
+        this.buttonAction('RaxaEmr.Outpatient.view.patient.refertodocpanel', 'confirmrefertodoc');
+    },
+
+    sortBy: function (obj) {
         store = this.getContact().getStore();
-        store.setSorters("firstName");
+        store.setSorters(obj);
         store.load();
+    },
+
+    sortByName: function () {
+        this.sortBy('firstName');
     },
 
     sortByDocName: function () {
-        store = this.getContact().getStore();
-        store.setSorters("nameofdoc");
-        store.load();
+        this.sortBy('nameofdoc');
     },
 
     sortByUrgency: function () {
-        store = this.getContact().getStore();
-        store.setSorters("urgency");
-        store.load();
+        this.sortBy('urgency');
     },
+
     sortByLastVisit: function () {
-        store = this.getContact().getStore();
-        store.setSorters("lastvisit");
-        store.load();
+        this.sortBy('lastvisit');
     },
 
     onSearchKeyUp: function (field) {

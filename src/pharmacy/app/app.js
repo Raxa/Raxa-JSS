@@ -5,10 +5,15 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'RaxaEmr.Pharmacy',
     
-    views: ['dispense', 'Viewport', 'mainview', 'Groups', 'groupedDrugs', 'alldrugs', 'add', 'add2', 'prescription'],
-    controllers: ['dispense', 'main', 'prescription'],
-    models: ['dispense', 'alldrugsmodel', 'groupmodel', 'drugmodel',],
-    stores: ['dispense', 'alldrugsstore', 'groupstore', 'drugstore',], 
+
+    views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceipt', 'listOfDrugs', 'newdrugform', 'pharmacyDetails', 
+            'reports', 'addPatient', 'stockIssue', 'stockIssueGrid', 'goodReceiptGrid', 'goodReceipt', 'goodIssueText', 'goodIssuePop', 'goodIssue',
+            'allStockPanel', 'allStockGrid', 'allStockForm', 'allStock', 'addDrug', 'allStock', 'prescribedDrugs', 'patientsGridPanel'],
+    
+    controllers: ['prescription'],
+    
+    stores: ['orderStore', 'Doctors', 'Identifiers', 'Locations', 'Patients', 'Persons', 'drugOrderPatient', 'drugOrderSearch', 'drugConcept', 'drugEncounter', 'allDrugs', 'PostLists'],
+    models: ['Address', 'Doctor', 'Identifier', 'Name', 'Patient', 'Person', 'drugOrderPatient', 'drugOrderSearch', 'drugOrder', 'drugEncounter', 'PostLists'],
     
     launch: function() {
         Ext.create('RaxaEmr.Pharmacy.view.Viewport');

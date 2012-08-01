@@ -21,8 +21,8 @@
 Ext.define('Registration.model.encounterModel', {
     extend: 'Ext.data.Model',
     
-    fields: ['encounterDatetime', 'patient', 'encounterType', 'location', 'form',
-    {
+    fields: ['encounterDatetime', 'patient', 'encounterType', 'location',
+	{
         name: 'provider',
         model: 'Registration.model.providerModel'
     },
