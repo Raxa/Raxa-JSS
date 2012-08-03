@@ -52,12 +52,13 @@ public class HibernateDrugInventoryDAO implements DrugInventoryDAO {
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugInventory.class);
 		criteria.add(Restrictions.eq("uuid", uuid));
+		System.out.println("///////"+criteria.uniqueResult());
 		return (DrugInventory) criteria.uniqueResult();
 	}
 	
 	public List<DrugInventory> getAllDrugInventories() throws DAOException {
 		
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugInventory.class);
 		return criteria.list();
 		
 	}
@@ -78,10 +79,10 @@ public class HibernateDrugInventoryDAO implements DrugInventoryDAO {
 		return drugInventory;
 	}
 	
-	public List<DrugInventory> getDrugInventoryByProvider(String providerUuid) {
+	public List<DrugInventory> getDrugInventoryByProvider(Integer providerId) {
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugInventory.class);
-		criteria.add(Restrictions.eq("providerUuid", providerUuid));
+		criteria.add(Restrictions.eq("providerId", providerId));
 		List<DrugInventory> drugInventories = new ArrayList<DrugInventory>();
 		drugInventories.addAll(criteria.list());
 		return drugInventories;

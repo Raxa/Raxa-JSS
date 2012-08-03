@@ -21,10 +21,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openmrs.Drug;
 import org.openmrs.EncounterType;
+import org.openmrs.Location;
+import org.openmrs.Provider;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.raxa.module.raxacore.DrugInventory;
+import org.raxa.module.raxacore.DrugPurchaseOrder;
 import org.raxa.module.raxacore.PatientList;
 import org.raxa.module.raxacore.db.DrugInventoryDAO;
 import org.raxa.module.raxacore.db.PatientListDAO;
@@ -33,7 +37,7 @@ public class HibernateDrugInventoryDAOTest extends BaseModuleContextSensitiveTes
 	
 	private static final String TEST_DATA_PATH = "org/raxa/module/raxacore/include/";
 	
-	private static final String MODULE_TEST_DATA_XML = TEST_DATA_PATH + "moduleTest2.xml";
+	private static final String MODULE_TEST_DATA_XML = TEST_DATA_PATH + "moduleTestData.xml";
 	
 	private DrugInventoryDAO dao = null;
 	
@@ -48,29 +52,99 @@ public class HibernateDrugInventoryDAOTest extends BaseModuleContextSensitiveTes
 	public void testSaveDrugInventory() {
 		DrugInventory dInventory = new DrugInventory();
 		//NOTE: never set Id, will be generated automatically (when saving)
-		dInventory.setName("TestList3");
+		
+		
+		dInventory.setName("TestList6");
 		dInventory.setDescription("Third Test List");
 		dInventory.setCreator(Context.getUserContext().getAuthenticatedUser());
 		dInventory.setDateCreated(new java.util.Date());
-		dInventory.setUuid("68547121-1b70-465c-99ee-c9dfd95e7d30");
+		dInventory.setUuid("68547121-1b70-465c-99ee-c9dfd95e7d34");
+		dInventory.setDateCreated(new java.util.Date());
 		dInventory.setRetired(Boolean.FALSE);
 		dInventory.setBatch("batch 1");
 		dInventory.setQuantity(10);
 		dInventory.setStatus("true");
-		dInventory.setDrugId(1);
+		//dInventory.setDrugId(2);
 		dInventory.setExpiryDate(new Date(2012 - 1 - 1));
 		dInventory.setValue(20);
-		dInventory.setProviderId(12);
-		dInventory.setLocationId(13);
+		dInventory.setProviderId(2);
+		dInventory.setLocationId(1);
 		dInventory.setDrugPurchaseOrderId(14);
-		
-		dInventory.setDrugInventoryId(14);
+		dInventory.setOriginalQuantity(20);
 		
 		dao.saveDrugInventory(dInventory);
-		List<DrugInventory> result = (List<DrugInventory>) dao
-		        .getDrugInventoryByUuid("68547121-1b70-465c-99ee-c9dfd95e7d30");
-		String uuid = result.get(0).getUuid();
-		assertEquals(uuid, "TestList3");
+		DrugInventory result = dao.getDrugInventoryByUuid("68547121-1b70-465c-99ee-c9dfd95e7d34");
+		//DrugInventory result=dao.get
+		String uuid = result.getUuid();
+		assertEquals(uuid, "68547121-1b70-465c-99ee-c9dfd95e7d34");
+	}
+	
+	@Test
+	public void testDeleteDrugInventory() {
+		DrugInventory dInventory=new DrugInventory();
+		dInventory.setName("TestList6");
+		dInventory.setDescription("Third Test List");
+		dInventory.setCreator(Context.getUserContext().getAuthenticatedUser());
+		dInventory.setDateCreated(new java.util.Date());
+		dInventory.setUuid("68547121-1b70-465c-99ee-c9dfd95e7d34");
+		dInventory.setDateCreated(new java.util.Date());
+		dInventory.setRetired(Boolean.FALSE);
+		dInventory.setBatch("batch 1");
+		dInventory.setQuantity(10);
+		dInventory.setStatus("true");
+		//dInventory.setDrugId(2);
+		dInventory.setExpiryDate(new Date(2012 - 1 - 1));
+		dInventory.setValue(20);
+		dInventory.setProviderId(2);
+		dInventory.setLocationId(1);
+		dInventory.setDrugPurchaseOrderId(14);
+		dInventory.setOriginalQuantity(20);
+
+		dao.deleteDrugInventory(dInventory);
+		
+		DrugInventory result=dao.getDrugInventoryByUuid("68547121-1b70-465c-99ee-c9dfd95e7d34");
+		assertEquals(result,null);
+		
+	}
+	
+	@Test
+	public void testGetDrugInventoryByUuid() {
+		DrugInventory result=dao.getDrugInventoryByUuid("68547121-1b70-465c-99ee-c9dfd95e7d36");
+		String name = result.getName();
+		assertEquals(name, "TestList6");
+		
+	}
+	
+	@Test
+	public void testGetAllDrugInventories() {
+		
+		List<DrugInventory> allDrugInventories = dao.getAllDrugInventories();
+		assertEquals(allDrugInventories.size(), 1);
+		
+	}
+	
+	@Test
+	public void testGetAllDrugInventoriesByStatus() {
+		List<DrugInventory> allDrugInventories = dao.getAllDrugInventoriesByStatus("on the way");
+		assertEquals(allDrugInventories.size(), 1);
+	}
+	
+	@Test
+	public void testUpdateDrugInventory() {
+		DrugInventory dInventory=dao.getDrugInventoryByUuid("68547121-1b70-465c-99ee-c9dfd95e7d36");
+		dInventory.setName("new test list");
+		dao.updateDrugInventory(dInventory);
+		String name=dao.getDrugInventoryByUuid("68547121-1b70-465c-99ee-c9dfd95e7d36").getName();
+		assertEquals(name, "new test list");
+
+		
+	}
+	
+	@Test
+	public void testGetDrugInventoryByProvider() {
+		List<DrugInventory> result = dao.getDrugInventoryByProvider(13);
+		assertEquals(result.size(), 1);
+		
 	}
 	
 }

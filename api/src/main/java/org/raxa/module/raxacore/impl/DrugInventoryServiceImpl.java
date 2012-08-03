@@ -92,9 +92,9 @@ public class DrugInventoryServiceImpl implements DrugInventoryService {
 	}
 	
 	@Override
-	public List<DrugInventory> getDrugInventoryByProvider(String providerUuid) {
+	public List<DrugInventory> getDrugInventoryByProvider(Integer providerId) {
 		
-		return dao.getDrugInventoryByProvider(providerUuid);
+		return dao.getDrugInventoryByProvider(providerId);
 	}
 	
 }

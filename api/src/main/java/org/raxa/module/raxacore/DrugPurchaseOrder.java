@@ -20,6 +20,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.openmrs.BaseOpenmrsMetadata;
+import org.openmrs.Location;
+import org.openmrs.Provider;
 
 public class DrugPurchaseOrder extends BaseOpenmrsMetadata implements Serializable {
 	
@@ -32,6 +34,10 @@ public class DrugPurchaseOrder extends BaseOpenmrsMetadata implements Serializab
 	private Integer locationId;
 	
 	private Date drugPurchaseOrderDate;
+	
+	private Provider provider;
+	
+	private Location location;
 	
 	public DrugPurchaseOrder() {
 		
@@ -85,6 +91,22 @@ public class DrugPurchaseOrder extends BaseOpenmrsMetadata implements Serializab
 	
 	public void setDrugPurchaseOrderDate(Date drugPurchaseOrderDate) {
 		this.drugPurchaseOrderDate = drugPurchaseOrderDate;
+	}
+	
+	public Provider getProvider() {
+		return provider;
+	}
+	
+	public void setProvider(Provider provider) {
+		this.provider = provider;
+	}
+	
+	public Location getLocation() {
+		return location;
+	}
+	
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 	
 }

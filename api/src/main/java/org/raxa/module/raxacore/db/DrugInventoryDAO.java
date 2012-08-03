@@ -34,6 +34,6 @@ public interface DrugInventoryDAO {
 	
 	public DrugInventory updateDrugInventory(DrugInventory drugInventory);
 	
-	public List<DrugInventory> getDrugInventoryByProvider(String providerUuid);
+	public List<DrugInventory> getDrugInventoryByProvider(Integer providerId);
 	
 }

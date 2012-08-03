@@ -83,9 +83,9 @@ public class DrugPurchaseOrderServiceImpl implements DrugPurchaseOrderService {
 		dao.deleteDrugPurchaseOrder(drugPurchaseOrder);
 	}
 	
-	public List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(String providerUuid) {
+	public List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(Integer providerId) {
 		
-		return dao.getDrugPurchaseOrderByProvider(providerUuid);
+		return dao.getDrugPurchaseOrderByProvider(providerId);
 	}
 	
 }

@@ -37,6 +37,6 @@ public interface DrugInventoryService extends OpenmrsService {
 	
 	void deleteDrugInventory(DrugInventory drugInventory);
 	
-	List<DrugInventory> getDrugInventoryByProvider(String providerUuid);
+	List<DrugInventory> getDrugInventoryByProvider(Integer providerId);
 	
 }

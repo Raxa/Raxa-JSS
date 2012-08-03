@@ -20,6 +20,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.openmrs.BaseOpenmrsMetadata;
+import org.openmrs.Drug;
+import org.openmrs.Location;
+import org.openmrs.Provider;
 
 public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	
@@ -28,6 +31,8 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	private Integer drugId;
 	
 	private Integer quantity;
+	
+	private Integer originalQuantity;
 	
 	private Date expiryDate;
 	
@@ -43,12 +48,21 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	
 	private Integer drugPurchaseOrderId;
 	
+	// added these 4 more elements to the class
+	private Drug drug;
+	
+	private Provider provider;
+	
+	private Location location;
+	
+	private DrugPurchaseOrder drugPurchaseOrder;
+	
 	public DrugInventory() {
 		
 	}
 	
 	public Integer getId() {
-		// TODO Auto-generated method stub
+		
 		return getDrugInventoryId();
 	}
 	
@@ -79,6 +93,14 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+	
+	public Integer getOriginalQuantity() {
+		return originalQuantity;
+	}
+	
+	public void setOriginalQuantity(Integer originalQuantity) {
+		this.originalQuantity = originalQuantity;
 	}
 	
 	public Date getExpiryDate() {
@@ -136,6 +158,38 @@ public class DrugInventory extends BaseOpenmrsMetadata implements Serializable {
 	
 	public void setDrugPurchaseOrderId(Integer drugPurchaseOrderId) {
 		this.drugPurchaseOrderId = drugPurchaseOrderId;
+	}
+	
+	public Drug getDrug() {
+		return drug;
+	}
+	
+	public void setDrug(Drug drug) {
+		this.drug = drug;
+	}
+	
+	public Provider getProvider() {
+		return provider;
+	}
+	
+	public void setProvider(Provider provider) {
+		this.provider = provider;
+	}
+	
+	public Location getLocation() {
+		return location;
+	}
+	
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
+	public DrugPurchaseOrder getDrugPurchaseOrder() {
+		return drugPurchaseOrder;
+	}
+	
+	public void setDrugPurchaseOrder(DrugPurchaseOrder drugPurchaseOrder) {
+		this.drugPurchaseOrder = drugPurchaseOrder;
 	}
 	
 }

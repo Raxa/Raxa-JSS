@@ -37,6 +37,6 @@ public interface DrugPurchaseOrderService extends OpenmrsService {
 	
 	void deleteDrugPurchaseOrder(DrugPurchaseOrder drugPurchaseOrder);
 	
-	List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(String providerUuid);
+	List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(Integer providerId);
 	
 }

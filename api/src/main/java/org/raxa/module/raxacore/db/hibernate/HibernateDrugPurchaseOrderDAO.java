@@ -47,12 +47,13 @@ public class HibernateDrugPurchaseOrderDAO implements DrugPurchaseOrderDAO {
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugPurchaseOrder.class);
 		criteria.add(Restrictions.eq("uuid", uuid));
+		System.out.println(criteria.uniqueResult());
 		return (DrugPurchaseOrder) criteria.uniqueResult();
 	}
 	
 	public List<DrugPurchaseOrder> getAllDrugPurchaseOrders() {
 		
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientList.class);
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugPurchaseOrder.class);
 		return criteria.list();
 	}
 	
@@ -76,10 +77,10 @@ public class HibernateDrugPurchaseOrderDAO implements DrugPurchaseOrderDAO {
 		sessionFactory.getCurrentSession().delete(drugPurchaseOrder);
 	}
 	
-	public List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(String providerUuid) {
+	public List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(Integer providerId) {
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugPurchaseOrder.class);
-		criteria.add(Restrictions.eq("providerUuid", providerUuid));
+		criteria.add(Restrictions.eq("providerId", providerId));
 		List<DrugPurchaseOrder> drugPurchaseOrders = new ArrayList<DrugPurchaseOrder>();
 		drugPurchaseOrders.addAll(criteria.list());
 		return drugPurchaseOrders;

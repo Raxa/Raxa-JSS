@@ -34,6 +34,6 @@ public interface DrugPurchaseOrderDAO {
 	
 	public void deleteDrugPurchaseOrder(DrugPurchaseOrder drugPurchaseOrder);
 	
-	public List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(String providerUuid);
+	public List<DrugPurchaseOrder> getDrugPurchaseOrderByProvider(Integer providerId);
 	
 }

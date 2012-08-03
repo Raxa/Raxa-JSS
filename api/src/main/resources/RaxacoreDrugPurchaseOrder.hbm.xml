@@ -1,31 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-    
-<hibernate-mapping package="org.raxa.module.raxacore">
-    
-    <class name="DrugPurchaseOrder" table="drug_purchase_order">
-        <id name="drugPurchaseOrderId" column="PO_id" >
-            <generator class="native"/>
+<hibernate-mapping package="org.raxa.module.raxacore" >
+
+    <class
+        name="DrugPurchaseOrder"
+        table="drug_purchase_order" >
+
+        <id
+            name="drugPurchaseOrderId"
+            column="PO_id" >
+
+            <generator class="native" />
         </id>
-        
-        <property name="name"           type="java.lang.String"     column="PO_name" length="255"/>
-        <property name="description"    type="java.lang.String"     column="PO_description" length="2000"/>
-        
-        <property name="received"           type="java.lang.Boolean"     column="Received" length="255"/>     
-        <many-to-one name="providerId"    class="org.openmrs.Provider"    column="Provider" not-null="true"/>
-        <many-to-one name="locationId"    class="org.openmrs.Location"     column="Location" not-null="true"/>
-        <property name="drugPurchaseOrderDate"  type="java.util.Date"     column="PO_Date" not-null="true" insert="false" />
-        <property name="uuid"           type="java.lang.String"     column="uuid" length="38" not-null="true" unique="true"/>
-        <many-to-one name="creator"     class="org.openmrs.User"    column="creator" not-null="true"/>
-        <property name="dateCreated"    type="java.util.Date"       column="date_created" not-null="true" length="19"/>
-        <property name="retired"        type="java.lang.Boolean"    column="retired" length="1" not-null="true"/>
-        <many-to-one name="retiredBy"   class="org.openmrs.User"    column="retired_by"/>
-        <property name="dateRetired"    type="java.util.Date"       column="date_retired"/>
-        <property name="retireReason"   type="java.lang.String"     column="retire_reason" length="255"/>
-        <many-to-one name="changedBy"   class="org.openmrs.User"    column="changed_by"/>
-        <property name="dateChanged"    type="java.util.Date"       column="date_changed" length="19"/>
+
+        <property
+            name="name"
+            column="PO_name"
+            length="255"
+            type="java.lang.String" />
+
+        <property
+            name="description"
+            column="PO_description"
+            length="2000"
+            type="java.lang.String" />
+
+        <property
+            name="received"
+            column="Received"
+            length="255"
+            type="java.lang.Boolean" />
+
+        <many-to-one
+            name="provider"
+            class="org.openmrs.Provider"
+            column="Provider_id"
+            not-null="true" />
+
+        <many-to-one
+            name="location"
+            class="org.openmrs.Location"
+            column="Location_id" />
+            <!--  not-null="true"--> 
+
+        <property
+            name="drugPurchaseOrderDate"
+            column="PO_Date"
+            insert="false"
+          
+            type="java.util.Date" />
+
+        <property
+            name="uuid"
+            column="uuid"
+            length="38"
+            not-null="true"
+            type="java.lang.String"
+            unique="true" />
+
+        <many-to-one
+            name="creator"
+            class="org.openmrs.User"
+            column="creator"
+            not-null="true" />
+
+        <property
+            name="dateCreated"
+            column="date_created"
+            length="19"
+            not-null="true"
+            type="java.util.Date" />
+
+        <property
+            name="retired"
+            column="retired"
+            length="1"
+            not-null="true"
+            type="java.lang.Boolean" />
+
+        <many-to-one
+            name="retiredBy"
+            class="org.openmrs.User"
+            column="retired_by" />
+
+        <property
+            name="dateRetired"
+            column="date_retired"
+            type="java.util.Date" />
+
+        <property
+            name="retireReason"
+            column="retire_reason"
+            length="255"
+            type="java.lang.String" />
+
+        <many-to-one
+            name="changedBy"
+            class="org.openmrs.User"
+            column="changed_by" />
+
+        <property
+            name="dateChanged"
+            column="date_changed"
+            length="19"
+            type="java.util.Date" />
+
+        <property
+            name="providerId"
+            column="Provider_id"
+            insert="false"
+            not-null="true"
+            type="java.lang.Integer"
+            update="false" />
+
+        <property
+            name="locationId"
+            column="Location_id"
+            insert="false"
+            
+            type="java.lang.Integer"
+            update="false" />
     </class>
+
 </hibernate-mapping>
