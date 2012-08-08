@@ -14,10 +14,10 @@
  * the License.
  */
 var myRecord;
+var loggedInDoc = '28cf4fec-7c1a-45e1-b15d-84194591f545';
 
 Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     extend: 'Ext.app.Controller',
-
     config: {
         refs: {
             main: 'mainview',
@@ -192,8 +192,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.showContact.setRecord(record);
         this.getMain().push(this.showContact);
         myRecord = record;
-		// alert(myRecord.data.uuid);
-		// this.submitHistory();
+		patientuuid = myRecord.data.uuid;
+		this.sendEncounterData(patientuuid,localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation, loggedInDoc);
     },
 
     addChiefComplain: function () {
@@ -336,7 +336,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     },
 	
 	submitHistory: function(){
-		this.sendEncounterData('6c19634f-fa41-4981-bbde-c057f53ea6c8',localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation,'659426c5-e3fd-4748-8277-603de376dc0e');
+		this.sendEncounterData('9921ad58-c235-11e1-b270-f23c91ae55df',localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation,'28cf4fec-7c1a-45e1-b15d-84194591f545');
 	},
 	
 	sendEncounterData: function (uuid, encountertype, location, provider) {
