@@ -92,6 +92,82 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
         }
     },
+	
+	init: function () {
+        this.getpatientlist();
+    },
+	
+	getpatientlist: function () {
+        var d = new Date();
+        var list_regEncounter = Ext.create('RaxaEmr.Outpatient.model.PostList', {
+            name: "Registration Encounter",
+            description: "Patients encountered Registration" + "startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d),
+            searchQuery: "?encounterType=" + localStorage.regUuidencountertype + "&startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d)
+        });
+        var list_scrEncounter = Ext.create('RaxaEmr.Outpatient.model.PostList', {
+            name: "Screener Encounter",
+            description: "Patients encountered Screener on " + "startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d),
+            searchQuery: "?encounterType=" + localStorage.screenerUuidencountertype + "&startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d)
+
+        });
+        var list_outEncounter = Ext.create('RaxaEmr.Outpatient.model.PostList', {
+            name: "Outpatient Encounter",
+            description: "Patients encountered Outpatient on " + "startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d),
+            searchQuery: "?encounterType=" + localStorage.outUuidencountertype + "&startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d)
+
+        });
+        //this.createRegList(list_regEncounter, list_scrEncounter);
+        var k = 0;
+        this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, k);
+
+    },
+	
+	createList: function (list_reg, list_scr, list_out, k) {
+        var store_reg = Ext.create('RaxaEmr.Outpatient.store.PostLists');
+        var store_scr = Ext.create('RaxaEmr.Outpatient.store.PostLists');
+        var store_out = Ext.create('RaxaEmr.Outpatient.store.PostLists')
+        store_reg.add(list_reg);
+        store_scr.add(list_scr);
+        store_out.add(list_out);
+        store_reg.sync();
+        store_scr.sync();
+        store_out.sync();
+        store_reg.on('write', function () {
+            k = k + 1;
+            if (k == 3) {
+                this.finalPatientList(store_reg, store_scr, store_out);
+            }
+        }, this);
+        store_scr.on('write', function () {
+            k = k + 1;
+            if (k == 3) {
+                this.finalPatientList(store_reg, store_scr, store_out);
+            }
+        }, this);
+        store_out.on('write', function () {
+            k = k + 1;
+            if (k == 3) {
+                this.finalPatientList(store_reg, store_scr, store_out);
+            }
+        }, this);
+        var a = [store_reg, store_scr, store_out];
+        return a;
+    },
+	
+	finalPatientList: function (store_regEncounter, store_scrEncounter, store_outEncounter) {
+        var store_patientList = Ext.create('RaxaEmr.Outpatient.store.PatientsList', {
+            storeId: 'patientStore'
+        });
+        store_patientList.getProxy().setUrl(this.getPatientListUrl(store_scrEncounter.getData().getAt(0).getData().uuid, store_outEncounter.getData().getAt(0).getData().uuid, localStorage.screenerUuidencountertype));
+        store_patientList.load();
+        store_patientList.on('load', function () {}, this);
+		Ext.getCmp('contact').setStore(store_patientList);
+		return store_patientList;
+    },
+	
+	getPatientListUrl: function (scr_UUID, out_UUID, encountertype) {
+        return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + scr_UUID + '&notInList=' + out_UUID + '&encounterType=' + encountertype);
+    },
 
     onMainPush: function (view, item) {
 
@@ -116,6 +192,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.showContact.setRecord(record);
         this.getMain().push(this.showContact);
         myRecord = record;
+		// alert(myRecord.data.uuid);
+		// this.submitHistory();
     },
 
     addChiefComplain: function () {
@@ -239,7 +317,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
                 for (i = 0; i < regexps.length; i++) {
                     var search = regexps[i];
-                    var didMatch = record.get('firstName').match(search) || record.get('lastName').match(search) || record.get('id').match(search);
+                    var didMatch = record.get('display').match(search) || record.get('uuid').match(search);
                     matched.push(didMatch);
                 }
 
@@ -255,5 +333,24 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     onSearchClearIconTap: function () {
         store = this.getContact().getStore();
         store.clearFilter();
-    }
+    },
+	
+	submitHistory: function(){
+		this.sendEncounterData('6c19634f-fa41-4981-bbde-c057f53ea6c8',localStorage.screenerUuidencountertype,localStorage.waitingUuidlocation,'659426c5-e3fd-4748-8277-603de376dc0e');
+	},
+	
+	sendEncounterData: function (uuid, encountertype, location, provider) {
+        var currentDate = new Date();
+        var jsonencounter = Ext.create('RaxaEmr.Outpatient.model.encounterpost', {
+            encounterDatetime: Util.Datetime(currentDate, Util.getUTCGMTdiff()),
+            patient: uuid,
+            encounterType: encountertype,
+            //location: location,
+            provider: provider
+        });
+        var store = Ext.create('RaxaEmr.Outpatient.store.encounterpost');
+        store.add(jsonencounter);
+        store.sync();
+        return store
+    },
 });
