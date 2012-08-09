@@ -19,7 +19,6 @@ function orderlist(v, record) {
     return record.data.labOrderId + ' ' + record.data.PatientDisplay;
 }
 
-
 Ext.define('Laboratory.model.LabOrderSearch', {
     extend: 'Ext.data.Model',
     fields: [{
@@ -37,5 +36,17 @@ Ext.define('Laboratory.model.LabOrderSearch', {
         name: 'PatientUUID',
         type: 'string',
         mapping: 'patient.uuid'
-    }]
+    }, {
+        name: 'LabOrderUuid',
+        type: 'string',
+        mapping: 'uuid'
+    }, {
+        name: 'ConceptUuid',
+        type: 'string',
+        mapping: 'concept.uuid'
+    }, {
+        name: 'ConceptName',
+        type: 'string',
+        mapping: 'concept.display'
+    }],
 })

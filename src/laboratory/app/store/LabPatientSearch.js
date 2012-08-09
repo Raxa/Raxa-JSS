@@ -10,15 +10,17 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * License for the specific lLaboratory.store.LabPananguage governing permissions and limitations under
  * the License.
  * 
- *  This file is store for labconcepts (Test Specimens & Tests)
+ * This file is store of list of LabPanel Section, which will be used in LabOrderCreation final view
  */
-Ext.define('Laboratory.store.concept', {
+Ext.define('Laboratory.store.LabPatientSearch', {
     extend: 'Ext.data.Store',
-    model: 'Laboratory.model.Concept',
-    //groupField: 'Specimen',
+    model: 'Laboratory.model.LabPatientSearch',
+
+    fields: ['PatientUuid', 'PatientName', 'FirstName', 'LastName', 'Sex', 'DOB', 'RelativeName', 'Village', 'Panchayat', 'Town'],
+
     proxy: {
         type: 'rest',
         url: '',
@@ -29,8 +31,9 @@ Ext.define('Laboratory.store.concept', {
         },
         reader: {
             type: 'json',
-            root: 'setMembers'
+            root: 'results'
         }
     },
     autoLoad: true,
+    autoSync: true,
 })

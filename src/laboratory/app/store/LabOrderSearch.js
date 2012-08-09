@@ -18,7 +18,7 @@
 Ext.define('Laboratory.store.LabOrderSearch', {
     extend: 'Ext.data.Store',
     model: 'Laboratory.model.LabOrderSearch',
-
+    groupField: 'orderlist',
     proxy: {
         type: 'rest',
         url: 'http://openmrs.gielow.me/openmrs-1.8.4/ws/rest/v1/order?type=laborder&v=full',
@@ -32,7 +32,6 @@ Ext.define('Laboratory.store.LabOrderSearch', {
             root: 'results'
         }
     },
-    autoLoad: true
-
-
+    autoLoad: true,
+    autoSync: true
 })

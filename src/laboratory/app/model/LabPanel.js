@@ -13,24 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- *  This is a grid panel which contains list of orders
+ * This file is model for labpanels
  */
-Ext.define('Laboratory.view.LabOrderList', {
-    extend: 'Ext.grid.Panel',
-    alias: 'widget.laborderlistgrid',
-    layout: 'fit',
+Ext.define('Laboratory.model.LabPanel', {
+    extend: 'Ext.data.Model',
+      fields: [{
+            name: 'Section',
+            type: 'string',
+			mapping: 'testPanelConcept.display'
+        },{
+	    	name: 'PanelUuid',
+	  		type: 'string',
+	    	mapping: 'testPanelConcept.uuid'	
+	}],
 
-    groupField: 'orderlist',
-
-    columns: [{
-        xtype: 'gridcolumn',
-        width: 200,
-        text: 'Order List',
-        dataIndex: 'orderlist',
-    }, {
-        xtype: 'gridcolumn',
-        width: 200,
-        text: 'Order List',
-        dataIndex: 'ConceptName',
-    }]
 });
+

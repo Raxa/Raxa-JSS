@@ -23,37 +23,65 @@ Ext.define('Laboratory.view.LabOrderCreation3', {
 
     items: [{
         xtype: 'gridpanel',
+        id: 'patientSearchCreateLabOrder',
         autoScroll: true,
         title: 'Lab order search result',
+        store: Ext.create('Laboratory.store.LabPatientSearch'),
         columns: [{
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'First Name'
+            dataIndex: 'FirstName',
+            text: 'First Name',
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'LastName',            
             text: 'Last Name'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Sex',
             text: 'Sex'
         }, {
             xtype: 'datecolumn',
+            dataIndex: 'DOB',            
             text: 'DOB'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'RelativeName',            
             text: 'Husband\'s / Father\'s Name'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Village',            
             text: 'Village'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Panchayat',
             text: 'Panchayat'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Town',
             text: 'Town'
         }],
         viewConfig: {
 
+        },        listeners: {
+            click: {
+                element: 'el', //bind to the underlying el property on the panel
+                fn: function () {
+                    var grid = Ext.getCmp('patientSearchCreateLabOrder');
+                    var pos = grid.getSelectionModel().selected.length;
+                    
+                    selectedPatientUuid = grid.getSelectionModel().lastSelected.data.PatientUuid;
+					selectedPatientName = grid.getSelectionModel().lastSelected.data.PatientName;
+
+					console.log(Ext.getCmp('LabOrderCreationContainer'));
+					console.log(selectedPatientName);
+  			        Ext.getCmp('PatientNameLabOrderCreation11').setValue(selectedPatientName);
+  			        
+          			  var l = Ext.getCmp('mainLabArea').getLayout();
+    		          l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
+                }
+            }
         }
+
     },{
         xtype: 'button',
         text: 'Continue',

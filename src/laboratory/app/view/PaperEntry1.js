@@ -31,19 +31,23 @@ Ext.define('Laboratory.view.PaperEntry1', {
         title: 'List of Lab Orders',
         width: 200,
         height: 400,
+        action: 'showLabPanel',
         store: Ext.create('Laboratory.store.LabOrderSearch'),
+
+
         listeners: {
             click: {
                 element: 'el', //bind to the underlying el property on the panel
+
                 fn: function () {
                     var l = Ext.getCmp('mainLabArea').getLayout();
                     l.setActiveItem(LAB_PAGES.PAPER_ENTRY_ENTER_DATA.value);
                     var grid = Ext.getCmp('labOrderListPaperEntry');
                     var pos = grid.getSelectionModel().selected.length;
-                    selectedLabOrderId = grid.store.data.items[pos - 1].raw.labOrderId;
-                    selectedPatientDisplay = grid.store.data.items[pos - 1].raw.patient.display;
-                    selectedPatientUuid = grid.store.data.items[pos - 1].raw.patient.uuid;
-                    selectedLabOrderIdUuid = grid.store.data.items[pos - 1].raw.uuid;
+                    selectedLabOrderId = grid.getSelectionModel().lastSelected.data.labOrderId;
+                    selectedPatientDisplay = grid.getSelectionModel().lastSelected.data.PatientDisplay;
+                    selectedPatientUuid = grid.getSelectionModel().lastSelected.data.PatientUUID;
+                    selectedLabOrderIdUuid = grid.getSelectionModel().lastSelected.data.LabOrderUuid;
 
                     //Sets the LabOrderId and Patient's Name in the view
                     Ext.getCmp('LabOrderNoPaperEntry4Panel').setValue(selectedLabOrderId);
@@ -85,5 +89,4 @@ Ext.define('Laboratory.view.PaperEntry1', {
             l.setActiveItem(LAB_PAGES.PAPER_ENTRY_SEARCH.value);
         }
     }]
-
 });

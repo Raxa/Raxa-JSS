@@ -10,18 +10,18 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * License for the specific lLaboratory.store.LabPananguage governing permissions and limitations under
  * the License.
  * 
- *  This file is store for labconcepts (Test Specimens & Tests)
+ * This file is store of list of LabPanel Section, which will be used in LabOrderCreation final view
  */
-Ext.define('Laboratory.store.concept', {
+Ext.define('Laboratory.store.LabPanelSection', {
     extend: 'Ext.data.Store',
-    model: 'Laboratory.model.Concept',
-    //groupField: 'Specimen',
+    model: 'Laboratory.model.LabPanel',
+	fields: ['Section', 'PanelUuid'],
     proxy: {
         type: 'rest',
-        url: '',
+        url: 'http://openmrs.gielow.me/openmrs-1.8.4/ws/rest/v1/jsslab/labtestpanel?v=full',
         headers: {
             "Accept": "application/json",
             "Authorization": "Basic " + window.btoa("admin:Admin123"),
@@ -29,7 +29,7 @@ Ext.define('Laboratory.store.concept', {
         },
         reader: {
             type: 'json',
-            root: 'setMembers'
+            root: 'results'
         }
     },
     autoLoad: true,

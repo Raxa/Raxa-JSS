@@ -24,7 +24,7 @@ Ext.define('Laboratory.model.Concept', {
         }, {
             name: 'Test',
             type: 'string',
-	    mapping: 'display',
+	 	    mapping: 'display',
         }, {
             name: 'Result'
         }, {

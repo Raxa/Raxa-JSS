@@ -71,7 +71,7 @@ Ext.define('Laboratory.view.LabOrderCreation12', {
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_FILTER_LOCATION.value);
-        }          
+        }
     }, {
         xtype: 'button',
         text: 'Find Provider',
@@ -80,7 +80,7 @@ Ext.define('Laboratory.view.LabOrderCreation12', {
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PROVIDER.value);
-        }        
+        }
     }, {
         xtype: 'button',
         text: 'Find Patient',
@@ -89,7 +89,7 @@ Ext.define('Laboratory.view.LabOrderCreation12', {
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PATIENT.value);
-        }        
+        }
     }]
 
 });
