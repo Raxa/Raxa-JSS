@@ -1,0 +1,215 @@
+// Unless you want to include all components, you must set $include-default to false
+// IF you set this to true, you can also remove lines 10 to 38 of this file
+$include-default: false;
+
+// Insert your custom variables here.
+$base-color: #5d6f7c;
+$panel-body-background-color: #ececec;
+$toolbar-background-color: #5D6F7C;
+
+
+$button-default-base-color: #5d6f7c;
+$button-default-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
+$button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
+$button-default-color: #FFFFFF;
+
+$button-toolbar-base-color: #5d6f7c;
+$button-toolbar-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
+$button-toolbar-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
+$button-toolbar-color: #FFFFFF;
+
+//button color toolbar: 2c4d84
+
+
+
+//$button-default-background-color-over: #FFFFFF;
+$button-medium-font-size: 20px;
+$button-small-font-size: ceil 20px;
+$button-large-font-size: ceil 20px;
+
+//fieldset sizes
+$fieldset-header-font-size: 17px;
+//$form-field-border-radius: 4px;
+//$form-field-font-weight: bold;
+
+//$font-family: helvetica neue;
+
+//$toolbar-text-font-family: $font-family;
+//$toolbar-text-font-size: ceil($font-size * .9) !default; //11px
+//$toolbar-text-font-weight: normal !default;
+$toolbar-text-color: #FFFFFF;
+//$toolbar-text-padding: 3px 4px 0 4px !default;
+//$toolbar-text-line-height: 16px !default;
+
+
+@import 'ext4/default/all';
+
+// You may remove any of the following modules that you
+// do not use in order to create a smaller css file.
+@include extjs-boundlist;
+@include extjs-button;
+@include extjs-btn-group;
+@include extjs-datepicker;
+@include extjs-colorpicker;
+@include extjs-menu;
+@include extjs-grid;
+@include extjs-form;
+    @include extjs-form-field;
+    @include extjs-form-fieldset;
+    @include extjs-form-file;
+    @include extjs-form-checkboxfield;
+    @include extjs-form-checkboxgroup;
+    @include extjs-form-triggerfield;
+    @include extjs-form-htmleditor;
+@include extjs-panel;
+@include extjs-qtip;
+@include extjs-slider;
+@include extjs-progress;
+@include extjs-toolbar;
+@include extjs-window;
+@include extjs-messagebox;
+@include extjs-tabbar;
+@include extjs-tab;
+@include extjs-tree;
+@include extjs-drawcomponent;
+@include extjs-viewport;
+
+
+@include extjs-button-ui(
+    'raxa-orange-small',
+
+    $border-radius: $button-small-border-radius,
+    $border-width: $button-small-border-width,  
+    $border-color: #ee7136,
+    $border-color-over: #ee7136,
+    $border-color-focus: #ee7136,
+    $border-color-pressed: #ee7136,
+    $border-color-disabled: black,
+    $padding: $button-small-padding,
+    $text-padding: $button-small-text-padding,
+
+    $background-color: #ee7136,
+    $background-color-over: #ee7136,
+    $background-color-focus: #ee7136,
+    $background-color-pressed: #ee7136,
+    $background-color-disabled: black,
+
+    $background-gradient: color_stops(#e8a795, #ee7136, #e8a795),
+    $background-gradient-over: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-focus: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-pressed: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-disabled: $button-default-background-gradient-disabled,
+
+    $color: $button-default-color,
+    $color-over: $button-default-color-over,
+    $color-focus: $button-default-color-focus,
+    $color-pressed: $button-default-color-pressed,
+    $color-disabled: $button-default-color-disabled,
+
+    $font-size: $button-small-font-size,
+    $font-size-over: $button-small-font-size-over,
+    $font-size-focus: $button-small-font-size-focus,
+    $font-size-pressed: $button-small-font-size-pressed,
+    $font-size-disabled: $button-small-font-size-disabled,
+    $font-weight: $button-small-font-weight,
+    $font-weight-over: $button-small-font-weight-over,
+    $font-weight-focus: $button-small-font-weight-focus,
+    $font-weight-pressed: $button-small-font-weight-pressed,
+    $font-weight-disabled: $button-small-font-weight-disabled,
+    $font-family: $button-small-font-family,
+    $font-family-over: $button-small-font-family-over,
+    $font-family-focus: $button-small-font-family-focus,
+    $font-family-pressed: $button-small-font-family-pressed,
+    $font-family-disabled: $button-small-font-family-disabled,
+    $icon-size: $button-small-icon-size
+);
+
+
+
+
+@include extjs-button-ui(
+    'raxa-aqua-small',
+
+    $border-radius: $button-small-border-radius,
+    $border-width: $button-small-border-width,  
+    $border-color: #009682,
+    $border-color-over: #009682,
+    $border-color-focus: #009682,
+    $border-color-pressed: #009682,
+    $border-color-disabled: black,
+    $padding: $button-small-padding,
+    $text-padding: $button-small-text-padding,
+
+    $background-color: #009682,
+    $background-color-over: #009682,
+    $background-color-focus: #009682,
+    $background-color-pressed: #009682,
+    $background-color-disabled: black,
+
+    $background-gradient: color_stops(#5bbba8, #009682, #5bbba8),
+    $background-gradient-over: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-focus: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-pressed: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-disabled: $button-default-background-gradient-disabled,
+
+    $color: $button-default-color,
+    $color-over: $button-default-color-over,
+    $color-focus: $button-default-color-focus,
+    $color-pressed: $button-default-color-pressed,
+    $color-disabled: $button-default-color-disabled,
+
+    $font-size: $button-small-font-size,
+    $font-size-over: $button-small-font-size-over,
+    $font-size-focus: $button-small-font-size-focus,
+    $font-size-pressed: $button-small-font-size-pressed,
+    $font-size-disabled: $button-small-font-size-disabled,
+    $font-weight: $button-small-font-weight,
+    $font-weight-over: $button-small-font-weight-over,
+    $font-weight-focus: $button-small-font-weight-focus,
+    $font-weight-pressed: $button-small-font-weight-pressed,
+    $font-weight-disabled: $button-small-font-weight-disabled,
+    $font-family: $button-small-font-family,
+    $font-family-over: $button-small-font-family-over,
+    $font-family-focus: $button-small-font-family-focus,
+    $font-family-pressed: $button-small-font-family-pressed,
+    $font-family-disabled: $button-small-font-family-disabled,
+    $icon-size: $button-small-icon-size
+);
+
+@include extjs-panel-ui(
+    'raxa-panel-not-rounded',
+    $ui-body-background-color: #c9cdd0,
+    $ui-body-font-size: 16px
+);
+
+
+@include extjs-panel-ui(
+    'raxa-panel',
+    $ui-border-radius: 4px,
+    $ui-body-background-color: #c9cdd0,
+    $ui-body-font-size: 16px
+);
+
+
+#custom-slider {
+    width:214px;
+    padding-top:6px;
+    background-image:url(img/ticks.gif);
+}
+
+.raxa-form-field{
+  -webkit-border-radius: 5px 5px;
+  -moz-border-radius: 5px 5px;
+  -ms-border-radius: 5px 5px;
+  -o-border-radius: 5px 5px;
+  border-radius: 5px 5px;
+
+};
+
+// This line changes the location of your images when creating UIs to be relative instead of within the ExtJS directory.
+// You MUST set this to true/string value if you are creating new UIs + supporting legacy browsers.
+// This only applies to new UIs. It does not apply to default component images (i.e. when changing $base-color)
+// The value can either be true, in which case the image path will be "../images/"
+// or a string, of where the path is
+$relative-image-path-for-uis: true; // defaults to "../images/" when true
+ 

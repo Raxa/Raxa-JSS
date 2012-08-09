@@ -1,10 +1,10 @@
 [{
-    "height": "165",
-    "weight": "70",
-    "bmi": "20",
+    "height": "80",
+    "weight": "10",
+    "bmi": "15.6",
     "bp": "110",
-    "pulse": "70",
-    "resrate": "30",
-    "temp": "12",
-    "oxysat": "30"
+    "pulse": "90",
+    "resrate": "20",
+    "temp": "100.5",
+    "oxysat": "98%"
 }]

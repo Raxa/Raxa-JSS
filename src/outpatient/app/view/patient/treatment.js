@@ -46,13 +46,67 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     width: '100%',
                     items: [{
                         xtype: 'selectfield',
-                        label: 'Treatment Type'
+                        label: 'Treatment Type',
+                        valueField: 'value',
+                        displayField: 'title',
+                        store: {
+                            data: [{
+                                value: '',
+                                title: '',
+                            }, {
+                                value: 'Pharmaceutical',
+                                title: 'Pharmaceutical',
+                            }]
+                        }
                     }, {
                         xtype: 'selectfield',
-                        label: 'Name of Drug'
+                        label: 'Name of Drug',
+                        valueField: 'value',
+                        displayField: 'title',
+                        store: {
+                            data: [{
+                                value: '',
+                                title: '',
+                            }, {
+                                value: 'Cialis (Tadalafil)',
+                                title: 'Cialis (Tadalafil)',
+                            }, {
+                                value: 'Cidofovir (Vistide)',
+                                title: 'Cidofovir (Vistide)',
+                            }, {
+                                value: 'Cinacalcet (Sensipar)',
+                                title: 'Cinacalcet (Sensipar)',
+                            }, {
+                                value: 'Ciprofloxacin (Cipro)',
+                                title: 'Ciprofloxacin (Cipro)',
+                            }, {
+                                value: 'Cisplatin (Cisplatin Injection)',
+                                title: 'Cisplatin (Cisplatin Injection)',
+                            }, {
+                                value: 'Citalopram Hydrobromide (Celexa)',
+                                title: 'Citalopram Hydrobromide (Celexa)',
+                            }]
+                        }
                     }, {
                         xtype: 'selectfield',
-                        label: 'Strength'
+                        label: 'Dosage',
+                        valueField: 'value',
+                        displayField: 'title',
+                        store: {
+                            data: [{
+                                value: '',
+                                title: '',
+                            }, {
+                                value: '100mg',
+                                title: '100mg'
+                            }, {
+                                value: '200mg',
+                                title: '200mg'
+                            }, {
+                                value: '500mg',
+                                title: '500mg'
+                            }]
+                        }
                     }, {
                         xtype: 'fieldset',
                         baseCls: 'x-form-fieldset-mod',
@@ -62,7 +116,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                         },
                         items: [{
                             xtype: 'selectfield',
-                            label: 'Dosage',
+                            label: 'Frequency',
                             border: 0,
                             labelWidth: '46.1538%',
                             flex: 13,
@@ -70,6 +124,9 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                             displayField: 'title',
                             store: {
                                 data: [{
+                                    value: '',
+                                    title: '',
+                                }, {
                                     value: 'onceDaily',
                                     title: 'Once Daily'
                                 }, {
@@ -88,24 +145,31 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                             displayField: 'title',
                             store: {
                                 data: [{
+                                    value: '',
+                                    title: '',
+                                }, {
                                     value: 'emptyStomach',
-                                    title: 'EmptyStomach'
+                                    title: 'Empty Stomach',
+                                }, {
+                                    value: 'withMeals',
+                                    title: 'With Meals',
                                 }, {
                                     value: 'afterFood',
-                                    title: 'After Food'
+                                    title: 'After Meals',
                                 }]
                             }
                         }]
                     }, {
-                        xtype: 'selectfield',
-                        label: 'Duration'
+                        xtype: 'textfield',
+                        label: 'Duration (days)',
                     }]
                 }, {
                     xtype: 'button',
                     ui: 'confirm',
                     text: 'Done',
                     handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.INSTRUCTIONS)
+                        /*Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.INSTRUCTIONS)*/
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.SUMMERY)
                     }
                 }]
             }, {
@@ -260,7 +324,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                         items: [{
                             xtype: 'datepickerfield',
                             label: 'Follow Up',
-                            placeHolder: 'mm/dd/yyyy',
+                            value: new Date(),
                             flex: 1
                         }]
                     }, {

@@ -36,28 +36,57 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                     displayField: 'title',
                     store: {
                         data: [{
-                            diagnosisCategory: 'anatomy',
-                            title: 'Anatomy'
+                            diagnosisCategory: '',
+                            title: '',
                         }, {
-                            diagnosisCategory: 'physiology',
-                            title: 'physiology'
+                            diagnosisCategory: 'Cardiovascular',
+                            title: 'Cardiovascular',
                         }, {
-                            diagnosisCategory: 'pathology',
-                            title: 'pathology'
+                            diagnosisCategory: 'Endocrine',
+                            title: 'Endocrine',
                         }, {
-                            diagnosisCategory: 'psychology',
-                            title: 'psychology'
+                            diagnosisCategory: 'Gastrointestinal',
+                            title: 'Gastrointestinal',
                         }, {
-                            diagnosisCategory: 'humanHemeostatic',
-                            title: 'Human Hemeostatic'
+                            diagnosisCategory: 'Genitourinary',
+                            title: 'Genitourinary',
                         }, {
-                            diagnosisCategory: 'other',
-                            title: 'Other'
+                            diagnosisCategory: 'Musculoskeletal',
+                            title: 'Musculoskeletal',
+                        }, {
+                            diagnosisCategory: 'Neurological',
+                            title: 'Neurological',
+                        }, {
+                            diagnosisCategory: 'Orthopedic',
+                            title: 'Orthopedic',
+                        }, {
+                            diagnosisCategory: 'Respiratory',
+                            title: 'Respiratory',
                         }]
                     }
                 }, {
                     xtype: 'selectfield',
-                    label: 'Diagnosis'
+                    label: 'Diagnosis',
+                    valueField: 'diagnosisCategory',
+                    displayField: 'title',
+                    store: {
+                        data: [{
+                            diagnosisCategory: '',
+                            title: '',
+                        }, {
+                            diagnosisCategory: 'Chronic Diarrhea',
+                            title: 'Chronic Diarrhea',
+                        }, {
+                            diagnosisCategory: 'Hookworm Infestation',
+                            title: 'Hookworm Infestation',
+                        }, {
+                            diagnosisCategory: 'Infectious Diarrhea',
+                            title: 'Infectious Diarrhea',
+                        }, {
+                            diagnosisCategory: 'Menetrier\'s Disease',
+                            title: 'Menetrier\'s Disease',
+                        }]
+                    }
                 }, {
                     xtype: 'textareafield',
                     label: 'Notes'
@@ -68,22 +97,22 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                     pack: 'center',
                     type: 'hbox'
                 },
-                items: [{
-                    xtype: 'button',
-                    ui: 'decline',
-                    text: 'Cancel',
-                    flex: 1
-                }, {
-                    xtype: 'button',
-                    margin: '0 10 0 10',
-                    text: 'Clear',
-                    flex: 1
-                }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Done',
-                    flex: 1
-                }]
+                /*items: [{*/
+                /*xtype: 'button',*/
+                /*ui: 'decline',*/
+                /*text: 'Cancel',*/
+                /*flex: 1*/
+                /*}, {*/
+                /*xtype: 'button',*/
+                /*margin: '0 10 0 10',*/
+                /*text: 'Clear',*/
+                /*flex: 1*/
+                /*}, {*/
+                /*xtype: 'button',*/
+                /*ui: 'confirm',*/
+                /*text: 'Done',*/
+                /*flex: 1*/
+                /*}]*/
             }]
         }, {
             xtype: 'container',
