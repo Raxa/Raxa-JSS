@@ -18,15 +18,20 @@
  * lists as necessary.
  */
 var form_num, lab_num;
+var x;
+//a global variable patientUpdate
 var patientUpdate = {
-    updatePatientsWaitingTitle: function () {
-        var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
+    //this method updates the title in patients waiting view with no. of patients waiting
+	updatePatientsWaitingTitle: function () {
+        // 3 different views shares this title, all three view get updated with same title
+		var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
         var patientWaitNumber = Ext.getStore('patientStore').getCount();
         var i;
         for (i = 0; i < patientsTitles.length; i++) {
             patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
         }
     },
+	//this method sets locally(persist = false) the bmi and encounter time in patients model
     setBMITime: function (store_patientList) {
         var i;
         for (i = 0; i < store_patientList.getCount(); i++) {
@@ -37,8 +42,8 @@ var patientUpdate = {
             }
         }
         Ext.getStore('patientStore').sort('display');
-        console.log(store_patientList)
     },
+	//this method returns the index of Obs which contain BMI details
     getObsBMI: function (obs) {
         var i;
         //console.log(obs)
@@ -49,11 +54,13 @@ var patientUpdate = {
             }
         }
     },
+	//this method sets the UI of sort buttons when pressed 
 	setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
         this.setCompQuery(string1_decline,'decline');
 		this.setCompQuery(string2_decline,'normal');
 		this.setCompQuery(string3_decline,'normal');
 	},
+	// a helper method or setSortButtonUi method to set component Query
 	setCompQuery : function (string1,uiType) {
 		var i;
         for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
@@ -239,8 +246,9 @@ Ext.define("Screener.controller.Application", {
 
         });
         //this.createRegList(list_regEncounter, list_scrEncounter);
-        var k = 0;
-        this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, k);
+        x = 0;
+        console.log('d')
+		this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, x);
 
     },
     // Creates two different List of Patients Registered and Patients Screened within last 24 hours
@@ -254,28 +262,22 @@ Ext.define("Screener.controller.Application", {
         store_reg.sync();
         store_scr.sync();
         store_out.sync();
-        store_reg.on('write', function () {
-            k = k + 1;
-            if (k == 3) {
-                this.finalPatientList(store_reg, store_scr, store_out);
-            }
-        }, this);
-        store_scr.on('write', function () {
-            k = k + 1;
-            if (k == 3) {
-                this.finalPatientList(store_reg, store_scr, store_out);
-            }
-        }, this);
-        store_out.on('write', function () {
-            k = k + 1;
-            if (k == 3) {
-                this.finalPatientList(store_reg, store_scr, store_out);
-            }
-        }, this);
-        var a = [store_reg, store_scr, store_out];
+		console.log('k')
+		
+		this.listenerOnList(store_reg, store_reg, store_scr, store_out);
+        this.listenerOnList(store_scr, store_reg, store_scr, store_out);
+        this.listenerOnList(store_out, store_reg, store_scr, store_out);
+		var a = [store_reg, store_scr, store_out];
         return a;
     },
-
+	listenerOnList: function(store, store1, store2, store3) {
+	store.on('write', function () {
+			x = x + 1;
+            if (x == 3) {
+                this.finalPatientList(store1, store2, store3);
+            }
+        }, this);
+	},
     // Creates List of Patients registered but not screened in last 24 hours
     finalPatientList: function (store_regEncounter, store_scrEncounter, store_outEncounter) {
         var store_patientList = Ext.create('Screener.store.PatientList', {
@@ -658,7 +660,8 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').sort('bmi');
 		patientUpdate.setSortButtonUi('ListView #sortBMI', 'ListView #sortFIFO', 'ListView #sortName');
     },
-    refreshList: function () {
+    //this method refreshes the patientList and also updates the patientWaitingTitle and bmi, encountertime locally in patient model 
+	refreshList: function () {
         Ext.getStore('patientStore').load();
         Ext.getStore('patientStore').on('load', function () {
             patientUpdate.updatePatientsWaitingTitle();
