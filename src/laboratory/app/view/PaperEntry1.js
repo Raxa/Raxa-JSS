@@ -22,22 +22,62 @@ Ext.define('Laboratory.view.PaperEntry1', {
     activeItem: 0,
 
     layout: {
-        type: 'absolute'
+        type: 'absolute',
     },
 
     items: [{
-        xtype: 'gridpanel',
-        height: 343,
-        width: 275,
-        title: 'Lab Orders waiting results',
-        columns: [{
-            xtype: 'gridcolumn',
-            width: 273,
-            dataIndex: 'string',
-            text: 'Details'
-        }],
-        viewConfig: {
+        xtype: 'laborderlistgrid',
+        id: 'labOrderListPaperEntry',
+        title: 'List of Lab Orders',
+        width: 200,
+        height: 400,
+        action: 'showLabPanel',
+        store: Ext.create('Laboratory.store.LabOrderSearch'),
 
+
+        listeners: {
+            click: {
+                element: 'el', //bind to the underlying el property on the panel
+
+                fn: function () {
+                    var l = Ext.getCmp('mainLabArea').getLayout();
+                    l.setActiveItem(LAB_PAGES.PAPER_ENTRY_ENTER_DATA.value);
+                    var grid = Ext.getCmp('labOrderListPaperEntry');
+                    var pos = grid.getSelectionModel().selected.length;
+                    selectedLabOrderId = grid.getSelectionModel().lastSelected.data.labOrderId;
+                    selectedPatientDisplay = grid.getSelectionModel().lastSelected.data.PatientDisplay;
+                    selectedPatientUuid = grid.getSelectionModel().lastSelected.data.PatientUUID;
+                    selectedLabOrderIdUuid = grid.getSelectionModel().lastSelected.data.LabOrderUuid;
+
+                    //Sets the LabOrderId and Patient's Name in the view
+                    Ext.getCmp('LabOrderNoPaperEntry4Panel').setValue(selectedLabOrderId);
+                    Ext.getCmp('patientDisplayPaperEntry4Panel').setValue(selectedPatientDisplay);
+
+                    var resultGrid = Ext.getCmp('results');
+
+                    //This Ajax call gets the uuid of LabSpecimen concept which is used to set the proxy of concept store
+                    Ext.Ajax.request({
+                        url: LAB_HOST + '/ws/rest/v1/order/' + selectedLabOrderIdUuid + '?v=full',
+                        method: 'GET',
+                        disableCaching: false,
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": "Basic " + window.btoa(LAB_USERNAME + ":" + LAB_PASSWORD),
+                            "Content-Type": "application/json"
+                        },
+                        failure: function (response) {
+                            console.log('GET on laborder failed with response status: ' + response.status);
+                        },
+                        success: function (response) {
+                            var JSONResult = JSON.parse(response.responseText);
+                            conceptUuid = JSONResult.concept.uuid;
+                            // This is to change the proxy by getting corresponding concept uuid from order
+                            resultGrid.store.getProxy().url = LAB_HOME + '/ws/rest/v1/concept/' + conceptUuid + '?v=full';
+                            resultGrid.store.load();
+                        }
+                    });
+                }
+            }
         }
     }, {
         xtype: 'button',
@@ -49,5 +89,4 @@ Ext.define('Laboratory.view.PaperEntry1', {
             l.setActiveItem(LAB_PAGES.PAPER_ENTRY_SEARCH.value);
         }
     }]
-
 });

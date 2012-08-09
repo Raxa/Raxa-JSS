@@ -20,46 +20,159 @@ Ext.define('Laboratory.view.LabOrderCreation11', {
     alias: 'widget.LabOrderCreation11',
     autoScroll: true,
     activeItem: 0,
-
     layout: {
         type: 'absolute'
     },
     items: [{
-        xtype: 'gridpanel',
-        height: 400,
-        width: 210,
-        autoScroll: true,
-        title: 'Lab Orders waiting results',
+        xtype: 'checkboxfield',
+        fieldLabel: '',
+        boxLabel: 'JSS Lab',
+        x: 10,
+        y: 30
+    }, {
+        xtype: 'checkboxfield',
+        fieldLabel: '',
+        boxLabel: 'Other Lab',
+        x: 10,
+        y: 50
+    }, {
+        xtype: 'displayfield',
+        value: 'Add Investigation',
+        fieldLabel: '',
+        x: 10,
+        y: 10
+    }, {
+        xtype: 'combobox',
+        fieldLabel: 'Section',
+        labelWidth: 50,
+        width: 200,
+        displayField: 'Section',
+        store: Ext.create('Laboratory.store.LabPanelSection'),
+
         columns: [{
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: ''
+            width: 200
+        }],
+        x: 0,
+        y: 80
+    }, {
+        xtype: 'gridpanel',
+        id: 'PanelListLabOrderCreation11',
+        width: 170,
+        store: Ext.create('Laboratory.store.LabPanelSection'),
+        title: '',
+        x: 10,
+        y: 140,
+        columns: [{
+            xtype: 'gridcolumn',
+            width: 150,
+            dataIndex: 'Section',
+            text: 'Investigation'
         }],
         viewConfig: {
 
         },
-        features: [{
-            ftype: 'grouping'
-        }]
+        listeners: {
+            click: {
+                element: 'el', //bind to the underlying el property on the panel
+                fn: function () {
+                    var grid = Ext.getCmp('PanelListLabOrderCreation11');
+                    var pos = grid.getSelectionModel().selected.length;
+                    selectedLabPanel = grid.getSelectionModel().lastSelected.data.Section;
+                    selectedLabPanelUuid = grid.getSelectionModel().lastSelected.data.PanelUuid;
+
+                    Ext.getCmp('LabOrderCreationContainer').add({
+                        xtype: 'splitter',
+
+                    }, {
+                        xtype: 'gridpanel',
+                        autoScroll: true,
+                        title: selectedLabPanel,
+                        columnLines: true,
+                        columns: [{
+                            xtype: 'gridcolumn',
+                            dataIndex: 'Specimen',
+                            text: 'Specimen Type',
+                            width: 175,
+                        }, {
+                            xtype: 'gridcolumn',
+                            text: 'Specimen Role'
+                        }, {
+                            xtype: 'gridcolumn',
+                            text: 'Client specimen Id'
+                        }, {
+                            xtype: 'datecolumn',
+                            text: 'Lab Speciment Id'
+                        }],
+                        viewConfig: {
+
+                        },
+                        store: new Ext.data.Store({
+                            fields: [{
+                                name: 'Specimen',
+                                type: 'string',
+                            }, {
+                                name: 'SpecimenUuid',
+                                type: 'string'
+                            }, {
+                                name: 'LabPanel',
+                                type: 'string'
+                            }, {
+                                name: 'LabPanelUuid',
+                                type: 'string'
+                            }],
+                            autoLoad: true,
+                            data: [{
+                                Specimen: grid.getSelectionModel().selected.items[0].raw.analysisSpecimenTypeConcept.display,
+                                SpecimenUuid: grid.getSelectionModel().selected.items[0].data.PanelUuid,
+                                LabPanel: selectedLabPanel,
+                                LabPanelUuid: selectedLabPanelUuid,
+                            }]
+                        }),
+                        displayField: 'value',
+                        forceSelection: true,
+                        closable: true,
+                        dockedItems: [{
+                            xtype: 'toolbar',
+                            dock: 'top',
+                            defaults: {
+                                minWidth: 50
+                            },
+                            items: [{
+                                xtype: 'component',
+                                flex: 1
+                            }, {
+                                xtype: 'button',
+                                text: 'Comment'
+                            }, ]
+                        }]
+
+
+                    });
+
+                }
+            }
+        }
     }, {
         xtype: 'displayfield',
         fieldLabel: 'Lab Order No.',
         x: 230,
     }, {
         xtype: 'displayfield',
-        fieldLabel: 'Patient',
+        fieldLabel: '<b>Patient</b>',
         labelAlign: 'top',
         x: 240,
         y: 40
     }, {
         xtype: 'displayfield',
-        fieldLabel: 'Provider',
+        fieldLabel: '<b>Provider</b>',
         labelAlign: 'top',
         x: 440,
         y: 40
     }, {
         xtype: 'displayfield',
-        width: 70,
+        id: 'PatientNameLabOrderCreation11',
+        labelWidth: 50,
         fieldLabel: 'Name',
         x: 240,
         y: 70
@@ -84,64 +197,42 @@ Ext.define('Laboratory.view.LabOrderCreation11', {
         x: 240,
         y: 130
     }, {
-        xtype: 'panel',
-        height: 150,
-        width: 450,
+        xtype: 'container',
+        id: 'LabOrderCreationContainer',
+        height: 300,
+        width: 500,
         autoScroll: true,
         title: '',
         x: 230,
         y: 170,
-        items: [{
-            xtype: 'gridpanel',
-            autoScroll: true,
-            title: 'Lab order',
-            columnLines: true,
-            columns: [{
-                xtype: 'gridcolumn',
-                dataIndex: 'string',
-                text: 'Specimen Type'
-            }, {
-                xtype: 'gridcolumn',
-                text: 'Specimen Role'
-            }, {
-                xtype: 'gridcolumn',
-                text: 'Client specimen Id'
-            }, {
-                xtype: 'datecolumn',
-                text: 'Lab Speciment Id'
-            }],
-            viewConfig: {
-
-            }
-        }]
     }, {
         xtype: 'button',
         text: 'Reset',
         x: 500,
-        y: 360
+        y: 500
     }, {
         xtype: 'button',
         text: 'Save',
         x: 570,
-        y: 360,
+        y: 500,
+        action: 'postLabOrder',
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
-        }        
+        }
     }, {
         xtype: 'button',
         text: 'Print',
         x: 430,
-        y: 360
+        y: 500,
     }, {
         xtype: 'button',
         text: 'Cancel',
         x: 240,
-        y: 360,
+        y: 500,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
-        }        
+        }
     }]
-
 });
