@@ -7,7 +7,7 @@
 Ext.define("Screener.view.TopMenu", {
     extend: 'Ext.Container',
     xtype: 'topmenu',
-	id: 'mainView',
+    id: 'mainView',
     config: {
         fullscreen: true,
         layout: 'vbox',
@@ -28,13 +28,6 @@ Ext.define("Screener.view.TopMenu", {
             width: 300
         }, {
             xtype: 'button',
-            id: 'showDoctorsButton',
-            text: 'Show Doctors',
-            ui: 'round',
-            height: 80,
-            width: 300
-        }, {
-            xtype: 'button',
             id: 'showPharmacyButton',
             text: 'Pharmacy Order',
             ui: 'round',
@@ -48,9 +41,9 @@ Ext.define("Screener.view.TopMenu", {
             height: 80,
             width: 300
         }, {
-			xtype: 'loadmask',
-			message: 'Loading',
-			id: 'loadMask'	
-		}]
+            xtype: 'loadmask',
+            message: 'Loading',
+            id: 'loadMask'	
+        }]
     }
 });

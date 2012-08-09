@@ -34,20 +34,39 @@ Ext.define('RaxaEmr.view.AppGrid', {
             });
         }
         for (var j = 0; j < args.length; j++) {
-            var cell = Ext.create('Ext.Panel', {
-                items: [{
-                        layout: 'vbox',
-                        xtype: 'button',
-                        id: args[j],
-                        html: '<div style="text-align:center;"><img src="resources/img/' +args[j] + '.png" width="180" height="180"/></div>',
-                   
-                        listeners: {
-                            tap: function () {
-                                window.location = this.id;
+            if (args[j]=='patientfacing'){
+                //TODO: DON'T LINK DIRECTLY TO Patient Facing
+                var cell = Ext.create('Ext.Panel', {
+                    items: [{
+                            layout: 'vbox',
+                            xtype: 'button',
+                            id: args[j],
+                            html: '<div style="text-align:center;"><img src="resources/img/' +args[j] + '.png" width="180" height="180"/></div>',
+
+                            listeners: {
+                                tap: function () {
+                                    window.location = patient-facing.github.com;
+                                }
                             }
-                        }
-                    }]
-            });
+                        }]
+                });
+            }
+            else {
+                var cell = Ext.create('Ext.Panel', {
+                    items: [{
+                            layout: 'vbox',
+                            xtype: 'button',
+                            id: args[j],
+                            html: '<div style="text-align:center;"><img src="resources/img/' +args[j] + '.png" width="180" height="180"/></div>',
+
+                            listeners: {
+                                tap: function () {
+                                    window.location = this.id;
+                                }
+                            }
+                        }]
+                });
+            }
             appRows[Math.floor(j / numRows)].add(cell);
         }     
         for (var i = 0; i < numRows; i++) {

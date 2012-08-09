@@ -16,25 +16,29 @@
  * This script defines the view SearchPart2 of the registration module
  */
 Ext.define('Registration.view.SearchPart2', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.searchpart2',
     border: 0,
     autoScroll: true,
     padding: 10,
     layout: {
-        type: 'auto'
+        type: 'hbox',
+        pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            border: 0,
+            xtype: 'panel',
+            ui: 'raxa-panel',
+            width: 800,
+            padding: 20,
             items: [{
-                xtype: 'panel',
+                xtype: 'container',
                 border: 0,
                 bodyPadding: 10,
                 items: [{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: 'Search Results of Patient',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.title'),
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
@@ -49,46 +53,46 @@ Ext.define('Registration.view.SearchPart2', {
                         hideHeaders: false,
                         columns: [{
                             xtype: 'gridcolumn',
-                            text: 'Sr. No',
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.SN'),
                             dataIndex: 'id'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'First Name',
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.FN'),
                             dataIndex: 'givenName'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Last Name',
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.LN'),
                             dataIndex: 'familyName'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Sex',
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.Gender'),
                             dataIndex: 'gender'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'DOB',
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.DOB'),
                             renderer: Ext.util.Format.dateRenderer('d.m.Y'),
                             dataIndex: 'birthdate'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Patient Id'
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.PI'),
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Husband/Fathers Name',
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.HFN'),
                             forceFit: true
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Village',
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.Village'),
                             dataIndex: 'cityVillage'
                         }, {
                             xtype: 'gridcolumn',
-                            text: 'Town'
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.Town'),
                         }], 
                         //was needed to see the patient profile as we click on one of the patient
                         listeners: {
                             cellClick: {
                                 fn: function () {
                                     var temp = this.getSelectionModel().getSelection()[0].getData()
-                                    localStorage.setItem('uuid',temp.uuid)
+                                    localStorage.setItem('searchUuid',temp.uuid)
                                     Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)
                                     Ext.getCmp('sexSearchedPatient').setValue(temp.gender)
@@ -109,14 +113,15 @@ Ext.define('Registration.view.SearchPart2', {
                             }
                         },
                         viewConfig: {
-                            emptyText: 'No Data Available',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.NoResult.emptytext'),
                             stripeRows: false
                         }
                     }, {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
-                        text: 'Modify Search',
+                        ui: 'raxa-orange-small',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.MS'),
                         action: 'modifySearch'
                     }]
                 }]
