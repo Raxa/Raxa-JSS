@@ -11,14 +11,18 @@ Ext.define("Screener.view.PharmacyView", {
         fullscreen: true,
         layout: 'hbox',
         title: 'Add Drugs',
+        cls: 'pharmacyview',
+        style: 'background:#96d2f7',
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
         {
             xtype: 'patientListView',
-            flex: 1
+            flex: 1,
+            margin : '5 5 5 5'           
         }, {
             xtype: 'pharmacyForm',
-            flex: 1
+            flex: 1,
+            margin : '5 5 5 5'
         }]
     }
 });
