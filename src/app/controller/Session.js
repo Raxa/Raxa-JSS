@@ -39,7 +39,8 @@ Ext.define('RaxaEmr.controller.Session', {
         },
 
         control: {
-            passwordID: {
+            //a controller on username and password field for event 'action' for doLogin method
+			passwordID: {
                 action: 'doLogin'
             },
             userName: {
@@ -64,7 +65,7 @@ Ext.define('RaxaEmr.controller.Session', {
     storeUserPrivileges: function (userInfo) {
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
-            Ext.Ajax.setTimeout(Util.getTimeoutLimit());
+           Ext.Ajax.setTimeout(Util.getTimeoutLimit());
             Ext.Ajax.request({
                 scope: this,
                 url: userInfoJson.results[0].links[0].uri + '?v=full',
