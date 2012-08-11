@@ -37,5 +37,5 @@ Ext.define('Laboratory.controller.Main', {
 	LAB_USERNAME='Admin';
 	LAB_PASSWORD='Admin123';
     }
-
+    
 });

@@ -23,16 +23,28 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
     views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4', 'BatchApproval', 'QueueStatus', 'ReportDelivery1', 'ReportDelivery1', 'ReportDelivery2', 'ReportDelivery3', 'ReportDelivery4', 'ReportDelivery5', 'SpecimenCollection1', 'SpecimenCollection2', 'SpecimenCollection3', 'SpecimenCollection4', 'SpecimenCollection5', 'SpecimenCollection6', 'SpecimenCollection7', 'SpecimenCollection8', 'SpecimenCollection9', 'SpecimenCollection10', 'SpecimenCollection11', 'SpecimenCollection12', 'SpecimenCollection13', 'LabOrderCreation1', 'LabOrderCreation2', 'LabOrderCreation3', 'LabOrderCreation4', 'LabOrderCreation5', 'LabOrderCreation6', 'LabOrderCreation7', 'LabOrderCreation8', 'LabOrderCreation9', 'LabOrderCreation10', 'LabOrderCreation11', 'LabOrderCreation12', 'SpecimenRegistration1', 'SpecimenRegistration2', 'SpecimenRegistration3', 'SpecimenRegistration4', 'SpecimenRegistration5', 'SpecimenRegistration6', 'SpecimenRegistration7', 'SpecimenRegistration8', 'SpecimenRegistration9', 'SpecimenRegistration10', 'SpecimenRegistration11', 'SpecimenRegistration12', 'SpecimenRegistration13', 'ResultEntry1', 'ResultEntry2', 'ResultEntry3', 'ResultEntry4', 'ResultEntry5', 'ReportApproval1', 'ReportApproval2', 'ReportApproval3', 'ReportApproval4', 'LabOrderList'],
 
     init: function () {
-        LAB_HOME = 'http://openmrs.gielow.me/openmrs-1.8.4';
-        LAB_USERNAME = 'Admin';
-        LAB_PASSWORD = 'Admin123';
-
         this.control({
             'LabOrderCreation11 button[action=postLabOrder]': {
                 click: this.labOrderFromGrid
             },
             'LabOrderCreation2 button[action=searchPatient]': {
                 click: this.searchPatient
+            },
+            'LabOrderCreation2': {
+                activate: function () {
+                    // listener on grid showing list of searched patient
+                    Ext.getCmp('patientSearchCreateLabOrder').on('cellClick', function () {
+                        this.selectPatient();
+                    }, this)
+                }
+            },
+            'LabOrderCreation11': {
+                activate: function () {
+                    // listener on labPanel which triggers on selection of labPanel and dynamically creates grids (of corresponding labPanel)
+                    Ext.getCmp('PanelListLabOrderCreation11').on('cellClick', function () {
+                        this.generateLabPanel();
+                    }, this)
+                }
             },
         })
     },
@@ -110,5 +122,97 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
         };
         Ext.getCmp('patientSearchCreateLabOrder').store.getProxy().url = LAB_HOME + '/ws/rest/v1/patient?q=' + searchPatientName + '&v=full';
         Ext.getCmp('patientSearchCreateLabOrder').store.load();
+    },
+
+    /* This function is triggered after patient is selected from grid (patientSearchCreateLabOrder) in LabOrderCreation3 showing list 
+     * of searched patient, query of which was entered in LabOrderCreation2
+     */
+    selectPatient: function () {
+        var grid = Ext.getCmp('patientSearchCreateLabOrder');
+        var pos = grid.getSelectionModel().selected.length;
+        selectedPatientUuid = grid.getSelectionModel().lastSelected.data.PatientUuid;
+        selectedPatientName = grid.getSelectionModel().lastSelected.data.PatientName;
+        Ext.getCmp('PatientNameLabOrderCreation11').setValue(selectedPatientName);
+
+  		//Move to final page which shows Lab Panels to be added to the laborder
+        var l = Ext.getCmp('mainLabArea').getLayout();
+        l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
+    },
+
+    /* This function creates grid dynamically based on which LabPanel is clicked by user.
+     */
+    generateLabPanel: function () {
+
+        var grid = Ext.getCmp('PanelListLabOrderCreation11');
+        var pos = grid.getSelectionModel().selected.length;
+        selectedLabPanel = grid.getSelectionModel().lastSelected.data.Section;
+        selectedLabPanelUuid = grid.getSelectionModel().lastSelected.data.PanelUuid;
+
+        Ext.getCmp('LabOrderCreationContainer').add({
+            xtype: 'splitter',
+
+        }, {
+            xtype: 'gridpanel',
+            autoScroll: true,
+            title: selectedLabPanel,
+            columnLines: true,
+            columns: [{
+                xtype: 'gridcolumn',
+                dataIndex: 'Specimen',
+                text: 'Specimen Type',
+                width: 175,
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Specimen Role'
+            }, {
+                xtype: 'gridcolumn',
+                text: 'Client specimen Id'
+            }, {
+                xtype: 'datecolumn',
+                text: 'Lab Speciment Id'
+            }],
+            viewConfig: {
+
+            },
+            store: new Ext.data.Store({
+                fields: [{
+                    name: 'Specimen',
+                    type: 'string',
+                }, {
+                    name: 'SpecimenUuid',
+                    type: 'string'
+                }, {
+                    name: 'LabPanel',
+                    type: 'string'
+                }, {
+                    name: 'LabPanelUuid',
+                    type: 'string'
+                }],
+                autoLoad: true,
+                data: [{
+                    Specimen: grid.getSelectionModel().selected.items[0].raw.analysisSpecimenTypeConcept.display,
+                    SpecimenUuid: grid.getSelectionModel().selected.items[0].data.PanelUuid,
+                    LabPanel: selectedLabPanel,
+                    LabPanelUuid: selectedLabPanelUuid,
+                }]
+            }),
+            displayField: 'value',
+            forceSelection: true,
+            closable: true,
+            dockedItems: [{
+                xtype: 'toolbar',
+                dock: 'top',
+                defaults: {
+                    minWidth: 50
+                },
+                items: [{
+                    xtype: 'component',
+                    flex: 1
+                }, {
+                    xtype: 'button',
+                    text: 'Comment'
+                }, ]
+            }]
+        });
     }
 });

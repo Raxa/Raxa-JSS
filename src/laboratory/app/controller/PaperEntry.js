@@ -38,19 +38,25 @@ Ext.define('Laboratory.controller.PaperEntry', {
     views: ['Viewport', 'Home', 'PaperEntry1', 'PaperEntry2', 'PaperEntry3', 'PaperEntry4', 'BatchApproval', 'QueueStatus', 'ReportDelivery1', 'ReportDelivery1', 'ReportDelivery2', 'ReportDelivery3', 'ReportDelivery4', 'ReportDelivery5', 'SpecimenCollection1', 'SpecimenCollection2', 'SpecimenCollection3', 'SpecimenCollection4', 'SpecimenCollection5', 'SpecimenCollection6', 'SpecimenCollection7', 'SpecimenCollection8', 'SpecimenCollection9', 'SpecimenCollection10', 'SpecimenCollection11', 'SpecimenCollection12', 'SpecimenCollection13', 'LabOrderCreation1', 'LabOrderCreation2', 'LabOrderCreation3', 'LabOrderCreation4', 'LabOrderCreation5', 'LabOrderCreation6', 'LabOrderCreation7', 'LabOrderCreation8', 'LabOrderCreation9', 'LabOrderCreation10', 'LabOrderCreation11', 'LabOrderCreation12', 'SpecimenRegistration1', 'SpecimenRegistration2', 'SpecimenRegistration3', 'SpecimenRegistration4', 'SpecimenRegistration5', 'SpecimenRegistration6', 'SpecimenRegistration7', 'SpecimenRegistration8', 'SpecimenRegistration9', 'SpecimenRegistration10', 'SpecimenRegistration11', 'SpecimenRegistration12', 'SpecimenRegistration13', 'ResultEntry1', 'ResultEntry2', 'ResultEntry3', 'ResultEntry4', 'ResultEntry5', 'ReportApproval1', 'ReportApproval2', 'ReportApproval3', 'ReportApproval4', 'LabOrderList'],
 
     init: function () {
-        LAB_HOST = "http://openmrs.gielow.me/openmrs-1.8.4";
-        LAB_USERNAME = 'admin';
-        LAB_PASSWORD = 'Admin123';
-
         this.control({
             'PaperEntry4 button[action=submitPaperEntry]': {
                 click: this.sendLabObs
             },
-            'PaperEntry1 button[action=showLabPanel]': {
-                click: this.showLabPanel
+            'PaperEntry1': {
+                activate: function () {
+                    // listener on laborderlist which triggers on selection of laborder
+                    Ext.getCmp('labOrderListPaperEntry').on('cellClick', function () {
+                        this.showLabPanel('labOrderListPaperEntry');
+                    }, this)
+                }
             },
-            'PaperEntry4 button[action=showLabPanel]': {
-                onCellClick: this.showLabPanel
+            'PaperEntry4': {
+                activate: function () {
+                    // listener on laborderlist which triggers on selection of laborder
+                    Ext.getCmp('labOrderListPaperEntry4').on('cellClick', function () {
+                        this.showLabPanel('labOrderListPaperEntry4');
+                    }, this)
+                }
             },
         })
     },
@@ -106,10 +112,10 @@ Ext.define('Laboratory.controller.PaperEntry', {
     /*  This function is called after a user selects a laborder. It sets the store of result grid (concept)
      *  after which the tests of selected laborder can be seen in the grid.
      */
-    showLabPanel: function () {
+    showLabPanel: function (gridPanel) {
         var l = Ext.getCmp('mainLabArea').getLayout();
         l.setActiveItem(LAB_PAGES.PAPER_ENTRY_ENTER_DATA.value);
-        var grid = Ext.getCmp('labOrderListPaperEntry');
+        var grid = Ext.getCmp(gridPanel);
         var pos = grid.getSelectionModel().selected.length;
         selectedLabOrderId = grid.getSelectionModel().lastSelected.data.labOrderId;
         selectedPatientDisplay = grid.getSelectionModel().lastSelected.data.PatientDisplay;
@@ -119,8 +125,8 @@ Ext.define('Laboratory.controller.PaperEntry', {
         //Sets the LabOrderId and Patient's Name in the view
         Ext.getCmp('LabOrderNoPaperEntry4Panel').setValue(selectedLabOrderId);
         Ext.getCmp('patientDisplayPaperEntry4Panel').setValue(selectedPatientDisplay);
-
         //results is grid which shows tests in the selected lab panel
+
         var resultGrid = Ext.getCmp('results');
 
         //This Ajax call gets the uuid of LabSpecimen concept which is used to set the proxy of concept store
@@ -144,5 +150,5 @@ Ext.define('Laboratory.controller.PaperEntry', {
                 resultGrid.store.load();
             }
         });
-    }
+    },
 });
