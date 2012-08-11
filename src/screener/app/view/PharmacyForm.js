@@ -13,14 +13,13 @@ Ext.define("Screener.view.PharmacyForm", {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Pharmacy Orders'
+            title: 'Pharmacy Orders',
         }, {
             layout: 'hbox',
             items: [{
                 xtype: 'drugStore',
-                width: '350px',
+                width: '500px',
                 id: 'form0',
-                height: '320px',
                 scrollable: false
             }, {
                 layout: 'vbox',

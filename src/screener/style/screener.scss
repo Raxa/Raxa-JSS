@@ -1,0 +1,208 @@
+//change base color
+$base-color: #4aa8e5;
+//change gradient style
+$base-gradient: 'bevel';
+$form-bg-color: #f7f7f7;
+@import 'sencha-touch/default/all';
+
+// You may remove any of the following modules that you
+// do not use in order to create a smaller css file.
+@include sencha-panel;
+@include sencha-buttons;
+@include sencha-sheet;
+@include sencha-picker;
+@include sencha-tabs;
+@include sencha-toolbar;
+@include sencha-toolbar-forms;
+@include sencha-indexbar;
+@include sencha-list;
+@include sencha-layout;
+@include sencha-carousel;
+@include sencha-form;
+@include sencha-msgbox;
+
+// class for selectset
+.fieldset{
+
+    //below three class remove borders from the form fields
+    .x-inner{
+        border-bottom-style: none;
+        border-top-style: none;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-color: #f7f7f7;
+        border-bottom-color: #f7f7f7;
+        border-left-color: #f7f7f7;
+        border-right-color: #f7f7f7;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+    }
+    .x-form-fieldset-inner{
+        border-bottom-style: none;
+        border-top-style: none;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-color: #eeeeee;
+        border-bottom-color: #eeeeee;
+        border-left-color: #eeeeee;
+        border-right-color: #eeeeee;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+    }
+    .x-form-fieldset, .x-field, .x-layout-hbox{
+        border-bottom-style: none;
+        border-top-style: none;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-color: #f7f7f7;
+        border-bottom-color: #f7f7f7;
+        border-left-color: #f7f7f7;
+        border-right-color: #f7f7f7;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+    }
+
+    // change label backgorund color
+    .x-form-label{
+       background-color : #f7f7f7;
+    }
+    // remove the arrow icon covering whole selectfield
+    .x-field-select {
+        position: relative;
+
+        .x-component-outer {
+            &:after {
+                    background: none;
+                    z-index: 2;
+            }
+            &:before {
+                    @include insertion(0em,auto,0,auto);
+                    right: 0;
+                    bottom: 0;
+                    @if $include-highlights { background: none;}
+                    z-index: 1;
+            }
+        }
+    }
+}
+
+.selectfield {
+    //below three class remove borders from the form fields
+    .x-inner{
+        border-bottom-style: none;
+        border-top-style: none;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-color: #f7f7f7;
+        border-bottom-color: #f7f7f7;
+        border-left-color: #f7f7f7;
+        border-right-color: #f7f7f7;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+    }
+    .x-form-fieldset-inner{
+        border-bottom-style: none;
+        border-top-style: none;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-color: #eeeeee;
+        border-bottom-color: #eeeeee;
+        border-left-color: #eeeeee;
+        border-right-color: #eeeeee;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+    }
+    .x-form-fieldset, .x-field, .x-layout-hbox{
+        border-bottom-style: none;
+        border-top-style: none;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-color: #f7f7f7;
+        border-bottom-color: #f7f7f7;
+        border-left-color: #f7f7f7;
+        border-right-color: #f7f7f7;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+    }
+    // add background color to field label
+    .x-form-label{
+       background-color : #f7f7f7;
+    }
+
+    // class for change the view of input part of select field
+    .x-field-input {
+        //change backgound of input part of selectfield
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e5799), color-stop(0%,#f1f1f1), color-stop(100%,#d3d3d3)); 
+        background-image: -webkit-linear-gradient(top, #1e5799 0%,#f1f1f1 0%,#d3d3d3 100%); 
+        background-image: linear-gradient(to bottom, #1e5799 0%,#f1f1f1 0%,#d3d3d3 100%);
+        
+        //things below make set the arrow icon after the input the part of select field
+        &:after {
+              @include selectmark(#eeeeee);
+              background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a4a4a4), color-stop(100%,#6c6c6c), color-stop(100%,#7db9e8));
+              z-index: 2;
+        }
+
+        &:before,
+        &:after {
+            pointer-events: none;
+            position: absolute;
+            display: block;
+        }
+
+        &:before {
+            @include insertion(4em,auto,0,auto);
+            right: 0;
+            bottom: 0;
+            @if $include-border-radius { @include border-right-radius($form-fieldset-radius); }
+            @if $include-highlights { background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e5799), color-stop(0%,#f1f1f1), color-stop(100%,#d3d3d3)); }
+            z-index: 1;
+        }
+
+        //give border to the input part of select field
+        border-bottom-style: solid;
+        border-top-style: solid;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-top-color: #eeeeee;
+        border-bottom-color: #eeeeee;
+        border-left-color: #eeeeee;
+        border-right-color: #eeeeee;
+        border-bottom-width: 1px;
+        border-top-width: 1px;
+        border-left-width: 1px;
+        border-right-width: 1px;
+        @include border-bottom-radius(8px);
+        @include border-top-radius(8px);
+    }
+ 
+}
+
+//class for text area giving border radius
+.textarea{
+    .x-component-outer{
+        border-top-left-radius: $form-fieldset-radius;
+        border-bottom-left-radius: $form-fieldset-radius;
+        border-top-right-radius: $form-fieldset-radius;
+        border-bottom-right-radius: $form-fieldset-radius;
+    }
+}
+
+//class  for pharmacy view to give border radius to child component of container
+.pharmacyview{
+    .x-container{
+        border-radius: $form-fieldset-radius;
+    }
+}
