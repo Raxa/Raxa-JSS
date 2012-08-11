@@ -21,7 +21,7 @@ Ext.define('Laboratory.store.LabOrderSearch', {
     groupField: 'orderlist',
     proxy: {
         type: 'rest',
-        url: 'http://openmrs.gielow.me/openmrs-1.8.4/ws/rest/v1/order?type=laborder&v=full',
+        url: LAB_HOST+'/ws/rest/v1/order?type=laborder&v=full',
         headers: {
             "Accept": "application/json",
             "Authorization": "Basic " + window.btoa("admin:Admin123"),

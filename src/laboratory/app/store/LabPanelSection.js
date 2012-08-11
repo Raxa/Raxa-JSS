@@ -21,7 +21,7 @@ Ext.define('Laboratory.store.LabPanelSection', {
 	fields: ['Section', 'PanelUuid'],
     proxy: {
         type: 'rest',
-        url: 'http://openmrs.gielow.me/openmrs-1.8.4/ws/rest/v1/jsslab/labtestpanel?v=full',
+        url: LAB_HOST+'/ws/rest/v1/jsslab/labtestpanel?v=full',
         headers: {
             "Accept": "application/json",
             "Authorization": "Basic " + window.btoa("admin:Admin123"),
