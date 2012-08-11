@@ -20,9 +20,5 @@ Ext.define('RaxaEmr.Outpatient.store.drugpanel', {
     config: {
         model: 'RaxaEmr.Outpatient.model.drugpanel',
         autoLoad: true,
-        proxy: {
-            type: 'ajax',
-            url: 'data/drugpanel.json'
-        }
     }
 });

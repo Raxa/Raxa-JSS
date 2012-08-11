@@ -43,9 +43,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     width: '100%',
                     items: [{
                         xtype: 'textareafield',
+						id: 'patientHistory',
                         label: 'Patient History'
                     }, {
                         xtype: 'textareafield',
+						id: 'pastMedicalHistory',
                         label: 'Past Medical History',
                     }]
                 }, {
@@ -97,12 +99,13 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         label: 'Alcohol',
                         valueField: 'alcoholFrequency',
                         displayField: 'title',
+						id: 'alcoholField',
                         store: {
                             data: [{
                                 alcoholFrequency: '',
                                 title: ''
                             }, {
-                                alcoholFrequency: 'none',
+                                alcoholFrequency: 'never',
                                 title: 'None'
                             }, {
                                 alcoholFrequency: 'daily',
@@ -130,6 +133,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             flex: 16,
                             valueField: 'time',
                             displayField: 'title',
+							id: 'tobaccoField',
                             store: {
                                 data: [{
                                     time: '',
@@ -150,6 +154,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             border: 0,
                             flex: 7,
                             valueField: 'way',
+							id: 'tobaccoRouteofIntake',
                             displayField: 'title',
                             store: {
                                 data: [{
@@ -174,6 +179,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             border: 0,
                             flex: 7,
                             valueField: 'amount',
+							id: 'tobaccoFrequency',
                             displayField: 'title',
                             store: {
                                 data: [{
@@ -193,12 +199,14 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         }]
                     }, {
                         xtype: 'textareafield',
+						id: 'otherHistory',
                         label: 'Other'
                     }]
                 }, {
                     xtype: 'fieldset',
                     items: [{
                         xtype: 'textareafield',
+						id: 'familyHistory',
                         label: 'Family History'
                     }]
                 }, {
@@ -210,18 +218,10 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     items: [{
                         xtype: 'button',
                         margin: '0 10 0 10',
-                        text: 'Back',
+						ui: 'confirm',
+                        text: 'Submit',
                         flex: 1,
-                        handler: function () {
-                            Ext.getCmp('history-panel').setActiveItem(HISTORY.PERSONAL)
-                        }
-                               /*}, {*/
-                           /*xtype: 'button',*/
-                           /*ui: 'confirm',*/
-                           /*margin: '0 10 0 10',*/
-                           /*text: 'OK',*/
-                           /*id: 'submit-history',*/
-                           /*flex: 1*/
+						id: 'submit-history'
                     }]
                 }]
             }, {
