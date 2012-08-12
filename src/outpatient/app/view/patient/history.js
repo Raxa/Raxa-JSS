@@ -36,6 +36,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
             scrollable: 'false',
             items: [{
                 xtype: 'formpanel',
+				id : 'patientHistoryPanel',
                 scrollable: 'false',
                 flex: 1,
                 items: [{
@@ -90,6 +91,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
             items: [{
                 xtype: 'formpanel',
                 flex: 1,
+				id: 'socialHistoryPanel',
                 scrollable: 'false',
                 items: [{
                     xtype: 'fieldset',

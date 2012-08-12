@@ -23,7 +23,12 @@ var CONCEPT = {
 	TOBACCO_INTAKE : '879c5f69-0e6a-46d0-81e8-b8cf046afd0d',
 	OTHER_HISTORY : '85c37437-3a9a-4db8-a8e2-9cb674b04a79',
 	FAMILY_HISTORY : '6c887b36-b356-4650-9b76-40f4b9be5f18',
-}
+	EXAMINATION_LIST : '7fa96bde-fda5-4559-9fea-73c32f93b87a',
+	NEUROLOGICAL_DIAGNOSIS : '800f8f3c-add0-4f4a-97d5-cb7f3a3926fd',
+	CARDIOLOGICAL_DIAGNOSIS : 'fa2c42dd-1dbd-426b-b0ad-b62a09a5e55e',
+};
+
+var opd_observations = new Array();
 
 Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     extend: 'Ext.app.Controller',
@@ -50,7 +55,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             saveduration: '#saveDuration',
 			adddruginlist: '#addDrugInList',
 			submithistory: '#submit-history',
-			submitdrugs : '#submitDrugs'
+			submitdrugs : '#submitDrugs',
+			adddiagnosis: '#addDiagnosis',
+			submitdiagnosis: '#submitDiagnosis',
         },
 
         control: {
@@ -109,6 +116,12 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 			},
 			submitdrugs : {
 				tap : 'submitdrugs'
+			},
+			adddiagnosis : {
+				tap : 'addDiagnosis'
+			},
+			submitdiagnosis : {
+				tap : 'submitDiagnosis'
 			}
         }
     },
@@ -288,7 +301,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
     refToDocButton: function () {
         this.buttonAction('RaxaEmr.Outpatient.view.patient.refertodocpanel', 'confirmrefertodoc');
-    },
+	},
 
     sortBy: function (obj) {
         store = this.getContact().getStore();
@@ -352,70 +365,113 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         store.clearFilter();
     },
 	
-	submitHistory: function(){
-		var history = new Array();
+	submitOpdEncounter: function(){
 		var obsdate = new Date();
+		var time = Util.Datetime(obsdate, Util.getUTCGMTdiff());
 		
+		var opdencounter = Ext.create('RaxaEmr.Outpatient.model.opdEncounter', {
+			patient: myRecord.data.uuid,
+			encounterType: localStorage.outUuidencountertype,
+			encounterDatetime: time,
+            provider: loggedInDoc,
+			obs: opd_observations
+		});
+		
+		var encounterStore = Ext.create('RaxaEmr.Outpatient.store.opdEncounterPost');
+		encounterStore.add(opdencounter);
+		encounterStore.sync();
+		encounterStore.on('write', function () {
+			Ext.Msg.alert('successfull');
+		}, this);
+	},
+	
+	submitHistory: function(){
+		var obsdate = new Date();
 		var tobaccoValue = Ext.getCmp('tobaccoField').getValue()+' '+Ext.getCmp('tobaccoRouteofIntake').getValue()+' '+Ext.getCmp('tobaccoFrequency').getValue()
 		
-		history.push({
+		opd_observations.push({
 			person: myRecord.data.uuid,
 			obsDatetime: obsdate,
 			concept : CONCEPT.PATIENT_HISTORY,
 			value: Ext.getCmp('patientHistory').getValue()
 		});
 		
-		history.push({
+		opd_observations.push({
 			person: myRecord.data.uuid,
 			obsDatetime: obsdate,
 			concept : CONCEPT.PAST_MEDICATION_HISTORY,
 			value: Ext.getCmp('pastMedicalHistory').getValue()
 		});
 		
-		history.push({
+		opd_observations.push({
 			person: myRecord.data.uuid,
 			obsDatetime: obsdate,
 			concept : CONCEPT.ALCOHOL_INTAKE,
 			value: Ext.getCmp('alcoholField').getValue()
 		});
 		
-		history.push({
+		opd_observations.push({
 			person: myRecord.data.uuid,
 			obsDatetime: obsdate,
 			concept : CONCEPT.TOBACCO_INTAKE,
 			value: tobaccoValue
 		});
 		
-		history.push({
+		opd_observations.push({
 			person: myRecord.data.uuid,
 			obsDatetime: obsdate,
 			concept : CONCEPT.OTHER_HISTORY,
 			value: Ext.getCmp('otherHistory').getValue()
 		});
 		
-		history.push({
+		opd_observations.push({
 			person: myRecord.data.uuid,
 			obsDatetime: obsdate,
 			concept : CONCEPT.FAMILY_HISTORY,
 			value: Ext.getCmp('familyHistory').getValue()
 		});
+		Ext.getCmp('patientHistoryPanel').reset();
+		Ext.getCmp('socialHistoryPanel').reset();
+	},
+	
+	submitExamination: function(){
+		var obsdate = new Date();
+		var examlist = Ext.getCmp('examList').getStore();
+		var prob_num = Ext.getCmp('examList').getStore().getCount();
+		prob_num = prob_num - 1;
 		
-		var time = Util.Datetime(obsdate, Util.getUTCGMTdiff());
-		
-		var historyencounter = Ext.create('RaxaEmr.Outpatient.model.historyEncounter', {
-			patient: myRecord.data.uuid,
-			encounterType: localStorage.outUuidencountertype,
-			encounterDatetime: time,
-            provider: loggedInDoc,
-			obs: history
+		for (i = 0; i <= prob_num; i++) {
+			opd_observations.push({
+				person: myRecord.data.uuid,
+				obsDatetime: obsdate,
+				concept : CONCEPT.EXAMINATION_LIST,
+				value: examlist.getAt(i).data.complain + examlist.getAt(i).data.duration
+			});
+		}
+	},
+	
+	addDiagnosis: function(){
+		var obsdate = new Date();
+		var conceptType;
+		var diagnosis_category = Ext.getCmp('diagnosisCategory').getValue();
+		if(diagnosis_category == 'Neuro'){
+			conceptType = CONCEPT.NEUROLOGICAL_DIAGNOSIS;
+		}else if(diagnosis_category == 'Cardio'){
+			conceptType =CONCEPT.CARDIOLOGICAL_DIAGNOSIS;
+		}
+		opd_observations.push({
+			person: myRecord.data.uuid,
+			obsDatetime: obsdate,
+			concept : conceptType,
+			value: Ext.getCmp('diagnosisField').getValue()+' : '+Ext.getCmp('diagnosisNotes').getValue()
 		});
-		
-		var encounterStore = Ext.create('RaxaEmr.Outpatient.store.historyPost');
-		encounterStore.add(historyencounter);
-		encounterStore.sync();
-		encounterStore.on('write', function () {
-			Ext.Msg.alert('successfull');
-		}, this);
+		Ext.getCmp('diagnosisForm').reset();
+	},
+	
+	submitDiagnosis: function(){
+		this.addDiagnosis();
+		this.submitExamination();
+		this.submitOpdEncounter();
 	},
 	
 	sendEncounterData: function (uuid, encountertype, location, provider) {

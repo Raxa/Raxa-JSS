@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Outpatient.model.historyObservation', {
+Ext.define('RaxaEmr.Outpatient.model.opdObservation', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{

@@ -1,5 +1,5 @@
 /* model for the encounter post call */
-Ext.define('RaxaEmr.Outpatient.model.historyEncounter', {
+Ext.define('RaxaEmr.Outpatient.model.opdEncounter', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{
@@ -18,7 +18,7 @@ Ext.define('RaxaEmr.Outpatient.model.historyEncounter', {
             type: 'string'
         }, {
             name: 'obs',
-            model: 'RaxaEmr.Outpatient.model.historyObservation'
+            model: 'RaxaEmr.Outpatient.model.opdObservation'
         }]
     }
 })
