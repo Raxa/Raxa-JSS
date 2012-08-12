@@ -580,6 +580,11 @@ Ext.define("Screener.controller.Application", {
     },
     //gets a list of all patients assigned to a doctor
     getAssignedPatientList: function (list, item, index) {
+        pStore = Ext.create('Ext.data.Store', {
+            fields: ['uuid', 'name', 'encuuid'],
+            data: null
+        });
+        Ext.getCmp('assignedPatientList').setStore(pStore)
         store = Ext.getStore('assPatientStore')
         docStore = Ext.create('Screener.store.Doctors')
         docStore.on('load', function () {
@@ -597,11 +602,7 @@ Ext.define("Screener.controller.Application", {
                         }
                     }
                 }
-                pStore = Ext.create('Ext.data.Store', {
-                    fields: ['uuid', 'name', 'encuuid'],
-                    data: count
-                });
-                Ext.getCmp('assignedPatientList').setStore(pStore)
+                pStore.setData(count);
                 return pStore
             })
         })
