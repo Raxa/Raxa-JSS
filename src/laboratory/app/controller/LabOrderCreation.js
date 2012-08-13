@@ -1,4 +1,3 @@
-+
 /**
  * Copyright 2012, Raxa
  *
@@ -16,7 +15,6 @@
  * 
  *  This is the controller of Laboratory Module which contains Lab order creation 
  */
-
 Ext.define('Laboratory.controller.LabOrderCreation', {
     extend: 'Ext.app.Controller',
     id: 'Main',
@@ -94,8 +92,8 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
             },
             success: function (response) {
                 console.log('Lab Paper Entry for' + 'POST successful with response status' + response.status);
-		        Ext.getCmp('labOrderListPaperEntry').store.load();
-		        Ext.getCmp('labOrderListPaperEntry4').store.load();		                        
+                Ext.getCmp('labOrderListPaperEntry').store.load();
+                Ext.getCmp('labOrderListPaperEntry4').store.load();
             }
         });
     },
@@ -134,7 +132,7 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
         selectedPatientName = grid.getSelectionModel().lastSelected.data.PatientName;
         Ext.getCmp('PatientNameLabOrderCreation11').setValue(selectedPatientName);
 
-  		//Move to final page which shows Lab Panels to be added to the laborder
+        //Move to final page which shows Lab Panels to be added to the laborder
         var l = Ext.getCmp('mainLabArea').getLayout();
         l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
     },
@@ -144,75 +142,88 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
     generateLabPanel: function () {
 
         var grid = Ext.getCmp('PanelListLabOrderCreation11');
-        var pos = grid.getSelectionModel().selected.length;
         selectedLabPanel = grid.getSelectionModel().lastSelected.data.Section;
         selectedLabPanelUuid = grid.getSelectionModel().lastSelected.data.PanelUuid;
+        var duplicate = false;
 
-        Ext.getCmp('LabOrderCreationContainer').add({
-            xtype: 'splitter',
+        var lengthOfItems = Ext.getCmp('LabOrderCreationContainer').items.length;
+        for (var i = 0; i < lengthOfItems; i++) {
+            if (Ext.getCmp('LabOrderCreationContainer').items.items[i].xtype == 'gridpanel') {
+                if (Ext.getCmp('LabOrderCreationContainer').items.items[i].store.data.items[0].raw.LabPanelUuid == selectedLabPanelUuid) {
+                    duplicate = true;
+                    break;
+                }
+            }
+        };
+        if (!duplicate) {
+            Ext.getCmp('LabOrderCreationContainer').add({
+                xtype: 'splitter',
 
-        }, {
-            xtype: 'gridpanel',
-            autoScroll: true,
-            title: selectedLabPanel,
-            columnLines: true,
-            columns: [{
-                xtype: 'gridcolumn',
-                dataIndex: 'Specimen',
-                text: 'Specimen Type',
-                width: 175,
             }, {
-                xtype: 'gridcolumn',
-                text: 'Specimen Role'
-            }, {
-                xtype: 'gridcolumn',
-                text: 'Client specimen Id'
-            }, {
-                xtype: 'datecolumn',
-                text: 'Lab Speciment Id'
-            }],
-            viewConfig: {
-
-            },
-            store: new Ext.data.Store({
-                fields: [{
-                    name: 'Specimen',
-                    type: 'string',
+                xtype: 'gridpanel',
+                autoScroll: true,
+                title: selectedLabPanel,
+                columnLines: true,
+                columns: [{
+                    xtype: 'gridcolumn',
+                    dataIndex: 'Specimen',
+                    text: 'Specimen Type',
+                    width: 175,
                 }, {
-                    name: 'SpecimenUuid',
-                    type: 'string'
+                    xtype: 'gridcolumn',
+                    text: 'Specimen Role'
                 }, {
-                    name: 'LabPanel',
-                    type: 'string'
+                    xtype: 'gridcolumn',
+                    text: 'Client specimen Id'
                 }, {
-                    name: 'LabPanelUuid',
-                    type: 'string'
+                    xtype: 'datecolumn',
+                    text: 'Lab Speciment Id'
                 }],
-                autoLoad: true,
-                data: [{
-                    Specimen: grid.getSelectionModel().selected.items[0].raw.analysisSpecimenTypeConcept.display,
-                    SpecimenUuid: grid.getSelectionModel().selected.items[0].data.PanelUuid,
-                    LabPanel: selectedLabPanel,
-                    LabPanelUuid: selectedLabPanelUuid,
-                }]
-            }),
-            displayField: 'value',
-            forceSelection: true,
-            closable: true,
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'top',
-                defaults: {
-                    minWidth: 50
+                viewConfig: {
+
                 },
-                items: [{
-                    xtype: 'component',
-                    flex: 1
-                }, {
-                    xtype: 'button',
-                    text: 'Comment'
-                }, ]
-            }]
-        });
+                store: new Ext.data.Store({
+                    fields: [{
+                        name: 'Specimen',
+                        type: 'string',
+                    }, {
+                        name: 'SpecimenUuid',
+                        type: 'string'
+                    }, {
+                        name: 'LabPanel',
+                        type: 'string'
+                    }, {
+                        name: 'LabPanelUuid',
+                        type: 'string'
+                    }],
+                    autoLoad: true,
+                    data: [{
+                        Specimen: grid.getSelectionModel().selected.items[0].raw.analysisSpecimenTypeConcept.display,
+                        SpecimenUuid: grid.getSelectionModel().selected.items[0].data.PanelUuid,
+                        LabPanel: selectedLabPanel,
+                        LabPanelUuid: selectedLabPanelUuid,
+                    }]
+                }),
+                displayField: 'value',
+                forceSelection: true,
+                closable: true,
+                dockedItems: [{
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    defaults: {
+                        minWidth: 50
+                    },
+                    items: [{
+                        xtype: 'component',
+                        flex: 1
+                    }, {
+                        xtype: 'button',
+                        text: 'Comment'
+                    }, ]
+                }]
+            });
+        } else {
+            alert(selectedLabPanel + ' is already added in the laborder');
+        }
     }
 });
