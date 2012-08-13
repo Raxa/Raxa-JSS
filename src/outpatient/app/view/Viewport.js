@@ -16,7 +16,15 @@
 
 Ext.define('RaxaEmr.Outpatient.view.Viewport', {
     extend: 'Ext.navigation.View',
-    xtype: 'mainview',
+    xtype: 'mainView',
+    
+    initialize: function (args) {
+        var topBar = Ext.create('Topbar.view.TopToolbar', {
+            docked: 'top'
+        });
+        this.add(topBar);
+
+    },
 
     requires: ['RaxaEmr.Outpatient.view.patientlist', 'RaxaEmr.Outpatient.view.patient.more', 'RaxaEmr.Outpatient.view.patient.labresulthistorypanel', 'RaxaEmr.Outpatient.view.patient.refertodocpanel', 'RaxaEmr.Outpatient.view.patient.medicationhistorypanel'],
 

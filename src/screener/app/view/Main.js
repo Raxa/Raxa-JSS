@@ -6,6 +6,13 @@ Ext.define("Screener.view.Main", {
     requires: 'Ext.navigation.View',
     extend: 'Ext.navigation.View',
     xtype: 'mainView',
+    initialize: function (args) {
+        var topBar = Ext.create('Topbar.view.TopToolbar', {
+            docked: 'top'
+        });
+        this.add(topBar);
+
+    },
     config: {
         fullscreen: true,
 
