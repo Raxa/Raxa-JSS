@@ -33,7 +33,7 @@ if (localStorage.getItem("host") == null) {
 } else HOST = localStorage.getItem("host");
 var username;
 var password;
-var timeoutLimit = 20000;
+var timeoutLimit = 150000;
 var hospitalName = 'JSS Hospital';
 var resourceUuid = [
 ['concept', 'height', 'HEIGHT (CM)'],
