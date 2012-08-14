@@ -20,7 +20,8 @@ Ext.define('RaxaEmr.Outpatient.view.Viewport', {
     
     initialize: function (args) {
         var topBar = Ext.create('Topbar.view.TopToolbar', {
-            docked: 'top'
+            docked: 'top',
+            title:'Outpatient Department',
         });
         this.add(topBar);
 
@@ -31,30 +32,31 @@ Ext.define('RaxaEmr.Outpatient.view.Viewport', {
     config: {
         autoDestroy: false,
         fullscreen: true,
-        navigationBar: {
+        /** navigationBar: {
             items: [{
                 xtype: 'button',
                 id: 'confirmmedicationhistory',
                 text: 'Done',
                 ui: 'confirm',
                 align: 'right',
-                hidden: true
+                hidden: false
             }, {
                 xtype: 'button',
                 id: 'confirmlabresulthistory',
                 text: 'Done',
                 ui: 'confirm',
                 align: 'right',
-                hidden: true
+                hidden: false
             }, {
                 xtype: 'button',
                 id: 'confirmrefertodoc',
                 text: 'Done',
                 ui: 'confirm',
                 align: 'right',
-                hidden: true
+                hidden: false
             }, ]
-        },
+        },**/
+	navigationBar:false,
         items: [{
             xtype: 'patientlist'
         }]

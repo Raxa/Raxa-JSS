@@ -17,6 +17,8 @@ Ext.define('Topbar.view.TopToolbar', {
             margin: 5,
             listeners: [{
                 fn: function (component, options) {
+			  
+
                     if(Ext.getCmp('mainView')==null)
                     {
                        var username = localStorage.getItem("username");
