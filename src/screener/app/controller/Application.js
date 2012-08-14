@@ -248,7 +248,7 @@ Ext.define("Screener.controller.Application", {
 
         });
         numberOfStoresWritten = 0;
-        this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, x);
+        this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, numberOfStoresWritten);
 
     },
     // Creates two different List of Patients Registered and Patients Screened within last 24 hours
@@ -781,7 +781,7 @@ Ext.define("Screener.controller.Application", {
             YESNO: [MB.NO, MB.YES]
         });
         // on-click, launch MessageBox
-        Ext.get('denddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 7);rugSubmitButton').on('click', function (e) {
+        Ext.get('drugSubmitButton').on('click', function (e) {
             Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
         });
     }
