@@ -48,17 +48,17 @@ var patientUpdate = {
         }
     },
     setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
-        this.setCompQuery(string1_decline,'decline');
-        this.setCompQuery(string2_normal,'normal');
-        this.setCompQuery(string3_normal,'normal');
+        this.setCompQuery(string1_decline, 'decline');
+        this.setCompQuery(string2_normal, 'normal');
+        this.setCompQuery(string3_normal, 'normal');
     },
-    setCompQuery : function (string1,uiType) {
+    setCompQuery: function (string1, uiType) {
         var i;
         for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
             Ext.ComponentQuery.query(string1)[i].setUi(uiType);
         }
     }
-		
+
 
 };
 Ext.define("Screener.controller.Application", {
@@ -332,7 +332,7 @@ Ext.define("Screener.controller.Application", {
             concept = new Array();
             order = new Array();
             var k = 0,
-            l = 0;
+                l = 0;
             for (i = 0; i <= form_num; i++) {
                 // value of Url for get call is made here using name of drug
                 var Url = HOST + '/ws/rest/v1/concept?q='
@@ -394,7 +394,7 @@ Ext.define("Screener.controller.Application", {
                         encounterStore.sync()
                         encounterStore.on('write', function () {
                             Ext.Msg.alert('successfull')
-                        //Note- if we want add a TIMEOUT it shown added somewhere here
+                            //Note- if we want add a TIMEOUT it shown added somewhere here
                         }, this)
 
                     }

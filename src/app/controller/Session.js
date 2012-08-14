@@ -83,8 +83,8 @@ Ext.define('RaxaEmr.controller.Session', {
                         };
                     }
                     for (i = 0; i < privilegesJson.roles.length; i++) {
-                        if(privilegesJson.roles[i].name == 'Provider'){
-                            localStorage.setItem('loggedInUser',privilegesJson.person.uuid)
+                        if (privilegesJson.roles[i].name == 'Provider') {
+                            localStorage.setItem('loggedInUser', privilegesJson.person.uuid)
                         }
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
@@ -224,8 +224,8 @@ Ext.define('RaxaEmr.controller.Session', {
     getLoginState: function () {
         var loginState = Ext.getCmp('mainView').getActiveItem()._activeItem;
         if (localStorage.getItem('basicAuthHeader')) {
-        this.loginSuccess();
-        Ext.getCmp('mainView').setActiveItem(2);
+            this.loginSuccess();
+            Ext.getCmp('mainView').setActiveItem(2);
         }
     },
 
@@ -252,8 +252,9 @@ Ext.define('RaxaEmr.controller.Session', {
     //views is the 2-d array of view urls (see Util.populateViews() for more info)
     launchAfterAJAX: function (views) {
         //remove loading mask
-        if(!Util.basicAuthHeader){
-        Ext.getCmp('mainView').setMasked(false);
-    }}
+        if (!Util.basicAuthHeader) {
+            Ext.getCmp('mainView').setMasked(false);
+        }
+    }
 
 });
