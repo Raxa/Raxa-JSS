@@ -286,7 +286,7 @@ Ext.define("Screener.controller.Application", {
                 else if(record.get('display')==="Sita Kumari")
                     record.set('image', '../../resources/img/sita.png');
                 else
-                    record.set('image', 'resources/pic.gif');
+                    record.set('image', '../resources/pic.gif');
                 console.log(record.get('image'));
             });
         }, this);
