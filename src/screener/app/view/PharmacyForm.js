@@ -6,54 +6,54 @@
 Ext.define("Screener.view.PharmacyForm", {
     xtype: 'pharmacyForm',
     extend: 'Ext.form.Panel',
-    requires: ['Ext.tab.Panel', 'Ext.form.FieldSet'],
     config: {
-        styleHtmlContent: true,
+        styleHtmlContent: false,
         xtype: 'orderform',
         autoscroll: true,
-        layout: 'vbox',
         items: [{
+            xtype: 'titlebar',
+            docked: 'top',
+            title: 'Pharmacy Orders',
+        }, {
             layout: 'hbox',
             items: [{
-                xtype: 'titlebar',
-                docked: 'top',
-                title: 'Pharmacy Orders'
-            }, {
                 xtype: 'drugStore',
-                width: '350px',
-                height: '250px'
+                width: '500px',
+                id: 'form0',
+                scrollable: false
             }, {
+                layout: 'vbox',
                 items: [{
-                    layout: 'vbox',
-                    items: [{
-                        xtype: 'button',
-                        ui: 'round',
-                        text: '+',
-                        id: 'addDrugFormButton',
-                        height: '40px',
-                        width: '100px'
-                    }, {
-                        xtype: 'spacer',
-                        height: 10
-                    }, {
-                        xtype: 'button',
-                        ui: 'round',
-                        text: '-',
-                        id: 'removeDrugFormButton',
-                        height: '40px',
-                        width: '100px'
-                    }]
+                    xtype: 'spacer',
+                    height: 15
+                }, {
+                    xtype: 'button',
+                    ui: 'round',
+                    text: '+',
+                    id: 'addDrugFormButton',
+                    height: '40px',
+                    width: '100px'
+                }, {
+                    xtype: 'spacer',
+                    height: 10
+                }, {
+                    xtype: 'button',
+                    ui: 'round',
+                    text: '-',
+                    id: 'removeDrugFormButton',
+                    height: '40px',
+                    width: '100px'
+                }, {
+                    xtype: 'spacer',
+                    height: 10
+                }, {
+                    xtype: 'button',
+                    ui: 'confirm',
+                    id: 'drugSubmitButton',
+                    height: '40px',
+                    text: 'submit',
+                    width: '100px'
                 }]
-            }, {
-                xtype: 'spacer',
-                height: 20
-            }, {
-                xtype: 'button',
-                ui: 'confirm',
-                id: 'drugSubmitButton',
-                height: '40px',
-                text: 'submit',
-                width: '200px'
             }]
         }]
     }

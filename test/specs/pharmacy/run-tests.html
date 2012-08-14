@@ -10,6 +10,7 @@
 
         <!-- include specs here -->
         <script type="text/javascript" src="controlSpec.js"></script>
+        <script type="text/javascript" src="prescriptionSpec.js"></script>
         <!-- load application here -->
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -22,8 +23,8 @@
                     //fill in details for your module
                     name: 'RaxaEmr.Pharmacy',
                     appFolder: '../../../src/pharmacy/app',
-                    controllers: ['dispense'],
-                    stores : ['dispense'],
+                    controllers: ['prescription'],
+                    stores : ['Patients'],
                     launch: function() {
                         //include the tests in the test.html head
                         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
