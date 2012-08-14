@@ -110,9 +110,6 @@ Ext.define('Registration.controller.BMI', {
         Ext.getCmp('bmiStatusID').setValue(bmiStatusText); //update bmi status
         Ext.getCmp('bmiNumberfieldID').setValue(bmi); //update bmi numberfield
         Ext.getCmp('bmiSliderID').setValue(bmi); //update bmi slider
-        
-        Ext.getCmp('bmiSliderID').fill = this.innerEl.insertFirst({cls:'x-slider-bg'});
-
     }
 
 

@@ -46,7 +46,7 @@ Ext.define('Registration.view.Viewport', {
                       }
                 }, {
                     xtype: 'tbtext',
-                    text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + 'admin'
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + username
                 }, {
                     xtype: 'tbseparator'
                 }, {

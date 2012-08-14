@@ -279,15 +279,7 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('loadMask').setHidden(true);
             patientUpdate.setBMITime(store_patientList);
             store_patientList.each(function (record) {
-                if(record.get('display')==="Pinky Singh")
-                    record.set('image', '../../resources/img/pinky.png');
-                else if(record.get('display')==="Ram Singh")
-                    record.set('image', '../../resources/img/ram.png');
-                else if(record.get('display')==="Sita Kumari")
-                    record.set('image', '../../resources/img/sita.png');
-                else
-                    record.set('image', '../resources/pic.gif');
-                console.log(record.get('image'));
+                record.set('image', '../resources/pic.gif');
             });
         }, this);
         setInterval('patientUpdate.updatePatientsWaitingTitle()', Util.getUiTime());

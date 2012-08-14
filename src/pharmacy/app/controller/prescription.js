@@ -51,9 +51,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     }, this)
                     // listner on patient search results to show drugorders when a patient is selected
                     Ext.getCmp('patientASearchGrid').on('cellClick', function () {
-                        console.log('hi');
                         this.patientSelect(Ext.getCmp('patientASearchGrid').getSelectionModel().getSelection()[0].getData());
-                       Ext.getCmp('image').getEl().update("<img border=\"0\" src=\"../../resources/img/pinky.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"); 
                     }, this)
                     // listner on perscription grid to show drugorder on main grid with more details
                     Ext.getCmp('drugOrderASearchGrid').on('cellClick', function () {
