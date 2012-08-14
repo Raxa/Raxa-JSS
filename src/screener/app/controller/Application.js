@@ -16,10 +16,17 @@
 /**
  * This class listens for the user input and makes changes to the doctor/patient
  * lists as necessary.
+ * TODO: Possible to combine patientUpdate with rest of controller?
  */
-var form_num, lab_num;
+var form_num;
+var lab_num;
+var numberOfStoresWritten;
+var NUMBER_OF_STORES_TO_WRITE = 3;
+
 var patientUpdate = {
+    //this method updates the title in patients waiting view with no. of patients waiting
     updatePatientsWaitingTitle: function () {
+        // 3 different views shares this title, all three view get updated with same title
         var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
         var patientWaitNumber = Ext.getStore('patientStore').getCount();
         var i;
@@ -27,19 +34,20 @@ var patientUpdate = {
             patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
         }
     },
+    //this method sets locally(persist = false) the bmi and encounter time in patients model
     setBMITime: function (store_patientList) {
         var i;
         for (i = 0; i < store_patientList.getCount(); i++) {
             store_patientList.getAt(i).getData().time = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].encounterDatetime;
-            if (store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs.length != 0) {
+            if (store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs.length !== 0) {
                 store_patientList.getAt(i).getData().bmi = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsBMI(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;
             }
         }
         Ext.getStore('patientStore').sort('display');
     },
+    //this method returns the index of Obs which contain BMI details
     getObsBMI: function (obs) {
         var i;
-        //console.log(obs)
         for (i = 0; i < obs.length; i++) {
             if (obs[i].display.indexOf('BODY MASS INDEX') != -1) {
                 ind = i;
@@ -47,11 +55,16 @@ var patientUpdate = {
             }
         }
     },
+    // This method sets the UI of sort buttons when pressed.
+    // One button is set as "declined" (pressed) while the other two
+    // are set to "normal" (not pressed).
     setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
         this.setCompQuery(string1_decline, 'decline');
         this.setCompQuery(string2_normal, 'normal');
         this.setCompQuery(string3_normal, 'normal');
     },
+    // Queries a component and sets its UI type.
+    // Used as a helper method for setSortButtonUi.
     setCompQuery: function (string1, uiType) {
         var i;
         for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
@@ -61,12 +74,16 @@ var patientUpdate = {
 
 
 };
+
+/*
+ * Main Controller for Screener Application
+ */
 Ext.define("Screener.controller.Application", {
     requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.PatientList', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView', 'Screener.store.AssignedPatientList'],
     models: ['Screener.model.Person', 'Screener.mosel.PostList', 'Screener.mosel.Patients'],
     extend: 'Ext.app.Controller',
     config: {
-        //here we name the elements we need from the page
+        // Here we name the elements we need from the page
         refs: {
             view: 'mainView',
             topmenu: 'topmenu',
@@ -110,7 +127,7 @@ Ext.define("Screener.controller.Application", {
             patientListView: '#patientListViewId',
             PatientsWaiting: '#patientsWaiting'
         },
-        //now we define all our listening methods
+        // Now we define all our listening methods
         control: {
             addDrugFormButton: {
                 tap: 'addDrugForm'
@@ -188,31 +205,26 @@ Ext.define("Screener.controller.Application", {
             },
             view: {
                 init: 'init'
-            },
-            drugSubmitButton: {
-                tap: 'drugsubmit'
-
             }
         }
     },
-    //adds the patient to the doctor using 'hasmany' association
+    // Adds the patient to the doctor using 'hasmany' association
     addToDoctor: function (patient) {
         doctorid = patient.get('doctorid');
         if (Ext.getStore('doctorStore').getAt(doctorid)) {
-            //first we add the association to the patient model is linked to this doctor
+            // First we add the association to the patient model is linked to this doctor
             Ext.getStore('doctorStore').getAt(doctorid).patients().add(patient);
-            //now we call function to increment number of patients
+            // Now we call function to increment number of patients
             Ext.getStore('doctorStore').getAt(doctorid).addPatient();
             Ext.getStore('patientStore').remove(patient);
         }
     },
 
-    //called on startup
+    // Called on startup
     init: function () {
         form_num = 0;
         lab_num = 0;
         this.getpatientlist();
-
     },
 
     // Creates an instance of PostList model for posting Registration and Screener List
@@ -235,44 +247,38 @@ Ext.define("Screener.controller.Application", {
             searchQuery: "?encounterType=" + localStorage.outUuidencountertype + "&startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d)
 
         });
-        //this.createRegList(list_regEncounter, list_scrEncounter);
-        var k = 0;
-        this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, k);
+        numberOfStoresWritten = 0;
+        this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, x);
 
     },
     // Creates two different List of Patients Registered and Patients Screened within last 24 hours
     createList: function (list_reg, list_scr, list_out, k) {
         var store_reg = Ext.create('Screener.store.PostLists');
         var store_scr = Ext.create('Screener.store.PostLists');
-        var store_out = Ext.create('Screener.store.PostLists')
+        var store_out = Ext.create('Screener.store.PostLists');
         store_reg.add(list_reg);
         store_scr.add(list_scr);
         store_out.add(list_out);
         store_reg.sync();
         store_scr.sync();
         store_out.sync();
-        store_reg.on('write', function () {
-            k = k + 1;
-            if (k == 3) {
-                this.finalPatientList(store_reg, store_scr, store_out);
-            }
-        }, this);
-        store_scr.on('write', function () {
-            k = k + 1;
-            if (k == 3) {
-                this.finalPatientList(store_reg, store_scr, store_out);
-            }
-        }, this);
-        store_out.on('write', function () {
-            k = k + 1;
-            if (k == 3) {
-                this.finalPatientList(store_reg, store_scr, store_out);
-            }
-        }, this);
+
+        this.listenerOnList(store_reg, store_reg, store_scr, store_out);
+        this.listenerOnList(store_scr, store_reg, store_scr, store_out);
+        this.listenerOnList(store_out, store_reg, store_scr, store_out);
         var a = [store_reg, store_scr, store_out];
         return a;
     },
-
+    // Listens for stores to be written. Once all stores have been written,
+    // creates the complete patient list to be displayed in Screener
+    listenerOnList: function (store, store1, store2, store3) {
+        store.on('write', function () {
+            numberOfStoresWritten++;
+            if (numberOfStoresWritten == NUMBER_OF_STORES_TO_WRITE) {
+                this.finalPatientList(store1, store2, store3);
+            }
+        }, this);
+    },
     // Creates List of Patients registered but not screened in last 24 hours
     finalPatientList: function (store_regEncounter, store_scrEncounter, store_outEncounter) {
         var store_patientList = Ext.create('Screener.store.PatientList', {
@@ -280,7 +286,7 @@ Ext.define("Screener.controller.Application", {
         });
         var store_assPatientList = Ext.create('Screener.store.AssignedPatientList', {
             storeId: 'assPatientStore'
-        })
+        });
         // Setting the url dynamically for store to store patients list
         store_patientList.getProxy().setUrl(this.getPatientListUrl(store_regEncounter.getData().getAt(0).getData().uuid, store_scrEncounter.getData().getAt(0).getData().uuid, localStorage.regUuidencountertype));
         store_assPatientList.getProxy().setUrl(this.getPatientListUrl(store_scrEncounter.getData().getAt(0).getData().uuid, store_outEncounter.getData().getAt(0).getData().uuid, localStorage.screenerUuidencountertype));
@@ -290,6 +296,7 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('loadMask').setHidden(true);
             patientUpdate.setBMITime(store_patientList);
         }, this);
+        // TODO: Pass a function instead of string, to avoid implied "eval"
         setInterval('patientUpdate.updatePatientsWaitingTitle()', Util.getUiTime());
         setInterval('Ext.getStore(\'patientStore\').load()', Util.getUiTime());
         return store_patientList;
@@ -320,7 +327,8 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('form' + form_num).hide();
             form_num--;
         }
-        store.getData().getAt(0).getData().uuid
+        // TODO: what is the following line for? Remove if does nothing
+        store.getData().getAt(0).getData().uuid;
     },
     //function for posting the drug order
     /* steps - get the drugs form server using get call on drugs
@@ -328,16 +336,16 @@ Ext.define("Screener.controller.Application", {
      *       - post the order with "concept", "patient", "drug", and most important "type" as "drugtype" */
     drugsubmit: function () {
         // one of the patient should be selected for posting drug order
-        if (this.getPatientList().getSelection()[0] != null) {
-            concept = new Array();
-            order = new Array();
-            var k = 0,
-                l = 0;
+        if (this.getPatientList().getSelection()[0] !== null) {
+            var concept = [];
+            var order = [];
+            var numberOfLoadedConcepts = 0;
+            var l = 0; // TODO: Remove if unused
             for (i = 0; i <= form_num; i++) {
                 // value of Url for get call is made here using name of drug
-                var Url = HOST + '/ws/rest/v1/concept?q='
-                Url = Url + Ext.getCmp('form' + i).getAt(0).getAt(0)._value.data.text
-                concept.push(Ext.create('Screener.store.drugConcept'))
+                var Url = HOST + '/ws/rest/v1/concept?q=';
+                Url = Url + Ext.getCmp('form' + i).getAt(0).getAt(0)._value.data.text;
+                concept.push(Ext.create('Screener.store.drugConcept'));
                 // setting up the proxy for store with the above Url
                 concept[i].setProxy({
                     type: 'rest',
@@ -347,13 +355,19 @@ Ext.define("Screener.controller.Application", {
                         type: 'json',
                         rootProperty: 'results'
                     }
-                })
-                var startdate = new Date()
+                });
+                var startdate = new Date();
                 // value of end date depending on the duration 
-                var enddate
-                if (Ext.getCmp('form' + i).getValues().duration == "1w") enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 7);
-                if (Ext.getCmp('form' + i).getValues().duration == "1m") enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 1, startdate.getDate());
-                if (Ext.getCmp('form' + i).getValues().duration == "2m") enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 2, startdate.getDate());
+                var enddate;
+                if (Ext.getCmp('form' + i).getValues().duration == "1w") {
+                    enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 7);
+                }
+                if (Ext.getCmp('form' + i).getValues().duration == "1m") {
+                    enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 1, startdate.getDate());
+                }
+                if (Ext.getCmp('form' + i).getValues().duration == "2m") {
+                    enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 2, startdate.getDate());
+                }
                 // model for drug order is created here
                 order.push({
                     patient: this.getPatientList().getSelection()[0].getData().uuid,
@@ -366,16 +380,18 @@ Ext.define("Screener.controller.Application", {
                     instructions: Ext.getCmp('form' + i).getValues().Instruction,
                     // type should be "drugorder" in order to post a drug order
                     type: 'drugorder'
-                })
-                if (order[i].instructions == "") order[i].instructions = "-"
+                });
+                if (order[i].instructions === "") {
+                    order[i].instructions = "-";
+                }
                 // here it makes the get call for concept of related drug
                 concept[i].load();
                 // added a counter k which increment as a concept load successfully, after all the concept are loaded
                 // value of k should be equal to the no. of drug forms
                 concept[i].on('load', function () {
-                    k = k + 1;
+                    numberOfLoadedConcepts++;
                     // value of k is compared with the no of drug forms
-                    if (k == form_num + 1) {
+                    if (numberOfLoadedConcepts == form_num + 1) {
                         for (var j = 0; j <= form_num; j++) {
                             order[j].concept = concept[j].getAt(0).getData().uuid
                         }
@@ -412,17 +428,17 @@ Ext.define("Screener.controller.Application", {
             height: '70px'
         });
     },
-    //opens form for creating new patient
+    // Opens form for creating new patient
     addPerson: function () {
         if (!this.newPatient) {
             this.newPatient = Ext.create('Screener.view.NewPatient');
             Ext.Viewport.add(this.newPatient);
         }
-        //set new FIFO id so patients come and go in the queue!
+        // Set new FIFO id so patients come and go in the queue!
         //this.getFormid().setValue(this.totalPatients);
         this.newPatient.show();
     },
-    //adds new person to the NewPersons store
+    // Adds new person to the NewPersons store
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
 
@@ -445,7 +461,7 @@ Ext.define("Screener.controller.Application", {
             return store;
         }
     },
-    // get IdentifierType using IdentifierType store 
+    // Get IdentifierType using IdentifierType store 
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Screener.store.IdentifierType')
         identifiers.load();
@@ -453,7 +469,7 @@ Ext.define("Screener.controller.Application", {
             this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
         }, this);
     },
-    // get Location using Location store
+    // Get Location using Location store
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Screener.store.Location')
         locations.load();
@@ -461,7 +477,7 @@ Ext.define("Screener.controller.Application", {
             this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
         }, this)
     },
-    // creates a new patient using NewPatients store 
+    // Creates a new patient using NewPatients store 
     makePatient: function (personUuid, identifierType, location) {
         var patient = Ext.create('Screener.model.NewPatient', {
             person: personUuid,
@@ -480,7 +496,7 @@ Ext.define("Screener.controller.Application", {
         }, this)
     },
 
-    //function to show screen with patient list
+    // Show screen with patient list
     showPatients: function () {
         if (Ext.getCmp('doctorSummary')) {
             Ext.getCmp('doctorSummary').hide();
@@ -493,7 +509,7 @@ Ext.define("Screener.controller.Application", {
         patientUpdate.updatePatientsWaitingTitle();
         this.countPatients();
     },
-    // counts number of patients assigned to a doctor   
+    // Counts number of patients assigned to a doctor   
     countPatients: function () {
         //store = Ext.create('Screener.store.AssignedPatientList');
         store = Ext.getStore('assPatientStore')
@@ -517,7 +533,7 @@ Ext.define("Screener.controller.Application", {
             })
         })
     },
-    //function to show screen with pharmacy list
+    // Show screen with pharmacy list
     showPharmacy: function () {
         if (!this.pharmacyView) {
             this.pharmacyView = Ext.create('Screener.view.PharmacyView');
@@ -640,6 +656,7 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').sort('bmi');
         patientUpdate.setSortButtonUi('ListView #sortBMI', 'ListView #sortFIFO', 'ListView #sortName');
     },
+    //this method refreshes the patientList and also updates the patientWaitingTitle and bmi, encountertime locally in patient model 
     refreshList: function () {
         Ext.getStore('patientStore').load();
         Ext.getStore('patientStore').on('load', function () {
@@ -764,7 +781,7 @@ Ext.define("Screener.controller.Application", {
             YESNO: [MB.NO, MB.YES]
         });
         // on-click, launch MessageBox
-        Ext.get('drugSubmitButton').on('click', function (e) {
+        Ext.get('denddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 7);rugSubmitButton').on('click', function (e) {
             Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
         });
     }
