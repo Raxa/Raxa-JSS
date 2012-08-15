@@ -15,6 +15,9 @@ Ext.define('Topbar.view.TopToolbar', {
             html: 'JSS',
             itemId: 'JSSLabel',
             margin: 5,
+	    id:'itembar',
+ 	
+
             listeners: [{
                 fn: function (component, options) {
 			  
@@ -76,7 +79,10 @@ Ext.define('Topbar.view.TopToolbar', {
             xtype: 'label',
             itemId: 'UsernameLabel',
             margin: 5,
-        }],
+        },
+	
+
+],
         listeners: [{
             fn: 'onLogoutButtonTap',
             event: 'tap',

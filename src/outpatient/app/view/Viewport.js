@@ -22,8 +22,40 @@ Ext.define('RaxaEmr.Outpatient.view.Viewport', {
         var topBar = Ext.create('Topbar.view.TopToolbar', {
             docked: 'top',
             title:'Outpatient Department',
+
         });
-        this.add(topBar);
+
+         topBar.add(
+                {
+                xtype: 'button',
+                id: 'confirmmedicationhistory',
+                text: 'Done',
+                ui: 'confirm',
+                align: 'right',
+                hidden: false
+                });
+        topBar.add({
+                xtype: 'button',
+                id: 'confirmlabresulthistory',
+                text: 'Done',
+                ui: 'confirm',
+                align: 'right',
+                hidden: false
+            });
+          topBar.add(
+          {
+                xtype: 'button',
+                id: 'confirmrefertodoc',
+                text: 'Done',
+                ui: 'confirm',
+                align: 'right',
+                hidden: false
+            }
+        );
+        
+        this.add(topBar); 
+        
+        
 
     },
 
@@ -32,31 +64,7 @@ Ext.define('RaxaEmr.Outpatient.view.Viewport', {
     config: {
         autoDestroy: false,
         fullscreen: true,
-        /** navigationBar: {
-            items: [{
-                xtype: 'button',
-                id: 'confirmmedicationhistory',
-                text: 'Done',
-                ui: 'confirm',
-                align: 'right',
-                hidden: false
-            }, {
-                xtype: 'button',
-                id: 'confirmlabresulthistory',
-                text: 'Done',
-                ui: 'confirm',
-                align: 'right',
-                hidden: false
-            }, {
-                xtype: 'button',
-                id: 'confirmrefertodoc',
-                text: 'Done',
-                ui: 'confirm',
-                align: 'right',
-                hidden: false
-            }, ]
-        },**/
-	navigationBar:false,
+        navigationBar:false,
         items: [{
             xtype: 'patientlist'
         }]
