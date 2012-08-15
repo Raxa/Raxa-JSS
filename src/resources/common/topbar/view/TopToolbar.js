@@ -15,7 +15,7 @@ Ext.define('Topbar.view.TopToolbar', {
             html: 'JSS',
             itemId: 'JSSLabel',
             margin: 5,
-	    id:'itembar',
+	   
  	
 
             listeners: [{
