@@ -36,7 +36,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
             scrollable: 'false',
             items: [{
                 xtype: 'formpanel',
-				id : 'patientHistoryPanel',
+                id: 'patientHistoryPanel',
                 scrollable: 'false',
                 flex: 1,
                 items: [{
@@ -44,11 +44,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     width: '100%',
                     items: [{
                         xtype: 'textareafield',
-						id: 'patientHistory',
+                        id: 'patientHistory',
                         label: 'Patient History'
                     }, {
                         xtype: 'textareafield',
-						id: 'pastMedicalHistory',
+                        id: 'pastMedicalHistory',
                         label: 'Past Medical History',
                     }]
                 }, {
@@ -91,7 +91,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
             items: [{
                 xtype: 'formpanel',
                 flex: 1,
-				id: 'socialHistoryPanel',
+                id: 'socialHistoryPanel',
                 scrollable: 'false',
                 items: [{
                     xtype: 'fieldset',
@@ -101,7 +101,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         label: 'Alcohol',
                         valueField: 'alcoholFrequency',
                         displayField: 'title',
-						id: 'alcoholField',
+                        id: 'alcoholField',
                         store: {
                             data: [{
                                 alcoholFrequency: '',
@@ -135,7 +135,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             flex: 16,
                             valueField: 'time',
                             displayField: 'title',
-							id: 'tobaccoField',
+                            id: 'tobaccoField',
                             store: {
                                 data: [{
                                     time: '',
@@ -156,7 +156,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             border: 0,
                             flex: 7,
                             valueField: 'way',
-							id: 'tobaccoRouteofIntake',
+                            id: 'tobaccoRouteofIntake',
                             displayField: 'title',
                             store: {
                                 data: [{
@@ -181,7 +181,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                             border: 0,
                             flex: 7,
                             valueField: 'amount',
-							id: 'tobaccoFrequency',
+                            id: 'tobaccoFrequency',
                             displayField: 'title',
                             store: {
                                 data: [{
@@ -201,14 +201,14 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                         }]
                     }, {
                         xtype: 'textareafield',
-						id: 'otherHistory',
+                        id: 'otherHistory',
                         label: 'Other'
                     }]
                 }, {
                     xtype: 'fieldset',
                     items: [{
                         xtype: 'textareafield',
-						id: 'familyHistory',
+                        id: 'familyHistory',
                         label: 'Family History'
                     }]
                 }, {
@@ -220,10 +220,10 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     items: [{
                         xtype: 'button',
                         margin: '0 10 0 10',
-						ui: 'confirm',
+                        ui: 'confirm',
                         text: 'Submit',
                         flex: 1,
-						id: 'submit-history'
+                        id: 'submit-history'
                     }]
                 }]
             }, {
@@ -240,7 +240,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     padding: '0 10 10 0',
                     handler: function () {
                         // TODO: Should redirect to medication history, not social history
-                        Ext.getCmp('working-area').setActiveItem(HISTORY.SOCIAL)
+                        Ext.getCmp('medicationhistory').fireEvent('tap');
                     }
                 }]
             }]

@@ -13,11 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Drug-Panel',
-
+    store: 'drugpanel',
     requires: ['Ext.ux.touch.grid.feature.Feature'],
 
     config: {
@@ -52,7 +51,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
         }, {
             header: 'Route of Administration',
             dataIndex: 'routeofadministration',
-            width: '20.3%',
+            width: '20%',
             cls: 'centered-cell',
         }]
     }

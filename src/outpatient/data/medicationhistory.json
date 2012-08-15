@@ -1,5 +1,5 @@
 [{
-    "drugname": "Drug 1",
+    "drugname": "ciplox",
     "duration": "10 days",
     "lastfilled": "8/04/2012",
     "prescriber": "Dr. Asd",
@@ -11,7 +11,7 @@
     "duration": "10 days",
     "lastfilled": "8/04/2012",
     "prescriber": "Dr. Asd",
-    "drugreaction": "Reaction 1",
+    "drugreaction": "No Reaction",
     "dosage": "once daily",
     "routeofadministration": "oral"
 }, {

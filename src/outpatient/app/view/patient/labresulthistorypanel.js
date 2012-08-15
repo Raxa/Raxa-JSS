@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.Outpatient.view.patient.labresulthistorypanel', {
     extend: 'Ext.Container',
     xtype: 'labresulthistorypanel',

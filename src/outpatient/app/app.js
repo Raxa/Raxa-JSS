@@ -14,7 +14,8 @@
  * the License.
  */
 Ext.Loader.setPath({
-    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid'
+    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid',
+    'Screener': '../screener/app'
 });
 
 Ext.Loader.setConfig({

@@ -13,13 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.Outpatient.view.patient.labresulthistory', {
     extend: 'Ext.dataview.List',
     xtype: 'Lab-Result-History',
     config: {
         store: 'labresulthistory',
         ui: 'round',
+        id: 'labResultHistoryList',
         items: [{
             xtype: 'toolbar',
             docked: 'top',
@@ -41,6 +41,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.labresulthistory', {
                 xtype: 'spacer'
             }, {
                 xtype: 'searchfield',
+                id: 'labordersearchfield',
                 placeHolder: 'Search...'
             }]
         }],
