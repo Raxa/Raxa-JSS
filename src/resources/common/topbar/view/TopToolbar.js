@@ -79,10 +79,7 @@ Ext.define('Topbar.view.TopToolbar', {
             xtype: 'label',
             itemId: 'UsernameLabel',
             margin: 5,
-        },
-	
-
-],
+        },],
         listeners: [{
             fn: 'onLogoutButtonTap',
             event: 'tap',

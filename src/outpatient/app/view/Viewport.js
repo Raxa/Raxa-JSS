@@ -25,35 +25,33 @@ Ext.define('RaxaEmr.Outpatient.view.Viewport', {
 
         });
 
-         topBar.add(
-                {
+         topBar.add({
                 xtype: 'button',
                 id: 'confirmmedicationhistory',
                 text: 'Done',
                 ui: 'confirm',
                 align: 'right',
                 hidden: false
-                });
-        topBar.add({
+         });
+         topBar.add({
                 xtype: 'button',
                 id: 'confirmlabresulthistory',
                 text: 'Done',
                 ui: 'confirm',
                 align: 'right',
                 hidden: false
-            });
-          topBar.add(
-          {
+         });
+         topBar.add(
+         {
                 xtype: 'button',
                 id: 'confirmrefertodoc',
                 text: 'Done',
                 ui: 'confirm',
                 align: 'right',
                 hidden: false
-            }
-        );
+         });
         
-        this.add(topBar); 
+         this.add(topBar); 
         
         
 
