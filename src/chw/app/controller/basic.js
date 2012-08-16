@@ -51,7 +51,7 @@ Ext.define('chw.controller.basic', {
             },
             "button[action=inventoryButton]": {
                 tap: function () {
-                    this.doToolbar('inventory')
+                    this.toolbarInventory();
                 }
             },
             "button[action=inventoryReduce]": {
@@ -67,17 +67,17 @@ Ext.define('chw.controller.basic', {
             },
             "button[action=listButton]": {
                 tap: function () {
-                    this.doToolbar('list')
+                    this.toolbarList();
                 }
             },
 //            "button[action=locateButton]": {
 //                tap: function () {
-//                    this.doToolbar('locate')
+//                    this.toolbarLocate();
 //                }
 //            },
             "button[action=logoutButton]": {
                 tap: function () {
-                    this.doToolbar('logout')
+                    this.toolbarLogout();
                 }
             },
             "button[action=okButton]": {
@@ -87,12 +87,12 @@ Ext.define('chw.controller.basic', {
             },
             "button[action=resourceButton]": {
                 tap: function () {
-                    this.doToolbar('resources')
+                    this.toolbarResources();
                 }
             },
             "button[action=syncButton]": {
                 tap: function () {
-                    this.doToolbar('sync')
+                    this.toolbarSync();
                 }
             },
             "button[action=visitStart]": {
@@ -287,10 +287,10 @@ Ext.define('chw.controller.basic', {
             helper.listDisclose('family', savedFamilyRecord)
         }else if(active.id=='inventoryDetails'){
             //Go back to inventory list
-            this.doToolbar('inventory')
+            this.toolbarInventory();
         }else if(active.id=='ext-resourceDetail-1'){
             //Go back to resource list
-            this.doToolbar('resources')
+            this.toolbarResources();
         }else if(active.id=='illnessDetails'){
             //Since illnessDetails can be reached from two separate views,
             //we are maintaining one global var 'toHistoryFrom' which saves
@@ -358,7 +358,7 @@ Ext.define('chw.controller.basic', {
                     scope: this,
                     withCredentials: true,
                     useDefaultXhrHeader: false,
-                    url: MRSHOST + '/ws/rest/v1/user?q=' + USER.name,
+                    url: HOST + '/ws/rest/v1/user?q=' + USER.name,
                     method: 'GET',
                     headers: HEADERS,
                     success: function (resp) {
@@ -386,7 +386,7 @@ Ext.define('chw.controller.basic', {
                 // save basic auth header
                 // delete existing logged in sessions
                 Ext.Ajax.request({
-                    url: MRSHOST + '/ws/rest/v1/session',
+                    url: HOST + '/ws/rest/v1/session',
                     withCredentials: true,
                     useDefaultXhrHeader: false,
                     method: 'DELETE',
@@ -395,7 +395,7 @@ Ext.define('chw.controller.basic', {
                 // check login and save to localStorage if valid
                 Ext.Ajax.request({
                     scope:this,
-                    url: MRSHOST + '/ws/rest/v1/session',
+                    url: HOST + '/ws/rest/v1/session',
                     withCredentials: true,
                     useDefaultXhrHeader: false,
                     headers: {
@@ -493,40 +493,50 @@ Ext.define('chw.controller.basic', {
             }
         }
     }, 
-    doToolbar: function (arg) {
-        //Toolbar button functionalities
-        if (arg==='list'){
-            Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
-        } else if (arg==='sync') {
-            //Syncing data
-            Ext.Msg.confirm('',Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.sync'), function (resp) {
-                if (resp==='yes') {
-                    //Send data to server
-                }
-            })
-        } else if (arg==='inventory') {
-            //Show inventory
-            var nstore = Ext.getStore('pills')
-            if (!nstore) {
-                Ext.create('chw.store.pills')
-            }
-            nstore.load();
-            Ext.getCmp('inventoryLists').setStore(nstore)
-            // console.log(Ext.getCmp('inventoryLists').getStore())
-            Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList)
-        } else if (arg==='logout') {
-            this.doExit()
-        } else if (arg==='resources') {
-            //Show resources
-            Ext.getCmp('viewPort').setActiveItem(PAGES.resourceList)
-        } /*else if (arg==='locate') {
-            var coords = Ext.ComponentQuery.query('familyDetails #familyMap')[0].getGeo();
-            console.log(coords)
-            var lat = ''
-            var lng = ''
-            Ext.Msg.confirm('Confirm','Use')
-        }*/
+    
+    toolbarList: function(){
+        Ext.getCmp('viewPort').setActiveItem(PAGES.familyList)
     },
+
+    //syncing data
+    toolbarSync: function(){
+        Ext.Msg.confirm('',Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.sync'), function (resp) {
+            if (resp==='yes') {
+                //Send data to server
+            }
+        })
+    },
+    
+    //show inventory
+    toolbarInventory: function(){
+        var nstore = Ext.getStore('pills');
+        if (!nstore) {
+            Ext.create('chw.store.pills');
+        }
+        nstore.load();
+        Ext.getCmp('inventoryLists').setStore(nstore);
+        // console.log(Ext.getCmp('inventoryLists').getStore())
+        Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList);
+    },
+    
+    toolbarLogout: function(){
+        this.doExit();
+    },
+    
+    //Show resources
+    toolbarResources: function() {
+        //Show resources
+        Ext.getCmp('viewPort').setActiveItem(PAGES.resourceList)        
+    },
+    
+    toolbarLocate: function(){
+        var coords = Ext.ComponentQuery.query('familyDetails #familyMap')[0].getGeo();
+        console.log(coords)
+        var lat = ''
+        var lng = ''
+        Ext.Msg.confirm('Confirm','Use')
+    },
+    
     doVisit: function (arg) {
         if (arg==='start') {
             // TODO: get type of visit

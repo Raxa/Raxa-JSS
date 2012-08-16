@@ -13,8 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-var HOST = 'http://174.129.222.130:8080/motech-platform-server/';
-var MRSHOST = 'http://test.raxa.org:8080/openmrs';
 var PAGES = {
     loginScreen: 0,
     familyList: 1,
