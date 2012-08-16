@@ -321,10 +321,11 @@ Ext.define("Screener.controller.Application", {
     drugsubmit: function () {
         // one of the patient should be selected for posting drug order
         if (this.getPatientList().getSelection()[0] != null) {
+            //this is the array of stores for getting the drugs concept uuid
             concept = new Array();
+            // this is the array of object for drug orders
             order = new Array();
-            var k = 0,
-            l = 0;
+            var k = 0;
             for (i = 0; i <= form_num; i++) {
                 // value of Url for get call is made here using name of drug
                 var Url = HOST + '/ws/rest/v1/concept?q='
@@ -341,7 +342,7 @@ Ext.define("Screener.controller.Application", {
                     }
                 })
                 var startdate = new Date()
-                // value of end date depending on the duration 
+                // setting up value of end date depending on the duration 
                 var enddate
                 if (Ext.getCmp('form' + i).getValues().duration == "1w") enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 7);
                 if (Ext.getCmp('form' + i).getValues().duration == "1m") enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 1, startdate.getDate());
@@ -367,6 +368,7 @@ Ext.define("Screener.controller.Application", {
                 concept[i].on('load', function () {
                     k = k + 1;
                     // value of k is compared with the no of drug forms
+                    // if value of k = no. of form we make the post call for  prescrition encounter with drug  orders
                     if (k == form_num + 1) {
                         for (var j = 0; j <= form_num; j++) {
                             order[j].concept = concept[j].getAt(0).getData().uuid

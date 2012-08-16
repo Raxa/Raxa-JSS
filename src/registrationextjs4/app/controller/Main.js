@@ -51,9 +51,11 @@ Ext.define('Registration.controller.Main', {
     /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
     Continue: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
+        // if condition that check if all the required fields are non-empty or not
         if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
             l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
         } else alert("Fields invalid");
+        //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
         Ext.getCmp('relativeNameConfirm').setValue(Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value);
@@ -74,8 +76,10 @@ Ext.define('Registration.controller.Main', {
 
     /* this function return to home screen */
     cancel: function () {
+        //return to home screen
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
+        //reset all the fields in registration form
         Ext.getCmp('patientFirstName').reset()
         Ext.getCmp('patientLastName').reset()
         Ext.getCmp('relativeFirstName').reset()
@@ -208,7 +212,7 @@ Ext.define('Registration.controller.Main', {
         // this statement calls getifentifiers() as soon as the post call is successful
         store.on('write', function () {
             this.getidentifierstype(store.getAt(0).getData().uuid)
-        }, this)//Going to BMI Page
+        }, this)
         //I made this function return this store because i needed this in jasmine unit test
         return store;
     },
@@ -252,6 +256,7 @@ Ext.define('Registration.controller.Main', {
        and loaction */
     makePatient: function (personUuid, identifierType, location) {
         localStorage.setItem('newPatientUuid',personUuid)
+        // creating the model for posting of patient
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
@@ -261,20 +266,22 @@ Ext.define('Registration.controller.Main', {
                 preferred: true
             }]
         });
+        // setting the patientid and paient name fields in bmi screen
         Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
         Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').getValue());
+        //creating store for posting the patient
         var PatientStore = Ext.create('Registration.store.patient')
         PatientStore.add(patient);
         //makes the post call for creating the patient
         PatientStore.sync();
         //I made this function return this store because i needed this in jasmine unit test
         PatientStore.on('load', function () {
+            // going to BMI page
             var l = Ext.getCmp('mainRegArea').getLayout();
             l.setActiveItem(REG_PAGES.REG_BMI.value); 
         }, this)
+        //this function return this store because i needed this in jasmine unit test
         return PatientStore;
-        
-        
     },
     // for now the function is called when the emergency button is pressed since the views were not completed
     
