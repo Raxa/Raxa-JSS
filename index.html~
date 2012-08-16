@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<script type="text/javascript">
+		<!--
+			window.location = "./src/chw"
+		//-->
+		</script>
+        <title>RaXa EMR - Hospital Information System</title>
+		<li><a href="./src/chw">Community Health Worker</a></li>
+        
+    </head>
+    <body>
+    </body>
+</html>

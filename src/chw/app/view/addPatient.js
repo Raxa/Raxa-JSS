@@ -13,24 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.addPatient', {
-    extend: 'Ext.Panel',
+Ext.define('chw.view.addPatient', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.AddPatient',
+    requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
         ui: 'neutral',
-        scrollable: true,
         items: [{
             xtype: 'titlebar',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newPatient'),
             docked: 'top',
-            title: 'Add Person',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
-                id: 'back_add_reg'
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
+                action: 'goback'
             }]
         }, {
-            xclass: 'mUserStories.view.userToolbar'
+            xclass: 'chw.view.userToolbar'
         }, {
             xtype: 'container',
             padding: '10px',
@@ -40,40 +41,38 @@ Ext.define('mUserStories.view.addPatient', {
                     labelWidth: '35%'
                 },
                 items: [{
+                    xtype:'textfield',
+                    hidden:true,
+                    required:true,
+                    itemId: 'familyId',
+                    disabled: true
+                },{
                     xtype: 'textfield',
-                    label: 'First',
-                    name: 'first_reg',
-                    id: 'first_reg',
-                    placeHolder: 'Harry',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.family'),
+                    disabled: true,
+                    required: true,
+                    itemId: 'familyField',
+                    // TODO: how do you randomly generate this?
+                    options: [{
+                        text: '',
+                        value: 'empty'
+                    }]
+                }, {
+                    xtype: 'textfield',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.name'),
+                    itemId: 'firstName',
+                    placeHolder: 'Vikram',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
-                    label: 'Last',
-                    name: 'last_reg',
-                    id: 'last_reg',
-                    placeHolder: 'Potter',
-                    required: true,
-                    clearIcon: true
-                }, {
-                    xtype: 'textfield',
-                    label: 'Phone',
-                    name: 'phone_reg',
-                    id: 'phone_reg',
-                    placeHolder: '1234567890',
-                    required: true,
-                    clearIcon: true
-                }, {
-                    xtype: 'textfield',
-                    label: 'Village',
-                    name: 'village_reg',
-                    id: 'village_reg',
-                    placeHolder: 'Village',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.surname'),
+                    itemId: 'lastName',
+                    placeHolder: 'Rathore',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'container',
-                    id: 'gender_cont',
                     layout: {
                         type: 'hbox',
                         align: 'stretch',
@@ -83,32 +82,50 @@ Ext.define('mUserStories.view.addPatient', {
                         xtype: 'radiofield',
                         name: 'radiogroup',
                         value: 'Female',
-                        label: 'Female',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.female'),
                         labelWidth: '70%',
                         flex: 1
                     }, {
                         xtype: 'radiofield',
                         name: 'radiogroup',
                         value: 'Male',
-                        label: 'Male',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.male'),
                         labelWidth: '70%',
                         flex: 1
                     }]
                 }, {
+                    // Also include option for current age?
                     xtype: 'datepickerfield',
                     destroyPickerOnHide: true,
                     name: 'bday',
-                    id: 'bday',
-                    label: 'Birthday',
+                    itemId: 'bday',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.bday'),
                     required: true,
                     value: new Date(),
                     picker: {
                         yearFrom: 1900
                     }
                 }, {
-                    xclass: 'mUserStories.view.okCancel'
+                    xtype: 'textfield',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.age'),
+                    itemId: 'patientAge',
+                    placeHolder: '32',
+                    required: true,
+                    clearIcon: true
+                }, {
+                    xtype: 'textfield',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.selectImage'),
+                    itemId: 'imageField',
+                    placeHolder: 'amir.jpg',
+                    required: true,
+                    clearIcon: true
                 }]
+            }, {
+                xclass: 'chw.view.okCancel'
             }]
         }]
+    },
+    saveForm: function () {
+        return this.getValues();
     }
 })
