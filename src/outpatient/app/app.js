@@ -15,10 +15,14 @@
  */
 Ext.Loader.setPath({
     'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid'
+    
 });
 
 Ext.Loader.setConfig({
-    enabled: true
+    enabled: true,
+    paths: {
+        'Ext.i18n': 'lib/i18n' //Path to the i18n library
+    }
 });
 
 Ext.application({
@@ -26,10 +30,11 @@ Ext.application({
 
     models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
     stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
-    views: ['Viewport'],
+    views: ['Viewport'], 
     controllers: ['patientlist'],
-
+    
     launch: function () {
+        
         Ext.create('RaxaEmr.Outpatient.view.Viewport');
     }
 });
