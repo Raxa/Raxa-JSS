@@ -15,8 +15,32 @@ Ext.define('Topbar.view.TopToolbar', {
             html: 'JSS',
             itemId: 'JSSLabel',
             margin: 5,
+	   
+ 	
+
             listeners: [{
                 fn: function (component, options) {
+			  
+
+                    if(Ext.getCmp('mainView')==null)
+                    {
+                       var username = localStorage.getItem("username");
+                       if(username==null)
+                       {
+                           username='Guest';
+                       }
+                       this.parent.getComponent('UsernameLabel').setHtml(username);
+                        var buttonUrlSettings = this.parent.add({
+                            xtype: 'urlSettingsButton',
+                            margin: 5,
+                            right: 0,
+                        });
+                        if (buttonLogout) {
+                            buttonLogout.hide();
+                        }
+                    }
+                    else
+                    {
                     if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
                         this.parent.getComponent('UsernameLabel').setHtml('Guest');
                         var buttonUrlSettings = this.parent.add({
@@ -40,6 +64,7 @@ Ext.define('Topbar.view.TopToolbar', {
                         if (buttonUrlSettings) {
                             buttonUrlSettings.hide();
                         }
+                        }
                     }
                 },
                 event: 'painted',
@@ -54,7 +79,7 @@ Ext.define('Topbar.view.TopToolbar', {
             xtype: 'label',
             itemId: 'UsernameLabel',
             margin: 5,
-        }],
+        },],
         listeners: [{
             fn: 'onLogoutButtonTap',
             event: 'tap',
