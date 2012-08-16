@@ -13,157 +13,111 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.patientDetails', {
+Ext.define('chw.view.patientDetails', {
     extend: 'Ext.tab.Panel',
+    alias: 'widget.patientDetails',
+    requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.patientDetails'),
             docked: 'top',
-            id: 'title_det',
-            title: 'Mobile User Stories',
             items: [{
                 xtype: 'button',
                 ui: 'back',
-                text: 'Back',
-                id: 'back_det'
+                action: 'goback',
+                text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back')
             }]
         }, {
-            xclass: 'mUserStories.view.userToolbar'
+            xclass: 'chw.view.userToolbar'
         }, {
-            xtype: 'formpanel',
-            title: 'Visit',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.basic'),
+            xtype: 'container',
+            height: '100%',
+            width: '100%',
+            scrollable: true,
+            layout: 'vbox',
             items: [{
-                xtype: 'fieldset',
-                title: 'Visit Details',
-                defaults: {
-                    labelWidth: '35%',
-                    labelAlign: 'top'
-                },
-                items: [{
-                    xtype: 'textfield',
-                    disabled: true,
-                    label: 'Symptom Description',
-                    id: 'info_vis',
-                    placeHolder: 'Has had diarrhea for more than 2 days and is having trouble swallowing solid foods.'
-                }]
-            }, { // maybe this should be a list not checklist?
-                // how much detail is necessary?
-                xtype: 'fieldset',
-                title: 'Suggested Tasks',
-                defaults: {
-                    labelWidth: '80%'
-                },
-                items: [{
-                    xtype: 'checkboxfield',
-                    name: 'task1',
-                    label: 'Oral Rehydration Salts'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task2',
-                    label: 'Rapid Diagnostic Test malaria'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task3',
-                    label: 'Check Vitamin A'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task4',
-                    label: 'Check albendazole'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'task5',
-                    label: 'Blood sample for CBC'
-                }]
-            }]
-        }, {
-            xtype: 'formpanel',
-            title: 'Records',
-            items: [{
-                xtype: 'fieldset',
-                title: 'Immunization Records',
-                defaults: {
-                    labelWidth: '80%'
-                },
-                items: [{
-                    xtype: 'checkboxfield',
-                    name: 'im1',
-                    label: 'Typhoid',
-                    checked: true
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'im2',
-                    label: 'Hep A',
-                    checked: true
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'im3',
-                    label: 'Polio'
-                }]
+                xtype: 'label',
+                itemId: 'patientDetailsImage',
+                html: '<center><img src="resources/user.png"/></center>',
+                height: '20%',
+                width: '100%',
+                padding: '10px'
             }, {
-                xtype: 'fieldset',
-                title: 'Other Records',
-                defaults: {
-                    labelWidth: '80%'
-                },
+                xtype: 'container',
+                padding: '10px',
                 items: [{
-                    xtype: 'checkboxfield',
-                    name: 'other1',
-                    label: 'Vitamin A'
-                }, {
-                    xtype: 'checkboxfield',
-                    name: 'other2',
-                    label: 'Albendazole'
+                    xtype: 'fieldset',
+                    title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.basicDetails'),
+                    defaults: {
+                        labelWidth: '35%',
+                        disabled: true
+                    },
+                    items: [{
+                        xtype: 'textfield',
+                        label: 'Patient Id',
+                        itemId: 'patientIdLabel'
+                            
+                    }, {
+                        xtype: 'textfield',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.name'),
+                        placeHolder: 'First',
+                        itemId: 'firstNameLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.surname'),
+                        placeHolder: 'Last',
+                        itemId: 'familyNameLabel'
+                    }, {
+                        xtype: 'textfield',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.gender'),
+                        placeHolder: 'Gender',
+                        itemId: 'patientGenderLabel'
+                    }, {
+                        //TODO: Change from Age to Bday
+                        xtype: 'textfield',
+                        label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.age'),
+                        placeHolder: 'Age',
+                        itemId: 'patientAgeLabel'
+                    }]
                 }]
             }]
         }, {
-            xtype: 'formpanel',
-            title: 'Lab',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.history'),
+            cls: 'demo-list',
             items: [{
-                xtype: 'fieldset',
-                title: 'Laboratory Results',
-                defaults: {
-                    labelWidth: '35%',
-                    disabled: true,
-                    labelAlign: 'top'
-                },
+                title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.members'),
+                xtype: 'list',
+                ui: 'round',
+                pinHeaders: false,
+                id: 'patientIllnessList',
+                width: '100%',
+                height: '80%',
+                centered: true,
+                itemTpl: [
+                    '<div style="float:left;width:32px;height:32px"><img src="{illnessDetails.illnessImage}" height="80%" width="80%"/></div>',
+                    '<div style="float:left;width:40%">',
+                        '<div class="list-item-title"">{illnessDetails.illnessName}</div>',
+                    '</div>',
+                    '<div>',
+                        '<div class="list-item-title" style="font-size:10px;">',
+                        '{illnessStartDate}-<br>{illnessEndDate}</div>',
+                    '</div>'
+                ].join(''),
+                onItemDisclosure: function (record) {
+                    helper.listDisclose('patientIllness',record)
+                }
+            }, {
+                xtype: 'container',
+                docked: 'bottom',
+                padding: '0px 60px 20px 60px',
                 items: [{
-                    xtype: 'textfield',
-                    label: 'Some results',
-                    id: 'info_res'
-                }]
-            }]
-        }, {
-            xtype: 'formpanel',
-            title: 'Info',
-            items: [{
-                xtype: 'fieldset',
-                title: 'Basic Information',
-                defaults: {
-                    labelWidth: '35%',
-                    disabled: true
-                },
-                items: [{
-                    xtype: 'textfield',
-                    label: 'First',
-                    id: 'first_det'
-                }, {
-                    xtype: 'textfield',
-                    label: 'Last',
-                    id: 'last_det'
-                }, {
-                    xtype: 'textfield',
-                    label: 'Address',
-                    id: 'address_det'
-                }, {
-                    xtype: 'textfield',
-                    label: 'Gender',
-                    id: 'gender_det'
-                }, {
-                    xtype: 'textfield',
-                    label: 'Birthday',
-                    id: 'bday_det'
+                    xtype: 'button',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.newIllness'),
+                    action: 'illnessAdd'
                 }]
             }]
         }]
