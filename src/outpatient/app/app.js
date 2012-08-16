@@ -34,7 +34,8 @@ Ext.application({
     controllers: ['patientlist'],
     
     launch: function () {
-        
-        Ext.create('RaxaEmr.Outpatient.view.Viewport');
+        if(Util.checkModulePrivilege('outpatient')){
+            Ext.create('RaxaEmr.Outpatient.view.Viewport');
+        }
     }
 });

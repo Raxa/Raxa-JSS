@@ -195,17 +195,6 @@ Ext.define("Screener.controller.Application", {
             }
         }
     },
-    //adds the patient to the doctor using 'hasmany' association
-    addToDoctor: function (patient) {
-        doctorid = patient.get('doctorid');
-        if (Ext.getStore('doctorStore').getAt(doctorid)) {
-            //first we add the association to the patient model is linked to this doctor
-            Ext.getStore('doctorStore').getAt(doctorid).patients().add(patient);
-            //now we call function to increment number of patients
-            Ext.getStore('doctorStore').getAt(doctorid).addPatient();
-            Ext.getStore('patientStore').remove(patient);
-        }
-    },
 
     //called on startup
     init: function () {
@@ -289,6 +278,9 @@ Ext.define("Screener.controller.Application", {
         store_patientList.on('load', function () {
             Ext.getCmp('loadMask').setHidden(true);
             patientUpdate.setBMITime(store_patientList);
+            store_patientList.each(function (record) {
+                record.set('image', '../resources/pic.gif');
+            });
         }, this);
         setInterval('patientUpdate.updatePatientsWaitingTitle()', Util.getUiTime());
         setInterval('Ext.getStore(\'patientStore\').load()', Util.getUiTime());
@@ -582,6 +574,11 @@ Ext.define("Screener.controller.Application", {
     },
     //gets a list of all patients assigned to a doctor
     getAssignedPatientList: function (list, item, index) {
+        pStore = Ext.create('Ext.data.Store', {
+            fields: ['uuid', 'name', 'encuuid'],
+            data: null
+        });
+        Ext.getCmp('assignedPatientList').setStore(pStore)
         store = Ext.getStore('assPatientStore')
         docStore = Ext.create('Screener.store.Doctors')
         docStore.on('load', function () {
@@ -599,11 +596,7 @@ Ext.define("Screener.controller.Application", {
                         }
                     }
                 }
-                pStore = Ext.create('Ext.data.Store', {
-                    fields: ['uuid', 'name', 'encuuid'],
-                    data: count
-                });
-                Ext.getCmp('assignedPatientList').setStore(pStore)
+                pStore.setData(count);
                 return pStore
             })
         })
@@ -664,7 +657,7 @@ Ext.define("Screener.controller.Application", {
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
         this.sendEncounterData(patient, localStorage.screenerUuidencountertype, localStorage.waitingUuidlocation, provider)
-        this.getDoctorList().refresh();
+        this.countPatients();
     },
     // unassign a patient assigned to a doctor
     removePatient: function () {
