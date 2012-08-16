@@ -209,7 +209,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     fillPrescription: function() {
-        console.log('hi');
         Ext.Msg.confirm("Confirmation", "Are you sure you want to fill prescription?", function (btn) {
             if (btn == 'yes') {
                 var l = Ext.getCmp('mainarea').getLayout();
@@ -369,7 +368,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 // added a counter k which increment as a concept load successfully, after all the concept are loaded
                 // value of k should be equal to the no. of drug forms
                 concept[i1].on('load', function () {
-                    console.log(Ext.getStore('orderStore'));
                     k1++;
                     if (k == drugs.items.length && k1 == k2) {
                         for (var j = 0; j < concept.length; j++) {
