@@ -20,6 +20,9 @@ Ext.define('Screener.model.Patients', {
 			name: 'time',
 			persist: false
 		}, {
+            name: 'image',
+            persist: false
+        }, {
             name: 'encounters',
             model: 'Screener.model.encounters'
         }]

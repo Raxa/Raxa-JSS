@@ -42,8 +42,10 @@ Ext.application({
 
     //entry point
     launch: function () {
-        Ext.Viewport.add({
-            xclass: 'Screener.view.Main'
-        });
+        if(Util.checkModulePrivilege('screener')){
+            Ext.Viewport.add({
+                xclass: 'Screener.view.Main'
+            });
+        }
     }
 });

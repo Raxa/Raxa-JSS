@@ -34,7 +34,6 @@ Ext.define('Registration.store.encounterStore', {
             type: 'json'
         }, 
         afterRequest:function(request,success){         //prints if request is successful
-            Ext.Msg.alert('Encounter saved successfully.');
             var l = Ext.getCmp('mainRegArea').getLayout();
             l.setActiveItem(REG_PAGES.HOME.value);
             Ext.getCmp('heightIDcm').reset()

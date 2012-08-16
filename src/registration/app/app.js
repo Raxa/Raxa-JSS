@@ -9,6 +9,8 @@ Ext.application({
     models: ['Patient'],
 
     launch: function () {
-        Ext.create('RaxaEmr.Registration.view.Viewport');
+        if(Util.checkModulePrivilege('registration')){
+            Ext.create('RaxaEmr.Registration.view.Viewport');
+        }
     }
 });
