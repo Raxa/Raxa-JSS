@@ -16,18 +16,6 @@
 var myRecord;
 var loggedInDoc = '74eab850-7853-40e0-a79a-67cd72447eda';
 
-var CONCEPT = {
-    PATIENT_HISTORY: '891066be-1fe4-4e3f-bf46-f192b24a6fd4',
-    PAST_MEDICATION_HISTORY: '9ca383c0-52d0-41a1-8e8e-aa297aa66bc3',
-    ALCOHOL_INTAKE: '1bde40e0-b085-4f7b-a401-7ce645a3b50b',
-    TOBACCO_INTAKE: '27458627-a8ab-4084-b1c3-f02774b9abbf',
-    OTHER_HISTORY: '553c3dc7-7286-4c85-b2f1-6210e9870841',
-    FAMILY_HISTORY: '703ee5c7-cdbc-4333-8360-da7e230ba899',
-    EXAMINATION_LIST: '4cfb4752-119c-45ca-abc9-514022eb6d14',
-    NEUROLOGICAL_DIAGNOSIS: '50e163ba-e836-46e5-9f59-31460c51156e',
-    CARDIOLOGICAL_DIAGNOSIS: '053653d0-6556-4dd1-9ba6-90402b17154f',
-};
-
 var opd_observations = new Array();
 
 Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
@@ -50,6 +38,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             cheifcomplain: '#cheifComplain',
             labinfo: '#labinfo',
             examlist: '#examList',
+            signlist: '#signList',
             deletecomlain: '#deleteComlain',
             addduration: '#addDuration',
             saveduration: '#saveDuration',
@@ -65,6 +54,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             reftodocsearchfield: '#reftodocsearchfield',
             reftodocsortbydocname: '#reftodocsortbydocname',
             reftodocsortbyopdno: '#reftodocsortbyopdno',
+            signfilterbysearchfield: '#signfilterbysearchfield',
         },
 
         control: {
@@ -74,6 +64,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             },
             contacts: {
                 itemtap: 'onContactSelect'
+            },
+            signlist: {
+                itemtap: 'onSignListSelect'
             },
             examlist: {
                 itemtap: 'onExamListSelect'
@@ -127,6 +120,10 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 clearicontap: 'refToDocOnSearchClearIconTap',
                 keyup: 'refToDocOnSearchKeyUp'
             },
+            signfilterbysearchfield: {
+                clearicontap: 'signFilterByOnSearchClearIconTap',
+                keyup: 'signFilterByOnSearchKeyUp'
+            },
             cheifcomplain: {
                 change: 'addChiefComplain',
             },
@@ -159,6 +156,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
     init: function () {
         this.getpatientlist();
+        // alert(localStorage.cardiologicaldiagnosisUuidconcept);
     },
 
     getpatientlist: function () {
@@ -429,6 +427,59 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.onSearchClearIconTap(Ext.getCmp('refToDocPanel').getStore());
     },
 
+    onSignListSelect: function (list, index, node, record) {
+        var sign = record.data.sign;
+        list.getStore().remove(record);
+        examlist = Ext.getCmp('examList');
+        examlist.getStore().add({
+            complain: sign,
+            id: sign,
+        });
+    },
+
+    signFilter: function () {
+        var value = Ext.getCmp('signFilter').getValue();
+        var store = Ext.getCmp('signList').getStore();
+
+        if (value) {
+            var searches = value.split(' ');
+            var regexps = [];
+            var i;
+
+            for (i = 0; i < searches.length; i++) {
+                if (!searches[i]) continue;
+                regexps.push(new RegExp(searches[i], 'i'));
+            }
+
+            store.filter(function (record) {
+                var matched = [];
+
+                for (i = 0; i < regexps.length; i++) {
+                    var search = regexps[i];
+                    var didMatch = record.get('type').match(search);
+                    matched.push(didMatch);
+                }
+
+                if (regexps.length > 1 && matched.indexOf(false) != -1) {
+                    return false;
+                } else {
+                    return matched[0];
+                }
+            });
+        }
+    },
+
+    signFilterByOnSearchKeyUp: function (field) {
+        Ext.getCmp('signList').setHidden(false);
+        Ext.getCmp('signList').getStore().load();
+        this.onSearchKeyUp(Ext.getCmp('signList').getStore(), field, 'sign', 'type');
+        this.signFilter();
+    },
+
+    signFilterByOnSearchClearIconTap: function () {
+        this.onSearchClearIconTap(Ext.getCmp('signList').getStore());
+    },
+
     submitOpdEncounter: function () {
         var obsdate = new Date();
         var time = Util.Datetime(obsdate, Util.getUTCGMTdiff());
@@ -463,12 +514,12 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         var obsdate = new Date();
         var tobaccoValue = Ext.getCmp('tobaccoField').getValue() + ' ' + Ext.getCmp('tobaccoRouteofIntake').getValue() + ' ' + Ext.getCmp('tobaccoFrequency').getValue()
 
-        this.addObservation(CONCEPT.PATIENT_HISTORY, Ext.getCmp('patientHistory').getValue());
-        this.addObservation(CONCEPT.PAST_MEDICATION_HISTORY, Ext.getCmp('pastMedicalHistory').getValue());
-        this.addObservation(CONCEPT.ALCOHOL_INTAKE, Ext.getCmp('alcoholField').getValue());
-        this.addObservation(CONCEPT.TOBACCO_INTAKE, tobaccoValue);
-        this.addObservation(CONCEPT.OTHER_HISTORY, Ext.getCmp('otherHistory').getValue());
-        this.addObservation(CONCEPT.FAMILY_HISTORY, Ext.getCmp('familyHistory').getValue());
+        this.addObservation(localStorage.patientHistoryUuidconcept, Ext.getCmp('patientHistory').getValue());
+        this.addObservation(localStorage.pastMedicationHistoryUuidconcept, Ext.getCmp('pastMedicalHistory').getValue());
+        this.addObservation(localStorage.alcoholIntakeUuidconcept, Ext.getCmp('alcoholField').getValue());
+        this.addObservation(localStorage.tobaccoIntakeUuidconcept, tobaccoValue);
+        this.addObservation(localStorage.otherHistoryUuidconcept, Ext.getCmp('otherHistory').getValue());
+        this.addObservation(localStorage.familyHistoryUuidconcept, Ext.getCmp('familyHistory').getValue());
 
         Ext.getCmp('patientHistoryPanel').reset();
         Ext.getCmp('socialHistoryPanel').reset();
@@ -478,9 +529,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         var obsdate = new Date();
         var examlist = Ext.getCmp('examList').getStore();
         var prob_num = examlist.getCount();
-
         for (i = 0; i < prob_num; i++) {
-            this.addObservation(CONCEPT.EXAMINATION_LIST, examlist.getAt(i).data.complain + examlist.getAt(i).data.duration);
+            this.addObservation(localStorage.examlistUuidconcept, examlist.getAt(i).data.complain + examlist.getAt(i).data.duration);
         }
     },
 
@@ -489,9 +539,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         var conceptType;
         var diagnosis_category = Ext.getCmp('diagnosisCategory').getValue();
         if (diagnosis_category == 'Neuro') {
-            conceptType = CONCEPT.NEUROLOGICAL_DIAGNOSIS;
+            conceptType = localStorage.neurologicalDiagnosisUuidconcept;
         } else if (diagnosis_category == 'Cardio') {
-            conceptType = CONCEPT.CARDIOLOGICAL_DIAGNOSIS;
+            conceptType = localStorage.cadiologicalDiagnosisUuidconcept;
         }
         this.addObservation(conceptType, Ext.getCmp('diagnosisField').getValue() + ' : ' + Ext.getCmp('diagnosisNotes').getValue());
         Ext.getCmp('diagnosisForm').reset();

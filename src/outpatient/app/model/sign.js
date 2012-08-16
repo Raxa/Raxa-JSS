@@ -13,11 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('RaxaEmr.Outpatient.store.cheifcomplain', {
-    extend: 'Ext.data.Store',
+Ext.define('RaxaEmr.Outpatient.model.sign', {
+    extend: 'Ext.data.Model',
 
     config: {
-        model: 'RaxaEmr.Outpatient.model.cheifcomplain',
-        autoLoad: true,
+        fields: ['sign', 'id', 'type']
     }
 });
