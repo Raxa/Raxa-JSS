@@ -1,3 +1,5 @@
+TOPBARBUTTONLOGOPATH = '../../resources/img/miniLogo.png';
+
 Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     extend: 'Ext.container.Container',
     alias: 'widget.pharmacytopbar',
@@ -52,14 +54,14 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         }, {
             xtype: 'button',
             text: 'Bill Records',
-            icon: '../../resources/img/miniLogo.png',
+            icon: TOPBARBUTTONLOGOPATH,
             iconAlign: 'top',
             scale: 'large',
             width: 80
         }, {
             xtype: 'button',
             text: 'Inventory',
-            icon: '../../resources/img/miniLogo.png',
+            icon: TOPBARBUTTONLOGOPATH,
             iconAlign: 'top',
             scale: 'large',
             width: 80,
@@ -70,7 +72,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         }, {
             xtype: 'button',
             text: 'Reports',
-            icon: '../../resources/img/miniLogo.png',
+            icon: TOPBARBUTTONLOGOPATH,
             iconAlign: 'top',
             scale: 'large',
             width: 80,
@@ -81,7 +83,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         }, {
             xtype: 'button',
             text: 'Admin',
-            icon: '../../resources/img/miniLogo.png',
+            icon: TOPBARBUTTONLOGOPATH,
             iconAlign: 'top',
             scale: 'large',
             width: 80,

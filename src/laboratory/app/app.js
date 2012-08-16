@@ -36,6 +36,8 @@ Ext.application({
 'ReportApproval1','ReportApproval2','ReportApproval3','ReportApproval4'],
   
       launch: function () {
-        Ext.create('Laboratory.view.Viewport');
+        if(Util.checkModulePrivilege('laboratory')){
+            Ext.create('Laboratory.view.Viewport');
+        }
     }
 });

@@ -45,7 +45,7 @@ Ext.define('RaxaEmr.view.AppGrid', {
 
                             listeners: {
                                 tap: function () {
-                                    window.location = patient-facing.github.com;
+                                    window.location = "http://patient-facing.github.com";
                                 }
                             }
                         }]

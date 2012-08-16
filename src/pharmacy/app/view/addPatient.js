@@ -1,3 +1,5 @@
+ADDPATIENTSECONDCOLUMNXPOSITION = 400;
+
 Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
     extend: 'Ext.form.Panel',
     alias: 'widget.addPatient',
@@ -59,21 +61,21 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         fieldLabel: 'Village',
         id: 'village',
         allowBlank: false,
-        x: 400,
+        x: ADDPATIENTSECONDCOLUMNXPOSITION,
         y: 30
     }, {
         xtype: 'textfield',
         fieldLabel: 'Block',
         id: 'block',
         allowBlank: false,
-        x: 400,
+        x: ADDPATIENTSECONDCOLUMNXPOSITION,
         y: 60
     }, {
         xtype: 'textfield',
         fieldLabel: 'District',
         id: 'District',
         allowBlank: false,
-        x: 400,
+        x: ADDPATIENTSECONDCOLUMNXPOSITION,
         y: 90
     }, {
         xtype: 'combobox',
@@ -83,7 +85,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         store: Ext.create('RaxaEmr.Pharmacy.store.Doctors'),
         displayField: 'display',
         allowBlank: false,
-        x: 400,
+        x: ADDPATIENTSECONDCOLUMNXPOSITION,
         y: 120
     }]
 });

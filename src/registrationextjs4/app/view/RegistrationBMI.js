@@ -131,7 +131,7 @@ Ext.define('Registration.view.RegistrationBMI', {
                             disabledCls: 'x-form-readonly',
                             readOnly: true,
                             minValue: 1,
-                            maxValue: BMI_MAX                            
+                            maxValue: BMI_MAX
                         }
                     }, {
                         xtype: 'fieldcontainer',

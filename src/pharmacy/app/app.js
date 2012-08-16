@@ -16,6 +16,8 @@ Ext.application({
     models: ['Address', 'Doctor', 'Identifier', 'Name', 'Patient', 'Person', 'drugOrderPatient', 'drugOrderSearch', 'drugOrder', 'drugEncounter', 'PostLists'],
     
     launch: function() {
-        Ext.create('RaxaEmr.Pharmacy.view.Viewport');
+        if(Util.checkModulePrivilege('pharmacy')){
+            Ext.create('RaxaEmr.Pharmacy.view.Viewport');
+        }
     }
 });

@@ -110,7 +110,8 @@ Ext.define('Registration.view.SearchPart1', {
                             width: 147,
                             margins: '0 0 0 6'
                         }]
-                    }//TODO: add these in when search layer is complete (no ticket as yet for this)
+                    }//TODO: add these in when search layer is complete
+                    //https://raxaemr.atlassian.net/browse/RAXAJSS-230
                     /*
                     ,{
                         xtype: 'fieldcontainer',
