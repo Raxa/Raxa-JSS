@@ -13,15 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.loginScreen', {
+Ext.define('mUserStories.view.loginScreen', {
     extend: 'Ext.Panel',
-    requires: ['chw.view.okCancel'],
-    alias: 'widget.LoginScreen',
     config: {
         items: [{
             xtype: 'titlebar',
-            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.chw'),
-            docked: 'top'
+            docked: 'top',
+            title: 'Mobile User Stories'
         }, {
             xtype: 'container',
             centered: true,
@@ -37,54 +35,24 @@ Ext.define('chw.view.loginScreen', {
                 padding: '30px',
                 items: [{
                     xtype: 'label',
-                    html: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label')
+                    html: 'Login Please<br>'
                 }]
             }, {
                 xtype: 'fieldset',
+                id: 'loginForm',
                 items: [{
                     xtype: 'textfield',
-                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.username'),
-                    itemId: 'usernameIID'
+                    label: 'Username',
+                    id: 'username',
+                    flex: 2
                 }, {
                     xtype: 'passwordfield',
-                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.password'),
-                    itemId: 'passwordIID'
+                    label: 'Password',
+                    id: 'password',
+                    flex: 2
                 }]
             }, {
-                xclass: 'chw.view.okCancel'
-            },{
-                xtype:'spacer',
-                flex:'1',
-                docked:'bottom'
-            },{
-                xtype: 'container',
-                docked:'bottom',
-                layout: {
-                    type: 'hbox'
-                },
-                items: [{
-                    xtype: 'label',
-                    flex: 1
-                },{
-                    xtype: 'selectfield',
-                    label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.language'),
-                    action: 'langfield',
-                    flex: 0,
-                    options: [{
-                        text:'',
-                        value:'empty'
-                    },{
-                        text: '\u0939\u093f\u0902\u0926\u0940',
-                        value: 'hi-IN'
-                    },{
-                        text: 'English',
-                        value: 'en-US'
-                    }]
-                },{
-                    xtype: 'label',
-                    flex: 1
-                }]
-                
+                xclass: 'mUserStories.view.okCancel'
             }]
         }]
     }

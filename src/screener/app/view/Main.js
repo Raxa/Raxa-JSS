@@ -3,17 +3,10 @@
  * to allow for easy switching between screens, a back button, etc.
  */
 Ext.define("Screener.view.Main", {
-    extend: 'Ext.Container',
+    requires: 'Ext.navigation.View',
+    extend: 'Ext.navigation.View',
     xtype: 'mainView',
-    initialize: function (args) {
-        var topBar = Ext.create('Topbar.view.TopToolbar', {
-            docked: 'top',
-	    title: 'JSS Hospital Screener System',
-        });
-        this.add(topBar);
-
-    },
-	config: {
+    config: {
         fullscreen: true,
 
         //don't delete views so we can switch screens quickly
@@ -26,5 +19,4 @@ Ext.define("Screener.view.Main", {
             }]
         }, ]
     }
-    
 });

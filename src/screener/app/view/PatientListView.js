@@ -19,7 +19,7 @@ Ext.define("Screener.view.PatientListView", {
             itemTpl: [
                 '<table>',
                 '<tr><td>',
-                '<img src={image} width=48 height=48 />',
+                '<img src="resources/pic.gif" />',
                 '</td>',
                 '<td>',
                 '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',

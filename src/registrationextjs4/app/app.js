@@ -40,8 +40,6 @@ Ext.application({
     controllers: ['Main', 'BMI','Search'],
 
     launch: function () {
-        if(Util.checkModulePrivilege('registrationextjs4')){
-            Ext.create('Registration.view.Viewport');
-        }
+        Ext.create('Registration.view.Viewport');
     }
 });

@@ -93,7 +93,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         },
         {
             xtype: 'numbercolumn',
-            width: 160,
+            width: 170,
             dataIndex: 'itemprice',
             text: 'Item Price',
             resizable: false,

@@ -24,7 +24,7 @@ var TREATMENT = {
 Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
     extend: 'Ext.Container',
     xtype: 'treatment-panel',
-    requires: ['RaxaEmr.Outpatient.view.patient.drugpanel', 'RaxaEmr.Outpatient.view.patient.treatmentsummery'],
+    requires: ['RaxaEmr.Outpatient.view.patient.drugpanel', 'RaxaEmr.Outpatient.view.patient.treatmentsummery', 'Screener.store.druglist', 'Screener.model.druglist'],
     id: 'treatment-panel',
     config: {
         layout: {
@@ -40,6 +40,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
             items: [{
                 xtype: 'formpanel',
                 flex: 1,
+				id: 'drugaddform',
                 scrollable: 'false',
                 items: [{
                     xtype: 'fieldset',
@@ -61,35 +62,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     }, {
                         xtype: 'selectfield',
                         label: 'Name of Drug',
-                        valueField: 'value',
-                        displayField: 'title',
-                        store: {
-                            data: [{
-                                value: '',
-                                title: '',
-                            }, {
-                                value: 'Cialis (Tadalafil)',
-                                title: 'Cialis (Tadalafil)',
-                            }, {
-                                value: 'Cidofovir (Vistide)',
-                                title: 'Cidofovir (Vistide)',
-                            }, {
-                                value: 'Cinacalcet (Sensipar)',
-                                title: 'Cinacalcet (Sensipar)',
-                            }, {
-                                value: 'Ciprofloxacin (Cipro)',
-                                title: 'Ciprofloxacin (Cipro)',
-                            }, {
-                                value: 'Cisplatin (Cisplatin Injection)',
-                                title: 'Cisplatin (Cisplatin Injection)',
-                            }, {
-                                value: 'Citalopram Hydrobromide (Celexa)',
-                                title: 'Citalopram Hydrobromide (Celexa)',
-                            }]
-                        }
+						id : 'drug-name',
+                        valueField: 'text',
                     }, {
                         xtype: 'selectfield',
-                        label: 'Dosage',
+                        label: 'Strength',
+						id : 'drug-strength',
                         valueField: 'value',
                         displayField: 'title',
                         store: {
@@ -97,13 +75,13 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                                 value: '',
                                 title: '',
                             }, {
-                                value: '100mg',
+                                value: '100',
                                 title: '100mg'
                             }, {
-                                value: '200mg',
+                                value: '200',
                                 title: '200mg'
                             }, {
-                                value: '500mg',
+                                value: '500',
                                 title: '500mg'
                             }]
                         }
@@ -120,6 +98,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                             border: 0,
                             labelWidth: '46.1538%',
                             flex: 13,
+							id : 'drug-frequency',
                             valueField: 'value',
                             displayField: 'title',
                             store: {
@@ -127,13 +106,13 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                                     value: '',
                                     title: '',
                                 }, {
-                                    value: 'onceDaily',
+                                    value: '1',
                                     title: 'Once Daily'
                                 }, {
-                                    value: 'twiceDaily',
+                                    value: '2',
                                     title: 'Twice Daily'
                                 }, {
-                                    value: 'thriceDaily',
+                                    value: '3',
                                     title: 'Thrice Daily'
                                 }]
                             }
@@ -141,6 +120,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                             xtype: 'selectfield',
                             border: 0,
                             flex: 7,
+							id : 'drug-instruction',
                             valueField: 'value',
                             displayField: 'title',
                             store: {
@@ -148,29 +128,27 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                                     value: '',
                                     title: '',
                                 }, {
-                                    value: 'emptyStomach',
+                                    value: 'Empty Stomach',
                                     title: 'Empty Stomach',
                                 }, {
-                                    value: 'withMeals',
+                                    value: 'With Meals',
                                     title: 'With Meals',
                                 }, {
-                                    value: 'afterFood',
+                                    value: 'After Meals',
                                     title: 'After Meals',
                                 }]
                             }
                         }]
                     }, {
                         xtype: 'textfield',
+						id : 'drug-duration',
                         label: 'Duration (days)',
                     }]
                 }, {
                     xtype: 'button',
                     ui: 'confirm',
                     text: 'Done',
-                    handler: function () {
-                        /*Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.INSTRUCTIONS)*/
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.SUMMERY)
-                    }
+					id : 'addDrugInList'
                 }]
             }, {
                 xtype: 'container',
@@ -182,7 +160,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     margin: '20 20 0 0',
                     width: 40,
                     icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
+                    padding: '0 10 10 0',
+                    handler: function () {
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);
+						Ext.getCmp('drugaddform').reset();
+                    }
                 }, {
                     xtype: 'button',
                     docked: 'top',
@@ -344,8 +326,8 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                 }, {
                     xtype: 'button',
                     ui: 'confirm',
-                    text: 'Done',
-                    handler: function () {}
+					id : 'submitDrugs',
+                    text: 'Done'
                 }]
             }, {
                 xtype: 'container',
@@ -357,7 +339,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     margin: '20 20 0 0',
                     width: 40,
                     icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
+                    padding: '0 10 10 0',
+                    handler: function () {
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);
+						Ext.getCmp('drugaddform').reset();
+                    }
                 }, {
                     xtype: 'button',
                     docked: 'top',

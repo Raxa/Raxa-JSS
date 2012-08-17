@@ -26,12 +26,14 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
         items: [{
             xtype: 'formpanel',
             flex: 1,
+			id : 'diagnosisForm',
             scrollable: 'false',
             items: [{
                 xtype: 'fieldset',
                 items: [{
                     xtype: 'selectfield',
                     label: 'Diagnosis Category',
+					id: 'diagnosisCategory',
                     valueField: 'diagnosisCategory',
                     displayField: 'title',
                     store: {
@@ -39,7 +41,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                             diagnosisCategory: '',
                             title: '',
                         }, {
-                            diagnosisCategory: 'Cardiovascular',
+                            diagnosisCategory: 'Cardio',
                             title: 'Cardiovascular',
                         }, {
                             diagnosisCategory: 'Endocrine',
@@ -54,7 +56,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                             diagnosisCategory: 'Musculoskeletal',
                             title: 'Musculoskeletal',
                         }, {
-                            diagnosisCategory: 'Neurological',
+                            diagnosisCategory: 'Neuro',
                             title: 'Neurological',
                         }, {
                             diagnosisCategory: 'Orthopedic',
@@ -67,6 +69,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                 }, {
                     xtype: 'selectfield',
                     label: 'Diagnosis',
+					id : 'diagnosisField',
                     valueField: 'diagnosisCategory',
                     displayField: 'title',
                     store: {
@@ -89,6 +92,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                     }
                 }, {
                     xtype: 'textareafield',
+					id: 'diagnosisNotes',
                     label: 'Notes'
                 }]
             }, {
@@ -97,22 +101,21 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                     pack: 'center',
                     type: 'hbox'
                 },
-                /*items: [{*/
-                /*xtype: 'button',*/
-                /*ui: 'decline',*/
-                /*text: 'Cancel',*/
-                /*flex: 1*/
-                /*}, {*/
-                /*xtype: 'button',*/
-                /*margin: '0 10 0 10',*/
-                /*text: 'Clear',*/
-                /*flex: 1*/
-                /*}, {*/
-                /*xtype: 'button',*/
-                /*ui: 'confirm',*/
-                /*text: 'Done',*/
-                /*flex: 1*/
-                /*}]*/
+                items:[{
+					xtype: 'button',
+					margin: '0 10 0 0',
+					text: 'Clear',
+					flex: 1,
+					handler : function(){
+						Ext.getCmp('diagnosisForm').reset();
+					}
+				}, {
+					xtype: 'button',
+					ui: 'confirm',
+					id : 'submitDiagnosis',
+					text: 'Done',
+					flex: 1
+				}]
             }]
         }, {
             xtype: 'container',
@@ -130,6 +133,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                 xtype: 'button',
                 docked: 'top',
                 height: 40,
+				id : 'addDiagnosis',
                 margin: '10 20 0 0',
                 width: 40,
                 icon: '../outpatient/resources/images/add.png',

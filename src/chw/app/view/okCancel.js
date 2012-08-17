@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('chw.view.okCancel', {
+Ext.define('mUserStories.view.okCancel', {
     extend: 'Ext.Container',
     config: {
         layout: {
@@ -33,7 +33,7 @@ Ext.define('chw.view.okCancel', {
                 xtype: 'button',
                 iconMask: true,
                 iconCls: 'check2',
-                action: 'okButton',
+                id: 'okButton',
                 ui: 'confirm'
             }, {
                 xtype: 'label',
@@ -42,7 +42,7 @@ Ext.define('chw.view.okCancel', {
                 xtype: 'button',
                 iconMask: true,
                 iconCls: 'delete1',
-                action: 'cancelButton',
+                id: 'cancelButton',
                 ui: 'decline'
             }, {
                 xtype: 'label',

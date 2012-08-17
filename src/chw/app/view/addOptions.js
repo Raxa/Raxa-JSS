@@ -13,50 +13,45 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-//THIS FILE IS PROBABLY NOT USED. CONSIDER DELETING.
-Ext.define('chw.view.addOptions', {
+Ext.define('mUserStories.view.addOptions', {
     extend: 'Ext.Panel',
-    requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            title: 'Add',
             docked: 'top',
+            title: 'Add',
             items: [{
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                action: 'goback'
+                id: 'back_add'
             }]
         }, {
-            xclass: 'chw.view.userToolbar'
+            xclass: 'mUserStories.view.userToolbar'
         }, {
             xtype: 'container',
             layout: 'vbox',
             centered: true,
             items: [{
                 xtype: 'button',
-                text: 'Family',
-                iconMask: true,
-                iconCls: 'team',
-                listeners: {
-                    tap: function () {
-                        Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
-                    }
-                }
+                text: 'Person',
+                iconMask:true,
+                id: 'add_reg',
+                iconCls: 'user_add'
             }, {
                 xtype: 'button',
-                text: 'Patient',
-                iconMask: true,
-                iconCls: 'user_add',
-                listeners: {
-                    tap: function () {
-                        Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
-                    }
-                }
+                text: 'Reminder',
+                id: 'add_rem',
+                iconMask:true,
+                iconCls:'time_repeat'
+            }, {
+                xtype: 'button',
+                text: 'Appointment',
+                id: 'add_app',
+                iconMask:true,
+                iconCls:'calendar_add'
             }]
         }]
     }

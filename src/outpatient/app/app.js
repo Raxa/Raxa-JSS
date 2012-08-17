@@ -14,28 +14,23 @@
  * the License.
  */
 Ext.Loader.setPath({
-    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid'
-    
+    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid',
+    'Screener': '../screener/app'
 });
 
 Ext.Loader.setConfig({
-    enabled: true,
-    paths: {
-        'Ext.i18n': 'lib/i18n' //Path to the i18n library
-    }
+    enabled: true
 });
 
 Ext.application({
     name: 'RaxaEmr.Outpatient',
 
-    models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
-    stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
-    views: ['Viewport'], 
+    models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign'],
+    stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign'],
+    views: ['Viewport'],
     controllers: ['patientlist'],
-    
+
     launch: function () {
-        if(Util.checkModulePrivilege('outpatient')){
-            Ext.create('RaxaEmr.Outpatient.view.Viewport');
-        }
+        Ext.create('RaxaEmr.Outpatient.view.Viewport');
     }
 });

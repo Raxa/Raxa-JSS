@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistory', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Medication-History',
@@ -22,7 +21,35 @@ Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistory', {
 
     config: {
         title: 'Medication History',
+        id: 'medicationhistorygrid',
         store: 'medicationhistory',
+        items: [{
+            xtype: 'toolbar',
+            docked: 'top',
+            items: [{
+                xtype: 'segmentedbutton',
+                margin: '0 0 0 10',
+                allowDepress: false,
+                items: [{
+                    xtype: 'button',
+                    text: 'Sort By Drug Name',
+                    id: 'medicationhistorysortbydrugname',
+                    pressed: true,
+                    width: 200,
+                }, {
+                    xtype: 'button',
+                    id: 'medicationhistorysortbydrugreaction',
+                    text: 'Sort By Drug Reaction',
+                    width: 200,
+                }]
+            }, {
+                xtype: 'spacer'
+            }, {
+                xtype: 'searchfield',
+                id: 'medicationhistorysearchfield',
+                placeHolder: 'Search...'
+            }]
+        }],
         columns: [{
             header: 'Drug Name',
             dataIndex: 'drugname',

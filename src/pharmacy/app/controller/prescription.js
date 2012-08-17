@@ -17,9 +17,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "prescription button[action=done2]": {
                 click: this.savePerson
             },
-            'prescription button[action=print]': {
-                click: this.fillPrescription
-            },
             'prescribedDrugs': {
                 render: this.onEditorRender,
                 edit: this.afterDrugEdit,
@@ -52,7 +49,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     }, this)
                     // listner on patient search results to show drugorders when a patient is selected
                     Ext.getCmp('patientASearchGrid').on('cellClick', function () {
-                        this.patientSelect(Ext.getCmp('patientASearchGrid').getSelectionModel().getSelection()[0].getData());
+                        this.patientSelect(Ext.getCmp('patientASearchGrid').getSelectionModel().getSelection()[0].getData())
                     }, this)
                     // listner on perscription grid to show drugorder on main grid with more details
                     Ext.getCmp('drugOrderASearchGrid').on('cellClick', function () {
@@ -212,22 +209,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         l1.setActiveItem(1);
     },
 
-    fillPrescription: function() {
-        Ext.Msg.confirm("Confirmation", "Are you sure you want to fill prescription?", function (btn) {
-            if (btn == 'yes') {
-                var l = Ext.getCmp('mainarea').getLayout();
-                l.setActiveItem(0);
-                var l1 = Ext.getCmp('addpatientarea').getLayout();
-                l1.setActiveItem(0);
-                var l2 = Ext.getCmp('addpatientgridarea').getLayout();
-                l2.setActiveItem(0);
-                Ext.getCmp('drugASearchGrid').getStore().removeAll();
-                Ext.getCmp('prescriptionDate').setValue('');
-                Ext.getCmp('image').getEl().update("<img border=\"0\" src=\"../../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"); 
-            } else {}
-        });
-    },
-
     savePerson: function () {
         if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid() && (Ext.getCmp('dob').getValue() != null || Ext.getCmp('age').getValue() != null)){
             var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
@@ -372,6 +353,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 // added a counter k which increment as a concept load successfully, after all the concept are loaded
                 // value of k should be equal to the no. of drug forms
                 concept[i1].on('load', function () {
+                    console.log(Ext.getStore('orderStore'));
                     k1++;
                     if (k == drugs.items.length && k1 == k2) {
                         for (var j = 0; j < concept.length; j++) {
@@ -405,6 +387,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 if (i1 == drugs.items.length - 1) {
                     for (var j = 0; j < concept.length; j++) {
                         order[j].concept = concept[j].getAt(0).getData().uuid;
+                        console.log(concept[j].getAt(0).getData().uuid);
                     }
                     var time = this.ISODateString(new Date());
                     // model for posting the encounter for given drug orders
