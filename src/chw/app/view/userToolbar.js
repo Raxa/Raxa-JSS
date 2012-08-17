@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.userToolbar', {
+Ext.define('chw.view.userToolbar', {
     extend: 'Ext.Toolbar',
     config: {
         docked: 'bottom',
@@ -26,23 +26,23 @@ Ext.define('mUserStories.view.userToolbar', {
             align: 'center'
         },
         items: [{
-            iconCls: 'add',
-            id: 'menuButton'
-        }, {
-            iconCls:'inbox2',
-            // iconCls: 'action',
-            id: 'inboxButton'
-        }, {
-            // iconCls: 'arrow_down',
+            iconCls: 'list',
+            action: 'listButton'
+        }/*, {
             iconCls:'cloud_black_upload1',
-            id: 'downButton'
+            action: 'syncButton'
         }, {
-            iconCls:'photos2',
-            // iconCls: 'star',
-            id: 'resourcesButton'
+            iconCls: 'locate',
+            action: 'locateButton'
+        }*/, {
+            iconCls: 'shop2',
+            action: 'inventoryButton'
+        }, {
+            iconCls: 'photos2',
+            action: 'resourceButton'
         }, {
             iconCls: 'delete',
-            id: 'logoutButton'
+            action: 'logoutButton'
         }]
     }
 })

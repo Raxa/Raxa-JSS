@@ -96,6 +96,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     {
                         xtype: 'button',
                         text: 'Review Prescription',
+                        ui: 'raxa-orange-small',
                         x: 420,
                         y: 580
                     },
@@ -104,6 +105,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         width: 60,
                         text: 'Done',
                         action: 'done',
+                        ui: 'raxa-aqua-small',
                         x: 330,
                         y: 580
                     },
@@ -111,6 +113,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Print',
+                        action: 'print',
+                        ui: 'raxa-aqua-small',
                         x: 560,
                         y: 580
                     }]
@@ -127,6 +131,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         width: 60,
                         text: 'Done',
                         action: 'done2',
+                        ui: 'raxa-aqua-small',
                         x: 330,
                         y: 580
                     },{
@@ -134,6 +139,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         width: 60,
                         text: 'Print',
                         action: 'print2',
+                        ui: 'raxa-aqua-small',
                         x: 460,
                         y: 580
                     }]
@@ -246,6 +252,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         x: 50,
                         y: 340,
                         text: 'Back',
+                        ui: 'raxa-orange-small',
                         action: 'back'
                     }]
                 },
@@ -332,6 +339,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     items:[
                     {
                         xtype: 'panel',
+                        id: 'image',
                         height: 110,
                         width: 110,
                         x: 190,

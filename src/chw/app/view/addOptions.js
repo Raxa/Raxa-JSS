@@ -13,45 +13,50 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-Ext.define('mUserStories.view.addOptions', {
+
+//THIS FILE IS PROBABLY NOT USED. CONSIDER DELETING.
+Ext.define('chw.view.addOptions', {
     extend: 'Ext.Panel',
+    requires: 'chw.view.userToolbar',
     config: {
         height: '100%',
         ui: 'neutral',
         items: [{
             xtype: 'titlebar',
-            docked: 'top',
             title: 'Add',
+            docked: 'top',
             items: [{
                 xtype: 'button',
                 ui: 'back',
                 text: 'Back',
-                id: 'back_add'
+                action: 'goback'
             }]
         }, {
-            xclass: 'mUserStories.view.userToolbar'
+            xclass: 'chw.view.userToolbar'
         }, {
             xtype: 'container',
             layout: 'vbox',
             centered: true,
             items: [{
                 xtype: 'button',
-                text: 'Person',
-                iconMask:true,
-                id: 'add_reg',
-                iconCls: 'user_add'
+                text: 'Family',
+                iconMask: true,
+                iconCls: 'team',
+                listeners: {
+                    tap: function () {
+                        Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
+                    }
+                }
             }, {
                 xtype: 'button',
-                text: 'Reminder',
-                id: 'add_rem',
-                iconMask:true,
-                iconCls:'time_repeat'
-            }, {
-                xtype: 'button',
-                text: 'Appointment',
-                id: 'add_app',
-                iconMask:true,
-                iconCls:'calendar_add'
+                text: 'Patient',
+                iconMask: true,
+                iconCls: 'user_add',
+                listeners: {
+                    tap: function () {
+                        Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
+                    }
+                }
             }]
         }]
     }
