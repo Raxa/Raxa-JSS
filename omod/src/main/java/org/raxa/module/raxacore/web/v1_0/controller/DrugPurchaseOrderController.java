@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.openmrs.Provider;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestUtil;
@@ -65,32 +67,42 @@ public class DrugPurchaseOrderController extends BaseRestController {
 	@RequestMapping(method = RequestMethod.POST)
 	@WSDoc("Save New DrugPurchaseOrder")
 	@ResponseBody
-	public Object saveDrugPurchaseOrder(@RequestBody SimpleObject post, HttpServletRequest request,
+	public Object creatnewDrugPurchaseOrder(@RequestBody SimpleObject post, HttpServletRequest request,
 	        HttpServletResponse response) throws ResponseException {
+		initDrugPurchaseOrderController();
+		
 		DrugPurchaseOrder drugOrder = new DrugPurchaseOrder();
-		drugOrder.setUuid(post.get("uuid").toString());
 		drugOrder.setName(post.get("name").toString());
+		drugOrder.setProvider(Context.getProviderService().getProvider(Integer.parseInt(post.get("providerId").toString())));
+		//drugOrder.setProviderId(new Integer(1));
+		
 		drugOrder.setProviderId(Integer.parseInt(post.get("providerId").toString()));
-		drugOrder.setDateCreated(new Date());
+		//drugOrder.setDateCreated(new Date());
 		
-		if (post.get("drugPurchaseOrderDate") != null) {
-			drugOrder.setDrugPurchaseOrderDate(new Date(post.get("drugPurchaseOrderDate").toString()));
-		}
+		//drugOrder.setCreator(Context.getUserContext().getAuthenticatedUser());
 		
-		if (post.get("received") != null) {
-			drugOrder.setReceived((Boolean) post.get("received"));
-		}
+		//drugOrder.setReceived(false);
+		
+		//
+		//drugOrder.setRetired(false);
 		
 		if (post.get("locationId") != null) {
 			drugOrder.setLocationId(Integer.parseInt(post.get("locationId").toString()));
 		}
 		
-		DrugPurchaseOrder created = service.saveDrugPurchaseOrder(drugOrder);
+		DrugPurchaseOrder created = null;
 		SimpleObject obj = new SimpleObject();
+		
+		created = service.saveDrugPurchaseOrder(drugOrder);
+		
+		System.out.println("uuid is" + drugOrder.getUuid());
+		
 		obj.add("uuid", created.getUuid());
 		obj.add("name", created.getName());
-		obj.add("providerId", created.getDateCreated());
-		return RestUtil.noContent(response);
+		obj.add("providerId", created.getProviderId());
+		
+		return RestUtil.created(response, obj);
+		
 	}
 	
 	//</editor-fold>
