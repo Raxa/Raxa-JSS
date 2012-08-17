@@ -144,8 +144,9 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
         var grid = Ext.getCmp('PanelListLabOrderCreation11');
         selectedLabPanel = grid.getSelectionModel().lastSelected.data.Section;
         selectedLabPanelUuid = grid.getSelectionModel().lastSelected.data.PanelUuid;
-        var duplicate = false;
 
+		//Check if there is a lab investigation in the view with a same name
+        var duplicate = false;
         var lengthOfItems = Ext.getCmp('LabOrderCreationContainer').items.length;
         for (var i = 0; i < lengthOfItems; i++) {
             if (Ext.getCmp('LabOrderCreationContainer').items.items[i].xtype == 'gridpanel') {
@@ -155,12 +156,12 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                 }
             }
         };
+        
+        //Grid is generated only if grid for same investigation is not in the view
         if (!duplicate) {
             Ext.getCmp('LabOrderCreationContainer').add({
-                xtype: 'splitter',
-
-            }, {
                 xtype: 'gridpanel',
+                margin: 10,
                 autoScroll: true,
                 title: selectedLabPanel,
                 columnLines: true,
@@ -168,7 +169,7 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                     xtype: 'gridcolumn',
                     dataIndex: 'Specimen',
                     text: 'Specimen Type',
-                    width: 175,
+                    width: 170,
                 }, {
                     xtype: 'gridcolumn',
                     text: 'Specimen Role'
@@ -223,7 +224,7 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                 }]
             });
         } else {
-            alert(selectedLabPanel + ' is already added in the laborder');
+        Ext.Msg.alert(selectedLabPanel + ' is already added in the laborder') 
         }
     }
 });
