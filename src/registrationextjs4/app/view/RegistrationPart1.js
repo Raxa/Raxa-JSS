@@ -25,6 +25,7 @@ Ext.define('Registration.view.RegistrationPart1', {
         type: 'hbox',
         pack: 'center'
     },
+             
     initComponent: function () {
         this.items = {
             xtype: 'panel',
@@ -34,6 +35,7 @@ Ext.define('Registration.view.RegistrationPart1', {
             items: [{
                 xtype: 'container',
                 bodyPadding: 0,
+		    
                 items: [{
                     xtype: 'fieldset',
                     //first element in bodyStyle is not working, passing it twice
@@ -45,6 +47,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
+
                     items: [{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),
@@ -67,7 +70,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPI.emptytext'),
                             allowBlank: true
 
-                        }]
+                        }],
+				
+
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PN'),
@@ -87,7 +92,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id: 'patientFirstName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
                             width: 172,
-                            allowBlank: false
+                            allowBlank: false,
+								
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PLN.emptytext'),
@@ -114,6 +120,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
                             id: 'relativeFirstName',
                             width:172,
+					
 
                             allowBlank: false
                         }, {
@@ -402,6 +409,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 ]
                             }),
                             displayField: 'occupation'
+					
                         }]
                     }, {
                         xtype: 'container',
@@ -419,18 +427,28 @@ Ext.define('Registration.view.RegistrationPart1', {
                             text: 'Cancel',
                             ui: 'raxa-orange-small',
                             action: 'cancel'
+				    
                         }, {
                             xtype: 'button',
                             margin: '30 0 0 30',
                             width: 60,
+                            id:'continuebutton',
                             text: 'Next',
                             ui: 'raxa-aqua-small',
-                            action: 'continue'
-                        }]
+                            action: 'continue',
+				    
+									              	
+				}]
                     }]
                 }]
             }]
         };
         this.callParent();
+
+
+	  
+
+		
     }
 });
+	
