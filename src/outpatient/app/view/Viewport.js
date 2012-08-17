@@ -16,53 +16,37 @@
 
 Ext.define('RaxaEmr.Outpatient.view.Viewport', {
     extend: 'Ext.navigation.View',
-    xtype: 'mainView',
-    
-    initialize: function (args) {
-        var topBar = Ext.create('Topbar.view.TopToolbar', {
-            docked: 'top',
-            title:'Outpatient Department',
-
-        });
-
-         topBar.add({
-                xtype: 'button',
-                id: 'confirmmedicationhistory',
-                text: 'Done',
-                ui: 'confirm',
-                align: 'right',
-                hidden: false
-         });
-         topBar.add({
-                xtype: 'button',
-                id: 'confirmlabresulthistory',
-                text: 'Done',
-                ui: 'confirm',
-                align: 'right',
-                hidden: false
-         });
-         topBar.add(
-         {
-                xtype: 'button',
-                id: 'confirmrefertodoc',
-                text: 'Done',
-                ui: 'confirm',
-                align: 'right',
-                hidden: false
-         });
-        
-         this.add(topBar); 
-        
-        
-
-    },
-
+    xtype: 'mainview',
+	id: 'mainview',
     requires: ['RaxaEmr.Outpatient.view.patientlist', 'RaxaEmr.Outpatient.view.patient.more', 'RaxaEmr.Outpatient.view.patient.labresulthistorypanel', 'RaxaEmr.Outpatient.view.patient.refertodocpanel', 'RaxaEmr.Outpatient.view.patient.medicationhistorypanel'],
 
     config: {
         autoDestroy: false,
         fullscreen: true,
-        navigationBar:false,
+        navigationBar: {
+            items: [{
+                xtype: 'button',
+                id: 'confirmmedicationhistory',
+                text: 'Done',
+                ui: 'confirm',
+                align: 'right',
+                hidden: true
+            }, {
+                xtype: 'button',
+                id: 'confirmlabresulthistory',
+                text: 'Done',
+                ui: 'confirm',
+                align: 'right',
+                hidden: true
+            }, {
+                xtype: 'button',
+                id: 'confirmrefertodoc',
+                text: 'Done',
+                ui: 'confirm',
+                align: 'right',
+                hidden: true
+            }, ]
+        },
         items: [{
             xtype: 'patientlist'
         }]

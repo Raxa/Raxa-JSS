@@ -13,14 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+Ext.define('RaxaEmr.Outpatient.model.sign', {
+    extend: 'Ext.data.Model',
 
-Ext.define('RaxaEmr.Outpatient.view.patient.treatmentsummery', {
-    extend: 'Ext.dataview.List',
-    xtype: 'Treatment-Summery',
-	id: 'drugList',
     config: {
-        store: 'drugpanel',
-        itemTpl: ['<div>{drugname} {strength} mg</br>{frequency} {instruction}</br>Continue for {duration} days</div>']
+        fields: ['sign', 'id', 'type']
     }
-
 });
