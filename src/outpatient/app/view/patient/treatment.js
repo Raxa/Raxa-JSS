@@ -24,7 +24,7 @@ var TREATMENT = {
 Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
     extend: 'Ext.Container',
     xtype: 'treatment-panel',
-    requires: ['RaxaEmr.Outpatient.view.patient.drugpanel', 'RaxaEmr.Outpatient.view.patient.treatmentsummery'],
+    requires: ['RaxaEmr.Outpatient.view.patient.drugpanel', 'RaxaEmr.Outpatient.view.patient.treatmentsummery', 'Screener.store.druglist', 'Screener.model.druglist'],
     id: 'treatment-panel',
     config: {
         layout: {
@@ -63,32 +63,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                         xtype: 'selectfield',
                         label: 'Name of Drug',
 						id : 'drug-name',
-                        valueField: 'value',
-                        displayField: 'title',
-                        store: {
-                            data: [{
-                                value: '',
-                                title: '',
-                            }, {
-                                value: 'Cialis',
-                                title: 'Cialis (Tadalafil)',
-                            }, {
-                                value: 'Cidofovir',
-                                title: 'Cidofovir (Vistide)',
-                            }, {
-                                value: 'Cinacalcet',
-                                title: 'Cinacalcet (Sensipar)',
-                            }, {
-                                value: 'Ciprofloxacin',
-                                title: 'Ciprofloxacin (Cipro)',
-                            }, {
-                                value: 'Cisplatin',
-                                title: 'Cisplatin (Cisplatin Injection)',
-                            }, {
-                                value: 'Citalopram Hydrobromide',
-                                title: 'Citalopram Hydrobromide (Celexa)',
-                            }]
-                        }
+                        valueField: 'text',
                     }, {
                         xtype: 'selectfield',
                         label: 'Strength',

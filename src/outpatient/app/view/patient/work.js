@@ -99,7 +99,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 icon: '../outpatient/resources/images/treatment.png',
                 padding: '0 0 0 0',
                 handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.TREATMENT)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.TREATMENT);
+					var drugList = Ext.create('Screener.store.druglist', {
+						storeId: 'drugStore'
+					});
+					drugList.load();
+					Ext.getCmp('drug-name').setStore(drugList);
                 }
             }]
         }]

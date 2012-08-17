@@ -156,7 +156,6 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
     init: function () {
         this.getpatientlist();
-        // alert(localStorage.cardiologicaldiagnosisUuidconcept);
     },
 
     getpatientlist: function () {
@@ -576,7 +575,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         for (i = 0; i <= drug_num; i++) {
             // value of Url for get call is made here using name of drug
             var Url = HOST + '/ws/rest/v1/concept?q='
-            Url = Url + 'd4t-30'
+            Url = Url + Ext.getCmp('drug-name').getValue();
             concept.push(Ext.create('RaxaEmr.Outpatient.store.drugConcept'))
             // setting up the proxy for store with the above Url
             concept[i].setProxy({
