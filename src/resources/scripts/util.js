@@ -333,5 +333,20 @@ var Util = {
                 }
             }
         });
+    },
+    
+    /**
+     * Runs before each module. Checks whether user has the privilege to view a specific module
+     * If not, redirects to login page.
+     * If so, returns true.
+     */
+    checkModulePrivilege: function(module){
+        var privileges = localStorage.getItem("privileges");
+        if(privileges!== null && (privileges.indexOf('RaxaEmrView '+module)!==-1 || privileges.indexOf('all privileges')!==-1)){
+            return true;
+        }
+        else{
+            window.location = "../";
+        }
     }
 }

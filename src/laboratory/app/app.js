@@ -39,7 +39,9 @@ Ext.application({
 'LabOrderList'],
   
       launch: function () {
-        Ext.create('Laboratory.view.Viewport');
+        if(Util.checkModulePrivilege('laboratory')){
+            Ext.create('Laboratory.view.Viewport');
+        }
     }
 });
 

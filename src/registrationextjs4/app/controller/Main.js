@@ -374,6 +374,7 @@ Ext.define('Registration.controller.Main', {
         store.add(jsonencounter);
         store.sync();
         store.on('write', function () {
+            Ext.Msg.alert('Encounter saved successfully.');
             this.cancel();
         }, this)
         return store;

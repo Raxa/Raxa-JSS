@@ -13,15 +13,43 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 Ext.Loader.setConfig({
-    enabled: true
-});
-Ext.application({
-    name: 'mUserStories',
-    controllers: ['basic'],
-    models: ['downModel', 'upPersonModel', 'names', 'addresses', 'upPatientModel', 'identifiers','encounterModel'],
-    stores: ['downStore', 'upPersonStore', 'location', 'identifiersType', 'upPatientStore','offlineStore','encounterStore'],
-    launch: function () {
-        Ext.create('mUserStories.view.loginScreen');
+    enabled: true,
+    paths: {
+        'Ext.i18n': '../lib/i18n' //Path to i18n library for localization
     }
+});
+
+Ext.application({
+    name: 'chw',
+    controllers: ['basic'],
+    models: ['family', 'patient', 'illness', 'pill', 'patientIllness', 'resource', 'visit'],
+    stores: ['families', 'patients', 'illnesses', 'pills', 'patientsIllnesses', 'resources', 'visits'],
+    views: [
+        'loginScreen', 
+        'familyList', 
+        'illnessList', 
+        'familyDetails', 
+        'patientDetails', 
+        'visitDetails', 
+        'inventoryList', 
+        'inventoryDetails', 
+        'addOptions', 
+        'addFamily', 
+        'addPatient',
+        'illnessDetails'
+    ],
+    launch: function () {
+        Ext.create('chw.view.loginScreen');
+    }
+});
+
+Ext.require('Ext.i18n.Bundle', function(){
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+        bundle: 'RaxaEmrChw',
+        lang: localStorage.getItem('lang'),
+        path: 'app/view',
+        noCache: true
+    });
 });
