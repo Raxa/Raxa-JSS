@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //examination tab view
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
     extend: 'Ext.Container',
     xtype: 'examination-panel',
@@ -90,9 +93,6 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                     }, {
                         xtype: 'actionsheet',
                         id: 'durationPicker',
-                        // layout: {
-                        // type: 'fit',
-                        // },
                         hidden: true,
                         items: [{
                             xtype: 'formpanel',
@@ -116,7 +116,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                                 xtype: 'button',
                                 text: 'Cancel',
                                 handler: function () {
-                                    Ext.getCmp('durationPicker').setHidden(true);
+                                    Ext.getCmp('durationPicker').setHidden(true);// to hide the duration picker field
                                 }
                             }]
                         }]

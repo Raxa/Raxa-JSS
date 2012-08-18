@@ -14,6 +14,8 @@
  * the License.
  */
 
+ //final lsit of the treatment tab
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.treatmentsummery', {
     extend: 'Ext.dataview.List',
     xtype: 'Treatment-Summery',

@@ -22,10 +22,10 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
         title: 'Outpatient Department',
         cls: 'x-contacts',
         ui: 'round',
+		// patient list toolbars
         items: [{
             xtype: 'toolbar',
             docked: 'top',
-
             items: [{
                 xtype: 'segmentedbutton',
                 allowDepress: false,
@@ -81,6 +81,7 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
                 }]
             }]
         }],
+		//list items  are shown by this
         itemTpl: ['<div class="headshot" style="background-image:url({image});"></div>', '<div style="float:left;width:30%;">', '{display}', '<span>From : {city}, {state}</span>', '<span>Age : {age}</span>', '</div>', '<div style="float:left;width:20%;">', '<span>{nameofdoc}</span>', '<span>Disease : {disease}</span>', '</div>', '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">{urgency}</div>', '<div style="float:right;width:40%;">', '<span>Last Visit : {lastvisit:date("j M Y")}</span>', '<span>No. of Visits : {noofvisits}</span>', '<span>ID : {uuid}</span>', '</div>'].join('')
     }
 });

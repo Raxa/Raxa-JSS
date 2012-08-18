@@ -13,6 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //bottom half view of the patient details (history , examination, diagnosis and treatment tab)
+ 
+ //enum to swich the tabs
+ 
 var TABS = {
     HISTORY: 0,
     EXAMINATION: 1,
@@ -49,7 +54,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 docked: 'top',
                 hidden: true
             }
-        }, {
+        }, {// used to make vertical tabs
             xtype: 'segmentedbutton',
             docked: 'left',
             margin: '0 0 0 15',
@@ -68,7 +73,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 padding: '0 0 0 0',
                 pressed: true,
                 handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.HISTORY)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.HISTORY)//switch the view to history tab 
                 }
             }, {
                 xtype: 'button',
@@ -79,7 +84,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 icon: '../outpatient/resources/images/examination.png',
                 padding: '0 0 0 0',
                 handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION)//switch the view to examination tab
                 }
             }, {
                 xtype: 'button',
@@ -89,7 +94,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 icon: '../outpatient/resources/images/diagnosis.png',
                 padding: '0 0 0 0',
                 handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.DIAGNOSIS)
+                    Ext.getCmp('maintabs').setActiveItem(TABS.DIAGNOSIS)//switch the view to diagnosis tab
                 }
             }, {
                 xtype: 'button',
@@ -99,7 +104,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 icon: '../outpatient/resources/images/treatment.png',
                 padding: '0 0 0 0',
                 handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.TREATMENT);
+                    Ext.getCmp('maintabs').setActiveItem(TABS.TREATMENT);//switch the view to treatment tab and drug list is fetched
 					var drugList = Ext.create('Screener.store.druglist', {
 						storeId: 'drugStore'
 					});

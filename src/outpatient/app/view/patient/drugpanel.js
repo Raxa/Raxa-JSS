@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+//medication history panel
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Drug-Panel',

@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //view of medication history
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistory', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Medication-History',

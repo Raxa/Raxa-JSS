@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //view of lab result history
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.labresulthistory', {
     extend: 'Ext.dataview.List',
     xtype: 'Lab-Result-History',

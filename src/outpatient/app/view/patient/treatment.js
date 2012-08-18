@@ -14,6 +14,9 @@
  * the License.
  */
 
+ //view of treatment tab
+ 
+ //enum for switching the panels in the treatment tab
 var TREATMENT = {
     ADD : 0,
     INSTRUCTIONS : 1,
@@ -162,7 +165,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     icon: '../outpatient/resources/images/add.png',
                     padding: '0 10 10 0',
                     handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);// to add more than one treatment
 						Ext.getCmp('drugaddform').reset();
                     }
                 }, {
@@ -200,7 +203,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     ui: 'confirm',
                     text: 'Done',
                     handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.DRUGPANEL)
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.DRUGPANEL)//switch to drug panel
                     }
                 }]
             }, {
@@ -242,7 +245,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     text: 'Done',
                     margin: '20 0 0 0',
                     handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.SUMMERY)
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.SUMMERY)//switch to tratment summery list
                     }
                 }]
             }, {
@@ -341,7 +344,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     icon: '../outpatient/resources/images/add.png',
                     padding: '0 10 10 0',
                     handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);// to add more than one treatment
 						Ext.getCmp('drugaddform').reset();
                     }
                 }, {

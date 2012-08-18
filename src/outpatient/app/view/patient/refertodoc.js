@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //view of refer to doc grid
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Refer-To-Doc',

@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //view of sign list in the examination tab
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.signlist', {
     extend: 'Ext.dataview.List',
     xtype: 'Sign-List',

@@ -28,7 +28,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
             flex: 1,
 			id : 'diagnosisForm',
             scrollable: 'false',
-            items: [{
+            items: [{// diagnosis form
                 xtype: 'fieldset',
                 items: [{
                     xtype: 'selectfield',
@@ -95,7 +95,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
 					id: 'diagnosisNotes',
                     label: 'Notes'
                 }]
-            }, {
+            }, {// submit nad clear buttons for action to be performed
                 xtype: 'container',
                 layout: {
                     pack: 'center',
@@ -117,7 +117,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
 					flex: 1
 				}]
             }]
-        }, {
+        }, {// side buttons for refer to doc nad to add another diagnosis
             xtype: 'container',
             width: 60,
             items: [{

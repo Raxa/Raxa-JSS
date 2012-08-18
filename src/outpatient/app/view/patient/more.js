@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //the view after clicking one of the patient in the patient list
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.more', {
     extend: 'Ext.Container',
     xtype: 'patientlist-show',
