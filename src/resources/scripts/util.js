@@ -352,7 +352,6 @@ var Util = {
     },
     DestoryKeyMapButton: function(keyName)
     {
-           keyMap.keyName.destroy(true);
-	     alert(keyMap);
+           keyMap.keyName.destroy(true)
     },
 }
