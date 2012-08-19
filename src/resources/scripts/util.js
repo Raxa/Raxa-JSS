@@ -31,6 +31,9 @@ var username;
 var password;
 var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
+var keyMap={
+  
+};
 var resourceUuid = [
 ['concept', 'height', 'HEIGHT (CM)'],
 ['concept', 'weight', 'WEIGHT (KG)'],
@@ -329,5 +332,27 @@ var Util = {
                 }
             }
         });
-    }
+    },
+    KeyMapButton: function(ComponentName,keyName)
+    {
+	 // this.DestoryKeyMapButton();
+        keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
+        {
+            key: Ext.EventObject.ENTER,
+            shift: false,
+            ctrl: false,
+	      fn:function(){
+            var element = Ext.getCmp(ComponentName);
+            element.fireEvent('click',element);
+		
+
+            },
+        }
+        ]);
+    },
+    DestoryKeyMapButton: function(keyName)
+    {
+           keyMap.keyName.destroy(true);
+	     alert(keyMap);
+    },
 }
