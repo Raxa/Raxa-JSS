@@ -28,7 +28,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
         columns: [{
             header: 'Drug Name',
             dataIndex: 'drugname',
-            width: '20%',
+            width: '25%',
             cls: 'centered-cell',
             renderer: function (value, values) {
                 return '<span>' + value + '</span>';
@@ -36,25 +36,20 @@ Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
         }, {
             header: 'Strength',
             dataIndex: 'strength',
-            width: '20%',
+            width: '25%',
             cls: 'centered-cell',
             renderer: function (value, values) {
                 return '<span>' + value + ' mg' + '</span>';
             }
         }, {
             header: 'Dosage',
-            dataIndex: 'dosage',
-            width: '20%',
+            dataIndex: 'frequency',
+            width: '25%',
             cls: 'centered-cell',
         }, {
             header: 'Instruction',
             dataIndex: 'instruction',
-            width: '20%',
-            cls: 'centered-cell',
-        }, {
-            header: 'Route of Administration',
-            dataIndex: 'routeofadministration',
-            width: '20%',
+            width: '25%',
             cls: 'centered-cell',
         }]
     }

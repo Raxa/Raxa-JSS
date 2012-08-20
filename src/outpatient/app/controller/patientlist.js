@@ -14,8 +14,6 @@
  * the License.
  */
 var myRecord;// for the record of current patient
-var loggedInDoc = '74eab850-7853-40e0-a79a-67cd72447eda';
-
 var opd_observations = new Array();//contains the observations of different tabs
 
 Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
@@ -55,6 +53,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             reftodocsortbydocname: '#reftodocsortbydocname',
             reftodocsortbyopdno: '#reftodocsortbyopdno',
             signfilterbysearchfield: '#signfilterbysearchfield',
+			referPatient : '#referpatient',
         },
 
         control: {//to perform action on specific component accessed through it's id above 
@@ -150,6 +149,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             },
             submitdiagnosis: {
                 tap: 'submitDiagnosis'
+            },
+            referPatient: {
+                tap: 'referPatient'
             }
         }
     },
@@ -489,7 +491,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             patient: myRecord.data.uuid,
             encounterType: localStorage.outUuidencountertype,
             encounterDatetime: time,
-            provider: loggedInDoc,
+            provider: localStorage.loggedInUser,
             obs: opd_observations
         });
 
@@ -499,6 +501,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         encounterStore.on('write', function () {
             Ext.Msg.alert('successfull');
         }, this);
+        Ext.getCmp('examList').getStore().removeAll();
     },
 	// to add observation in the observation array
     addObservation: function (concept, value) {
@@ -624,6 +627,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                         // this is the encounter for the prescription encounterType
                         encounterType: localStorage.prescriptionUuidencountertype,
                         encounterDatetime: time,
+						provider: localStorage.loggedInUser,
                         orders: order
                     })
                     var encounterStore = Ext.create('RaxaEmr.Outpatient.store.drugEncounter')
@@ -638,5 +642,25 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 }
             }, this);
         }
-    },
+		druglist.removeAll();
+	},
+
+	referPatient: function () {
+		var selection = Ext.getCmp('refToDocPanel').getSelection();
+		var provider = selection[0].data.person.uuid;
+		// alert(provider);
+        var currentDate = new Date();
+        var jsonencounter = Ext.create('Screener.model.encounterpost', {
+            encounterDatetime: Util.Datetime(currentDate, 5.5),
+            patient: myRecord.data.uuid,
+            encounterType: localStorage.screenerUuidencountertype,
+            provider: provider
+        });
+        var store = Ext.create('Screener.store.encounterpost');
+        store.add(jsonencounter);
+        store.sync();
+		store.on('write', function () {
+            Ext.Msg.alert('successfull');
+        }, this);
+    }
 });

@@ -25,7 +25,7 @@ Ext.apply(Ext.form.VTypes, {
 });
 
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://test.raxa.org:8080/openmrs';
+    var HOST = 'http://localhost:8082/openmrs-standalone';
 } else HOST = localStorage.getItem("host");
 var username;
 var password;

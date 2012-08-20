@@ -47,6 +47,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
             }, {
                 xtype: 'spacer'
             }, {
+				xtype: 'button',
+				id: 'referpatient',
+				text: 'Refer',
+				ui: 'confirm',
+				width: 100,
+			}, {
                 xtype: 'searchfield',
                 id: 'reftodocsearchfield',
                 placeHolder: 'Search...'
@@ -57,12 +63,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
             dataIndex: 'display',
             width: '50%',
             cls: 'centered-cell',
-            renderer: function (value, values) {
+            renderer: function (value) {
                 return value.split("- ")[1];
             }
         }, {
-            header: 'OPD Number',
-            dataIndex: 'uuid',
+            header: 'Identifier',
+            dataIndex: 'identifier',
             width: '50%',
             cls: 'centered-cell'
         }]

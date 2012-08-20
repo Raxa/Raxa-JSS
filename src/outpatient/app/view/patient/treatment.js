@@ -19,9 +19,8 @@
  //enum for switching the panels in the treatment tab
 var TREATMENT = {
     ADD : 0,
-    INSTRUCTIONS : 1,
-    DRUGPANEL : 2,
-    SUMMERY : 3
+    DRUGPANEL : 1,
+    SUMMERY : 2
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
@@ -165,58 +164,10 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     icon: '../outpatient/resources/images/add.png',
                     padding: '0 10 10 0',
                     handler: function () {
+						Ext.getCmp('addDrugInList').fireEvent('tap');
                         Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);// to add more than one treatment
 						Ext.getCmp('drugaddform').reset();
                     }
-                }, {
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '10 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/problemlist.png',
-                    padding: '0 10 10 0'
-                }]
-            }]
-        }, {
-            xtype: 'container',
-            layout: {
-                type: 'hbox'
-            },
-            items: [{
-                xtype: 'formpanel',
-                flex: 1,
-                items: [{
-                    xtype: 'fieldset',
-                    items: [{
-                        xtype: 'selectfield',
-                        label: 'Treatment'
-                    }, {
-                        xtype: 'textareafield',
-                        label: 'Instructions'
-                    }, {
-                        xtype: 'togglefield',
-                        label: 'Admit'
-                    }]
-                }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Done',
-                    handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.DRUGPANEL)//switch to drug panel
-                    }
-                }]
-            }, {
-                xtype: 'container',
-                width: 60,
-                items: [{
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '20 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
                 }, {
                     xtype: 'button',
                     docked: 'top',
@@ -258,7 +209,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     margin: '20 20 0 0',
                     width: 40,
                     icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
+                    padding: '0 10 10 0',
+                    handler: function () {
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD);// to add more than one treatment
+						Ext.getCmp('drugaddform').reset();
+                    }
                 }, {
                     xtype: 'button',
                     docked: 'top',
