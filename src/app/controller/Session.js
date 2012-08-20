@@ -198,6 +198,7 @@ Ext.define('RaxaEmr.controller.Session', {
     },
 
     showDashboard: function () {
+        Startup.getResourceUuid();
         var privileges = localStorage.getItem("privileges");
         var allModules = Util.getModules();
         var allApps = Util.getApps();
@@ -231,7 +232,6 @@ Ext.define('RaxaEmr.controller.Session', {
 
     //on entry point for application, give control to Util.getViews()
     launch: function () {
-        Startup.getResourceUuid();
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,

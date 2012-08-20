@@ -26,17 +26,10 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Screener',
 
-<<<<<<< HEAD
-    requires: ['Screener.store.Patients', 'Screener.store.Doctors','Screener.store.Doctors', 'Ext.navigation.View', 'Ext.MessageBox'],
-
-    //we will use a Patient and Doctor class
-    models: ['Patient', 'Doctor', 'Links', 'encounters'],
-=======
     requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Screener.store.Doctors', 'Ext.navigation.View'],
 
     //we will use a Patient and Doctor class
     models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'Observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
->>>>>>> 94eb766accce905d843bc90c40dd7e185e32d395
 
     //here we declare the visual components
     views: ['Main', 'TopMenu', 'PatientView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary', 'DoctorSummary'],
@@ -45,11 +38,7 @@ Ext.application({
     controllers: ['Application'],
 
     //the stores will hold our data in a local cache
-<<<<<<< HEAD
-    stores: ['Patients', 'Doctors', 'encounters'],
-=======
     stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary','AssignedPatientList'],
->>>>>>> 94eb766accce905d843bc90c40dd7e185e32d395
 
     //entry point
     launch: function () {

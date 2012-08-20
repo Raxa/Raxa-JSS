@@ -64,7 +64,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             text: 'Duration',
                             // gets the duration using start and end date of prescription
                             renderer: function(value, metadata, record){
-                                console.log(record)
                                 var temp = record.getData().endDate - record.getData().startDate
                                 temp = temp/(86400000)
                                 temp = parseInt(temp) + 1
@@ -103,7 +102,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Done',
-                        action: 'done',
+                        action: 'done1',
                         x: 330,
                         y: 580
                     },
@@ -111,6 +110,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Print',
+                        action: 'print1',
                         x: 560,
                         y: 580
                     }]
@@ -121,7 +121,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     items:[{
                         xtype: 'prescribedDrugs',
                         x: 190,
-                        y: 270,
+                        y: 270
                     },{
                         xtype: 'button',
                         width: 60,
@@ -220,7 +220,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             ]
                         }, {
                             xtype: 'gridpanel',
-                            title: 'prescriptions',
+                            title: 'Prescriptions',
                             border: 0,
                             id: 'drugOrderASearchGrid',
                             store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),

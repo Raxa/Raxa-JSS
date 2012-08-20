@@ -1,10 +1,10 @@
 Ext.define('Registration.controller.Main', {
     extend: 'Ext.app.Controller',
     id: 'main', 
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'IllnessDetails', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore'],
-    models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel'],
+    stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore', 'Doctors'],
+    models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor'],
         
     init: function () {
         this.control({
@@ -14,6 +14,15 @@ Ext.define('Registration.controller.Main', {
             },
             //clicking cancel button on registraion form 2 calls cancel()
             "registrationpart1 button[action=cancel]": {
+                click: this.cancel
+            },
+            'illnessdetails button[action=next]':{
+                click: this.confirm
+            },
+            'illnessdetails button[action=back]':{
+                click: this.regpage1
+            },
+            'illnessdetails button[action=cancel]':{
                 click: this.cancel
             },
             //clicking cancel button on confirmation screen calls cancel()
@@ -41,7 +50,20 @@ Ext.define('Registration.controller.Main', {
         l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
     },
     
+    regpage1: function(){
+        var l = Ext.getCmp('mainRegArea').getLayout();
+        l.setActiveItem(REG_PAGES.REG_1.value);
+    },
     
+    confirm: function(){
+        if(Ext.getCmp('registrationfeespaid') != undefined){
+            var l = Ext.getCmp('mainRegArea').getLayout();
+            l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
+        }
+        else{
+            Ext.Msg.alert('Fill the registration fees')
+        }
+    },
     
     searchPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
@@ -52,7 +74,8 @@ Ext.define('Registration.controller.Main', {
     Continue: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
         if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
-            l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
+            //l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
+            l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);
         } else alert("Fields invalid");
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
@@ -60,7 +83,6 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
         Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
         Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
-        Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
         Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
         Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
@@ -95,6 +117,13 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('patientPrimaryContact').reset()
         Ext.getCmp('patientSecondaryContact').reset()
         Ext.getCmp('oldPatientIdentifier').reset()
+        Ext.getCmp('complaintarea').reset()
+        Ext.getCmp('remarksarea').reset()
+        Ext.getCmp('referredby').reset()
+        Ext.getCmp('companionname').reset()
+        Ext.getCmp('phonenumber').reset()
+        Ext.getCmp('relationtopatient').reset()
+        Ext.getCmp('registrationfeespaid').reset()
     },
 
     /* this function makes the post call for making the person */
@@ -109,7 +138,7 @@ Ext.define('Registration.controller.Main', {
             addresses: [{
                 address1: Ext.getCmp('block').value,
                 address2: Ext.getCmp('street').value,
-                cityVillage: Ext.getCmp('town').value,
+                cityVillage: Ext.getCmp('town').value
             }]
         //right now there is bug in openmrs server due to which sending attributes with body of 
         //post call leads to 500 response status so right now I am commenting it for
@@ -362,6 +391,33 @@ Ext.define('Registration.controller.Main', {
                 value: Ext.getCmp('registrationfeespaid').value
             });
             jsonencounter.data.obs.push(jsonencounterregfee.data);
+        }
+        if(Ext.getCmp('complaintarea').isValid() && Ext.getCmp('complaintarea').value != null){
+            var jsonencountercomplaint = Ext.create('Registration.model.obsModel',{
+                obsDatetime : t,
+                person: localStorage.newPatientUuid,
+                concept: localStorage.complaintUuidconcept,
+                value: Ext.getCmp('complaintarea').value
+            });
+            jsonencounter.data.obs.push(jsonencountercomplaint.data);
+        }
+        if(Ext.getCmp('remarksarea').isValid() && Ext.getCmp('remarksarea').value != null){
+            var jsonencounterremarks = Ext.create('Registration.model.obsModel',{
+                obsDatetime : t,
+                person: localStorage.newPatientUuid,
+                concept: localStorage.notesUuidconcept,
+                value: Ext.getCmp('remarksarea').value
+            });
+            jsonencounter.data.obs.push(jsonencounterremarks.data);
+        }
+        if(Ext.getCmp('referredby').isValid() && Ext.getCmp('referredby').value != null){
+            var jsonencounterreferred = Ext.create('Registration.model.obsModel',{
+                obsDatetime : t,
+                person: localStorage.newPatientUuid,
+                concept: localStorage.referredUuidconcept,
+                value: Ext.getStore('Doctors').data.items[Ext.getStore('Doctors').find('display',Ext.getCmp('referredby').value)].data.uuid
+            });
+            jsonencounter.data.obs.push(jsonencounterreferred.data);
         }
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);

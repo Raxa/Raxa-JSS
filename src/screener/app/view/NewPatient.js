@@ -47,11 +47,7 @@ Ext.define("Screener.view.NewPatient", {
                     label : 'Female',
                     value: 'F',
                     name  : 'choice',
-<<<<<<< HEAD
-                    labelWidth: 100,
-=======
                     labelWidth: 90,
->>>>>>> 94eb766accce905d843bc90c40dd7e185e32d395
                     flex  : 1
                 },
                 {

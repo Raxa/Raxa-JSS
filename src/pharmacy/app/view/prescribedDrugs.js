@@ -111,7 +111,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                     });
                 }
             },{
-                icon: '../../resources/img/edit.png',
+                icon: '../../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
                     drugEditor.fireEvent('drugDelete', {

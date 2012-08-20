@@ -312,40 +312,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
                 },{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.title2'),
-                    items:[{
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.RF'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            xtype: 'numberfield',
-                            fieldLabel: 'Registration Fees Paid',
-                            id: 'registrationfeespaid',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.RF'),
-                            defaultValue: 0,
-                            labelPad: 20,
-                            labelWidth: 70,
-                            labelAlign: 'right',
-                            anchor: '95%',
-                            margin: '0 10 0 0',
-                            hideTrigger: true,
-                            keyNavEnabled: false,
-                            mouseWheelEnabled: false,
-                            nanText: 'Invalid Input'
-                        }]  
-                    }]
-                },{
-                    xtype: 'fieldset',
-                    padding: 10,
                     border: false,
                     items:[{
                         xtype: 'button',

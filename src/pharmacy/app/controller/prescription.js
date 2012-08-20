@@ -1,3 +1,4 @@
+var flag = 0
 Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     extend: 'Ext.app.Controller',
 
@@ -16,6 +17,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             },
             "prescription button[action=done2]": {
                 click: this.savePerson
+            },
+            "prescription button[action=print2]": {
+                click: this.prescriptionfill2
+            },
+            "prescription button[action=print1]": {
+                click: this.prescriptionfill1
             },
             'prescribedDrugs': {
                 render: this.onEditorRender,
@@ -204,8 +211,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var l1 = Ext.getCmp('addpatientgridarea').getLayout();
         l1.setActiveItem(1);
     },
-
+    
     savePerson: function () {
+        flag = 1
         if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid() && (Ext.getCmp('dob').getValue() != null || Ext.getCmp('age').getValue() != null)){
             var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
                 gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
@@ -283,12 +291,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 preferred: true
             }]
         });
+        localStorage.setItem('person',personUuid)
         var PatientStore = Ext.create('RaxaEmr.Pharmacy.store.Patients')
         PatientStore.add(patient);
         //makes the post call for creating the patient
         PatientStore.sync();
         PatientStore.on('write', function() {
-            this.sendPharmacyEncounter(personUuid);
+            this.sendPharmacyEncounter(personUuid,localStorage.pharmacyUuidencountertype);
         },this)
     //I made this funtion return this store because i needed this in jasmine unit test
     //return PatientStore
@@ -300,9 +309,40 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         }
         return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
     },
-
     
-    sendPharmacyEncounter: function(uuid) {
+    prescriptionfill1: function() {
+        var time = this.ISODateString(new Date());
+        // the order here will be the encounter selected from the prescription grid from 'Ext.getSelection()'
+        // model for posting the encounter for given drug orders
+        var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
+            patient: localStorage.person,
+            // this is the encounter for the prescription encounterType
+            encounterType: localStorage.prescriptionfillUuidencountertype,
+            encounterDatetime: time,
+            provoider: localStorage.loggedInUser
+            //orders: order
+        })
+        var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
+        encounterStore.add(encounter)
+        // make post call for encounter
+        encounterStore.sync()
+        encounterStore.on('write', function () {
+            Ext.Msg.alert('successfull')
+        //Note- if we want add a TIMEOUT it shown added somewhere here
+        }, this)
+    },
+    
+    prescriptionfill2: function(){
+        if(flag == 1){
+            flag = 0
+            this.sendPharmacyEncounter(localStorage.person,localStorage.prescriptionfillUuidencountertype)
+        }
+        else{
+            Ext.Msg.alert('Please press \'Done\' button first')
+        }
+    },
+        
+    sendPharmacyEncounter: function(uuid,encountertype) {
         concept = new Array();
         order = new Array();
         var k = 0,k1 = 0,k2 = 0;
@@ -349,25 +389,34 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 // added a counter k which increment as a concept load successfully, after all the concept are loaded
                 // value of k should be equal to the no. of drug forms
                 concept[i1].on('load', function () {
-                    console.log(Ext.getStore('orderStore'));
                     k1++;
                     if (k == drugs.items.length && k1 == k2) {
+                        console.log(concept)
                         for (var j = 0; j < concept.length; j++) {
+                            console.log(concept[j])
                             order[j].concept = concept[j].getAt(0).getData().uuid;
                         }
                         if(order.length == 0){
-                            RaxaEmr.Pharmacy.model.drugEncounter.getFields()[4].persist = false;
+                            RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = false;
                         }
                         var time = this.ISODateString(new Date());
                         // model for posting the encounter for given drug orders
                         var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
                             patient: uuid,
                             // this is the encounter for the prescription encounterType
-                            encounterType: localStorage.pharmacyUuidencountertype,
+                            encounterType: encountertype,
                             encounterDatetime: time,
                             orders: order
                         })
+                        if (encountertype == localStorage.prescriptionfillUuidencountertype) {
+                            encounter.data.provider = localStorage.loggedInUser;
+                            RaxaEmr.Pharmacy.model.Person.getFields()[4].persist = true;
+                        } else {
+                            RaxaEmr.Pharmacy.model.Person.getFields()[4].persist = false;
+                        }
                         var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
+                        console.log(encounterStore)
+                        console.log(encounter)
                         encounterStore.add(encounter)
                         // make post call for encounter
                         encounterStore.sync()
@@ -390,10 +439,16 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
                         patient: uuid,
                         // this is the encounter for the prescription encounterType
-                        encounterType: localStorage.pharmacyUuidencountertype,
+                        encounterType: encountertype,
                         encounterDatetime: time,
                         orders: order
                     })
+                    if (encountertype == localStorage.prescriptionfillUuidencountertype) {
+                        encounter.data.provider = localStorage.loggedInUser;
+                        RaxaEmr.Pharmacy.model.Person.getFields()[4].persist = true;
+                    } else {
+                        RaxaEmr.Pharmacy.model.Person.getFields()[4].persist = false;
+                    }
                     var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
                     encounterStore.add(encounter)
                     // make post call for encounter
@@ -431,6 +486,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         if (x.age != 0) Ext.getCmp('prescriptionPatientAge').setValue(x.age)
         else Ext.getCmp('prescriptionPatientAge').setValue(null)
         Ext.getCmp('prescriptionPatientGender').setValue(x.gender)
+        localStorage.steItem('person',x.uuid)
         this.getDrugOrders(x.uuid)
     },
 

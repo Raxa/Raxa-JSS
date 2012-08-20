@@ -35,10 +35,14 @@ Ext.require('Ext.i18n.Bundle', function(){
 
 Ext.application({
     name: 'Registration',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'IllnessDetails', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['Main', 'BMI','Search'],
 
+    controllers: ['Main', 'BMI','Search'],
+    
+    stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore', 'Doctors'],
+    models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor'],
+    
     launch: function () {
         Ext.create('Registration.view.Viewport');
     }
