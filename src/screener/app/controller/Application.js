@@ -319,7 +319,6 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('form' + form_num).hide();
             form_num--;
         }
-        // TODO: what is the following line for? Remove if does nothing
     },
     //function for posting the drug order
     /* steps - get the drugs form server using get call on drugs
