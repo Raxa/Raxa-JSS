@@ -32,7 +32,7 @@ var password;
 var timeoutLimit = 20000;
 var hospitalName = 'JSS Hospital';
 var keyMap={
-  
+    
 };
 var resourceUuid = [
 ['concept', 'height', 'HEIGHT (CM)'],
@@ -335,16 +335,14 @@ var Util = {
     },
     KeyMapButton: function(ComponentName,keyName)
     {
-	 // this.DestoryKeyMapButton();
         keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
         {
-            key: Ext.EventObject.ENTER,
+            key: keyName,
             shift: false,
             ctrl: false,
 	      fn:function(){
-            var element = Ext.getCmp(ComponentName);
+		var element = Ext.getCmp(ComponentName);
             element.fireEvent('click',element);
-		
 
             },
         }
