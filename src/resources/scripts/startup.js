@@ -47,6 +47,7 @@ var Startup = {
     
     
     getResourceUuid: function() {
+        console.log("getResourceUuid");
         var x;
         Ext.Ajax.request({
             url : HOST+'/ws/rest/v1/concept?q=height',
@@ -63,10 +64,11 @@ var Startup = {
                     }
                 }
                 if(x != localStorage.heightUuidconcept || localStorage.heightUuidconcept == undefined){
-                    
-                    for(var i1 =0;i1<resourceUuid.length;++i1){
-                        var a = resourceUuid[i1]
-                        Util.getAttributeFromREST(a[0], a[1], a[2])
+
+                    for (k in resourceUuid)
+                    {
+                        var res = resourceUuid[k];
+                        Util.getAttributeFromREST(res.resource, res.queryTerm, res.varName, res.displayName);
                     }
                 }
             }            
