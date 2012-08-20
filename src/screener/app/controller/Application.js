@@ -320,7 +320,6 @@ Ext.define("Screener.controller.Application", {
             form_num--;
         }
         // TODO: what is the following line for? Remove if does nothing
-        store.getData().getAt(0).getData().uuid;
     },
     //function for posting the drug order
     /* steps - get the drugs form server using get call on drugs
