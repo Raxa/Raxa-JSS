@@ -492,6 +492,7 @@ Ext.define("Screener.controller.Application", {
         PatientStore.add(patient);
         PatientStore.sync();
         PatientStore.on('write', function () {
+        // TODO: Need to add location to OpenMRS for screenerUuidlocation
             this.sendEncounterData(personUuid, localStorage.regUuidencountertype, localStorage.screenerUuidlocation, localStorage.loggedInUser)
         }, this)
     },
@@ -678,6 +679,7 @@ Ext.define("Screener.controller.Application", {
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
+        // TODO: Need to add location to OpenMRS for waitingUuidlocation
         this.sendEncounterData(patient, localStorage.screenerUuidencountertype, localStorage.waitingUuidlocation, provider)
         this.getDoctorList().refresh();
     },

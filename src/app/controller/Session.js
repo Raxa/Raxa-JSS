@@ -166,6 +166,9 @@ Ext.define('RaxaEmr.controller.Session', {
      * Called when login is successful for the given user, populates AppGrid with the user's modules
      */
     loginSuccess: function () {
+        // If not yet retrieved, gets Uuids associated with OpenMRS concepts
+        Startup.getResourceUuid();
+        
         var privileges = localStorage.getItem("privileges");
         var allModules = Util.getModules();
         var userModules = [];
@@ -231,7 +234,6 @@ Ext.define('RaxaEmr.controller.Session', {
 
     //on entry point for application, give control to Util.getViews()
     launch: function () {
-        Startup.getResourceUuid();
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,
