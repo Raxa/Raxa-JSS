@@ -19,11 +19,7 @@ Ext.define('Screener.model.Doctor', {
         },{
             name: 'numpatients',
             type: 'number',
-            
         },{
-			name: 'identifier',
-            type: 'number',
-		},{
             name: 'person',
             model: 'Screener.model.Person'
         }]
