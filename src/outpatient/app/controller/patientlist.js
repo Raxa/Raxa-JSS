@@ -648,7 +648,6 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 	referPatient: function () {
 		var selection = Ext.getCmp('refToDocPanel').getSelection();
 		var provider = selection[0].data.person.uuid;
-		// alert(provider);
         var currentDate = new Date();
         var jsonencounter = Ext.create('Screener.model.encounterpost', {
             encounterDatetime: Util.Datetime(currentDate, 5.5),
@@ -657,6 +656,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             provider: provider
         });
         var store = Ext.create('Screener.store.encounterpost');
+		store.getProxy().setUrl(HOST + '/ws/rest/v1/encounter/' +myRecord.data.encounters[0].uuid);
         store.add(jsonencounter);
         store.sync();
 		store.on('write', function () {
