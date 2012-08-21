@@ -64,7 +64,6 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
         Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
         Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
-        Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
         Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
         Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
@@ -81,6 +80,7 @@ Ext.define('Registration.controller.Main', {
 
     /* this function return to home screen */
     cancel: function () {
+        console.log("cancel");
         //return to home screen
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
@@ -94,7 +94,6 @@ Ext.define('Registration.controller.Main', {
             'education',
             'dob',
             'patientAge',
-            'caste',
             'occupation',
             'block',
             'street',
@@ -107,7 +106,7 @@ Ext.define('Registration.controller.Main', {
             'oldPatientIdentifier'
         ];
         
-        for (var i = 0; i < components.length; i++)
+        for (var i = 0; i < fields.length; i++)
         {
             Ext.getCmp(fields[i]).reset();
         }
@@ -115,6 +114,7 @@ Ext.define('Registration.controller.Main', {
 
     /* this function makes the post call for making the person */
     submit: function () {
+        console.log("submit!");
         //creating the json object to be made
         var jsonperson = Ext.create('Registration.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
@@ -127,6 +127,8 @@ Ext.define('Registration.controller.Main', {
                 address2: Ext.getCmp('street').value,
                 cityVillage: Ext.getCmp('town').value,
             }]
+        // TODO: Create a ticket for this, put code in ticket and return it
+        // later.
         //right now there is bug in openmrs server due to which sending attributes with body of 
         //post call leads to 500 response status so right now I am commenting it for
         /*  attributes : [{
@@ -238,6 +240,7 @@ Ext.define('Registration.controller.Main', {
     
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
     sendEncounterData: function(){
+        console.log("send encounter data");
         var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel',{
@@ -321,6 +324,28 @@ Ext.define('Registration.controller.Main', {
             });
             jsonencounter.data.obs.push(jsonencounterregfee.data);
         }
+
+        // TODO: Move this to ScreenerVitals controller in screener, later
+        //  Create a screenerVitals encounter and tie these observations to it
+        //  instead of a registration encounter.
+        var createObs = function (c, v) {
+            var jsonObs = Ext.create('Registration.model.obsModel',{
+                    obsDatetime : t,
+                    person: localStorage.newPatientUuid,
+                    concept: c,
+                    value: v
+                });
+            jsonencounter.data.obs.push(jsonObs.data);
+        };
+
+        console.log("Creating Obs for uuid types...");
+        createObs(localStorage.bloodoxygensaturationUuidconcept, 1);
+        createObs(localStorage.diastolicbloodpressureUuidconcept, 6);
+        createObs(localStorage.respiratoryRateUuidconcept, 7);
+        createObs(localStorage.systolicbloodpressureUuidconcept, 8);
+        createObs(localStorage.temperatureUuidconcept, 9);
+        console.log("... Complete! Created Obs for new uuid types");
+
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
         store.sync();
