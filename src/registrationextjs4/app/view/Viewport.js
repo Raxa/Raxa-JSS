@@ -32,7 +32,7 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'image',
                     height: 35,
                     width: 40,
-                    src: '../../resources/img/iconWhite.png'
+                    src: '../../src/resources/img/iconWhite.png'
                 }, {
                     xtype: 'tbfill'
                 },{
@@ -42,7 +42,7 @@ Ext.define('Registration.view.Viewport', {
                       text: 'Registration Home Page',
                       handler: function () {
                           var l = Ext.getCmp('mainRegArea').getLayout();
-                          l.setActiveItem(LAB_PAGES.HOME.name);
+                          l.setActiveItem(REG_PAGES.HOME.home);
                       }
                 }, {
                     xtype: 'tbtext',

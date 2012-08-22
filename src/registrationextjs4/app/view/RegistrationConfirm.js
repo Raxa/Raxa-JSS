@@ -163,6 +163,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             readOnly: true
                         }]
                     }, /* TODO: add back in caste
+                       // Current registration system (used by JSS) has caste field in the form
                         {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Caste'),
