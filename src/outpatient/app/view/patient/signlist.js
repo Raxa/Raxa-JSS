@@ -13,12 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-Ext.define('RaxaEmr.Outpatient.store.drugpanel', {
-    extend: 'Ext.data.Store',
-
+ 
+ //view of sign list in the examination tab
+ 
+Ext.define('RaxaEmr.Outpatient.view.patient.signlist', {
+    extend: 'Ext.dataview.List',
+    xtype: 'Sign-List',
     config: {
-        model: 'RaxaEmr.Outpatient.model.drugpanel',
-        autoLoad: true,
-    }
+        cls: 'x-exam',
+        id: 'signList',
+        hidden: true,
+        store: 'sign',
+        itemTpl: ['<div id="{id}">', '<strong>{sign}{duration}</strong>', '</div>']
+    },
 });

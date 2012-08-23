@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //the chief complain view
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.examinationlist', {
     extend: 'Ext.dataview.List',
     xtype: 'Examination-List',
