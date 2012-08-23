@@ -5,9 +5,10 @@
  * a doctor.
  */
 Ext.define("Screener.view.PatientView", {
+    xtype: 'patientView',
     extend: 'Ext.Container',
-    config: {
-        fullscreen: true,
+	config: {
+        /*fullscreen: true,*/
         layout: 'hbox',
         title: 'Patient Assignments',
         items: [
@@ -23,8 +24,8 @@ Ext.define("Screener.view.PatientView", {
         '<div>({numpatients}){[this.splitter(values.display)]}</div>',
     {
          splitter: function(str){
-            var name = str.split("- ")[1]
-            return 'Dr.' + name
+             var name = str.split("- ")[1];
+             return 'Dr.' + name;
         
         }
     }

@@ -26,26 +26,94 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Screener',
 
-    requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Screener.store.Doctors', 'Ext.navigation.View'],
+    requires: [
+        'Screener.store.Patients', 
+        'Screener.store.Doctors', 
+        'Screener.store.druglist',
+        'Ext.navigation.View'
+    ],
+    stores: [
+        'Screener.store.AssignedPatientList',
+        'Screener.store.Doctors',
+        'Screener.store.drugConcept',
+        'Screener.store.drugEncounter',
+        'Screener.store.druglist',
+        'Screener.store.encounterpost',
+        'Screener.store.encounters',
+        'Screener.store.IdentifierType',
+        'Screener.store.Location',
+        'Screener.store.NewPatients',
+        'Screener.store.NewPersons',
+        'Screener.store.PatientList',
+        'Screener.store.Patients',
+        'Screener.store.PatientSummary',
+        'Screener.store.PostLists'
+    ],
 
     //we will use a Patient and Doctor class
-    models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'Observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
+    models: [
+        'Patient', 
+        'Doctor', 
+        'Links', 
+        'PostList', 
+        'GetList', 
+        'Patients', 
+        'Observation', 
+        'druglist', 
+        'drugOrder', 
+        'drugEncounter', 
+        'PatientSummary', 
+        'Obs'
+    ],
 
     //here we declare the visual components
-    views: ['Main', 'TopMenu', 'PatientView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary', 'DoctorSummary'],
+    views: [
+        'Main', 
+        'TopMenu', 
+        'PatientView', 
+        'NewPatient', 
+        'Sort', 
+        'PharmacyView', 
+        'PharmacyForm', 
+        'DrugStore', 
+        'PatientListView', 
+        'LabOrderView', 
+        'LabOrderForm', 
+        'LabStore', 
+        'PatientSummary', 
+        'DoctorSummary',
+    ],
 
     //here we declare our controller that will perform actions
     controllers: ['Application'],
 
     //the stores will hold our data in a local cache
-    stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary','AssignedPatientList'],
+    stores: [
+        'Patients', 
+        'Doctors', 
+        'PostLists', 
+        'druglist', 
+        'drugEncounter', 
+        'PatientSummary',
+        'AssignedPatientList'
+    ],
 
     //entry point
     launch: function () {
         if(Util.checkModulePrivilege('screener')){
-            Ext.Viewport.add({
-                xclass: 'Screener.view.Main'
+            var mainScreen = Ext.create('Ext.Container', {
+                fullscreen: true,
+                layout: 'card',
+                items: [{
+                        xclass: 'Screener.view.Main'
+                }]
             });
+            var topBar = Ext.create('Topbar.view.TopToolbar', {
+                docked: 'top',
+                title: 'JSS Hospital Screener System'
+            });
+            localStorage.mainScreen = mainScreen;
+            mainScreen.add(topBar);
         }
     }
 });

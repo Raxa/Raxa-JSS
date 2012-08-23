@@ -1,17 +1,18 @@
 /**
  * This screen defines the main menu buttons for:
- * Add a Patient,
- * Show Patients,
- * Show Doctors
+ * Add New Patient
+ * Assign Patients to Doctors
+ * Add Patient Vitals
+ * Add Pharmacy order
+ * Add Lab Order
  */
 Ext.define("Screener.view.TopMenu", {
     extend: 'Ext.Container',
     xtype: 'topmenu',
-    id: 'mainView',
     config: {
-        fullscreen: true,
+        /*fullscreen: true,*/
         layout: 'vbox',
-        centered: true,
+        /*centered: true,*/
         items: [{
             xtype: 'button',
             id: 'addPatientButton',
@@ -22,21 +23,28 @@ Ext.define("Screener.view.TopMenu", {
         }, {
             xtype: 'button',
             id: 'showPatientsButton',
-            text: 'Show Unassigned Patients',
+            text: 'Assign Patients to Doctors',
+            ui: 'round',
+            height: 80,
+            width: 300
+        }, {
+            xtype: 'button',
+            id: 'addPatientVitalsButton',
+            text: 'Add Patient Vitals',
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showPharmacyButton',
-            text: 'Pharmacy Order',
+            text: 'Add Pharmacy Order',
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showLabButton',
-            text: 'Lab Order',
+            text: 'Add Lab Order',
             ui: 'round',
             height: 80,
             width: 300
