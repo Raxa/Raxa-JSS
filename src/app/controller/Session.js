@@ -84,13 +84,13 @@ Ext.define('RaxaEmr.controller.Session', {
                     }
                     for (j = 0; j < privilegesJson.roles.length; j++) {
                         if(privilegesJson.roles[j].name === 'Provider'){
-                            localStorage.setItem('loggedInUser',privilegesJson.person.uuid)
+                            localStorage.setItem('loggedInUser',privilegesJson.person.uuid);
                         }
                         if(privilegesJson.roles[j].name === 'System Developer'){
                             privilegesArray[i] = {
                                 'name': 'all privileges',
                                 'description': 'allprivileges'
-                            }
+                            };
                         }
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
@@ -115,13 +115,13 @@ Ext.define('RaxaEmr.controller.Session', {
         localStorage.setItem("username", username);
 
         if (username === "") {
-            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankusername'))
+            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankusername'));
             return;
         }
 
         var password = Ext.getCmp('passwordID').getValue();
         if (password === "") {
-            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankpassword'))
+            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankpassword'));
             return;
         }
 
