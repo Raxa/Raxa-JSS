@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 Ext.define('RaxaEmr.Outpatient.view.patientlist', {
     extend: 'Ext.List',
     xtype: 'patientlist',
@@ -23,11 +22,10 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
         title: 'Outpatient Department',
         cls: 'x-contacts',
         ui: 'round',
-        store: 'patientlist',
+		// patient list toolbars
         items: [{
             xtype: 'toolbar',
             docked: 'top',
-
             items: [{
                 xtype: 'segmentedbutton',
                 allowDepress: false,
@@ -83,24 +81,21 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
                 }]
             }]
         }],
-        itemTpl: [  
-            /*'<div class="headshot" style="background-image:url(resources/images/headshots/pic.gif);"></div>', */
-            '<div class="headshot" style="background-image:url({image});"></div>', 
-            '<div style="float:left;width:30%;">', 
-                '{firstName} {lastName}', 
-                '<span>From : {city}, {state}</span>', 
-                '<span>Age : {age}</span>', 
-            '</div>', 
-            '<div style="float:left;width:20%;">', 
-                '<span>{nameofdoc}</span>', 
-                '<span>Disease : {disease}</span>', 
-            '</div>', 
-            '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">{urgency}</div>', 
-            '<div style="float:right;width:40%;">', 
-                '<span>Last Visit : {lastvisit:date("j M Y")}</span>',
-                '<span>No. of Visits : {noofvisits}</span>', 
-                '<span>ID : {id}</span>', 
-            '</div>'
-        ].join('')
-    }
+		//list items  are shown by this
+		itemTpl: new Ext.XTemplate(
+			'<div class="headshot" style="background-image:url({image});"></div>', '<div style="float:left;width:25%;">', '{display}', '<span>Gender : {[this.gender(values.gender)]}</span>', '<span>From : New Delhi, India</span>', '</div>', '<div style="float:left;width:25%;">', '<span>Dr.Arpana Jain</span>', '<span>Disease : Asthma</span>', '<span>Age : {age}</span>', '</div>', '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">8</div>', '<div style="float:right;width:25%;">', '<span>Last Visit : {[this.date(values)]}</span>', '<span>No. of Visits : 2</span>', '<span>ID : 16736127</span>', '</div>',
+			{
+				date: function(str){
+					return str.encounters[0].encounterDatetime.split("T")[0]
+				},
+				gender: function(str){
+					if(str == 'M'){
+						return 'Male';
+					}else if(str == 'F'){
+						return 'Female' 
+					}
+				}
+			}
+		)
+	}
 });

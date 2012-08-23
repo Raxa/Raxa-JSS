@@ -13,12 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-Ext.define('RaxaEmr.Outpatient.store.drugpanel', {
+Ext.define('RaxaEmr.Outpatient.store.sign', {
     extend: 'Ext.data.Store',
 
     config: {
-        model: 'RaxaEmr.Outpatient.model.drugpanel',
-        autoLoad: true,
+        model: 'RaxaEmr.Outpatient.model.sign',
+        proxy: {
+            type: 'ajax',
+            url: 'data/sign.json',
+        }
     }
 });

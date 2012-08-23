@@ -29,7 +29,7 @@ LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
 	
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://test.raxa.org:8080/openmrs';
+    var HOST = 'http://localhost:8082/openmrs-standalone';
 } else HOST = localStorage.getItem("host");
 var username;
 var password;
@@ -40,6 +40,15 @@ var resourceUuid = [
 ['concept', 'weight', 'WEIGHT (KG)'],
 ['concept', 'bmi', 'BODY MASS INDEX'],
 ['concept', 'regfee', 'Registration Fee'],
+['concept', 'patientHistory', 'PATIENT HISTORY'],
+['concept', 'pastMedicationHistory', 'PAST MEDICATION HISTORY'],
+['concept', 'alcoholIntake', 'ALCOHOL INTAKE'],
+['concept', 'tobaccoIntake', 'TOBACCO INTAKE'],
+['concept', 'otherHistory', 'OTHER HISTORY'],
+['concept', 'familyHistory', 'FAMILY HISTORY'],
+['concept', 'examlist', 'EXAMINATION LIST'],
+['concept', 'neurologicalDiagnosis', 'NEUROLOGICAL DIAGNOSIS'],
+['concept', 'cadiologicalDiagnosis', 'CARDIOLOGICAL DIAGNOSIS'],
 ['form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms'],
 ['encountertype', 'reg', 'REGISTRATION - Registration encounter'],
 ['encountertype', 'screener', 'SCREENER - Screener encounter'],
