@@ -29,24 +29,26 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         xtype: 'combobox',
         fieldLabel: 'Search Lab',
         x: 10,
-        y: 30
+        y: 30,
+        labelWidth: 50,
+        width: 200,
     }, {
         xtype: 'textfield',
-        width: 240,
+        width: 175,
         fieldLabel: '',
         emptyText: 'Enter the Lab order no.',
         x: 10,
         y: 110
     }, {
         xtype: 'textfield',
-        width: 240,
+        width: 175,
         blankText: '',
         emptyText: 'Enter the Patient Registration Number',
         x: 10,
         y: 190
     }, {
         xtype: 'textfield',
-        width: 280,
+        width: 175,
         fieldLabel: 'Provider\'s Name',
         hideEmptyLabel: false,
         labelAlign: 'top',
@@ -56,70 +58,70 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         y: 310
     }, {
         xtype: 'textfield',
-        width: 140,
+        id: 'patientFirstNameLabOrderCreation11',
+        width: 100,
         fieldLabel: 'Patient\'s Name',
         labelAlign: 'top',
-        labelWidth: 50,
+        //      labelWidth: 30,
         emptyText: 'First Name',
         x: 10,
         y: 260
     }, {
         xtype: 'textfield',
-        width: 240,
+        width: 100,
         fieldLabel: '',
-        hideEmptyLabel: false,
+        hideEmptyLabel: true,
         emptyText: 'Last Name',
-        x: 50,
+        x: 120,
         y: 280
     }, {
         xtype: 'button',
+        id: 'patientLastNameLabOrderCreation11',
         height: 20,
         width: 50,
         text: 'Find',
-        x: 260,
+        x: 200,
         y: 110,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
-        }        
-        
+        }
+
     }, {
         xtype: 'button',
         height: 20,
         width: 50,
         text: 'Find',
-        x: 260,
+        x: 200,
         y: 190,
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
-        }        
-        
+        }
+
     }, {
         xtype: 'button',
         height: 20,
         width: 50,
         text: 'Find',
+        action: 'searchPatient',
         x: 10,
         y: 420,
-        handler: function () {
-            var l = Ext.getCmp('mainLabArea').getLayout();
-            l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
-        }                
+        handler: function () {}
     }, {
         xtype: 'datefield',
-        width: 130,
+        width: 100,
         fieldLabel: 'Lab orders from',
         labelAlign: 'top',
         x: 10,
         y: 360
     }, {
         xtype: 'datefield',
-        width: 150,
+        width: 100,
         fieldLabel: 'to',
         hideEmptyLabel: false,
         labelWidth: 20,
-        x: 150,
+        x: 130,
         y: 380
     }, {
         xtype: 'image',
