@@ -24,6 +24,10 @@ Ext.apply(Ext.form.VTypes, {
     phoneMask: /[ \d\-\(\)]/
 });
 
+LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
+LAB_USERNAME='Admin';
+LAB_PASSWORD='Admin123';
+	
 if (localStorage.getItem("host") == null) {
     var HOST = 'http://localhost:8082/openmrs-standalone';
 } else HOST = localStorage.getItem("host");
