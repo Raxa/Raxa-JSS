@@ -84,43 +84,43 @@
                                 <tr>
                                     <td>Registration:</td>
                                     <td>
-                                        <input type="text" id="RegNo" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Id" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Name:</td>
                                     <td>
-                                        <input type="text" id="PatientName" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Name" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Age:</td>
                                     <td>
-                                        <input type="text" id="PatientAge" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Age" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Gender:</td>
                                     <td>
-                                        <input type="text" id="PatientGender" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Gender" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Weight:</td>
                                     <td>
-                                        <input type="text" id="PatientWeight" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Weight" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Village</td>
                                     <td>
-                                        <input type="text" id="PatientVillage" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Village" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Tehsil:</td>
                                     <td>
-                                        <input type="text" id="PatientTehsil" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Tehsil" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                             </tbody>
@@ -132,35 +132,15 @@
         <script>
  			//Retrieve information about last selected Patient from localStorage       
             var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
-            if(selectedPatient.Name)
-			{ 
-				document.getElementById("PatientName").value = selectedPatient.Name;
+            var selectedPatientAttributes = ['Name','Id','Age','Gender','Weight','Village','Tehsil'];
+			for(var i=0; i<selectedPatientAttributes.length; i++)
+			{
+				if(selectedPatient[selectedPatientAttributes[i]])
+				{
+					document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];			
+				}
 			}
-			if(selectedPatient.Id)
-            {
-            	document.getElementById("RegNo").value = selectedPatient.Id;
-            }           
-            if(selectedPatient.Age)
-            {
-            	document.getElementById("PatientAge").value = selectedPatient.Age ;
-            }
-            if(selectedPatient.Gender)
-            {
-            	document.getElementById("PatientGender").value =  selectedPatient.Gender;
-            }
-            if(selectedPatient.Weight)
-            {
-           		document.getElementById("PatientWeight").value = selectedPatient.Weight; 
-            }
-            if(selectedPatient.Village)
-            {
-            	document.getElementById("PatientVillage").value = selectedPatient.Village;
-            }
-            if(selectedPatient.Tehsil)
-            {
-           		document.getElementById("PatientTehsil").value = selectedPatient.Tehsil; 
-            }
-            var currentDate = new Date();
+           var currentDate = new Date();
             document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
 			
             //Print Button is hidden and then window is printed.

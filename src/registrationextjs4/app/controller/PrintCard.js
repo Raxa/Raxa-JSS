@@ -18,9 +18,7 @@
 Ext.define('Registration.controller.PrintCard', {
     extend: 'Ext.app.Controller',
     id: 'printCard',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI', 'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore'],
-    models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel'],
+    views: ['Viewport','RegistrationConfirm', 'RegistrationBMI', 'SearchConfirm'],
 
     init: function () {
         this.control({
