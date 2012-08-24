@@ -93,13 +93,6 @@ var patientUpdate = {
  */
 Ext.define("Screener.controller.Application", {
     requires: [
-        /*'Screener.store.Doctors', */
-        /*'Screener.store.NewPatients', */
-        /*'Screener.store.PatientList', */
-        /*'Screener.store.NewPersons', */
-        /*'Screener.store.IdentifierType', */
-        /*'Screener.store.Location', */
-        /*'Screener.store.AssignedPatientList',*/
         'Screener.store.AssignedPatientList',
         'Screener.store.Doctors',
         'Screener.store.drugConcept',
@@ -119,7 +112,6 @@ Ext.define("Screener.controller.Application", {
         'Screener.view.PharmacyForm', 
         'Screener.view.PatientListView'
     ],
-    // TODO: The next line says 'mosel', not 'model'. Fix it
     models: [
         'Screener.model.Person', 
         'Screener.model.PostList', 
@@ -153,6 +145,7 @@ Ext.define("Screener.controller.Application", {
             showPatientsButton: '#showPatientsButton',
             showPharmacyButton: '#showPharmacyButton',
             showLabButton: '#showLabButton',
+            showVitalsButton: '#showVitalsButton',
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
             assignButton: '#assignButton',
@@ -196,6 +189,9 @@ Ext.define("Screener.controller.Application", {
             },
             showLabButton: {
                 tap: 'showLab'
+            },
+            showVitalsButton: {
+                tap: 'showVitals'
             },
             assignButton: {
                 tap: 'assignPatient'
@@ -554,16 +550,14 @@ Ext.define("Screener.controller.Application", {
 
     // Show screen with patient list
     showPatients: function () {
-        console.log("showPatients");
         if (Ext.getCmp('doctorSummary')) {
             Ext.getCmp('doctorSummary').hide();
         }
-        /*if (!this.patientView) {*/
-        /*this.patientView = Ext.create('Screener.view.PatientView');*/
-        /*}*/
+        if (!this.patientView) {
+            this.patientView = Ext.create('Screener.view.PatientView');
+        }
         // this.getDoctorList().deselectAll();
-        /*this.getView().push(this.patientView);*/
-        Ext.getCmp("mainView").setActiveItem(PAGES.SCREENER.ASSIGN_PATIENTS);
+        this.getView().push(this.patientView);
 
         patientUpdate.updatePatientsWaitingTitle();
         this.countPatients();
@@ -594,12 +588,11 @@ Ext.define("Screener.controller.Application", {
     },
     // Show screen with pharmacy list
     showPharmacy: function () {
-        /*if (!this.pharmacyView) {*/
-        /*this.pharmacyView = Ext.create('Screener.view.PharmacyView');*/
-        /*form_num = 0;*/
-        /*}*/
-        /*this.getView().push(this.pharmacyView);*/
-        Ext.getCmp("mainView").setActiveItem(PAGES.SCREENER.PHARMACY_ORDER);
+        if (!this.pharmacyView) {
+            this.pharmacyView = Ext.create('Screener.view.PharmacyView');
+            form_num = 0;
+        }
+        this.getView().push(this.pharmacyView);
         while (form_num > 0) {
             Ext.getCmp('form' + form_num).remove({
                 autoDestroy: true
@@ -610,11 +603,10 @@ Ext.define("Screener.controller.Application", {
         patientUpdate.updatePatientsWaitingTitle();
     },
     showLab: function () {
-        /*if (!this.labOrderView) {*/
-        /*this.labOrderView = Ext.create('Screener.view.LabOrderView');*/
-        /*}*/
-        /*this.getView().push(this.labOrderView);*/
-        Ext.getCmp("mainView").setActiveItem(PAGES.SCREENER.LAB_ORDER);
+        if (!this.labOrderView) {
+            this.labOrderView = Ext.create('Screener.view.LabOrderView');
+        }
+        this.getView().push(this.labOrderView);
         while (lab_num > 0) {
             Ext.getCmp('lab' + lab_num).remove({
                 autoDestroy: true
@@ -623,6 +615,16 @@ Ext.define("Screener.controller.Application", {
             lab_num--;
         }
         patientUpdate.updatePatientsWaitingTitle();
+    },
+    showVitals: function () {
+        if (!this.vitalsView) {
+            this.vitalsView = Ext.create('Screener.view.VitalsView');
+        }
+        // this.getDoctorList().deselectAll();
+        this.getView().push(this.vitalsView);
+
+        patientUpdate.updatePatientsWaitingTitle();
+        this.countPatients();
     },
     // opens form for patient summary
     showPatientSummary: function (list, item, index) {

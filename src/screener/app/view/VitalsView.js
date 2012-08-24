@@ -2,15 +2,15 @@
  * This screen shows a list of patients on the left side,
  * with a button to sort them. The right side shows a drug order    *  form
  */
-Ext.define("Screener.view.PharmacyView", {
+Ext.define("Screener.view.VitalsView", {
     extend: 'Ext.Container',
-    id: 'pharmacyView',
-    requires: ['Screener.view.PharmacyForm'],
-    xtype: 'pharmacylist',
+    id: 'vitalsView',
+    requires: ['Screener.view.VitalsForm'],
+    xtype: 'vitalslist',
     config: {
         fullscreen: true,
         layout: 'hbox',
-        title: 'Add Drugs',
+        title: 'Add Vitals',
         style: 'background:#96d2f7',
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
@@ -18,7 +18,7 @@ Ext.define("Screener.view.PharmacyView", {
             xtype: 'patientListView',
             flex: 1
         }, {
-            xtype: 'pharmacyForm',
+            xtype: 'vitalsForm',
             flex: 1
         }]
     }

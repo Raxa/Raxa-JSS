@@ -29,7 +29,7 @@ Ext.define("Screener.view.TopMenu", {
             width: 300
         }, {
             xtype: 'button',
-            id: 'addPatientVitalsButton',
+            id: 'showVitalsButton',
             text: 'Add Patient Vitals',
             ui: 'round',
             height: 80,
