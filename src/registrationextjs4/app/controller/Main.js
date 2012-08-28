@@ -39,6 +39,7 @@ Ext.define('Registration.controller.Main', {
     registerPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
+	  Util.KeyMapButton('continuebutton',Ext.EventObject.ENTER);
     },
     
     
@@ -47,13 +48,16 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         console.log(REG_PAGES.SEARCH_1.value);
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
+        Util.KeyMapButton('searchbutton1',Ext.EventObject.ENTER);
     },
     /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
     Continue: function () {
-        var l = Ext.getCmp('mainRegArea').getLayout();
+        
+	  var l = Ext.getCmp('mainRegArea').getLayout();
         // if condition that check if all the required fields are non-empty or not
         if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
             l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
+            Util.KeyMapButton('submitbutton',Ext.EventObject.ENTER);
         } else alert("Fields invalid");
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
@@ -76,6 +80,7 @@ Ext.define('Registration.controller.Main', {
 
     /* this function return to home screen */
     cancel: function () {
+	  Util.DestoryKeyMapButton(Ext.EventObject.ENTER);
         //return to home screen
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
@@ -103,6 +108,7 @@ Ext.define('Registration.controller.Main', {
 
     /* this function makes the post call for making the person */
     submit: function () {
+	
         //creating the json object to be made
         var jsonperson = Ext.create('Registration.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),

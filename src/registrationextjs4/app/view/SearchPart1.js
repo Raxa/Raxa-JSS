@@ -18,6 +18,7 @@
 Ext.define('Registration.view.SearchPart1', {
     extend: 'Ext.container.Container',
     alias: 'widget.searchpart1',
+    	
     border: 0,
     padding: 10,
     autoScroll: true,
@@ -29,6 +30,7 @@ Ext.define('Registration.view.SearchPart1', {
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
+	      id:'Searchpart1', 
             width: 800,
             padding: 20,
             items: [{
@@ -217,6 +219,7 @@ Ext.define('Registration.view.SearchPart1', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 60,
+				id:'searchbutton1',
                         ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Search'),
                         action: 'search'
@@ -230,7 +233,11 @@ Ext.define('Registration.view.SearchPart1', {
                     }]
                 }]
             }]
+		
         };
         this.callParent();
+	
+	  
+
     }
 });
