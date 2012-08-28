@@ -1,7 +1,8 @@
 Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
     extend: 'Ext.data.Store',
     id: 'allDrugs',
-    fields: [{name: 'text', type: 'string', mapping: 'name'}],
+    fields: [{name: 'text', type: 'string', mapping: 'name'},
+        {name: 'uuid', type: 'string', mapping: 'uuid'}],
     autoLoad: true,
     autoSync: false,
     proxy: {

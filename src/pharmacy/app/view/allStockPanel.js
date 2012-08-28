@@ -2,7 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.allStockPanel',
     border: false,
-    height: 285,
+    height: 190,
     width: 840,
     layout: {
         type: 'absolute'
@@ -19,14 +19,13 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
         autoScroll: true,
         border: false,
         hideScroller: true,
-        height: 200,
-        width: 723,
+        height: 150,
+        width: 800,
         x: 110,
         y: 40,
         layout: {
             type: 'hbox',
-            align: 'stretch',
-            padding: 5
+            align: 'stretch'
         },
         items: [{
             xtype: 'button',
@@ -70,42 +69,36 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
                 Ext.getCmp('newdrugbutton').enable();
                 Ext.getCmp('newdruggroupbutton').enable();
             }
-        },{
-            xtype: 'button',
-            width: 150,
-            height: 150,
-            text: 'Stock Issue',
-            handler: function(){
-                var l = Ext.getCmp('stocklayoutarea').getLayout();
-                l.setActiveItem(1);
-                Ext.getCmp('newpobutton').disable();
-                Ext.getCmp('newreceiptbutton').disable();
-                Ext.getCmp('newissuebutton').enable();
-                Ext.getCmp('newdrugbutton').enable();
-                Ext.getCmp('newdruggroupbutton').enable();
-            }
-        },{
-            xtype: 'button',
-            width: 150,
-            height: 150,
-            text: 'Goods Receipt',
-            handler: function(){
-                var l = Ext.getCmp('stocklayoutarea').getLayout();
-                l.setActiveItem(2);
-                Ext.getCmp('newpobutton').disable();
-                Ext.getCmp('newreceiptbutton').enable();
-                Ext.getCmp('newissuebutton').disable();
-                Ext.getCmp('newdrugbutton').enable();
-                Ext.getCmp('newdruggroupbutton').enable();
-            }
-        },{
-            xtype: 'button',
-            width: 150,
-            height: 150
-        },{
-            xtype: 'button',
-            width: 150,
-            height: 150
-        }]
+        }
+//        ,{
+//            xtype: 'button',
+//            width: 150,
+//            height: 150,
+//            text: 'Stock Issue',
+//            handler: function(){
+//                var l = Ext.getCmp('stocklayoutarea').getLayout();
+//                l.setActiveItem(1);
+//                Ext.getCmp('newpobutton').disable();
+//                Ext.getCmp('newreceiptbutton').disable();
+//                Ext.getCmp('newissuebutton').enable();
+//                Ext.getCmp('newdrugbutton').enable();
+//                Ext.getCmp('newdruggroupbutton').enable();
+//            }
+//        },{
+//            xtype: 'button',
+//            width: 150,
+//            height: 150,
+//            text: 'Goods Receipt',
+//            handler: function(){
+//                var l = Ext.getCmp('stocklayoutarea').getLayout();
+//                l.setActiveItem(2);
+//                Ext.getCmp('newpobutton').disable();
+//                Ext.getCmp('newreceiptbutton').enable();
+//                Ext.getCmp('newissuebutton').disable();
+//                Ext.getCmp('newdrugbutton').enable();
+//                Ext.getCmp('newdruggroupbutton').enable();
+//            }
+//        }
+    ]
     }]
 });
