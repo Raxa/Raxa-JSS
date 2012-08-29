@@ -51,8 +51,8 @@ Ext.define('Registration.view.Home', {
                     margin: '10 0 13 0',
                     width: 300,
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.Home.register'),
-                    action: 'register'
-                }, {
+                    action: 'register',
+		    }, {
                     xtype: 'button',
                     height: 35,
                     margin: '10 0 13 0',

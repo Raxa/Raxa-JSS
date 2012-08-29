@@ -38,7 +38,6 @@ var username;
 var password;
 var timeoutLimit = 150000;
 var hospitalName = 'JSS Hospital';
-
 var resourceUuid = {
     "height": {
         "resource": "concept",
@@ -411,25 +410,78 @@ var Util = {
         });
     },
 
-    getProviderUuid: function (uuid) {
-        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+    getPersonUuidFromProviderUuid: function (uuid) {
         Ext.Ajax.request({
-            url: HOST + '/ws/rest/v1/provider/' + uuid, //'/ws/rest/v1/concept?q=height',
+            url: HOST + '/ws/rest/v1/provider/' + uuid,
             method: 'GET',
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             failure: function (response) {
-                console.log('GET failed with response status: ' + response.status); // + response.status);
+                console.log('GET failed with response status: ' + response.status);
             },
             success: function (response) {
-                var x = "person not exits"
                 if (console.log(JSON.parse(response.responseText).person.uuid) != null) {
-                    return JSON.parse(response.responseText).person.uuid
+                    return JSON.parse(response.responseText).person.uuid;
                 } else {
-                    return x
+                    return "provider with given uuid does not exist";
                 }
             }
         });
+    },
+    KeyMapButton: function(ComponentName,keyName)
+    {
+        keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
+        {
+            key: keyName,
+            shift: false,
+            ctrl: false,
+	      fn:function(){
+		var element = Ext.getCmp(ComponentName);
+            element.fireEvent('click',element);
+
+            }
+        }
+        ]);
+    },
+    DestoryKeyMapButton: function(keyName)
+    {
+           keyMap.keyName.destroy(true)
+    },
+    
+        
+    getProviderUuidFromPersonUuid: function (uuid) {
+        Ext.Ajax.request({
+            url: HOST + '/ws/rest/v1/provider?v=full',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: ' + response.status);
+            },
+            success: function (response) {
+                var allProviders = JSON.parse(response.responseText).results;
+                for(i=0; i<allProviders.length; i++){
+                    if(allProviders[i].person.uuid === uuid){
+                        console.log("success");
+                        localStorage.setItem("loggedInProvider", allProviders[i].uuid);
+                        return allProviders[i].uuid;
+                    }
+                }
+                return "provider with given uuid not found";
+            }
+        });
+    },
+    
+    /**
+     * Returns the uuid of the logged in provider
+     */
+    getLoggedInProviderUuid: function(){
+        if(!localStorage.getItem("loggedInUser"))
+            return "provider is not logged in";
+        if(localStorage.getItem("loggedInProvider"))
+            return localStorage.getItem("loggedInProvder");
+        else
+            return this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
     },
     
     /**
@@ -446,4 +498,5 @@ var Util = {
             window.location = "../";
         }
     }
+
 }
