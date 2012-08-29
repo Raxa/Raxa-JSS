@@ -7,14 +7,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
     layout: {
         type: 'absolute'
     },
-    items: [
-    {
+    items: [{
         xtype: 'textfield',
         emptyText: 'Search',
         x: 600,
         y: 10
-    },
-    {
+    }, {
         xtype: 'panel',
         autoScroll: true,
         border: false,
@@ -33,7 +31,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
             width: 150,
             height: 150,
             text: 'Stock Analysis',
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('stocklayoutarea').getLayout();
                 l.setActiveItem(0);
                 Ext.getCmp('newpobutton').enable();
@@ -42,12 +40,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
                 Ext.getCmp('newdrugbutton').enable();
                 Ext.getCmp('newdruggroupbutton').enable();
             }
-        },{
+        }, {
             xtype: 'button',
             width: 150,
             height: 150,
             text: 'Expiring Stock',
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('stocklayoutarea').getLayout();
                 l.setActiveItem(0);
                 Ext.getCmp('newpobutton').enable();
@@ -56,12 +54,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
                 Ext.getCmp('newdrugbutton').enable();
                 Ext.getCmp('newdruggroupbutton').enable();
             }
-        },{
+        }, {
             xtype: 'button',
             width: 150,
             height: 150,
             text: 'Stock Out',
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('stocklayoutarea').getLayout();
                 l.setActiveItem(0);
                 Ext.getCmp('newpobutton').enable();
@@ -70,12 +68,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
                 Ext.getCmp('newdrugbutton').enable();
                 Ext.getCmp('newdruggroupbutton').enable();
             }
-        },{
+        }, {
             xtype: 'button',
             width: 150,
             height: 150,
             text: 'Stock Issue',
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('stocklayoutarea').getLayout();
                 l.setActiveItem(1);
                 Ext.getCmp('newpobutton').disable();
@@ -84,12 +82,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
                 Ext.getCmp('newdrugbutton').enable();
                 Ext.getCmp('newdruggroupbutton').enable();
             }
-        },{
+        }, {
             xtype: 'button',
             width: 150,
             height: 150,
             text: 'Goods Receipt',
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('stocklayoutarea').getLayout();
                 l.setActiveItem(2);
                 Ext.getCmp('newpobutton').disable();
@@ -98,11 +96,11 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
                 Ext.getCmp('newdrugbutton').enable();
                 Ext.getCmp('newdruggroupbutton').enable();
             }
-        },{
+        }, {
             xtype: 'button',
             width: 150,
             height: 150
-        },{
+        }, {
             xtype: 'button',
             width: 150,
             height: 150

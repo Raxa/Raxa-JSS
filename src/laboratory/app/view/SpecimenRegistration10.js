@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows patient & his provider details
  */
 Ext.define('Laboratory.view.SpecimenRegistration10', {
@@ -72,7 +72,7 @@ Ext.define('Laboratory.view.SpecimenRegistration10', {
         text: 'Find Location',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_FILTER_LOCATION.value);
         }
@@ -82,7 +82,7 @@ Ext.define('Laboratory.view.SpecimenRegistration10', {
         text: 'Find Provider',
         x: 280,
         y: 60,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_PROVIDER.value);
         }
@@ -92,7 +92,7 @@ Ext.define('Laboratory.view.SpecimenRegistration10', {
         text: 'Find Patient',
         x: 280,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_LAB_ORDER.value);
         }
@@ -104,7 +104,7 @@ Ext.define('Laboratory.view.SpecimenRegistration10', {
         text: 'Continue',
         x: 440,
         y: 160,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_INVESTIGATION_DETAILS.value);
         }
@@ -113,7 +113,7 @@ Ext.define('Laboratory.view.SpecimenRegistration10', {
         text: 'Cancel',
         x: 280,
         y: 160,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
         }

@@ -17,8 +17,8 @@ Ext.define('Screener.model.Observation', {
             name: 'comment',
             type: 'string'
         }, {
-        	name: 'order',
-        	type: 'int'
+            name: 'order',
+            type: 'int'
         }]
     }
 });

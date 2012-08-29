@@ -9,48 +9,42 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
         type: 'absolute'
     },
     bodyPadding: 10,
-    items: [
-    {
+    items: [{
         xtype: 'button',
         width: 90,
         text: 'New P.O',
         x: 350,
         y: 40,
         id: 'newpobutton'
-    },
-    {
+    }, {
         xtype: 'button',
         width: 90,
         text: 'New Issue',
         x: 450,
         y: 40,
         id: 'newissuebutton'
-    },
-    {
+    }, {
         xtype: 'button',
         width: 90,
         text: 'New Reciept',
         x: 550,
         y: 40,
         id: 'newreceiptbutton'
-    },
-    {
+    }, {
         xtype: 'button',
         width: 90,
         text: 'New Drug',
         x: 650,
         y: 40,
         id: 'newdrugbutton'
-    },
-    {
+    }, {
         xtype: 'button',
         width: 90,
         text: 'New Drug Group',
         x: 750,
         y: 40,
         id: 'newdruggroupbutton'
-    },
-    {
+    }, {
         xtype: 'combobox',
         width: 230,
         labelWidth: 80,

@@ -5,15 +5,15 @@
 Ext.define("Screener.view.Main", {
     extend: 'Ext.Container',
     xtype: 'mainView',
-    initialize: function (args) {
+    initialize: function(args) {
         var topBar = Ext.create('Topbar.view.TopToolbar', {
             docked: 'top',
-	    title: 'JSS Hospital Screener System',
+            title: 'JSS Hospital Screener System',
         });
         this.add(topBar);
 
     },
-	config: {
+    config: {
         fullscreen: true,
 
         //don't delete views so we can switch screens quickly
@@ -26,5 +26,5 @@ Ext.define("Screener.view.Main", {
             }]
         }, ]
     }
-    
+
 });

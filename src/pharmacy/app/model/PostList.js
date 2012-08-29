@@ -17,5 +17,5 @@ Ext.define('RaxaEmr.Pharmacy.model.PostList', {
         type: 'string',
         persist: false
     }]
-    
+
 });

@@ -1,7 +1,7 @@
 /**
- * This class defines a Identifiers, holding 3 strings 
- * for identifier, identifiertype, location, and an 
- * boolean for preffered 
+ * This class defines a Identifiers, holding 3 strings
+ * for identifier, identifiertype, location, and an
+ * boolean for preffered
  */
 Ext.define('Screener.model.Identifiers', {
     extend: 'Ext.data.Model',

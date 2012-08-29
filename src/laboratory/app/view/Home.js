@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view (also Landing Page of Lab Module) lists all the options available to the user. 
+ *
+ *  This view (also Landing Page of Lab Module) lists all the options available to the user.
  */
 Ext.define('Laboratory.view.Home', {
     extend: 'Ext.container.Container',
@@ -35,7 +35,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Specimen Collection',
         x: 20,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
         }
@@ -46,7 +46,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Queue Status',
         x: 240,
         y: 280,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.QUEUE_STATUS.value);
         }
@@ -57,7 +57,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Anonymous Identification',
         x: 240,
         y: 230,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.ANONYMOUS_PATIENT_HOME.value);
         }
@@ -68,7 +68,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Paper Entry',
         x: 240,
         y: 180,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.PAPER_ENTRY_LIST.value);
         }
@@ -79,7 +79,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Report Delivery/ Print Lab Report',
         x: 240,
         y: 130,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_LIST.value);
         }
@@ -97,7 +97,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Create  Lab Order',
         x: 240,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_HOME.value);
         }
@@ -115,7 +115,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Report Approval',
         x: 20,
         y: 230,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
         }
@@ -127,7 +127,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Batch Approval',
         x: 20,
         y: 180,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.BATCH_APPROVAL.value);
         }
@@ -138,7 +138,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Result Entry',
         x: 20,
         y: 130,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.RESULT_ENTRY_HOME.value);
         }
@@ -149,7 +149,7 @@ Ext.define('Laboratory.view.Home', {
         text: 'Specimen Registration',
         x: 20,
         y: 80,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
         }

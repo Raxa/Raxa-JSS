@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows details of lab specimens
  */
 Ext.define('Laboratory.view.ReportDelivery5', {
@@ -56,7 +56,7 @@ Ext.define('Laboratory.view.ReportDelivery5', {
         text: 'Go to Home',
         x: 10,
         y: 420,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
         }

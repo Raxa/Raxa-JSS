@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is allows to set filter on a location 
+ *
+ *  This view is allows to set filter on a location
  */
 Ext.define('Laboratory.view.LabOrderCreation12', {
     extend: 'Ext.container.Container',
@@ -68,28 +68,28 @@ Ext.define('Laboratory.view.LabOrderCreation12', {
         text: 'Find Location',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_FILTER_LOCATION.value);
-        }          
+        }
     }, {
         xtype: 'button',
         text: 'Find Provider',
         x: 280,
         y: 60,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PROVIDER.value);
-        }        
+        }
     }, {
         xtype: 'button',
         text: 'Find Patient',
         x: 280,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PATIENT.value);
-        }        
+        }
     }]
 
 });

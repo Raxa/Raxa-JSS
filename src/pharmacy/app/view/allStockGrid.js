@@ -7,42 +7,35 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         type: 'absolute'
     },
     x: 110,
-    columns: [
-    {
+    columns: [{
         xtype: 'rownumberer',
         text: 'S.No',
         width: 40
-    },
-    {
+    }, {
         xtype: 'gridcolumn',
         text: 'Name of Drug',
         width: 120
-    },{
+    }, {
         xtype: 'numbercolumn',
         text: 'Stock Status',
         width: 100
-    },
-    {
+    }, {
         xtype: 'numbercolumn',
         text: 'Qty',
         width: 80
-    },
-    {
+    }, {
         xtype: 'numbercolumn',
         text: 'Qty expiring',
         width: 100
-    },
-    {
+    }, {
         xtype: 'gridcolumn',
         text: 'Days of Stock',
         width: 100
-    },
-    {
+    }, {
         xtype: 'datecolumn',
         text: 'Order Due Date',
         width: 100
-    },
-    {
+    }, {
         xtype: 'numbercolumn',
         text: 'Qty orderdered',
         width: 90

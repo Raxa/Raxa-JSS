@@ -6,19 +6,19 @@ Ext.define('Screener.store.IdentifierType', {
     xtype: 'identifierTypeStore',
     config: {
         fields: [{
-                name: 'uuid',
-                type: 'string'
+            name: 'uuid',
+            type: 'string'
         }],
         proxy: {
             type: 'rest',
             url: HOST + '/ws/rest/v1/patientidentifiertype',
             headers: Util.getBasicAuthHeaders(),
             reader: {
-              type: 'json',
-              rootProperty: 'results'
+                type: 'json',
+                rootProperty: 'results'
             },
             writer: {
-              type: 'json'
+                type: 'json'
             }
         }
     }

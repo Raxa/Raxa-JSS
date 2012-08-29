@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view allows searching lab order with different searching options
  */
 Ext.define('Laboratory.view.ReportDelivery2', {
@@ -92,7 +92,7 @@ Ext.define('Laboratory.view.ReportDelivery2', {
         text: 'Find',
         x: 10,
         y: 420,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_SEARCH_LIST.value);
         }

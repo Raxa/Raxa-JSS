@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script defines the view RegistrationPart1 of the registration module
  */
 Ext.define('Registration.view.RegistrationPart1', {
@@ -25,7 +25,7 @@ Ext.define('Registration.view.RegistrationPart1', {
         type: 'hbox',
         pack: 'center'
     },
-    initComponent: function () {
+    initComponent: function() {
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
@@ -37,8 +37,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                 items: [{
                     xtype: 'fieldset',
                     //first element in bodyStyle is not working, passing it twice
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     padding: 5,
                     title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.title'),
@@ -64,7 +64,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             },
                             items: [{
                                 xtype: 'numberfield',
-                                cls: 'raxa-form-panel',    
+                                cls: 'raxa-form-panel',
                                 name: 'Old Patient Identifier',
                                 id: 'oldPatientIdentifier',
                                 fieldLabel: 'Old Patient Identifier',
@@ -87,7 +87,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
-                                cls: 'raxa-form-panel',    
+                                cls: 'raxa-form-panel',
                                 name: 'firstName',
                                 id: 'patientFirstName',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
@@ -118,14 +118,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 name: 'firstName',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
                                 id: 'relativeFirstName',
-                                width:172,
+                                width: 172,
 
                                 allowBlank: false
                             }, {
                                 name: 'lastName',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHLN.emptytext'),
                                 id: 'relativeLastName',
-                                width:172,
+                                width: 172,
                                 margins: '0 0 0 6',
 
                                 allowBlank: false
@@ -152,7 +152,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 labelPad: 20,
                                 labelWidth: 200,
                                 anchor: '75%',
-                                width:172,
+                                width: 172,
                                 allowBlank: false
                             }, {
                                 name: 'Age',
@@ -190,33 +190,33 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other'),
                             }]
                         }]
-                    },{
+                    }, {
                         xtype: 'panel',
                         ui: 'raxa-panel',
                         layout: {
                             type: 'vbox',
                             align: 'stretch'
                         },
-                        items:[{
-                                html: "<img border=\"0\" src=\"../../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
-                        },{
+                        items: [{
+                            html: "<img border=\"0\" src=\"../../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
+                        }, {
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
                             xtype: 'button',
                             width: 80,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.TakePhoto'),
-                            action: 'takePhoto'                            
+                            action: 'takePhoto'
                         }]
                     }]
                 }]
-            },{
+            }, {
                 xtype: 'container',
                 border: 0,
                 bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     padding: 5,
                     title: 'Address and Contact Details',
@@ -230,7 +230,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelWidth: 200,
                         width: 573,
                         allowBlank: false,
-                    //anchor: '95%'
+                        //anchor: '95%'
                     }, {
                         xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Street'),
@@ -305,26 +305,26 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'primaryContact',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.1'),
                             id: 'patientPrimaryContact',
-                            width:172,
+                            width: 172,
                             allowBlank: true
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.2'),
                             id: 'patientSecondaryContact',
-                            width:172,
+                            width: 172,
                             margins: '0 0 0 6',
                             allowBlank: true
                         }]
                     }]
                 }]
-            },{
+            }, {
                 xtype: 'container',
                 border: 0,
                 bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     padding: 5,
                     title: 'Secondary Information',
@@ -344,7 +344,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'combo',
                             name: 'education',
-                            label: 'Education Details',fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
+                            label: 'Education Details',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
                             id: 'education',
                             layout: 'hbox',
                             width: 172,
@@ -360,7 +361,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }),
                             displayField: 'education'
                         }]
-                    }, /* TODO: add back in caste after we decide what fields we want
+                    },
+                    /* TODO: add back in caste after we decide what fields we want
                         {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Caste',
@@ -393,7 +395,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }),
                             displayField: 'caste'
                         }]
-                    }, */{
+                    }, */
+                    {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation'),
                         layout: 'hbox',
@@ -415,13 +418,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['occupation'],
                                 data: [
-                                ['Unemployed'],
-                                ['Student'],
-                                ['Agriculture Related'],
-                                ['Bank Related'],
-                                ['Medical Related'],
-                                ['Engineering Related'],
-                                ['Not Mentioned']
+                                    ['Unemployed'],
+                                    ['Student'],
+                                    ['Agriculture Related'],
+                                    ['Bank Related'],
+                                    ['Medical Related'],
+                                    ['Engineering Related'],
+                                    ['Not Mentioned']
                                 ]
                             }),
                             displayField: 'occupation'

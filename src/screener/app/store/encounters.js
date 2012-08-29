@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script initiates the registration module
  */
 
@@ -22,19 +22,19 @@
 
 Ext.define('Screener.store.encounters', {
     extend: 'Ext.data.Store',
-    config:{
+    config: {
         model: 'Screener.model.encounters',
         proxy: {
             type: 'rest',
-            url : HOST + '/ws/rest/v1/encounter',
+            url: HOST + '/ws/rest/v1/encounter',
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json'
             },
             writer: {
                 type: 'json'
-            }, 
-            afterRequest:function(request,success){         //prints if request is successful
+            },
+            afterRequest: function(request, success) { //prints if request is successful
                 alert('Encounter saved successfully.');
             }
         }

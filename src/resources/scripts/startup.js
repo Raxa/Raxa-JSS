@@ -13,7 +13,7 @@ var Startup = {
      * @param module: the raxa module
      * @return the function to call when we receive the app.js file
      */
-    getViewRequestHandler: function (getRequest, views, module) {
+    getViewRequestHandler: function(getRequest, views, module) {
         //we return an error code (for Jasmine testing)
         errCode = 'noErrors';
         //decrement calls left if we received a response from server
@@ -27,12 +27,11 @@ var Startup = {
             for (j = 0; j < viewStrings.length; j++) {
                 currIndex = views.length;
                 views[currIndex] = [];
-                views[currIndex][0] = 'RaxaEmrView '+module + ' ' + viewStrings[j];
-                if(module == 'login'){
+                views[currIndex][0] = 'RaxaEmrView ' + module + ' ' + viewStrings[j];
+                if (module == 'login') {
                     views[currIndex][1] = '#' + viewStrings[j];
-                }
-                else{
-                    views[currIndex][1] = module+'/#' + viewStrings[j];
+                } else {
+                    views[currIndex][1] = module + '/#' + viewStrings[j];
                 }
             }
         }
@@ -44,35 +43,35 @@ var Startup = {
 
         return errCode;
     },
-    
-    
+
+
     getResourceUuid: function() {
         var x;
         Ext.Ajax.request({
-            url : HOST+'/ws/rest/v1/concept?q=height',
+            url: HOST + '/ws/rest/v1/concept?q=height',
             method: 'GET',
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
-            failure: function (response) {
-                console.log('GET failed with response status: '+ response.status); // + response.status);
+            failure: function(response) {
+                console.log('GET failed with response status: ' + response.status); // + response.status);
             },
-            success: function (response) {
-                for(var i=0;i<JSON.parse(response.responseText).results.length;++i){
-                    if(JSON.parse(response.responseText).results[i].display == 'HEIGHT (CM)'){
+            success: function(response) {
+                for (var i = 0; i < JSON.parse(response.responseText).results.length; ++i) {
+                    if (JSON.parse(response.responseText).results[i].display == 'HEIGHT (CM)') {
                         x = JSON.parse(response.responseText).results[i].uuid
                     }
                 }
-                if(x != localStorage.heightUuidconcept || localStorage.heightUuidconcept == undefined){
-                    
-                    for(var i1 =0;i1<resourceUuid.length;++i1){
+                if (x != localStorage.heightUuidconcept || localStorage.heightUuidconcept == undefined) {
+
+                    for (var i1 = 0; i1 < resourceUuid.length; ++i1) {
                         var a = resourceUuid[i1]
                         Util.getAttributeFromREST(a[0], a[1], a[2])
                     }
                 }
-            }            
+            }
         });
     },
-    
+
     /**
      * for each of the modules defined in Util.getModules(), create a GET
      * request and send to server for the app/app.js file
@@ -81,22 +80,22 @@ var Startup = {
      * @param views: 2-d array for storing view names+URLs
      * @param callback: function to be called after AJAX is done
      */
-    createViewGetRequest: function (currModuleAddr, module, views, callback) {
+    createViewGetRequest: function(currModuleAddr, module, views, callback) {
         Ext.Ajax.request({
             url: currModuleAddr + '/app/app.js',
             method: 'GET',
-            success: function (response) {
+            success: function(response) {
                 Startup.getViewRequestHandler(response, views, module);
                 if (getCallsLeft === 0) {
-                    Startup.postPrivilege(views,callback);
+                    Startup.postPrivilege(views, callback);
                 }
             },
-            failure: function (response) {
+            failure: function(response) {
                 // if we don't have GET response success, return error string
                 console.log(module + ' does not have app/app.js file');
                 getCallsLeft--;
                 if (getCallsLeft === 0) {
-                    Startup.postPrivilege(views,callback);
+                    Startup.postPrivilege(views, callback);
                 }
             }
         });
@@ -108,10 +107,10 @@ var Startup = {
      * views has [x][0] = 'name', [x][1] = 'url'
      * Example: views[8][0] = 'login Dashboard', views[8][1] = "login/#Dashboard"
      * @param modules: all the current modules of raxa
-     * @param callback: function to be called after AJAX GETs are finished, 
+     * @param callback: function to be called after AJAX GETs are finished,
      * the callback function should take in views as parameter
      */
-    populateViews: function (modules, callback) {
+    populateViews: function(modules, callback) {
         //2-d array of view names + urls
         views = [];
         //keeping track of how many GETs left to receive
@@ -129,7 +128,7 @@ var Startup = {
                 //adding url for bare app i.e. screener/index.html
                 currIndex = views.length;
                 views[currIndex] = [];
-                views[currIndex][0] = 'RaxaEmrView '+modules[i];
+                views[currIndex][0] = 'RaxaEmrView ' + modules[i];
                 views[currIndex][1] = modules[i];
             }
             //create AJAX get request for each app/app.js file
@@ -137,11 +136,11 @@ var Startup = {
         }
     },
     /**
-    * POST the passed views to the REST services on HOST using AJAX Request
-    * @param views: 2-d array for storing view names+URLs
-    * @param callback: function to be called after AJAX GETs are finished, 
-    */
-    postPrivilege: function (views, callback) {
+     * POST the passed views to the REST services on HOST using AJAX Request
+     * @param views: 2-d array for storing view names+URLs
+     * @param callback: function to be called after AJAX GETs are finished,
+     */
+    postPrivilege: function(views, callback) {
         //Counts the successful POST AJAX Calls
         postSuccessCount = 0;
 
@@ -161,11 +160,11 @@ var Startup = {
                 jsonData: jsonPriviledge,
                 headers: Util.getBasicAuthHeaders(),
 
-                failure: function (response) {
+                failure: function(response) {
                     console.log('Privilege POST failed with response status ' + response.status);
                 },
 
-                success: function (response) {
+                success: function(response) {
                     postSuccessCount++;
                     //if all POST calls are successful, callback method is called
                     if (postSuccessCount == (views.length - 1)) {

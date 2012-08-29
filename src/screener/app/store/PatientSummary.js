@@ -24,7 +24,7 @@ Ext.define('Screener.store.PatientSummary', {
             url: HOST + '/ws/rest/v1/encounter?patient=',
             reader: {
                 type: 'json',
-				rootProperty: 'results'
+                rootProperty: 'results'
             }
         }
     }

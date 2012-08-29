@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
- //the view of history tab
- 
+
+//the view of history tab
+
 // enum to change the panels of history tab
- 
+
 var HISTORY = {
     PERSONAL: 0,
     SOCIAL: 1
@@ -61,8 +61,8 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     ui: 'forward',
                     text: 'Next',
                     id: 'next',
-                    handler: function () {
-                        Ext.getCmp('history-panel').setActiveItem(HISTORY.SOCIAL)// to swich the view to social history
+                    handler: function() {
+                        Ext.getCmp('history-panel').setActiveItem(HISTORY.SOCIAL) // to swich the view to social history
                     }
                 }]
             }, {
@@ -243,8 +243,8 @@ Ext.define('RaxaEmr.Outpatient.view.patient.history', {
                     width: 40,
                     icon: '../outpatient/resources/images/medicationhistory.png',
                     padding: '0 10 10 0',
-                    handler: function () {
-                        Ext.getCmp('medicationhistory').fireEvent('tap');// to swich the view to medication history
+                    handler: function() {
+                        Ext.getCmp('medicationhistory').fireEvent('tap'); // to swich the view to medication history
                     }
                 }]
             }]

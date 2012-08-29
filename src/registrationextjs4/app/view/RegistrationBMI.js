@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script defines the view RegistrationBMI of the registration module
  */
 Ext.define('Registration.view.RegistrationBMI', {
@@ -25,7 +25,7 @@ Ext.define('Registration.view.RegistrationBMI', {
         type: 'hbox',
         pack: 'center'
     },
-    initComponent: function () {
+    initComponent: function() {
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
@@ -37,21 +37,21 @@ Ext.define('Registration.view.RegistrationBMI', {
                 items: [{
                     xtype: 'displayfield',
                     fieldLabel: 'Patient Identifier',
-                    value: 'Patient ID comes here', 
+                    value: 'Patient ID comes here',
                     id: 'bmiPatientID',
                     readOnly: true,
-                },{
+                }, {
                     xtype: 'displayfield',
                     fieldLabel: 'Patient Name',
                     value: 'Patient Name comes here',
                     readOnly: true,
                     id: 'bmiPatientName',
                     padding: '0 0 40 0'
-                },{
+                }, {
                     xtype: 'fieldset',
                     title: 'Enter Measures for Body Mass Index',
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     items: [{
                         xtype: 'form',
@@ -95,11 +95,11 @@ Ext.define('Registration.view.RegistrationBMI', {
                             padding: '20 0 40 0'
                         }]
                     }]
-                },{
+                }, {
                     xtype: 'fieldset',
                     title: 'BMI',
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     items: [{
                         xtype: 'numberfield',

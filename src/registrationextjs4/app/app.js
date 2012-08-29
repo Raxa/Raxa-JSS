@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script initiates the registration module
  */
 
@@ -23,8 +23,8 @@ Ext.Loader.setConfig({
     }
 });
 
-Ext.require('Ext.i18n.Bundle', function(){
-    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+Ext.require('Ext.i18n.Bundle', function() {
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle', {
         bundle: 'RaxaEmrReg',
         //Specify language here
         lang: 'en-US',
@@ -35,12 +35,11 @@ Ext.require('Ext.i18n.Bundle', function(){
 
 Ext.application({
     name: 'Registration',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
-    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['Main', 'BMI','Search'],
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI', 'SearchPart1', 'SearchPart2', 'SearchConfirm'],
+    controllers: ['Main', 'BMI', 'Search'],
 
-    launch: function () {
-        if(Util.checkModulePrivilege('registrationextjs4')){
+    launch: function() {
+        if (Util.checkModulePrivilege('registrationextjs4')) {
             Ext.create('Registration.view.Viewport');
         }
     }

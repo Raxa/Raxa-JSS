@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is third and last form (contact information) for adding provider  
+ *
+ *  This view is third and last form (contact information) for adding provider
  */
 Ext.define('Laboratory.view.LabOrderCreation9', {
     extend: 'Ext.container.Container',
@@ -56,16 +56,16 @@ Ext.define('Laboratory.view.LabOrderCreation9', {
     }, {
         xtype: 'button',
         text: 'Cancel',
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
-        } 
+        }
     }, {
         xtype: 'button',
         text: 'Done',
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
-        }        
+        }
     }]
-    });
+});

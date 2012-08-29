@@ -43,7 +43,7 @@ Ext.define('chw.view.addOptions', {
                 iconMask: true,
                 iconCls: 'team',
                 listeners: {
-                    tap: function () {
+                    tap: function() {
                         Ext.getCmp('viewPort').setActiveItem(PAGES.addFamily)
                     }
                 }
@@ -53,7 +53,7 @@ Ext.define('chw.view.addOptions', {
                 iconMask: true,
                 iconCls: 'user_add',
                 listeners: {
-                    tap: function () {
+                    tap: function() {
                         Ext.getCmp('viewPort').setActiveItem(PAGES.addPatient)
                     }
                 }

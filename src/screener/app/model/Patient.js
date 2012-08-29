@@ -1,6 +1,6 @@
 /**
  * This class defines a Patient,
- * with strings for uuid and display, 
+ * with strings for uuid and display,
  * and model for links
  */
 Ext.define('Screener.model.Patient', {

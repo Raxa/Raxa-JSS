@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script defines the view Viewport of the registration module
  */
 Ext.define('Registration.view.Viewport', {
@@ -22,7 +22,7 @@ Ext.define('Registration.view.Viewport', {
         pack: 'center',
         type: 'hbox'
     },
-    initComponent: function () {
+    initComponent: function() {
         this.items = {
             dockedItems: [{
                 xtype: 'toolbar',
@@ -35,15 +35,15 @@ Ext.define('Registration.view.Viewport', {
                     src: '../../resources/img/iconWhite.png'
                 }, {
                     xtype: 'tbfill'
-                },{
-                      xtype: 'button',
-                      height: 35,
-                      width: 200,
-                      text: 'Registration Home Page',
-                      handler: function () {
-                          var l = Ext.getCmp('mainRegArea').getLayout();
-                          l.setActiveItem(LAB_PAGES.HOME.name);
-                      }
+                }, {
+                    xtype: 'button',
+                    height: 35,
+                    width: 200,
+                    text: 'Registration Home Page',
+                    handler: function() {
+                        var l = Ext.getCmp('mainRegArea').getLayout();
+                        l.setActiveItem(LAB_PAGES.HOME.name);
+                    }
                 }, {
                     xtype: 'tbtext',
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + username

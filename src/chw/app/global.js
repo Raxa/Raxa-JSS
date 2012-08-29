@@ -36,7 +36,7 @@ USER.type = 'CHW';
 USER.uuid = '';
 var CURR_DATE = new Date();
 var CURR_LOC = {
-    LAT : 0,
+    LAT: 0,
     LOG: 0
 }
 var LOCATION = "";
@@ -47,15 +47,15 @@ var savedFamilyRecord
 var savedPatientRecord
 var savedIllnessRecord
 var helper = {
-    listDisclose: function (list,record) {
-        if(list==='family'){
+    listDisclose: function(list, record) {
+        if (list === 'family') {
             // set all family details before transition
-            savedFamilyRecord=record
+            savedFamilyRecord = record
             Ext.ComponentQuery.query('familyDetails #familyAddressLabel')[0].setValue(record.get('familyAddress'));
             Ext.ComponentQuery.query('familyDetails #familyTitle')[0].setTitle(record.get('familyName'));
             Ext.ComponentQuery.query('familyDetails #familyDescripLabel')[0].setTitle(record.get('familyDescrip'));
             Ext.ComponentQuery.query('familyDetails #familyIdLabel')[0].setValue(record.get('familyId'));
-            Ext.ComponentQuery.query('familyDetails #familyImageLabel')[0].setHtml('<center><img src="'+record.get('familyImage')+'" height="100px"/></center>')
+            Ext.ComponentQuery.query('familyDetails #familyImageLabel')[0].setHtml('<center><img src="' + record.get('familyImage') + '" height="100px"/></center>')
             // loading family member list
             var patientStore = Ext.getStore('patients');
             if (!patientStore) {
@@ -63,13 +63,13 @@ var helper = {
             }
             var familyId = record.get('familyId');
             //Filtering the list by family id
-            patientStore.filter('familyId',familyId)
-            patientStore.onAfter('load',function(){
+            patientStore.filter('familyId', familyId)
+            patientStore.onAfter('load', function() {
                 Ext.getCmp('familyMembersList').setStore(patientStore);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails)
             });
             patientStore.load();
-        } else if (list==='illness') {
+        } else if (list === 'illness') {
             console.log('===Illness===')
             savedIllnessRecord = record
             var pistored = Ext.getStore('patientsIllnesses')
@@ -77,16 +77,15 @@ var helper = {
                 Ext.create('chw.store.patientsIllnesses')
             }
             // TODO: Something is definitely wrong with the filter
-            pistored.filter('illnessId',record.get('illnessId'))
-            pistored.onAfter('load', function () {
+            pistored.filter('illnessId', record.get('illnessId'))
+            pistored.onAfter('load', function() {
                 Ext.getCmp('illnessList').setStore(pistored);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
             })
             pistored.load();
-        } else if (list==='patient') {
-            savedPatientRecord=record
-            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="'
-                +record.get('patientImage')+'" width="150px" /></center>')
+        } else if (list === 'patient') {
+            savedPatientRecord = record
+            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="' + record.get('patientImage') + '" width="150px" /></center>')
             Ext.ComponentQuery.query('patientDetails #firstNameLabel')[0].setValue(record.get('firstName'));
             Ext.ComponentQuery.query('patientDetails #familyNameLabel')[0].setValue(record.get('familyName'));
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(record.get('patientGender'));
@@ -97,39 +96,36 @@ var helper = {
                 Ext.create('chw.store.patientsIllnesses')
             }
             var pid = record.get('patientId')
-            pistore.filter('patientId',pid)
-            pistore.onAfter('load',function () {
+            pistore.filter('patientId', pid)
+            pistore.onAfter('load', function() {
                 Ext.getCmp('patientIllnessList').setStore(pistore);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
             });
             pistore.load();
-        } else if (list==='inventory') {
+        } else if (list === 'inventory') {
             Ext.getCmp('inventoryDetails').setHidden(false);
             Ext.ComponentQuery.query('inventoryDetails #pillDescripLabel')[0].setValue(record.get('pillDescrip'));
             Ext.ComponentQuery.query('inventoryDetails #pillAmountLabel')[0].setValue(record.get('pillAmount'));
             Ext.ComponentQuery.query('inventoryDetails #pillFrequencyLabel')[0].setValue(record.get('pillFrequency'));
             Ext.ComponentQuery.query('inventoryDetails #pillNotesLabel')[0].setValue(record.get('pillNotes'));
             Ext.ComponentQuery.query('inventoryDetails #pillTitleLabel')[0].setTitle(record.get('pillName'));
-            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="'
-                +record.get('pillImage')+'" width="100px"/></center>');
+            Ext.ComponentQuery.query('inventoryDetails #pillImageLabel')[0].setHtml('<center><img src="' + record.get('pillImage') + '" width="100px"/></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryDetails)
-        } else if (list==='resources') {
-            savedResourcesRecord=record
+        } else if (list === 'resources') {
+            savedResourcesRecord = record
             Ext.ComponentQuery.query('resourceDetail #resourceNameTitle')[0].setTitle(record.get('resourceName'));
             var type = record.get('resourceType')
             var location = record.get('resourceLocation');
             var container = Ext.ComponentQuery.query('resourceDetail #resourceLocationLabel')[0];
-            if (type==='photo') {
-                container.setHtml('<img src="'+ location +'" height="100%" width="100%"/>')
+            if (type === 'photo') {
+                container.setHtml('<img src="' + location + '" height="100%" width="100%"/>')
             } else if (type === 'video') {
-                container.setHtml('<video controls="controls" height="100%" width="100%"><source src="' 
-                    + location + '" type="video/webm" />Your browser does not support the video tag</video>')
+                container.setHtml('<video controls="controls" height="100%" width="100%"><source src="' + location + '" type="video/webm" />Your browser does not support the video tag</video>')
             } else if (type === 'audio') {
-                container.setHtml('<audio controls="controls"><source src="' + location 
-                    + '" type = "audio/mp3" />Your browser does not support the audio element</audio>')
+                container.setHtml('<audio controls="controls"><source src="' + location + '" type = "audio/mp3" />Your browser does not support the audio element</audio>')
             }
             Ext.getCmp('viewPort').setActiveItem(PAGES.resourceDetail)
-        } else if (list==='patientIllness') {
+        } else if (list === 'patientIllness') {
             //Going to illness history from patient details
             toHistoryFrom = 'patientDetails'
             Ext.getCmp('illnessDetails').setHidden(false);
@@ -145,10 +141,9 @@ var helper = {
             Ext.ComponentQuery.query('illnessDetails #illnessEndDate')[0].setValue(record.get('illnessEndDate'));
             Ext.ComponentQuery.query('illnessDetails #illnessTreatmentField')[0].setValue(record.get('illnessTreatment'));
             Ext.ComponentQuery.query('illnessDetails #illnessNotesField')[0].setValue(record.get('illnessNotes'));
-            Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="' 
-                + illnessDetails.illnessImage+'" width="100px" /></center>');
+            Ext.ComponentQuery.query('illnessDetails #illnessImageLabel')[0].setHtml('<center><img src="' + illnessDetails.illnessImage + '" width="100px" /></center>');
             Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
-        } else if (list==='ipatient') {
+        } else if (list === 'ipatient') {
             //Going to illness history from disease list
             toHistoryFrom = 'diseaseList'
             // get the patient information
@@ -162,35 +157,34 @@ var helper = {
             Ext.ComponentQuery.query('patientDetails #patientGenderLabel')[0].setValue(pName.patientGender);
             Ext.ComponentQuery.query('patientDetails #patientAgeLabel')[0].setValue(pName.patientAge);
             Ext.ComponentQuery.query('patientDetails #patientIdLabel')[0].setValue(pName.patientId);
-            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="'
-                +pName.patientImage+'" width="150px" /></center>')
+            Ext.ComponentQuery.query('patientDetails #patientDetailsImage')[0].setHtml('<center><img src="' + pName.patientImage + '" width="150px" /></center>')
             // show history
             var patillstore = Ext.getStore('patientsIllnesses');
             if (!patillstore) {
                 Ext.create('chw.store.patientsIllnesses')
             }
-            patillstore.filter('patientId',patid)
-            patillstore.onAfter('load',function () {
+            patillstore.filter('patientId', patid)
+            patillstore.onAfter('load', function() {
                 Ext.getCmp('patientIllnessList').setStore(patillstore);
                 Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
             });
             patillstore.load();
         }
     },
-    doVis: function (arg) {
+    doVis: function(arg) {
         var visitStore = Ext.getStore('visits');
         visitStore.load();
         var t = visitStore.getById(arg)
-        Ext.Msg.confirm('Task', t.get('visitDetail'), function (resp) {
-            if (resp==='yes') {
+        Ext.Msg.confirm('Task', t.get('visitDetail'), function(resp) {
+            if (resp === 'yes') {
                 var comp = Ext.getCmp(arg);
                 comp.setUi('decline');
                 comp.setDisabled(true);
-                Ext.ComponentQuery.query('visitDetails #'+arg+'_audio')[0].play();
+                Ext.ComponentQuery.query('visitDetails #' + arg + '_audio')[0].play();
             }
         })
     }
-    
+
 }
 var HEADERS = {
     "Authorization": localStorage.getItem("basicAuthHeader"),

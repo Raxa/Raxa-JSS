@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view tree list view of location 
+ *
+ *  This view tree list view of location
  */
 Ext.define('Laboratory.view.SpecimenCollection11', {
     extend: 'Ext.container.Container',

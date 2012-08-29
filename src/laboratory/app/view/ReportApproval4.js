@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is allows all options to approve or reject a lab order 
+ *
+ *  This view is allows all options to approve or reject a lab order
  */
 Ext.define('Laboratory.view.ReportApproval4', {
     extend: 'Ext.container.Container',
@@ -129,7 +129,7 @@ Ext.define('Laboratory.view.ReportApproval4', {
         text: 'Save Only',
         x: 570,
         y: 360,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
         }
@@ -138,7 +138,7 @@ Ext.define('Laboratory.view.ReportApproval4', {
         text: 'Cancel',
         x: 240,
         y: 360,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
         }
@@ -148,7 +148,7 @@ Ext.define('Laboratory.view.ReportApproval4', {
         text: 'Reject',
         x: 510,
         y: 140,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
         }
@@ -158,7 +158,7 @@ Ext.define('Laboratory.view.ReportApproval4', {
         text: 'Approve',
         x: 430,
         y: 140,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
         }
@@ -168,7 +168,7 @@ Ext.define('Laboratory.view.ReportApproval4', {
         text: 'Clear All',
         x: 590,
         y: 140,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_HOME.value);
         }

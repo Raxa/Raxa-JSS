@@ -4,21 +4,21 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
     layout: {
         type: 'auto'
     },
-    items:[{
+    items: [{
         xtype: 'container',
-        layout:{
+        layout: {
             type: 'auto'
         },
         autoScroll: true,
         margin: '20 50 0 110',
-        items:[{
+        items: [{
             xtype: 'tabpanel',
             activeTab: 0,
             autoScroll: true,
             tabPosition: 'left',
             tabHeight: 100,
             height: 580,
-            margin:'10 0 0 0',
+            margin: '10 0 0 0',
             tabWidth: 60,
             items: [{
                 xtype: 'panel',
@@ -29,29 +29,25 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                     labelWidth: 130,
                     value: 'List Of Drugs',
                     readOnly: true
-                },{
+                }, {
                     xtype: 'button',
                     text: 'New Drug',
                     margin: '-35 0 0 820'
-                },{
+                }, {
                     xtype: 'gridpanel',
                     title: 'List Of Drugs',
                     height: 450,
                     margin: '10 0 0 0',
-                    columns: [
-                    {
+                    columns: [{
                         header: 'S no',
                         width: 100
-                    },
-                    {
+                    }, {
                         header: 'Name Of Drug',
                         width: 250
-                    },
-                    {
+                    }, {
                         header: 'Manufacturer',
                         width: 250
-                    },
-                    {
+                    }, {
                         header: 'Drug Group',
                         width: 250
                     }],
@@ -59,15 +55,15 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                         stripeRows: false
                     }
                 }]
-            },{
+            }, {
                 xtype: 'panel',
                 title: 'Drug Groups',
                 items: [{
                     xtype: 'container',
-                    layout:{
+                    layout: {
                         type: 'hbox'
                     },
-                    items:[{
+                    items: [{
                         xtype: 'panel',
                         width: 255,
                         border: false,
@@ -76,17 +72,16 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                         margin: '10 10 10 110',
                         height: 500,
                         layout: 'auto',
-                        items:[{
+                        items: [{
                             xtype: 'button',
                             text: 'New Drug Group',
                             width: 120,
                             margin: '10 0 0 0'
-                        },{
+                        }, {
                             xtype: 'gridpanel',
                             width: 250,
                             height: 420,
-                            columns: [
-                            {
+                            columns: [{
                                 xtype: 'gridcolumn',
                                 width: 245,
                                 text: 'Drug Group Name'
@@ -95,49 +90,47 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                                 stripeRows: false
                             }
                         }]
-                    },{
+                    }, {
                         xtype: 'container',
                         layout: {
                             type: 'vbox'
                         },
                         margin: '100 0 0 100',
-                        items:[{
+                        items: [{
                             xtype: 'displayfield',
                             fieldLabel: 'Drug Group Name',
                             labelWidth: 130,
                             value: 'Group Name',
                             id: 'groupnameID',
                             readOnly: true
-                        },{
+                        }, {
                             xtype: 'displayfield',
                             fieldLabel: 'Regimen',
                             labelWidth: 80,
                             value: 'Regimen',
                             id: 'regimenID',
                             readOnly: true
-                        },{
+                        }, {
                             xtype: 'gridpanel',
                             width: 350,
                             height: 350,
-                            columns: [
-                            {
+                            columns: [{
                                 header: 'S no',
                                 width: 50
-                            },{
+                            }, {
                                 header: 'Name Of Drug',
                                 width: 147
-                            },{
+                            }, {
                                 header: 'Manufacturer',
                                 width: 147
-                            },
-                            ],
+                            }, ],
                             viewConfig: {
                                 stripeRows: false
                             }
                         }]
                     }]
                 }]
-            },{
+            }, {
                 xtype: 'panel',
                 title: 'Facilities',
                 items: [{
@@ -145,7 +138,7 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                     value: 'LIST OF FACILITIES',
                     margin: '30 10 0 150',
                     labelWidth: 130
-                },{
+                }, {
                     xtype: 'button',
                     text: 'Create New Facility',
                     width: 150,
@@ -153,33 +146,27 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                         Ext.widget('addfacility')
                     },
                     margin: '0 0 0 800'
-                },{
+                }, {
                     xtype: 'gridpanel',
                     margin: '10 170 10 150',
                     autoScroll: true,
                     height: 450,
-                    columns: [
-                    {
+                    columns: [{
                         header: 'S no',
                         width: 100
-                    },
-                    {
+                    }, {
                         header: 'Facility Name',
                         width: 150
-                    },
-                    {
+                    }, {
                         header: 'City',
                         width: 100
-                    },
-                    {
+                    }, {
                         header: 'Address',
                         width: 200
-                    },
-                    {
+                    }, {
                         header: 'Contact no',
                         width: 100
-                    },
-                    {
+                    }, {
                         header: 'Person Incharge',
                         width: 140
                     }],

@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
- //view of medication history
- 
+
+//view of medication history
+
 Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistory', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Medication-History',
@@ -58,7 +58,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistory', {
             dataIndex: 'drugname',
             width: '10%',
             cls: 'centered-cell',
-            renderer: function (value, values) {
+            renderer: function(value, values) {
                 return '<span>' + value + '</span>';
             }
         }, {
@@ -66,7 +66,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistory', {
             dataIndex: 'duration',
             width: '10%',
             cls: 'centered-cell',
-            renderer: function (value, values) {
+            renderer: function(value, values) {
                 return '<span>' + value + '</span>';
             }
         }, {

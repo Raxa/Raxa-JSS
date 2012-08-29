@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is first page of Report Delivery and contains the list of Lab Orders 
+ *
+ *  This view is first page of Report Delivery and contains the list of Lab Orders
  */
 Ext.define('Laboratory.view.ResultEntry2', {
     extend: 'Ext.container.Container',
@@ -78,7 +78,7 @@ Ext.define('Laboratory.view.ResultEntry2', {
         text: 'Find',
         x: 260,
         y: 110,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.RESULT_ENTRY_SPECIMEN_SEARCH_RESULT.value);
         }
@@ -90,7 +90,7 @@ Ext.define('Laboratory.view.ResultEntry2', {
         text: 'Find',
         x: 260,
         y: 190,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.RESULT_ENTRY_SPECIMEN_SEARCH_RESULT.value);
         }
@@ -102,7 +102,7 @@ Ext.define('Laboratory.view.ResultEntry2', {
         text: 'Find',
         x: 10,
         y: 420,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.RESULT_ENTRY_SPECIMEN_SEARCH_RESULT.value);
         }

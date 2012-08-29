@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view allows search on provider (through tree panel on location) 
+ *
+ *  This view allows search on provider (through tree panel on location)
  */
 Ext.define('Laboratory.view.SpecimenRegistration4', {
     extend: 'Ext.container.Container',
@@ -59,7 +59,7 @@ Ext.define('Laboratory.view.SpecimenRegistration4', {
         text: 'Find Location',
         x: 280,
         y: 120,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_FILTER_LOCATION.value);
         }
@@ -71,7 +71,7 @@ Ext.define('Laboratory.view.SpecimenRegistration4', {
         x: 280,
         y: 90,
 
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_PROVIDER.value);
         }
@@ -81,7 +81,7 @@ Ext.define('Laboratory.view.SpecimenRegistration4', {
         text: 'Find Patient',
         x: 280,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_LAB_ORDER.value);
         }
@@ -92,7 +92,7 @@ Ext.define('Laboratory.view.SpecimenRegistration4', {
         text: 'Continue',
         x: 440,
         y: 160,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PROVIDER_SEARCH_RESULT.value);
         }
@@ -102,7 +102,7 @@ Ext.define('Laboratory.view.SpecimenRegistration4', {
         text: 'Cancel',
         x: 280,
         y: 160,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
         }
@@ -138,7 +138,7 @@ Ext.define('Laboratory.view.SpecimenRegistration4', {
             text: 'Find',
             x: 160,
             y: 80,
-            handler: function () {
+            handler: function() {
                 var l = Ext.getCmp('mainLabArea').getLayout();
                 l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PROVIDER_SEARCH_RESULT.value);
             }

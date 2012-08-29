@@ -6,7 +6,7 @@ Ext.define('Registration.store.search', {
     // is/are null
     listeners: {
         load: {
-            fn: function () {
+            fn: function() {
                 var Data = this.getProxy().reader.jsonData.results;
                 var i
                 this.removeAll();

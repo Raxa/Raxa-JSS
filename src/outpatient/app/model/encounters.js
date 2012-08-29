@@ -22,4 +22,3 @@ Ext.define('RaxaEmr.Outpatient.model.encounters', {
         }]
     }
 });
-

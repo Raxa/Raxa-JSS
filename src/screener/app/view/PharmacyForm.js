@@ -1,5 +1,5 @@
 /**
- * This screen shows a drug order form 
+ * This screen shows a drug order form
  * with a button to add additional medications and a submit button.The left side shows patient
  * list
  */

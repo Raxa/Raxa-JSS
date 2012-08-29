@@ -6,20 +6,20 @@ Ext.define('Screener.store.Location', {
     xtype: 'locationStore',
     config: {
         fields: [{
-                name: 'uuid',
-                type: 'string'
+            name: 'uuid',
+            type: 'string'
         }],
         proxy: {
             type: 'rest',
             headers: Util.getBasicAuthHeaders(),
             url: HOST + '/ws/rest/v1/location',
             reader: {
-              type: 'json',
-              rootProperty: 'results'
+                type: 'json',
+                rootProperty: 'results'
             },
             writer: {
-              type: 'json',
-              rootProperty: 'results'
+                type: 'json',
+                rootProperty: 'results'
             }
         }
     }

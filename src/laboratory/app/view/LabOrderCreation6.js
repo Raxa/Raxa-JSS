@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view shows result of search on provider in tabular form 
+ *
+ *  This view shows result of search on provider in tabular form
  */
 Ext.define('Laboratory.view.LabOrderCreation6', {
     extend: 'Ext.container.Container',
@@ -47,19 +47,18 @@ Ext.define('Laboratory.view.LabOrderCreation6', {
         text: 'Add new Provider',
         x: 0,
         y: 150,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_ADD_PROVIDER_1.value);
         }
-        },
-        {
+    }, {
         xtype: 'button',
         text: 'Continue',
         x: 120,
         y: 150,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_DETAILS.value);
-        }         
+        }
     }]
 });

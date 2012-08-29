@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view shows result of search on lab order, patient or provider 
+ *
+ *  This view shows result of search on lab order, patient or provider
  */
 Ext.define('Laboratory.view.SpecimenRegistration3', {
     extend: 'Ext.container.Container',
@@ -61,7 +61,7 @@ Ext.define('Laboratory.view.SpecimenRegistration3', {
         text: 'Cancel',
         x: 190,
         y: 270,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
         }
@@ -71,7 +71,7 @@ Ext.define('Laboratory.view.SpecimenRegistration3', {
         text: 'Continue',
         x: 350,
         y: 270,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_DETAILS.value);
         }
