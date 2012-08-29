@@ -27,15 +27,15 @@ var NUMBER_OF_STORES_TO_WRITE = 3;
 var store_patientList;
 var store_assignedPatientList;
 
-// TODO: Declare PAGES in utils, globally, and create sub-dict of pages in each modules main controller
-var PAGES = {};  
-PAGES.SCREENER = {
-    "TOP_MENU" : 0,
-    "ASSIGN_PATIENTS" : 1,
-    "PHARMACY_ORDER" : 2,
-    "LAB_ORDER" : 3,
-    "PATIENT_VITALS" : 4
-};
+/*// TODO: Declare PAGES in utils, globally, and create sub-dict of pages in each modules main controller*/
+/*var PAGES = {};  */
+/*PAGES.SCREENER = {*/
+/*"TOP_MENU" : 0,*/
+/*"ASSIGN_PATIENTS" : 1,*/
+/*"PHARMACY_ORDER" : 2,*/
+/*"LAB_ORDER" : 3,*/
+/*"PATIENT_VITALS" : 4*/
+/*};*/
 
 var patientUpdate = {
     //this method updates the title in patients waiting view with no. of patients waiting
@@ -63,8 +63,9 @@ var patientUpdate = {
     //this method returns the index of Obs which contain BMI details
     getObsBMI: function (obs) {
         var i;
+        var BMI_DESCRIPTION = 'BODY MASS INDEX';
         for (i = 0; i < obs.length; i++) {
-            if (obs[i].display.indexOf('BODY MASS INDEX') != -1) {
+            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
                 ind = i;
                 return i;
             }
@@ -108,14 +109,25 @@ Ext.define("Screener.controller.Application", {
         'Screener.store.Patients',
         'Screener.store.PatientSummary',
         'Screener.store.PostLists',
-        
+
+        // Added for posting Screener Vitals
+        'Screener.model.encounterModel',
+        'Screener.model.obsModel',
+        'Screener.model.orderModel',
+        'Screener.model.providerModel',
+        'Screener.store.encounterStore',
+	    'Screener.model.observation',	
+
         'Screener.view.PharmacyForm', 
-        'Screener.view.PatientListView'
+        'Screener.view.PatientListView',
+        'Screener.view.VitalsView',
+        'Screener.view.VitalsForm'
     ],
     models: [
         'Screener.model.Person', 
         'Screener.model.PostList', 
-        'Screener.model.Patients'
+        'Screener.model.Patients',
+	    'Screener.model.observation'
     ],
     extend: 'Ext.app.Controller',
     config: {
@@ -128,6 +140,7 @@ Ext.define("Screener.controller.Application", {
             patientSummary: 'patientSummary',
             doctorSummary: 'doctorSummary',
             labOrderForm: 'labOrderForm',
+            vitalsForm: 'vitalsForm',
             /*pharmacyView: 'pharmacyView',*/
             /*labOrderView: 'labOrderView',*/
             pharmacyForm: 'pharmacyForm',
@@ -148,6 +161,7 @@ Ext.define("Screener.controller.Application", {
             showVitalsButton: '#showVitalsButton',
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
+            submitVitalsButton: '#submitVitalsButton',
             assignButton: '#assignButton',
             removeButton: '#removeButton',
             sortButton: '#sortButton',
@@ -180,6 +194,9 @@ Ext.define("Screener.controller.Application", {
             },
             savePatientButton: {
                 tap: 'savePerson'
+            },
+            submitVitalsButton: {
+                tap: 'savePatientVitals'
             },
             showDoctorsButton: {
                 tap: 'showDoctors'
@@ -259,12 +276,11 @@ Ext.define("Screener.controller.Application", {
         store_assignedPatientList = Ext.create('Screener.store.AssignedPatientList', {
             storeId: 'assPatientStore'
         });
-        this.getpatientlist();
+        this.preparePatientList();
     },
 
     // Creates an instance of PostList model for posting Registration and Screener List
-    getpatientlist: function () {
-        console.log("getPatientList");
+    preparePatientList: function () {
         var d = new Date();
         var list_regEncounter = Ext.create('Screener.model.PostList', {
             name: "Registration Encounter",
@@ -556,8 +572,12 @@ Ext.define("Screener.controller.Application", {
         if (!this.patientView) {
             this.patientView = Ext.create('Screener.view.PatientView');
         }
-        // this.getDoctorList().deselectAll();
         this.getView().push(this.patientView);
+        
+        // Deselect to prevent lists in other views from affecting
+        // https://raxaemr.atlassian.net/browse/RAXAJSS-360
+        /*this.getDoctorList().deselectAll();*/
+        this.getPatientList().deselectAll();
 
         patientUpdate.updatePatientsWaitingTitle();
         this.countPatients();
@@ -620,11 +640,17 @@ Ext.define("Screener.controller.Application", {
         if (!this.vitalsView) {
             this.vitalsView = Ext.create('Screener.view.VitalsView');
         }
-        // this.getDoctorList().deselectAll();
         this.getView().push(this.vitalsView);
+        this.getPatientList().deselectAll();
+        
+        // TODO: Get most recent vitals
+        
 
+        // Update # of patients waiting
         patientUpdate.updatePatientsWaitingTitle();
-        this.countPatients();
+        // TODO: Will fail, msg: "Uncaught TypeError: Cannot call method
+        // 'setStore' of undefined". Why?
+        /*this.countPatients();*/
     },
     // opens form for patient summary
     showPatientSummary: function (list, item, index) {
@@ -639,7 +665,7 @@ Ext.define("Screener.controller.Application", {
         store.getProxy().setUrl(HOST + '/ws/rest/v1/encounter?patient=' + uuid);
         store.load({
             callback: function (records, operation, success) {
-                // the operation object contains all of the details of the load operation
+        console.log(this.getPatientList())
                 for (i = 1; i <= 5; i++) {
                     Ext.getCmp(i).setHtml("");
                     Ext.getCmp(i).setHtml(store.last().raw.obs[i - 1].display);
@@ -806,25 +832,97 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').add(patient);
     },
 
-    sendEncounterData: function (uuid, encountertype, location, provider) {
+    sendEncounterData: function (personUuid, encountertype, location, provider) {
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
-        var currentDate = new Date();
+        var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
+        
         // creates the encounter json object
+        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
         var jsonencounter = Ext.create('Screener.model.encounterpost', {
-            encounterDatetime: Util.Datetime(currentDate, Util.getUTCGMTdiff()),
-            patient: uuid, //you will get the uuid from ticket 144...pass it here
+            encounterDatetime: t,
+            patient: personUuid, //you will get the uuid from ticket 144...pass it here
             encounterType: encountertype,
             //location: location,
             provider: provider
         });
-        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+       
+        // Handle "Screener Vitals" encounters specially
+        // Create observations linked to the encounter
+        if (encountertype === localStorage.screenervitalsUuidencountertype)
+        {
+            var observations = jsonencounter.observations();    // Create set of observations
+            
+            var createObs = function (c, v) {
+                // TODO: When adding a temperature of 9, this caused a failure 
+                // because only 25-43 are valid on backend (see concept 
+                // dictionary: http://test.raxa.org:8080/openmrs/dictionary/concept.htm?conceptId=5088 
+                // ... so we need to enforce this on the front-end too and 
+                // handle errors where a user submits a disallowed vital (just
+                // don't persist it, but fail gracefully and continue?)
+                //
+                // As soon as an error happens, it closes REST connection
+                //
+                // ... and write some tests for these corner cases!
+                observations.add({
+                        obsDatetime : t,
+                        // TODO: Update patient id to selected patient
+                        person: personUuid,
+                        concept: c,
+                        value: v
+                });
+            };
+
+            console.log("Creating Obs for uuid types...");
+            // TODO: Validate fields before submitting
+            // TODO: Get values from UI
+            v = Ext.getCmp("vitalsForm").getValues();
+            console.log(v);
+            /*return;*/
+            createObs(localStorage.bloodoxygensaturationUuidconcept,
+                v.bloodOxygenSaturationField);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, 
+                v.diastolicBloodPressureField);
+            createObs(localStorage.respiratoryRateUuidconcept, 
+                v.respiratoryRateField);
+            createObs(localStorage.systolicbloodpressureUuidconcept,
+                v.systolicBloodPressureField);
+            createObs(localStorage.temperatureUuidconcept, 
+                v.temperatureField); 
+            createObs(localStorage.pulseUuidconcept, 
+                v.pulseField);
+            observations.sync();
+            console.log("... Complete! Created Obs for new uuid types");
+        }
+
+        // Create encounter
         var store = Ext.create('Screener.store.encounterpost');
         store.add(jsonencounter);
         store.sync();
         store.on('write', function () {
             Ext.getStore('patientStore').load();
-        }, this)
-        return store
+        }, this);
+        return store;
+    },
+
+    // Create a SCREENER_VITALS encounter and attach vitals observations
+    savePatientVitals: function () {
+        var selectedPatient  = this.getPatientList().getSelection()[0];
+        console.log(selectedPatient);
+        if ( ! selectedPatient) {
+            Ext.Msg.alert("You must select a patient");
+            return;
+        }
+        var patientUuid = selectedPatient.data.uuid;
+        this.getPatientList().deselectAll();
+
+        // TODO: Get uuid of logged in provider (likely a nurse?) who is
+        // entering the vitals
+        var providerUuid = "e0ca3719-790a-4343-8a7b-8923e99f75ed";
+        
+        console.log("send encounter data");
+        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerUuid);
+        return;
+
     },
 
     drugSubmit: function () {

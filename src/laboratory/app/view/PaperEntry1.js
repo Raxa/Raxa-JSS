@@ -22,23 +22,17 @@ Ext.define('Laboratory.view.PaperEntry1', {
     activeItem: 0,
 
     layout: {
-        type: 'absolute'
+        type: 'absolute',
     },
 
     items: [{
-        xtype: 'gridpanel',
-        height: 343,
-        width: 275,
-        title: 'Lab Orders waiting results',
-        columns: [{
-            xtype: 'gridcolumn',
-            width: 273,
-            dataIndex: 'string',
-            text: 'Details'
-        }],
-        viewConfig: {
-
-        }
+        xtype: 'laborderlistgrid',
+        id: 'labOrderListPaperEntry',
+        title: 'List of Lab Orders',
+        width: 200,
+        height: 400,
+        action: 'showLabPanel',
+        store: Ext.create('Laboratory.store.LabOrderSearch')
     }, {
         xtype: 'button',
         margin: '10 50 0 270',
@@ -49,5 +43,4 @@ Ext.define('Laboratory.view.PaperEntry1', {
             l.setActiveItem(LAB_PAGES.PAPER_ENTRY_SEARCH.value);
         }
     }]
-
 });

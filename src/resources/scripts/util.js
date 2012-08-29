@@ -30,6 +30,10 @@ var HOST = localStorage.getItem("host");
 DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
 HOST = (HOST === null) ? DEFAULT_HOST : HOST; 
     
+LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
+LAB_USERNAME='Admin';
+LAB_PASSWORD='Admin123';
+	
 var username;
 var password;
 var timeoutLimit = 150000;

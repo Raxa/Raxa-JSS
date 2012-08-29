@@ -19,9 +19,5 @@ Ext.define('RaxaEmr.Outpatient.store.cheifcomplain', {
     config: {
         model: 'RaxaEmr.Outpatient.model.cheifcomplain',
         autoLoad: true,
-        proxy: {
-            type: 'ajax',
-            url: 'data/examinationlist.json',
-        }
     }
 });

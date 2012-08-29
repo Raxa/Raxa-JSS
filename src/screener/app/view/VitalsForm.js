@@ -50,6 +50,7 @@ Ext.define("Screener.view.VitalsForm", {
                     // Fieldset for inputting vitals
 					xtype: 'fieldset',
 					title: 'Input Vitals',
+                    id: 'vitalsFields',
 					items: [{
 						// Systolic Blood Pressure
 						xtype: 'numberfield',
@@ -91,13 +92,13 @@ Ext.define("Screener.view.VitalsForm", {
 						listeners: maxLengthListener(3)
 					},
 					{
-						// Pulse Rate
+						// Pulse
 						xtype: 'numberfield',
 						label: 'Pulse Rate',
 						minValue: 0,
 						maxValue: 200,
 						stepValue: 1,
-						name: 'pulseRateField',
+						name: 'pulseField',
 						listeners: maxLengthListener(3)
 					},
 					{
@@ -107,7 +108,7 @@ Ext.define("Screener.view.VitalsForm", {
 						minValue: 0,
 						maxValue: 100,
 						stepValue: 1,
-						name: 'oxygenSaturationField',
+						name: 'bloodOxygenSaturationField',
 						listeners: maxLengthListener(3)
 					}]
 				},{
@@ -150,14 +151,14 @@ Ext.define("Screener.view.VitalsForm", {
 						xtype: 'textfield',
 						disabled: true,
 						value: '-',
-						name: 'pulseRateRecentValue'
+						name: 'pulseRecentValue'
 					},
 					{
 						// Oxygen Saturation
 						xtype: 'textfield',
 						disabled: true,
 						value: '-',
-						name: 'oxygenSaturationRecentValue'
+						name: 'bloodOxygenSaturationRecentValue'
 					}]
 				}]
 			},
@@ -165,7 +166,7 @@ Ext.define("Screener.view.VitalsForm", {
                 // Submit Button
 				xtype: 'button',
 				ui: 'confirm',
-				id: 'vitalsSubmitButton',
+				id: 'submitVitalsButton',
                 height: '40px',
 				text: 'submit',
                 width: '100px'
