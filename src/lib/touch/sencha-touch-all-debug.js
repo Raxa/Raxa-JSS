@@ -69429,7 +69429,6 @@ Ext.define('Ext.dataview.DataView', {
             }
             //<debug warn>
             else {
-
                 Ext.Logger.warn("The specified Store cannot be found", this);
             }
             //</debug>

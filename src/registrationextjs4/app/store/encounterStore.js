@@ -33,11 +33,11 @@ Ext.define('Registration.store.encounterStore', {
         // TODO: Move this to controller. View updating logic should happen in
         // the controller, not in the model
         afterRequest:function(request,success){         //prints if request is successful
-            var l = Ext.getCmp('mainRegArea').getLayout();
-            l.setActiveItem(REG_PAGES.HOME.value);
-            Ext.getCmp('heightIDcm').reset();
-            Ext.getCmp('weightIDkg').reset();
-            Ext.getCmp('bmiNumberfieldID').reset();
+            /*var l = Ext.getCmp('mainRegArea').getLayout();*/
+            /*l.setActiveItem(REG_PAGES.HOME.value);*/
+            /*Ext.getCmp('heightIDcm').reset();*/
+            /*Ext.getCmp('weightIDkg').reset();*/
+            /*Ext.getCmp('bmiNumberfieldID').reset();*/
         }
     }
 });

@@ -211,6 +211,26 @@ var TIME_BEFORE_NOW = 0.1;
 // The Util class provids several methods that are shared by the core, apps and modules
 var Util = {
 	
+    /*
+     * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
+     * Number field fails to enforce maxLength, so must add JavaScript listener
+     * http://stackoverflow.com/questions/9613743/maxlength-attribute-of-numberfield-in-sencha-touch
+     */
+    maxLengthListener: function(maxLength) {
+        return {
+            keyup: function(textfield, e, eOpts) {
+                var value = textfield.getValue() + '';
+                var length = value.length;
+
+                var MAX_LENGTH = maxLength;
+                if (length > MAX_LENGTH) {
+                    textfield.setValue(value.substring(0, MAX_LENGTH));
+                    return false;
+                }
+            }
+        };
+    },
+
     /**
      *Returns the value of time difference in UTC and GMT
      *@return diffinUTC_GMT
@@ -382,10 +402,6 @@ var Util = {
     },
 
     getAttributeFromREST: function (resource, queryParameter, varName, display) {
-        if (varName === '') {
-            varName = queryParameter;
-        }
-
         //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/' + resource + '?q=' + queryParameter, //'/ws/rest/v1/concept?q=height',

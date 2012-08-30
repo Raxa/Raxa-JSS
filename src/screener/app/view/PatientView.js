@@ -8,9 +8,7 @@ Ext.define("Screener.view.PatientView", {
 	xtype: 'patientView',
 	extend: 'Ext.Container',
 	config: {
-		/*fullscreen: true,*/
 		layout: 'hbox',
-        /*title: 'Patient Assignments',*/
 		items: [
 		//our patient list is built on the Patients store, and has a title and sort button
 		{

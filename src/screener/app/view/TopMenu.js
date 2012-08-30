@@ -10,7 +10,6 @@ Ext.define("Screener.view.TopMenu", {
     extend: 'Ext.Container',
     xtype: 'topmenu',
     config: {
-        /*fullscreen: true,*/
         layout: 'vbox',
         /*centered: true,*/
         items: [{

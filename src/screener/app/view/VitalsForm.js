@@ -4,25 +4,6 @@
  * list
  */
 
-// Listener to workaround maxLength bug in HTML5 numberfield with Sencha
-// Number field fails to enforce maxLength, so must add JavaScript listener
-// http://stackoverflow.com/questions/9613743/maxlength-attribute-of-numberfield-in-sencha-touch
-// TODO: Move to Utils
-var maxLengthListener = function(maxLength) {
-	return {
-		keyup: function(textfield, e, eOpts) {
-			var value = textfield.getValue() + '';
-			var length = value.length;
-
-			var MAX_LENGTH = maxLength;
-			if (length > MAX_LENGTH) {
-				textfield.setValue(value.substring(0, MAX_LENGTH));
-				return false;
-			}
-		}
-	};
-};
-
 Ext.define("Screener.view.VitalsForm", {
 	xtype: 'vitalsForm',
     id: 'vitalsForm',
@@ -37,12 +18,10 @@ Ext.define("Screener.view.VitalsForm", {
 			title: 'Vitals'
 		},
 		{
-            // Need a separate panel here, so I can show/hide depending on
-            // whether or not a patient is selected
+            // Need a separate panel here, so I can show/hide/disable
 			xtype: 'panel',
 			layout: 'vbox',
 			id: 'vitalsInput',
-            // hidden: true, // TODO: Show form only if patient is selected
 			items: [{
 				xtype: 'panel',
 				layout: 'hbox',
@@ -59,7 +38,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 300,
 						stepValue: 1,
 						name: 'systolicBloodPressureField',
-						listeners: maxLengthListener(3)
+						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Diastolic Blood Pressure
@@ -69,7 +48,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 300,
 						stepValue: 1,
 						name: 'diastolicBloodPressureField',
-						listeners: maxLengthListener(3)
+						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Temperature
@@ -79,7 +58,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 200,
 						stepValue: 1,
 						name: 'temperatureField',
-						listeners: maxLengthListener(3)
+						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Repiratory Rate
@@ -89,7 +68,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 200,
 						stepValue: 1,
 						name: 'respiratoryRateField',
-						listeners: maxLengthListener(3)
+						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Pulse
@@ -99,7 +78,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 200,
 						stepValue: 1,
 						name: 'pulseField',
-						listeners: maxLengthListener(3)
+						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Oxygen Saturation
@@ -109,7 +88,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 100,
 						stepValue: 1,
 						name: 'bloodOxygenSaturationField',
-						listeners: maxLengthListener(3)
+						listeners: Util.maxLengthListener(3)
 					}]
 				},{
                     xtype: 'spacer',

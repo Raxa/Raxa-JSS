@@ -107,7 +107,10 @@ Ext.define('Registration.controller.Main', {
             'phoneContactInformation',
             'patientPrimaryContact',
             'patientSecondaryContact',
-            'oldPatientIdentifier'
+            'oldPatientIdentifier',
+            'heightIDcm',
+            'weightIDkg',
+            'bmiNumberfieldID'
         ];
         
         for (var i = 0; i < fields.length; i++)
@@ -130,8 +133,7 @@ Ext.define('Registration.controller.Main', {
                 address2: Ext.getCmp('street').value,
                 cityVillage: Ext.getCmp('town').value,
             }]
-        // TODO: Create a ticket for this, put code in ticket and return it
-        // later.
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-206
         //right now there is bug in openmrs server due to which sending attributes with body of 
         //post call leads to 500 response status so right now I am commenting it for
         /*  attributes : [{
@@ -157,6 +159,10 @@ Ext.define('Registration.controller.Main', {
             Registration.model.Person.getFields()[3].persist = false;
         }
 
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-206
+        // Restore old code which adds patient Attributes
+        // ('oldPatientIdentifier', 'caste', 'education', etc)
+        
         var store = Ext.create('Registration.store.Person');
         store.add(jsonperson);
         // this statement makes the post call to make the person
@@ -328,27 +334,6 @@ Ext.define('Registration.controller.Main', {
             jsonencounter.data.obs.push(jsonencounterregfee.data);
         }
 
-        // TODO: Move this to ScreenerVitals controller in screener, later
-        //  Create a screenerVitals encounter and tie these observations to it
-        //  instead of a registration encounter.
-        var createObs = function (c, v) {
-            var jsonObs = Ext.create('Registration.model.obsModel',{
-                    obsDatetime : t,
-                    person: localStorage.newPatientUuid,
-                    concept: c,
-                    value: v
-                });
-            jsonencounter.data.obs.push(jsonObs.data);
-        };
-
-        console.log("Creating Obs for uuid types...");
-        createObs(localStorage.bloodoxygensaturationUuidconcept, 1);
-        createObs(localStorage.diastolicbloodpressureUuidconcept, 6);
-        createObs(localStorage.respiratoryRateUuidconcept, 7);
-        createObs(localStorage.systolicbloodpressureUuidconcept, 8);
-        createObs(localStorage.temperatureUuidconcept, 9);
-        console.log("... Complete! Created Obs for new uuid types");
-
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
         store.sync();
@@ -356,6 +341,7 @@ Ext.define('Registration.controller.Main', {
             Ext.Msg.alert('Encounter saved successfully.');
             this.cancel();
         }, this);
+
         return store;
     }
 });

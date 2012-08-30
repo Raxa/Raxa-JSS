@@ -10,7 +10,6 @@ Ext.define("Screener.view.LabOrderView", {
     requires: ['Screener.view.LabOrderForm'],
 
     config: {
-        /*fullscreen: true,*/
         layout: 'hbox',
         title: 'Add Lab Orders',
         items: [

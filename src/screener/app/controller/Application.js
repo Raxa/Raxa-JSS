@@ -27,16 +27,6 @@ var NUMBER_OF_STORES_TO_WRITE = 3;
 var store_patientList;
 var store_assignedPatientList;
 
-/*// TODO: Declare PAGES in utils, globally, and create sub-dict of pages in each modules main controller*/
-/*var PAGES = {};  */
-/*PAGES.SCREENER = {*/
-/*"TOP_MENU" : 0,*/
-/*"ASSIGN_PATIENTS" : 1,*/
-/*"PHARMACY_ORDER" : 2,*/
-/*"LAB_ORDER" : 3,*/
-/*"PATIENT_VITALS" : 4*/
-/*};*/
-
 var patientUpdate = {
     //this method updates the title in patients waiting view with no. of patients waiting
     updatePatientsWaitingTitle: function () {
@@ -141,8 +131,6 @@ Ext.define("Screener.controller.Application", {
             doctorSummary: 'doctorSummary',
             labOrderForm: 'labOrderForm',
             vitalsForm: 'vitalsForm',
-            /*pharmacyView: 'pharmacyView',*/
-            /*labOrderView: 'labOrderView',*/
             pharmacyForm: 'pharmacyForm',
             newPatient: 'newPatient',
             sortPanel: 'sortPanel',
@@ -334,14 +322,6 @@ Ext.define("Screener.controller.Application", {
     },
     // Creates List of Patients registered but not screened in last 24 hours
     finalPatientList: function (store_regEncounter, store_scrEncounter, store_outEncounter) {
-        console.log("finalPatientList");
-        /*var store_patientList = Ext.create('Screener.store.PatientList', {*/
-        /*storeId: 'patientStore'*/
-        /*});*/
-        /*var store_assignedPatientList = Ext.create('Screener.store.AssignedPatientList', {*/
-        /*storeId: 'assPatientStore'*/
-        /*});*/
-        // Setting the url dynamically for store to store patients list
         store_patientList.getProxy().setUrl(
             this.getPatientListUrl(
                 store_regEncounter.getData().getAt(0).getData().uuid, 
@@ -361,8 +341,9 @@ Ext.define("Screener.controller.Application", {
         store_patientList.on('load', function () {
             Ext.getCmp('loadMask').setHidden(true);
             patientUpdate.setBMITime(store_patientList);
+            // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
-                    /*record.set('image', '../resources/pic.gif');*/
+                record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
             });
         }, this);
         // TODO: Pass a function instead of string, to avoid implied "eval"
@@ -559,7 +540,8 @@ Ext.define("Screener.controller.Application", {
         PatientStore.add(patient);
         PatientStore.sync();
         PatientStore.on('write', function () {
-        // TODO: Need to add location to OpenMRS for screenerUuidlocation
+            // TODO: https://raxaemr.atlassian.net/browse/TODO-67
+            // Need to add location to OpenMRS for screenerUuidlocation
             this.sendEncounterData(personUuid, localStorage.regUuidencountertype, localStorage.screenerUuidlocation, localStorage.loggedInUser)
         }, this)
     },
@@ -574,8 +556,8 @@ Ext.define("Screener.controller.Application", {
         }
         this.getView().push(this.patientView);
         
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-360
         // Deselect to prevent lists in other views from affecting
-        // https://raxaemr.atlassian.net/browse/RAXAJSS-360
         /*this.getDoctorList().deselectAll();*/
         this.getPatientList().deselectAll();
 
@@ -643,14 +625,11 @@ Ext.define("Screener.controller.Application", {
         this.getView().push(this.vitalsView);
         this.getPatientList().deselectAll();
         
-        // TODO: Get most recent vitals
-        
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-366
+        // Get most recent vitals
 
         // Update # of patients waiting
         patientUpdate.updatePatientsWaitingTitle();
-        // TODO: Will fail, msg: "Uncaught TypeError: Cannot call method
-        // 'setStore' of undefined". Why?
-        /*this.countPatients();*/
     },
     // opens form for patient summary
     showPatientSummary: function (list, item, index) {
@@ -665,7 +644,6 @@ Ext.define("Screener.controller.Application", {
         store.getProxy().setUrl(HOST + '/ws/rest/v1/encounter?patient=' + uuid);
         store.load({
             callback: function (records, operation, success) {
-        console.log(this.getPatientList())
                 for (i = 1; i <= 5; i++) {
                     Ext.getCmp(i).setHtml("");
                     Ext.getCmp(i).setHtml(store.last().raw.obs[i - 1].display);
@@ -768,7 +746,8 @@ Ext.define("Screener.controller.Application", {
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
-        // TODO: Need to add location to OpenMRS for waitingUuidlocation
+        // TODO: https://raxaemr.atlassian.net/browse/TODO-67#comment-12611
+        // Need to add location to OpenMRS for waitingUuidlocation
         this.sendEncounterData(patient, localStorage.screenerUuidencountertype, localStorage.waitingUuidlocation, provider)
         this.countPatients();
     },
@@ -840,7 +819,7 @@ Ext.define("Screener.controller.Application", {
         // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
         var jsonencounter = Ext.create('Screener.model.encounterpost', {
             encounterDatetime: t,
-            patient: personUuid, //you will get the uuid from ticket 144...pass it here
+            patient: personUuid, 
             encounterType: encountertype,
             //location: location,
             provider: provider
@@ -853,19 +832,10 @@ Ext.define("Screener.controller.Application", {
             var observations = jsonencounter.observations();    // Create set of observations
             
             var createObs = function (c, v) {
-                // TODO: When adding a temperature of 9, this caused a failure 
-                // because only 25-43 are valid on backend (see concept 
-                // dictionary: http://test.raxa.org:8080/openmrs/dictionary/concept.htm?conceptId=5088 
-                // ... so we need to enforce this on the front-end too and 
-                // handle errors where a user submits a disallowed vital (just
-                // don't persist it, but fail gracefully and continue?)
-                //
-                // As soon as an error happens, it closes REST connection
-                //
-                // ... and write some tests for these corner cases!
+                // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
+                // Validate before submitting an Obs
                 observations.add({
                         obsDatetime : t,
-                        // TODO: Update patient id to selected patient
                         person: personUuid,
                         concept: c,
                         value: v
@@ -873,23 +843,13 @@ Ext.define("Screener.controller.Application", {
             };
 
             console.log("Creating Obs for uuid types...");
-            // TODO: Validate fields before submitting
-            // TODO: Get values from UI
             v = Ext.getCmp("vitalsForm").getValues();
-            console.log(v);
-            /*return;*/
-            createObs(localStorage.bloodoxygensaturationUuidconcept,
-                v.bloodOxygenSaturationField);
-            createObs(localStorage.diastolicbloodpressureUuidconcept, 
-                v.diastolicBloodPressureField);
-            createObs(localStorage.respiratoryRateUuidconcept, 
-                v.respiratoryRateField);
-            createObs(localStorage.systolicbloodpressureUuidconcept,
-                v.systolicBloodPressureField);
-            createObs(localStorage.temperatureUuidconcept, 
-                v.temperatureField); 
-            createObs(localStorage.pulseUuidconcept, 
-                v.pulseField);
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField);
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField);
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField);
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField); 
+            createObs(localStorage.pulseUuidconcept, v.pulseField);
             observations.sync();
             console.log("... Complete! Created Obs for new uuid types");
         }
@@ -915,7 +875,8 @@ Ext.define("Screener.controller.Application", {
         var patientUuid = selectedPatient.data.uuid;
         this.getPatientList().deselectAll();
 
-        // TODO: Get uuid of logged in provider (likely a nurse?) who is
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-369
+        // Get uuid of logged in provider (likely a nurse?) who is
         // entering the vitals
         var providerUuid = "e0ca3719-790a-4343-8a7b-8923e99f75ed";
         
