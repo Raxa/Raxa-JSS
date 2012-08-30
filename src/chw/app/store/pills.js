@@ -21,9 +21,9 @@ Ext.define('chw.store.pills', {
         model: 'chw.model.pill',
         id: 'pills',
         sorters: 'pillName',
-        grouper: function (record) {
+        grouper: function(record) {
             return record.get('pillName')[0];
-        }, 
+        },
         data: [{
             pillName: 'Ciprofloxacin',
             pillDescrip: 'Antibiotic for bowel issues',

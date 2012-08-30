@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows result of search on lab order, patient or provider
  */
 Ext.define('Laboratory.view.ReportApproval3', {
@@ -30,7 +30,7 @@ Ext.define('Laboratory.view.ReportApproval3', {
         text: 'Continue',
         x: 350,
         y: 210,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_LAB_ORDER_SEARCH_RESULT.value);
         }
@@ -39,7 +39,7 @@ Ext.define('Laboratory.view.ReportApproval3', {
         text: 'Back',
         x: 190,
         y: 210,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_PAGE.value);
         }

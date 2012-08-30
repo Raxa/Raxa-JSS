@@ -36,10 +36,10 @@ Ext.define('Registration.model.searchPatient', {
     }, {
         name: 'address1',
         type: 'string'
-    }, { 
+    }, {
         name: 'address2',
         type: 'string'
-    }, { 
+    }, {
         name: 'postalCode',
         type: 'string'
     }, {

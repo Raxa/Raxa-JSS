@@ -1,11 +1,11 @@
 /**
- * This class defines a Names, holding 2 strings 
- * for givenName and familyName 
+ * This class defines a Names, holding 2 strings
+ * for givenName and familyName
  */
-Ext.define('Screener.model.Names',{
+Ext.define('Screener.model.Names', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [ {
+        fields: [{
             name: 'givenName',
             type: 'string'
         }, {

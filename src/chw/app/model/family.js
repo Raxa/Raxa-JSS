@@ -22,10 +22,10 @@ Ext.define('chw.model.family', {
         fields: [{
             name: 'familyId',
             type: 'number'
-        },{
+        }, {
             name: 'familyName',
             type: 'string'
-        },{
+        }, {
             name: 'familyAddress',
             type: 'string'
         }, {

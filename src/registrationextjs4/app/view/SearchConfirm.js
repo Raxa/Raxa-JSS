@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script defines the view SearchConfirm of the registration module
  */
 Ext.define('Registration.view.SearchConfirm', {
@@ -25,7 +25,7 @@ Ext.define('Registration.view.SearchConfirm', {
         type: 'hbox',
         pack: 'center'
     },
-    initComponent: function () {
+    initComponent: function() {
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
@@ -166,7 +166,8 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, /* TODO: add back in caste
+                    },
+                    /* TODO: add back in caste
                         {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste'),
@@ -188,7 +189,8 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, */{
+                    }, */
+                    {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation'),
                         layout: 'hbox',
@@ -345,7 +347,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         width: 120,
                         ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
-                        handler: function () {
+                        handler: function() {
                             var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
                         }
@@ -355,7 +357,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         width: 160,
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Return'),
                         ui: 'raxa-orange-small',
-                        handler: function () {
+                        handler: function() {
                             var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Screen (Result List)
                         }

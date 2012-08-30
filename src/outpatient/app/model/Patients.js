@@ -1,11 +1,10 @@
 Ext.define('RaxaEmr.Outpatient.model.Patients', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [
-		{
-			name: 'id',
+        fields: [{
+            name: 'id',
             persist: false
-		},{
+        }, {
             name: 'uuid',
             type: 'string'
         }, {

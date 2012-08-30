@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view allows search on lab order , patient & provider
  */
 Ext.define('Laboratory.view.SpecimenRegistration2', {
@@ -59,7 +59,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
         text: 'Find Location',
         x: 280,
         y: 120,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_FILTER_LOCATION.value);
         }
@@ -69,7 +69,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
         text: 'Find Provider',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_PROVIDER.value);
         }
@@ -79,7 +79,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
         text: 'Find Patient',
         x: 280,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_SEARCH_LAB_ORDER.value);
         }
@@ -90,7 +90,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
         x: 440,
         y: 160,
 
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_PATIENT_DETAILS.value);
 
@@ -102,7 +102,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
         text: 'Cancel',
         x: 280,
         y: 160,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_HOME.value);
         },
@@ -193,7 +193,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
             text: 'Find',
             x: 160,
             y: 80,
-            handler: function () {
+            handler: function() {
                 var l = Ext.getCmp('mainLabArea').getLayout();
                 l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_LAB_ORDER_SEARCH_RESULT.value);
             }
@@ -202,7 +202,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
             text: 'Find',
             x: 160,
             y: 160,
-            handler: function () {
+            handler: function() {
                 var l = Ext.getCmp('mainLabArea').getLayout();
                 l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_LAB_ORDER_SEARCH_RESULT.value);
             }
@@ -211,7 +211,7 @@ Ext.define('Laboratory.view.SpecimenRegistration2', {
             text: 'Find',
             x: 160,
             y: 270,
-            handler: function () {
+            handler: function() {
                 var l = Ext.getCmp('mainLabArea').getLayout();
                 l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_LAB_ORDER_SEARCH_RESULT.value);
             }

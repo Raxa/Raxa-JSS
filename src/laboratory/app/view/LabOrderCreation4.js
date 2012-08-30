@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view allows user to search provider
  */
 Ext.define('Laboratory.view.LabOrderCreation4', {
@@ -55,11 +55,11 @@ Ext.define('Laboratory.view.LabOrderCreation4', {
         text: 'Find',
         x: 10,
         y: 100,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PROVIDER_SEARCH_RESULT.value);
-        }        
-        
+        }
+
     }, {
         xtype: 'button',
         height: 20,
@@ -67,10 +67,10 @@ Ext.define('Laboratory.view.LabOrderCreation4', {
         text: 'Find',
         x: 10,
         y: 210,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PROVIDER_SEARCH_RESULT.value);
-        }        
+        }
     }, {
         xtype: 'image',
         height: 30,
@@ -113,27 +113,27 @@ Ext.define('Laboratory.view.LabOrderCreation4', {
         text: 'Find Location',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_FILTER_LOCATION.value);
-        }                  
+        }
     }, {
         xtype: 'button',
         text: 'Find Provider',
         x: 280,
         y: 60,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PROVIDER.value);
-        }        
+        }
     }, {
         xtype: 'button',
         text: 'Find Patient',
         x: 280,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PATIENT.value);
-        }                
+        }
     }]
 });

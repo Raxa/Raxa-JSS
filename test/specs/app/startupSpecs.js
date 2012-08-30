@@ -1,4 +1,4 @@
-describe("Get View Request Handler", function () {
+describe("Get View Request Handler", function() {
     views = [];
     getCallsLeft = 10;
     getRequests = [{
@@ -15,7 +15,7 @@ describe("Get View Request Handler", function () {
         'responseText': null
     }];
 
-    it("adds views into an array", function () {
+    it("adds views into an array", function() {
         views = [];
         Startup.getViewRequestHandler(getRequests[0], views, 'testModule1');
         var actual = views[2][0];
@@ -23,7 +23,7 @@ describe("Get View Request Handler", function () {
         expect(actual).toEqual(expected);
     });
 
-    it("returns an error code when no views are defined", function () {
+    it("returns an error code when no views are defined", function() {
         var actual = Startup.getViewRequestHandler(getRequests[1], views, 'testModule2');
         var expected = 'noViewsDefined';
         expect(actual).toEqual(expected);
@@ -31,9 +31,9 @@ describe("Get View Request Handler", function () {
 
 });
 
-describe("Create View Request", function () {
-    it("sends out GET to add view", function () {
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+describe("Create View Request", function() {
+    it("sends out GET to add view", function() {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var response = {
                 status: 200,
                 responseText: 'views: [\'view1\', \'view2\']'
@@ -49,16 +49,16 @@ describe("Create View Request", function () {
 
 });
 
-describe("POST views on Server", function(){
-	xit("returns Server Response", function() {
+describe("POST views on Server", function() {
+    xit("returns Server Response", function() {
 
-    	var views = new Array();
-    	views = []
-        views[0]=[];
+        var views = new Array();
+        views = []
+        views[0] = [];
         views[0][0] = 'Home Page';
         views[0][1] = 'http://raxatest.com/registration/home';
- 
- /*
+
+        /*
    spyOn(Ext.Ajax,'request').andCallFake(function (request) {
 		
 		method: 'POST';
@@ -80,9 +80,9 @@ describe("POST views on Server", function(){
         
         });  
 */
-	var expected = 	waitsFor(Startup.postPrivilege(views));
-	expect(expected).toBeDefined(); 
-	
-});
+        var expected = waitsFor(Startup.postPrivilege(views));
+        expect(expected).toBeDefined();
+
+    });
 
 });

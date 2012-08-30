@@ -13,8 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
- //view of refer to doc panel
+
+//view of refer to doc panel
 
 Ext.define('RaxaEmr.Outpatient.view.patient.refertodocpanel', {
     extend: 'Ext.Container',
@@ -34,7 +34,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.refertodocpanel', {
         record: null
     },
 
-    updateRecord: function (newRecord) {
+    updateRecord: function(newRecord) {
         if (newRecord) {
             this.down('#reftodoccontent').setData(newRecord.data);
         }

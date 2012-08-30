@@ -12,15 +12,14 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script defines the controller BMI of the registration module
  */
 Ext.define('Registration.controller.BMI', {
     extend: 'Ext.app.Controller',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
-    'SearchPart1', 'SearchPart2', 'SearchConfirm'],
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI', 'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     controllers: ['BMI'],
-    init: function () {
+    init: function() {
         //On init, check for change of numberfields in the field container heightWeightID in the view registrationbmi
         this.control({
             'registrationbmi #heightWeightID numberfield': {
@@ -34,7 +33,7 @@ Ext.define('Registration.controller.BMI', {
     },
 
     //Get values from view registrationbmi and call neccessary methods to calculate bmi & display on screen
-    getBMIData: function () {
+    getBMIData: function() {
         var height_cm = parseFloat(Ext.getCmp('heightIDcm').getValue()); //Get height value from view registrationbmi
         var weight_kg = parseFloat(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view registrationbmi
         var bmiInfo = this.calculateBMI(height_cm, weight_kg); //Calculate bmi
@@ -43,7 +42,7 @@ Ext.define('Registration.controller.BMI', {
     },
 
     //Function to Calculate bmi 
-    calculateBMI: function (height_cm, weight_kg) {
+    calculateBMI: function(height_cm, weight_kg) {
         var bmiErrorHeight = 0; //Variable to check for height error
         var bmiErrorWeight = 0; //Varibale to check for weight error
         if (height_cm <= BMI_HEIGHT_MIN || height_cm > BMI_HEIGHT_MAX) {
@@ -106,7 +105,7 @@ Ext.define('Registration.controller.BMI', {
     },
 
     //Updates the bmi status message and also updates the bmi value displayed in the numberfield and slider
-    updateBMIDisplay: function (bmiStatusText, bmi) {
+    updateBMIDisplay: function(bmiStatusText, bmi) {
         Ext.getCmp('bmiStatusID').setValue(bmiStatusText); //update bmi status
         Ext.getCmp('bmiNumberfieldID').setValue(bmi); //update bmi numberfield
         Ext.getCmp('bmiSliderID').setValue(bmi); //update bmi slider

@@ -1,5 +1,5 @@
 /**
- * This screen shows a Lab order form 
+ * This screen shows a Lab order form
  * with a button to add additional test and a submit button.The left side shows patient
  * list
  */

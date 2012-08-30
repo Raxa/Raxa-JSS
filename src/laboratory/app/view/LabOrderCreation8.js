@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view is second page of adding new provider.
  */
 Ext.define('Laboratory.view.LabOrderCreation8', {
@@ -60,7 +60,7 @@ Ext.define('Laboratory.view.LabOrderCreation8', {
         text: 'Cancel',
         x: 80,
         y: 50,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
         }
@@ -72,7 +72,7 @@ Ext.define('Laboratory.view.LabOrderCreation8', {
         x: 100,
         y: 50,
         text: 'Save',
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_ADD_PROVIDER_3.value);
         }

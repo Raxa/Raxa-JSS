@@ -4,7 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.model.PurchaseOrder', {
         name: 'id',
         //every model have a id field by default and it shouldn't go with post call's body so
         //we defined it and made the persist property false 
-        persist: false 
+        persist: false
     }, {
         name: 'name',
         type: 'string',
@@ -29,11 +29,11 @@ Ext.define('RaxaEmr.Pharmacy.model.PurchaseOrder', {
         name: 'drugPurchaseOrderDate',
         type: 'string',
         mapping: 'date'
-    },{
+    }, {
         name: 'uuid',
         type: 'string',
         persist: false
-    },{
+    }, {
         name: 'inventories',
         model: 'RaxaEmr.Pharmacy.model.DrugInventory'
     }]

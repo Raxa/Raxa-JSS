@@ -6,7 +6,7 @@ Ext.define('RaxaEmr.Pharmacy.store.Doctors', {
     model: 'RaxaEmr.Pharmacy.model.Doctor',
     proxy: {
         type: 'ajax',
-        url: HOST +'/ws/rest/v1/provider',
+        url: HOST + '/ws/rest/v1/provider',
         headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',
@@ -14,4 +14,4 @@ Ext.define('RaxaEmr.Pharmacy.store.Doctors', {
         }
     },
     autoLoad: true
-}); 
+});

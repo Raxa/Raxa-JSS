@@ -18,11 +18,11 @@ Ext.define("Screener.view.PharmacyView", {
         {
             xtype: 'patientListView',
             flex: 1,
-            margin : '5 5 5 5'           
+            margin: '5 5 5 5'
         }, {
             xtype: 'pharmacyForm',
             flex: 1,
-            margin : '5 5 5 5'
+            margin: '5 5 5 5'
         }]
     }
 });

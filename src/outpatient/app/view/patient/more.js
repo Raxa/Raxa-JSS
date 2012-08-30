@@ -109,7 +109,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
         record: null
     },
 
-    updateRecord: function (newRecord) {
+    updateRecord: function(newRecord) {
         if (newRecord) {
             this.down('#content').setData(newRecord.data);
         }

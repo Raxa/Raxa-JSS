@@ -21,10 +21,10 @@ Ext.define('chw.store.patients', {
         model: 'chw.model.patient',
         id: 'patientStore',
         sorters: 'familyName',
-        grouper: function (record) {
+        grouper: function(record) {
             return record.get('familyName')[0];
         },
-         proxy: {
+        proxy: {
             type: 'localstorage',
             id: 'patients'
         }

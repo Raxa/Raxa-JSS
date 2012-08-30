@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows result of search on lab order
  */
 Ext.define('Laboratory.view.SpecimenCollection3', {
@@ -55,7 +55,7 @@ Ext.define('Laboratory.view.SpecimenCollection3', {
         height: 20,
         width: 70,
         text: 'Continue',
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SPECIMEN_COLLECTION_CRITERIA.value);
         }

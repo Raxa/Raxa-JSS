@@ -1,8 +1,8 @@
-describe("Session", function () {
+describe("Session", function() {
 
     var mainController = null;
     var mainView = null;
-    beforeEach(function () {
+    beforeEach(function() {
         if (!mainController) {
 
             mainController = testApp.getController('Session');
@@ -24,17 +24,17 @@ describe("Session", function () {
 
     });
 
-    it("adds modules to the dashboard at login", function () {
+    it("adds modules to the dashboard at login", function() {
         localStorage.setItem("privileges", "RaxaEmrView screener, RaxaEmrView registration")
         mainController.loginSuccess();
         expect(Ext.getCmp('modulesPanel')).toBeDefined();
     });
 
-    it("stores privilege URLs for particular user in localStorage", function () {
+    it("stores privilege URLs for particular user in localStorage", function() {
         var userInfo = {
             responseText: "{\"results\":[{\"links\":[{\"uri\":\"http://test.com\"}]}]}"
         };
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var response = {
                 responseText: "{\"privileges\":[{\"name\":\"RaxaEmrView screener\",\"description\":\"screener\"}," + "{\"name\":\"RaxaEmrView registration\",\"description\":\"registration\"}]}"
             };
@@ -53,7 +53,7 @@ describe("Session", function () {
         expect(actual).toEqual(expected);
     });
 
-    it("only adds modules to the app grid the user is allowed to view", function () {
+    it("only adds modules to the app grid the user is allowed to view", function() {
         localStorage.setItem("privileges", "RaxaEmrView screener, RaxaEmrView registration");
         mainController.loginSuccess();
         expect(Ext.getCmp('screener')).toBeDefined();
@@ -61,27 +61,27 @@ describe("Session", function () {
         expect(Ext.getCmp('registrationextjs4')).not.toBeDefined();
     });
 
-    it(" shows connection error when timeout in getUserPrivilege", function () {
+    it(" shows connection error when timeout in getUserPrivilege", function() {
         var testName = "testUser";
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var expected = Util.getTimeoutLimit();
             expect(Ext.Ajax.getTimeout()).toEqual(expected);
         });
         mainController.getUserPrivileges(testName);
     }); // this test checks the value of timeout is same as defined in getUserPrivileges
-    
-	it(" shows connection error when timeout in storeUserPrivilege", function () {
+
+    it(" shows connection error when timeout in storeUserPrivilege", function() {
         var userInfo = {
             responseText: "{\"results\":[{\"links\":[{\"uri\":\"http://test.com\"}]}]}"
         };
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var expected = Util.getTimeoutLimit();
             expect(Ext.Ajax.getTimeout()).toEqual(expected);
         });
         mainController.storeUserPrivileges(userInfo);
     }); // this test checks the value of timeout is same as defined in storeUserPrivileges
-    
-	it("has the same text on the userName label in the UI and in the i18n properties file", function () {
+
+    it("has the same text on the userName label in the UI and in the i18n properties file", function() {
         var displayed = Ext.getCmp('userName').getLabel();
         var expected = Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label');
         expect(displayed).toEqual(expected);

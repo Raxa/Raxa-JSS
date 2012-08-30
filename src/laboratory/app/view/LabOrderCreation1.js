@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is first page of Lab order creation which provides list of Lab Orders & button to navigate to search page 
+ *
+ *  This view is first page of Lab order creation which provides list of Lab Orders & button to navigate to search page
  */
 Ext.define('Laboratory.view.LabOrderCreation1', {
     extend: 'Ext.container.Container',
@@ -73,7 +73,7 @@ Ext.define('Laboratory.view.LabOrderCreation1', {
         text: 'Find Location',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_FILTER_LOCATION.value);
         }
@@ -82,7 +82,7 @@ Ext.define('Laboratory.view.LabOrderCreation1', {
         text: 'Find Provider',
         x: 280,
         y: 60,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PROVIDER.value);
         }
@@ -92,7 +92,7 @@ Ext.define('Laboratory.view.LabOrderCreation1', {
         text: 'Find Patient',
         x: 280,
         y: 30,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_SEARCH_PATIENT.value);
         }

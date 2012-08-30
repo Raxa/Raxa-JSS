@@ -8,8 +8,8 @@ Ext.application({
     views: ['Home', 'Register', 'Search', 'Bmi', 'PatientScreen1', 'PatientScreen2', 'Viewport'],
     models: ['Patient'],
 
-    launch: function () {
-        if(Util.checkModulePrivilege('registration')){
+    launch: function() {
+        if (Util.checkModulePrivilege('registration')) {
             Ext.create('RaxaEmr.Registration.view.Viewport');
         }
     }

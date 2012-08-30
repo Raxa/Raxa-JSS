@@ -22,10 +22,10 @@ Ext.define('chw.model.patient', {
         fields: [{
             name: 'familyId',
             type: 'string'
-        },{
+        }, {
             name: 'patientId',
             type: 'string'
-        },{
+        }, {
             name: 'firstName',
             type: 'string'
         }, {
@@ -43,9 +43,11 @@ Ext.define('chw.model.patient', {
         }, {
             name: 'patientImage',
             type: 'string'
-        }/*, {
+        }
+        /*, {
             name: 'patientIllnesses',
             type: 'chw.model.illnessModel'
-        }*/]
+        }*/
+        ]
     }
 })

@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script initiates the registration module
  */
 
@@ -23,7 +23,7 @@ Ext.define('Registration.store.providerStore', {
     model: 'Registration.model.providerModel',
     proxy: {
         type: 'rest',
-        url : HOST + '/ws/rest/v1/provider',
+        url: HOST + '/ws/rest/v1/provider',
         headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json'
@@ -31,7 +31,7 @@ Ext.define('Registration.store.providerStore', {
         writer: {
             type: 'json'
         },
-        afterRequest:function(request,success){         //prints if request is successful
+        afterRequest: function(request, success) { //prints if request is successful
             console.log(success);
         }
     }

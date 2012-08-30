@@ -14,11 +14,10 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     viewConfig: {
         stripeRows: false
     },
-    initComponent: function () {    
+    initComponent: function() {
         var drugEditor = this;
         this.addEvents(['drugEdit', 'drugDelete']);
-        this.columns = [
-        {
+        this.columns = [{
             xtype: 'gridcolumn',
             width: 220,
             dataIndex: 'drugname',
@@ -30,10 +29,9 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 editable: false,
                 store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
                 displayField: 'text',
-                forceSelection: true     
+                forceSelection: true
             }
-        },
-        {
+        }, {
             xtype: 'gridcolumn',
             width: 100,
             dataIndex: 'dosage',
@@ -44,14 +42,21 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 allowBlank: false,
                 editable: false,
                 store: new Ext.data.Store({
-                    fields:['value'],
-                    data: [{value: '250'},{value: '500'},{value: '600'},{value: '800'}]
+                    fields: ['value'],
+                    data: [{
+                        value: '250'
+                    }, {
+                        value: '500'
+                    }, {
+                        value: '600'
+                    }, {
+                        value: '800'
+                    }]
                 }),
                 displayField: 'value',
                 forceSelection: true
             }
-        },
-        {
+        }, {
             xtype: 'gridcolumn',
             width: 90,
             dataIndex: 'duration',
@@ -62,14 +67,23 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 allowBlank: false,
                 editable: false,
                 store: new Ext.data.Store({
-                    fields:['value'],
-                    data: [{value: '1 week'},{value: '2 week'},{value: '3 week'},{value: '1 month'},{value: '2 month'}]
+                    fields: ['value'],
+                    data: [{
+                        value: '1 week'
+                    }, {
+                        value: '2 week'
+                    }, {
+                        value: '3 week'
+                    }, {
+                        value: '1 month'
+                    }, {
+                        value: '2 month'
+                    }]
                 }),
                 displayField: 'value',
                 forceSelection: true
             }
-        },
-        {
+        }, {
             xtype: 'numbercolumn',
             width: 55,
             dataIndex: 'qty',
@@ -79,8 +93,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 xtype: 'numberfield',
                 allowBlank: true
             }
-        },
-        {
+        }, {
             xtype: 'numbercolumn',
             text: 'Unit Price',
             width: 100,
@@ -90,15 +103,14 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 xtype: 'numberfield',
                 allowBlank: true
             }
-        },
-        {
+        }, {
             xtype: 'numbercolumn',
             width: 100,
             dataIndex: 'itemprice',
             text: 'Item Price',
             resizable: false,
             id: 'itemprice'
-        },{
+        }, {
             xtype: 'actioncolumn',
             width: 45,
             items: [{
@@ -110,7 +122,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                         colIndex: colIndex
                     });
                 }
-            },{
+            }, {
                 icon: '../../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
@@ -125,10 +137,10 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         this.dockedItems = [{
             xtype: 'toolbar',
             dock: 'bottom',
-            config:{
+            config: {
                 align: 'left'
             },
-            items: ['->',{
+            items: ['->', {
                 text: 'Add Drug',
                 iconCls: 'icon-add'
             }]

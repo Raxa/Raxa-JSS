@@ -5,7 +5,7 @@ Ext.define('Registration.model.Person', {
         name: 'id',
         //every model have a id field by default and it shouldn't go with post call's body so
         //we defined it and made the persist property false 
-        persist: false 
+        persist: false
     }, {
         name: 'gender',
         type: 'string'
@@ -31,6 +31,6 @@ Ext.define('Registration.model.Person', {
         //this is false because there is a bug in openmrs due to which sending attributes in body leads 
         //to 500 response status 
         //TODO: remove this once the open mrs server is updated to latest one
-        persist: false 
+        persist: false
     }]
 });

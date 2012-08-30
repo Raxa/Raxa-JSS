@@ -1,5 +1,5 @@
 /**
- * This screen shows a list of patients 
+ * This screen shows a list of patients
  */
 Ext.define("Screener.view.PatientListView", {
     xtype: 'patientListView',
@@ -16,16 +16,7 @@ Ext.define("Screener.view.PatientListView", {
         {
             xtype: 'list',
             itemId: 'patientList',
-            itemTpl: [
-                '<table>',
-                '<tr><td>',
-                '<img src={image} width=48 height=48 />',
-                '</td>',
-                '<td>',
-                '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',
-                '</td></tr>',
-                '</table>',
-            ].join(''),
+            itemTpl: ['<table>', '<tr><td>', '<img src={image} width=48 height=48 />', '</td>', '<td>', '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ', '</td></tr>', '</table>', ].join(''),
             store: 'patientStore',
             items: [{
                 xtype: 'titlebar',

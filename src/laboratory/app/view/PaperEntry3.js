@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows search result on Lab Order
  */
 Ext.define('Laboratory.view.PaperEntry3', {
@@ -56,7 +56,7 @@ Ext.define('Laboratory.view.PaperEntry3', {
         text: 'Add Entry',
         x: 10,
         y: 420,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.PAPER_ENTRY_ENTER_DATA.value);
         }

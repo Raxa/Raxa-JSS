@@ -4,28 +4,27 @@ Ext.define('RaxaEmr.Pharmacy.model.Location', {
         name: 'id',
         //every model have a id field by default and it shouldn't go with post call's body so
         //we defined it and made the persist property false 
-        persist: false 
+        persist: false
     }, {
         name: 'display',
         type: 'string',
         mapping: 'display'
-    },{
+    }, {
         name: 'uuid',
         type: 'string',
         persist: false
-    },{
+    }, {
         name: 'tags',
         model: 'RaxaEmr.Pharmacy.model.LocationTag'
-    },{
+    }, {
         name: 'tagName',
         mapping: 'tags.display'
     }],
-    hasTag: function(tag){
-        for(i=0; i< this.get("tags").length; i++)
-            if(tag===this.get("tags")[i].description){
-                return true;
-            }
+    hasTag: function(tag) {
+        for (i = 0; i < this.get("tags").length; i++)
+        if (tag === this.get("tags")[i].description) {
+            return true;
+        }
         return false;
     }
 });
-

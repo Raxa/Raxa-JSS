@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is tree list view of Location 
+ *
+ *  This view is tree list view of Location
  */
 Ext.define('Laboratory.view.SpecimenCollection6', {
     extend: 'Ext.container.Container',
@@ -84,7 +84,7 @@ Ext.define('Laboratory.view.SpecimenCollection6', {
         text: 'Find Patient',
         x: 280,
         y: 60,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SEARCH_LAB_ORDER.value);
         }
@@ -94,7 +94,7 @@ Ext.define('Laboratory.view.SpecimenCollection6', {
         text: 'Find Location',
         x: 280,
         y: 120,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_FILTER_LOCATION.value);
         }
@@ -104,7 +104,7 @@ Ext.define('Laboratory.view.SpecimenCollection6', {
         text: 'Find Provider',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SEARCH_PROVIDER.value);
         }

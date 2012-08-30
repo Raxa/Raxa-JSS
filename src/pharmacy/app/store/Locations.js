@@ -17,4 +17,3 @@ Ext.define('RaxaEmr.Pharmacy.store.Locations', {
         }
     }
 });
-

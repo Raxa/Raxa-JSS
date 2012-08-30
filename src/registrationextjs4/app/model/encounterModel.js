@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script initiates the registration module
  */
 
@@ -20,20 +20,17 @@
 
 Ext.define('Registration.model.encounterModel', {
     extend: 'Ext.data.Model',
-    
-    fields: ['encounterDatetime', 'patient', 'encounterType', 'location',
-	{
+
+    fields: ['encounterDatetime', 'patient', 'encounterType', 'location', {
         name: 'provider',
         model: 'Registration.model.providerModel'
-    },
-    {
+    }, {
         name: 'orders',
         model: 'Registration.model.orderModel'
-    },
-    {//includes the obs model so that it can be stored at each time
+    }, { //includes the obs model so that it can be stored at each time
         name: 'obs',
         model: 'Registration.model.obsModel'
-    },{
+    }, {
         name: 'id',
         persist: false
     }]

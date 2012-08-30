@@ -21,7 +21,7 @@ Ext.define('chw.store.illnesses', {
         model: 'chw.model.illness',
         id: 'illnesses',
         sorters: 'illnessName',
-        grouper: function (record) {
+        grouper: function(record) {
             return record.get('illnessName')[0];
         },
         data: [{

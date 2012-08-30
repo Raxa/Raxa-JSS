@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  Viewport allows loading of different views on it
  */
 Ext.define('Laboratory.view.Viewport', {
@@ -23,7 +23,7 @@ Ext.define('Laboratory.view.Viewport', {
         type: 'hbox'
     },
 
-    initComponent: function () {
+    initComponent: function() {
         this.items = {
             dockedItems: [{
                 xtype: 'toolbar',
@@ -37,15 +37,15 @@ Ext.define('Laboratory.view.Viewport', {
                 }, {
                     xtype: 'tbfill'
                 }, {
-                      xtype: 'button',
-                      height: 40,
-                      width: 200,
-                      text: 'Laboratory Home Page',
-                      handler: function () {
-                      var l = Ext.getCmp('mainLabArea').getLayout();
-                      l.setActiveItem(LAB_PAGES.HOME.value);
-                      }
-                } , {
+                    xtype: 'button',
+                    height: 40,
+                    width: 200,
+                    text: 'Laboratory Home Page',
+                    handler: function() {
+                        var l = Ext.getCmp('mainLabArea').getLayout();
+                        l.setActiveItem(LAB_PAGES.HOME.value);
+                    }
+                }, {
                     xtype: 'tbtext',
                     text: 'Logged in as ' + username
                 }, {
@@ -101,89 +101,89 @@ Ext.define('Laboratory.view.Viewport', {
                 xtype: 'ReportDelivery4'
             }, {
                 xtype: 'ReportDelivery5'
-            },{
+            }, {
                 xtype: 'LabOrderCreation1'
-            },{
+            }, {
                 xtype: 'LabOrderCreation2'
-            },{
+            }, {
                 xtype: 'LabOrderCreation3'
-            },{
+            }, {
                 xtype: 'LabOrderCreation4'
-            },{
+            }, {
                 xtype: 'LabOrderCreation5'
-            },{
+            }, {
                 xtype: 'LabOrderCreation6'
-            },{
+            }, {
                 xtype: 'LabOrderCreation7'
-            },{
+            }, {
                 xtype: 'LabOrderCreation8'
-            },{
+            }, {
                 xtype: 'LabOrderCreation9'
-            },{
+            }, {
                 xtype: 'LabOrderCreation10'
-            },{
+            }, {
                 xtype: 'LabOrderCreation11'
-            },{
+            }, {
                 xtype: 'LabOrderCreation12'
-            },{
+            }, {
                 xtype: 'SpecimenCollection1'
-            },{
+            }, {
                 xtype: 'SpecimenCollection2'
-            },{
+            }, {
                 xtype: 'SpecimenCollection3'
-            },{
+            }, {
                 xtype: 'SpecimenCollection4'
-            },{
+            }, {
                 xtype: 'SpecimenCollection5'
-            },{
+            }, {
                 xtype: 'SpecimenCollection6'
-            },{
+            }, {
                 xtype: 'SpecimenCollection7'
-            },{
+            }, {
                 xtype: 'SpecimenCollection8'
-            },{
+            }, {
                 xtype: 'SpecimenCollection9'
-            },{
+            }, {
                 xtype: 'SpecimenCollection10'
-            },{
+            }, {
                 xtype: 'SpecimenCollection11'
-            },{
+            }, {
                 xtype: 'SpecimenCollection12'
-            },{
+            }, {
                 xtype: 'SpecimenCollection13'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration1'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration2'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration3'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration4'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration5'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration6'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration7'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration8'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration9'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration10'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration11'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration12'
-            },{
+            }, {
                 xtype: 'SpecimenRegistration13'
-            },{
+            }, {
                 xtype: 'ResultEntry1'
-            },{
+            }, {
                 xtype: 'ResultEntry2'
-            },{
+            }, {
                 xtype: 'ResultEntry3'
-            },{
+            }, {
                 xtype: 'ResultEntry4'
             }, {
                 xtype: 'ResultEntry5'

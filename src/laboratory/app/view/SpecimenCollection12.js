@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows criterias for showing various specimen collection criterias
  */
 Ext.define('Laboratory.view.SpecimenCollection12', {
@@ -104,7 +104,7 @@ Ext.define('Laboratory.view.SpecimenCollection12', {
         text: 'Continue',
         x: 490,
         y: 390,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_SPECIMEN_COLLECTION_GRID.value);
         }
@@ -113,7 +113,7 @@ Ext.define('Laboratory.view.SpecimenCollection12', {
         text: 'Cancel',
         x: 320,
         y: 390,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
         }
@@ -122,7 +122,7 @@ Ext.define('Laboratory.view.SpecimenCollection12', {
         text: 'Back',
         x: 150,
         y: 390,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_LAB_ORDER_SEARCH_RESULT.value);
         }

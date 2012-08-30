@@ -1,16 +1,15 @@
 Ext.define('RaxaEmr.Outpatient.model.encounterpost', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [
-		{
-			name: 'id',
-			persist: false
-		
-		}, {
+        fields: [{
+            name: 'id',
+            persist: false
+
+        }, {
             name: 'patient',
             type: 'string',
             mapping: 'patient.uuid'
-        },{
+        }, {
             name: 'encounterType',
             type: 'string'
         }, {
@@ -23,8 +22,7 @@ Ext.define('RaxaEmr.Outpatient.model.encounterpost', {
         }, {
             name: 'location',
             type: 'string',
-			persist: false
+            persist: false
         }]
     }
 });
-

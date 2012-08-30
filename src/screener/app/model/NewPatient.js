@@ -1,7 +1,7 @@
 /**
- * This class defines a Names, holding 2 strings 
+ * This class defines a Names, holding 2 strings
  * for id and person
- * and extends to a model Identifiers 
+ * and extends to a model Identifiers
  */
 Ext.define('Screener.model.NewPatient', {
     extend: 'Ext.data.Model',

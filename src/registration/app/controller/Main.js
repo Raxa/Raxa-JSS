@@ -34,7 +34,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         }
     },
     //get values from Bmi Form and calls neccessary methods to calculate BMI & display on Screen (from Bmi.js)
-    getBmiData: function () {
+    getBmiData: function() {
         var weight_kg = parseInt(Ext.getCmp('weightId').getValue()); //Get Weight value from Form
         var height_cm = parseInt(Ext.getCmp('heightCmId').getValue()); //Get Height(cm) value from Form
         var bmiInfo = this.calculateBmi(weight_kg, height_cm);
@@ -42,7 +42,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
     },
 
     //function to calculate bmi 
-    calculateBmi: function (weight_kg, height_cm) {
+    calculateBmi: function(weight_kg, height_cm) {
         console.log('calculateBmi');
         if (weight_kg == 0 || height_cm == 0) {
             color = 'red';
@@ -109,7 +109,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         }
     },
 
-    updateBmiDisplay: function (color, bmiStatusText, bmi_rounded, bmi) {
+    updateBmiDisplay: function(color, bmiStatusText, bmi_rounded, bmi) {
         var updatedHtml = '<div align="center" style="color:' + color + '"><b>BMI Status: ' + bmiStatusText + '</div>';
 
         Ext.getCmp('BmiStatusId').setHtml(updatedHtml);
@@ -118,7 +118,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         Ext.getCmp('bmiSlider').setValue(bmi); //Slider set to calculated Bmi
     },
 
-    init: function () {
+    init: function() {
         console.log('Main controller init');
         this.initializePatientStore();
         this.printPatientStore();
@@ -133,7 +133,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         });
     },
 
-    initializePatientStore: function () {
+    initializePatientStore: function() {
         console.log('initializePatientStore');
         //our Store automatically picks up the LocalStorageProxy defined on the
         //Patient model
@@ -142,7 +142,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         });
     },
 
-    addPatientToStore: function () {
+    addPatientToStore: function() {
         console.log("add patient to patientStore");
 
         var form = this.getCreatePatientForm();
@@ -157,20 +157,20 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         console.log(patientStore.last());
     },
 
-    printPatientStore: function () {
+    printPatientStore: function() {
         patientStore.load();
         console.log("# of records in PatientStore = " + patientStore.getCount());
     },
 
     // TODO: Remove this. Just a test to validate that Jasmine hooks are working
-    testFunction: function () {
+    testFunction: function() {
         return true;
     },
 
     /*
      * Takes input from Registration Form and creates a patient in LocalStorage
      */
-    createPatient: function () {
+    createPatient: function() {
         console.log("createPatient");
         this.addPatientToStore();
     },
@@ -180,7 +180,7 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
      * TODO: Make search a lot more flexible, to return multiple matches,
      * and imperfect matches
      */
-    searchPatients: function () {
+    searchPatients: function() {
         console.log("searchPatients");
         // TODO: patient store must be initialize
         var form = this.getSearchPatientsForm();

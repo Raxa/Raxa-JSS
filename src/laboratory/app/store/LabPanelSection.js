@@ -12,16 +12,16 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific lLaboratory.store.LabPananguage governing permissions and limitations under
  * the License.
- * 
+ *
  * This file is store of list of LabPanel Section, which will be used in LabOrderCreation final view
  */
 Ext.define('Laboratory.store.LabPanelSection', {
     extend: 'Ext.data.Store',
     model: 'Laboratory.model.LabPanel',
-	fields: ['Section', 'PanelUuid'],
+    fields: ['Section', 'PanelUuid'],
     proxy: {
         type: 'rest',
-        url: LAB_HOST+'/ws/rest/v1/jsslab/labtestpanel?v=full',
+        url: LAB_HOST + '/ws/rest/v1/jsslab/labtestpanel?v=full',
         headers: {
             "Accept": "application/json",
             "Authorization": "Basic " + window.btoa("admin:Admin123"),

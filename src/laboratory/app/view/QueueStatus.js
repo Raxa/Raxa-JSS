@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view is used for checking queue of the tests conducted in laboratory
  */
 Ext.define('Laboratory.view.QueueStatus', {

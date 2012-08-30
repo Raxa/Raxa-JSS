@@ -14,8 +14,8 @@
  * the License.
  */
 
- //info about the patient when we click on a patient like weight, height etc. is shown by this grid
- 
+//info about the patient when we click on a patient like weight, height etc. is shown by this grid
+
 Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'grid-grid',
@@ -31,16 +31,16 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             dataIndex: 'height',
             width: '10%',
             cls: 'centered-cell',
-            renderer: function (value, values) {
-                return '<span>' + value + ' cm' + '</span>';// to change the view of the data feched
+            renderer: function(value, values) {
+                return '<span>' + value + ' cm' + '</span>'; // to change the view of the data feched
             }
         }, {
             header: 'Weight',
             dataIndex: 'weight',
             width: '10%',
             cls: 'centered-cell',
-            renderer: function (value, values) {
-                return '<span>' + value + ' kg' + '</span>';// to change the view of the data feched
+            renderer: function(value, values) {
+                return '<span>' + value + ' kg' + '</span>'; // to change the view of the data feched
             }
         }, {
             header: 'BMI',
@@ -52,10 +52,10 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             dataIndex: 'bp',
             width: '15%',
             cls: 'centered-cell',
-            renderer: function (value) {
+            renderer: function(value) {
                 // TODO: Determine how to pass 2 BMI values into one grid panel
                 var bmi = 68;
-                return Ext.String.format('{0}/{1}', value, bmi);// to change the view of the data feched
+                return Ext.String.format('{0}/{1}', value, bmi); // to change the view of the data feched
             }
         }, {
             header: 'Pulse',

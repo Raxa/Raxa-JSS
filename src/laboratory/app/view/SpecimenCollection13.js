@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view contains grid view of specimen to be collected
  */
 Ext.define('Laboratory.view.SpecimenCollection13', {
@@ -46,7 +46,7 @@ Ext.define('Laboratory.view.SpecimenCollection13', {
         text: 'OK',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
         }

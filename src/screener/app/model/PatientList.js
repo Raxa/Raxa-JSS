@@ -9,12 +9,12 @@ Ext.define('Screener.model.PatientList', {
             name: 'name',
             type: 'string'
         }, {
-			name: 'description',
-			type: 'string'					
-		}, {
-			name: 'searchQuery',
-			type: 'string'
-		}, {
+            name: 'description',
+            type: 'string'
+        }, {
+            name: 'searchQuery',
+            type: 'string'
+        }, {
             name: 'patients',
             model: 'Screener.model.Patients'
         }]

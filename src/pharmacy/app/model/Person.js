@@ -4,7 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.model.Person', {
         name: 'id',
         //every model have a id field by default and it shouldn't go with post call's body so
         //we defined it and made the persist property false 
-        persist: false 
+        persist: false
     }, {
         name: 'gender',
         type: 'string'

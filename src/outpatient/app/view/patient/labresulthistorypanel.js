@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
- //view of lab history panel
- 
+
+//view of lab history panel
+
 Ext.define('RaxaEmr.Outpatient.view.patient.labresulthistorypanel', {
     extend: 'Ext.Container',
     xtype: 'labresulthistorypanel',
@@ -34,7 +34,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.labresulthistorypanel', {
         record: null
     },
 
-    updateRecord: function (newRecord) {
+    updateRecord: function(newRecord) {
         if (newRecord) {
             this.down('#labcontent').setData(newRecord.data);
         }

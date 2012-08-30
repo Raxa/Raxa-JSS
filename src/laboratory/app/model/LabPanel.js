@@ -12,20 +12,19 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This file is model for labpanels
  */
 Ext.define('Laboratory.model.LabPanel', {
     extend: 'Ext.data.Model',
-      fields: [{
-            name: 'Section',
-            type: 'string',
-			mapping: 'testPanelConcept.display'
-        },{
-	    	name: 'PanelUuid',
-	  		type: 'string',
-	    	mapping: 'testPanelConcept.uuid'	
-	}],
+    fields: [{
+        name: 'Section',
+        type: 'string',
+        mapping: 'testPanelConcept.display'
+    }, {
+        name: 'PanelUuid',
+        type: 'string',
+        mapping: 'testPanelConcept.uuid'
+    }],
 
 });
-

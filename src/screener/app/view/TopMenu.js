@@ -43,7 +43,7 @@ Ext.define("Screener.view.TopMenu", {
         }, {
             xtype: 'loadmask',
             message: 'Loading',
-            id: 'loadMask'	
+            id: 'loadMask'
         }]
     }
 });

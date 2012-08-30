@@ -13,5 +13,5 @@ Ext.define('RaxaEmr.Pharmacy.store.PostLists', {
         },
         writer: 'json',
     }
-    
+
 });

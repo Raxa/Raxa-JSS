@@ -21,7 +21,7 @@ Ext.define('chw.store.families', {
         model: 'chw.model.family',
         id: 'families',
         sorters: 'familyDistance',
-        grouper: function (record) {
+        grouper: function(record) {
             return record.get('familyDistance');
         },
         proxy: {

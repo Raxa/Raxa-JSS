@@ -1,6 +1,6 @@
 /**
- * This is a drug order form 
- * containing various parameters of placing an order including name,strength,quantity 
+ * This is a drug order form
+ * containing various parameters of placing an order including name,strength,quantity
  * frequency and duration
  */
 Ext.define("Screener.view.DrugStore", {
@@ -71,11 +71,11 @@ Ext.define("Screener.view.DrugStore", {
                 }]
             }, {
                 layout: 'hbox',
-                items:[{
+                items: [{
                     xtype: 'selectfield',
                     labelAlign: 'top',
                     cls: 'selectfield',
-                    flex:1,
+                    flex: 1,
                     label: 'Duration',
                     name: 'duration',
                     options: [{
@@ -108,7 +108,7 @@ Ext.define("Screener.view.DrugStore", {
                         text: 'as required',
                         value: 'req'
                     }]
-                
+
                 }]
             }, {
                 xtype: 'textareafield',

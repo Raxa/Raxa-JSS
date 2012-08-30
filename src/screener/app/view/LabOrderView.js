@@ -1,6 +1,6 @@
 /**
  * This screen shows a list of patients on the left side,
- * with a button to sort them. The right side shows a Lab Order Form    
+ * with a button to sort them. The right side shows a Lab Order Form
  */
 Ext.define("Screener.view.LabOrderView", {
     extend: 'Ext.Container',

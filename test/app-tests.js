@@ -10,7 +10,7 @@ var App = new Ext.Application({
     // Controllers to test
     controllers: ['Main'],
 
-    launch: function () {
+    launch: function() {
         // include the tests in the test.html head
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();

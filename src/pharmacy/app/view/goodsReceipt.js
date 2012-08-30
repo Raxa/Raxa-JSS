@@ -6,7 +6,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
         align: 'stretch'
     },
     autoScroll: true,
-    items:[{
+    items: [{
         xtype: 'panel',
         height: 675,
         border: false,
@@ -20,12 +20,12 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
             value: 'Display New Order',
             x: 200,
             y: 20
-        },{
+        }, {
             xtype: 'panel',
             height: 140,
             width: 540,
             border: 1,
-            style: { 
+            style: {
                 borderColor: '#010e0d',
                 borderStyle: 'dashed',
                 borderWidth: '1px'
@@ -41,43 +41,37 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
                 value: 'PO Detais',
                 x: 30,
                 y: 10
-            },
-            {
+            }, {
                 xtype: 'radiofield',
                 boxLabel: 'PO No',
                 x: 20,
                 y: 30
-            },
-            {
+            }, {
                 xtype: 'combobox',
                 width: 115,
                 x: 125,
                 y: 30
-            },
-            {
+            }, {
                 xtype: 'radiofield',
                 fieldLabel: '',
                 boxLabel: 'Donation',
                 x: 20,
                 y: 50
-            },
-            {
+            }, {
                 xtype: 'textfield',
                 width: 190,
                 fieldLabel: 'Receipt No',
                 labelWidth: 70,
                 x: 50,
                 y: 80
-            },
-            {
+            }, {
                 xtype: 'datefield',
                 width: 190,
                 fieldLabel: 'Date',
                 labelWidth: 70,
                 x: 50,
                 y: 110
-            },
-            {
+            }, {
                 xtype: 'form',
                 height: 140,
                 width: 290,
@@ -85,41 +79,34 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
                 bodyPadding: 10,
                 x: 250,
                 y: 0,
-                items: [
-                {
+                items: [{
                     xtype: 'displayfield',
                     value: 'Vendor Name',
                     fieldLabel: 'Vendor',
                     anchor: '100%'
-                },
-                {
+                }, {
                     xtype: 'displayfield',
                     value: 'Line 1',
                     fieldLabel: 'Address',
                     anchor: '100%'
-                },
-                {
+                }, {
                     xtype: 'displayfield',
                     value: 'Line 2',
                     anchor: '100%'
-                },
-                {
+                }, {
                     xtype: 'displayfield',
                     width: 283,
                     value: 'Raxa',
                     fieldLabel: 'Person name',
                     anchor: '100%'
-                },
-                {
+                }, {
                     xtype: 'displayfield',
                     value: '9999999999',
                     fieldLabel: 'Contact',
                     anchor: '100%'
-                }
-                ]
+                }]
             }]
-        },
-        {
+        }, {
             xtype: 'panel',
             height: 30,
             width: 540,
@@ -134,8 +121,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
                 value: 'Drug Details',
                 x: 10,
                 y: 0
-            },
-            {
+            }, {
                 xtype: 'button',
                 height: 30,
                 width: 60,
@@ -145,24 +131,21 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
                 handler: function() {
                     Ext.widget('newDrugForm')
                 }
-            },
-            {
+            }, {
                 xtype: 'button',
                 height: 30,
                 width: 60,
                 text: 'Save',
                 x: 330,
                 y: 0
-            },
-            {
+            }, {
                 xtype: 'button',
                 height: 30,
                 width: 60,
                 text: 'Reset',
                 x: 400,
                 y: 0
-            },
-            {
+            }, {
                 xtype: 'button',
                 height: 30,
                 width: 60,
@@ -170,8 +153,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
                 x: 470,
                 y: 0
             }]
-        },
-        {
+        }, {
             xtype: 'gridpanel',
             height: 173,
             width: 540,
@@ -180,64 +162,56 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
             viewConfig: {
 
             },
-            columns: [
-            {
+            columns: [{
                 xtype: 'gridcolumn',
                 width: 65,
                 text: 'S no'
-            },
-            {
+            }, {
                 xtype: 'gridcolumn',
                 width: 210,
                 text: 'Name Of Drug'
-            },
-            {
+            }, {
                 xtype: 'gridcolumn',
                 width: 130,
                 text: 'Qty Ordered'
-            },
-            {
+            }, {
                 xtype: 'gridcolumn',
                 width: 130,
                 text: 'Qty Received',
                 editable: true
             }]
-        },{
+        }, {
             xtype: 'button',
             height: 30,
             width: 60,
             text: 'Save',
             x: 310,
             y: 630
-        },
-        {
+        }, {
             xtype: 'button',
             height: 30,
             width: 60,
             text: 'Cancel',
             x: 400,
             y: 630
-        },
-        {
+        }, {
             xtype: 'displayfield',
             value: '#2301  - Paracetamol Details',
             x: 200,
             y: 420
-        },{
+        }, {
             xtype: 'gridpanel',
             height: 179,
             x: 200,
             y: 450,
             width: 350,
-            columns: [
-            {
+            columns: [{
                 xtype: 'gridcolumn',
                 dataIndex: 'string',
                 editable: true,
                 text: 'Batch no',
                 width: 174
-            },
-            {
+            }, {
                 xtype: 'datecolumn',
                 dataIndex: 'date',
                 editable: true,
@@ -247,7 +221,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
             plugins: [
             Ext.create('Ext.grid.plugin.CellEditing', {
                 ptype: 'cellediting'
-            })] 
+            })]
         }]
     }]
 });

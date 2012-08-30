@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view provides option to search on provider
  */
 Ext.define('Laboratory.view.SpecimenCollection4', {
@@ -56,7 +56,7 @@ Ext.define('Laboratory.view.SpecimenCollection4', {
         text: 'Find',
         x: 260,
         y: 60,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_PROVIDER_SEARCH_RESULT.value);
         }
@@ -67,7 +67,7 @@ Ext.define('Laboratory.view.SpecimenCollection4', {
         text: 'Find',
         x: 260,
         y: 220,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_PROVIDER_SEARCH_RESULT.value);
         }

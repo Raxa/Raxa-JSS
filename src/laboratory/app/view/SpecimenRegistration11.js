@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows details of specimen of a patient
  */
 Ext.define('Laboratory.view.SpecimenRegistration11', {
@@ -127,7 +127,7 @@ Ext.define('Laboratory.view.SpecimenRegistration11', {
         text: 'New Laborder',
         x: 560,
         y: 330,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_ADD_INVESTIGATION.value);
         }

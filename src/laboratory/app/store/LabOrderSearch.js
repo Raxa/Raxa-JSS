@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This file is store of list of laborders
  */
 Ext.define('Laboratory.store.LabOrderSearch', {
@@ -21,7 +21,7 @@ Ext.define('Laboratory.store.LabOrderSearch', {
     groupField: 'orderlist',
     proxy: {
         type: 'rest',
-        url: LAB_HOST+'/ws/rest/v1/order?type=laborder&v=full',
+        url: LAB_HOST + '/ws/rest/v1/order?type=laborder&v=full',
         headers: {
             "Accept": "application/json",
             "Authorization": "Basic " + window.btoa("admin:Admin123"),

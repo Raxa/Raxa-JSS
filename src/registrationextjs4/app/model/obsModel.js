@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script initiates the registration module
  */
 
@@ -20,14 +20,13 @@
 
 Ext.define('Registration.model.obsModel', {
     extend: 'Ext.data.Model',
-    
+
     fields: ['person', 'obsDatetime', 'concept', 'value', {
         name: 'id',
         persist: false
-    }]    
-});/* 
+    }]
+});
+/* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-

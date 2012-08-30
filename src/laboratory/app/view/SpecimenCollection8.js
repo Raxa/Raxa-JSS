@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view is first page (Basic Details) of adding new provider
  */
 Ext.define('Laboratory.view.SpecimenCollection8', {
@@ -55,7 +55,7 @@ Ext.define('Laboratory.view.SpecimenCollection8', {
         text: 'Save',
         x: 280,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_ADD_PROVIDER_2.value);
         }
@@ -64,7 +64,7 @@ Ext.define('Laboratory.view.SpecimenCollection8', {
         text: 'Cancel',
         x: 200,
         y: 90,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_COLLECTION_HOME.value);
         }

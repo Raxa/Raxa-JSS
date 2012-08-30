@@ -42,21 +42,21 @@ Ext.define('chw.view.addFamily', {
                 },
                 items: [{
                     xtype: 'textfield',
-                    id:'familyName',
+                    id: 'familyName',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.family'),
                     placeHolder: 'Goel',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
-                    id:'address',
+                    id: 'address',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.address'),
                     placeHolder: 'Goel House',
                     required: true,
                     clearIcon: true
                 }, {
                     xtype: 'textfield',
-                    id:'description',
+                    id: 'description',
                     label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.description'),
                     placeHolder: 'Near Temple',
                     clearIcon: true

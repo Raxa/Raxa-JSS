@@ -41,18 +41,9 @@ Ext.define('chw.view.illnessList', {
             centered: true,
             indexBar: true,
             emptyText: '</pre><div>No patients with this illness found.</div><pre>',
-            itemTpl: [
-                '<div style="float:left;width:32px;height:32px"><img src="{patientDetails.patientImage}" height="80%" width="80%"/></div>',
-                '<div style="float:left;width:60%">',
-                '<div class="list-item-title" style="font-size:15px;">{patientDetails.firstName} {patientDetails.familyName}</div>',
-                '<div class="list-item-narrative" style="font-size:10px;">Age: {patientDetails.patientAge} Gender: {patientDetails.patientGender}</div>',
-                '</div>',
-                '<div style="float:left;width:32px;height:32px">',
-                '<img src=resources/circle.png height="80%" width="80%"/>',
-                '</div>'
-            ].join(''),
-            onItemDisclosure: function (record) {
-                helper.listDisclose('ipatient',record)
+            itemTpl: ['<div style="float:left;width:32px;height:32px"><img src="{patientDetails.patientImage}" height="80%" width="80%"/></div>', '<div style="float:left;width:60%">', '<div class="list-item-title" style="font-size:15px;">{patientDetails.firstName} {patientDetails.familyName}</div>', '<div class="list-item-narrative" style="font-size:10px;">Age: {patientDetails.patientAge} Gender: {patientDetails.patientGender}</div>', '</div>', '<div style="float:left;width:32px;height:32px">', '<img src=resources/circle.png height="80%" width="80%"/>', '</div>'].join(''),
+            onItemDisclosure: function(record) {
+                helper.listDisclose('ipatient', record)
             }
         }]
     }
