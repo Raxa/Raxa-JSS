@@ -36,8 +36,8 @@ Ext.define('chw.view.familyDetails', {
             width: '100%',
             scrollable: true,
             title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.summary'),
-            layout:{
-                type:'vbox'
+            layout: {
+                type: 'vbox'
             },
             items: [{
                 xtype: 'label',
@@ -96,18 +96,9 @@ Ext.define('chw.view.familyDetails', {
                 width: '100%',
                 height: '80%',
                 centered: true,
-                itemTpl: [
-                    '<div style="float:left;width:32px;height:32px"><img src="{patientImage}" height="80%" width="80%"/></div>',
-                    '<div style="float:left;width:60%">',
-                    '<div class="list-item-title" style="font-size:15px;">{firstName} {familyName}</div>',
-                    '<div class="list-item-narrative" style="font-size:10px;">Age: {patientAge} Gender: {patientGender}</div>',
-                    '</div>',
-                    '<div style="float:left;width:32px;height:32px">',
-                    '<img src=resources/circle.png height="80%" width="80%"/>',
-                    '</div>'
-                ].join(''),
-                onItemDisclosure: function (record) {
-                    helper.listDisclose('patient',record)
+                itemTpl: ['<div style="float:left;width:32px;height:32px"><img src="{patientImage}" height="80%" width="80%"/></div>', '<div style="float:left;width:60%">', '<div class="list-item-title" style="font-size:15px;">{firstName} {familyName}</div>', '<div class="list-item-narrative" style="font-size:10px;">Age: {patientAge} Gender: {patientGender}</div>', '</div>', '<div style="float:left;width:32px;height:32px">', '<img src=resources/circle.png height="80%" width="80%"/>', '</div>'].join(''),
+                onItemDisclosure: function(record) {
+                    helper.listDisclose('patient', record)
                 }
             }, {
                 xtype: 'container',
@@ -122,7 +113,7 @@ Ext.define('chw.view.familyDetails', {
                     iconCls: 'user_add'
                 }]
             }]
-        },{
+        }, {
             xtype: 'container',
             layout: {
                 type: 'fit'

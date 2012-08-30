@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows search result in tabular form
  */
 Ext.define('Laboratory.view.LabOrderCreation3', {
@@ -63,7 +63,7 @@ Ext.define('Laboratory.view.LabOrderCreation3', {
     }, {
         xtype: 'button',
         text: 'Continue',
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_DETAILS.value);
         }

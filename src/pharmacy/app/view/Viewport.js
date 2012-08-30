@@ -6,29 +6,29 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
         type: 'vbox',
         align: 'center'
     },
-    items:[{
+    items: [{
         xtype: 'pharmacytopbar'
-    },{
+    }, {
         autoScroll: true,
         layout: 'auto',
-        width:960,
-        items:[{
+        width: 960,
+        items: [{
             layout: 'card',
             id: 'mainarea',
             activeItem: 0,
-            items:[{
+            items: [{
                 xtype: 'prescription'
-            },{
+            }, {
                 xtype: 'goodsdetails'
-            },{
+            }, {
                 xtype: 'reports'
-            },{
+            }, {
                 xtype: 'drugGroups'
-            },{
+            }, {
                 xtype: 'allStock'
-            },{
+            }, {
                 xtype: 'requisition'
-            },{
+            }, {
                 xtype: 'goodReceipt'
             }]
         }]

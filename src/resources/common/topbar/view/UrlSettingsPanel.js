@@ -16,7 +16,7 @@ Ext.define('Topbar.view.UrlSettingsPanel', {
                 placeHolder: 'Host URL',
                 name: 'hostField',
                 listeners: {
-                    blur: function (field, event, options) {
+                    blur: function(field, event, options) {
                         HOST = field.getValue();
                         localStorage.setItem("host", HOST);
                     }

@@ -14,8 +14,8 @@
  * the License.
  */
 Ext.Loader.setPath({
-    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid',//Path to grid code so that grid fuctionalities and view can be accessed
-    'Screener': '../screener/app'//Path to screener module so that store and models of screener can be accessed 
+    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid', //Path to grid code so that grid fuctionalities and view can be accessed
+    'Screener': '../screener/app' //Path to screener module so that store and models of screener can be accessed 
 });
 
 Ext.Loader.setConfig({
@@ -27,14 +27,14 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'RaxaEmr.Outpatient',
-	// models, stores, controller and views used in the OPD directly
+    // models, stores, controller and views used in the OPD directly
     models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign'],
     stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign'],
-    views: ['Viewport'], 
+    views: ['Viewport'],
     controllers: ['patientlist'],
     // to launch the module view
-    launch: function () {
-        if(Util.checkModulePrivilege('outpatient')){
+    launch: function() {
+        if (Util.checkModulePrivilege('outpatient')) {
             Ext.create('RaxaEmr.Outpatient.view.Viewport');
         }
     }

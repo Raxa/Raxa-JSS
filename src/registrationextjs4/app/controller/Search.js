@@ -3,7 +3,7 @@ Ext.define('Registration.controller.Search', {
     views: ['SearchPart1', 'SearchPart2', 'Viewport', 'SearchConfirm'],
     stores: ['search'],
     models: ['searchPatient'],
-    init: function () {
+    init: function() {
         this.control({
             "searchpart1 button[action=search]": {
                 click: this.search
@@ -14,13 +14,13 @@ Ext.define('Registration.controller.Search', {
             "searchpart2 button[action=modifySearch]": {
                 click: this.modifySearch
             },
-            "searchconfirm button[action=bmipage]":{
+            "searchconfirm button[action=bmipage]": {
                 click: this.gotoBMIpage
             }
         })
     },
     //function making the rest call to get the patient with given search quiry
-    search: function () {
+    search: function() {
         if (Ext.getCmp('patientFirstNameSearch').isValid() || Ext.getCmp('PatientIdentifierSearch').isValid()) {
             // concatenating the identifier and patient name to make the url for get call
             var Url = HOST + '/ws/rest/v1/patient?q='; // Ext.getCmp('PatientIdentifierSearch').getValue() + "&&v=full";
@@ -42,7 +42,7 @@ Ext.define('Registration.controller.Search', {
             Ext.getCmp('patientGrid').view.store = store;
             store.load();
             // this is required to load the page after the data is beging loaded successfully
-            store.on('datachanged', function () {
+            store.on('datachanged', function() {
                 var l = Ext.getCmp('mainRegArea').getLayout();
                 l.setActiveItem(REG_PAGES.SEARCH_2.value);
                 Ext.getCmp('patientGrid').view.refresh();
@@ -55,7 +55,7 @@ Ext.define('Registration.controller.Search', {
     },
 
     //function which reset all the field in search patient form
-    reset: function () {
+    reset: function() {
         Ext.getCmp('OldPatientIdentifierSearch').reset()
         Ext.getCmp('PatientIdentifierSearch').reset()
         Ext.getCmp('patientFirstNameSearch').reset()
@@ -67,26 +67,26 @@ Ext.define('Registration.controller.Search', {
         Ext.getCmp('phoneNumberSearch').reset()
     },
 
-    modifySearch: function () {
+    modifySearch: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen
     },
-    
+
     gotoBMIpage: function() {
         Ext.Ajax.request({
-            url : HOST+'/ws/rest/v1/patient/'+localStorage.searchUuid,
+            url: HOST + '/ws/rest/v1/patient/' + localStorage.searchUuid,
             method: 'GET',
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
-            failure: function (response) { 
-                console.log('GET failed with response status: '+ response.status); // + response.status);
+            failure: function(response) {
+                console.log('GET failed with response status: ' + response.status); // + response.status);
             },
-            success: function (response) {
+            success: function(response) {
                 var string = JSON.parse(response.responseText).identifiers[0].display;
-                Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
+                Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=') + 2, string.length));
                 Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameSearchedPatient').getValue());
                 var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.REG_BMI.value); 
+                l.setActiveItem(REG_PAGES.REG_BMI.value);
             }
         });
     }

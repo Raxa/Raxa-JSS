@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
- //view of medication history panel
- 
+
+//view of medication history panel
+
 Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistorypanel', {
     extend: 'Ext.Container',
     xtype: 'Medication-History-Panel',
@@ -34,7 +34,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.medicationhistorypanel', {
         record: null
     },
 
-    updateRecord: function (newRecord) {
+    updateRecord: function(newRecord) {
         if (newRecord) {
             this.down('#medicationhistorycontent').setData(newRecord.data);
         }

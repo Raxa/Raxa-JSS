@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script defines the view Home of the registration module
  */
 Ext.define('Registration.view.Home', {
@@ -24,7 +24,7 @@ Ext.define('Registration.view.Home', {
     layout: {
         type: 'fit'
     },
-    initComponent: function () {
+    initComponent: function() {
         this.items = {
             border: 0,
             layout: {
@@ -52,7 +52,7 @@ Ext.define('Registration.view.Home', {
                     width: 300,
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.Home.register'),
                     action: 'register',
-		    }, {
+                }, {
                     xtype: 'button',
                     height: 35,
                     margin: '10 0 13 0',

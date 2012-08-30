@@ -1,5 +1,5 @@
 /**
- * Does the Post call for creating a new patient 
+ * Does the Post call for creating a new patient
  */
 Ext.define('Screener.store.NewPatients', {
     extend: 'Ext.data.Store',
@@ -11,11 +11,11 @@ Ext.define('Screener.store.NewPatients', {
             headers: Util.getBasicAuthHeaders(),
             url: HOST + '/ws/rest/v1/patient',
             reader: {
-              type: 'json',
-              rootProperty: 'results'
+                type: 'json',
+                rootProperty: 'results'
             },
             writer: {
-              type: 'json'
+                type: 'json'
             }
         }
     }

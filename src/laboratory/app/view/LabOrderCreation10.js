@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view shows list of lab orders for a patient 
+ *
+ *  This view shows list of lab orders for a patient
  */
 Ext.define('Laboratory.view.LabOrderCreation10', {
     extend: 'Ext.container.Container',
@@ -122,7 +122,7 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         text: 'New Lab Order',
         x: 530,
         y: 340,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
         }
@@ -131,7 +131,7 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         text: 'Cancel',
         x: 300,
         y: 340,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
         }

@@ -9,12 +9,12 @@ Ext.define('RaxaEmr.Outpatient.model.PatientsList', {
             name: 'name',
             type: 'string'
         }, {
-			name: 'description',
-			type: 'string'					
-		}, {
-			name: 'searchQuery',
-			type: 'string'
-		}, {
+            name: 'description',
+            type: 'string'
+        }, {
+            name: 'searchQuery',
+            type: 'string'
+        }, {
             name: 'patients',
             model: 'RaxaEmr.Outpatient.model.Patients'
         }]

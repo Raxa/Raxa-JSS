@@ -7,8 +7,8 @@ Ext.define('RaxaEmr.Pharmacy.model.Address', {
     }, {
         name: 'cityVillage',
         type: 'string'
-    },{
+    }, {
         name: 'countyDistrict',
         type: 'string'
-}]
+    }]
 });

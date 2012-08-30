@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view shows details of Lab order and allow user to set type of Report Delivery
  */
 Ext.define('Laboratory.view.ReportDelivery4', {
@@ -130,7 +130,7 @@ Ext.define('Laboratory.view.ReportDelivery4', {
         text: 'Print',
         x: 600,
         y: 140,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_DELIVERY_INVESTIGATION_TABLE.value);
         }

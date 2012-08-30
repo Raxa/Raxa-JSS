@@ -14,4 +14,3 @@ Ext.define('Screener.model.Links', {
         }]
     }
 });
-

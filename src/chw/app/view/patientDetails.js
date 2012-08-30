@@ -60,7 +60,7 @@ Ext.define('chw.view.patientDetails', {
                         xtype: 'textfield',
                         label: 'Patient Id',
                         itemId: 'patientIdLabel'
-                            
+
                     }, {
                         xtype: 'textfield',
                         label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.name'),
@@ -97,18 +97,9 @@ Ext.define('chw.view.patientDetails', {
                 width: '100%',
                 height: '80%',
                 centered: true,
-                itemTpl: [
-                    '<div style="float:left;width:32px;height:32px"><img src="{illnessDetails.illnessImage}" height="80%" width="80%"/></div>',
-                    '<div style="float:left;width:40%">',
-                        '<div class="list-item-title"">{illnessDetails.illnessName}</div>',
-                    '</div>',
-                    '<div>',
-                        '<div class="list-item-title" style="font-size:10px;">',
-                        '{illnessStartDate}-<br>{illnessEndDate}</div>',
-                    '</div>'
-                ].join(''),
-                onItemDisclosure: function (record) {
-                    helper.listDisclose('patientIllness',record)
+                itemTpl: ['<div style="float:left;width:32px;height:32px"><img src="{illnessDetails.illnessImage}" height="80%" width="80%"/></div>', '<div style="float:left;width:40%">', '<div class="list-item-title"">{illnessDetails.illnessName}</div>', '</div>', '<div>', '<div class="list-item-title" style="font-size:10px;">', '{illnessStartDate}-<br>{illnessEndDate}</div>', '</div>'].join(''),
+                onItemDisclosure: function(record) {
+                    helper.listDisclose('patientIllness', record)
                 }
             }, {
                 xtype: 'container',

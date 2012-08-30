@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view allows to add new provider (2nd page) 
+ *
+ *  This view allows to add new provider (2nd page)
  */
 Ext.define('Laboratory.view.SpecimenRegistration7', {
     extend: 'Ext.container.Container',
@@ -59,7 +59,7 @@ Ext.define('Laboratory.view.SpecimenRegistration7', {
         text: 'Cancel',
         x: 200,
         y: 50,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
         }
@@ -70,7 +70,7 @@ Ext.define('Laboratory.view.SpecimenRegistration7', {
         x: 400,
         y: 50,
         text: 'Save',
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_ADD_PROVIDER_3.value);
         }

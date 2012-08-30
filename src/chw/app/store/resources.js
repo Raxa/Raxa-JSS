@@ -21,7 +21,7 @@ Ext.define('chw.store.resources', {
         model: 'chw.model.resource',
         id: 'resources',
         sorters: 'resourceName',
-        grouper: function (record) {
+        grouper: function(record) {
             return record.get('resourceName')[0];
         },
         data: [{

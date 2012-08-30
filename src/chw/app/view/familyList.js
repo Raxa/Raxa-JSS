@@ -41,18 +41,12 @@ Ext.define('chw.view.familyList', {
                 height: '100%',
                 centered: true,
                 loadingText: 'Loading List...',
-                emptyText: '</pre><div class="notes-list-empty-text"><center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noPatients')+'<br></center></div><pre>',
-                itemTpl: [
-                    '<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>',
-                    '<div style="float:left;width:70%">',
-                    '<div class="list-item-title" style="font-size:15px;">{familyName}</div>',
-                    '<div class="list-item-narrative" style="font-size:11px;">{familyDescrip}</div>',
-                    '</div>'
-                ].join(''),
-                onItemDisclosure: function (record) {
+                emptyText: '</pre><div class="notes-list-empty-text"><center><br>' + Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noPatients') + '<br></center></div><pre>',
+                itemTpl: ['<div style="float:left;width:32px;height:32px"><img src="{familyImage}" height="80%" width="80%"/></div>', '<div style="float:left;width:70%">', '<div class="list-item-title" style="font-size:15px;">{familyName}</div>', '<div class="list-item-narrative" style="font-size:11px;">{familyDescrip}</div>', '</div>'].join(''),
+                onItemDisclosure: function(record) {
                     helper.listDisclose('family', record)
                 }
-            },{
+            }, {
                 xtype: 'container',
                 height: '20%',
                 docked: 'bottom',
@@ -74,17 +68,12 @@ Ext.define('chw.view.familyList', {
                 id: 'illnessNames',
                 store: 'illnesses',
                 width: '100%',
-                height:'100%',
+                height: '100%',
                 centered: true,
                 indexBar: true,
-                itemTpl: [
-                    '<div style="float:left;width:32px;height:32px">',
-                        '<img src="{illnessImage}" height="80%" width="80%"/>',
-                    '</div>',
-                    '<div>&nbsp&nbsp{illnessName}</div>'
-                ].join(''),
-                emptyText: '<center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noIllness')+'<br></center>',
-                onItemDisclosure: function (record) {
+                itemTpl: ['<div style="float:left;width:32px;height:32px">', '<img src="{illnessImage}" height="80%" width="80%"/>', '</div>', '<div>&nbsp&nbsp{illnessName}</div>'].join(''),
+                emptyText: '<center><br>' + Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noIllness') + '<br></center>',
+                onItemDisclosure: function(record) {
                     helper.listDisclose('illness', record)
                 }
             }]

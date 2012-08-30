@@ -2,8 +2,8 @@
 Ext.define('RaxaEmr.Pharmacy.model.drugOrderPatient', {
     extend: 'Ext.data.Model',
     fields: [{
-            name: 'id'
-    },{
+        name: 'id'
+    }, {
         name: 'uuid',
         type: 'string'
     }, {
@@ -21,5 +21,6 @@ Ext.define('RaxaEmr.Pharmacy.model.drugOrderPatient', {
         name: 'patientId',
         type: 'string',
         mapping: 'identifiers.identidier'
-    }*/]
+    }*/
+    ]
 })

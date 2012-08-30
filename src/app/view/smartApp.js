@@ -1,11 +1,11 @@
 Ext.define('RaxaEmr.view.smartApp', {
     extend: 'Ext.Container',
     id: 'smartApp',
-    initialize: function (args) {
+    initialize: function(args) {
         this.callParent();
     },
     //addApps takes in a string array of the Apps for the current user, populates dashboard icon grid
-    addApps: function (args) {
+    addApps: function(args) {
         //must destroy our panel if we ever call again (if the user logs out for example)
         if (Ext.getCmp('appsPanel')) {
             Ext.getCmp('appsPanel').destroy();
@@ -35,7 +35,7 @@ Ext.define('RaxaEmr.view.smartApp', {
                     html: '<div style="text-align:center;"><img src="smartApp/' + args[j] + '/icon.png" width="75" height="75"/></div>',
 
                     listeners: {
-                        tap: function () {
+                        tap: function() {
                             window.location = 'smartApp/' + this.id;
                         }
                     }

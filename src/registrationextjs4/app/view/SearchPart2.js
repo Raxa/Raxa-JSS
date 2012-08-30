@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This script defines the view SearchPart2 of the registration module
  */
 Ext.define('Registration.view.SearchPart2', {
@@ -25,7 +25,7 @@ Ext.define('Registration.view.SearchPart2', {
         type: 'hbox',
         pack: 'center'
     },
-    initComponent: function () {
+    initComponent: function() {
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
@@ -86,14 +86,14 @@ Ext.define('Registration.view.SearchPart2', {
                         }, {
                             xtype: 'gridcolumn',
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.Town'),
-                        }], 
+                        }],
                         //was needed to see the patient profile as we click on one of the patient
                         listeners: {
                             cellClick: {
-                                fn: function () {
+                                fn: function() {
                                     var temp = this.getSelectionModel().getSelection()[0].getData()
                                     //saving uuid's here so we can access them in the controllers for encounter POST
-                                    localStorage.setItem('searchUuid',temp.uuid)
+                                    localStorage.setItem('searchUuid', temp.uuid)
                                     localStorage.setItem('newPatientUuid', temp.uuid)
                                     Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)

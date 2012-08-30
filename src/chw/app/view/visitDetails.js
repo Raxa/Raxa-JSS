@@ -30,7 +30,7 @@ Ext.define('chw.view.visitDetails', {
                 xtype: 'button',
                 ui: 'back',
                 text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.back'),
-                action:'goback'
+                action: 'goback'
             }]
         }, {
             xclass: 'chw.view.userToolbar'

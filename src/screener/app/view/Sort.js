@@ -30,7 +30,7 @@ Ext.define("Screener.view.Sort", {
             ui: 'round'
         }]
     },
-    saveForm: function () {
+    saveForm: function() {
         return this.getValues();
     }
 

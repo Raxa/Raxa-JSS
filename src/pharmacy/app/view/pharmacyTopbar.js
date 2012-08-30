@@ -1,6 +1,6 @@
 TOPBARBUTTONLOGOPATH = '../../resources/img/miniLogo.png';
 
-Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
+Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar', {
     extend: 'Ext.container.Container',
     alias: 'widget.pharmacytopbar',
     autoScroll: true,
@@ -11,7 +11,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     },
     renderTo: Ext.getBody(),
     border: 1,
-    style: { 
+    style: {
         borderColor: '#000000',
         borderStyle: 'solid',
         borderWidth: '1px'
@@ -43,7 +43,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             iconAlign: 'top',
             scale: 'large',
             width: 80,
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('mainarea').getLayout();
                 l.setActiveItem(0);
                 var l1 = Ext.getCmp('addpatientarea').getLayout();
@@ -65,7 +65,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             iconAlign: 'top',
             scale: 'large',
             width: 80,
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('mainarea').getLayout();
                 l.setActiveItem(4);
             }
@@ -76,7 +76,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             iconAlign: 'top',
             scale: 'large',
             width: 80,
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('mainarea').getLayout();
                 l.setActiveItem(2);
             }
@@ -87,7 +87,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             iconAlign: 'top',
             scale: 'large',
             width: 80,
-            handler: function(){
+            handler: function() {
                 var l = Ext.getCmp('mainarea').getLayout();
                 l.setActiveItem(3);
             }

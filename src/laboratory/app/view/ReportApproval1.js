@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is first page of Report Approval 
+ *
+ *  This view is first page of Report Approval
  */
 Ext.define('Laboratory.view.ReportApproval1', {
     extend: 'Ext.container.Container',
@@ -43,7 +43,7 @@ Ext.define('Laboratory.view.ReportApproval1', {
         text: 'Search',
         x: 460,
         y: 330,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.REPORT_APPROVAL_SEARCH_LAB_ORDER.value);
         }

@@ -39,7 +39,7 @@ Ext.define('chw.model.pill', {
         }, {
             name: 'pillMin',
             type: 'int'
-        }, 
+        },
         // TODO: make it so not hard coded in
         {
             name: 'pillColor',

@@ -17,7 +17,7 @@ Ext.define('Topbar.view.UrlSettingsButton', {
         }]
     },
 
-    onUrlButtonTap: function (button, e, options) {
+    onUrlButtonTap: function(button, e, options) {
         var urlPanel = button.urlButton;
         if (!urlPanel) {
             urlPanel = button.urlPanel = Ext.widget('urlSettingsPanel');

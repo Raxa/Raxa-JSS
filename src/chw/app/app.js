@@ -26,27 +26,14 @@ Ext.application({
     controllers: ['basic'],
     models: ['family', 'patient', 'illness', 'pill', 'patientIllness', 'resource', 'visit'],
     stores: ['families', 'patients', 'illnesses', 'pills', 'patientsIllnesses', 'resources', 'visits'],
-    views: [
-        'loginScreen', 
-        'familyList', 
-        'illnessList', 
-        'familyDetails', 
-        'patientDetails', 
-        'visitDetails', 
-        'inventoryList', 
-        'inventoryDetails', 
-        'addOptions', 
-        'addFamily', 
-        'addPatient',
-        'illnessDetails'
-    ],
-    launch: function () {
+    views: ['loginScreen', 'familyList', 'illnessList', 'familyDetails', 'patientDetails', 'visitDetails', 'inventoryList', 'inventoryDetails', 'addOptions', 'addFamily', 'addPatient', 'illnessDetails'],
+    launch: function() {
         Ext.create('chw.view.loginScreen');
     }
 });
 
-Ext.require('Ext.i18n.Bundle', function(){
-    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+Ext.require('Ext.i18n.Bundle', function() {
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle', {
         bundle: 'RaxaEmrChw',
         lang: localStorage.getItem('lang'),
         path: 'app/view',

@@ -88,7 +88,7 @@ def recursiveList(dirname):
     print "# of files scanned in total: %s" % (disallowedCount + allowedCount,)
     print "# of files blocked by blacklist filter: %s" % (disallowedCount,)
     print "# of files allowed by blacklist filter: %s" % (allowedCount,)
-    print "# of '.js' files: %s" % (beautifiedCount,)
+    print "# of '.js' files: %s" % (jsCount,)
     #print "# of '.js' files with code delta due to beautification: %s" % (beautifiedCount,)
     print ""
 

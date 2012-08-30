@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view displays various search options to search on lab orders & patient
  */
 Ext.define('Laboratory.view.LabOrderCreation2', {
@@ -82,7 +82,7 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         text: 'Find',
         x: 200,
         y: 110,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
         }
@@ -94,7 +94,7 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         text: 'Find',
         x: 200,
         y: 190,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_SEARCH_RESULT.value);
         }
@@ -107,7 +107,7 @@ Ext.define('Laboratory.view.LabOrderCreation2', {
         action: 'searchPatient',
         x: 10,
         y: 420,
-        handler: function () {}
+        handler: function() {}
     }, {
         xtype: 'datefield',
         width: 100,

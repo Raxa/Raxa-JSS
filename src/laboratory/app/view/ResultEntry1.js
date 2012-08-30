@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view is first page of Result Entry and contains the list of awaiting investigations 
+ *
+ *  This view is first page of Result Entry and contains the list of awaiting investigations
  */
 Ext.define('Laboratory.view.ResultEntry1', {
     extend: 'Ext.container.Container',
@@ -43,7 +43,7 @@ Ext.define('Laboratory.view.ResultEntry1', {
         text: 'Search Specimen',
         x: 200,
         y: 350,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.RESULT_ENTRY_SEARCH_SPECIMEN.value);
         }

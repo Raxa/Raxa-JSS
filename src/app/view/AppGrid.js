@@ -8,12 +8,12 @@ Ext.define('RaxaEmr.view.AppGrid', {
     config: {
         layout: 'fit'
     },
-    initialize: function (args) {
+    initialize: function(args) {
         this.callParent();
     },
-    
+
     //addModules takes in a string array of the modules for the current user, populates dashboard icon grid
-    addModules: function (args) {
+    addModules: function(args) {
         //must destroy our panel if we ever call again (if the user logs out for example)
         if (Ext.getCmp('modulesPanel')) {
             Ext.getCmp('modulesPanel').destroy();
@@ -34,41 +34,40 @@ Ext.define('RaxaEmr.view.AppGrid', {
             });
         }
         for (var j = 0; j < args.length; j++) {
-            if (args[j]=='patientfacing'){
+            if (args[j] == 'patientfacing') {
                 //TODO: DON'T LINK DIRECTLY TO Patient Facing
                 var cell = Ext.create('Ext.Panel', {
                     items: [{
-                            layout: 'vbox',
-                            xtype: 'button',
-                            id: args[j],
-                            html: '<div style="text-align:center;"><img src="resources/img/' +args[j] + '.png" width="180" height="180"/></div>',
+                        layout: 'vbox',
+                        xtype: 'button',
+                        id: args[j],
+                        html: '<div style="text-align:center;"><img src="resources/img/' + args[j] + '.png" width="180" height="180"/></div>',
 
-                            listeners: {
-                                tap: function () {
-                                    window.location = "http://patient-facing.github.com";
-                                }
+                        listeners: {
+                            tap: function() {
+                                window.location = "http://patient-facing.github.com";
                             }
-                        }]
+                        }
+                    }]
                 });
-            }
-            else {
+            } else {
                 var cell = Ext.create('Ext.Panel', {
                     items: [{
-                            layout: 'vbox',
-                            xtype: 'button',
-                            id: args[j],
-                            html: '<div style="text-align:center;"><img src="resources/img/' +args[j] + '.png" width="180" height="180"/></div>',
+                        layout: 'vbox',
+                        xtype: 'button',
+                        id: args[j],
+                        html: '<div style="text-align:center;"><img src="resources/img/' + args[j] + '.png" width="180" height="180"/></div>',
 
-                            listeners: {
-                                tap: function () {
-                                    window.location = this.id;
-                                }
+                        listeners: {
+                            tap: function() {
+                                window.location = this.id;
                             }
-                        }]
+                        }
+                    }]
                 });
             }
             appRows[Math.floor(j / numRows)].add(cell);
-        }     
+        }
         for (var i = 0; i < numRows; i++) {
             modulesPanel.add(appRows[i]);
         }

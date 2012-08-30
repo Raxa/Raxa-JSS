@@ -1,19 +1,19 @@
-describe("controller", function () {
+describe("controller", function() {
 
     var store = null,
-    ctlr = null,
-    secondCtlr = null,
-    view = null,
-    secondStore = null;
+        ctlr = null,
+        secondCtlr = null,
+        view = null,
+        secondStore = null;
     var TIMEOUT = 4000;
-    beforeEach(function () {
-        
+    beforeEach(function() {
+
         if (!secondCtlr) {
             secondCtlr = Application.getController('prescription');
 
         }
 
-        
+
         if (!secondStore) {
             secondStore = Ext.create('RaxaEmr.Pharmacy.store.Patients');
         }
@@ -42,8 +42,8 @@ describe("controller", function () {
 
 
 
-    it("data in the form fields and responce from ajax request loads in store", function () {
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+    it("data in the form fields and responce from ajax request loads in store", function() {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var response = {
                 responseText: "{\"uuid\":\"8896cd8c-e910-44df-96cd-37ce894fd6e3\",\"display\":\"Raxa Jss\",\"gender\":\"M\",\"age\":20,\"birthdate\":null,\"birthdateEstimated\":false,\"dead\":false,\"deathDate\":null,\"causeOfDeath\":null,\"preferredName\":{\"uuid\":\"31913fd2-2f83-48ab-83ad-12a587fe3744\",\"display\":\"Raxa Jss\",\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3/name/31913fd2-2f83-48ab-83ad-12a587fe3744\",\"rel\":\"self\"}]},\"preferredAddress\":{\"uuid\":\"675dd755-1a5c-41db-b9b0-548d80c4fab2\",\"display\":\"12\",\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3/address/675dd755-1a5c-41db-b9b0-548d80c4fab2\",\"rel\":\"self\"}]},\"attributes\":[],\"voided\":false,\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3\",\"rel\":\"self\"},{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3?v=full\",\"rel\":\"full\"}]}",
                 status: 201
@@ -71,8 +71,8 @@ describe("controller", function () {
         expect(store.getProxy().getReader().jsonData.age).toEqual(20);
     });
 
-    it("loads patientIdentifiersTypes in store", function () {
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+    it("loads patientIdentifiersTypes in store", function() {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var response = {
                 responseText: "{\"results\":[{\"uuid\":\"8d79403a-c2cc-11de-8d13-0010c6dffd0f\",\"display\":\"Old Identification Number - Number given out prior to the OpenMRS system (No check digit)\",\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/patientidentifiertype/8d79403a-c2cc-11de-8d13-0010c6dffd0f\",\"rel\":\"self\"}]},{\"uuid\":\"8d793bee-c2cc-11de-8d13-0010c6dffd0f\",\"display\":\"OpenMRS Identification Number - Unique number used in OpenMRS\",\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/patientidentifiertype/8d793bee-c2cc-11de-8d13-0010c6dffd0f\",\"rel\":\"self\"}]}]}",
                 status: 200
@@ -84,8 +84,8 @@ describe("controller", function () {
         store.load();
         expect(store.getAt(0).getData().uuid).toEqual("8d79403a-c2cc-11de-8d13-0010c6dffd0f")
     });
-    it("loads patientLocation in store", function () {
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+    it("loads patientLocation in store", function() {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var response = {
                 responseText: "{\"results\":[{\"uuid\":\"8d6c993e-c2cc-11de-8d13-0010c6dffd0f\",\"display\":\"Unknown Location - \",\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v2/location/8d6c993e-c2cc-11de-8d13-0010c6dffd0f\",\"rel\":\"self\"}]}]}",
                 status: 200
@@ -97,8 +97,8 @@ describe("controller", function () {
         store.load();
         expect(store.getAt(0).getData().uuid).toEqual("8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
     });
-    it("responce from ajax request loads in store", function () {
-        spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
+    it("responce from ajax request loads in store", function() {
+        spyOn(Ext.Ajax, 'request').andCallFake(function(request) {
             var response = {
                 responseText: "{\"uuid\":\"8896cd8c-e910-44df-96cd-37ce894fd6e3\",\"display\":\"Raxa Jss\",\"gender\":\"M\",\"age\":20,\"birthdate\":null,\"birthdateEstimated\":false,\"dead\":false,\"deathDate\":null,\"causeOfDeath\":null,\"preferredName\":{\"uuid\":\"31913fd2-2f83-48ab-83ad-12a587fe3744\",\"display\":\"Raxa Jss\",\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3/name/31913fd2-2f83-48ab-83ad-12a587fe3744\",\"rel\":\"self\"}]},\"preferredAddress\":{\"uuid\":\"675dd755-1a5c-41db-b9b0-548d80c4fab2\",\"display\":\"12\",\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3/address/675dd755-1a5c-41db-b9b0-548d80c4fab2\",\"rel\":\"self\"}]},\"attributes\":[],\"voided\":false,\"links\":[{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3\",\"rel\":\"self\"},{\"uri\":\"http://raxaemr.jelastic.dogado.eu/ws/rest/v1/person/8896cd8c-e910-44df-96cd-37ce894fd6e3?v=full\",\"rel\":\"full\"}]}",
                 status: 201

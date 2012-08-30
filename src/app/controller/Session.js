@@ -51,7 +51,7 @@ Ext.define('RaxaEmr.controller.Session', {
         }
     },
 
-    showLogin: function () {
+    showLogin: function() {
         window.location.hash = 'Login';
         Ext.getCmp('mainView').setActiveItem(0);
     },
@@ -61,7 +61,7 @@ Ext.define('RaxaEmr.controller.Session', {
      * privileges in localStorage
      * @param userInfo: contains a link to the full information listing of a user
      */
-    storeUserPrivileges: function (userInfo) {
+    storeUserPrivileges: function(userInfo) {
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
             Ext.Ajax.setTimeout(Util.getTimeoutLimit());
@@ -72,7 +72,7 @@ Ext.define('RaxaEmr.controller.Session', {
                 withCredentials: true,
                 useDefaultXhrHeader: false,
                 headers: Util.getBasicAuthHeaders(),
-                success: function (response) {
+                success: function(response) {
                     var privilegesJson = Ext.decode(response.responseText);
                     //only adding necessary fields for localStorage
                     var privilegesArray = [];
@@ -83,10 +83,10 @@ Ext.define('RaxaEmr.controller.Session', {
                         };
                     }
                     for (j = 0; j < privilegesJson.roles.length; j++) {
-                        if(privilegesJson.roles[j].name === 'Provider'){
-                            localStorage.setItem('loggedInUser',privilegesJson.person.uuid);
+                        if (privilegesJson.roles[j].name === 'Provider') {
+                            localStorage.setItem('loggedInUser', privilegesJson.person.uuid);
                         }
-                        if(privilegesJson.roles[j].name === 'System Developer'){
+                        if (privilegesJson.roles[j].name === 'System Developer') {
                             privilegesArray[i] = {
                                 'name': 'all privileges',
                                 'description': 'allprivileges'
@@ -96,7 +96,7 @@ Ext.define('RaxaEmr.controller.Session', {
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
                     this.loginSuccess();
                 },
-                failure: function () {
+                failure: function() {
                     Ext.getCmp('mainView').setMasked(false);
                     Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
                 }
@@ -110,7 +110,7 @@ Ext.define('RaxaEmr.controller.Session', {
 
     // doLogin functions populates the views in the background while transferring
     // the view to dashboard
-    doLogin: function () {
+    doLogin: function() {
         var username = Ext.getCmp('userName').getValue();
         localStorage.setItem("username", username);
 
@@ -133,13 +133,13 @@ Ext.define('RaxaEmr.controller.Session', {
         this.getUserPrivileges(username);
         //populating views with all the modules, sending a callback function
         //only run this as postuser
-        if(localStorage.getItem("username")==="postuser"){
+        if (localStorage.getItem("username") === "postuser") {
             //splash loading screen, mask on 'mainview'
             Ext.getCmp('mainView').setMasked({
                 xtype: 'loadmask',
                 message: 'Loading'
             });
-            Startup.populateViews(Util.getModules(), this.launchAfterAJAX);            
+            Startup.populateViews(Util.getModules(), this.launchAfterAJAX);
         }
     },
 
@@ -153,7 +153,7 @@ Ext.define('RaxaEmr.controller.Session', {
      * To retrieve the string, use localStorage.getItem("privileges")
      * @param username: user with associated privileges
      */
-    getUserPrivileges: function (username) {
+    getUserPrivileges: function(username) {
         Ext.Ajax.setTimeout(Util.getTimeoutLimit());
         Ext.Ajax.request({
             scope: this,
@@ -163,7 +163,7 @@ Ext.define('RaxaEmr.controller.Session', {
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
             success: this.storeUserPrivileges,
-            failure: function () {
+            failure: function() {
                 Ext.getCmp('mainView').setMasked(false);
                 Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
             }
@@ -173,7 +173,7 @@ Ext.define('RaxaEmr.controller.Session', {
     /**
      * Called when login is successful for the given user, populates AppGrid with the user's modules
      */
-    loginSuccess: function () {
+    loginSuccess: function() {
         Startup.getResourceUuid();
         var numAppsAvailable = this.addModulesToDashboard();
         //if only 1 app available, send to that page
@@ -194,7 +194,7 @@ Ext.define('RaxaEmr.controller.Session', {
     /**
      * Helper function to add all required modules into Dashboard
      */
-    addModulesToDashboard: function(){
+    addModulesToDashboard: function() {
         var privileges = localStorage.getItem("privileges");
         var allModules = Util.getModules();
         var allApps = Util.getApps();
@@ -202,7 +202,7 @@ Ext.define('RaxaEmr.controller.Session', {
         //starting at index=1 here, don't need app button for 'login'
         for (i = 1; i < allModules.length; i++) {
             //checking if user is allows to view the module
-            if(privileges.indexOf('RaxaEmrView '+allModules[i])!==-1 || privileges.indexOf('all privileges')!==-1){
+            if (privileges.indexOf('RaxaEmrView ' + allModules[i]) !== -1 || privileges.indexOf('all privileges') !== -1) {
                 userModules[userModules.length] = allModules[i];
             }
         }
@@ -211,7 +211,7 @@ Ext.define('RaxaEmr.controller.Session', {
         return userModules.length;
     },
 
-    showDashboard: function () {
+    showDashboard: function() {
         this.addModulesToDashboard();
         window.location.hash = 'Dashboard';
         Ext.getCmp('mainView').setActiveItem(2);
@@ -219,7 +219,7 @@ Ext.define('RaxaEmr.controller.Session', {
 
     //This function determines the login state
     //If already logged in, it redirects to the dashboard
-    getLoginState: function () {
+    getLoginState: function() {
         var loginState = Ext.getCmp('mainView').getActiveItem()._activeItem;
         if (localStorage.getItem('basicAuthHeader')) {
             this.loginSuccess();
@@ -228,7 +228,7 @@ Ext.define('RaxaEmr.controller.Session', {
     },
 
     //on entry point for application, give control to Util.getViews()
-    launch: function () {
+    launch: function() {
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,
@@ -247,7 +247,7 @@ Ext.define('RaxaEmr.controller.Session', {
     //once Util.populateViews() is done with AJAX GET calls, it calls this function
     //to start graphics, etc
     //views is the 2-d array of view urls (see Util.populateViews() for more info)
-    launchAfterAJAX: function (views) {
+    launchAfterAJAX: function(views) {
         //remove loading mask
         Ext.getCmp('mainView').setMasked(false);
     }

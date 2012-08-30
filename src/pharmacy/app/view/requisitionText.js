@@ -6,14 +6,12 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
     layout: {
         type: 'absolute'
     },
-    items: [
-    {
+    items: [{
         xtype: 'displayfield',
         value: 'New Requisition',
         x: 230,
         y: 10
-    },
-    {
+    }, {
         margin: 5,
         xtype: 'combobox',
         width: 190,
@@ -25,5 +23,5 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
         emptyText: 'Location',
         x: 50,
         y: 50
-    }]  
+    }]
 });

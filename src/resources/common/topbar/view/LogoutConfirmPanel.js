@@ -55,7 +55,7 @@ Ext.define('Topbar.view.LogoutConfirmPanel', {
         }]
     },
 
-    onLogoutConfirmYesTap: function (button, e, options) {
+    onLogoutConfirmYesTap: function(button, e, options) {
         Util.logoutUser();
         localStorage.removeItem('basicAuthHeader');
         localStorage.removeItem('privileges');
@@ -67,7 +67,7 @@ Ext.define('Topbar.view.LogoutConfirmPanel', {
         logconfirm.hide();
     },
 
-    onLogoutConfirmNoTap: function (button, e, options) {
+    onLogoutConfirmNoTap: function(button, e, options) {
         var logconfirm = this.parent.getComponent('LogoutConfirmPanel');
         logconfirm.hide();
     }

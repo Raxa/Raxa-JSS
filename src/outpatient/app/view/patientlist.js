@@ -22,7 +22,7 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
         title: 'Outpatient Department',
         cls: 'x-contacts',
         ui: 'round',
-		// patient list toolbars
+        // patient list toolbars
         items: [{
             xtype: 'toolbar',
             docked: 'top',
@@ -81,21 +81,18 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
                 }]
             }]
         }],
-		//list items  are shown by this
-		itemTpl: new Ext.XTemplate(
-			'<div class="headshot" style="background-image:url({image});"></div>', '<div style="float:left;width:25%;">', '{display}', '<span>Gender : {[this.gender(values.gender)]}</span>', '<span>From : New Delhi, India</span>', '</div>', '<div style="float:left;width:25%;">', '<span>Dr.Arpana Jain</span>', '<span>Disease : Asthma</span>', '<span>Age : {age}</span>', '</div>', '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">8</div>', '<div style="float:right;width:25%;">', '<span>Last Visit : {[this.date(values)]}</span>', '<span>No. of Visits : 2</span>', '<span>ID : 16736127</span>', '</div>',
-			{
-				date: function(str){
-					return str.encounters[0].encounterDatetime.split("T")[0]
-				},
-				gender: function(str){
-					if(str == 'M'){
-						return 'Male';
-					}else if(str == 'F'){
-						return 'Female' 
-					}
-				}
-			}
-		)
-	}
+        //list items  are shown by this
+        itemTpl: new Ext.XTemplate('<div class="headshot" style="background-image:url({image});"></div>', '<div style="float:left;width:25%;">', '{display}', '<span>Gender : {[this.gender(values.gender)]}</span>', '<span>From : New Delhi, India</span>', '</div>', '<div style="float:left;width:25%;">', '<span>Dr.Arpana Jain</span>', '<span>Disease : Asthma</span>', '<span>Age : {age}</span>', '</div>', '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">8</div>', '<div style="float:right;width:25%;">', '<span>Last Visit : {[this.date(values)]}</span>', '<span>No. of Visits : 2</span>', '<span>ID : 16736127</span>', '</div>', {
+            date: function(str) {
+                return str.encounters[0].encounterDatetime.split("T")[0]
+            },
+            gender: function(str) {
+                if (str == 'M') {
+                    return 'Male';
+                } else if (str == 'F') {
+                    return 'Female'
+                }
+            }
+        })
+    }
 });

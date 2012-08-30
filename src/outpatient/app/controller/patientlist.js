@@ -13,13 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-var myRecord;// for the record of current patient
-var opd_observations = new Array();//contains the observations of different tabs
+var myRecord; // for the record of current patient
+var opd_observations = new Array(); //contains the observations of different tabs
 
 Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     extend: 'Ext.app.Controller',
     config: {
-        refs: {// all the fields are accessed in the controller through the id of the components 
+        refs: { // all the fields are accessed in the controller through the id of the components 
             main: '#mainview',
             contacts: 'patientlist',
             contact: '#contact',
@@ -53,10 +53,10 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             reftodocsortbydocname: '#reftodocsortbydocname',
             reftodocsortbyopdno: '#reftodocsortbyopdno',
             signfilterbysearchfield: '#signfilterbysearchfield',
-			referPatient : '#referpatient',
+            referPatient: '#referpatient',
         },
 
-        control: {//to perform action on specific component accessed through it's id above 
+        control: { //to perform action on specific component accessed through it's id above 
             main: {
                 push: 'onMainPush',
                 pop: 'onMainPop'
@@ -155,21 +155,21 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             }
         }
     },
-	//this function starts on the load of the module
-    init: function () {
+    //this function starts on the load of the module
+    init: function() {
         this.getpatientlist();
     },
-	//fetches patient list who are screened but not not have an OPD encounter
-    getpatientlist: function () {
+    //fetches patient list who are screened but not not have an OPD encounter
+    getpatientlist: function() {
         var d = new Date();
-		//fetching screener patient list
+        //fetching screener patient list
         var list_scrEncounter = Ext.create('RaxaEmr.Outpatient.model.PostList', {
             name: "Screener Encounter",
             description: "Patients encountered Screener on " + "startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d),
             searchQuery: "?encounterType=" + localStorage.screenerUuidencountertype + "&startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d)
 
         });
-		//fetching opd patient list
+        //fetching opd patient list
         var list_outEncounter = Ext.create('RaxaEmr.Outpatient.model.PostList', {
             name: "Outpatient Encounter",
             description: "Patients encountered Outpatient on " + "startDate=" + Util.Datetime(d, 24) + "&endDate=" + Util.Datetime(d),
@@ -180,58 +180,58 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.createList(list_scrEncounter, list_outEncounter, k);
 
     },
-	//creating postlists for screener and opd lists
-    createList: function (list_scr, list_out, k) {
+    //creating postlists for screener and opd lists
+    createList: function(list_scr, list_out, k) {
         var store_scr = Ext.create('RaxaEmr.Outpatient.store.PostLists');
         var store_out = Ext.create('RaxaEmr.Outpatient.store.PostLists');
         store_scr.add(list_scr);
         store_out.add(list_out);
         store_scr.sync();
         store_out.sync();
-        store_scr.on('write', function () {
+        store_scr.on('write', function() {
             k = k + 1;
             if (k == 2) {
                 this.finalPatientList(store_scr, store_out);
             }
         }, this);
-        store_out.on('write', function () {
+        store_out.on('write', function() {
             k = k + 1;
             if (k == 2) {
                 this.finalPatientList(store_scr, store_out);
             }
         }, this);
     },
-	//this is where the actual list is fetched
-    finalPatientList: function (store_scrEncounter, store_outEncounter) {
+    //this is where the actual list is fetched
+    finalPatientList: function(store_scrEncounter, store_outEncounter) {
         var store_patientList = Ext.create('RaxaEmr.Outpatient.store.PatientsList', {
             storeId: 'patientStore'
         });
         store_patientList.getProxy().setUrl(this.getPatientListUrl(store_scrEncounter.getData().getAt(0).getData().uuid, store_outEncounter.getData().getAt(0).getData().uuid, localStorage.screenerUuidencountertype));
         store_patientList.load();
-        store_patientList.on('load', function () {}, this);
-        Ext.getCmp('contact').setStore(store_patientList);//setting store for the patient list
+        store_patientList.on('load', function() {}, this);
+        Ext.getCmp('contact').setStore(store_patientList); //setting store for the patient list
         return store_patientList;
     },
-	//for setting the url of the store
-    getPatientListUrl: function (scr_UUID, out_UUID, encountertype) {
+    //for setting the url of the store
+    getPatientListUrl: function(scr_UUID, out_UUID, encountertype) {
         return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + scr_UUID + '&notInList=' + out_UUID + '&encounterType=' + encountertype);
     },
-	//what happens when we push something in the main view i.e. acually viewport of the module
-    onMainPush: function (view, item) {
+    //what happens when we push something in the main view i.e. acually viewport of the module
+    onMainPush: function(view, item) {
 
         if (item.xtype == "contact-show") {
             this.getContacts().deselectAll();
         }
 
     },
-	//function is called when we popped from main view
-    onMainPop: function (view, item) {
+    //function is called when we popped from main view
+    onMainPop: function(view, item) {
         this.buttonHide('confirmlabresulthistory');
         this.buttonHide('confirmmedicationhistory');
         this.buttonHide('confirmrefertodoc');
     },
-	//called after clicking on a patient in the patient list
-    onContactSelect: function (list, index, node, record) {
+    //called after clicking on a patient in the patient list
+    onContactSelect: function(list, index, node, record) {
 
         if (!this.showContact) {
             this.showContact = Ext.create('RaxaEmr.Outpatient.view.patient.more');
@@ -242,7 +242,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         myRecord = record;
     },
 
-    addChiefComplain: function () {
+    addChiefComplain: function() {
         var combo = Ext.getCmp('cheifComplain');
         examlist = Ext.getCmp('examList');
         examlist.getStore().add({
@@ -251,24 +251,24 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         });
         Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION);
     },
-	// called after selection of the examination list
-    onExamListSelect: function (list, index, node, record) {
+    // called after selection of the examination list
+    onExamListSelect: function(list, index, node, record) {
         Ext.getCmp('deleteComlain').setHidden(false);
         Ext.getCmp('addDuration').setHidden(false);
     },
-	//to delete something form examination list of sign list
-    deleteComplain: function () {
+    //to delete something form examination list of sign list
+    deleteComplain: function() {
         var examlist = Ext.getCmp('examList');
         selectedRecord = examlist.getSelection();
         examlist.getStore().remove(selectedRecord);
     },
-	//to add duration for a specefic problem/sign in the examlist
-    addduration: function () {
+    //to add duration for a specefic problem/sign in the examlist
+    addduration: function() {
         this.getMain().push(Ext.getCmp('durationPicker'));
         Ext.getCmp('durationPicker').setHidden(false);
     },
-	//for saving the duaration
-    saveduration: function () {
+    //for saving the duaration
+    saveduration: function() {
         var duration = Ext.getCmp('durationfield').getValue();
         var examlist = Ext.getCmp('examList');
         var selectedRecord = examlist.getSelection();
@@ -277,15 +277,15 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         Ext.getCmp('durationPicker').setHidden(true);
         Ext.getCmp('durationfield').reset();
     },
-	//to perform actions on toolbar buttion of navigation view
-    buttonAction: function (obj, obj2) {
+    //to perform actions on toolbar buttion of navigation view
+    buttonAction: function(obj, obj2) {
         this.obj1 = Ext.create(obj);
         this.obj1.setRecord(myRecord);
         this.getMain().push(this.obj1);
         this.buttonShow(obj2);
     },
 
-    buttonShow: function (obj) {
+    buttonShow: function(obj) {
         var button = Ext.getCmp(obj);
 
         if (!button.isHidden()) {
@@ -295,7 +295,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         button.setHidden(false);
     },
 
-    buttonHide: function (obj) {
+    buttonHide: function(obj) {
         var button = Ext.getCmp(obj);
 
         if (button.isHidden()) {
@@ -304,16 +304,16 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
         button.setHidden(true);
     },
-	//to show the lab history of a patient
-    labInfoAction: function () {
+    //to show the lab history of a patient
+    labInfoAction: function() {
         this.buttonAction('RaxaEmr.Outpatient.view.patient.labresulthistorypanel', 'confirmlabresulthistory');
     },
-	//to show the medication history of a patient
-    medicationHistoryAction: function () {
+    //to show the medication history of a patient
+    medicationHistoryAction: function() {
         this.buttonAction('RaxaEmr.Outpatient.view.patient.medicationhistorypanel', 'confirmmedicationhistory');
     },
-	//to show the doctors list for referal
-    refToDocButton: function () {
+    //to show the doctors list for referal
+    refToDocButton: function() {
         this.buttonAction('RaxaEmr.Outpatient.view.patient.refertodocpanel', 'confirmrefertodoc');
         var docList = Ext.create('Screener.store.Doctors', {
             storeId: 'docStore'
@@ -321,45 +321,45 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         docList.load();
         Ext.getCmp('refToDocPanel').setStore(docList);
     },
-	//for shorting the patient list
-    sortBy: function (obj, listStore) {
+    //for shorting the patient list
+    sortBy: function(obj, listStore) {
         listStore.setSorters(obj);
         listStore.load();
     },
 
-    sortByName: function () {
+    sortByName: function() {
         this.sortBy('display', this.getContact().getStore());
     },
 
-    sortByDocName: function () {
+    sortByDocName: function() {
         this.sortBy('nameofdoc');
     },
 
-    sortByUrgency: function () {
+    sortByUrgency: function() {
         this.sortBy('urgency');
     },
 
-    sortByLastVisit: function () {
+    sortByLastVisit: function() {
         this.sortBy('lastvisit');
     },
-	// for sorting the medication history
-    medicationHistorySortByDrugName: function () {
+    // for sorting the medication history
+    medicationHistorySortByDrugName: function() {
         this.sortBy('drugname', Ext.getCmp('medicationhistorygrid').getStore());
     },
 
-    medicationHistorySortByDrugReaction: function () {
+    medicationHistorySortByDrugReaction: function() {
         this.sortBy('drugreaction', Ext.getCmp('medicationhistorygrid').getStore());
     },
-	// sorting the doc list for referal
-    refToDocSortByDocName: function () {
+    // sorting the doc list for referal
+    refToDocSortByDocName: function() {
         this.sortBy('display', Ext.getCmp('refToDocPanel').getStore());
     },
 
-    refToDocSortByOpdno: function () {
+    refToDocSortByOpdno: function() {
         this.sortBy('uuid', Ext.getCmp('refToDocPanel').getStore());
     },
-	// for serching in the list
-    onSearchKeyUp: function (listStore, field, value1, value2) {
+    // for serching in the list
+    onSearchKeyUp: function(listStore, field, value1, value2) {
 
         var value = field.getValue();
         var store = listStore;
@@ -376,7 +376,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 regexps.push(new RegExp(searches[i], 'i'));
             }
 
-            store.filter(function (record) {
+            store.filter(function(record) {
                 var matched = [];
 
                 for (i = 0; i < regexps.length; i++) {
@@ -393,44 +393,44 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             });
         }
     },
-	// called when clear icon in the search field is clicked
-    onSearchClearIconTap: function (listStore) {
+    // called when clear icon in the search field is clicked
+    onSearchClearIconTap: function(listStore) {
         listStore.clearFilter();
     },
 
-    patientListOnSearchKeyUp: function (field) {
+    patientListOnSearchKeyUp: function(field) {
         this.onSearchKeyUp(this.getContact().getStore(), field, 'display', 'uuid');
     },
 
-    patientListOnSearchClearIconTap: function () {
+    patientListOnSearchClearIconTap: function() {
         this.onSearchClearIconTap(this.getContact().getStore());
     },
 
-    medicationHistoryOnSearchKeyUp: function (field) {
+    medicationHistoryOnSearchKeyUp: function(field) {
         this.onSearchKeyUp(Ext.getCmp('medicationhistorygrid').getStore(), field, 'drugname', 'drugreaction');
     },
 
-    medicationHistoryOnSearchClearIconTap: function () {
+    medicationHistoryOnSearchClearIconTap: function() {
         this.onSearchClearIconTap(Ext.getCmp('medicationhistorygrid').getStore());
     },
 
-    labOrderOnSearchKeyUp: function (field) {
+    labOrderOnSearchKeyUp: function(field) {
         this.onSearchKeyUp(Ext.getCmp('labResultHistoryList').getStore(), field, 'laborderno', 'specimenid');
     },
 
-    labOrderOnSearchClearIconTap: function () {
+    labOrderOnSearchClearIconTap: function() {
         this.onSearchClearIconTap(Ext.getCmp('labResultHistoryList').getStore());
     },
 
-    refToDocOnSearchKeyUp: function (field) {
+    refToDocOnSearchKeyUp: function(field) {
         this.onSearchKeyUp(Ext.getCmp('refToDocPanel').getStore(), field, 'display', 'uuid');
     },
 
-    refToDocOnSearchClearIconTap: function () {
+    refToDocOnSearchClearIconTap: function() {
         this.onSearchClearIconTap(Ext.getCmp('refToDocPanel').getStore());
     },
-	//called when sign list is clicked or selected
-    onSignListSelect: function (list, index, node, record) {
+    //called when sign list is clicked or selected
+    onSignListSelect: function(list, index, node, record) {
         var sign = record.data.sign;
         list.getStore().remove(record);
         examlist = Ext.getCmp('examList');
@@ -440,7 +440,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         });
     },
     // to filter the search in the signlist
-    signFilter: function () {
+    signFilter: function() {
         var value = Ext.getCmp('signFilter').getValue();
         var store = Ext.getCmp('signList').getStore();
 
@@ -454,7 +454,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 regexps.push(new RegExp(searches[i], 'i'));
             }
 
-            store.filter(function (record) {
+            store.filter(function(record) {
                 var matched = [];
 
                 for (i = 0; i < regexps.length; i++) {
@@ -471,19 +471,19 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             });
         }
     },
-	//for searching in the signlist
-    signFilterByOnSearchKeyUp: function (field) {
+    //for searching in the signlist
+    signFilterByOnSearchKeyUp: function(field) {
         Ext.getCmp('signList').setHidden(false);
         Ext.getCmp('signList').getStore().load();
         this.onSearchKeyUp(Ext.getCmp('signList').getStore(), field, 'sign', 'type');
         this.signFilter();
     },
 
-    signFilterByOnSearchClearIconTap: function () {
+    signFilterByOnSearchClearIconTap: function() {
         this.onSearchClearIconTap(Ext.getCmp('signList').getStore());
     },
-	// called when an opd encounter is submitted
-    submitOpdEncounter: function () {
+    // called when an opd encounter is submitted
+    submitOpdEncounter: function() {
         var obsdate = new Date();
         var time = Util.Datetime(obsdate, Util.getUTCGMTdiff());
 
@@ -498,13 +498,13 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         var encounterStore = Ext.create('RaxaEmr.Outpatient.store.opdEncounterPost');
         encounterStore.add(opdencounter);
         encounterStore.sync();
-        encounterStore.on('write', function () {
+        encounterStore.on('write', function() {
             Ext.Msg.alert('successfull');
         }, this);
         Ext.getCmp('examList').getStore().removeAll();
     },
-	// to add observation in the observation array
-    addObservation: function (concept, value) {
+    // to add observation in the observation array
+    addObservation: function(concept, value) {
         var obsdate = new Date();
         opd_observations.push({
             person: myRecord.data.uuid,
@@ -513,8 +513,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             value: value
         });
     },
-	// to submit history observations
-    submitHistory: function () {
+    // to submit history observations
+    submitHistory: function() {
         var obsdate = new Date();
         var tobaccoValue = Ext.getCmp('tobaccoField').getValue() + ' ' + Ext.getCmp('tobaccoRouteofIntake').getValue() + ' ' + Ext.getCmp('tobaccoFrequency').getValue()
 
@@ -528,8 +528,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         Ext.getCmp('patientHistoryPanel').reset();
         Ext.getCmp('socialHistoryPanel').reset();
     },
-	// to submit the examination observations
-    submitExamination: function () {
+    // to submit the examination observations
+    submitExamination: function() {
         var obsdate = new Date();
         var examlist = Ext.getCmp('examList').getStore();
         var prob_num = examlist.getCount();
@@ -537,8 +537,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             this.addObservation(localStorage.examlistUuidconcept, examlist.getAt(i).data.complain + examlist.getAt(i).data.duration);
         }
     },
-	// to add the diagnosis observations in the obs array
-    addDiagnosis: function () {
+    // to add the diagnosis observations in the obs array
+    addDiagnosis: function() {
         var obsdate = new Date();
         var conceptType;
         var diagnosis_category = Ext.getCmp('diagnosisCategory').getValue();
@@ -550,14 +550,14 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         this.addObservation(conceptType, Ext.getCmp('diagnosisField').getValue() + ' : ' + Ext.getCmp('diagnosisNotes').getValue());
         Ext.getCmp('diagnosisForm').reset();
     },
-	// to submit the diagnosis observations
-    submitDiagnosis: function () {
+    // to submit the diagnosis observations
+    submitDiagnosis: function() {
         this.addDiagnosis();
         this.submitExamination();
         this.submitOpdEncounter();
     },
-	// to add the drug order in the drug list and drug panel
-    adddruginlist: function () {
+    // to add the drug order in the drug list and drug panel
+    adddruginlist: function() {
         druglist = Ext.getCmp('drugList');
         druglist.getStore().add({
             drugname: Ext.getCmp('drug-name').getValue(),
@@ -568,8 +568,8 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         });
         Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.DRUGPANEL)
     },
-	// to submit the drug order
-    submitdrugs: function () {
+    // to submit the drug order
+    submitdrugs: function() {
         concept = new Array();
         order = new Array();
         var k = 0,
@@ -613,7 +613,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             concept[i].load();
             // added a counter k which increment as a concept load successfully, after all the concept are loaded
             // value of k should be equal to the no. of drug forms
-            concept[i].on('load', function () {
+            concept[i].on('load', function() {
                 k = k + 1;
                 // value of k is compared with the no of drug forms
                 if (k == drug_num + 1) {
@@ -627,14 +627,14 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                         // this is the encounter for the prescription encounterType
                         encounterType: localStorage.prescriptionUuidencountertype,
                         encounterDatetime: time,
-						provider: localStorage.loggedInUser,
+                        provider: localStorage.loggedInUser,
                         orders: order
                     })
                     var encounterStore = Ext.create('RaxaEmr.Outpatient.store.drugEncounter')
                     encounterStore.add(encounter)
                     // make post call for encounter
                     encounterStore.sync()
-                    encounterStore.on('write', function () {
+                    encounterStore.on('write', function() {
                         Ext.Msg.alert('successfull')
                         //Note- if we want add a TIMEOUT it shown added somewhere here
                     }, this)
@@ -642,12 +642,12 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 }
             }, this);
         }
-		druglist.removeAll();
-	},
+        druglist.removeAll();
+    },
 
-	referPatient: function () {
-		var selection = Ext.getCmp('refToDocPanel').getSelection();
-		var provider = selection[0].data.person.uuid;
+    referPatient: function() {
+        var selection = Ext.getCmp('refToDocPanel').getSelection();
+        var provider = selection[0].data.person.uuid;
         var currentDate = new Date();
         var jsonencounter = Ext.create('Screener.model.encounterpost', {
             encounterDatetime: Util.Datetime(currentDate, 5.5),
@@ -656,10 +656,10 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             provider: provider
         });
         var store = Ext.create('Screener.store.encounterpost');
-		store.getProxy().setUrl(HOST + '/ws/rest/v1/encounter/' +myRecord.data.encounters[0].uuid);
+        store.getProxy().setUrl(HOST + '/ws/rest/v1/encounter/' + myRecord.data.encounters[0].uuid);
         store.add(jsonencounter);
         store.sync();
-		store.on('write', function () {
+        store.on('write', function() {
             Ext.Msg.alert('successfull');
         }, this);
     }

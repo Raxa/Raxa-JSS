@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  *  This view contains final view to enter details of a Lab order
  */
 Ext.define('Laboratory.view.LabOrderCreation11', {
@@ -132,7 +132,7 @@ Ext.define('Laboratory.view.LabOrderCreation11', {
         x: 570,
         y: 500,
         action: 'postLabOrder',
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
         }
@@ -146,7 +146,7 @@ Ext.define('Laboratory.view.LabOrderCreation11', {
         text: 'Cancel',
         x: 240,
         y: 500,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
         }

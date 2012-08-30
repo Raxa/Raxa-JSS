@@ -15,34 +15,19 @@ Ext.define('Topbar.view.TopToolbar', {
             html: 'JSS',
             itemId: 'JSSLabel',
             margin: 5,
-	   
- 	
+
+
 
             listeners: [{
-                fn: function (component, options) {
-			  
+                fn: function(component, options) {
 
-                    if(Ext.getCmp('mainView')==null)
-                    {
-                       var username = localStorage.getItem("username");
-                       if(username==null)
-                       {
-                           username='Guest';
-                       }
-                       this.parent.getComponent('UsernameLabel').setHtml(username);
-                        var buttonUrlSettings = this.parent.add({
-                            xtype: 'urlSettingsButton',
-                            margin: 5,
-                            right: 0,
-                        });
-                        if (buttonLogout) {
-                            buttonLogout.hide();
+
+                    if (Ext.getCmp('mainView') == null) {
+                        var username = localStorage.getItem("username");
+                        if (username == null) {
+                            username = 'Guest';
                         }
-                    }
-                    else
-                    {
-                    if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
-                        this.parent.getComponent('UsernameLabel').setHtml('Guest');
+                        this.parent.getComponent('UsernameLabel').setHtml(username);
                         var buttonUrlSettings = this.parent.add({
                             xtype: 'urlSettingsButton',
                             margin: 5,
@@ -52,18 +37,29 @@ Ext.define('Topbar.view.TopToolbar', {
                             buttonLogout.hide();
                         }
                     } else {
-                        this.parent.getComponent('UsernameLabel').setHtml(localStorage.getItem('Username'));
-                        var buttonLogout = this.parent.add({
-                            xtype: 'button',
-                            itemId: 'LogoutButton',
-                            margin: 5,
-                            right: 0,
-                            ui: 'action',
-                            text: 'Logout',
-                        });
-                        if (buttonUrlSettings) {
-                            buttonUrlSettings.hide();
-                        }
+                        if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
+                            this.parent.getComponent('UsernameLabel').setHtml('Guest');
+                            var buttonUrlSettings = this.parent.add({
+                                xtype: 'urlSettingsButton',
+                                margin: 5,
+                                right: 0,
+                            });
+                            if (buttonLogout) {
+                                buttonLogout.hide();
+                            }
+                        } else {
+                            this.parent.getComponent('UsernameLabel').setHtml(localStorage.getItem('Username'));
+                            var buttonLogout = this.parent.add({
+                                xtype: 'button',
+                                itemId: 'LogoutButton',
+                                margin: 5,
+                                right: 0,
+                                ui: 'action',
+                                text: 'Logout',
+                            });
+                            if (buttonUrlSettings) {
+                                buttonUrlSettings.hide();
+                            }
                         }
                     }
                 },
@@ -79,7 +75,7 @@ Ext.define('Topbar.view.TopToolbar', {
             xtype: 'label',
             itemId: 'UsernameLabel',
             margin: 5,
-        },],
+        }, ],
         listeners: [{
             fn: 'onLogoutButtonTap',
             event: 'tap',
@@ -87,7 +83,7 @@ Ext.define('Topbar.view.TopToolbar', {
         }]
     },
 
-    onLogoutButtonTap: function (button, e, options) {
+    onLogoutButtonTap: function(button, e, options) {
         var logconfirm = button.LogoutButton;
         if (!logconfirm) {
             logconfirm = button.LogoutButton = Ext.widget('logoutConfirmPanel');

@@ -9,7 +9,7 @@ Ext.define('RaxaEmr.Pharmacy.store.StockList', {
         url: HOST + '/ws/rest/v1/raxacore/druginventory',
         headers: Util.getBasicAuthHeaders(),
         reader: {
-            type:'json',
+            type: 'json',
             root: 'results'
         }
     }

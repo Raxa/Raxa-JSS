@@ -42,9 +42,9 @@ Ext.define('chw.view.resourceList', {
             pinHeaders: false,
             store: 'resources',
             loadingText: 'Loading List...',
-            emptyText: '</pre><div class="notes-list-empty-text"><center><br>'+Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noResources')+'<br></center></div><pre>',
-            onItemDisclosure: function (record) {
-                helper.listDisclose('resources',record);
+            emptyText: '</pre><div class="notes-list-empty-text"><center><br>' + Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.noResources') + '<br></center></div><pre>',
+            onItemDisclosure: function(record) {
+                helper.listDisclose('resources', record);
             },
             itemTpl: '<div>{resourceName}</div>'
         }]

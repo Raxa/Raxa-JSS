@@ -38,11 +38,11 @@ Ext.application({
     controllers: ['Application'],
 
     //the stores will hold our data in a local cache
-    stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary','AssignedPatientList'],
+    stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary', 'AssignedPatientList'],
 
     //entry point
-    launch: function () {
-        if(Util.checkModulePrivilege('screener')){
+    launch: function() {
+        if (Util.checkModulePrivilege('screener')) {
             Ext.Viewport.add({
                 xclass: 'Screener.view.Main'
             });

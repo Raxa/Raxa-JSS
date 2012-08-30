@@ -14,7 +14,7 @@ Ext.application({
     tabletStartupScreen: 'resources/img/icon.png',
     models: ['Session'],
     // List of Models for dynamic loading
-    views: ['Login', 'AppGrid','AppCarousel','smartApp'],
+    views: ['Login', 'AppGrid', 'AppCarousel', 'smartApp'],
     // List of Views for dynamic loading
     controllers: ['Session'],
     // List of Controllers for dynamic loading
@@ -22,7 +22,7 @@ Ext.application({
 });
 
 //i18n
-Ext.require('Ext.i18n.Bundle', function () {
+Ext.require('Ext.i18n.Bundle', function() {
     Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle', {
         bundle: 'RaxaEmr',
         //Specify language here.

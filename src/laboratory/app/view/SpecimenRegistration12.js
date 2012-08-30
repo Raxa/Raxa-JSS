@@ -12,8 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
- *  This view allows to add specimen 
+ *
+ *  This view allows to add specimen
  */
 Ext.define('Laboratory.view.SpecimenRegistration12', {
     extend: 'Ext.container.Container',
@@ -113,7 +113,7 @@ Ext.define('Laboratory.view.SpecimenRegistration12', {
         text: 'Save',
         x: 560,
         y: 330,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_REPORT_STATUS.value);
         }
@@ -158,7 +158,7 @@ Ext.define('Laboratory.view.SpecimenRegistration12', {
         text: 'Cancel',
         x: 240,
         y: 330,
-        handler: function () {
+        handler: function() {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.SPECIMEN_REGISTRATION_HOME.value);
         }

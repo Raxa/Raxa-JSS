@@ -1,18 +1,18 @@
 /**
- * This class defines a Person, holding 3 strings 
+ * This class defines a Person, holding 3 strings
  * for id, gender and uuid
- * and extends to a model Names 
+ * and extends to a model Names
  */
-Ext.define('Screener.model.Person',{
+Ext.define('Screener.model.Person', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [ {
+        fields: [{
             name: 'id',
             persist: false
         }, {
             name: 'gender',
             type: 'string'
-        },{
+        }, {
             name: 'uuid',
             type: 'string',
             persist: false

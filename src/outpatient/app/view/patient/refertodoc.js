@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
- //view of refer to doc grid
- 
+
+//view of refer to doc grid
+
 Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Refer-To-Doc',
@@ -47,12 +47,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
             }, {
                 xtype: 'spacer'
             }, {
-				xtype: 'button',
-				id: 'referpatient',
-				text: 'Refer',
-				ui: 'confirm',
-				width: 100,
-			}, {
+                xtype: 'button',
+                id: 'referpatient',
+                text: 'Refer',
+                ui: 'confirm',
+                width: 100,
+            }, {
                 xtype: 'searchfield',
                 id: 'reftodocsearchfield',
                 placeHolder: 'Search...'
@@ -63,7 +63,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
             dataIndex: 'display',
             width: '50%',
             cls: 'centered-cell',
-            renderer: function (value) {
+            renderer: function(value) {
                 return value.split("- ")[1];
             }
         }, {

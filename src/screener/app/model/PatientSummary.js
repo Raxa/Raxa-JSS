@@ -16,8 +16,7 @@
 //Model of an encounter
 Ext.define('Screener.model.PatientSummary', {
     extend: 'Ext.data.Model',
-    fields: ['encounterDatetime', 'patient', 'encounterType',
-    {
+    fields: ['encounterDatetime', 'patient', 'encounterType', {
         //includes the obs model so that it can be stored at each time
         name: 'obs',
         model: 'Screener.model.Obs'

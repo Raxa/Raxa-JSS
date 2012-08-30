@@ -41,6 +41,6 @@ Ext.define('RaxaEmr.Registration.model.Patient', {
         	name: 'occupation',
         	type: 'string'
         }*/
-]
+        ]
     }
 });
