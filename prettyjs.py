@@ -1,11 +1,17 @@
 #!/usr/bin/python
 
-"""Pretty JS
-    - Runs JsBeautifier on all files in entire tree
-    - Can configure paths or specific files to ignore
+"""Pretty JS - Runs JsBeautifier on all .js files in Raxa-JSS tree
     
-    NOTE: You must install python jsbeautifier before use 
-    https://github.com/einars/js-beautify
+Must be run from the /Raxa-JSS directory
+
+Can configure paths or specific files to ignore. To ignore a file or path, it must be added to the blacklist. 
+
+Requires user confirmation before each beautification, to avoid accidentally affecting files (can use --no-confirm option, too)
+
+Creates .pbak files to backup any file affected by beautification. To ignore these when doing a commit, use "git add -u", to add only already tracked files to the changelist. Then can run "git clean (-f)" to remove untracked files
+
+NOTE: You must install python jsbeautifier before use 
+https://github.com/einars/js-beautify
 """
 
 import os 
@@ -29,7 +35,7 @@ def main():
     # Handle command-line arguments
     args = sys.argv[1:]
     if '--no-confirm' in args:
-        print "wont confirmation each file beautification"
+        print "Wont confirm before each file beautification!"
         CONFIRM_EACH_PRETTY = False
 
     # TODO: Add ability to "cleanup" -- removes .pbak files
@@ -71,7 +77,7 @@ def recursiveList(dirname):
                 #print 'fn: %s, fx: %s' % (fileName, fileExtension)
                 if fileExtension == '.js':
                     jsCount += 1
-                    print filePath
+                    #print filePath
                     fileList.append(filePath)
 
     for f in fileList:
@@ -97,7 +103,7 @@ def beautifyFile(filename):
     if before != after:
         makePretty = False
         if CONFIRM_EACH_PRETTY:
-            print "...would change. Beautify?"
+            print "... will change." 
             if confirm():
                 makePretty = True
         else:
@@ -109,7 +115,10 @@ def beautifyFile(filename):
             w.write(after)
             print "Beautified."
         else:
-            "Skipped." 
+            print "Skipped."  
+
+    else:
+        print "... no change."
 
     # TODO: Allow showing diff from beautification.
     # For now, just see the diff via git
