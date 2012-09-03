@@ -29,7 +29,7 @@ LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
 	
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://localhost:8082/openmrs-standalone';
+    var HOST = 'http://test.raxa.org:8080/openmrs';
 } else HOST = localStorage.getItem("host");
 var username;
 var password;
