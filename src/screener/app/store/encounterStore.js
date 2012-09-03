@@ -12,14 +12,26 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script initiates the registration module
  */
 
-//model of an observation
-Ext.define('Screener.model.Obs', {
-    extend: 'Ext.data.Model',
-    fields: ['person', 'obsDatetime', 'concept', 'value',
-    {
-        name: 'id',
-        persist: false
-    }]
+// The store for an encounter. Sends all filled fields to the server
+Ext.define('Screener.store.encounterStore', {
+	extend: 'Ext.data.Store',
+	config: {
+		model: 'Screener.model.encounterModel',
+		proxy: {
+			type: 'rest',
+			url: HOST + '/ws/rest/v1/encounter',
+			headers: Util.getBasicAuthHeaders(),
+			reader: {
+				type: 'json'
+			},
+			writer: {
+				type: 'json'
+			}
+		}
+	}
 });
+
