@@ -42,11 +42,11 @@ Ext.define('Registration.view.Viewport', {
                       text: 'Registration Home Page',
                       handler: function () {
                           var l = Ext.getCmp('mainRegArea').getLayout();
-                          l.setActiveItem(LAB_PAGES.HOME.name);
+                          l.setActiveItem(REG_PAGES.HOME.home);
                       }
                 }, {
                     xtype: 'tbtext',
-                    text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + username
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + localStorage.getItem('username')
                 }, {
                     xtype: 'tbseparator'
                 }, {

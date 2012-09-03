@@ -46,7 +46,6 @@ Ext.define('Registration.controller.Main', {
     
     searchPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
-        console.log(REG_PAGES.SEARCH_1.value);
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
         Util.KeyMapButton('searchbutton1',Ext.EventObject.ENTER);
     },
@@ -68,6 +67,8 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
         Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
         Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
+//		This was causing a bug, as none of the fields after this line were copied to confirmation page
+//      Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
         Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
         Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);

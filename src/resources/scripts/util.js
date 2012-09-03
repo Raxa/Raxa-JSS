@@ -26,14 +26,18 @@ Ext.apply(Ext.form.VTypes, {
 
 // Set host. If host has been configured in localStorage, use that host.
 // Otherwise, use the default host.
-var HOST = localStorage.getItem("host"); 
-DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
-HOST = (HOST === null) ? DEFAULT_HOST : HOST; 
-    
 LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
 LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
-	
+
+var HOST;
+var DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
+if (localStorage.getItem("host") === null) {
+    HOST = DEFAULT_HOST; 
+} else { 
+    HOST = localStorage.getItem("host"); 
+}
+
 var username;
 var password;
 var timeoutLimit = 150000;
