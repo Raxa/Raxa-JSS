@@ -125,7 +125,7 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_CREATION.value);
-        }          
+        }
     }, {
         xtype: 'button',
         text: 'Cancel',
@@ -134,6 +134,6 @@ Ext.define('Laboratory.view.LabOrderCreation10', {
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.HOME.value);
-        }   
+        }
     }]
 });

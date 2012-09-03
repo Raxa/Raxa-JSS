@@ -24,18 +24,34 @@ Ext.apply(Ext.form.VTypes, {
     phoneMask: /[ \d\-\(\)]/
 });
 
+LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
+LAB_USERNAME='Admin';
+LAB_PASSWORD='Admin123';
+	
 if (localStorage.getItem("host") == null) {
-    var HOST = 'http://test.raxa.org:8080/openmrs';
+    var HOST = 'http://localhost:8082/openmrs-standalone';
 } else HOST = localStorage.getItem("host");
 var username;
 var password;
 var timeoutLimit = 150000;
 var hospitalName = 'JSS Hospital';
+var keyMap={
+    
+};
 var resourceUuid = [
 ['concept', 'height', 'HEIGHT (CM)'],
 ['concept', 'weight', 'WEIGHT (KG)'],
 ['concept', 'bmi', 'BODY MASS INDEX'],
 ['concept', 'regfee', 'Registration Fee'],
+['concept', 'patientHistory', 'PATIENT HISTORY'],
+['concept', 'pastMedicationHistory', 'PAST MEDICATION HISTORY'],
+['concept', 'alcoholIntake', 'ALCOHOL INTAKE'],
+['concept', 'tobaccoIntake', 'TOBACCO INTAKE'],
+['concept', 'otherHistory', 'OTHER HISTORY'],
+['concept', 'familyHistory', 'FAMILY HISTORY'],
+['concept', 'examlist', 'EXAMINATION LIST'],
+['concept', 'neurologicalDiagnosis', 'NEUROLOGICAL DIAGNOSIS'],
+['concept', 'cadiologicalDiagnosis', 'CARDIOLOGICAL DIAGNOSIS'],
 ['form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms'],
 ['encountertype', 'reg', 'REGISTRATION - Registration encounter'],
 ['encountertype', 'screener', 'SCREENER - Screener encounter'],
@@ -310,24 +326,93 @@ var Util = {
         });
     },
 
-    getProviderUuid: function (uuid) {
-        //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
+    getPersonUuidFromProviderUuid: function (uuid) {
         Ext.Ajax.request({
-            url: HOST + '/ws/rest/v1/provider/' + uuid, //'/ws/rest/v1/concept?q=height',
+            url: HOST + '/ws/rest/v1/provider/' + uuid,
             method: 'GET',
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             failure: function (response) {
-                console.log('GET failed with response status: ' + response.status); // + response.status);
+                console.log('GET failed with response status: ' + response.status);
             },
             success: function (response) {
-                var x = "person not exits"
                 if (console.log(JSON.parse(response.responseText).person.uuid) != null) {
-                    return JSON.parse(response.responseText).person.uuid
+                    return JSON.parse(response.responseText).person.uuid;
                 } else {
-                    return x
+                    return "provider with given uuid does not exist";
                 }
             }
         });
+    },
+    KeyMapButton: function(ComponentName,keyName)
+    {
+        keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
+        {
+            key: keyName,
+            shift: false,
+            ctrl: false,
+	      fn:function(){
+		var element = Ext.getCmp(ComponentName);
+            element.fireEvent('click',element);
+
+            }
+        }
+        ]);
+    },
+    DestoryKeyMapButton: function(keyName)
+    {
+           keyMap.keyName.destroy(true)
+    },
+    
+        
+    getProviderUuidFromPersonUuid: function (uuid) {
+        Ext.Ajax.request({
+            url: HOST + '/ws/rest/v1/provider?v=full',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: ' + response.status);
+            },
+            success: function (response) {
+                var allProviders = JSON.parse(response.responseText).results;
+                for(i=0; i<allProviders.length; i++){
+                    if(allProviders[i].person.uuid === uuid){
+                        console.log("success");
+                        localStorage.setItem("loggedInProvider", allProviders[i].uuid);
+                        return allProviders[i].uuid;
+                    }
+                }
+                return "provider with given uuid not found";
+            }
+        });
+    },
+    
+    /**
+     * Returns the uuid of the logged in provider
+     */
+    getLoggedInProviderUuid: function(){
+        if(!localStorage.getItem("loggedInUser"))
+            return "provider is not logged in";
+        if(localStorage.getItem("loggedInProvider"))
+            return localStorage.getItem("loggedInProvder");
+        else
+            return this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
+    },
+    
+    /**
+     * Runs before each module. Checks whether user has the privilege to view a specific module
+     * If not, redirects to login page.
+     * If so, returns true.
+     */
+    checkModulePrivilege: function(module){
+        var privileges = localStorage.getItem("privileges");
+        if(privileges!== null && (privileges.indexOf('RaxaEmrView '+module)!==-1 || privileges.indexOf('all privileges')!==-1)){
+            return true;
+        }
+        else{
+            window.location = "../";
+        }
     }
+
 }

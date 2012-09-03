@@ -110,7 +110,7 @@ var Startup = {
      * @param modules: all the current modules of raxa
      * @param callback: function to be called after AJAX GETs are finished, 
      * the callback function should take in views as parameter
-=     */
+     */
     populateViews: function (modules, callback) {
         //2-d array of view names + urls
         views = [];

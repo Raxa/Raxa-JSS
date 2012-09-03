@@ -17,12 +17,14 @@
 Ext.define('RaxaEmr.Outpatient.view.Viewport', {
     extend: 'Ext.navigation.View',
     xtype: 'mainview',
-
+	id: 'mainview',
+	//other view used in this view are included
     requires: ['RaxaEmr.Outpatient.view.patientlist', 'RaxaEmr.Outpatient.view.patient.more', 'RaxaEmr.Outpatient.view.patient.labresulthistorypanel', 'RaxaEmr.Outpatient.view.patient.refertodocpanel', 'RaxaEmr.Outpatient.view.patient.medicationhistorypanel'],
 
     config: {
         autoDestroy: false,
         fullscreen: true,
+		// confirmation buttons in the toolbar in the different view like medication history, refer to doc panel etc.
         navigationBar: {
             items: [{
                 xtype: 'button',
@@ -47,6 +49,7 @@ Ext.define('RaxaEmr.Outpatient.view.Viewport', {
                 hidden: true
             }, ]
         },
+		//the basic view of the main page is loaded
         items: [{
             xtype: 'patientlist'
         }]

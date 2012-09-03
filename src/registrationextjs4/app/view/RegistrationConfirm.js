@@ -350,6 +350,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     border: false,
                     items:[{
                         xtype: 'button',
+				id:'submitbutton',
                         margin: '10 50 0 270',
                         width: 130,
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.SC'),
@@ -368,5 +369,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
             }]
         };
         this.callParent();
+ 
     }
 });
