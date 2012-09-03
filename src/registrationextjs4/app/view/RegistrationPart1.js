@@ -47,6 +47,10 @@ Ext.define('Registration.view.RegistrationPart1', {
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
+                    	
+                   layout: {	  	
+                        type: 'hbox'
+                    },
 
                     items: [{
                         xtype: 'container',
