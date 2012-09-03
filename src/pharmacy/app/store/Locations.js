@@ -4,13 +4,12 @@
  */
 Ext.define('RaxaEmr.Pharmacy.store.Locations', {
     extend: 'Ext.data.Store',
-    fields: [{
-        name: 'uuid',
-        type: 'string'
-    }],
+    model: 'RaxaEmr.Pharmacy.model.Location',
+    autoLoad: true,
+    id: 'locations',
     proxy: {
         type: 'rest',
-        url: HOST + '/ws/rest/v1/location',
+        url: HOST + '/ws/rest/v1/location?v=full',
         headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',

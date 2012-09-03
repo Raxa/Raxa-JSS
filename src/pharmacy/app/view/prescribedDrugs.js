@@ -4,7 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     id: 'prescribedDrugs',
     height: 300,
     styleHtmlContent: false,
-    width: 777,
+    width: 750,
     store: 'orderStore',
     autoScroll: true,
     selType: 'rowmodel',
@@ -20,7 +20,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         this.columns = [
         {
             xtype: 'gridcolumn',
-            width: 200,
+            width: 220,
             dataIndex: 'drugname',
             text: 'Name Of drug',
             resizable: false,
@@ -35,7 +35,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         },
         {
             xtype: 'gridcolumn',
-            width: 85,
+            width: 100,
             dataIndex: 'dosage',
             text: 'Dosage',
             resizable: false,
@@ -83,7 +83,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         {
             xtype: 'numbercolumn',
             text: 'Unit Price',
-            width: 130,
+            width: 100,
             resizable: false,
             dataIndex: 'unitprice',
             editor: {
@@ -93,7 +93,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         },
         {
             xtype: 'numbercolumn',
-            width: 160,
+            width: 100,
             dataIndex: 'itemprice',
             text: 'Item Price',
             resizable: false,
@@ -102,7 +102,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             xtype: 'actioncolumn',
             width: 45,
             items: [{
-                icon: '../../resources/img/edit.png',
+                icon: '../resources/img/edit.png',
                 tooltip: 'Edit',
                 handler: function(grid, rowIndex, colIndex) {
                     drugEditor.fireEvent('drugEdit', {
@@ -111,7 +111,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                     });
                 }
             },{
-                icon: '../../resources/img/edit.png',
+                icon: '../../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
                     drugEditor.fireEvent('drugDelete', {
@@ -125,9 +125,10 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
         this.dockedItems = [{
             xtype: 'toolbar',
             dock: 'bottom',
-            items: [
-            '->',
-            {
+            config:{
+                align: 'left'
+            },
+            items: ['->',{
                 text: 'Add Drug',
                 iconCls: 'icon-add'
             }]
