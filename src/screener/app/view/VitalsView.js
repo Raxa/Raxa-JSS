@@ -1,24 +1,24 @@
 /**
  * This screen shows a list of patients on the left side,
- * with a button to sort them. The right side shows a Lab Order Form    
+ * with a button to sort them. The right side shows a drug order    *  form
  */
-Ext.define("Screener.view.LabOrderView", {
+Ext.define("Screener.view.VitalsView", {
     extend: 'Ext.Container',
-
-    id: 'labOrderView',
-
-    requires: ['Screener.view.LabOrderForm'],
-
+    id: 'vitalsView',
+    requires: ['Screener.view.VitalsForm'],
+    xtype: 'vitalslist',
     config: {
+        fullscreen: true,
         layout: 'hbox',
-        title: 'Add Lab Orders',
+        title: 'Add Vitals',
+        style: 'background:#96d2f7',
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
         {
             xtype: 'patientListView',
             flex: 1
         }, {
-            xtype: 'labOrderForm',
+            xtype: 'vitalsForm',
             flex: 1
         }]
     }

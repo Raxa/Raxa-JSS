@@ -16,24 +16,33 @@
  * This script initiates the registration module
  */
 
-//the store for an encounter. Sends all filled fields to the server
-Ext.define('Screener.store.encounterpost', {
-    extend: 'Ext.data.Store',
-    config:{
-        model: 'Screener.model.encounterpost',
-        proxy: {
-            type: 'rest',
-            url : HOST + '/ws/rest/v1/encounter',
-            headers: Util.getBasicAuthHeaders(),
-            reader: {
-                type: 'json'
+// model of an encounter
+Ext.define('Screener.model.encounterModel', {
+	extend: 'Ext.data.Model',
+    /*config: [{*/
+		fields: ['encounterDatetime', 'patient', 'encounterType', 
+            {
+                name: 'location', 
+                persist: false
             },
-            writer: {
-                type: 'json'
-            }, 
-            afterRequest:function(request,success){         //prints if request is successful
-                alert('Encounter saved successfully.');
-            }
-        }
-    }
+        {
+			name: 'provider',
+			model: 'Screener.model.providerModel',
+			persist: false
+		},
+		{
+			name: 'orders',
+			model: 'Screener.model.orderModel',
+			persist: false
+		},
+		{ //includes the obs model so that it can be stored at each time
+			name: 'obs',
+			model: 'Screener.model.obsModel',
+			persist: false
+		},
+		{
+			name: 'id'
+		}]
+    /*}]*/
 });
+

@@ -12,14 +12,16 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
+ * This script initiates the registration module
  */
 
-//model of an observation
-Ext.define('Screener.model.Obs', {
+// model of an order
+
+Ext.define('Screener.model.orderModel', {
     extend: 'Ext.data.Model',
-    fields: ['person', 'obsDatetime', 'concept', 'value',
-    {
+    fields: ['orderType', 'patient', 'concept', {
         name: 'id',
         persist: false
     }]
-});
+})
