@@ -182,7 +182,7 @@ Ext.define('RaxaEmr.controller.Session', {
         }
         //if no apps available, alert the user
         else if (numAppsAvailable === 0) {
-            Ext.Msg.alert("No Privileges Found", "Contact your system administrator")
+            Ext.Msg.alert("No Privileges Found", "Contact your system administrator");
         }
         //otherwise show the AppGrid
         else {
@@ -240,7 +240,7 @@ Ext.define('RaxaEmr.controller.Session', {
             }, {
                 xclass: 'RaxaEmr.view.AppCarousel'
             }]
-        }),
+        });
         this.getLoginState();
     },
 

@@ -15,11 +15,11 @@
  */
 
 //model of an observation
-Ext.define('Screener.model.Obs', {
+
+Ext.define('Screener.model.obsModel', {
     extend: 'Ext.data.Model',
-    fields: ['person', 'obsDatetime', 'concept', 'value',
-    {
+    fields: ['person', 'obsDatetime', 'concept', 'value', {
         name: 'id',
         persist: false
-    }]
+    }]    
 });

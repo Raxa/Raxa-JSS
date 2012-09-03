@@ -24,43 +24,128 @@ Ext.apply(Ext.form.VTypes, {
     phoneMask: /[ \d\-\(\)]/
 });
 
+// Set host. If host has been configured in localStorage, use that host.
+// Otherwise, use the default host.
 LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
 LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
-	
-if (localStorage.getItem("host") == null) {
-    var HOST = 'http://test.raxa.org:8080/openmrs';
-} else HOST = localStorage.getItem("host");
+
+var HOST;
+var DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
+if (localStorage.getItem("host") === null) {
+    HOST = DEFAULT_HOST; 
+} else { 
+    HOST = localStorage.getItem("host"); 
+}
+
 var username;
 var password;
 var timeoutLimit = 150000;
 var hospitalName = 'JSS Hospital';
-var keyMap={
-    
+var resourceUuid = {
+    "height": {
+        "resource": "concept",
+        "queryTerm": "height",
+        "varName": "height",
+        "displayName": "HEIGHT (CM)"
+    },
+    "weight": {
+        "resource": "concept",
+        "queryTerm": "weight",
+        "varName": "weight",
+        "displayName": "WEIGHT (KG)"
+    },
+    "bmi": {
+        "resource": "concept",
+        "queryTerm": "bmi",
+        "varName": "bmi",
+        "displayName": "BODY MASS INDEX"
+    },
+    "regfee": {
+        "resource": "concept",
+        "queryTerm": "regfee",
+        "varName": "regfee",
+        "displayName": "Registration Fee"
+    },
+    "systolicbloodpressure": {
+        "resource": "concept",
+        "queryTerm": "SYSTOLIC BLOOD PRESSURE",
+        "varName": "systolicbloodpressure",
+        "displayName": "SYSTOLIC BLOOD PRESSURE"
+    },
+    "diastolicbloodpressure": {
+        "resource": "concept",
+        "queryTerm": "DIASTOLIC BLOOD PRESSURE",
+        "varName": "diastolicbloodpressure",
+        "displayName": "DIASTOLIC BLOOD PRESSURE"
+    },
+    "pulse": {
+        "resource": "concept",
+        "queryTerm": "pulse",
+        "varName": "pulse",
+        "displayName": "PULSE"
+    },
+    "respiratoryRate": {
+        "resource": "concept",
+        "queryTerm": "RESPIRATORY RATE",
+        "varName": "respiratoryRate",
+        "displayName": "RESPIRATORY RATE"
+    },
+    "temperature": {
+        "resource": "concept",
+        "queryTerm": "TEMPERATURE (C)",
+        "varName": "temperature",
+        "displayName": "TEMPERATURE (C)"
+    },
+    "bloodoxygensaturation": {
+        "resource": "concept",
+        "queryTerm": "BLOOD OXYGEN SATURATION",
+        "varName": "bloodoxygensaturation",
+        "displayName": "BLOOD OXYGEN SATURATION"
+    },
+    "basic": {
+        "resource": "form",
+        "queryTerm": "basic",
+        "varName": "basic",
+        "displayName": "Basic Form - This form contains only the common/core elements needed for most forms"
+    },
+    "reg": {
+        "resource": "encountertype",
+        "queryTerm": "reg",
+        "varName": "reg",
+        "displayName": "REGISTRATION - Registration encounter"
+    },
+    "screener": {
+        "resource": "encountertype",
+        "queryTerm": "screener",
+        "varName": "screener",
+        "displayName": "SCREENER - Screener encounter"
+    },
+    "screenervitals": {
+        "resource": "encountertype",
+        "queryTerm": "screenervitals",
+        "varName": "screenervitals",
+        "displayName": "SCREENERVITALS - Screener encounter vitals (such as blood pressure, temperature, respiratory rate, pulse rate, oxygen saturation)"
+    },
+    "out": {
+        "resource": "encountertype",
+        "queryTerm": "out",
+        "varName": "out",
+        "displayName": "OUTPATIENT - Outpatient encounter"
+    },
+    "prescription": {
+        "resource": "encountertype",
+        "queryTerm": "prescription",
+        "varName": "prescription",
+        "displayName": "PRESCRIPTION - Prescription encounter"
+    },
+    "prescriptionfill": {
+        "resource": "encountertype",
+        "queryTerm": "prescriptionfill",
+        "varName": "prescriptionfill",
+        "displayName": "PRESCRIPTIONFILL - Prescriptionfill encounter"
+    }
 };
-var resourceUuid = [
-['concept', 'height', 'HEIGHT (CM)'],
-['concept', 'weight', 'WEIGHT (KG)'],
-['concept', 'bmi', 'BODY MASS INDEX'],
-['concept', 'regfee', 'Registration Fee'],
-['concept', 'patientHistory', 'PATIENT HISTORY'],
-['concept', 'pastMedicationHistory', 'PAST MEDICATION HISTORY'],
-['concept', 'alcoholIntake', 'ALCOHOL INTAKE'],
-['concept', 'tobaccoIntake', 'TOBACCO INTAKE'],
-['concept', 'otherHistory', 'OTHER HISTORY'],
-['concept', 'familyHistory', 'FAMILY HISTORY'],
-['concept', 'examlist', 'EXAMINATION LIST'],
-['concept', 'neurologicalDiagnosis', 'NEUROLOGICAL DIAGNOSIS'],
-['concept', 'cadiologicalDiagnosis', 'CARDIOLOGICAL DIAGNOSIS'],
-['form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms'],
-['encountertype', 'reg', 'REGISTRATION - Registration encounter'],
-['encountertype', 'screener', 'SCREENER - Screener encounter'],
-['encountertype', 'out', 'OUTPATIENT - Outpatient encounter'],
-['encountertype', 'prescription', 'PRESCRIPTION - Prescription encounter'],
-['encountertype', 'prescriptionfill', 'PRESCRIPTIONFILL - Prescriptionfill encounter'],
-['location', 'screener', 'Screener Registration Disk - registration desk in a screener module'],
-['location', 'waiting', 'Waiting Patient: Screener - patients assigned to a doctor']
-];
 
 // This is the name of the Patient Identifier Type that is being Auto-Generated by the IDGen Module.
 // Put the Identifier Type Name in between the /.* and the .*/
@@ -125,11 +210,31 @@ var diffinUTC_GMT = 5.5;
 //OpenMRS checks whether encounters are ahead of current time --
 //if a system clock is ahead of OpenMRS clock, some things can't be posted
 //therefore, we need to fudge our time a few mins behind
-var TIME_BEFORE_NOW = .1;
+var TIME_BEFORE_NOW = 0.1;
 
 // The Util class provids several methods that are shared by the core, apps and modules
 var Util = {
 	
+    /*
+     * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
+     * Number field fails to enforce maxLength, so must add JavaScript listener
+     * http://stackoverflow.com/questions/9613743/maxlength-attribute-of-numberfield-in-sencha-touch
+     */
+    maxLengthListener: function(maxLength) {
+        return {
+            keyup: function(textfield, e, eOpts) {
+                var value = textfield.getValue() + '';
+                var length = value.length;
+
+                var MAX_LENGTH = maxLength;
+                if (length > MAX_LENGTH) {
+                    textfield.setValue(value.substring(0, MAX_LENGTH));
+                    return false;
+                }
+            }
+        };
+    },
+
     /**
      *Returns the value of time difference in UTC and GMT
      *@return diffinUTC_GMT
@@ -160,9 +265,9 @@ var Util = {
         var k = new Date(d - (60 * hours) * MS_PER_MINUTE);
 
         function pad(n) {
-            return n < 10 ? '0' + n : n
+            return n < 10 ? '0' + n : n;
         }
-        return k.getFullYear() + '-' + pad(k.getMonth() + 1) + '-' + pad(k.getDate()) + 'T' + pad(k.getHours()) + ':' + pad(k.getMinutes()) + ':' + pad(k.getSeconds()) + 'Z'
+        return k.getFullYear() + '-' + pad(k.getMonth() + 1) + '-' + pad(k.getDate()) + 'T' + pad(k.getHours()) + ':' + pad(k.getMinutes()) + ':' + pad(k.getSeconds()) + 'Z';
     },
     getTimeoutLimit: function () {
         return timeoutLimit;
@@ -181,7 +286,7 @@ var Util = {
             "Authorization": localStorage.getItem("basicAuthHeader"),
             "Accept": "application/json",
             "Content-Type": "application/json"
-        }
+        };
         return headers;
     },
 
@@ -213,7 +318,7 @@ var Util = {
         xmlReq.setRequestHeader("Accept", "application/json");
         xmlReq.setRequestHeader("Authorization", "Basic " + window.btoa(username + ":" + password));
         xmlReq.send();
-        if (xmlReq.status = "200") {
+        if (xmlReq.status == "200") {
             var authenticated = Ext.decode(xmlReq.responseText).authenticated;
             if (authenticated) {
                 localStorage.setItem("basicAuthHeader", "Basic " + window.btoa(username + ":" + password));
@@ -229,7 +334,7 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing'];
+        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory'];
     },
 
     getApps: function () {
@@ -245,7 +350,7 @@ var Util = {
     getDeviceId: function () {
         var deviceId;
         //Checks if localStorage already has deviceId stored in it        
-        if (localStorage.getItem("deviceId") == null) {
+        if (localStorage.getItem("deviceId") === null) {
             var randomNumber = [];
             for (var i = 0; i < 6; i++) {
                 //generates random digit from 0 to 10
@@ -300,8 +405,7 @@ var Util = {
         }
     },
 
-    getAttributeFromREST: function (resource, queryParameter, display) {
-
+    getAttributeFromREST: function (resource, queryParameter, varName, display) {
         //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/' + resource + '?q=' + queryParameter, //'/ws/rest/v1/concept?q=height',
@@ -312,13 +416,13 @@ var Util = {
                 console.log('GET failed with response status: ' + response.status); // + response.status);
             },
             success: function (response) {
+                console.log("getAttributeFromRest ... resource: " + resource + ", queryParameter: " + queryParameter + ", varName:" + varName + " RESPONSE: " + response.responseText);
                 for (var i = 0; i < JSON.parse(response.responseText).results.length; ++i) {
                     if (JSON.parse(response.responseText).results[i].display == display) {
                         if (resource != 'location') {
-                            localStorage.setItem(queryParameter + "Uuid" + resource, JSON.parse(response.responseText).results[i].uuid)
+                            localStorage.setItem(varName + "Uuid" + resource, JSON.parse(response.responseText).results[i].uuid)
                         } else {
-                            console.log
-                            localStorage.setItem(queryParameter + "Uuid" + resource, display)
+                            localStorage.setItem(varName + "Uuid" + resource, display)
                         }
                     }
                 }

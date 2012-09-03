@@ -25,7 +25,7 @@ describe("Session", function () {
     });
 
     it("adds modules to the dashboard at login", function () {
-        localStorage.setItem("privileges", "RaxaEmrView screener, RaxaEmrView registration")
+        localStorage.setItem("privileges", "RaxaEmrView screener, RaxaEmrView registration");
         mainController.loginSuccess();
         expect(Ext.getCmp('modulesPanel')).toBeDefined();
     });
