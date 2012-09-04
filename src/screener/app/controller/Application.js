@@ -56,21 +56,26 @@ var patientUpdate = {
         for (i = 0; i < store_patientList.getCount(); i++) {
             store_patientList.getAt(i).getData().time = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].encounterDatetime;
             if (store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs.length !== 0) {
+                // TODO: Clean up this mess-ay code
                 store_patientList.getAt(i).getData().bmi = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsBMI(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;
+                /*store_patientList.getAt(i).getData().pulse = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsPulse(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;*/
             }
         }
         Ext.getStore('patientStore').sort('display');
     },
     //this method returns the index of Obs which contain BMI details
     getObsBMI: function (obs) {
+        // TODO: What if NO bmi? needs to handle that case, too
         var i;
         var BMI_DESCRIPTION = 'BODY MASS INDEX';
         for (i = 0; i < obs.length; i++) {
+            console.log(obs[i].display);
             if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
                 ind = i;
-                return i;
+                /*return i;*/
             }
         }
+        return ind;
     },
     // This method sets the UI of sort buttons when pressed.
     // One button is set as "declined" (pressed) while the other two
@@ -865,7 +870,8 @@ Ext.define("Screener.controller.Application", {
 
     // Create a SCREENER_VITALS encounter and attach vitals observations
     savePatientVitals: function () {
-        var selectedPatient  = this.getPatientList().getSelection()[0];
+        /*var selectedPatient  = this.getPatientList().getSelection()[0];*/
+        var selectedPatient  = this.currentPatientIndex;
         console.log(selectedPatient);
         if ( ! selectedPatient) {
             Ext.Msg.alert("You must select a patient");
