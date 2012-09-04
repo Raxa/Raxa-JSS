@@ -240,40 +240,40 @@ var Util = {
     getSelectModules: function () {
         var moduleElements=[];
         for (var i = 0; i < Util.getModules().length ; i++) {
-          var text = Util.getModules()[i];
-          var changedText = "";
-        switch(text) {
-            case 'login' :
-                changedText = 'DASHBOARD';
-                break;
-            case 'screener' :
-                changedText = 'SCREENER';
-                break;
-            case 'registration' :
-                changedText = 'REGISTRATION';
-                break;
-            case 'registrationextjs4':
-                changedText = 'REGISTRATION Desktop';
-                break;
-            case 'pharmacy' :
-                changedText = 'PHARMACY';
-                break;
-            case 'chw' :
-                changedText = 'CHW';
-                break;
-            case 'outpatient' :
-                changedText = 'OPD';
-                break;
-            case 'laboratory' :
-                changedText = 'LABORATORY';
-                break;
-            case  'patientfacing':
-                changedText = 'PATIENT FACING';
-                break;
-            default :
-                changedText = 'You Dont Have Permission ToAccess Any Module';
-                break;
-        }
+            var text = Util.getModules()[i];
+            var changedText = "";
+            switch(text) {
+                case 'login' :
+                    changedText = 'DASHBOARD';
+                    break;
+                case 'screener' :
+                    changedText = 'SCREENER';
+                    break;
+                case 'registration' :
+                    changedText = 'REGISTRATION';
+                    break;
+                case 'registrationextjs4':
+                    changedText = 'REGISTRATION Desktop';
+                    break;
+                case 'pharmacy' :
+                    changedText = 'PHARMACY';
+                    break;
+                case 'chw' :
+                    changedText = 'CHW';
+                    break;
+                case 'outpatient' :
+                    changedText = 'OPD';
+                    break;
+                case 'laboratory' :
+                    changedText = 'LABORATORY';
+                    break;
+                case  'patientfacing':
+                    changedText = 'PATIENT FACING';
+                    break;
+                default :
+                    changedText = 'You Dont Have Permission ToAccess Any Module';
+                    break;
+            }
             var obj = {
                 text : changedText , 
                 value:Util.getModules()[i]

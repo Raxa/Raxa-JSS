@@ -15,15 +15,13 @@ Ext.define("Screener.view.Main", {
                 type: 'hbox' ,
                 pack: 'center',
                 align: 'middle'
-
-        
             },
             xtype: 'fieldset',
             items: [
             {
                 xtype: 'selectfield',
                 id: 'topbarSelectfield',
-               centered: true ,
+                centered: true ,
                 value: 'screener' ,
                 options: 
                 Util.getSelectModules(),
@@ -60,9 +58,6 @@ Ext.define("Screener.view.Main", {
             },
             
             ]
-        
-        
         }, ]
     }
-    
 });
