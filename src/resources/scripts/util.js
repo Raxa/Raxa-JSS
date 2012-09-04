@@ -230,7 +230,92 @@ var Util = {
     getModules: function () {
         //always keep login at first position as its app path is different
         return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing'];
+        
     },
+    // {name:'sdd',location:}
+    getSelectModules: function () {
+        var moduleElements=[];
+        for (var i = 0; i < Util.getModules().length ; i++) {
+          // var changedText = getTextChange(Util.getModules()[i]);
+          var text = Util.getModules()[i];
+          var changedText = "";
+        switch(text) {
+            case 'login' :
+                changedText = 'DASHBOARD';
+                break;
+            case 'screener' :
+                changedText = 'SCREENER';
+                break;
+            case 'registration' :
+                changedText = 'REGISTRATION';
+                break;
+            case 'registrationextjs4':
+                changedText = 'REGISTRATION Desktop';
+                break;
+            case 'pharmacy' :
+                changedText = 'PHARMACY';
+                break;
+            case 'chw' :
+                changedText = 'CHW';
+                break;
+            case 'outpatient' :
+                changedText = 'OPD';
+                break;
+            case 'laboratory' :
+                changedText = 'LABORATORY';
+                break;
+            case  'patientfacing':
+                changedText = 'PATIENT FACING';
+                break;
+            default :
+                changedText = 'You Dont Have Permission ToAccess Any Module';
+                break;
+        }
+            var obj = {
+                text : changedText , 
+                value:Util.getModules()[i]
+            };
+            moduleElements.push(obj);
+        } 
+      
+        console.log(moduleElements);
+        return moduleElements;
+    },
+    
+//    getTextChange: function (text) {
+//        var changedText = "";
+//        switch(text) {
+//            case login :
+//                changedText = 'Dashboard';
+//                break;
+//            case screener :
+//                changedText = 'SCREENER';
+//                break;
+//            case registration :
+//                changedText = 'REGISTRATION';
+//                break;
+//            case registrationextjs4 :
+//                changedText = 'REGISTRATION Desktop';
+//            case pharmacy :
+//                changedText = 'PHARMACY';
+//                break;
+//            case chw :
+//                changedText = 'CHW';
+//                break;
+//            case outpatient :
+//                changedText = 'OPD';
+//                break;
+//            case laboratory :
+//                changedText = 'LABORATORY';
+//                break;
+//            case  patientfacing:
+//                changedText = 'PATIENT FACING';
+//                break;
+//        }
+//        return changedText;
+//        
+//        
+//    } ,
 
     getApps: function () {
         //always keep login at first position as its app path is different
@@ -351,9 +436,9 @@ var Util = {
             key: keyName,
             shift: false,
             ctrl: false,
-	      fn:function(){
-		var element = Ext.getCmp(ComponentName);
-            element.fireEvent('click',element);
+            fn:function(){
+                var element = Ext.getCmp(ComponentName);
+                element.fireEvent('click',element);
 
             }
         }
@@ -361,7 +446,7 @@ var Util = {
     },
     DestoryKeyMapButton: function(keyName)
     {
-           keyMap.keyName.destroy(true)
+        keyMap.keyName.destroy(true)
     },
     
         
