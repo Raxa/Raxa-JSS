@@ -232,11 +232,14 @@ var Util = {
         return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing'];
         
     },
-    // {name:'sdd',location:}
+
+      /**
+       *Return selected module in Raxa and by changing the module text font .
+       *@return [ 'LOGIN', 'SCREENER', ....]
+       */
     getSelectModules: function () {
         var moduleElements=[];
         for (var i = 0; i < Util.getModules().length ; i++) {
-          // var changedText = getTextChange(Util.getModules()[i]);
           var text = Util.getModules()[i];
           var changedText = "";
         switch(text) {
@@ -277,45 +280,9 @@ var Util = {
             };
             moduleElements.push(obj);
         } 
-      
-        console.log(moduleElements);
         return moduleElements;
     },
     
-//    getTextChange: function (text) {
-//        var changedText = "";
-//        switch(text) {
-//            case login :
-//                changedText = 'Dashboard';
-//                break;
-//            case screener :
-//                changedText = 'SCREENER';
-//                break;
-//            case registration :
-//                changedText = 'REGISTRATION';
-//                break;
-//            case registrationextjs4 :
-//                changedText = 'REGISTRATION Desktop';
-//            case pharmacy :
-//                changedText = 'PHARMACY';
-//                break;
-//            case chw :
-//                changedText = 'CHW';
-//                break;
-//            case outpatient :
-//                changedText = 'OPD';
-//                break;
-//            case laboratory :
-//                changedText = 'LABORATORY';
-//                break;
-//            case  patientfacing:
-//                changedText = 'PATIENT FACING';
-//                break;
-//        }
-//        return changedText;
-//        
-//        
-//    } ,
 
     getApps: function () {
         //always keep login at first position as its app path is different
