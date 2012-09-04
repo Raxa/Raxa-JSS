@@ -269,6 +269,19 @@ Ext.define("Screener.controller.Application", {
         this.preparePatientList();
     },
 
+    // Updates the number of Patients Waiting in the left Title Bar
+    updatePatientsWaitingTitle: function () {
+        console.log("updatePatientsWaitingTitle");
+        // 3 different views shares this title, all three view get updated with same title
+        var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
+        var patientWaitNumber = Ext.getStore('patientStore').getCount();
+        /*var patientWaitNumber = 5;*/
+        var i;
+        for (i = 0; i < patientsTitles.length; i++) {
+            patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
+        }
+    },
+
     // Creates an instance of PostList model for posting Registration and Screener List
     preparePatientList: function () {
         var d = new Date();
@@ -349,7 +362,11 @@ Ext.define("Screener.controller.Application", {
             });
         }, this);
         // TODO: Pass a function instead of string, to avoid implied "eval"
-        setInterval('patientUpdate.updatePatientsWaitingTitle()', Util.getUiTime());
+        // TODO: Does this actually refresh on the specified interval? tried
+        // with 5000 and it doesnt work..
+        /*setInterval(this.updatePatientsWaitingTitle, Util.getUiTime());*/
+        /*setInterval('this.updatePatientsWaitingTitle', 5000);*/
+        setInterval('this.updatePatientsWaitingTitle', Util.getUiTime());
         setInterval('Ext.getStore(\'patientStore\').load()', Util.getUiTime());
         return store_patientList;
     },
@@ -561,7 +578,9 @@ Ext.define("Screener.controller.Application", {
         /*this.getDoctorList().deselectAll();*/
         this.getPatientList().deselectAll();
 
-        patientUpdate.updatePatientsWaitingTitle();
+        console.log('update title');
+        this.updatePatientsWaitingTitle();
+        console.log('count patients');
         this.countPatients();
     },
     // Counts number of patients assigned to a doctor   
@@ -602,7 +621,7 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('form' + form_num).hide();
             form_num--;
         }
-        patientUpdate.updatePatientsWaitingTitle();
+        this.updatePatientsWaitingTitle();
     },
     showLab: function () {
         this.navigate(Util.PAGES.SCREENER.LAB_ORDER, Util.PAGES.SCREENER.TOP_MENU);
@@ -617,7 +636,7 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('lab' + lab_num).hide();
             lab_num--;
         }
-        patientUpdate.updatePatientsWaitingTitle();
+        this.updatePatientsWaitingTitle();
     },
     showVitals: function () {
         this.navigate(Util.PAGES.SCREENER.VITALS, Util.PAGES.SCREENER.TOP_MENU);
@@ -628,7 +647,7 @@ Ext.define("Screener.controller.Application", {
         // Get most recent vitals
 
         // Update # of patients waiting
-        patientUpdate.updatePatientsWaitingTitle();
+        this.updatePatientsWaitingTitle();
     },
     // opens form for patient summary
     showPatientSummary: function (list, item, index) {
@@ -726,8 +745,9 @@ Ext.define("Screener.controller.Application", {
     //this method refreshes the patientList and also updates the patientWaitingTitle and bmi, encountertime locally in patient model 
     refreshList: function () {
         Ext.getStore('patientStore').load();
+        that = this;
         Ext.getStore('patientStore').on('load', function () {
-            patientUpdate.updatePatientsWaitingTitle();
+            that.updatePatientsWaitingTitle();
             patientUpdate.setBMITime(Ext.getStore('patientStore'));
         });
     },
