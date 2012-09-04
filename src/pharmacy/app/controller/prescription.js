@@ -56,6 +56,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'prescription button[action=print]': {
                 click: this.fillPrescription
             },
+		'prescription button[action=print2]': {   //Action of Print button in Search Patient
+                click: this.printPrescribedDrugs
+            },
             'prescribedDrugs': {
                 render: this.onEditorRender,
                 edit: this.afterDrugEdit,
@@ -257,6 +260,53 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             store.sync();
         }
     }, 
+    printPrescribedDrugs: function()
+	{
+		      var drugs = Ext.getStore('orderStore').data;
+			var noofdrugs=0;
+       		if(drugs.items)
+			{
+			noofdrugs = drugs.items.length;
+			}
+			var drugName=new Array();
+			var drugDosage=new Array();
+			var drugDuration=new Array();
+			var drugQty=new Array();
+			var drugUP=new Array();
+			var drugIP=new Array();
+		      for (var i1 = 0; i1 < noofdrugs; i1++) {
+				drugName[i1]=drugs.items[i1].data.drugname ;
+				drugDosage[i1]=drugs.items[i1].data.dosage ;
+				drugDuration[i1]=drugs.items[i1].data.duration ;
+				drugQty[i1]=drugs.items[i1].data.qty ;
+				drugUP[i1]=drugs.items[i1].data.unitprice ;
+				drugIP[i1]=drugs.items[i1].data.itemprice ;
+			}
+			
+
+
+			  var drugs = Ext.getStore('orderStore');
+   			  var selectedPatient = {
+		        GiveName: Ext.getCmp('givenName').getValue(),
+			  FamilyName:Ext.getCmp('familyName').getValue(),
+			  village: Ext.getCmp('village').getValue(),
+			  block: Ext.getCmp('block').getValue(),
+			  District: Ext.getCmp('District').getValue(),
+			  Doctor: Ext.getCmp('doctor').getValue(),
+			  Dob: Ext.getCmp('dob').getValue(),
+			  Age: Ext.getCmp('age').getValue(),
+  			  //Gender:Ext.getCmp('gender').getValue(),
+			  Length : noofdrugs,
+			  Drugs:drugName,
+			  Dosage:drugDosage,
+			  Duration:drugDuration,
+			  qty:drugQty,  
+			  UP:drugUP,
+			  IP:drugIP
+	            };
+	            localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+			popupWindow = window.open('app/print.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+	},
     
     //adds a drug to the current prescription
     addDrug: function() {
@@ -291,7 +341,53 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 l2.setActiveItem(0);
                 Ext.getCmp('drugASearchGrid').getStore().removeAll();
                 Ext.getCmp('prescriptionDate').setValue('');
-            } else {}
+            } else {
+var drugs = Ext.getStore('orderStore').data;
+			var noofdrugs=0;
+       		if(drugs.items)
+			{
+			noofdrugs = drugs.items.length;
+			}
+			var drugName=new Array();
+			var drugDosage=new Array();
+			var drugDuration=new Array();
+			var drugQty=new Array();
+			var drugUP=new Array();
+			var drugIP=new Array();
+		      for (var i1 = 0; i1 < noofdrugs; i1++) {
+				drugName[i1]=drugs.items[i1].data.drugname ;
+				drugDosage[i1]=drugs.items[i1].data.dosage ;
+				drugDuration[i1]=drugs.items[i1].data.duration ;
+				drugQty[i1]=drugs.items[i1].data.qty ;
+				drugUP[i1]=drugs.items[i1].data.unitprice ;
+				drugIP[i1]=drugs.items[i1].data.itemprice ;
+			}
+			
+
+
+			  var drugs = Ext.getStore('orderStore');
+   			  var selectedPatient = {
+		        GiveName: Ext.getCmp('prescriptionPatientName').getValue(),
+			  //FamilyName:Ext.getCmp('prescriptionPatientFamilyName').getValue(),
+			  //village: Ext.getCmp('prescriptionPatientVillage').getValue(),
+			  //block: Ext.getCmp('prescriptionPatientBlock').getValue(),
+			  //District: Ext.getCmp('prescriptionPatientDistrict').getValue(),
+			  //Doctor: Ext.getCmp('prescriptionPatientDoctor').getValue(),
+			  //Dob: Ext.getCmp('prescriptionPatientDob').getValue(),
+			  Age: Ext.getCmp('prescriptionPatientAge').getValue(),
+			  Gender:Ext.getCmp('prescriptionPatientGender').getValue(),
+			  Length : noofdrugs,
+			  Drugs:drugName,
+			  Dosage:drugDosage,
+			  Duration:drugDuration,
+			  qty:drugQty,  
+			  UP:drugUP,
+			  IP:drugIP
+	            };
+	            localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+			popupWindow = window.open('app/print.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+
+}
         });
     },
 
