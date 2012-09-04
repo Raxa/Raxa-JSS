@@ -99,8 +99,6 @@ Ext.define("Screener.controller.Application", {
         'Screener.store.Patients',
         'Screener.store.PatientSummary',
         'Screener.store.PostLists',
-        /*'Screener.model.orderModel',*/
-        /*'Screener.model.providerModel',*/
 	    'Screener.model.observation',	
         'Screener.view.PharmacyForm', 
         'Screener.view.PatientListView',
