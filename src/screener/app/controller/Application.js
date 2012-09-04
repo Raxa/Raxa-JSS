@@ -13,10 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 /**
  * This class listens for the user input and makes changes to the doctor/patient
  * lists as necessary.
- * TODO: Possible to combine patientUpdate with rest of controller?
+ *
+ * TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-380
+ * Possible to combine patientUpdate with rest of controller?
  */
 var form_num;
 var lab_num;
@@ -26,6 +29,14 @@ var NUMBER_OF_STORES_TO_WRITE = 3;
 // Stores
 var store_patientList;
 var store_assignedPatientList;
+
+Util.PAGES.SCREENER = {
+    TOP_MENU: 0,
+    ASSIGN_PATIENTS: 1,
+    VITALS: 2,
+    PHARMACY_ORDER: 3,
+    LAB_ORDER: 4
+};
 
 var patientUpdate = {
     //this method updates the title in patients waiting view with no. of patients waiting
@@ -117,7 +128,6 @@ Ext.define("Screener.controller.Application", {
         refs: {
             view: 'mainView',
             topmenu: 'topmenu',
-            navBar: '#navBar',
             patientView: 'patientView',
             patientSummary: 'patientSummary',
             doctorSummary: 'doctorSummary',
@@ -543,11 +553,9 @@ Ext.define("Screener.controller.Application", {
         if (Ext.getCmp('doctorSummary')) {
             Ext.getCmp('doctorSummary').hide();
         }
-        if (!this.patientView) {
-            this.patientView = Ext.create('Screener.view.PatientView');
-        }
-        this.getView().push(this.patientView);
         
+        this.navigate(Util.PAGES.SCREENER.ASSIGN_PATIENTS, Util.PAGES.SCREENER.TOP_MENU);
+
         // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-360
         // Deselect to prevent lists in other views from affecting
         /*this.getDoctorList().deselectAll();*/
@@ -582,11 +590,11 @@ Ext.define("Screener.controller.Application", {
     },
     // Show screen with pharmacy list
     showPharmacy: function () {
-        if (!this.pharmacyView) {
-            this.pharmacyView = Ext.create('Screener.view.PharmacyView');
-            form_num = 0;
-        }
-        this.getView().push(this.pharmacyView);
+        this.navigate(Util.PAGES.SCREENER.PHARMACY_ORDER, Util.PAGES.SCREENER.TOP_MENU);
+        
+        // TODO: I'm not sure if we want to destroy other orders. Might we
+        // instead preserve them in case nurse enters some, leaves page, and
+        // then returns? Only on submit should they reset.
         while (form_num > 0) {
             Ext.getCmp('form' + form_num).remove({
                 autoDestroy: true
@@ -597,10 +605,11 @@ Ext.define("Screener.controller.Application", {
         patientUpdate.updatePatientsWaitingTitle();
     },
     showLab: function () {
-        if (!this.labOrderView) {
-            this.labOrderView = Ext.create('Screener.view.LabOrderView');
-        }
-        this.getView().push(this.labOrderView);
+        this.navigate(Util.PAGES.SCREENER.LAB_ORDER, Util.PAGES.SCREENER.TOP_MENU);
+       
+        // TODO: I'm not sure if we want to destroy other orders. Might we
+        // instead preserve them in case nurse enters some, leaves page, and
+        // then returns? Only on submit should they reset.
         while (lab_num > 0) {
             Ext.getCmp('lab' + lab_num).remove({
                 autoDestroy: true
@@ -611,10 +620,8 @@ Ext.define("Screener.controller.Application", {
         patientUpdate.updatePatientsWaitingTitle();
     },
     showVitals: function () {
-        if (!this.vitalsView) {
-            this.vitalsView = Ext.create('Screener.view.VitalsView');
-        }
-        this.getView().push(this.vitalsView);
+        this.navigate(Util.PAGES.SCREENER.VITALS, Util.PAGES.SCREENER.TOP_MENU);
+        
         this.getPatientList().deselectAll();
         
         // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-366
@@ -900,5 +907,15 @@ Ext.define("Screener.controller.Application", {
         Ext.get('drugSubmitButton').on('click', function (e) {
             Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
         });
+    },
+
+    // TODO: Possible to get oldPage via application state?
+    navigate: function(newPage, oldPage) {
+        // Move to lab Page
+        this.getView().setActiveItem(newPage);
+        
+        // Add back button to toolbar
+        var topbar = Ext.getCmp("topbar");
+        topbar.setBackButtonTargetPage(oldPage);
     }
 });
