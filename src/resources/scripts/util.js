@@ -448,9 +448,12 @@ var Util = {
             }
         });
     },
+
     KeyMapButton: function(ComponentName,keyName)
     {
-        keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
+	
+ /*     Causing BUG (RAXAJSS-381) in main REPO, so commenting the code. 
+	  keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
         {
             key: keyName,
             shift: false,
@@ -462,7 +465,9 @@ var Util = {
             }
         }
         ]);
+*/
     },
+
     DestoryKeyMapButton: function(keyName)
     {
            keyMap.keyName.destroy(true)
