@@ -99,15 +99,9 @@ Ext.define("Screener.controller.Application", {
         'Screener.store.Patients',
         'Screener.store.PatientSummary',
         'Screener.store.PostLists',
-
-        // Added for posting Screener Vitals
-        'Screener.model.encounterModel',
-        'Screener.model.obsModel',
-        'Screener.model.orderModel',
-        'Screener.model.providerModel',
-        'Screener.store.encounterStore',
+        /*'Screener.model.orderModel',*/
+        /*'Screener.model.providerModel',*/
 	    'Screener.model.observation',	
-
         'Screener.view.PharmacyForm', 
         'Screener.view.PatientListView',
         'Screener.view.VitalsView',
