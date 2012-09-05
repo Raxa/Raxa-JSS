@@ -54,11 +54,12 @@ Ext.define("Screener.view.VitalsForm", {
 						// Temperature
 						xtype: 'numberfield',
 						label: 'Temperature',
-						minValue: 0,
-						maxValue: 200,
-						stepValue: 1,
+                        // TODO: For all inputs, get bounds from OpenMRS concept dictionary
+						minValue: 25, 
+						maxValue: 43,
+						stepValue: 0.1,
 						name: 'temperatureField',
-						listeners: Util.maxLengthListener(3)
+						listeners: Util.maxLengthListener(4)
 					},
 					{
 						// Repiratory Rate

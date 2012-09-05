@@ -136,7 +136,8 @@ Ext.define("Screener.controller.Application", {
             pharmacyForm: 'pharmacyForm',
             newPatient: 'newPatient',
             sortPanel: 'sortPanel',
-            patientList: '#patientList',
+            patientList: '#patientList', // Assign Patient page
+            vitalsPatientList: '#vitalsPatientList',
             doctorList: '#doctorList',
             expandDoctorList: '#expandDoctorList',
             assignedPatientList: '#assignedPatientList',
@@ -621,9 +622,10 @@ Ext.define("Screener.controller.Application", {
     },
     showVitals: function () {
         this.navigate(Util.PAGES.SCREENER.VITALS, Util.PAGES.SCREENER.TOP_MENU);
-        
-        this.getPatientList().deselectAll();
-        
+       
+        var vpl = this.getVitalsPatientList().getComponent("patientList"); 
+        vpl.deselectAll();
+
         // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-366
         // Get most recent vitals
 
@@ -739,8 +741,8 @@ Ext.define("Screener.controller.Application", {
         var currentNumPatients = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('Doctors').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
         this.getPatientList().getSelection()[0].set('patientid', this.currentDoctorIndex);
-        var patient = this.getPatientList().getSelection()[0].data.uuid
-        var provider = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).data.person.uuid
+        var patient = this.getPatientList().getSelection()[0].data.uuid;
+        var provider = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).data.person.uuid;
         Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
@@ -865,14 +867,15 @@ Ext.define("Screener.controller.Application", {
 
     // Create a SCREENER_VITALS encounter and attach vitals observations
     savePatientVitals: function () {
-        var selectedPatient  = this.getPatientList().getSelection()[0];
+        var vpl = this.getVitalsPatientList().getComponent("patientList"); 
+        var selectedPatient  = vpl.getSelection()[0];
         console.log(selectedPatient);
         if ( ! selectedPatient) {
             Ext.Msg.alert("You must select a patient");
             return;
         }
         var patientUuid = selectedPatient.data.uuid;
-        this.getPatientList().deselectAll();
+        vpl.deselectAll();
 
         // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-369
         // Get uuid of logged in provider (likely a nurse?) who is

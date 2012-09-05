@@ -16,6 +16,7 @@ Ext.define("Screener.view.VitalsView", {
         //our patient list is built on the Patients store, and has a title and sort button
         {
             xtype: 'patientListView',
+            id: 'vitalsPatientList',
             flex: 1
         }, {
             xtype: 'vitalsForm',

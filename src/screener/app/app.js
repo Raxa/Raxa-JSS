@@ -48,10 +48,6 @@ Ext.application({
             var mainScreen = Ext.create('Screener.view.Main', {
                     fullscreen: true,
                 });
-            /*var mainScreen = Ext.Viewport.add('Screener.view.Main', {*/
-            /*Ext.Viewport.add('Screener.view.Main', {*/
-            /**//*fullscreen: true,*/
-            /*});*/
 			var topBar = Ext.create('Topbar.view.TopToolbar', {
 				docked: 'top',
 				title: 'JSS Hospital Screener System'
