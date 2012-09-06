@@ -374,18 +374,24 @@ var Util = {
      */
     getPatientIdentifier: function () {
         //TODO: add this back in once ID Gen is working properly
-        //https://raxaemr.atlassian.net/browse/JLM-45 (is accidentally a JLM issue)
-        //        var patientIDRequest = new XMLHttpRequest();
-        //        patientIDRequest.open("GET", HOST + '/module/idgen/generateIdentifier.form?source=1&comment=New%20Patient', false);
-        //        patientIDRequest.setRequestHeader("Accept", "*/*");
-        //        patientIDRequest.send();
-        //        if (patientIDRequest.status = "200") {
-        //            var pid = patientIDRequest.responseText;
-        //            return pid;
-        //        } else {
-        //            console.log('ERROR Code on creating patient identifier: ' + patientIDRequest.status);
-        //        }
-        return (Math.floor(Math.random()*1000000)).toString();
+        var user = "admin";
+        var pass = "Hello123";
+        var generatedId = (Math.floor(Math.random()*1000000)).toString();
+        url = HOST + '/ws/rest/v1/patient?q='+generatedId,
+        xmlHttp = new XMLHttpRequest(); 
+        xmlHttp.open( "GET", url , false );
+        xmlHttp.setRequestHeader("Accept", "application/json");
+        xmlHttp.setRequestHeader("Authorization", "Basic " + window.btoa(user + ":" + pass));
+        xmlHttp.send();
+        var jsonData = JSON.parse(xmlHttp.responseText);
+        if (xmlHttp.status == "200") {
+            if(jsonData.results.length > 0) {
+                Util.getPatientIdentifier();
+            } else {
+                return generatedId;
+            }
+              
+        }
     },
 
     //Function to help share Models between ExtJS and Sencha Touch 2
