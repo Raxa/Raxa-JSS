@@ -30,7 +30,7 @@ Ext.application({
 	stores: ['Screener.store.AssignedPatientList', 'Screener.store.Doctors', 'Screener.store.drugConcept', 'Screener.store.drugEncounter', 'Screener.store.druglist', 'Screener.store.encounterpost', 'Screener.store.encounters', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.PatientList', 'Screener.store.Patients', 'Screener.store.PatientSummary', 'Screener.store.PostLists'],
 
 	//we will use a Patient and Doctor class
-	models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'Observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
+	models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
 
 	//here we declare the visual components
 	views: ['Main', 'TopMenu', 'PatientView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary', 'DoctorSummary', ],
