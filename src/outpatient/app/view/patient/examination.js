@@ -58,14 +58,8 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                                 filterBy: '',
                                 title: '',
                             }, {
-                                filterBy: 'pelvic',
-                                title: 'Pelvic',
-                            }, {
-                                filterBy: 'chest',
-                                title: 'Chest',
-                            }, {
-                                filterBy: 'extremities',
-                                title: 'Extremities',
+                                filterBy: 'all',
+                                title: 'All',
                             }]
                         }
                     }, {

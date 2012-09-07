@@ -1,19 +1,357 @@
-[
-{
-    "sign" : "Abdominal Pain",
-    "id" : "1",
-    "type" : "pelvic",
+[{
+    "sign": "BRONCHOSPASM",
+    "id": "123BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
 }, {
-    "sign" : "Nausea",
-    "id" : "3",
-    "type" : "pelvic",
+    "sign": "ABDOMINAL PAIN",
+    "id": "170BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
 }, {
-    "sign" : "Vomiting",
-    "id" : "4",
-    "type" : "chest",
+    "sign": "BURNING SENSATION",
+    "id": "411BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
 }, {
-    "sign" : "Weakness",
-    "id" : "5",
-    "type" : "chest",
-}
-]
+    "sign": "HEADACHE",
+    "id": "652BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "PRESSURE SENSATION",
+    "id": "740BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "Chest Tightness",
+    "id": "106845BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SHARP SENSATION",
+    "id": "798BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "DIZZINESS",
+    "id": "921BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "HEMOPTYSIS",
+    "id": "1015BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "DIARRHEA, CHRONIC",
+    "id": "2117BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "Persistent diarrhea",
+    "id": "109662BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "ABDOMINAL PAIN",
+    "id": "2211BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "ORAL SORES",
+    "id": "2350BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "FATIGUE",
+    "id": "3089BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "HEARING DIFFICULTY",
+    "id": "3092BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "VISION DIFFICULTIES",
+    "id": "3093BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SWALLOWING DIFFICULTIES",
+    "id": "3094BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SHORTNESS OF BREATH",
+    "id": "3102BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SOB",
+    "id": "98185BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "NAUSEA",
+    "id": "3122BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "VOMITING",
+    "id": "3125BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "MENOPAUSAL",
+    "id": "3135BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SWELLING",
+    "id": "3147BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "PARESTHESIA",
+    "id": "3150BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "REFUSAL TO FEED",
+    "id": "3163BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "DYSURIA",
+    "id": "3166BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "NIGHT SWEATS",
+    "id": "3175BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "MUSCLE PAIN",
+    "id": "3180BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "PAIN, LOWER EXTREMITIES",
+    "id": "3181BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "COUGH",
+    "id": "122BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "Dyspepsia",
+    "id": "126BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "HEARTBURN",
+    "id": "92751BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "INDIGESTION",
+    "id": "93281BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "CHEST PAIN",
+    "id": "155BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "Rash",
+    "id": "544BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "Skin rash",
+    "id": "106860BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "Hematuria",
+    "id": "880BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "Bloody urine",
+    "id": "88768BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "HISTORY OF PNEUMONIA",
+    "id": "1221BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "ASYMMETRIC REFLEXES",
+    "id": "1276BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "PAROT ENLARGEMENT",
+    "id": "1287BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "ACTIVE NOT ON ARVS",
+    "id": "1654BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "ON ANTIRETROVIRALS",
+    "id": "1657BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "NOSTRIL FLARING",
+    "id": "53987BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "FLARING OF THE NARES",
+    "id": "91981BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "NOSE FLARING",
+    "id": "95497BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SKIN COLD TO TOUCH",
+    "id": "53992BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "MASS, ABDOMINAL",
+    "id": "2208BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "ABDOMINAL MASS",
+    "id": "87134BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "DECREASED SENSATION",
+    "id": "2240BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "NUCHAL RIGITY",
+    "id": "2275BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "NECK STIFFNESS",
+    "id": "95207BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "WHEEZE",
+    "id": "2314BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "WEAKNESS",
+    "id": "2331BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "IRRITABLE",
+    "id": "2369BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "APATHETIC",
+    "id": "2371BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "INDIFFERENT",
+    "id": "93280BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "JOINT SWELLING",
+    "id": "2424BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "MUSCLE TENDERNESS",
+    "id": "2425BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "WHO HIV - CHRONIC DIARRHEA",
+    "id": "2451BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "THRUSH",
+    "id": "2666BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "WEIGHT GAIN",
+    "id": "2668BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "LEARNING PROBLEMS",
+    "id": "2676BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "FEVER",
+    "id": "3085BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "PRODUCTIVE COUGH",
+    "id": "3097BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "TOUX GRASSE",
+    "id": "3098BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "tos productiva",
+    "id": "54925BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SHORTNESS OF BREATH AT REST",
+    "id": "3103BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SOB AT REST",
+    "id": "98186BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SHORTNESS OF BREATH WITH EXERTION",
+    "id": "3105BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SOB EXERTION",
+    "id": "87046BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "SOB WITH EXERTION",
+    "id": "98188BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "HISTORY OF JAUNDICE",
+    "id": "3131BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "MENSTRUATING",
+    "id": "3134BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "VAGINAL DISCHARGE",
+    "id": "3139BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "URETHRAL DISCHARGE",
+    "id": "3141BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "FOCAL WEAKNESS",
+    "id": "3151BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "CONFUSION",
+    "id": "3152BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "NASAL DISCHARGE",
+    "id": "3162BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "ABDOMINAL SWELLING",
+    "id": "3165BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "IRRITABILITY",
+    "id": "3169BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "IRRITABLE",
+    "id": "93421BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "IRRITABILITÉ",
+    "id": "105988BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "POOR APPETITE",
+    "id": "3177BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "MENTAL ILLNESS",
+    "id": "3182BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "MEMORY PROBLEMS",
+    "id": "3183BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "cough lasting more than 2 weeks",
+    "id": "107272BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "TOUX DURANT PLUS DE DEUX SEMAINES",
+    "id": "107939BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}, {
+    "sign": "unable to drink or breastfeed",
+    "id": "107349BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "type": "all"
+}]
