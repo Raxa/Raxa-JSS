@@ -131,7 +131,7 @@ var resourceUuid = {
         "resource": "encountertype",
         "queryTerm": "screenervitals",
         "varName": "screenervitals",
-        "displayName": "SCREENERVITALS - Screener encounter vitals (such as blood pressure, temperature, respiratory rate, pulse rate, oxygen saturation)"
+        "displayName": "SCREENERVITALS - Screener Vitals encounter"
     },
     "out": {
         "resource": "encountertype",

@@ -28,7 +28,7 @@ Ext.define("Screener.view.VitalsForm", {
 				items: [{
 					// Fieldset for inputting vitals
 					xtype: 'fieldset',
-					title: 'Input Vitals',
+                    /*title: 'Input Vitals',*/
 					id: 'vitalsFields',
 					// TODO: For all inputs, get bounds from OpenMRS concept dictionary
 					items: [{
@@ -39,7 +39,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 250,
                         value: 0,
 						stepValue: 1,
-						name: 'systolicBloodPressureField',
+						name: 'systolicBloodPressureField'
 					},
 					{
 						// Diastolic Blood Pressure
@@ -49,7 +49,7 @@ Ext.define("Screener.view.VitalsForm", {
 						maxValue: 150,
                         value: 0,
 						stepValue: 1,
-						name: 'diastolicBloodPressureField',
+						name: 'diastolicBloodPressureField'
 					},
 					{
 						// Temperature
@@ -58,9 +58,9 @@ Ext.define("Screener.view.VitalsForm", {
                         id: 'tempSliderExt',
                         minValue: 25,   // TODO: Fix visual error in Slider. bar starts at far right and cant slide (this is a Sencha bug)
 						maxValue: 43,
-                        /*value: 25,*/
-						stepValue: 1,
-						name: 'temperatureField',
+                        value: 25,
+						stepValue: 0.1,
+						name: 'temperatureField'
 					},
 					{
 						// Repiratory Rate
@@ -69,9 +69,8 @@ Ext.define("Screener.view.VitalsForm", {
 						minValue: 0,
 						maxValue: 200,
                         value: 0,
-                        /*defaultValue: 20,*/
 						stepValue: 1,
-						name: 'respiratoryRateField',
+						name: 'respiratoryRateField'
 					},
 					{
 						// Pulse
@@ -79,9 +78,8 @@ Ext.define("Screener.view.VitalsForm", {
 						label: 'Pulse Rate',
 						minValue: 0,
 						maxValue: 230,
-                        /*defaultValue: 100,*/
 						stepValue: 1,
-						name: 'pulseField',
+						name: 'pulseField'
 					},
 					{
 						// Oxygen Saturation
@@ -89,10 +87,8 @@ Ext.define("Screener.view.VitalsForm", {
 						label: 'Oxygen Saturation',
 						minValue: 0,
 						maxValue: 100,
-                        /*defaultValue: 98,*/
 						stepValue: 1,
-						name: 'bloodOxygenSaturationField',
-						listeners: Util.maxLengthListener(3)
+						name: 'bloodOxygenSaturationField'
 					}]
 				}]
 			},

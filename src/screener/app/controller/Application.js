@@ -294,7 +294,6 @@ Ext.define("Screener.controller.Application", {
     },
     // Creates two different List of Patients Registered and Patients Screened within last 24 hours
     createList: function (list_reg, list_scr, list_out, k) {
-        console.log("createList");
         var store_reg = Ext.create('Screener.store.PostLists');
         var store_scr = Ext.create('Screener.store.PostLists');
         var store_out = Ext.create('Screener.store.PostLists');
@@ -314,7 +313,6 @@ Ext.define("Screener.controller.Application", {
     // Listens for stores to be written. Once all stores have been written,
     // creates the complete patient list to be displayed in Screener
     listenerOnList: function (store, store1, store2, store3) {
-        console.log("listenerOnList");
         store.on('write', function () {
             numberOfStoresWritten++;
             if (numberOfStoresWritten == NUMBER_OF_STORES_TO_WRITE) {
@@ -830,7 +828,8 @@ Ext.define("Screener.controller.Application", {
             patient: personUuid, 
             encounterType: encountertype,
             //location: location,
-            provider: provider
+            provider: provider,
+            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
         });
        
         // Handle "Screener Vitals" encounters specially
@@ -852,12 +851,12 @@ Ext.define("Screener.controller.Application", {
 
             console.log("Creating Obs for uuid types...");
             v = Ext.getCmp("vitalsForm").getValues();
-            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField);
-            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField);
-            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField);
-            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField);
-            createObs(localStorage.temperatureUuidconcept, v.temperatureField); 
-            createObs(localStorage.pulseUuidconcept, v.pulseField);
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField[0]);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField[0]);
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField[0]);
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField[0]);
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField[0]); 
+            createObs(localStorage.pulseUuidconcept, v.pulseField[0]);
             observations.sync();
             console.log("... Complete! Created Obs for new uuid types");
         }
@@ -876,7 +875,6 @@ Ext.define("Screener.controller.Application", {
     savePatientVitals: function () {
         var vpl = this.getVitalsPatientList().getComponent("patientList"); 
         var selectedPatient  = vpl.getSelection()[0];
-        console.log(selectedPatient);
         if ( ! selectedPatient) {
             Ext.Msg.alert("You must select a patient");
             return;
@@ -886,13 +884,10 @@ Ext.define("Screener.controller.Application", {
 
         // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-369
         // Get uuid of logged in provider (likely a nurse?) who is
-        // entering the vitals
-        var providerUuid = "e0ca3719-790a-4343-8a7b-8923e99f75ed";
-        
-        console.log("send encounter data");
-        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerUuid);
-        return;
-
+        // entering the vitals [Note: Need "Person Uuid" of Provider]
+        var providerPersonUuid = "1d0efb1a-f770-11e1-a276-f23c91ae55df";
+        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerPersonUuid);
+        Ext.Msg.alert("Submitted patient vitals");
     },
 
     drugSubmit: function () {
@@ -921,10 +916,10 @@ Ext.define("Screener.controller.Application", {
 
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
-        // Move to lab Page
+        // Move to new page
         this.getView().setActiveItem(newPage);
         
-        // Add back button to toolbar
+        // Add back button to toolbar which points to old page
         var topbar = Ext.getCmp("topbar");
         topbar.setBackButtonTargetPage(oldPage);
     }
