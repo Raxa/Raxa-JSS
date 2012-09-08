@@ -14,13 +14,8 @@
  * the License.
  */
 
-/**
- * This class listens for the user input and makes changes to the doctor/patient
- * lists as necessary.
- *
- * TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-380
- * Possible to combine patientUpdate with rest of controller?
- */
+// TODO: Scope these appropriately - they shouldn't be fully global, just
+// within this controller
 var form_num;
 var lab_num;
 var numberOfStoresWritten;
@@ -36,63 +31,6 @@ Util.PAGES.SCREENER = {
     VITALS: 2,
     PHARMACY_ORDER: 3,
     LAB_ORDER: 4
-};
-
-var patientUpdate = {
-    //this method updates the title in patients waiting view with no. of patients waiting
-    updatePatientsWaitingTitle: function () {
-        // 3 different views shares this title, all three view get updated with same title
-        var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
-        var patientWaitNumber = Ext.getStore('patientStore').getCount();
-        /*var patientWaitNumber = 5;*/
-        var i;
-        for (i = 0; i < patientsTitles.length; i++) {
-            patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
-        }
-    },
-    //this method sets locally(persist = false) the bmi and encounter time in patients model
-    setBMITime: function (store_patientList) {
-        var i;
-        for (i = 0; i < store_patientList.getCount(); i++) {
-            store_patientList.getAt(i).getData().time = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].encounterDatetime;
-            if (store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs.length !== 0) {
-                // TODO: Clean up this mess-ay code
-                store_patientList.getAt(i).getData().bmi = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsBMI(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;
-                /*store_patientList.getAt(i).getData().pulse = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsPulse(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;*/
-            }
-        }
-        Ext.getStore('patientStore').sort('display');
-    },
-    //this method returns the index of Obs which contain BMI details
-    getObsBMI: function (obs) {
-        // TODO: What if NO bmi? needs to handle that case, too
-        var i;
-        var BMI_DESCRIPTION = 'BODY MASS INDEX';
-        for (i = 0; i < obs.length; i++) {
-            console.log(obs[i].display);
-            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
-                ind = i;
-                /*return i;*/
-            }
-        }
-        return ind;
-    },
-    // This method sets the UI of sort buttons when pressed.
-    // One button is set as "declined" (pressed) while the other two
-    // are set to "normal" (not pressed).
-    setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
-        this.setCompQuery(string1_decline, 'decline');
-        this.setCompQuery(string2_normal, 'normal');
-        this.setCompQuery(string3_normal, 'normal');
-    },
-    // Queries a component and sets its UI type.
-    // Used as a helper method for setSortButtonUi.
-    setCompQuery: function (string1, uiType) {
-        var i;
-        for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
-            Ext.ComponentQuery.query(string1)[i].setUi(uiType);
-        }
-    }
 };
 
 /*
@@ -287,6 +225,49 @@ Ext.define("Screener.controller.Application", {
             patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
         }
     },
+    //this method sets locally(persist = false) the bmi and encounter time in patients model
+    setBMITime: function (store_patientList) {
+        for (var i = 0; i < store_patientList.getCount(); i++) {
+            var currentPatientData = store_patientList.getAt(i).getData();
+            var encounters = currentPatientData.encounters;
+            var mostRecentEncounter = encounters[encounters.length - 1];
+            var observations = mostRecentEncounter.obs;   
+
+            // Update data (time, bmi) in patient list
+            currentPatientData.time = mostRecentEncounter.encounterDatetime;
+            currentPatientData.bmi = this.getObsBMI(observations);
+        }
+        Ext.getStore('patientStore').sort('display');
+    },
+    //helper method - returns BMI value if it exists
+    getObsBMI: function (obs) {
+        var BMI_DESCRIPTION = 'BODY MASS INDEX';
+        for (var i = 0; i < obs.length; i++) {
+            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
+                return obs[i].value;
+            }
+        }
+
+        // TODO: What if NO bmi? needs to handle that case, too
+        // Return null or NaN, ensure other methods handle this possibility
+        return 0;
+    },
+    // This method sets the UI of sort buttons when pressed.
+    // One button is set as "declined" (pressed) while the other two
+    // are set to "normal" (not pressed).
+    setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
+        this.setCompQuery(string1_decline, 'decline');
+        this.setCompQuery(string2_normal, 'normal');
+        this.setCompQuery(string3_normal, 'normal');
+    },
+    // Queries a component and sets its UI type.
+    // Used as a helper method for setSortButtonUi.
+    setCompQuery: function (string1, uiType) {
+        var i;
+        for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
+            Ext.ComponentQuery.query(string1)[i].setUi(uiType);
+        }
+    },
 
     // Creates an instance of PostList model for posting Registration and Screener List
     preparePatientList: function () {
@@ -359,9 +340,10 @@ Ext.define("Screener.controller.Application", {
         );
         store_patientList.load();
         store_assignedPatientList.load();
+        that = this;
         store_patientList.on('load', function () {
             Ext.getCmp('loadMask').setHidden(true);
-            patientUpdate.setBMITime(store_patientList);
+            that.setBMITime(store_patientList);
             // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
                 record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
@@ -739,15 +721,15 @@ Ext.define("Screener.controller.Application", {
     },
     sortByName: function () {
         Ext.getStore('patientStore').sort('display');
-        patientUpdate.setSortButtonUi('ListView #sortName', 'ListView #sortBMI', 'ListView #sortFIFO');
+        this.setSortButtonUi('ListView #sortName', 'ListView #sortBMI', 'ListView #sortFIFO');
     },
     sortByFIFO: function () {
         Ext.getStore('patientStore').sort('time');
-        patientUpdate.setSortButtonUi('ListView #sortFIFO', 'ListView #sortName', 'ListView #sortBMI');
+        this.setSortButtonUi('ListView #sortFIFO', 'ListView #sortName', 'ListView #sortBMI');
     },
     sortByBMI: function () {
         Ext.getStore('patientStore').sort('bmi');
-        patientUpdate.setSortButtonUi('ListView #sortBMI', 'ListView #sortFIFO', 'ListView #sortName');
+        this.setSortButtonUi('ListView #sortBMI', 'ListView #sortFIFO', 'ListView #sortName');
     },
     //this method refreshes the patientList and also updates the patientWaitingTitle and bmi, encountertime locally in patient model 
     refreshList: function () {
@@ -755,7 +737,7 @@ Ext.define("Screener.controller.Application", {
         that = this;
         Ext.getStore('patientStore').on('load', function () {
             that.updatePatientsWaitingTitle();
-            patientUpdate.setBMITime(Ext.getStore('patientStore'));
+            that.setBMITime(Ext.getStore('patientStore'));
         });
     },
 
