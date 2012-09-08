@@ -6,7 +6,7 @@
 
 Ext.define("Screener.view.VitalsForm", {
 	xtype: 'vitalsForm',
-    id: 'vitalsForm',
+	id: 'vitalsForm',
 	extend: 'Ext.form.Panel',
 	config: {
 		styleHtmlContent: false,
@@ -18,7 +18,7 @@ Ext.define("Screener.view.VitalsForm", {
 			title: 'Vitals'
 		},
 		{
-            // Need a separate panel here, so I can show/hide/disable
+			// Need a separate panel here, so I can show/hide/disable
 			xtype: 'panel',
 			layout: 'vbox',
 			id: 'vitalsInput',
@@ -26,128 +26,82 @@ Ext.define("Screener.view.VitalsForm", {
 				xtype: 'panel',
 				layout: 'hbox',
 				items: [{
-                    // Fieldset for inputting vitals
+					// Fieldset for inputting vitals
 					xtype: 'fieldset',
 					title: 'Input Vitals',
-                    id: 'vitalsFields',
+					id: 'vitalsFields',
+					// TODO: For all inputs, get bounds from OpenMRS concept dictionary
 					items: [{
 						// Systolic Blood Pressure
-						xtype: 'numberfield',
+						xtype: 'sliderfieldextended',
 						label: 'Systolic Blood Pressure',
 						minValue: 0,
-						maxValue: 300,
+						maxValue: 250,
+                        value: 0,
 						stepValue: 1,
 						name: 'systolicBloodPressureField',
-						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Diastolic Blood Pressure
-						xtype: 'numberfield',
+						xtype: 'sliderfieldextended',
 						label: 'Diastolic Blood Pressure',
 						minValue: 0,
-						maxValue: 300,
+						maxValue: 150,
+                        value: 0,
 						stepValue: 1,
 						name: 'diastolicBloodPressureField',
-						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Temperature
-						xtype: 'numberfield',
+						xtype: 'sliderfield',
 						label: 'Temperature',
-                        // TODO: For all inputs, get bounds from OpenMRS concept dictionary
-						minValue: 25, 
+                        id: 'tempSliderExt',
+						minValue: 25,   // TODO: Fix visual error in Slider. bar starts at far right and cant slide
 						maxValue: 43,
-						stepValue: 0.1,
+                        /*value: 25,*/
+						stepValue: 1,
 						name: 'temperatureField',
-						listeners: Util.maxLengthListener(4)
 					},
 					{
 						// Repiratory Rate
-						xtype: 'numberfield',
+						xtype: 'sliderfieldextended',
 						label: 'Respiratory Rate',
 						minValue: 0,
 						maxValue: 200,
+                        value: 0,
+                        /*defaultValue: 20,*/
 						stepValue: 1,
 						name: 'respiratoryRateField',
-						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Pulse
-						xtype: 'numberfield',
+						xtype: 'sliderfieldextended',
 						label: 'Pulse Rate',
 						minValue: 0,
-						maxValue: 200,
+						maxValue: 230,
+                        /*defaultValue: 100,*/
 						stepValue: 1,
 						name: 'pulseField',
-						listeners: Util.maxLengthListener(3)
 					},
 					{
 						// Oxygen Saturation
-						xtype: 'numberfield',
+						xtype: 'sliderfieldextended',
 						label: 'Oxygen Saturation',
 						minValue: 0,
 						maxValue: 100,
+                        /*defaultValue: 98,*/
 						stepValue: 1,
 						name: 'bloodOxygenSaturationField',
 						listeners: Util.maxLengthListener(3)
 					}]
-				},{
-                    xtype: 'spacer',
-                    width: '30px'
-				},{
-                    // Fieldset to display most recent vitals readings
-					xtype: 'fieldset',
-					title: 'Most Recent Reading',
-					items: [{
-						// Systolic Blood Pressure
-						xtype: 'textfield',
-						disabled: true,
-						value: '120 - August 20, 2012 (FAKE)',
-						name: 'systolicBloodPressureRecentValue'
-					},
-					{
-						// Diastolic Blood Pressure
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'diastolicBloodPressureRecentValue'
-					},
-					{
-						// Temperature
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'temperatureRecentValue'
-					},
-					{
-						// Repiratory Rate
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'respiratoryRateRecentValue'
-					},
-					{
-						// Pulse Rate
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'pulseRecentValue'
-					},
-					{
-						// Oxygen Saturation
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'bloodOxygenSaturationRecentValue'
-					}]
 				}]
 			},
 			{
-                // Submit Button
+				// Submit Button
 				xtype: 'button',
 				ui: 'confirm',
 				id: 'submitVitalsButton',
-                height: '40px',
+				height: '40px',
 				text: 'submit',
                 width: '100px'
 			}]
