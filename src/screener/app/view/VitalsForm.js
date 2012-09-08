@@ -53,10 +53,10 @@ Ext.define("Screener.view.VitalsForm", {
 					},
 					{
 						// Temperature
-						xtype: 'sliderfield',
+						xtype: 'sliderfieldextended',
 						label: 'Temperature',
                         id: 'tempSliderExt',
-						minValue: 25,   // TODO: Fix visual error in Slider. bar starts at far right and cant slide
+                        minValue: 25,   // TODO: Fix visual error in Slider. bar starts at far right and cant slide (this is a Sencha bug)
 						maxValue: 43,
                         /*value: 25,*/
 						stepValue: 1,
