@@ -260,32 +260,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             store.sync();
         }
     }, 
+    
     printPrescribedDrugs: function()
 	{
-		      var drugs = Ext.getStore('orderStore').data;
-			var noofdrugs=0;
-       		if(drugs.items)
-			{
-			noofdrugs = drugs.items.length;
-			}
-			var drugName=new Array();
-			var drugDosage=new Array();
-			var drugDuration=new Array();
-			var drugQty=new Array();
-			var drugUP=new Array();
-			var drugIP=new Array();
-		      for (var i1 = 0; i1 < noofdrugs; i1++) {
-				drugName[i1]=drugs.items[i1].data.drugname ;
-				drugDosage[i1]=drugs.items[i1].data.dosage ;
-				drugDuration[i1]=drugs.items[i1].data.duration ;
-				drugQty[i1]=drugs.items[i1].data.qty ;
-				drugUP[i1]=drugs.items[i1].data.unitprice ;
-				drugIP[i1]=drugs.items[i1].data.itemprice ;
-			}
-			
-
-
-			  var drugs = Ext.getStore('orderStore');
+	    	        var Grid=this.readGrid();
    			  var selectedPatient = {
 		        GiveName: Ext.getCmp('givenName').getValue(),
 			  FamilyName:Ext.getCmp('familyName').getValue(),
@@ -296,17 +274,38 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 			  Dob: Ext.getCmp('dob').getValue(),
 			  Age: Ext.getCmp('age').getValue(),
   			  //Gender:Ext.getCmp('gender').getValue(),
-			  Length : noofdrugs,
-			  Drugs:drugName,
-			  Dosage:drugDosage,
-			  Duration:drugDuration,
-			  qty:drugQty,  
-			  UP:drugUP,
-			  IP:drugIP
+			  Length : Grid[0].length,
+			  Drugs:Grid[0],
+			  Dosage:Grid[1],
+			  Duration:Grid[2],
+			  qty:Grid[3],  
+			  UP:Grid[4],
+			  IP:Grid[5]
 	            };
-	            localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
-			popupWindow = window.open('app/print.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+     			this.storeLocally(selectedPatient);
 	},
+	readGrid:function(){
+			var drugs = Ext.getStore('orderStore').data;
+			var noofdrugs=0;
+       		if(drugs.items)
+			{
+			noofdrugs = drugs.items.length;
+			}
+			
+			var drug=new Array(noofdrugs);
+			for (var i1 = 0; i1 < 6; i1++) {
+				drug[i1]=new Array(noofdrugs);
+			}
+		      for (var i1 = 0; i1 < noofdrugs; i1++) {
+				drug[0][i1]=drugs.items[i1].data.drugname ;
+				drug[1][i1]=drugs.items[i1].data.dosage ;
+				drug[2][i1]=drugs.items[i1].data.duration ;
+				drug[3][i1]=drugs.items[i1].data.qty ;
+				drug[4][i1]=drugs.items[i1].data.unitprice ;
+				drug[5][i1]=drugs.items[i1].data.itemprice ;
+			}
+			return(drug);
+      },
     
     //adds a drug to the current prescription
     addDrug: function() {
@@ -331,6 +330,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     fillPrescription: function() {
+	  var controller = this;
         Ext.Msg.confirm("Confirmation", "Are you sure you want to fill prescription?", function (btn) {
             if (btn == 'yes') {
                 var l = Ext.getCmp('mainarea').getLayout();
@@ -342,30 +342,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.getCmp('drugASearchGrid').getStore().removeAll();
                 Ext.getCmp('prescriptionDate').setValue('');
             } else {
-var drugs = Ext.getStore('orderStore').data;
-			var noofdrugs=0;
-       		if(drugs.items)
-			{
-			noofdrugs = drugs.items.length;
-			}
-			var drugName=new Array();
-			var drugDosage=new Array();
-			var drugDuration=new Array();
-			var drugQty=new Array();
-			var drugUP=new Array();
-			var drugIP=new Array();
-		      for (var i1 = 0; i1 < noofdrugs; i1++) {
-				drugName[i1]=drugs.items[i1].data.drugname ;
-				drugDosage[i1]=drugs.items[i1].data.dosage ;
-				drugDuration[i1]=drugs.items[i1].data.duration ;
-				drugQty[i1]=drugs.items[i1].data.qty ;
-				drugUP[i1]=drugs.items[i1].data.unitprice ;
-				drugIP[i1]=drugs.items[i1].data.itemprice ;
-			}
-			
-
-
-			  var drugs = Ext.getStore('orderStore');
+                  
+                    var Grid=controller.readGrid();
+			  
    			  var selectedPatient = {
 		        GiveName: Ext.getCmp('prescriptionPatientName').getValue(),
 			  //FamilyName:Ext.getCmp('prescriptionPatientFamilyName').getValue(),
@@ -376,21 +355,24 @@ var drugs = Ext.getStore('orderStore').data;
 			  //Dob: Ext.getCmp('prescriptionPatientDob').getValue(),
 			  Age: Ext.getCmp('prescriptionPatientAge').getValue(),
 			  Gender:Ext.getCmp('prescriptionPatientGender').getValue(),
-			  Length : noofdrugs,
-			  Drugs:drugName,
-			  Dosage:drugDosage,
-			  Duration:drugDuration,
-			  qty:drugQty,  
-			  UP:drugUP,
-			  IP:drugIP
+			  Length : Grid[0].length,
+			  Drugs:Grid[0],
+			  Dosage:Grid[1],
+			  Duration:Grid[2],
+			  qty:Grid[3],  
+			  UP:Grid[4],
+			  IP:Grid[5]
 	            };
-	            localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
-			popupWindow = window.open('app/print.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
-
+	            
+			controller.storeLocally(selectedPatient);
 }
         });
     },
-
+    storeLocally:function(selectedPatient)
+    {
+	localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+			popupWindow = window.open('app/print.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+    },
     savePerson: function () {
         if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid() && (Ext.getCmp('dob').getValue() != null || Ext.getCmp('age').getValue() != null)){
             var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
