@@ -374,21 +374,19 @@ var Util = {
      */
     getPatientIdentifier: function () {
         //TODO: add this back in once ID Gen is working properly
-        var user = "admin";
-        var pass = "Hello123";
         var generatedId = (Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
         xmlHttp.open( "GET", url , false );
         xmlHttp.setRequestHeader("Accept", "application/json");
-        xmlHttp.setRequestHeader("Authorization", "Basic " + window.btoa(user + ":" + pass));
+        xmlHttp.setRequestHeader("Authorization", localStorage.getItem("basicAuthHeader"));
         xmlHttp.send();
         var jsonData = JSON.parse(xmlHttp.responseText);
         if (xmlHttp.status == "200") {
             if(jsonData.results.length > 0) {
                 Util.getPatientIdentifier();
             } else {
-                return generatedId;
+                 return generatedId;
             }
               
         }
