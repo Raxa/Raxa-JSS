@@ -260,8 +260,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             store.sync();
         }
     }, 
-    
-    printPrescribedDrugs: function()
+      printPrescribedDrugs: function()
 	{
 	    	        var Grid=this.readGrid();
    			  var selectedPatient = {
@@ -286,9 +285,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 			{
 			noofdrugs = drugs.items.length;
 			}
-			
 			var drugGrid=new Array(noofdrugs);
-			
 		      for (var i1 = 0; i1 < noofdrugs; i1++) {
 				drugGrid[i1]={};
 				drugGrid[i1].drugname=drugs.items[i1].data.drugname ;
@@ -300,7 +297,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 
 			}
 			return(drugGrid);
-      },
+    },
     
     //adds a drug to the current prescription
     addDrug: function() {
