@@ -273,16 +273,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 			  Doctor: Ext.getCmp('doctor').getValue(),
 			  Dob: Ext.getCmp('dob').getValue(),
 			  Age: Ext.getCmp('age').getValue(),
-  			  //Gender:Ext.getCmp('gender').getValue(),
-			  Length : Grid[0].length,
-			  Drugs:Grid[0],
-			  Dosage:Grid[1],
-			  Duration:Grid[2],
-			  qty:Grid[3],  
-			  UP:Grid[4],
-			  IP:Grid[5]
+  			  Gender:Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
+			  Length : Grid.length,
+			  DrugGrid:Grid
 	            };
-     			this.storeLocally(selectedPatient);
+     			this.printing(selectedPatient);
 	},
 	readGrid:function(){
 			var drugs = Ext.getStore('orderStore').data;
@@ -292,19 +287,19 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 			noofdrugs = drugs.items.length;
 			}
 			
-			var drug=new Array(noofdrugs);
-			for (var i1 = 0; i1 < 6; i1++) {
-				drug[i1]=new Array(noofdrugs);
-			}
+			var drugGrid=new Array(noofdrugs);
+			
 		      for (var i1 = 0; i1 < noofdrugs; i1++) {
-				drug[0][i1]=drugs.items[i1].data.drugname ;
-				drug[1][i1]=drugs.items[i1].data.dosage ;
-				drug[2][i1]=drugs.items[i1].data.duration ;
-				drug[3][i1]=drugs.items[i1].data.qty ;
-				drug[4][i1]=drugs.items[i1].data.unitprice ;
-				drug[5][i1]=drugs.items[i1].data.itemprice ;
+				drugGrid[i1]={};
+				drugGrid[i1].drugname=drugs.items[i1].data.drugname ;
+				drugGrid[i1].dosage=drugs.items[i1].data.dosage ;
+				drugGrid[i1].duration=drugs.items[i1].data.duration ;
+				drugGrid[i1].qty=drugs.items[i1].data.qty ;
+				drugGrid[i1].unitprice=drugs.items[i1].data.unitprice ;
+				drugGrid[i1].itemprice=drugs.items[i1].data.itemprice ;
+
 			}
-			return(drug);
+			return(drugGrid);
       },
     
     //adds a drug to the current prescription
@@ -342,35 +337,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.getCmp('drugASearchGrid').getStore().removeAll();
                 Ext.getCmp('prescriptionDate').setValue('');
             } else {
-                  
-                    var Grid=controller.readGrid();
-			  
-   			  var selectedPatient = {
-		        GiveName: Ext.getCmp('prescriptionPatientName').getValue(),
-			  //FamilyName:Ext.getCmp('prescriptionPatientFamilyName').getValue(),
-			  //village: Ext.getCmp('prescriptionPatientVillage').getValue(),
-			  //block: Ext.getCmp('prescriptionPatientBlock').getValue(),
-			  //District: Ext.getCmp('prescriptionPatientDistrict').getValue(),
-			  //Doctor: Ext.getCmp('prescriptionPatientDoctor').getValue(),
-			  //Dob: Ext.getCmp('prescriptionPatientDob').getValue(),
-			  Age: Ext.getCmp('prescriptionPatientAge').getValue(),
-			  Gender:Ext.getCmp('prescriptionPatientGender').getValue(),
-			  Length : Grid[0].length,
-			  Drugs:Grid[0],
-			  Dosage:Grid[1],
-			  Duration:Grid[2],
-			  qty:Grid[3],  
-			  UP:Grid[4],
-			  IP:Grid[5]
-	            };
-	            
-			controller.storeLocally(selectedPatient);
-}
+			controller.printPrescribedDrugs();
+	      }
         });
     },
-    storeLocally:function(selectedPatient)
+    printing:function(selectedPatient)
     {
-	localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+	            localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
 			popupWindow = window.open('app/print.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
     },
     savePerson: function () {
