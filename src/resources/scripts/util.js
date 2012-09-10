@@ -451,8 +451,8 @@ var Util = {
 
     KeyMapButton: function(ComponentName,keyName)
     {
-	
- /*     Causing BUG (RAXAJSS-381) in main REPO, so commenting the code. 
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-381 
+        /*
 	  keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
         {
             key: keyName,
@@ -470,9 +470,11 @@ var Util = {
 
     DestoryKeyMapButton: function(keyName)
     {
-           keyMap.keyName.destroy(true)
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-381 
+        /*
+        keyMap.keyName.destroy(true);
+        */
     },
-    
         
     getProviderUuidFromPersonUuid: function (uuid) {
         Ext.Ajax.request({
