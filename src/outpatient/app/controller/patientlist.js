@@ -505,7 +505,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     diagnosisFilterByOnSearchKeyUp: function (field,e) {
 	
     //Searches only if Enter key is identified
-	if(e.event.keyIdentifier=="Enter")
+
+// Commented code to check if "Enter" Key is pressed or not as list of diagnosis is reduced to JSS prefered only
+//	if(e.event.keyIdentifier=="Enter")
 	{	
         Ext.getCmp('diagnosisList').setHidden(false);
         Ext.getCmp('diagnosisList').getStore().load();
