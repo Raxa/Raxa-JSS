@@ -53,7 +53,10 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             reftodocsortbydocname: '#reftodocsortbydocname',
             reftodocsortbyopdno: '#reftodocsortbyopdno',
             signfilterbysearchfield: '#signfilterbysearchfield',
-			referPatient : '#referpatient',
+	    referPatient : '#referpatient',
+	    diagnosisfilterbysearchfield : '#diagnosisfilterbysearchfield',
+	    diagnosislist: '#diagnosisList',
+	    deleteDiagnosed: '#deleteDiagnosed'
         },
 
         control: {//to perform action on specific component accessed through it's id above 
@@ -67,6 +70,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             signlist: {
                 itemtap: 'onSignListSelect'
             },
+	    diagnosislist:{
+	        itemtap: 'onDiagnosisListSelect'
+	    },
             examlist: {
                 itemtap: 'onExamListSelect'
             },
@@ -123,6 +129,10 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 clearicontap: 'signFilterByOnSearchClearIconTap',
                 keyup: 'signFilterByOnSearchKeyUp'
             },
+	    diagnosisfilterbysearchfield: {
+                clearicontap: 'diagnosisFilterByOnSearchClearIconTap',
+                keyup: 'diagnosisFilterByOnSearchKeyUp'
+	    },
             cheifcomplain: {
                 change: 'addChiefComplain',
             },
@@ -152,7 +162,14 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             },
             referPatient: {
                 tap: 'referPatient'
-            }
+            },
+            deleteDiagnosed: {
+                tap: 'deleteDiagnosed',
+            },
+            diagnosedList: {
+                itemtap: 'onDiagnosedListSelect'
+            },
+
         }
     },
 	//this function starts on the load of the module
@@ -471,7 +488,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             });
         }
     },
-	//for searching in the signlist
+    //for searching in the signlist
     signFilterByOnSearchKeyUp: function (field) {
         Ext.getCmp('signList').setHidden(false);
         Ext.getCmp('signList').getStore().load();
@@ -481,6 +498,48 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
     signFilterByOnSearchClearIconTap: function () {
         this.onSearchClearIconTap(Ext.getCmp('signList').getStore());
+    },
+    
+    //This function searches list of diagnosis. Since this list is very big, UI occasionally freezes
+    //So, this function searches only after "Enter" button is detected
+    diagnosisFilterByOnSearchKeyUp: function (field,e) {
+	
+    //Searches only if Enter key is identified
+	if(e.event.keyIdentifier=="Enter")
+	{	
+        Ext.getCmp('diagnosisList').setHidden(false);
+        Ext.getCmp('diagnosisList').getStore().load();
+        this.onSearchKeyUp(Ext.getCmp('diagnosisList').getStore(), field, 'sign', 'type');
+        this.signFilter();
+	}
+    },
+
+    //This function is called on every event on searchfield 
+    diagnosisFilterByOnSearchClearIconTap: function() {
+        this.onSearchClearIconTap(Ext.getCmp('diagnosisList').getStore());
+    },
+     
+    //This function calls on selection of Diagnosis list and adds to Diagnosed List
+    onDiagnosisListSelect: function (list, index, node, record) {
+        var sign = record.data.sign;
+        list.getStore().remove(record);
+        diagnosislist = Ext.getCmp('diagnosedList');
+        diagnosislist.getStore().add({
+            complain: sign,
+            id: sign,
+        });
+    },
+    
+   //This function is triggered when items are selected in diagnosed list and Delete button is pressed (to remove diagnosed disease)
+    deleteDiagnosed: function () {
+        var diagnosedlist = Ext.getCmp('diagnosedList');
+        selectedRecord = examlist.getSelection();
+        examlist.getStore().remove(selectedRecord);
+    },
+
+   //This function enables button which is to remove selected Diagnosed Diseased from Diagnosed List
+    onDiagnosedListSelect: function (list, index, node, record) {
+        Ext.getCmp('deleteDiagnosed').setHidden(false);
     },
 	// called when an opd encounter is submitted
     submitOpdEncounter: function () {

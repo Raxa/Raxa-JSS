@@ -17,105 +17,73 @@
 Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
     extend: 'Ext.Container',
     xtype: 'diagnosis-panel',
+    requires: ['RaxaEmr.Outpatient.view.patient.diagnosedlist','RaxaEmr.Outpatient.view.patient.diagnosislist'],
     id: 'diagnosis-panel',
     config: {
         layout: {
-            type: 'hbox'
+            type: 'vbox'
         },
         title: 'Diagnosis',
-        items: [{
-            xtype: 'formpanel',
-            flex: 1,
-			id : 'diagnosisForm',
-            scrollable: 'false',
-            items: [{// diagnosis form
-                xtype: 'fieldset',
-                items: [{
-                    xtype: 'selectfield',
-                    label: 'Diagnosis Category',
-					id: 'diagnosisCategory',
-                    valueField: 'diagnosisCategory',
-                    displayField: 'title',
-                    store: {
-                        data: [{
-                            diagnosisCategory: '',
-                            title: '',
-                        }, {
-                            diagnosisCategory: 'Cardio',
-                            title: 'Cardiovascular',
-                        }, {
-                            diagnosisCategory: 'Endocrine',
-                            title: 'Endocrine',
-                        }, {
-                            diagnosisCategory: 'Gastrointestinal',
-                            title: 'Gastrointestinal',
-                        }, {
-                            diagnosisCategory: 'Genitourinary',
-                            title: 'Genitourinary',
-                        }, {
-                            diagnosisCategory: 'Musculoskeletal',
-                            title: 'Musculoskeletal',
-                        }, {
-                            diagnosisCategory: 'Neuro',
-                            title: 'Neurological',
-                        }, {
-                            diagnosisCategory: 'Orthopedic',
-                            title: 'Orthopedic',
-                        }, {
-                            diagnosisCategory: 'Respiratory',
-                            title: 'Respiratory',
-                        }]
-                    }
-                }, {
-                    xtype: 'selectfield',
-                    label: 'Diagnosis',
-					id : 'diagnosisField',
-                    valueField: 'diagnosisCategory',
-                    displayField: 'title',
-                    store: {
-                        data: [{
-                            diagnosisCategory: '',
-                            title: '',
-                        }, {
-                            diagnosisCategory: 'Chronic Diarrhea',
-                            title: 'Chronic Diarrhea',
-                        }, {
-                            diagnosisCategory: 'Hookworm Infestation',
-                            title: 'Hookworm Infestation',
-                        }, {
-                            diagnosisCategory: 'Infectious Diarrhea',
-                            title: 'Infectious Diarrhea',
-                        }, {
-                            diagnosisCategory: 'Menetrier\'s Disease',
-                            title: 'Menetrier\'s Disease',
-                        }]
-                    }
-                }, {
-                    xtype: 'textareafield',
-					id: 'diagnosisNotes',
-                    label: 'Notes'
-                }]
-            }, {// submit nad clear buttons for action to be performed
+        items: [
+{
+            xtype: 'container',
+            layout: {
+                type: 'hbox'
+            },
+            items: [{
                 xtype: 'container',
+                flex: 1,
                 layout: {
-                    pack: 'center',
-                    type: 'hbox'
+                    type: 'vbox'
                 },
-                items:[{
-					xtype: 'button',
-					margin: '0 10 0 0',
-					text: 'Clear',
-					flex: 1,
-					handler : function(){
-						Ext.getCmp('diagnosisForm').reset();
-					}
-				}, {
-					xtype: 'button',
-					ui: 'confirm',
-					id : 'submitDiagnosis',
-					text: 'Done',
-					flex: 1
-				}]
+                items: [{
+                    xtype: 'formpanel',
+                    border: '0 0 1 0',
+                    padding: '0 0 0 0',
+                    style: 'border:solid #DADADA;',
+                    scrollable: false,
+                    height: 93,
+                    items: [{
+                        xtype: 'selectfield',
+                        label: 'Search In',
+                        id: 'diagnosisFilter',
+                        border: '0 0 1 0',
+                        style: 'border:solid #DADADA;',
+                        valueField: 'filterBy',
+                        displayField: 'title',
+                        store: {
+                            data: [{
+                                filterBy: '',
+                                title: '',
+                            }, {
+                                filterBy: 'all',
+                                title: 'All',
+                            }]
+                        }
+                    }, {
+                        xtype: 'searchfield',
+                        id: 'diagnosisfilterbysearchfield',
+                    }]
+                }, {
+                    xtype: 'Diagnosis-List',
+                    flex: 1,
+                }]
+            }, {
+                xtype: 'container',
+                flex: 1,
+                items: [{
+                    xtype: 'container',
+                    margin: '0 0 20 0',
+                    border: '0 0 0 3',
+                    style: 'border:solid #DADADA;',
+                    height: 576,
+                    layout: {
+                        type: 'fit'
+                    },
+                    items: [{
+                        xtype: 'Diagnosed-List',
+                    }]
+                }]
             }]
         }, {// side buttons for refer to doc nad to add another diagnosis
             xtype: 'container',
@@ -133,7 +101,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                 xtype: 'button',
                 docked: 'top',
                 height: 40,
-				id : 'addDiagnosis',
+		id : 'addDiagnosis',
                 margin: '10 20 0 0',
                 width: 40,
                 icon: '../outpatient/resources/images/add.png',
