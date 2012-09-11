@@ -46,7 +46,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                 }
             },
             {
-                xtype: 'numbercolumn',
+                xtype: 'gridcolumn',
                 width: 55,
                 dataIndex: 'quantity',
                 text: 'Quantity',
@@ -58,7 +58,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                 }
             },{
                 xtype: 'actioncolumn',
-                width: 45,
+                width: 22,
                 items: [{
                         icon: '../../resources/img/delete.png',
                         tooltip: 'Delete',
@@ -82,7 +82,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                         action: 'addRequisition'
                     }]
             }];
-        Ext.getStore('PurchaseOrders').add({
+        Ext.getStore('RequisitionItems').add({
             drugname: '',
             quantity: ''
         })[0];

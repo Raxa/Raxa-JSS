@@ -14,10 +14,14 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
     {
         margin: 5,
         xtype: 'combobox',
-        width: 190,
-        labelWidth: 60,
-        fieldLabel: 'Group by',
-        emptyText: 'Location',
+        width: 220,
+        labelWidth: 80,
+        fieldLabel: 'Your Location',
+        store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
+            storeId: 'currentLocations'
+        }),
+        displayField: 'display',
+        emptyText: 'Location'
     },{
         margin: 5,
         xtype: 'button',
@@ -38,7 +42,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
         margin: 5,
         xtype: 'button',
         width: 90,
-        text: 'New Reciept',
+        text: 'New Receipt',
         id: 'newreceiptbutton',
         action: 'newReceipt'
     },

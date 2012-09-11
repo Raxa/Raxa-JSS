@@ -1,6 +1,6 @@
-Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
+Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.allStockGrid',
+    alias: 'widget.drugDetailsGrid',
     height: 250,
     width: 600,
     layout: {
@@ -53,22 +53,27 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         width: 80
     },
     {
-        xtype: 'gridcolumn',
+        xtype: 'numbercolumn',
         text: 'Qty',
         dataIndex: 'quantity',
         width: 80
     },
     {
-        xtype: 'gridcolumn',
+        xtype: 'numbercolumn',
         text: 'Days',
-        width: 60,
-        dataIndex: 'days',
-        useNull: true
+        width: 60
     },
     {
         xtype: 'gridcolumn',
         text: 'Location',
-        dataIndex: 'roomLocation',
+        dataIndex: 'locationName',
         width: 100
-    }]
+    }],
+    initForDrug: function(drugName){
+        Ext.getStore('stockList').clearFilter();
+        Ext.getStore('stockList').filter(function(record){
+            return record.get('drugName')===drugName;
+        });
+    }
 });
+
