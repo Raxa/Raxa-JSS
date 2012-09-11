@@ -158,11 +158,6 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     },
 	//this function starts on the load of the module
     init: function () {
-        console.log("vitalsGrid");
-        /*console.log(vitalsGrid);*/
-        obsStore = Ext.create('RaxaEmr.Outpatient.store.obs');
-        obsStore.load();
-        console.log(obsStore); 
         this.getpatientlist();
     },
 	//fetches patient list who are screened but not not have an OPD encounter
