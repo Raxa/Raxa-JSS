@@ -23,12 +23,17 @@ var lab_num;
 var numberOfStoresWritten;
 var NUMBER_OF_STORES_TO_WRITE = 3;
 
+// Stores
+var store_patientList;
+var store_assignedPatientList;
+
 var patientUpdate = {
     //this method updates the title in patients waiting view with no. of patients waiting
     updatePatientsWaitingTitle: function () {
         // 3 different views shares this title, all three view get updated with same title
         var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
         var patientWaitNumber = Ext.getStore('patientStore').getCount();
+        /*var patientWaitNumber = 5;*/
         var i;
         for (i = 0; i < patientsTitles.length; i++) {
             patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
@@ -48,8 +53,9 @@ var patientUpdate = {
     //this method returns the index of Obs which contain BMI details
     getObsBMI: function (obs) {
         var i;
+        var BMI_DESCRIPTION = 'BODY MASS INDEX';
         for (i = 0; i < obs.length; i++) {
-            if (obs[i].display.indexOf('BODY MASS INDEX') != -1) {
+            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
                 ind = i;
                 return i;
             }
@@ -71,16 +77,40 @@ var patientUpdate = {
             Ext.ComponentQuery.query(string1)[i].setUi(uiType);
         }
     }
-
-
 };
 
 /*
  * Main Controller for Screener Application
  */
 Ext.define("Screener.controller.Application", {
-    requires: ['Screener.store.Doctors', 'Screener.store.NewPatients', 'Screener.store.PatientList', 'Screener.store.NewPersons', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView', 'Screener.view.PharmacyForm', 'Screener.view.PatientListView', 'Screener.store.AssignedPatientList'],
-    models: ['Screener.model.Person', 'Screener.mosel.PostList', 'Screener.mosel.Patients'],
+    requires: [
+        'Screener.store.AssignedPatientList',
+        'Screener.store.Doctors',
+        'Screener.store.drugConcept',
+        'Screener.store.drugEncounter',
+        'Screener.store.druglist',
+        'Screener.store.encounterpost',
+        'Screener.store.encounters',
+        'Screener.store.IdentifierType',
+        'Screener.store.Location',
+        'Screener.store.NewPatients',   // Cant find this store
+        'Screener.store.NewPersons',
+        'Screener.store.PatientList',
+        'Screener.store.Patients',
+        'Screener.store.PatientSummary',
+        'Screener.store.PostLists',
+	    'Screener.model.observation',	
+        'Screener.view.PharmacyForm', 
+        'Screener.view.PatientListView',
+        'Screener.view.VitalsView',
+        'Screener.view.VitalsForm'
+    ],
+    models: [
+        'Screener.model.Person', 
+        'Screener.model.PostList', 
+        'Screener.model.Patients',
+	    'Screener.model.observation'
+    ],
     extend: 'Ext.app.Controller',
     config: {
         // Here we name the elements we need from the page
@@ -92,8 +122,7 @@ Ext.define("Screener.controller.Application", {
             patientSummary: 'patientSummary',
             doctorSummary: 'doctorSummary',
             labOrderForm: 'labOrderForm',
-            pharmacyView: 'pharmacyView',
-            labOrderView: 'labOrderView',
+            vitalsForm: 'vitalsForm',
             pharmacyForm: 'pharmacyForm',
             newPatient: 'newPatient',
             sortPanel: 'sortPanel',
@@ -109,8 +138,10 @@ Ext.define("Screener.controller.Application", {
             showPatientsButton: '#showPatientsButton',
             showPharmacyButton: '#showPharmacyButton',
             showLabButton: '#showLabButton',
+            showVitalsButton: '#showVitalsButton',
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
+            submitVitalsButton: '#submitVitalsButton',
             assignButton: '#assignButton',
             removeButton: '#removeButton',
             sortButton: '#sortButton',
@@ -144,6 +175,9 @@ Ext.define("Screener.controller.Application", {
             savePatientButton: {
                 tap: 'savePerson'
             },
+            submitVitalsButton: {
+                tap: 'savePatientVitals'
+            },
             showDoctorsButton: {
                 tap: 'showDoctors'
             },
@@ -152,6 +186,9 @@ Ext.define("Screener.controller.Application", {
             },
             showLabButton: {
                 tap: 'showLab'
+            },
+            showVitalsButton: {
+                tap: 'showVitals'
             },
             assignButton: {
                 tap: 'assignPatient'
@@ -213,11 +250,17 @@ Ext.define("Screener.controller.Application", {
     init: function () {
         form_num = 0;
         lab_num = 0;
-        this.getpatientlist();
+        store_patientList = Ext.create('Screener.store.PatientList', {
+            storeId: 'patientStore'
+        });
+        store_assignedPatientList = Ext.create('Screener.store.AssignedPatientList', {
+            storeId: 'assPatientStore'
+        });
+        this.preparePatientList();
     },
 
     // Creates an instance of PostList model for posting Registration and Screener List
-    getpatientlist: function () {
+    preparePatientList: function () {
         var d = new Date();
         var list_regEncounter = Ext.create('Screener.model.PostList', {
             name: "Registration Encounter",
@@ -238,10 +281,10 @@ Ext.define("Screener.controller.Application", {
         });
         numberOfStoresWritten = 0;
         this.createList(list_regEncounter, list_scrEncounter, list_outEncounter, numberOfStoresWritten);
-
     },
     // Creates two different List of Patients Registered and Patients Screened within last 24 hours
     createList: function (list_reg, list_scr, list_out, k) {
+        console.log("createList");
         var store_reg = Ext.create('Screener.store.PostLists');
         var store_scr = Ext.create('Screener.store.PostLists');
         var store_out = Ext.create('Screener.store.PostLists');
@@ -261,6 +304,7 @@ Ext.define("Screener.controller.Application", {
     // Listens for stores to be written. Once all stores have been written,
     // creates the complete patient list to be displayed in Screener
     listenerOnList: function (store, store1, store2, store3) {
+        console.log("listenerOnList");
         store.on('write', function () {
             numberOfStoresWritten++;
             if (numberOfStoresWritten == NUMBER_OF_STORES_TO_WRITE) {
@@ -270,22 +314,28 @@ Ext.define("Screener.controller.Application", {
     },
     // Creates List of Patients registered but not screened in last 24 hours
     finalPatientList: function (store_regEncounter, store_scrEncounter, store_outEncounter) {
-        var store_patientList = Ext.create('Screener.store.PatientList', {
-            storeId: 'patientStore'
-        });
-        var store_assPatientList = Ext.create('Screener.store.AssignedPatientList', {
-            storeId: 'assPatientStore'
-        });
-        // Setting the url dynamically for store to store patients list
-        store_patientList.getProxy().setUrl(this.getPatientListUrl(store_regEncounter.getData().getAt(0).getData().uuid, store_scrEncounter.getData().getAt(0).getData().uuid, localStorage.regUuidencountertype));
-        store_assPatientList.getProxy().setUrl(this.getPatientListUrl(store_scrEncounter.getData().getAt(0).getData().uuid, store_outEncounter.getData().getAt(0).getData().uuid, localStorage.screenerUuidencountertype));
+        store_patientList.getProxy().setUrl(
+            this.getPatientListUrl(
+                store_regEncounter.getData().getAt(0).getData().uuid, 
+                store_scrEncounter.getData().getAt(0).getData().uuid, 
+                localStorage.regUuidencountertype
+            )
+        );
+        store_assignedPatientList.getProxy().setUrl(
+            this.getPatientListUrl(
+                store_scrEncounter.getData().getAt(0).getData().uuid, 
+                store_outEncounter.getData().getAt(0).getData().uuid, 
+                localStorage.screenerUuidencountertype
+            )
+        );
         store_patientList.load();
-        store_assPatientList.load();
+        store_assignedPatientList.load();
         store_patientList.on('load', function () {
             Ext.getCmp('loadMask').setHidden(true);
             patientUpdate.setBMITime(store_patientList);
+            // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
-                record.set('image', '../resources/pic.gif');
+                record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
             });
         }, this);
         // TODO: Pass a function instead of string, to avoid implied "eval"
@@ -294,10 +344,9 @@ Ext.define("Screener.controller.Application", {
         return store_patientList;
     },
     // returns dynamically changed URL for getting patientList
-    getPatientListUrl: function (reg_UUID, scr_UUID, encountertype) {
-        return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + reg_UUID + '&notInList=' + scr_UUID + '&encounterType=' + encountertype);
+    getPatientListUrl: function (inListUuid, notInListUuid, encountertype) {
+        return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + inListUuid + '&notInList=' + notInListUuid + '&encounterType=' + encountertype);
     },
-
 
     //add new drug order form 
     addDrugForm: function () {
@@ -483,6 +532,8 @@ Ext.define("Screener.controller.Application", {
         PatientStore.add(patient);
         PatientStore.sync();
         PatientStore.on('write', function () {
+            // TODO: https://raxaemr.atlassian.net/browse/TODO-67
+            // Need to add location to OpenMRS for screenerUuidlocation
             this.sendEncounterData(personUuid, localStorage.regUuidencountertype, localStorage.screenerUuidlocation, localStorage.loggedInUser)
         }, this)
     },
@@ -495,8 +546,13 @@ Ext.define("Screener.controller.Application", {
         if (!this.patientView) {
             this.patientView = Ext.create('Screener.view.PatientView');
         }
-        // this.getDoctorList().deselectAll();
         this.getView().push(this.patientView);
+        
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-360
+        // Deselect to prevent lists in other views from affecting
+        /*this.getDoctorList().deselectAll();*/
+        this.getPatientList().deselectAll();
+
         patientUpdate.updatePatientsWaitingTitle();
         this.countPatients();
     },
@@ -554,6 +610,19 @@ Ext.define("Screener.controller.Application", {
         }
         patientUpdate.updatePatientsWaitingTitle();
     },
+    showVitals: function () {
+        if (!this.vitalsView) {
+            this.vitalsView = Ext.create('Screener.view.VitalsView');
+        }
+        this.getView().push(this.vitalsView);
+        this.getPatientList().deselectAll();
+        
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-366
+        // Get most recent vitals
+
+        // Update # of patients waiting
+        patientUpdate.updatePatientsWaitingTitle();
+    },
     // opens form for patient summary
     showPatientSummary: function (list, item, index) {
         if (!this.patientSummary) {
@@ -567,7 +636,6 @@ Ext.define("Screener.controller.Application", {
         store.getProxy().setUrl(HOST + '/ws/rest/v1/encounter?patient=' + uuid);
         store.load({
             callback: function (records, operation, success) {
-                // the operation object contains all of the details of the load operation
                 for (i = 1; i <= 5; i++) {
                     Ext.getCmp(i).setHtml("");
                     Ext.getCmp(i).setHtml(store.last().raw.obs[i - 1].display);
@@ -670,6 +738,8 @@ Ext.define("Screener.controller.Application", {
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
         this.getAssignButton().disable();
+        // TODO: https://raxaemr.atlassian.net/browse/TODO-67#comment-12611
+        // Need to add location to OpenMRS for waitingUuidlocation
         this.sendEncounterData(patient, localStorage.screenerUuidencountertype, localStorage.waitingUuidlocation, provider)
         this.countPatients();
     },
@@ -733,25 +803,79 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').add(patient);
     },
 
-    sendEncounterData: function (uuid, encountertype, location, provider) {
+    sendEncounterData: function (personUuid, encountertype, location, provider) {
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
-        var currentDate = new Date();
+        var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
+        
         // creates the encounter json object
+        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
         var jsonencounter = Ext.create('Screener.model.encounterpost', {
-            encounterDatetime: Util.Datetime(currentDate, Util.getUTCGMTdiff()),
-            patient: uuid, //you will get the uuid from ticket 144...pass it here
+            encounterDatetime: t,
+            patient: personUuid, 
             encounterType: encountertype,
             //location: location,
             provider: provider
         });
-        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+       
+        // Handle "Screener Vitals" encounters specially
+        // Create observations linked to the encounter
+        if (encountertype === localStorage.screenervitalsUuidencountertype)
+        {
+            var observations = jsonencounter.observations();    // Create set of observations
+            
+            var createObs = function (c, v) {
+                // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
+                // Validate before submitting an Obs
+                observations.add({
+                        obsDatetime : t,
+                        person: personUuid,
+                        concept: c,
+                        value: v
+                });
+            };
+
+            console.log("Creating Obs for uuid types...");
+            v = Ext.getCmp("vitalsForm").getValues();
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField);
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField);
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField);
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField); 
+            createObs(localStorage.pulseUuidconcept, v.pulseField);
+            observations.sync();
+            console.log("... Complete! Created Obs for new uuid types");
+        }
+
+        // Create encounter
         var store = Ext.create('Screener.store.encounterpost');
         store.add(jsonencounter);
         store.sync();
         store.on('write', function () {
             Ext.getStore('patientStore').load();
-        }, this)
-        return store
+        }, this);
+        return store;
+    },
+
+    // Create a SCREENER_VITALS encounter and attach vitals observations
+    savePatientVitals: function () {
+        var selectedPatient  = this.getPatientList().getSelection()[0];
+        console.log(selectedPatient);
+        if ( ! selectedPatient) {
+            Ext.Msg.alert("You must select a patient");
+            return;
+        }
+        var patientUuid = selectedPatient.data.uuid;
+        this.getPatientList().deselectAll();
+
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-369
+        // Get uuid of logged in provider (likely a nurse?) who is
+        // entering the vitals
+        var providerUuid = "e0ca3719-790a-4343-8a7b-8923e99f75ed";
+        
+        console.log("send encounter data");
+        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerUuid);
+        return;
+
     },
 
     drugSubmit: function () {

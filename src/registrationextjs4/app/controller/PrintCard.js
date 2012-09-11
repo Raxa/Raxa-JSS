@@ -1,0 +1,82 @@
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ * This script is to generate a html page for printing of Patient basic details.
+ */
+Ext.define('Registration.controller.PrintCard', {
+    extend: 'Ext.app.Controller',
+    id: 'printCard',
+    views: ['Viewport','RegistrationConfirm', 'RegistrationBMI', 'SearchConfirm'],
+
+    init: function () {
+        this.control({
+            'registrationbmi button[action=printPatientCard]': {
+                click: this.printPatientCard
+            },
+            "searchconfirm button[action=bmipage]": {
+                click: this.storePatientDatafromSearchResult
+            },
+            "registrationconfirm button[action=submit]": {
+                click: this.storePatientDatafromRegistration
+            },
+
+
+        })
+    },
+
+    /** This function stores the last selected patient in the localStorage, which will (from Search Result) 
+     *  be used to get details while printing of Registration card
+     */
+    storePatientDatafromSearchResult: function () {
+        var selectedPatient = {
+            Name: Ext.getCmp('patientNameSearchedPatient').value,
+            Age: Ext.getCmp('ageSearchedPatient').value,
+            Gender: Ext.getCmp('sexSearchedPatient').value,
+            Village: Ext.getCmp('townSearchedPatient').value,
+            Tehsil: Ext.getCmp('tehsilSearchedPatient').value
+        };
+        localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+    },
+
+    /** This function stores the last selected patient in the localStorage (from New Registration), which will   
+     *  be used to get details while printing of Registration card
+     */
+    storePatientDatafromRegistration: function () {
+        var selectedPatient = {
+            Name: Ext.getCmp('patientNameConfirm').value,
+            Age: Ext.getCmp('ageConfirm').value,
+            Gender: Ext.getCmp('sexConfirm').value,
+            Village: Ext.getCmp('townConfirm').value,
+            Tehsil: Ext.getCmp('tehsilConfirm').value
+        };
+        localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+    },
+
+    /** This function adds the weight field and patient id (as it is not entered before final view)
+     *  and also pops up Registration page on the screen which needs to be printed
+     */
+    printPatientCard: function () {
+        //This is to check whether weight is entered or not (as it is a field on Registration Card)
+        if (!Ext.getCmp('weightIDkg').value) {
+            Ext.Msg.alert("Please enter weight before printing");
+        } else {
+            var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
+            selectedPatient.Weight = Ext.getCmp('weightIDkg').value;
+            selectedPatient.Id = Ext.getCmp('bmiPatientID').value;
+            localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+            popupWindow = window.open('app/patientCard.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+        }
+    }
+});

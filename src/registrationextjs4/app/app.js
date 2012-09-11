@@ -37,7 +37,7 @@ Ext.application({
     name: 'Registration',
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['Main', 'BMI','Search'],
+    controllers: ['Main', 'BMI','Search','PrintCard'],
 
     launch: function () {
         if(Util.checkModulePrivilege('registrationextjs4')){

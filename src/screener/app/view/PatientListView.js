@@ -5,7 +5,9 @@ Ext.define("Screener.view.PatientListView", {
     xtype: 'patientListView',
     extend: 'Ext.Container',
     alias: 'widget.ListView',
-
+    requires: [
+        'Screener.store.NewPatients'
+    ],
 
     config: {
         layout: 'hbox',
@@ -19,7 +21,7 @@ Ext.define("Screener.view.PatientListView", {
             itemTpl: [
                 '<table>',
                 '<tr><td>',
-                '<img src={image} width=48 height=48 />',
+                '<img src="{image}" width=48 height=48 />',
                 '</td>',
                 '<td>',
                 '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',

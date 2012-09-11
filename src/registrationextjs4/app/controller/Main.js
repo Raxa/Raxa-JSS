@@ -33,7 +33,7 @@ Ext.define('Registration.controller.Main', {
             'registrationbmi button[action=bmiSubmit]': {
                 click: this.sendEncounterData
             }
-        })
+        });
     },
     
     registerPatient: function() {
@@ -46,7 +46,6 @@ Ext.define('Registration.controller.Main', {
     
     searchPatient: function() {
         var l = Ext.getCmp('mainRegArea').getLayout();
-        console.log(REG_PAGES.SEARCH_1.value);
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
         Util.KeyMapButton('searchbutton1',Ext.EventObject.ENTER);
     },
@@ -58,7 +57,9 @@ Ext.define('Registration.controller.Main', {
         if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
             l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
             Util.KeyMapButton('submitbutton',Ext.EventObject.ENTER);
-        } else alert("Fields invalid");
+        } else { 
+            alert("Fields invalid");
+        }
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
@@ -66,11 +67,15 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
         Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
         Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
-        //Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
+//		This was causing a bug, as none of the fields after this line were copied to confirmation page
+//      Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
         Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
         Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
-        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) Ext.getCmp('phoneConfirm').setValue(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel)
+        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) 
+        {
+            Ext.getCmp('phoneConfirm').setValue(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel);
+        }
         Ext.getCmp('patientPrimaryContactNumberConfirm').setValue(Ext.getCmp('patientPrimaryContact').value);
         Ext.getCmp('patientSecondaryContactNumberConfirm').setValue(Ext.getCmp('patientSecondaryContact').value);
         Ext.getCmp('townConfirm').setValue(Ext.getCmp('town').value);
@@ -80,35 +85,43 @@ Ext.define('Registration.controller.Main', {
 
     /* this function return to home screen */
     cancel: function () {
-	  Util.DestoryKeyMapButton(Ext.EventObject.ENTER);
+	    Util.DestoryKeyMapButton(Ext.EventObject.ENTER);
         //return to home screen
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
         //reset all the fields in registration form
-        Ext.getCmp('patientFirstName').reset()
-        Ext.getCmp('patientLastName').reset()
-        Ext.getCmp('relativeFirstName').reset()
-        Ext.getCmp('relativeLastName').reset()
-        Ext.getCmp('sexRadioGroup').reset()
-        Ext.getCmp('education').reset()
-        Ext.getCmp('dob').reset()
-        Ext.getCmp('patientAge').reset()
-        //Ext.getCmp('caste').reset()
-        Ext.getCmp('occupation').reset()
-        Ext.getCmp('block').reset()
-        Ext.getCmp('street').reset()
-        Ext.getCmp('town').reset()
-        Ext.getCmp('tehsil').reset()
-        Ext.getCmp('district').reset()
-        Ext.getCmp('phoneContactInformation').reset()
-        Ext.getCmp('patientPrimaryContact').reset()
-        Ext.getCmp('patientSecondaryContact').reset()
-        Ext.getCmp('oldPatientIdentifier').reset()
+        var fields = [
+            'patientFirstName',
+            'patientLastName',
+            'relativeFirstName',
+            'relativeLastName',
+            'sexRadioGroup',
+            'education',
+            'dob',
+            'patientAge',
+            'occupation',
+            'block',
+            'street',
+            'town',
+            'tehsil',
+            'district',
+            'phoneContactInformation',
+            'patientPrimaryContact',
+            'patientSecondaryContact',
+            'oldPatientIdentifier',
+            'heightIDcm',
+            'weightIDkg',
+            'bmiNumberfieldID'
+        ];
+        
+        for (var i = 0; i < fields.length; i++)
+        {
+            Ext.getCmp(fields[i]).reset();
+        }
     },
 
     /* this function makes the post call for making the person */
     submit: function () {
-	
         //creating the json object to be made
         var jsonperson = Ext.create('Registration.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
@@ -267,17 +280,21 @@ Ext.define('Registration.controller.Main', {
         // setting the patientid and paient name fields in bmi screen
         Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
         Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').getValue());
+        
         //creating store for posting the patient
         var PatientStore = Ext.create('Registration.store.patient')
         PatientStore.add(patient);
+        
         //makes the post call for creating the patient
         PatientStore.sync();
+        
         //I made this function return this store because i needed this in jasmine unit test
         PatientStore.on('load', function () {
             // going to BMI page
             var l = Ext.getCmp('mainRegArea').getLayout();
             l.setActiveItem(REG_PAGES.REG_BMI.value); 
-        }, this)
+        }, this);
+        
         //this function return this store because i needed this in jasmine unit test
         return PatientStore;
     },
@@ -285,6 +302,7 @@ Ext.define('Registration.controller.Main', {
     
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
     sendEncounterData: function(){
+        console.log("send encounter data");
         var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel',{
@@ -368,13 +386,15 @@ Ext.define('Registration.controller.Main', {
             });
             jsonencounter.data.obs.push(jsonencounterregfee.data);
         }
+
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
         store.sync();
         store.on('write', function () {
             Ext.Msg.alert('Encounter saved successfully.');
             this.cancel();
-        }, this)
+        }, this);
+
         return store;
     }
 });
