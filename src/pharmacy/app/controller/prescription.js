@@ -320,7 +320,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     fillPrescription: function() {
-	  var controller = this;
+        var controller = this;
         Ext.Msg.confirm("Confirmation", "Are you sure you want to fill prescription?", function (btn) {
             if (btn == 'yes') {
                 var l = Ext.getCmp('mainarea').getLayout();
@@ -333,7 +333,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.getCmp('prescriptionDate').setValue('');
             } else {
                 controller.printPrescribedDrugs();
-	      }
+            }
         });
     },
     printing:function(selectedPatient) {
