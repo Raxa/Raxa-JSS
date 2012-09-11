@@ -47,99 +47,18 @@ Ext.define('Registration.view.RegistrationPart1', {
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
+                    	
+                   layout: {	  	
+                        type: 'hbox'
+                    },
 
                     items: [{
                         xtype: 'container',
                         items: [{
-                            xtype: 'numberfield',
-                            cls: 'raxa-form-panel',    
-                            name: 'Old Patient Identifier',
-                            id: 'oldPatientIdentifier',
-                            fieldLabel: 'Old Patient Identifier',
-                            width: 353,
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPI.emptytext'),
-                            allowBlank: true
-
-                        }],
-				
-
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PN'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            cls: 'raxa-form-panel',    
-                            name: 'firstName',
-                            id: 'patientFirstName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
-                            width: 172,
-                            allowBlank: false,
-								
-                        }, {
-                            name: 'lastName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PLN.emptytext'),
-                            id: 'patientLastName',
-                            width: 172,
-                            margins: '0 0 0 6',
-                            allowBlank: false
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHN'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'firstName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
-                            id: 'relativeFirstName',
-                            width:172,
-					
-
-                            allowBlank: false
-                        }, {
-                            name: 'lastName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHLN.emptytext'),
-                            id: 'relativeLastName',
-                            width:172,
-                            margins: '0 0 0 6',
-
-                            allowBlank: false
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            xtype: 'datefield',
-                            fieldLabel: 'DOB',
-                            id: 'dob',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext1'),
+                            xtype: 'fieldcontainer',	  	
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),	  	
+                            layout: 'hbox',
+ 	                        combineErrors: true,
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 200,
@@ -148,7 +67,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
-                                xtype: 'numberfield',
+                                xtype: 'textfield',
                                 cls: 'raxa-form-panel',    
                                 name: 'Old Patient Identifier',
                                 id: 'oldPatientIdentifier',
@@ -283,7 +202,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             align: 'stretch'
                         },
                         items:[{
-                                html: "<img border=\"0\" src=\"../../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
+                                html: "<img border=\"0\" src=\"/Raxa-JSS/src/resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         },{
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
@@ -378,7 +297,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
                         layout: 'hbox',
                         combineErrors: true,
-                        defaultType: 'numberfield',
+                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 200,
