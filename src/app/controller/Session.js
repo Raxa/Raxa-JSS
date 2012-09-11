@@ -94,6 +94,8 @@ Ext.define('RaxaEmr.controller.Session', {
                         }
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
+                    //saving the provider uuid into localstorage
+                    Util.getLoggedInProviderUuid();
                     this.loginSuccess();
                 },
                 failure: function () {
