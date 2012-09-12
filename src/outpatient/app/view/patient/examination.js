@@ -55,9 +55,6 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                         displayField: 'title',
                         store: {
                             data: [{
-                                filterBy: '',
-                                title: '',
-                            }, {
                                 filterBy: 'all',
                                 title: 'All',
                             }]
