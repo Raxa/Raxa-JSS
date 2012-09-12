@@ -61,31 +61,13 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                         },
                         flex: 1,
                         items: [{
-                            xtype: 'selectfield',
-                            label: 'Chief Complain',
+                            xtype: 'textareafield',
+                            label: 'Chief Complain (by Nurse)',
                             id: 'cheifComplain',
                             valueField: 'cheifComplain',
                             displayField: 'title',
-                            autoComplete: true,
                             flex: 1,
-                            store: {
-                                data: [{
-                                    cheifComplain: 'Abdominal Pain',
-                                    title: 'Abdominal Pain',
-                                }, {
-                                    cheifComplain: 'Fever',
-                                    title: 'Fever',
-                                }, {
-                                    cheifComplain: 'Nausea',
-                                    title: 'Nausea',
-                                }, {
-                                    cheifComplain: 'Vomiting',
-                                    title: 'Vomiting',
-                                }, {
-                                    cheifComplain: 'Weakness',
-                                    title: 'Weakness',
-                                }]
-                            }
+	                    disabled : true
                         }]
                     }, {
                         xtype: 'fieldset',
@@ -97,8 +79,9 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
                         flex: 1,
                         items: [{
                             xtype: 'textareafield',
-                            label: 'Notes',
-                            flex: 1
+                            label: 'Nurse\'s Notes',
+                            flex: 1,
+	                    disabled : true
                         }]
                     }]
                 }, {
