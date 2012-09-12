@@ -219,5 +219,20 @@
 		"sign": "Hydrocele",
 		"id": "117474AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 		"type": "all"
+	},
+	{
+		"sign": "CERVICAL CANCER",
+		"id": "116023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "HANSEN'S DISEASE",
+		"id": "890AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Peptic ulcer disease ",
+		"id": "114262AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
 	}
 ]
