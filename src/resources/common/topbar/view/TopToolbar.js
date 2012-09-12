@@ -100,12 +100,12 @@ Ext.define('Topbar.view.TopToolbar', {
             Util.getSelectModules(),
             listeners: {
                 change: function (value) {
-                    var part = (window.location.href).substring(window.location.href.lastIndexOf('/') + 1);
-                    var loc = "#Dashboard";
-                    if(part == loc) {
-                      if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
-                      value: Ext.getCmp('topbarSelectfield').getValue();
-                      window.location = "http://patient-facing.github.com"; 
+                    var url = window.location.href;
+                    if(url.indexOf("Dashboard") >= 0)
+                    {
+                        if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
+                            value: Ext.getCmp('topbarSelectfield').getValue();
+                        window.location = "http://patient-facing.github.com"; 
                         } else {
                             window.location = Ext.getCmp('topbarSelectfield').getValue();
                         }
@@ -116,11 +116,9 @@ Ext.define('Topbar.view.TopToolbar', {
                         if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
                             window.location = "http://patient-facing.github.com"; 
                         } else {
-                            var url = window.location.href;
-                            var array = url.split('/');
-                            var lastsegment = array[array.length-2];
-                            if(lastsegment != Ext.getCmp('topbarSelectfield').getValue())
-                            window.location = '../'+Ext.getCmp('topbarSelectfield').getValue();
+                            var currentUrl = window.location.href;
+                            if(currentUrl.indexOf(Ext.getCmp('topbarSelectfield').getValue()) < 0)
+                                window.location = '../'+Ext.getCmp('topbarSelectfield').getValue();
                         }
                     }
                 }
