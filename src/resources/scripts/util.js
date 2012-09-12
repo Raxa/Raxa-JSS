@@ -373,7 +373,6 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        //TODO: add this back in once ID Gen is working properly
         var generatedId = (Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
@@ -384,13 +383,14 @@ var Util = {
         var jsonData = JSON.parse(xmlHttp.responseText);
         if (xmlHttp.status == "200") {
             if(jsonData.results.length > 0) {
-                Util.getPatientIdentifier();
+                return(Util.getPatientIdentifier());
             } else {
                  return generatedId;
             }
-              
         }
     },
+    
+  //  getX: function(){return 5},
 
     //Function to help share Models between ExtJS and Sencha Touch 2
     platformizeModelConfig: function (extJsModelConfig) {
