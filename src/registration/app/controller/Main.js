@@ -23,7 +23,10 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
         control: {
             'button[action=CalculateBmiAction]': {
                 tap: 'getBmiData'
-            }
+            },
+            'button[action=submitbmi]': {
+                tap: 'backToRegistration'
+            }            
         },
 
         refs: {
@@ -32,6 +35,10 @@ Ext.define('RaxaEmr.Registration.controller.Main', {
             // gives getSearchPatientsForm()
             searchPatientsForm: '#searchPatientsForm'
         }
+    },
+    // submitting Bmi return to registration homepage
+    backToRegistration: function(){
+        Ext.Viewport.setActiveItem(Ext.create('RaxaEmr.Registration.view.Viewport')); 
     },
     //get values from Bmi Form and calls neccessary methods to calculate BMI & display on Screen (from Bmi.js)
     getBmiData: function () {
