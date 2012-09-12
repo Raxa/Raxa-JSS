@@ -24,12 +24,12 @@ Ext.define('Topbar.view.TopToolbar', {
 
                     if(Ext.getCmp('mainView')==null)
                     {
-                       var username = localStorage.getItem("username");
-                       if(username==null)
-                       {
-                           username='Guest';
-                       }
-                       this.parent.getComponent('UsernameLabel').setHtml(username);
+                        var username = localStorage.getItem("username");
+                        if(username==null)
+                        {
+                            username='Guest';
+                        }
+                        this.parent.getComponent('UsernameLabel').setHtml(username);
                         var buttonUrlSettings = this.parent.add({
                             xtype: 'urlSettingsButton',
                             margin: 5,
@@ -41,29 +41,29 @@ Ext.define('Topbar.view.TopToolbar', {
                     }
                     else
                     {
-                    if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
-                        this.parent.getComponent('UsernameLabel').setHtml('Guest');
-                        var buttonUrlSettings = this.parent.add({
-                            xtype: 'urlSettingsButton',
-                            margin: 5,
-                            right: 0,
-                        });
-                        if (buttonLogout) {
-                            buttonLogout.hide();
-                        }
-                    } else {
-                        this.parent.getComponent('UsernameLabel').setHtml(localStorage.getItem('Username'));
-                        var buttonLogout = this.parent.add({
-                            xtype: 'button',
-                            itemId: 'LogoutButton',
-                            margin: 5,
-                            right: 0,
-                            ui: 'action',
-                            text: 'Logout',
-                        });
-                        if (buttonUrlSettings) {
-                            buttonUrlSettings.hide();
-                        }
+                        if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
+                            this.parent.getComponent('UsernameLabel').setHtml('Guest');
+                            var buttonUrlSettings = this.parent.add({
+                                xtype: 'urlSettingsButton',
+                                margin: 5,
+                                right: 0,
+                            });
+                            if (buttonLogout) {
+                                buttonLogout.hide();
+                            }
+                        } else {
+                            this.parent.getComponent('UsernameLabel').setHtml(localStorage.getItem('Username'));
+                            var buttonLogout = this.parent.add({
+                                xtype: 'button',
+                                itemId: 'LogoutButton',
+                                margin: 5,
+                                right: 0,
+                                ui: 'action',
+                                text: 'Logout',
+                            });
+                            if (buttonUrlSettings) {
+                                buttonUrlSettings.hide();
+                            }
                         }
                     }
                 },
@@ -79,13 +79,56 @@ Ext.define('Topbar.view.TopToolbar', {
             xtype: 'label',
             itemId: 'UsernameLabel',
             margin: 5,
-        },],
+        }, 
+        ] ,
         listeners: [{
             fn: 'onLogoutButtonTap',
             event: 'tap',
             delegate: '#LogoutButton'
         }]
     },
+    
+    
+    initialize: function () {
+        this.add( {
+            xtype: 'selectfield',
+            id: 'topbarSelectfield',
+            centered: true ,
+            selected : true,
+            value : " ",
+            options: 
+            Util.getSelectModules(),
+            listeners: {
+                change: function (value) {
+                    var part = (window.location.href).substring(window.location.href.lastIndexOf('/') + 1);
+                    var loc = "#Dashboard";
+                    if(part == loc) {
+                      if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
+                      value: Ext.getCmp('topbarSelectfield').getValue();
+                      window.location = "http://patient-facing.github.com"; 
+                        } else {
+                            window.location = Ext.getCmp('topbarSelectfield').getValue();
+                        }
+                    } else {
+                        if(Ext.getCmp('topbarSelectfield').getValue() == 'login') {
+                            window.location = '../' ;
+                        } else
+                        if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
+                            window.location = "http://patient-facing.github.com"; 
+                        } else {
+                            var url = window.location.href;
+                            var array = url.split('/');
+                            var lastsegment = array[array.length-2];
+                            if(lastsegment != Ext.getCmp('topbarSelectfield').getValue())
+                            window.location = '../'+Ext.getCmp('topbarSelectfield').getValue();
+                        }
+                    }
+                }
+            }
+        }     
+        )
+    },
+
 
     onLogoutButtonTap: function (button, e, options) {
         var logconfirm = button.LogoutButton;
@@ -93,6 +136,6 @@ Ext.define('Topbar.view.TopToolbar', {
             logconfirm = button.LogoutButton = Ext.widget('logoutConfirmPanel');
         }
         logconfirm.showBy(button);
-    }
-
+    },
+ 
 });

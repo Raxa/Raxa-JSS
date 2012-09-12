@@ -10,38 +10,17 @@ Ext.define("Screener.view.Main", {
     xtype: 'mainView',
     initialize: function (args) {
         var topBar = Ext.create('Topbar.view.TopToolbar', {
-            docked: 'top',
-            layout: {
-                type: 'hbox' ,
-                pack: 'center',
-                align: 'middle'
-            },
-            xtype: 'fieldset',
-            items: [
-            {
-                xtype: 'selectfield',
-                id: 'topbarSelectfield',
-                centered: true ,
-                value: 'screener' ,
-                options: 
-                Util.getSelectModules(),
-                listeners: {
-                    change: function () {
-                        console.log(Ext.getCmp('topbarSelectfield').getValue());
-                        if(Ext.getCmp('topbarSelectfield').getValue() == 'login') {
-                            window.location = '../' ;
-                        } else
-                        if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
-                            window.location = "http://patient-facing.github.com"; 
-                        } else {
-                            window.location = '../'+Ext.getCmp('topbarSelectfield').getValue();
-                        }
-                    }
-                }
-            }
-            ]
-        });
+});
         this.add(topBar);
+        Ext.getCmp('topbarSelectfield').setValue("Screener");
+       // topBar.getElementById('topbarSelectfield').setValue("Screener");
+      // var value = Ext.getCmp('topbarSelectfield').getValue();
+       //console.log(value);
+       //value = "Screener";
+       //console.log(value);
+     //  value.setData("Screener");
+        // topBar.initialize.value = "Screener";    
+        //console.log(Ext.getCmp('topbarSelectfield').getValue()); 
     },
     config: {
         fullscreen: true,
