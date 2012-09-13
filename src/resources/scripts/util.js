@@ -452,6 +452,8 @@ var Util = {
                 if (console.log(JSON.parse(response.responseText).person.uuid) != null) {
                     return JSON.parse(response.responseText).person.uuid;
                 } else {
+                    // TODO: should throw an exception, not return the wrong string
+                    // Ext.Error.raise('<Error Text>');
                     return "provider with given uuid does not exist";
                 }
             }
@@ -511,6 +513,8 @@ var Util = {
      */
     getLoggedInProviderUuid: function(){
         if(!localStorage.getItem("loggedInUser"))
+            // TODO: should throw an exception, not return the wrong string
+            // Ext.Error.raise('<Error Text>');
             return "provider is not logged in";
         if(localStorage.getItem("loggedInProvider"))
             return localStorage.getItem("loggedInProvder");

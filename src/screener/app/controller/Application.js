@@ -882,10 +882,7 @@ Ext.define("Screener.controller.Application", {
         var patientUuid = selectedPatient.data.uuid;
         vpl.deselectAll();
 
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-369
-        // Get uuid of logged in provider (likely a nurse?) who is
-        // entering the vitals [Note: Need "Person Uuid" of Provider]
-        var providerPersonUuid = "1d0efb1a-f770-11e1-a276-f23c91ae55df";
+        var providerPersonUuid = localStorage.loggedInUser;
         this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerPersonUuid);
         Ext.Msg.alert("Submitted patient vitals");
     },
