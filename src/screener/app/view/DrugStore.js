@@ -20,14 +20,14 @@ Ext.define("Screener.view.DrugStore", {
                 items: [{
                     xtype: 'selectfield',
                     labelAlign: 'top',
-                    label: 'Drug',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.drug'),
                     name: 'drug',
                     cls: 'selectfield',
                     width: 250,
                     store: Ext.create('Screener.store.druglist')
                 }, {
                     xtype: 'selectfield',
-                    label: 'Strength',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.strength'),
                     width: 150,
                     labelAlign: 'top',
                     cls: 'selectfield',
@@ -46,7 +46,7 @@ Ext.define("Screener.view.DrugStore", {
                     xtype: 'selectfield',
                     labelAlign: 'top',
                     width: 100,
-                    label: 'Quantity',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.quant'),
                     name: 'quantity',
                     cls: 'selectfield',
                     options: [{
@@ -76,36 +76,36 @@ Ext.define("Screener.view.DrugStore", {
                     labelAlign: 'top',
                     cls: 'selectfield',
                     flex:1,
-                    label: 'Duration',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.duration'),
                     name: 'duration',
                     options: [{
-                        text: 'one week',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.ow'),
                         value: '1w'
                     }, {
-                        text: 'one month',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.om'),
                         value: '1m'
                     }, {
-                        text: 'two months',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.tm'),
                         value: '2m'
                     }]
                 }, {
                     xtype: 'selectfield',
                     labelAlign: 'top',
-                    label: 'Frequency',
+                    label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.freq'),
                     cls: 'selectfield',
                     name: 'frequency',
                     flex: 1,
                     options: [{
-                        text: 'once a day',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.ond'),
                         value: 'ond'
                     }, {
-                        text: 'twice a day',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.bd'),
                         value: 'bd'
                     }, {
-                        text: 'thrice a day',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.tri'),
                         value: 'tri'
                     }, {
-                        text: 'as required',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.asreq'),
                         value: 'req'
                     }]
                 
@@ -114,7 +114,7 @@ Ext.define("Screener.view.DrugStore", {
                 xtype: 'textareafield',
                 id: 'instruction',
                 cls: 'textarea',
-                label: 'Order of medication',
+                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DrugStore.oom'),
                 name: 'Instruction',
                 labelAlign: 'top',
                 height: '100px'

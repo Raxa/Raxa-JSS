@@ -8,7 +8,7 @@ Ext.define("Screener.view.Main", {
     initialize: function (args) {
         var topBar = Ext.create('Topbar.view.TopToolbar', {
             docked: 'top',
-	    title: 'JSS Hospital Screener System',
+	    title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.Main.jsshss'),
         });
         this.add(topBar);
 
@@ -20,7 +20,7 @@ Ext.define("Screener.view.Main", {
         autoDestroy: false,
 
         items: [{
-            title: "JSS Hospital Screener System",
+            title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.Main.jsshss'),
             items: [{
                 xtype: 'topmenu'
             }]

@@ -9,7 +9,7 @@ Ext.define("Screener.view.PatientView", {
     config: {
         fullscreen: true,
         layout: 'hbox',
-        title: 'Patient Assignments',
+        title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PatientListView.pat_ass'),
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
         {
@@ -32,11 +32,11 @@ Ext.define("Screener.view.PatientView", {
             items: [{
                 xtype: 'titlebar',
                 docked: 'top',
-                title: 'Doctors',
+                title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PatientView.doctors'),
                 items: [{
                     xtype: 'button',
                     id: 'assignButton',
-                    text: 'ASSIGN',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PatientView.ass'),
                     align: 'left',
                     disabled: 'true'
                 }]
