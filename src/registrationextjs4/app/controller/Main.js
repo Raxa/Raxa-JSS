@@ -396,7 +396,7 @@ Ext.define('Registration.controller.Main', {
             var jsonencountercomplaint = Ext.create('Registration.model.obsModel',{
                 obsDatetime : t,
                 person: localStorage.newPatientUuid,
-                concept: localStorage.complaintUuidconcept,
+                concept: localStorage.regcomplaintUuidconcept,
                 value: Ext.getCmp('complaintarea').value
             });
             jsonencounter.data.obs.push(jsonencountercomplaint.data);

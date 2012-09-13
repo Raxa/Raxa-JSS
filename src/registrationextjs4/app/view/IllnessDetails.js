@@ -75,7 +75,7 @@ Ext.define('Registration.view.IllnessDetails', {
                 id: 'referredby',
                 width: 475,
                 allowBlank: true,
-                editable: false,
+                //editable: false,
                 displayField: 'display',
                 labelAlign: 'right',
                 labelPad: 20,
