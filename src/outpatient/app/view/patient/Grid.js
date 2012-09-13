@@ -18,7 +18,8 @@
  
 Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
     extend: 'Ext.ux.touch.grid.View',
-    xtype: 'grid-grid',
+    xtype: 'vitalsGrid',
+    id: 'vitalsGrid',
 
     requires: ['Ext.ux.touch.grid.feature.Feature', 'Ext.field.Number', 'RaxaEmr.Outpatient.store.Grid'],
 

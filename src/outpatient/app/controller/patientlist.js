@@ -54,6 +54,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             reftodocsortbyopdno: '#reftodocsortbyopdno',
             signfilterbysearchfield: '#signfilterbysearchfield',
 			referPatient : '#referpatient',
+            vitalsGrid : '#vitalsGrid',
         },
 
         control: {//to perform action on specific component accessed through it's id above 
