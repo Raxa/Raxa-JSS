@@ -16,7 +16,7 @@ Ext.define("Screener.view.Main", {
     config: {
         fullscreen: true,
         //don't delete views so we can switch screens quickly
-        autoDestroy: false,
+        autoDestroy: false ,
         items: [{
             title: "JSS Hospital Screener System",
             items: [

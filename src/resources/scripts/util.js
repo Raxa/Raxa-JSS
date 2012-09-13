@@ -454,7 +454,7 @@ var Util = {
                 extend: extJsModelConfig.extend,
                 config: extJsModelConfig
             };
-            delete config.config.extend;
+            delete config.config.extend ;
             return config;
         } else {
             Ext.Error.raise('Could not recognize Library');
