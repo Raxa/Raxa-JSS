@@ -33,7 +33,7 @@ Ext.define('Registration.controller.Main', {
             'registrationbmi button[action=bmiSubmit]': {
                 click: this.sendEncounterData
             }
-        })
+        });
     },
     
     registerPatient: function() {
@@ -57,7 +57,9 @@ Ext.define('Registration.controller.Main', {
         if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
             l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
             Util.KeyMapButton('submitbutton',Ext.EventObject.ENTER);
-        } else alert("Fields invalid");
+        } else { 
+            alert("Fields invalid");
+        }
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
@@ -70,7 +72,10 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
         Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
         Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
-        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) Ext.getCmp('phoneConfirm').setValue(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel)
+        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) 
+        {
+            Ext.getCmp('phoneConfirm').setValue(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel);
+        }
         Ext.getCmp('patientPrimaryContactNumberConfirm').setValue(Ext.getCmp('patientPrimaryContact').value);
         Ext.getCmp('patientSecondaryContactNumberConfirm').setValue(Ext.getCmp('patientSecondaryContact').value);
         Ext.getCmp('townConfirm').setValue(Ext.getCmp('town').value);
@@ -80,35 +85,43 @@ Ext.define('Registration.controller.Main', {
 
     /* this function return to home screen */
     cancel: function () {
-	  Util.DestoryKeyMapButton(Ext.EventObject.ENTER);
+	    Util.DestoryKeyMapButton(Ext.EventObject.ENTER);
         //return to home screen
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
         //reset all the fields in registration form
-        Ext.getCmp('patientFirstName').reset()
-        Ext.getCmp('patientLastName').reset()
-        Ext.getCmp('relativeFirstName').reset()
-        Ext.getCmp('relativeLastName').reset()
-        Ext.getCmp('sexRadioGroup').reset()
-        Ext.getCmp('education').reset()
-        Ext.getCmp('dob').reset()
-        Ext.getCmp('patientAge').reset()
-        Ext.getCmp('caste').reset()
-        Ext.getCmp('occupation').reset()
-        Ext.getCmp('block').reset()
-        Ext.getCmp('street').reset()
-        Ext.getCmp('town').reset()
-        Ext.getCmp('tehsil').reset()
-        Ext.getCmp('district').reset()
-        Ext.getCmp('phoneContactInformation').reset()
-        Ext.getCmp('patientPrimaryContact').reset()
-        Ext.getCmp('patientSecondaryContact').reset()
-        Ext.getCmp('oldPatientIdentifier').reset()
+        var fields = [
+            'patientFirstName',
+            'patientLastName',
+            'relativeFirstName',
+            'relativeLastName',
+            'sexRadioGroup',
+            'education',
+            'dob',
+            'patientAge',
+            'occupation',
+            'block',
+            'street',
+            'town',
+            'tehsil',
+            'district',
+            'phoneContactInformation',
+            'patientPrimaryContact',
+            'patientSecondaryContact',
+            'oldPatientIdentifier',
+            'heightIDcm',
+            'weightIDkg',
+            'bmiNumberfieldID'
+        ];
+        
+        for (var i = 0; i < fields.length; i++)
+        {
+            Ext.getCmp(fields[i]).reset();
+        }
     },
 
     /* this function makes the post call for making the person */
     submit: function () {
-	
         //creating the json object to be made
         var jsonperson = Ext.create('Registration.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
@@ -121,6 +134,7 @@ Ext.define('Registration.controller.Main', {
                 address2: Ext.getCmp('street').value,
                 cityVillage: Ext.getCmp('town').value,
             }]
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-206
         //right now there is bug in openmrs server due to which sending attributes with body of 
         //post call leads to 500 response status so right now I am commenting it for
         /*  attributes : [{
@@ -146,71 +160,10 @@ Ext.define('Registration.controller.Main', {
             Registration.model.Person.getFields()[3].persist = false;
         }
 
-        //the following fields are commented because they are the part of attribute
-        //TODO: removes this comments atfer the server is updated to latest one
-        /*  if(Ext.getCmp('oldPatientIdentifier').getValue() != null){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('oldPatientIdentifier').getValue(),
-                //the attributeType will change if we change the server so change them if server changes
-                attributeType : 'c2d25bfc-a682-420f-8f38-27582947d4f9'      
-            })
-        }
-        if(Ext.getCmp('caste').getValue() != null){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('caste').getValue(),
-                attributeType : '76f7e5db-09dc-47b6-8f30-507ba628bdae'
-            })
-        }
-        if(Ext.getCmp('education').getValue() != null){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('education').getValue(),
-                attributeType : '76f7e5db-09dc-47b6-8f30-507ba628bdae'
-            })
-        }
-        if(Ext.getCmp('occupation').getValue() != null){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('occupation').getValue(),
-                attributeType : '93c98870-9aa6-4bed-a6cc-9e3112b99cb6'
-            })
-        }
-        if(Ext.getCmp('tehsil').getValue() != ""){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('tehsil').getValue(),
-                attributeType : 'eb877b53-3b32-43d2-bb51-a2f85d527d91'
-            })
-        }
-        if(Ext.getCmp('district').getValue() != ""){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('district').getValue(),
-                attributeType : '651075c9-b458-4143-88cc-8251b0995e82'
-            })
-        }
-        if(Ext.getCmp('phoneContactInformation').getChecked().length > 0){
-            if(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel == "Yes"){
-                jsonperson.data.attributes.push({
-                    value : true,
-                    attributeType : '471eb88e-facf-4d37-89e0-c3eda3c767bc'
-                })
-            }
-            else {
-                jsonperson.data.attributes.push({
-                    value : false,
-                    attributeType : '471eb88e-facf-4d37-89e0-c3eda3c767bc'
-                })
-            }
-        }
-        if(Ext.getCmp('patientPrimaryContact').getValue() != null){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('patientPrimaryContact').getValue(),
-                attributeType : '0e912add-2937-41e9-b192-d8ac77533c85'
-            })
-        }
-        if(Ext.getCmp('patientSecondaryContact').getValue() != null){
-            jsonperson.data.attributes.push({
-                value : Ext.getCmp('patientSecondaryContact').getValue(),
-                attributeType : '27124172-690f-44fa-8017-bc3fc3fb7df2'
-            })
-        }*/
+        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-206
+        // Restore old code which adds patient Attributes
+        // ('oldPatientIdentifier', 'caste', 'education', etc)
+        
         var store = Ext.create('Registration.store.Person');
         store.add(jsonperson);
         // this statement makes the post call to make the person
@@ -275,17 +228,21 @@ Ext.define('Registration.controller.Main', {
         // setting the patientid and paient name fields in bmi screen
         Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
         Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').getValue());
+        
         //creating store for posting the patient
         var PatientStore = Ext.create('Registration.store.patient')
         PatientStore.add(patient);
+        
         //makes the post call for creating the patient
         PatientStore.sync();
+        
         //I made this function return this store because i needed this in jasmine unit test
         PatientStore.on('load', function () {
             // going to BMI page
             var l = Ext.getCmp('mainRegArea').getLayout();
             l.setActiveItem(REG_PAGES.REG_BMI.value); 
-        }, this)
+        }, this);
+        
         //this function return this store because i needed this in jasmine unit test
         return PatientStore;
     },
@@ -293,6 +250,7 @@ Ext.define('Registration.controller.Main', {
     
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
     sendEncounterData: function(){
+        console.log("send encounter data");
         var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel',{
@@ -376,13 +334,15 @@ Ext.define('Registration.controller.Main', {
             });
             jsonencounter.data.obs.push(jsonencounterregfee.data);
         }
+
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
         store.sync();
         store.on('write', function () {
             Ext.Msg.alert('Encounter saved successfully.');
             this.cancel();
-        }, this)
+        }, this);
+
         return store;
     }
 });

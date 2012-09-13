@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 //model of an observation
 Ext.define('Screener.model.Obs', {
     extend: 'Ext.data.Model',
