@@ -15,6 +15,12 @@
  *
  * This class provides util methods and constants that are shared by the core, apps and modules
  */
+
+// TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-382
+// Move everything inside of Util so not in global scope. Then update
+// references from other parts of application. E.g. page enums is a low hanging
+// fruit to start with 
+
 /* Phone Number Validation */
 Ext.apply(Ext.form.VTypes, {
     phone: function (value, field) {
@@ -125,7 +131,7 @@ var resourceUuid = {
         "resource": "encountertype",
         "queryTerm": "screenervitals",
         "varName": "screenervitals",
-        "displayName": "SCREENERVITALS - Screener encounter vitals (such as blood pressure, temperature, respiratory rate, pulse rate, oxygen saturation)"
+        "displayName": "SCREENERVITALS - Screener Vitals encounter"
     },
     "out": {
         "resource": "encountertype",
@@ -214,7 +220,10 @@ var TIME_BEFORE_NOW = 0.1;
 
 // The Util class provids several methods that are shared by the core, apps and modules
 var Util = {
-	
+    
+    // Enum to capture pages in each app. E.g. Util.PAGES.SCREENER.PAGE_NAME
+    PAGES: {},
+
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
      * Number field fails to enforce maxLength, so must add JavaScript listener
@@ -447,6 +456,8 @@ var Util = {
                 if (console.log(JSON.parse(response.responseText).person.uuid) != null) {
                     return JSON.parse(response.responseText).person.uuid;
                 } else {
+                    // TODO: should throw an exception, not return the wrong string
+                    // Ext.Error.raise('<Error Text>');
                     return "provider with given uuid does not exist";
                 }
             }
@@ -508,6 +519,8 @@ var Util = {
      */
     getLoggedInProviderUuid: function(){
         if(!localStorage.getItem("loggedInUser"))
+            // TODO: should throw an exception, not return the wrong string
+            // Ext.Error.raise('<Error Text>');
             return "provider is not logged in";
         if(localStorage.getItem("loggedInProvider"))
             return localStorage.getItem("loggedInProvder");
