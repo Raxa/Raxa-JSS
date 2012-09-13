@@ -44,7 +44,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '10%',
             cls: 'centered-cell',
             renderer: function (value, values) {
-                if(value == "--") {
+                if(value == "--")  {
                     return '<span>' + value + '</span>';  
                 } else {
                     return '<span>' + value + ' kg' + '</span>';

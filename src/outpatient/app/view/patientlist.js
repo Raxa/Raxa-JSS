@@ -94,7 +94,7 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
 					}else if(str == 'F'){
 						return 'Female' 
 					}
-				}
+				 }
 			}
 		)
 	}
