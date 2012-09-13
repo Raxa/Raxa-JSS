@@ -34,7 +34,7 @@
 .x-contacts .x-list-item-label{font-weight:bold}
 .x-contacts .x-list-item-label span{display:block;font-size:14px;font-weight:normal;color:#666}
 .x-contacts.x-list{background:#EEEEEE}
-.x-contacts .x-list-item{height:70px}
+.x-contacts .x-list-item{height:80px}
 .x-contact .x-list-item > *{float:left}
 .x-contacts .headshot{float:left;height:50px;width:50px;margin-right:10px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 2px rgba(0, 0, 0, 0.6)}
 .x-contacts .property{float:left;height:56px;margin-right:2px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:0px;border-radius:4px;-webkit-box-shadow:inset 0 0 5px rgba(0, 0, 0, 0.8)}
@@ -42,7 +42,7 @@
 
 .x-show-contact{background:#EEEEEE}
 .x-show-contact.x-list-item{background:#EEEEEE}
-.x-show-contact .top{padding:15px;height:80px}
+.x-show-contact .top{padding:1px}
 .x-show-contact .top > *{float:left}
 .x-show-contact .top .headshot{height:50px;width:50px;margin-right:10px;background-size:cover;background-position:center center;-webkit-border-radius:10px;border-radius:10px;border:1px solid #444;-webkit-box-shadow:inset 0 0 2px rgba(0, 0, 0, 0.4)}
 .x-show-contact .top .name{width:195px;padding-top:0;font-size:22px;font-weight:bold}
