@@ -24,6 +24,6 @@ Ext.define("Screener.view.Main", {
                 xtype: 'topmenu'
             },
             ]
-        }, ]
+        },]
     }
 });
