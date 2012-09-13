@@ -14,8 +14,9 @@
  * the License.
  */
 
-// TODO: Scope these appropriately - they shouldn't be fully global, just
-// within this controller
+// TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-382
+// Scope these appropriately - they shouldn't be fully global, just within this
+// controller. e.g. var outpatientGlobals = {}
 var form_num;
 var lab_num;
 var numberOfStoresWritten;
