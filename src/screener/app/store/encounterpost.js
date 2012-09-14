@@ -16,10 +16,7 @@
  * This script initiates the registration module
  */
 
-
-
-//the store for an encounter. Sends all filledd fields to the server
-
+//the store for an encounter. Sends all filled fields to the server
 Ext.define('Screener.store.encounterpost', {
     extend: 'Ext.data.Store',
     config:{
