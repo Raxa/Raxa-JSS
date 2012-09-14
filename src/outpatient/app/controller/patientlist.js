@@ -27,6 +27,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             docname: '#docname',
             urgency: '#urgency',
             lastvisit: '#lastvisit',
+            refresh: '#refresh',
             mainTabs: '#maintabs',
             medicationHistory: '#medicationhistory',
             refToDocButton: '#reftodocbutton',
@@ -53,7 +54,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             reftodocsortbydocname: '#reftodocsortbydocname',
             reftodocsortbyopdno: '#reftodocsortbyopdno',
             signfilterbysearchfield: '#signfilterbysearchfield',
-			referPatient : '#referpatient',
+			referPatient : '#referpatient'
         },
 
         control: {//to perform action on specific component accessed through it's id above 
@@ -78,9 +79,12 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             },
             urgency: {
                 tap: 'sortByUrgency'
-            },
+            },   
             lastvisit: {
                 tap: 'sortByLastVisit'
+            },
+            refresh: {
+                tap: 'refreshList'
             },
             medicationhistorysortbydrugname: {
                 tap: 'medicationHistorySortByDrugName'
@@ -124,16 +128,16 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 keyup: 'signFilterByOnSearchKeyUp'
             },
             cheifcomplain: {
-                change: 'addChiefComplain',
+                change: 'addChiefComplain'
             },
             deletecomlain: {
-                tap: 'deleteComplain',
+                tap: 'deleteComplain'
             },
             saveduration: {
-                tap: 'saveduration',
+                tap: 'saveduration'
             },
             addduration: {
-                tap: 'addduration',
+                tap: 'addduration'
             },
             adddruginlist: {
                 tap: 'adddruginlist'
@@ -332,15 +336,19 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     },
 
     sortByDocName: function () {
-        this.sortBy('nameofdoc');
+        this.sortBy('nameofdoc',this.getContact().getStore());
     },
 
     sortByUrgency: function () {
-        this.sortBy('urgency');
+        this.sortBy('urgency',this.getContact().getStore());
     },
 
     sortByLastVisit: function () {
-        this.sortBy('lastvisit');
+        this.sortBy('lastvisit',this.getContact().getStore());
+    },
+    
+    refreshList: function() {
+        this.getContact().getStore().load();        
     },
 	// for sorting the medication history
     medicationHistorySortByDrugName: function () {

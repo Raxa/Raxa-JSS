@@ -55,7 +55,7 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
             xtype: 'toolbar',
             docked: 'top',
 
-            items: [{
+            items: [ {
                 xtype: 'segmentedbutton',
                 allowDepress: false,
                 items: [{
@@ -79,7 +79,16 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
                     text: 'Last Visit',
                     id: 'lastvisit'
                 }]
-            }]
+            },{
+                xtype: 'spacer'
+            },{
+                    xtype: 'button',
+                    width: 130,
+                    text: 'Refresh',
+                    id: 'refresh',
+                    action: 'refreshList',
+                    align: 'right'
+                }]
         }],
 		//list items  are shown by this
 		itemTpl: new Ext.XTemplate(

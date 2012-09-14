@@ -58,7 +58,7 @@ Ext.define("Screener.view.PatientListView", {
                     align: 'right'
                 }]
             }],
-            flex: 1,
+            flex: 1
         }]
-    },
+    }
 });
