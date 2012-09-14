@@ -15,7 +15,7 @@ Ext.define("Screener.view.TopMenu", {
         items: [{
             xtype: 'button',
             id: 'addPatientButton',
-            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.add_newp'),
+            text: 'Add New Patient',
             ui: 'round',
             height: 80,
             width: 300
