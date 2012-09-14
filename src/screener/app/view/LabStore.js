@@ -16,7 +16,7 @@ Ext.define("Screener.view.LabStore", {
             xtype: 'fieldset',
             items: [{
                 xtype: 'selectfield',
-                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.lab_ord'),
+                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.lab_ord'),
                 name: 'drug',
                 options: [{
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.amylase'),

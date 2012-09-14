@@ -15,7 +15,7 @@ Ext.define("Screener.view.VitalsForm", {
 		items: [{
 			xtype: 'titlebar',
 			docked: 'top',
-			title: 'Vitals'
+			title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.vitals')
 		},
 		{
 			// Need a separate panel here, so I can show/hide/disable
@@ -34,7 +34,7 @@ Ext.define("Screener.view.VitalsForm", {
 					items: [{
 						// Systolic Blood Pressure
 						xtype: 'sliderfieldextended',
-						label: 'Systolic Blood Pressure',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.sysbp'),
                         labelAlign: 'top',
 						minValue: 0,
 						maxValue: 250,
@@ -45,7 +45,7 @@ Ext.define("Screener.view.VitalsForm", {
 					{
 						// Diastolic Blood Pressure
 						xtype: 'sliderfieldextended',
-						label: 'Diastolic Blood Pressure',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.diasbp'),
                         labelAlign: 'top',
 						minValue: 0,
 						maxValue: 150,
@@ -56,7 +56,7 @@ Ext.define("Screener.view.VitalsForm", {
 					{
 						// Temperature
 						xtype: 'sliderfieldextended',
-						label: 'Temperature',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.temp'),
                         labelAlign: 'top',
                         id: 'tempSliderExt',
                         minValue: 25,   // TODO: Fix visual error in Slider. bar starts at far right and cant slide (this is a Sencha bug)
@@ -68,7 +68,7 @@ Ext.define("Screener.view.VitalsForm", {
 					{
 						// Repiratory Rate
 						xtype: 'sliderfieldextended',
-						label: 'Respiratory Rate',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.resp_rate'),
                         labelAlign: 'top',
 						minValue: 0,
 						maxValue: 200,
@@ -79,7 +79,7 @@ Ext.define("Screener.view.VitalsForm", {
 					{
 						// Pulse
 						xtype: 'sliderfieldextended',
-						label: 'Pulse Rate',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.pul_rate'),
                         labelAlign: 'top',
 						minValue: 0,
 						maxValue: 230,
@@ -89,7 +89,7 @@ Ext.define("Screener.view.VitalsForm", {
 					{
 						// Oxygen Saturation
 						xtype: 'sliderfieldextended',
-						label: 'Oxygen Saturation',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.oxy_sat'),
                         labelAlign: 'top',
 						minValue: 0,
 						maxValue: 100,
@@ -104,7 +104,7 @@ Ext.define("Screener.view.VitalsForm", {
 				ui: 'confirm',
 				id: 'submitVitalsButton',
 				height: '40px',
-				text: 'submit',
+				text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.submit'),
                 width: '100px'
 			}]
 		}]
