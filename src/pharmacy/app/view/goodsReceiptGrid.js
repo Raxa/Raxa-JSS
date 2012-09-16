@@ -19,7 +19,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     x: 110,
     initComponent: function () {
         var receiptEditor = this;
-        this.addEvents(['receiptDelete']);
+        this.addEvents(['deleteReceiptDrug']);
         this.columns= [
         {
             xtype: 'gridcolumn',
@@ -29,15 +29,16 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
         {
             xtype: 'gridcolumn',
             width: 200,
-            dataIndex: 'drugname',
+            dataIndex: 'drugName',
             text: 'Name Of drug',
             editor: {
                 xtype: 'combobox',
-                allowBlank: false,
                 editable: true,
+                minChars: 3,
+                typeAhead: true,
+                autoSelect: false,
                 store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
                 displayField: 'text',
-                forceSelection: true,     
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
@@ -114,7 +115,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 icon: '../../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
-                    receiptEditor.fireEvent('receiptDelete', {
+                    receiptEditor.fireEvent('deleteReceiptDrug', {
                         rowIndex: rowIndex,
                         colIndex: colIndex
                     });
@@ -130,7 +131,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                     {
                         text: 'Add Drug',
                         iconCls: 'icon-add',
-                        action: 'addReceipt'
+                        action: 'addReceiptDrug'
                     }]
             }];
         Ext.getStore('newReceipt').add({

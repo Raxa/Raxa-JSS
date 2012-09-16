@@ -2,7 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.alertGrid',
     styleHtmlContent: false,
-    height: 300,
+    height: 200,
     width: 300,
     store: Ext.create('RaxaEmr.Pharmacy.store.Alerts',{
         autoLoad: true,
@@ -35,6 +35,7 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
             dataIndex: 'description',
             hidden: true
         },
+        //THIS is still in progress. I hope to finish it soon
 //        {
 //            xtype: 'checkcolumn',
 //            width: 20,

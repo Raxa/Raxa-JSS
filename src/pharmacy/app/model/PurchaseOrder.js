@@ -21,7 +21,7 @@ Ext.define('RaxaEmr.Pharmacy.model.PurchaseOrder', {
         name: 'stocklocation',
         model: 'RaxaEmr.Pharmacy.model.Location'
     }, {
-        name: 'stocklocationName',
+        name: 'stocklocationname',
         type: 'string',
         mapping: 'stocklocation.display'
     },{

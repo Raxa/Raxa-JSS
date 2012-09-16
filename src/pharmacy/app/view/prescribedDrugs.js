@@ -16,7 +16,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     },
     initComponent: function () {    
         var drugEditor = this;
-        this.addEvents(['drugDelete']);
+        this.addEvents(['deleteDrug']);
         this.columns = [
         {
             xtype: 'gridcolumn',
@@ -135,7 +135,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 icon: '../../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
-                    drugEditor.fireEvent('drugDelete', {
+                    drugEditor.fireEvent('deleteDrug', {
                         rowIndex: rowIndex,
                         colIndex: colIndex
                     });

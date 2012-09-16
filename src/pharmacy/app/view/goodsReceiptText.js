@@ -27,7 +27,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
         items:[{
             border: false,
             xtype: 'panel',
-            width: 300,
+            width: 500,
             bodyPadding: 10,
             layout: {
                 type: 'vbox'
@@ -44,11 +44,37 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
                     xtype: 'radiofield',
                     boxLabel: 'PO No',
                     margin: '0 20 0 0'
-                //width: 50
                 },
                 {
                     xtype: 'combobox',
-                    width: 115
+                    width: 400,
+                    labelWidth: 90,
+                    id: "receiptPurchaseOrderPicker",
+                    store: Ext.create('RaxaEmr.Pharmacy.store.PurchaseOrders', {
+                        storeId: 'stockIssues',
+                        filters: [{
+                            property: 'name',
+                            value: /Stock Issue/
+                        },{
+                            property: 'received',
+                            value: false
+                        }
+                        ]
+                    }),
+                    fieldLabel: 'Stock Issue(optional):',
+                    valueField: 'uuid',
+                    displayField: 'description',
+                    listeners: {
+                        'focus': {
+                            fn: function (comboField) {
+                                comboField.doQuery(comboField.allQuery, true);
+                                comboField.expand();
+                            }
+                            , 
+                            scope: this
+                        }
+                    },
+                    emptyText: 'Stock Issue'
                 }]
             },
             {
@@ -70,7 +96,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
             }]
         },
         {
-            width: 300,
+            width: 100,
             xtype: 'panel',
             border: false,
             bodyPadding: 10,

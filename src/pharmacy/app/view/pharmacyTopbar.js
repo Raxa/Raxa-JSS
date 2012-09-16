@@ -110,8 +110,6 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                 if(Ext.getCmp('alertPanel').isHidden()){
                     Ext.getCmp('alertPanel').show();
                     this.setText('Close');
-                    console.log(this.parents)
-                    console.log(Ext.getCmp('pharmacytopbar'));
                     var x = Ext.getCmp('pharmacytopbar').x + Ext.getCmp('pharmacytopbar').width - Ext.getCmp('alertPanel').width;
                     Ext.getCmp('alertPanel').setPosition(x, PHARMACYTOPBARHEIGHT);
                     Ext.getCmp('alertPanel').setHeight(200);

@@ -21,7 +21,17 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
             }),
         fieldLabel: 'Your Location:',
         displayField: 'display',
-        emptyText: 'Location'
+        emptyText: 'Location',
+        listeners: {
+            'focus': {
+                fn: function (comboField) {
+                    comboField.doQuery(comboField.allQuery, true);
+                    comboField.expand();
+                }
+                , 
+                scope: this
+            }
+        }
     },
     {
         margin: 5,
@@ -34,6 +44,16 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
         }),
         fieldLabel: 'Stock Location:',
         displayField: 'display',
-        emptyText: 'Location'
+        emptyText: 'Location',
+        listeners: {
+            'focus': {
+                fn: function (comboField) {
+                    comboField.doQuery(comboField.allQuery, true);
+                    comboField.expand();
+                }
+                , 
+                scope: this
+            }
+        }
     }]  
 });

@@ -7,24 +7,19 @@ Ext.define('RaxaEmr.Pharmacy.model.Alert', {
         persist: false 
     }, {
         name: 'name',
-        type: 'string',
-        mapping: 'name'
+        type: 'string'
     }, {
         name: 'description',
-        type: 'string',
-        mapping: 'description'
+        type: 'string'
     }, {
         name: 'seen',
-        type: 'boolean',
-        mapping: 'seen'
+        type: 'boolean'
     }, {
         name: 'alertType',
-        type: 'string',
-        mapping: 'alertType'
+        type: 'string'
     }, {
         name: 'defaultTask',
-        type: 'string',
-        mapping: 'defaultTask'
+        type: 'string'
     },{
         name: 'uuid',
         type: 'string',
@@ -43,8 +38,7 @@ Ext.define('RaxaEmr.Pharmacy.model.Alert', {
         mapping: 'fromLocation.display'
     },{
         name: 'time',
-        type: 'string',
-        mapping: 'time'
+        type: 'string'
     }
 ]
 });

@@ -1,6 +1,5 @@
 Ext.define('RaxaEmr.Pharmacy.store.StockList', {
     extend: 'Ext.data.Store',
-    id: 'stockList',
     model: 'RaxaEmr.Pharmacy.model.DrugInventory',
     autoLoad: true,
     autoSync: false,
@@ -26,17 +25,19 @@ Ext.define('RaxaEmr.Pharmacy.store.StockList', {
     },
     updateFields: function(){
         for(var i=0; i<this.data.items.length; i++){
-            if(this.data.items[i].data.batch!==null && this.data.items[i].data.batch!=="" && this.data.items[i].data.quantity!==0){
-                this.data.items[i].set("batchQuantity", this.data.items[i].data.batch+" ("+this.data.items[i].data.quantity+")");
+            var item = this.data.items[i];
+            if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
+                item.set("batchQuantity", item.data.batch+" ("+item.data.quantity+")");
             }
             else{
-                this.data.items[i].set("batchQuantity", null);
+                item.set("batchQuantity", null);
             }
-            if(this.data.items[i].data.expiryDate!==""){
-                this.data.items[i].set("days", Util.daysFromNow(this.data.items[i].data.expiryDate));
+            
+            if(item.data.expiryDate!==""){
+                item.set("days", Util.daysFromNow(item.data.expiryDate));
             }
             else{
-                this.data.items[i].set("days", null);
+                item.set("days", null);
             }
         }
 

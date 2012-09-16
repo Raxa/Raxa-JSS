@@ -24,7 +24,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     },
     initComponent: function () {    
         var issueEditor = this;
-        this.addEvents(['issueDelete']);
+        this.addEvents(['deleteIssueDrug']);
         this.columns = [
         {
             xtype: 'rownumberer',
@@ -38,11 +38,12 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             text: 'Name Of drug',
             editor: {
                 xtype: 'combobox',
-                allowBlank: false,
                 editable: true,
+                minChars: 3,
+                typeAhead: true,
+                autoSelect: false,
                 store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
                 displayField: 'text',
-                forceSelection: true,     
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
@@ -51,6 +52,16 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                         }
                         , 
                         scope: this
+                    },
+                    'select':{
+                        fn: function(comboField, records){
+                            var row = (Ext.getCmp('goodsIssueGrid').getSelectionModel().selection.row);
+                            Ext.getStore('newIssue').getAt(row).set('expiryDate', null);
+                            Ext.getStore('newIssue').getAt(row).set('batch', null);
+                            Ext.getStore('newIssue').getAt(row).set('batchQuantity', null);
+                            Ext.getStore('newIssue').getAt(row).set('roomLocation', null);
+                            Ext.getStore('newIssue').getAt(row).set('batchUuid', null);
+                        }
                     }
                 }
             }
@@ -70,7 +81,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
         {
             xtype: 'gridcolumn',
             text: 'Batch No.',
-            dataIndex: 'batch',
+            dataIndex: 'batchQuantity',
             width: 170,
             editor: {
                 xtype: 'combobox',
@@ -90,7 +101,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                             //only allow batches that are available, have the correct drug, are in the current location, and
                             //haven't yet been assigned to another inventory
                             comboField.getStore().filter(function(record){
-                                return record.get('status')===STOCKSTATUS.AVAILABLE && record.get('drugName')===selectedDrug && (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
+                                var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
+                                var isCurrentDrug = (record.get('drugName')===selectedDrug);
+                                var isBatch = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
+                                return isAvailable && isCurrentDrug && isBatch;
                             });
                             comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();
@@ -101,11 +115,15 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                     'select':{
                         fn: function(comboField, records){
                             var expiryDate = records[0].data.expiryDate;
+                            var roomLoc = records[0].data.roomLocation;
+                            var batchUuid = records[0].data.uuid;
+                            var batch = records[0].data.batch;
                             var row = (Ext.getCmp('goodsIssueGrid').getSelectionModel().selection.row);
                             Ext.getStore('newIssue').getAt(row).set('expiryDate', expiryDate);
+                            Ext.getStore('newIssue').getAt(row).set('batch', batch);
+                            Ext.getStore('newIssue').getAt(row).set('roomLocation', roomLoc);
+                            Ext.getStore('newIssue').getAt(row).set('batchUuid', batchUuid);
                             Ext.getCmp('goodsIssueGrid').getView().refresh();
-                            console.log("have:"+records[0].data.quantity);
-                            console.log("require:"+Ext.getStore('newIssue').getAt(row).get('quantity'));
                             var requiredQuantity = Ext.getStore('newIssue').getAt(row).get('quantity');
                             var quantityInBatch = records[0].data.quantity;
                             //if current batch doesn't cover entire quantity required, reduce quantity and add new row
@@ -129,6 +147,11 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             text: 'Expiry Date',
             dataIndex: 'expiryDate',
             width: 180
+        },{
+            xtype: 'gridcolumn',
+            text: 'Location',
+            dataIndex: 'roomLocation',
+            width: 60
         },        
         {
             xtype: 'actioncolumn',
@@ -137,7 +160,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 icon: '../../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
-                    issueEditor.fireEvent('issueDelete', {
+                    issueEditor.fireEvent('deleteIssueDrug', {
                         rowIndex: rowIndex,
                         colIndex: colIndex
                     });

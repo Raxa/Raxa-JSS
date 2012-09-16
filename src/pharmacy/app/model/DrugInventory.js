@@ -46,6 +46,11 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
         type: 'string',
         mapping: 'batch'
     },{
+        name: 'batchUuid',
+        type: 'string',
+        mapping: 'batchUuid',
+        persist: false
+    },{
         name: 'value',
         type: 'int',
         mapping: 'value'

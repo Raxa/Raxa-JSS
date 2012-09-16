@@ -64,7 +64,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             text: 'Duration',
                             // gets the duration using start and end date of prescription
                             renderer: function(value, metadata, record){
-                                console.log(record)
                                 var temp = record.getData().endDate - record.getData().startDate
                                 temp = temp/(86400000)
                                 temp = parseInt(temp) + 1
