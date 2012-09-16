@@ -33,7 +33,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
         layout: {
             type: 'hbox'
         },
-        height: 490,
+        height: 600,
         items: [{
             xtype: 'tabpanel',
             border: '1 1 1 0',
@@ -59,7 +59,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
             docked: 'left',
             margin: '0 0 0 15',
             width: 40,
-            height: 480,
+            height: 600,
             layout: {
                 type: 'vbox'
             },
@@ -109,7 +109,16 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
 						storeId: 'drugStore'
 					});
 					drugList.load();
-					Ext.getCmp('drug-name').setStore(drugList);
+//					Ext.getCmp('drug-name').setStore(drugList);
+                }
+            }, {
+                xtype: 'button',
+                width: 40,
+                flex: 1,
+                cls: 'x-button-vikas',
+                icon: '../outpatient/resources/images/data.png',
+                padding: '0 0 0 0',
+                handler: function () {
                 }
             }]
         }]
