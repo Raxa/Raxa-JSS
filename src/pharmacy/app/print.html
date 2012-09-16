@@ -1,0 +1,74 @@
+<!--
+  Copyright 2012, Raxa
+ 
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+ 
+ This page acts as print preview for patient registration card
+
+-->
+<html>
+<head>
+    <title>Patient Registration Card</title>
+</head>
+<body>
+    <form>
+    <input type="button" value="Continue to Print" id="printButton" onclick="hideAndPrint();"
+        align="right">
+    </form>
+    <table border="1" cellpadding="1" cellspacing="1" style="width: 100%; height: auto">
+        <tbody>
+            <tr>
+                <td style='width: 30%'>
+                    <div id='tab1' style='width: 100%'>
+                    </div>
+                </td>
+                <td style='width: 70%'>
+                    <div id='tab2' style='width: 100%'>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        var total = 0;
+        var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
+        var selectedPatientAttributes = ['GiveName', 'FamilyName', 'village', 'block', 'District', 'Doctor', 'Dob', 'Age', 'Gender'];
+        var tab = '<table style="width:100%"><tbody>';
+        for (i = 0; i < selectedPatientAttributes.length; i++) {
+            if (selectedPatient[selectedPatientAttributes[i]]) {
+
+                tab += "<tr><td>" + selectedPatientAttributes[i] + "</td><td>" + selectedPatient[selectedPatientAttributes[i]] + "</td></tr>";
+
+            }
+        }
+        tab += '</tbody></table>';
+        document.getElementById('tab1').innerHTML = tab;
+        tab = '<table border="1"  style="width:100%" text-align="center"><tbody><tr><td>Drugs</td><td>Dosage</td><td>Duration</td><td>qty</td><td>UnitPrice</td><td>ItemPrice</td></tr>';
+        for (var j = 0; j < selectedPatient['Length']; j++) {
+            tab += '<tr>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].drugname + '</td>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].dosage + '</td>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].duration + '</td>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].qty + '</td>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].unitprice + '</td>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].itemprice + '</td>';
+            tab += '</tr>';
+            total += selectedPatient['DrugGrid'][j].itemprice;
+        }
+        tab += '<tr><td></td><td></td><td></td><td></td><td>Total</td><td>' + total + '</td></tr>';
+        tab += '</tbody></table>';
+        document.getElementById('tab2').innerHTML = tab;
+
+    </script>
+</body>
+</html>

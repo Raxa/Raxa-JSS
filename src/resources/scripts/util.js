@@ -15,6 +15,12 @@
  *
  * This class provides util methods and constants that are shared by the core, apps and modules
  */
+
+// TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-382
+// Move everything inside of Util so not in global scope. Then update
+// references from other parts of application. E.g. page enums is a low hanging
+// fruit to start with 
+
 /* Phone Number Validation */
 Ext.apply(Ext.form.VTypes, {
     phone: function (value, field) {
@@ -149,7 +155,7 @@ var resourceUuid = {
         "resource": "encountertype",
         "queryTerm": "screenervitals",
         "varName": "screenervitals",
-        "displayName": "SCREENERVITALS - Screener encounter vitals (such as blood pressure, temperature, respiratory rate, pulse rate, oxygen saturation)"
+        "displayName": "SCREENERVITALS - Screener Vitals encounter"
     },
     "out": {
         "resource": "encountertype",
@@ -299,15 +305,9 @@ var TIME_BEFORE_NOW = 0.1;
 
 // The Util class provids several methods that are shared by the core, apps and modules
 var Util = {
-	
-    /**
-     *Returns how many days are left from now to date passed in
-     */
-    daysFromNow: function(futureDate) {
-        var future = new Date(futureDate);
-        var now = new Date();
-        return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
-    },
+    
+    // Enum to capture pages in each app. E.g. Util.PAGES.SCREENER.PAGE_NAME
+    PAGES: {},
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
@@ -471,20 +471,24 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        //TODO: add this back in once ID Gen is working properly
-        //https://raxaemr.atlassian.net/browse/JLM-45 (is accidentally a JLM issue)
-        //        var patientIDRequest = new XMLHttpRequest();
-        //        patientIDRequest.open("GET", HOST + '/module/idgen/generateIdentifier.form?source=1&comment=New%20Patient', false);
-        //        patientIDRequest.setRequestHeader("Accept", "*/*");
-        //        patientIDRequest.send();
-        //        if (patientIDRequest.status = "200") {
-        //            var pid = patientIDRequest.responseText;
-        //            return pid;
-        //        } else {
-        //            console.log('ERROR Code on creating patient identifier: ' + patientIDRequest.status);
-        //        }
-        return (Math.floor(Math.random()*1000000)).toString();
+        var generatedId = (Math.floor(Math.random()*1000000)).toString();
+        url = HOST + '/ws/rest/v1/patient?q='+generatedId,
+        xmlHttp = new XMLHttpRequest(); 
+        xmlHttp.open( "GET", url , false );
+        xmlHttp.setRequestHeader("Accept", "application/json");
+        xmlHttp.setRequestHeader("Authorization", localStorage.getItem("basicAuthHeader"));
+        xmlHttp.send();
+        var jsonData = JSON.parse(xmlHttp.responseText);
+        if (xmlHttp.status == "200") {
+            if(jsonData.results.length > 0) {
+                return(Util.getPatientIdentifier());
+            } else {
+                 return generatedId;
+            }
+        }
     },
+    
+  //  getX: function(){return 5},
 
     //Function to help share Models between ExtJS and Sencha Touch 2
     platformizeModelConfig: function (extJsModelConfig) {
@@ -541,6 +545,8 @@ var Util = {
                 if (console.log(JSON.parse(response.responseText).person.uuid) != null) {
                     return JSON.parse(response.responseText).person.uuid;
                 } else {
+                    // TODO: should throw an exception, not return the wrong string
+                    // Ext.Error.raise('<Error Text>');
                     return "provider with given uuid does not exist";
                 }
             }
@@ -601,7 +607,9 @@ var Util = {
      * Returns the uuid of the logged in provider
      */
     getLoggedInProviderUuid: function(){
-        if(!localStorage.getItem("loggedInUser")){
+        if(!localStorage.getItem("loggedInUser"))
+            // TODO: should throw an exception, not return the wrong string
+            // Ext.Error.raise('<Error Text>');
             return "provider is not logged in";
         }
         if(localStorage.getItem("loggedInProvider")){
