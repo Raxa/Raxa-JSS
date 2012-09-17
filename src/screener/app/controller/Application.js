@@ -157,11 +157,11 @@ Ext.define("Screener.controller.Application", {
             'patientListView button[action=refreshList]': {
                 tap: 'refreshList'
             },
+            sortByNameButton: {
+                tap: 'sortByName'
+            },
             drugSubmitButton: {
                 tap: 'drugSubmit'
-            },
-            'patientListView button[action=sortByName]': {
-                tap: 'sortByName'
             },
             'patientListView button[action=sortByFIFO]': {
                 tap: 'sortByFIFO'
@@ -495,9 +495,9 @@ Ext.define("Screener.controller.Application", {
     // Adds new person to the NewPersons store
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
-
+       
         if (formp.givenname && formp.familyname && formp.choice) {
-            var person = Ext.create('Screener.model.Person', {
+            var person = Ext.create('Screener.model.Person',{
                 gender: formp.choice,
                 names: [{
                     givenName: formp.givenname,
@@ -507,9 +507,9 @@ Ext.define("Screener.controller.Application", {
             var store = Ext.create('Screener.store.NewPersons');
             store.add(person);
             store.sync();
-            store.on('write', function () {
+            store.on('write', function(){
                 this.getidentifierstype(store.getData().getAt(0).getData().uuid)
-            }, this);
+            } ,this);
             Ext.getCmp('newPatient').hide();
             Ext.getCmp('newPatient').reset();
             return store;
@@ -519,17 +519,17 @@ Ext.define("Screener.controller.Application", {
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Screener.store.IdentifierType')
         identifiers.load();
-        identifiers.on('load', function () {
-            this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
-        }, this);
+        identifiers.on('load',function(){
+            this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
+        },this);
     },
     // Get Location using Location store
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Screener.store.Location')
         locations.load();
-        locations.on('load', function () {
-            this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
-        }, this)
+        locations.on('load',function(){
+            this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
+        },this)
     },
     // Creates a new patient using NewPatients store 
     makePatient: function (personUuid, identifierType, location) {
@@ -818,6 +818,76 @@ Ext.define("Screener.controller.Application", {
         Ext.getStore('patientStore').add(patient);
     },
 
+    sendEncounterData: function (personUuid, encountertype, location, provider) {
+        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
+        
+        // creates the encounter json object
+        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+        var jsonencounter = Ext.create('Screener.model.encounterpost', {
+            encounterDatetime: t,
+            patient: personUuid, 
+            encounterType: encountertype,
+            //location: location,
+            provider: provider,
+            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+        });
+       
+        // Handle "Screener Vitals" encounters specially
+        // Create observations linked to the encounter
+        if (encountertype === localStorage.screenervitalsUuidencountertype)
+        {
+            var observations = jsonencounter.observations();    // Create set of observations
+            
+            var createObs = function (c, v) {
+                // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
+                // Validate before submitting an Obs
+                observations.add({
+                        obsDatetime : t,
+                        person: personUuid,
+                        concept: c,
+                        value: v
+                });
+            };
+
+            console.log("Creating Obs for uuid types...");
+            v = Ext.getCmp("vitalsForm").getValues();
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField[0]);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField[0]);
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField[0]);
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField[0]);
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField[0]); 
+            createObs(localStorage.pulseUuidconcept, v.pulseField[0]);
+            observations.sync();
+            console.log("... Complete! Created Obs for new uuid types");
+        }
+
+        // Create encounter
+        var store = Ext.create('Screener.store.encounterpost');
+        store.add(jsonencounter);
+        store.sync();
+        store.on('write', function () {
+            Ext.getStore('patientStore').load();
+        }, this);
+        return store;
+    },
+
+    // Create a SCREENER_VITALS encounter and attach vitals observations
+    savePatientVitals: function () {
+        var vpl = this.getVitalsPatientList().getComponent("patientList"); 
+        var selectedPatient  = vpl.getSelection()[0];
+        if ( ! selectedPatient) {
+            Ext.Msg.alert("You must select a patient");
+            return;
+        }
+        var patientUuid = selectedPatient.data.uuid;
+        vpl.deselectAll();
+
+        var providerPersonUuid = localStorage.loggedInUser;
+        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerPersonUuid);
+        Ext.Msg.alert("Submitted patient vitals");
+    },
+    
     sendEncounterData: function (personUuid, encountertype, location, provider) {
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
         var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());

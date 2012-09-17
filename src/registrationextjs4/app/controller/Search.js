@@ -15,7 +15,7 @@ Ext.define('Registration.controller.Search', {
                 click: this.modifySearch
             },
             "searchconfirm button[action=bmipage]":{
-                click: this.gotoBMIpage
+                click: this.gotoIllnessDetails
             }
         });
     },
@@ -88,7 +88,7 @@ Ext.define('Registration.controller.Search', {
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen
     },
     
-    gotoBMIpage: function() {
+    gotoIllnessDetails: function() {
         Ext.Ajax.request({
             url : HOST+'/ws/rest/v1/patient/'+localStorage.searchUuid,
             method: 'GET',
@@ -102,7 +102,7 @@ Ext.define('Registration.controller.Search', {
                 Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
                 Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameSearchedPatient').getValue());
                 var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.REG_BMI.value); 
+                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value); 
             }
         });
     }
