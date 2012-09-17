@@ -262,7 +262,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         type: 'absolute'
                     },
                     collapsed: true,
-                    title: 'My Panel',
+                    title: 'Patient Queue',
                     items: [
                     {
                         xtype: 'textfield',
@@ -278,7 +278,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         width: 190,
                         title: 'Today', 
                         store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
-   
                         y: 70
                     }
                     ],
@@ -309,7 +308,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     xtype: 'gridpanel',
                     height: 71,
                     collapsed: true,
-                    title: 'Pending (35)',
+                    title: 'Pending',
                     columnLines: false,
                     columns: [
                     {

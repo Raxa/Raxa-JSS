@@ -888,31 +888,97 @@ Ext.define("Screener.controller.Application", {
         Ext.Msg.alert("Submitted patient vitals");
     },
     
-    sendEncounterData: function(uuid,encountertype,location,provider){
+    sendEncounterData: function (personUuid, encountertype, location, provider) {
         //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
-        var currentDate = new Date();
+        var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
+        
         // creates the encounter json object
-        var jsonencounter = Ext.create('Screener.model.encounters',{
-            encounterDatetime: Util.Datetime(currentDate),
-            patient: uuid,//you will get the uuid from ticket 144...pass it here
+        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+        var jsonencounter = Ext.create('Screener.model.encounterpost', {
+            encounterDatetime: t,
+            patient: personUuid, 
             encounterType: encountertype,
-            location: location,
-            provider: provider
+            //location: location,
+            provider: provider,
+            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+        });
+       
+        // Handle "Screener Vitals" encounters specially
+        // Create observations linked to the encounter
+        if (encountertype === localStorage.screenervitalsUuidencountertype)
+        {
+            var observations = jsonencounter.observations();    // Create set of observations
+            
+            var createObs = function (c, v) {
+                // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
+                // Validate before submitting an Obs
+                observations.add({
+                        obsDatetime : t,
+                        person: personUuid,
+                        concept: c,
+                        value: v
+                });
+            };
+
+            console.log("Creating Obs for uuid types...");
+            v = Ext.getCmp("vitalsForm").getValues();
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField[0]);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField[0]);
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField[0]);
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField[0]);
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField[0]); 
+            createObs(localStorage.pulseUuidconcept, v.pulseField[0]);
+            observations.sync();
+            console.log("... Complete! Created Obs for new uuid types");
+        }
+
+        // Create encounter
+        var store = Ext.create('Screener.store.encounterpost');
+        store.add(jsonencounter);
+        store.sync();
+        store.on('write', function () {
+            Ext.getStore('patientStore').load();
+        }, this);
+        return store;
+    },
+
+    // Create a SCREENER_VITALS encounter and attach vitals observations
+    savePatientVitals: function () {
+        var vpl = this.getVitalsPatientList().getComponent("patientList"); 
+        var selectedPatient  = vpl.getSelection()[0];
+        if ( ! selectedPatient) {
+            Ext.Msg.alert("You must select a patient");
+            return;
+        }
+        var patientUuid = selectedPatient.data.uuid;
+        vpl.deselectAll();
+
+        var providerPersonUuid = localStorage.loggedInUser;
+        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerPersonUuid);
+        Ext.Msg.alert("Submitted patient vitals");
+    },
+
+    drugSubmit: function () {
+        objectRef = this;
+        // changes the button text to 'Confirm' and 'Cancel'
+        var MB = Ext.MessageBox;
+        Ext.apply(MB, {
+            YES: {
+                text: 'Confirm',
+                itemId: 'yes',
+                ui: 'action'
+            },
+            NO: {
+                text: 'Cancel',
+                itemId: 'no'
+            }
         });
         Ext.apply(MB, {
             YESNO: [MB.NO, MB.YES]
         });
         // on-click, launch MessageBox
         Ext.get('drugSubmitButton').on('click', function (e) {
-            Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", function(){
-                // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
-                var store = Ext.create('Screener.store.encounters');
-                store.add(jsonencounter);
-                store.sync();
-                store.on('write', function () {
-                }, this)
-                
-            });
+            Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
         });
     },
 

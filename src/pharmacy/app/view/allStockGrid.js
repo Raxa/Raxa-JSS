@@ -11,7 +11,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         listeners : {
             select : function(rowModel, record, rowIndex) {
                 //on select, go to drug details page
-                Ext.getCmp('mainarea').getLayout().setActiveItem(PHARM_PAGES.DRUGDETAILS.value);
+                Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
                 Ext.getCmp('drugDetails').initForDrug(record.data.drugName);
             },
             scope : this
@@ -37,11 +37,6 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Type',
-        width: 80
-    },
-    {
-        xtype: 'gridcolumn',
         text: 'Qty',
         dataIndex: 'quantity',
         width: 80
@@ -55,8 +50,14 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Location',
+        text: 'Room Location',
         dataIndex: 'roomLocation',
         width: 100
+    },
+    {
+        xtype: 'gridcolumn',
+        text: 'Dispense Location',
+        dataIndex: 'locationName',
+        width: 120
     }]
 });
