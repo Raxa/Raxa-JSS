@@ -1,18 +1,18 @@
-Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
+Ext.define('RaxaEmr.Pharmacy.view.goodsIssue', {
     extend: 'Ext.container.Container',
-    id: 'goodsReceipt',
+    id: '.goodsIssue',
     autoScroll: true,
-    alias: 'widget.goodsReceipt',
-    items:[,{
-        xtype: 'goodsReceiptText',
+    alias: 'widget.goodsIssue',
+    items:[{
+        xtype: 'goodsIssueText',
         x : 110
     },{
-        xtype: 'goodsReceiptGrid',
+        xtype: 'goodsIssueGrid',
         x : 110
     },{
         xtype: 'button',
         text: 'Cancel',
-        action: 'cancelReceipt',
+        action: 'cancelIssue',
         ui: 'raxa-orange-small',
         x: 500
     },
@@ -20,7 +20,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
         xtype: 'button',
         width: 60,
         text: 'Submit',
-        action: 'submitReceipt',
+        action: 'submitIssue',
         ui: 'raxa-aqua-small',
         x: 600
     }]

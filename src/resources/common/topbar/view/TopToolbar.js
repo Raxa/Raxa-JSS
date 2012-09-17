@@ -29,7 +29,7 @@ Ext.define('Topbar.view.TopToolbar', {
 						if (username == null) {
 							username = 'Guest';
 						}
-						this.parent.getComponent('UsernameLabel').setHtml(username);
+						//this.parent.getComponent('UsernameLabel').setHtml(username);
 						var buttonUrlSettings = this.parent.add({
 							xtype: 'urlSettingsButton',
 							margin: 5,
@@ -41,7 +41,7 @@ Ext.define('Topbar.view.TopToolbar', {
 					}
 					else {
 						if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
-							this.parent.getComponent('UsernameLabel').setHtml('Guest');
+							//this.parent.getComponent('UsernameLabel').setHtml('Guest');
 							var buttonUrlSettings = this.parent.add({
 								xtype: 'urlSettingsButton',
 								margin: 5,
