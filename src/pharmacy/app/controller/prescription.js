@@ -83,6 +83,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "prescription button[action=done2]": {
                 click: this.savePerson
             },
+            "prescription button[action=print2]": {
+                click: this.prescriptionfill2
+            },
+            "prescription button[action=print1]": {
+                click: this.prescriptionfill1
+            },
             'prescription button[action=fillPrescription]': {
                 click: this.fillPrescription
             },
@@ -492,7 +498,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         //makes the post call for creating the patient
         PatientStore.sync();
         PatientStore.on('write', function() {
-            this.sendPharmacyEncounter(personUuid);
+            this.sendPharmacyEncounter(personUuid, localStorage.pharmacyUuidencountertype);
         },this)
     //I made this funtion return this store because i needed this in jasmine unit test
     //return PatientStore
@@ -504,9 +510,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         }
         return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
     },
-
     
-    sendPharmacyEncounter: function(uuid) {
+    sendPharmacyEncounter: function(uuid, encountertype) {
         concept = new Array();
         order = new Array();
         var k = 0,k1 = 0,k2 = 0;
@@ -566,7 +571,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
                             patient: uuid,
                             // this is the encounter for the prescription encounterType
-                            encounterType: localStorage.pharmacyUuidencountertype,
+                            encounterType: encounterType,
                             encounterDatetime: time,
                             orders: order
                         })
@@ -591,7 +596,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
                         patient: uuid,
                         // this is the encounter for the prescription encounterType
-                        encounterType: localStorage.pharmacyUuidencountertype,
+                        encounterType: encounterType,
                         encounterDatetime: time,
                         orders: order
                     })
@@ -1187,5 +1192,37 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     showAllOrders: function(){
         Ext.getStore('stockList').clearFilter();
+    },
+    
+    prescriptionfill1: function() {
+        var time = Util.getCurrentTime();
+        // the order here will be the encounter selected from the prescription grid from 'Ext.getSelection()'
+        // model for posting the encounter for given drug orders
+        var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
+            patient: localStorage.person,
+            // this is the encounter for the prescription encounterType
+            encounterType: localStorage.prescriptionfillUuidencountertype,
+            encounterDatetime: time,
+            provoider: localStorage.loggedInUser
+            //orders: order
+        })
+        var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
+        encounterStore.add(encounter)
+        // make post call for encounter
+        encounterStore.sync()
+        encounterStore.on('write', function () {
+            Ext.Msg.alert('successfull')
+        }, this)
+    },
+    
+    prescriptionfill2: function(){
+        if(flag == 1){
+            flag = 0
+            this.sendPharmacyEncounter(localStorage.person,localStorage.prescriptionfillUuidencountertype)
+        }
+        else{
+            Ext.Msg.alert('Please press \'Done\' button first')
+        }
     }
+
 });

@@ -133,6 +133,24 @@ var resourceUuid = {
         "varName": "bloodoxygensaturation",
         "displayName": "BLOOD OXYGEN SATURATION"
     },
+    "referred": {
+        "resource": "concept",
+        "queryTerm": "REFERRING PERSON",
+        "varName": "referred",
+        "displayName": "REFERRING PERSON"
+    },
+    "notes": {
+        "resource": "concept",
+        "queryTerm": "CLINICIAN NOTES",
+        "varName": "notes",
+        "displayName": "CLINICIAN NOTES"
+    },
+    "regcomplaint": {
+        "resource": "concept",
+        "queryTerm": "REGISTRATION COMPLAINT",
+        "varName": "regcomplaint",
+        "displayName": "REGISTRATION COMPLAINT"
+    },
     "basic": {
         "resource": "form",
         "queryTerm": "basic",
@@ -272,24 +290,28 @@ var REG_PAGES = {
         value: 1,
         name: "registrationpart1"
     },
-    REG_CONFIRM: {
+    ILLNESS_DETAILS: {
         value: 2,
+        name: "illnessdetails"
+    },
+    REG_CONFIRM: {
+        value: 3,
         name: "registrationconfirm"
     },
     REG_BMI: {
-        value: 3,
+        value: 4,
         name: "registrationbmi"
     },
     SEARCH_1: {
-        value: 4,
+        value: 5,
         name: "searchpart1"
     },
     SEARCH_2: {
-        value: 5,
+        value: 6,
         name: "searchpart2"
     },
     SEARCH_CONFIRM: {
-        value: 6,
+        value: 7,
         name: "searchconfirm"
     }
 };
@@ -661,3 +683,4 @@ var Util = {
         });
     }
 }
+

@@ -103,7 +103,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Done',
-                        action: 'done',
+                        action: 'doneWithNewPatientPrescription',
                         ui: 'raxa-aqua-small',
                         x: 330,
                         y: 580
@@ -112,7 +112,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Print',
-                        action: 'fillPrescription',
+                        action: 'printPrescribedDrugs',
                         ui: 'raxa-aqua-small',
                         x: 560,
                         y: 580
@@ -124,12 +124,12 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     items:[{
                         xtype: 'prescribedDrugs',
                         x: 190,
-                        y: 270,
+                        y: 270
                     },{
                         xtype: 'button',
                         width: 60,
                         text: 'Done',
-                        action: 'done2',
+                        action: 'doneWithQueuedPatientPrescription',
                         ui: 'raxa-aqua-small',
                         x: 330,
                         y: 580

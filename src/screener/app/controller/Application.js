@@ -157,11 +157,11 @@ Ext.define("Screener.controller.Application", {
             'patientListView button[action=refreshList]': {
                 tap: 'refreshList'
             },
+            sortByNameButton: {
+                tap: 'sortByName'
+            },
             drugSubmitButton: {
                 tap: 'drugSubmit'
-            },
-            'patientListView button[action=sortByName]': {
-                tap: 'sortByName'
             },
             'patientListView button[action=sortByFIFO]': {
                 tap: 'sortByFIFO'
@@ -495,9 +495,9 @@ Ext.define("Screener.controller.Application", {
     // Adds new person to the NewPersons store
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
-
+       
         if (formp.givenname && formp.familyname && formp.choice) {
-            var person = Ext.create('Screener.model.Person', {
+            var person = Ext.create('Screener.model.Person',{
                 gender: formp.choice,
                 names: [{
                     givenName: formp.givenname,
@@ -507,9 +507,9 @@ Ext.define("Screener.controller.Application", {
             var store = Ext.create('Screener.store.NewPersons');
             store.add(person);
             store.sync();
-            store.on('write', function () {
+            store.on('write', function(){
                 this.getidentifierstype(store.getData().getAt(0).getData().uuid)
-            }, this);
+            } ,this);
             Ext.getCmp('newPatient').hide();
             Ext.getCmp('newPatient').reset();
             return store;
@@ -519,17 +519,17 @@ Ext.define("Screener.controller.Application", {
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Screener.store.IdentifierType')
         identifiers.load();
-        identifiers.on('load', function () {
-            this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
-        }, this);
+        identifiers.on('load',function(){
+            this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
+        },this);
     },
     // Get Location using Location store
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Screener.store.Location')
         locations.load();
-        locations.on('load', function () {
-            this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
-        }, this)
+        locations.on('load',function(){
+            this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
+        },this)
     },
     // Creates a new patient using NewPatients store 
     makePatient: function (personUuid, identifierType, location) {
@@ -887,28 +887,32 @@ Ext.define("Screener.controller.Application", {
         this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerPersonUuid);
         Ext.Msg.alert("Submitted patient vitals");
     },
-
-    drugSubmit: function () {
-        objectRef = this;
-        // changes the button text to 'Confirm' and 'Cancel'
-        var MB = Ext.MessageBox;
-        Ext.apply(MB, {
-            YES: {
-                text: 'Confirm',
-                itemId: 'yes',
-                ui: 'action'
-            },
-            NO: {
-                text: 'Cancel',
-                itemId: 'no'
-            }
+    
+    sendEncounterData: function(uuid,encountertype,location,provider){
+        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        var currentDate = new Date();
+        // creates the encounter json object
+        var jsonencounter = Ext.create('Screener.model.encounters',{
+            encounterDatetime: Util.Datetime(currentDate),
+            patient: uuid,//you will get the uuid from ticket 144...pass it here
+            encounterType: encountertype,
+            location: location,
+            provider: provider
         });
         Ext.apply(MB, {
             YESNO: [MB.NO, MB.YES]
         });
         // on-click, launch MessageBox
         Ext.get('drugSubmitButton').on('click', function (e) {
-            Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
+            Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", function(){
+                // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+                var store = Ext.create('Screener.store.encounters');
+                store.add(jsonencounter);
+                store.sync();
+                store.on('write', function () {
+                }, this)
+                
+            });
         });
     },
 

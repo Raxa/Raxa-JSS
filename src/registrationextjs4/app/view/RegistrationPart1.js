@@ -48,7 +48,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         msgTarget: 'side'
                     },
                     	
-                   layout: {	  	
+                    layout: {	  	
                         type: 'hbox'
                     },
 
@@ -58,7 +58,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             xtype: 'fieldcontainer',	  	
                             fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),	  	
                             layout: 'hbox',
- 	                        combineErrors: true,
+                            combineErrors: true,
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 200,
@@ -202,7 +202,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             align: 'stretch'
                         },
                         items:[{
-                                html: "<img border=\"0\" src=\"/Raxa-JSS/src/resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
+                            html: "<img border=\"0\" src=\"/Raxa-JSS/src/resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         },{
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
@@ -348,18 +348,19 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'combo',
                             name: 'education',
-                            label: 'Education Details',fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
+                            label: 'Education Details',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
                             id: 'education',
                             layout: 'hbox',
                             width: 172,
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
                                 data: [
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.1')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.2')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.3')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.4')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.5')]
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.1')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.2')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.3')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.4')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.5')]
                                 ]
                             }),
                             displayField: 'education'
@@ -455,20 +456,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id:'continuebutton',
                             text: 'Next',
                             ui: 'raxa-aqua-small',
-                            action: 'continue',
-				    
-									              	
-				}]
+                            action: 'continue'
+                        }]
                     }]
                 }]
             }]
         };
         this.callParent();
-
-
-	  
-
-		
     }
 });
 	
