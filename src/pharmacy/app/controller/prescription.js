@@ -585,7 +585,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         // make post call for encounter
                         encounterStore.sync()
                         encounterStore.on('write', function () {
-                            Ext.Msg.alert('successfull');
+                            Ext.Msg.alert('Successful');
                             Ext.getStore('orderStore').removeAll();
                         }, this)
                     }
@@ -610,7 +610,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     // make post call for encounter
                     encounterStore.sync()
                     encounterStore.on('write', function () {
-                        Ext.Msg.alert('successfull')
+                        Ext.Msg.alert('Successful')
                     }, this)
                 }
             }
@@ -823,7 +823,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getStore('stockList').load();
             Ext.getCmp('allStockGrid').getView().refresh();
             Ext.getStore('batches').load();
-            Ext.Msg.alert('successful');
+            Ext.Msg.alert('Successful');
         }, this);
     },
 
@@ -982,7 +982,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getStore('stockList').load();
             Ext.getCmp('allStockGrid').getView().refresh();
             Ext.getStore('fillRequisitions').load();
-            Ext.Msg.alert('successful');
+            Ext.Msg.alert('Successful');
         }, this);
     },
     
@@ -1148,7 +1148,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getStore('stockList').load();
             Ext.getCmp('allStockGrid').getView().refresh();
             Ext.getStore('stockIssues');
-            Ext.Msg.alert('successful');
+            Ext.Msg.alert('Successful');
         }, this);
     },
     
@@ -1199,8 +1199,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             // this is the encounter for the prescription encounterType
             encounterType: localStorage.prescriptionfillUuidencountertype,
             encounterDatetime: time,
-            provoider: localStorage.loggedInUser
-            //orders: order
+            provider: localStorage.loggedInUser
         })
         var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
         encounterStore.add(encounter)
@@ -1215,7 +1214,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             l2.setActiveItem(0);
             Ext.getCmp('drugASearchGrid').getStore().removeAll();
             Ext.getCmp('prescriptionDate').setValue('');
-            Ext.Msg.alert('successfull')
+            Ext.Msg.alert('Successful')
         }, this)
     },
     
