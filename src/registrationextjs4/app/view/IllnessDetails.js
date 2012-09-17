@@ -40,7 +40,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     xtype: 'textareafield',
                     cls: 'raxa-form-panel',    
                     name: 'Complaint Area',
-                    id: 'complaintarea',
+                    id: 'complaintArea',
                     width: 375,
                     height: 125,
                     scrollable: true,
@@ -62,7 +62,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     xtype: 'textareafield',
                     cls: 'raxa-form-panel',    
                     name: 'Remarks Area',
-                    id: 'remarksarea',
+                    id: 'remarksArea',
                     width: 375,
                     height: 55,
                     scrollable: true,
@@ -72,7 +72,7 @@ Ext.define('Registration.view.IllnessDetails', {
                 xtype: 'combobox',
                 fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.referred'),
                 store: Ext.create('Registration.store.Doctors'),
-                id: 'referredby',
+                id: 'referredBy',
                 width: 475,
                 allowBlank: true,
                 //editable: false,
@@ -111,7 +111,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     xtype: 'textfield',
                     cls: 'raxa-form-panel',    
                     name: 'Companion Name',
-                    id: 'companionname',
+                    id: 'companionName',
                     width: 375,
                     allowBlank: true
                 }]
@@ -131,7 +131,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     xtype: 'numberfield',
                     cls: 'raxa-form-panel',    
                     name: 'Phone Number',
-                    id: 'phonenumber',
+                    id: 'phoneNumber',
                     width: 255,
                     allowBlank: true
                 }]
@@ -151,7 +151,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     xtype: 'textfield',
                     cls: 'raxa-form-panel',    
                     name: 'Relation',
-                    id: 'relationtopatient',
+                    id: 'relationToPatient',
                     width: 255,
                     allowBlank: true
                 }]
@@ -183,7 +183,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     xtype: 'numberfield',
                     cls: 'raxa-form-panel',    
                     name: 'Registration Fees',
-                    id: 'registrationfeespaid',
+                    id: 'registrationFeesPaid',
                     width: 175,
                     allowBlank: false
                 },{
@@ -234,7 +234,7 @@ Ext.define('Registration.view.IllnessDetails', {
                 margin: '30 0 0 30',
                 width: 60,
                 text: 'Next',
-                action: 'next'
+                action: 'goToBMI'
             }]
         }]
     }]

@@ -290,13 +290,13 @@ var REG_PAGES = {
         value: 1,
         name: "registrationpart1"
     },
-    ILLNESS_DETAILS: {
-        value: 2,
-        name: "illnessdetails"
-    },
     REG_CONFIRM: {
-        value: 3,
+        value: 2,
         name: "registrationconfirm"
+    },
+    ILLNESS_DETAILS: {
+        value: 3,
+        name: "illnessdetails"
     },
     REG_BMI: {
         value: 4,

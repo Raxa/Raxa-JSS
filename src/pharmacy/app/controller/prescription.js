@@ -80,8 +80,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'prescription [action=addPatient]': {
                 click: this.displayForm
             },
-            "prescription button[action=done2]": {
-                click: this.savePerson
+            "prescription button[action=doneWithNewPatientPrescription]": {
+                click: function(){
+                    this.savePerson();
+                    this.prescriptionfill2();
+                }
             },
             "prescription button[action=print2]": {
                 click: this.prescriptionfill2
@@ -89,8 +92,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "prescription button[action=print1]": {
                 click: this.prescriptionfill1
             },
-            'prescription button[action=fillPrescription]': {
-                click: this.fillPrescription
+            'prescription button[action=doneWithQueuedPatientPrescription]': {
+                click: this.fillPrescription1
             },
             'prescription button[action=printPrescribedDrugs]': {   //Action of Print button in Search Patient
                 click: this.printPrescribedDrugs
