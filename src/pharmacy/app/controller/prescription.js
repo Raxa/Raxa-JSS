@@ -79,17 +79,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "prescription button[action=doneWithNewPatientPrescription]": {
                 click: function(){
                     this.savePerson();
-                    this.prescriptionfill2();
+                    this.prescriptionFillNewPatient();
                 }
             },
-            "prescription button[action=print2]": {
-                click: this.prescriptionfill2
-            },
-            "prescription button[action=print1]": {
-                click: this.prescriptionfill1
-            },
             'prescription button[action=doneWithQueuedPatientPrescription]': {
-                click: this.fillPrescription1
+                click: this.prescriptionFillQueuedPatient
             },
             'prescription button[action=printPrescribedDrugs]': {   //Action of Print button in Search Patient
                 click: this.printPrescribedDrugs
@@ -421,6 +415,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             }
         });
     },
+    
     printing:function(selectedPatient) {
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
         popupWindow = window.open('app/print.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
@@ -521,7 +516,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
     },
     
-    sendPharmacyEncounter: function(uuid, encountertype) {
+    sendPharmacyEncounter: function(uuid, typeOfEncounter) {
         concept = new Array();
         order = new Array();
         var k = 0,k1 = 0,k2 = 0;
@@ -581,7 +576,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
                             patient: uuid,
                             // this is the encounter for the prescription encounterType
-                            encounterType: encounterType,
+                            encounterType: typeOfEncounter,
                             encounterDatetime: time,
                             orders: order
                         })
@@ -1195,7 +1190,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getStore('stockList').clearFilter();
     },
     
-    prescriptionfill1: function() {
+    prescriptionFillNewPatient: function() {
         var time = Util.getCurrentTime();
         // the order here will be the encounter selected from the prescription grid from 'Ext.getSelection()'
         // model for posting the encounter for given drug orders
@@ -1212,18 +1207,28 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // make post call for encounter
         encounterStore.sync()
         encounterStore.on('write', function () {
+            var l = Ext.getCmp('mainarea').getLayout();
+            l.setActiveItem(0);
+            var l1 = Ext.getCmp('addpatientarea').getLayout();
+            l1.setActiveItem(0);
+            var l2 = Ext.getCmp('addpatientgridarea').getLayout();
+            l2.setActiveItem(0);
+            Ext.getCmp('drugASearchGrid').getStore().removeAll();
+            Ext.getCmp('prescriptionDate').setValue('');
             Ext.Msg.alert('successfull')
         }, this)
     },
     
-    prescriptionfill2: function(){
-        if(flag == 1){
-            flag = 0
-            this.sendPharmacyEncounter(localStorage.person,localStorage.prescriptionfillUuidencountertype)
-        }
-        else{
-            Ext.Msg.alert('Please press \'Done\' button first')
-        }
+    prescriptionFillQueuedPatient: function(){
+        this.sendPharmacyEncounter(localStorage.person,localStorage.prescriptionfillUuidencountertype)
+        var l = Ext.getCmp('mainarea').getLayout();
+        l.setActiveItem(0);
+        var l1 = Ext.getCmp('addpatientarea').getLayout();
+        l1.setActiveItem(0);
+        var l2 = Ext.getCmp('addpatientgridarea').getLayout();
+        l2.setActiveItem(0);
+        Ext.getCmp('drugASearchGrid').getStore().removeAll();
+        Ext.getCmp('prescriptionDate').setValue('');
     }
 
 });
