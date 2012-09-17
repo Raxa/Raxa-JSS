@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Outpatient.model.Observation', {
+Ext.define('RaxaEmr.Outpatient.model.obs', {
 	extend: 'Ext.data.Model',
 	config: {
 		fields: [{
@@ -16,15 +16,7 @@ Ext.define('RaxaEmr.Outpatient.model.Observation', {
 		{
 			name: 'value',
 			type: 'string'
-		},
-		{
-			name: 'comment',
-			type: 'string'
-		},
-		{
-			name: 'order',
-			type: 'int'
-		}]
+		}],
 	}
 });
 
