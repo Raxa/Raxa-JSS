@@ -343,7 +343,8 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory'];
+        //'registration' (sencha touch version) and 'chw' are removed from the list as they are not being used now
+	return ['login', 'screener', 'registrationextjs4', 'outpatient', 'laboratory','pharmacy'];
     },
 
     getApps: function () {
