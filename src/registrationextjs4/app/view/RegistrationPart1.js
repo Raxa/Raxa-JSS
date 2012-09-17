@@ -67,7 +67,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
-                                xtype: 'numberfield',
+                                xtype: 'textfield',
                                 cls: 'raxa-form-panel',    
                                 name: 'Old Patient Identifier',
                                 id: 'oldPatientIdentifier',
@@ -297,7 +297,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
                         layout: 'hbox',
                         combineErrors: true,
-                        defaultType: 'numberfield',
+                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 200,

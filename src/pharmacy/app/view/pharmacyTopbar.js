@@ -1,4 +1,5 @@
 TOPBARBUTTONLOGOPATH = '../../resources/img/miniLogo.png';
+PHARMACYTOPBARHEIGHT = 65;
 
 Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     extend: 'Ext.container.Container',
@@ -26,7 +27,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     },
     items: [{
         xtype: 'toolbar',
-        height: 65,
+        height: PHARMACYTOPBARHEIGHT,
         dock: 'top',
         items: [{
             xtype: 'image',
@@ -100,10 +101,26 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             xtype: 'tbseparator'
         }, {
             xtype: 'button',
-            text: 'Alert',
-            menu: new Ext.menu.Menu({
-                items: []
-            })
+            id: 'alertButton',
+            text: 'Alerts',
+            width: 60,
+            height: 30,
+            handler: function(){
+                Ext.getStore('alerts').load();
+                if(Ext.getCmp('alertPanel').isHidden()){
+                    Ext.getCmp('alertPanel').show();
+                    this.setText('Close');
+                    var x = Ext.getCmp('pharmacytopbar').x + Ext.getCmp('pharmacytopbar').width - Ext.getCmp('alertPanel').width;
+                    Ext.getCmp('alertPanel').setPosition(x, PHARMACYTOPBARHEIGHT);
+                    Ext.getCmp('alertPanel').setHeight(200);
+                    this.setUI('raxa-orange-small');
+                }else{
+                    Ext.getCmp('alertPanel').hide();
+                    this.setText('Alerts');
+                    this.setUI('default');
+                }
+                
+            }
         }]
     }]
 })

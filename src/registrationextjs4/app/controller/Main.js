@@ -132,18 +132,12 @@ Ext.define('Registration.controller.Main', {
             addresses: [{
                 address1: Ext.getCmp('block').value,
                 address2: Ext.getCmp('street').value,
-                cityVillage: Ext.getCmp('town').value,
+                cityVillage: Ext.getCmp('town').value
+            }],
+            attributes : [{
+                value : Ext.getCmp('relativeFirstName').value+" "+Ext.getCmp('relativeLastName').value,
+                attributeType : localStorage.primaryRelativeUuidpersonattributetype
             }]
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-206
-        //right now there is bug in openmrs server due to which sending attributes with body of 
-        //post call leads to 500 response status so right now I am commenting it for
-        /*  attributes : [{
-                value : Ext.getCmp('relativeFirstName').value,            
-                attributeType : '88b65382-496f-4789-b200-f01985e609e5'  
-            }, {
-                value : Ext.getCmp('relativeLastName').value,
-                attributeType : '606157e9-e2d9-454d-bef4-27a56b3da953'
-            }]*/
         })
         //this if else statement change the persist property of age field in Person model so that if its
         //empty it should not be sent to server in the body of post call
@@ -159,11 +153,69 @@ Ext.define('Registration.controller.Main', {
         } else {
             Registration.model.Person.getFields()[3].persist = false;
         }
-
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-206
-        // Restore old code which adds patient Attributes
-        // ('oldPatientIdentifier', 'caste', 'education', etc)
-        
+        if(Ext.getCmp('oldPatientIdentifier').getValue() != null){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('oldPatientIdentifier').getValue(),
+                //the attributeType will change if we change the server so change them if server changes
+                attributeType : localStorage.oldPatientIdentificationNumberUuidpersonattributetype
+            })
+        }
+        /*if(Ext.getCmp('caste').getValue() != null){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('caste').getValue(),
+                attributeType : 'cff6cebc-24e7-46b0-9841-0269b56b01f1'
+            })
+        }*/
+        if(Ext.getCmp('education').getValue() != null){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('education').getValue(),
+                attributeType : localStorage.educationUuidpersonattributetype
+            })
+        }
+        if(Ext.getCmp('occupation').getValue() != null){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('occupation').getValue(),
+                attributeType : localStorage.occupationUuidpersonattributetype
+            })
+        }
+        if(Ext.getCmp('tehsil').getValue() != ""){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('tehsil').getValue(),
+                attributeType : localStorage.tehsilUuidpersonattributetype
+            })
+        }
+        if(Ext.getCmp('district').getValue() != ""){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('district').getValue(),
+                attributeType : localStorage.districtUuidpersonattributetype
+            })
+        }
+        if(Ext.getCmp('phoneContactInformation').getChecked().length > 0){
+            if(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel == "Yes"){
+                jsonperson.data.attributes.push({
+                    value : "true",
+                    attributeType : localStorage.contactByPhoneUuidpersonattributetype
+                })
+            }
+            else {
+                jsonperson.data.attributes.push({
+                    value : "false",
+                    attributeType : localStorage.contactByPhoneUuidpersonattributetype
+                })
+            }
+        }
+        if(Ext.getCmp('patientPrimaryContact').getValue() != null){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('patientPrimaryContact').getValue(),
+                attributeType : localStorage.primaryContactUuidpersonattributetype
+            })
+        }
+        if(Ext.getCmp('patientSecondaryContact').getValue() != null){
+            jsonperson.data.attributes.push({
+                value : Ext.getCmp('patientSecondaryContact').getValue(),
+                attributeType : localStorage.secondaryContactUuidpersonattributetype
+            })
+        }
         var store = Ext.create('Registration.store.Person');
         store.add(jsonperson);
         // this statement makes the post call to make the person
