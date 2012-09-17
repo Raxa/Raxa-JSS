@@ -344,6 +344,16 @@ var Util = {
     getUiTime: function () {
         return UITIME;
     },
+	
+    /**
+     *Returns how many days are left from now to date passed in
+     */
+    daysFromNow: function(futureDate) {
+        var future = new Date(futureDate);
+        var now = new Date();
+        return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
+    },
+
 
     /**
      *Gets the current time
@@ -607,7 +617,7 @@ var Util = {
      * Returns the uuid of the logged in provider
      */
     getLoggedInProviderUuid: function(){
-        if(!localStorage.getItem("loggedInUser"))
+        if(!localStorage.getItem("loggedInUser")){
             // TODO: should throw an exception, not return the wrong string
             // Ext.Error.raise('<Error Text>');
             return "provider is not logged in";

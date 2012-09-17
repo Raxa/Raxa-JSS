@@ -733,7 +733,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
      * Populates issue drug fields with drugs + quantites from the purchase order
      */
     populateReceiptFromPurchaseOrder: function(combo, records){
-        Ext.getCmp('receiptLocationPicker').setValue(records[0].data.dispenselocationname);
+        Ext.getCmp('receiptLocationPicker').setValue(records[0].data.dispenseLocationName);
         //emptying previous fields
         Ext.getStore('newReceipt').removeAll();
         Ext.ComponentQuery.query('goodsReceiptGrid')[0].getSelectionModel().deselectAll();
@@ -802,8 +802,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             description: "Receipt at "+receiptLocationString+ " on "+time.toString().substr(0, 10),
             received: "true",
             provider: Util.getLoggedInProviderUuid(),
-            stocklocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
-            dispenselocation: Ext.getStore("receiptLocations").getAt(receiptLocationIndex).data.uuid,
+            stockLocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
+            dispenseLocation: Ext.getStore("receiptLocations").getAt(receiptLocationIndex).data.uuid,
             drugPurchaseOrderDate: time,
             inventories: drugInventories
         });
@@ -959,8 +959,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             description: "Requisition from "+dispenseLocationString+ " on "+time.toString().substr(0, 10),
             received: "false",
             provider: Util.getLoggedInProviderUuid(),
-            stocklocation: Ext.getStore("stockLocations").getAt(stockLocationIndex).data.uuid,
-            dispenselocation: Ext.getStore("dispenseLocations").getAt(dispenseLocationIndex).data.uuid,
+            stockLocation: Ext.getStore("stockLocations").getAt(stockLocationIndex).data.uuid,
+            dispenseLocation: Ext.getStore("dispenseLocations").getAt(dispenseLocationIndex).data.uuid,
             drugPurchaseOrderDate: time,
             inventories: drugInventories
         });
@@ -991,8 +991,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
          * Populates issue drug fields with drugs + quantites from the purchase order
          */
     populateIssueFromPurchaseOrder: function(combo, records){
-        Ext.getCmp('issueDispenseLocationPicker').setValue(records[0].data.dispenselocationname);
-        Ext.getCmp('issueStockLocationPicker').setValue(records[0].data.stocklocationname);
+        Ext.getCmp('issuedispenseLocationPicker').setValue(records[0].data.dispenseLocationName);
+        Ext.getCmp('issueStockLocationPicker').setValue(records[0].data.stockLocationName);
         //emptying previous fields
         Ext.getStore('newIssue').removeAll();
         Ext.ComponentQuery.query('goodsIssueGrid')[0].getSelectionModel().deselectAll();
@@ -1075,7 +1075,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 return "Quantity cannot exceed batch";
             }
         }
-        if(Ext.getCmp('issueDispenseLocationPicker').getValue()===null){
+        if(Ext.getCmp('issuedispenseLocationPicker').getValue()===null){
             return "Please select a dispense location";
         }
         return null;
@@ -1091,7 +1091,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         }
         RaxaEmr.Pharmacy.model.PurchaseOrder.getFields()[RaxaEmr_Pharmacy_Controller_Vars.PURCHASE_ORDER_MODEL.INVENTORIES_INDEX].persist = true;
         RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = true;
-        var issueDispenseLocationIndex = Ext.getStore("issueDispenseLocations").find('display', Ext.getCmp("issueDispenseLocationPicker").value);
+        var issuedispenseLocationIndex = Ext.getStore("issuedispenseLocations").find('display', Ext.getCmp("issuedispenseLocationPicker").value);
         var issueStockLocationIndex = Ext.getStore("issueStockLocations").find('display', Ext.getCmp("issueStockLocationPicker").value);
         var purchaseOrderUuid = Ext.getCmp('issuePurchaseOrderPicker').getValue();
         var issueStockLocationString = Ext.getStore("issueStockLocations").getAt(issueStockLocationIndex).data.display.toString().split(" - ")[0];
@@ -1106,7 +1106,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 quantity: issues.items[i].data.quantity,
                 originalQuantity: issues.items[i].data.quantity,
                 expiryDate: issues.items[i].data.expiryDate,
-                location: Ext.getStore("issueDispenseLocations").getAt(issueDispenseLocationIndex).data.uuid
+                location: Ext.getStore("issuedispenseLocations").getAt(issuedispenseLocationIndex).data.uuid
             });
             if(purchaseOrderUuid!==null){
                 drugInventories[i].uuid = issues.items[i].data.uuid;
@@ -1119,8 +1119,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             description: "Issue from "+issueStockLocationString+ " on "+time.toString().substr(0, 10),
             received: "false",
             provider: Util.getLoggedInProviderUuid(),
-            stocklocation: Ext.getStore("issueStockLocations").getAt(issueStockLocationIndex).data.uuid,
-            dispenselocation: Ext.getStore("issueDispenseLocations").getAt(issueDispenseLocationIndex).data.uuid,
+            stockLocation: Ext.getStore("issueStockLocations").getAt(issueStockLocationIndex).data.uuid,
+            dispenseLocation: Ext.getStore("issuedispenseLocations").getAt(issuedispenseLocationIndex).data.uuid,
             drugPurchaseOrderDate: time,
             inventories: drugInventories
         });
@@ -1136,7 +1136,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             var alertParams = {
                 name: "New Issue from stock center",
                 toLocation: Ext.getStore("issueStockLocations").getAt(issueStockLocationIndex).data.uuid,
-                fromLocation: Ext.getStore("issueDispenseLocations").getAt(issueDispenseLocationIndex).data.uuid,
+                fromLocation: Ext.getStore("issuedispenseLocations").getAt(issuedispenseLocationIndex).data.uuid,
                 alertType: "newIssue",
                 defaultTask: "newReceipt"
             };
@@ -1186,6 +1186,71 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     showAllOrders: function(){
-        Ext.getStore('stockList').clearFilter();
+        //Ext.getStore('stockList').clearFilter();
+               var submitDrugs = [ "Acetate" , "Acetazolamide" , "Aceten" , "Acetylsalicylic" , "Aciclovir" , "Adrenaline" , "Adrenochrome" , "Adriamycin" , "Aerocort" , "Albendazole" , "Allopurinol" , "Amikacin" , "Aminophyline" , "Aminosalicylate" , "Amitriptyline" , "Amlodipine" , "Amoxycillin" , "Ampicillin" , "Antacid" , "Artesunate" , "Artimether" , "Aspirin" , "Atenolol" , "Atorvastatin" , "Atropin" , "Azithromycin" , "Bacillus" , "Bandage" , "Beclomethasone" , "Benzathine" , "Benzene" , "Benzine" , "Benzyl" , "Betadine" , "Betamethsone" , "Bethanechol" , "Bicarbonate" , "Bisacodyl" , "Bitartrate" , "Bleomycin" , "Bromide" , "Bucopan" , "Budesonide" , "Buscopan" , "Butyl" , "Calcirol" , "Calmette" , "Caproate" , "Carbamazepine" , "Carbidopa" , "Carbimazole" , "Cefadroxil" , "Cefazoline" , "Cefixime" , "Cefotaxime" , "Ceftriaxone" , "Cephlexin" , "Cetrizine" , "Chana" , "Chloramphenical" , "Chloramphenicol" , "Chlorepheniramine" , "Chloroquine" , "Chlorpheniramine" , "Chlorpromazine" , "Cholecalciferol" , "Chromostat" , "Chuna" , "Churna" , "Cindamycin" , "Cinnarazine" , "Cipro" , "Ciprofloxacin" , "Cisplatin" , "Citrate" , "Clarithromycin" , "Clavulanate" , "Clindamycin" , "Clobenate" , "Clobetasol" , "Clofazimine" , "Clomiphene" , "Clonazepam" , "Clotrimazole" , "Cloxacillin" , "Cloxacilline" , "Codinol" , "Colostomy" , "Cotrimazole" , "Cotrimoxazole" , "Cyclophosphamide" , "Cycloserine" , "Cyproheptadin" , "Dacarbazine" , "Dactinomycin" , "Dapsone" , "Decarbazine" , "Dexamethasone" , "Dextrox" , "Diazepam" , "Dicfenec" , "Diclofenac" , "Diclofenec" , "Dicloxacillin" , "Dicyclominehydrochloride" , "Diethyl" , "Digoxin" , "DiltiazemHydrochloride" , "Dinitrate" , "Dipropionate" , "Diprovate" , "Dizolwax" , "Dobutamine" , "Dopamine" , "Doxinate" , "Doxorubicin" , "Doxycycline" , "Doxycyline" , "Drops" , "Enalapril" , "Enalpril" , "Endoasthma" , "Endoxan" , "Erythromycin" , "Ethambutal" , "Ethinomide" , "Etofylline" , "Etoposide" , "Eumosone" , "Famotidine" , "Faropenem" , "Ferrous" , "Fersifol" , "Finestride" , "Fluconazole" , "Fluoxetine" , "Flurouracil" , "Frusemide" , "Furazolidine" , "Gentamicin" , "Gentian" , "Glibenclamide" , "Glipizide" , "Gluconate" , "Glycerin" , "Glycerol" , "Griseofulvin" , "Grisofulvin" , "Guerin" , "Haloperidol" , "Heparin" , "Hexachloride" , "Hydrochlorothiazide" , "Hydrocortisone" , "Hydroxyprogesterone" , "Hydroxypropyl" , "Hydroxyurea" , "Hyoscine" , "Ibuprofen" , "Ifosfamide" , "Imipramin" , "Immunoglobulin" , "Indomethacin" , "Insulin," , "Iodide" , "Iodine" , "Ipratropium" , "Isabgol" , "Isoniazid" , "Isophane" , "Isorbide" , "Isoxsuprine" , "Ivermectin" , "Kidrolyte" , "Labetalol" , "Lactulose" , "Levamisole" , "Levodopa" , "Levoflox" , "Lincomycin" , "Lynoral" , "Magnesium" , "Maleate" , "Melan" , "Meropenam" , "Mesna" , "Metformin" , "Methorexate" , "Methotrexate" , "Methoxsalen" , "Methyergometrine" , "Methylcellulose" , "Methyldopa" , "Methylergometrine" , "Methylprednisolone" , "Metoclopramide" , "Metoprolol" , "Metro" , "Metronidazole" , "Miconazole" , "Minocyclline" , "Minral" , "Misoprost" , "Monopas" , "Monosemicarbazone" , "Moxifloxacin" , "Multimineral" , "Multivitamin" , "Namak" , "Neostigmin" , "Nevirapine" , "Nicotinate" , "Nicoumalone" , "Nidazole" , "Nifedepin" , "Nitrofurantoin" , "Nitroglycerin" , "Norethindrone" , "Ofloxacin" , "Olanzapine" , "Omeprazole" , "Omerazole" , "Ondansetron" , "Oxymetazoline" , "Oxytocin" , "Paracetamol" , "Paraffine" , "Pencilline" , "Penicillin" , "Pentazocine" , "Pentoxifylline" , "Pessaries" , "Pheniramine" , "Phenobarbitone" , "Phenytoin" , "Pioglitazone" , "Pipracilline" , "Placentex" , "Povidine" , "Povidone" , "Pralidoxime" , "Prazocin" , "Prednisolone" , "Pressurised" , "PrimaQuine" , "Prochlorperazine" , "Promethazine" , "Propranol" , "Pyrazinamide" , "Pyridoxine" , "Pyrimethamine" , "Quetiapine" , "Quinine" , "Rabipur" , "Ranitidine" , "Respirator" , "Retino" , "Rifampicin" , "Risperidone" , "Rotacap" , "Rotacaps" , "Rotahaler" , "Salbutamol" , "Saral" , "Sertraline" , "Setron" , "Sodium Chlorzoxazone Paracetamol" , "Soframycin" , "Spironolactone" , "Streptokinase" , "Streptomycin" , "Sukhdi" , "Sulfa" , "Sulfadizine" , "Sulphacetamide" , "Sulphadoxine" , "Sulphate" , "TRIAMCINOLONE" , "Tamoxifen" , "Tamsulosin" , "Tetanus" , "Tetracycline" , "Tetradecyl" , "Thalidomide" , "Theophyline" , "Theophylline" , "Thisulphate" , "Thrombophob" , "Thyroxin" , "Tilstigmin" , "Tramadol" , "Tramdol" , "Trihexyphenidyl" , "Triphla" , "Trisilicate" , "Tropicamide" , "Turbutaline" , "U.S.P" , "Valethamate" , "Valporate" , "Vancomycin" , "Veginal" , "Venam" , "Vinblastin" , "Vincristine" , "Violet" , "Vitalet" , "MultiVitamin" , "Vitcofol" , "Vyaghri" , "Warfarin" , "Xylocaine" , "Zincovit" , "chloquine" , "multimineral"];
+        var submitUuids = [];
+        console.log(submitDrugs.length);
+        //        for(var i=0; i<submitDrugs.length; i++){
+        for(var i=290; i<submitDrugs.length; i++){
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", 'http://test.raxa.org:8080/openmrs/ws/rest/v1/concept?q='+submitDrugs[i]+"&v=full" , false );
+            xmlHttp.setRequestHeader("Accept", "application/json");
+            xmlHttp.setRequestHeader("Authorization", "Basic " + window.btoa("admin" + ":" + "Hello123"));
+            xmlHttp.send();
+            //var jsonResponse = JSON.parse(xmlHttp.responseText);
+            if (xmlHttp.status == "200") {
+                var jsonResponse = Ext.decode(xmlHttp.responseText);
+                var j=0;
+                var complete=false;
+                while(j<jsonResponse.results.length && !complete){
+                    var k=0;
+                    var isUpper = true;
+                    while (k<jsonResponse.results[j].display.length && isUpper){
+                        var character = jsonResponse.results[j].display.charAt(k);
+                        if (!isNaN(character * 1)){
+                            isUpper = false;
+                        }else{
+                            if (character == character.toUpperCase()) {
+                            //alert ('upper case true');
+                            }
+                            if (character == character.toLowerCase()){
+                                isUpper = false;
+                            }
+                        }
+                        k++;
+                    }
+                    if(isUpper){
+                        complete = true;
+                        submitUuids.push(jsonResponse.results[j].uuid);
+//                        console.log(jsonResponse.results[j].display);
+//                        var newDrug = {
+//                            concept: jsonResponse.results[j].uuid,
+//                            name: submitDrugs[i]
+//                        };
+//                        var newDrugParam = Ext.encode(newDrug);
+//                        Ext.Ajax.request({
+//                            url: "http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/drug", //HOST + '/ws/rest/v1/raxacore/drug',
+//                            method: 'POST',
+//                            params: newDrugParam,
+//                            disableCaching: false,
+//                            headers: Util.getBasicAuthHeaders(),
+//                            success: function (response) {
+//                                console.log("drug created");
+//                            },
+//                            failure: function (response) {
+//                                console.log('POST alert failed with response status: ' + response.status);
+//                            }
+//                        });
+                    }
+                    j++;
+                }              
+            }
+        }
+        console.log(submitUuids);
+        var allUuids = "";
+        for(var x=0; x<submitUuids.length; x++){
+            allUuids = allUuids + "\""+submitUuids[x]+"\", ";
+        }
+        console.log(allUuids);
     }
 });

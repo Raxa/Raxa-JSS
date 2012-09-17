@@ -75,9 +75,9 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         xtype: 'combobox',
         width: 300,
         labelWidth: 90,
-        id: "issueDispenseLocationPicker",
+        id: "issuedispenseLocationPicker",
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
-            storeId: 'issueDispenseLocations'
+            storeId: 'issuedispenseLocations'
         }),
         fieldLabel: 'Dispense Location:',
         displayField: 'display',
