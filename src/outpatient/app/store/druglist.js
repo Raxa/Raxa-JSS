@@ -26,7 +26,7 @@ Ext.define('RaxaEmr.Outpatient.store.druglist', {
 	  	
       proxy: {
         type: 'rest',
-        url: HOST+'/ws/rest/v1/drug',
+        url: HOST+'/ws/rest/v1/drug?v=full',
         headers: Util.getBasicAuthHeaders(),
         reader: {
            type: 'json',

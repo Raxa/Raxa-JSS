@@ -19,7 +19,7 @@ Ext.define('RaxaEmr.Outpatient.model.druglist', {
         fields: [{
             name: 'drug',
             type: 'string',
-            mapping: 'display'
+            mapping: 'name'
         }, {
             name: 'uuid',
             type: 'string',

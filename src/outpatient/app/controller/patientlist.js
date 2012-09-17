@@ -588,7 +588,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             Ext.create('Ext.Panel', {
                 id: 'searchedDrugList',
                 items: [{
-                    height: 150,
+                    height: 475,
                     xtype: 'Drug-List',
                     scrollable: true,
                     hidden: false
