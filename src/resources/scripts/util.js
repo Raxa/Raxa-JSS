@@ -261,6 +261,8 @@ var BMI_WEIGHT_MIN = 0;
 var KEY = {
     ENTER: 13
 };
+var keyMap = {
+};
 
 // Enum for Registration Module Page Numbers
 var REG_PAGES = {
@@ -566,8 +568,10 @@ var Util = {
 
     KeyMapButton: function(ComponentName,keyName)
     {
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-381 
-        /*
+        if(keyMap.keyName!=null)
+        {
+            this.DestroyKeyMapButton(keyName);
+        }
 	  keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
         {
             key: keyName,
@@ -580,15 +584,13 @@ var Util = {
                 }
             }
         ]);
-*/
+
     },
 
-    DestoryKeyMapButton: function(keyName)
+    DestroyKeyMapButton: function(keyName)
     {
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-381 
-        /*
         keyMap.keyName.destroy(true);
-        */
+        keyMap.keyName=null;
     },
         
     getProviderUuidFromPersonUuid: function (uuid) {
