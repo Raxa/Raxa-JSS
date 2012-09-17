@@ -17,14 +17,20 @@ Ext.define('RaxaEmr.Pharmacy.model.PurchaseOrder', {
         name: 'received',
         type: 'boolean',
         mapping: 'name'
+    },{
+        name: 'stockLocation',
+        model: 'RaxaEmr.Pharmacy.model.Location'
     }, {
-        name: 'provider',
+        name: 'stockLocationName',
         type: 'string',
-        mapping: 'provider'
+        mapping: 'stockLocation.display'
+    },{
+        name: 'dispenseLocation',
+        model: 'RaxaEmr.Pharmacy.model.Location'
     }, {
-        name: 'location',
+        name: 'dispenseLocationName',
         type: 'string',
-        mapping: 'location'
+        mapping: 'dispenseLocation.display'
     }, {
         name: 'drugPurchaseOrderDate',
         type: 'string',
@@ -36,5 +42,9 @@ Ext.define('RaxaEmr.Pharmacy.model.PurchaseOrder', {
     },{
         name: 'inventories',
         model: 'RaxaEmr.Pharmacy.model.DrugInventory'
+    },{
+        name: 'provider',
+        type: 'string',
+        mapping: 'provider'
     }]
 });

@@ -10,3 +10,4 @@ build.xml
 pom.xml
 /build/
 /dist/
+*.swp
