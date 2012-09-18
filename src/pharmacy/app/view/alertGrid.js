@@ -21,11 +21,6 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
         this.columns= [
         {
             xtype: 'gridcolumn',
-            width: 25,
-            text: ''
-        },
-        {
-            xtype: 'gridcolumn',
             width: 250,
             dataIndex: 'name'
         },
@@ -35,12 +30,11 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
             dataIndex: 'description',
             hidden: true
         },
-        //THIS is still in progress. I hope to finish it soon
-//        {
-//            xtype: 'checkcolumn',
-//            width: 20,
-//            dataIndex: 'seen'
-//        }
+        {
+            xtype: 'checkcolumn',
+            width: 20,
+            //dataIndex: 'seen'
+        }
         ],
         this.plugins = [this.cellEditor];
         this.callParent(arguments);

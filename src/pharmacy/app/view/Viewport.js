@@ -5,6 +5,7 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     requires: 'RaxaEmr.Pharmacy.view.pharmacyTopbar',
     autoScroll: true,
     width: 960,
+    autoHeight: 800,
     layout: {
         type: 'vbox',
         align: 'center'

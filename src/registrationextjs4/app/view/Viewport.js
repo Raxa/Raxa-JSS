@@ -70,6 +70,8 @@ Ext.define('Registration.view.Viewport', {
             }, {
                 xtype: REG_PAGES.REG_CONFIRM.name
             }, {
+                xtype: REG_PAGES.ILLNESS_DETAILS.name
+            }, {
                 xtype: REG_PAGES.REG_BMI.name
             }, {
                 xtype: REG_PAGES.SEARCH_1.name
