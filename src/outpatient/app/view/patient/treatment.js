@@ -64,7 +64,82 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
                     width: '150',
                     text: 'Confirm Drug Order',
                     padding: '0 10 10 0',
-                    handler: function () {}
+                    handler: function () {
+						//Loads the drug order from drugpanel store and POST encounter with order inside it
+                        drugOrderInDrugPanel = Ext.getStore('drugpanel');
+                        drugListStore = Ext.getStore('druglist')
+                        order = [];
+                        for (var i = 0; i < drugOrderInDrugPanel.data.length; i++) {
+                            for (var j = 0; j < drugListStore.data.length; j++) {
+                                if (drugOrderInDrugPanel.data.items[i].data.drugname == drugListStore.data.items[j].data.drug) {
+                                    var druguuid = drugListStore.data.items[i].data.uuid;
+                                    break;
+                                }
+                            }
+
+                            concept = new Array();
+
+                            var duration = drugOrderInDrugPanel.data.items[i].data.duration;
+                            var strength = drugOrderInDrugPanel.data.items[i].data.strength;
+                            var quantity = drugOrderInDrugPanel.data.items[i].data.duration;
+                            var frequency = drugOrderInDrugPanel.data.items[i].data.frequency;
+                            var instruction = drugOrderInDrugPanel.data.items[i].data.instruction;
+
+                            Ext.Ajax.request({
+                                url: HOST + '/ws/rest/v1/concept?q=' + drugOrderInDrugPanel.data.items[i].data.drugname,
+                                method: 'GET',
+                                disableCaching: false,
+                                headers: Util.getBasicAuthHeaders(),
+                                failure: function (response) {
+                                    console.log('GET call on concept failed with response status' + response.status);
+                                },
+                                success: function (response) {
+                                    console.log('GET call on concept was successful with response status' + response.status);
+
+                                    var JSONResult = JSON.parse(response.responseText);
+
+                                    var currentdate = new Date();
+                                    var startdate = Util.Datetime(startdate, Util.getUTCGMTdiff())
+                                    order.push({
+                                        patient: Ext.getCmp('contact').selected.items[0].data.uuid,
+                                        drug: druguuid,
+                                        startDate: currentdate,
+                                        autoExpireDate: new Date(currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDate() + duration),
+                                        dose: strength,
+                                        quantity: duration,
+                                        frequency: frequency,
+                                        instructions: instruction,
+                                        // type should be "drugorder" in order to post a drug order
+                                        type: 'drugorder',
+                                        concept: JSONResult.results[0].uuid
+                                    });
+                                }
+                            });
+                        }
+
+                        var currentdate = new Date();
+                        var time = Util.Datetime(currentdate, Util.getUTCGMTdiff());
+
+                        // model for posting the encounter for given drug orders
+                        var encounter = Ext.create('RaxaEmr.Outpatient.model.drugEncounter', {
+                            patient: Ext.getCmp('contact').selected.items[0].data.uuid,
+
+                            // this is the encounter for the prescription encounterType
+                            encounterType: localStorage.outUuidencountertype,
+                            encounterDatetime: time,
+                            provider: localStorage.loggedInUser,
+                            orders: order
+                        });
+
+                        var encounterStore = Ext.create('RaxaEmr.Outpatient.store.drugEncounter')
+                        encounterStore.add(encounter)
+                        // make post call for encounter
+                        encounterStore.sync()
+
+                        var i = 0;
+                        var j = 0;
+                        var k = 0;
+                    }
                 }]
             }, {
                 xtype: 'drug-grid',
