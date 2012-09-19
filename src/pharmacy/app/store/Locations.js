@@ -14,6 +14,20 @@ Ext.define('RaxaEmr.Pharmacy.store.Locations', {
             type: 'json',
             root: 'results'
         }
+    },
+    listeners: {
+        'load': {
+            fn: function(theStore, records){
+                for(var i=0; i<records.length; i++){
+                    if(records[i].hasTag(RaxaEmr_Pharmacy_Controller_Vars.DEFAULT_PHARMACY_LOCATION_TAG)){
+                        localStorage.setItem('pharmacyLocation', records[i].data.uuid);
+                    }
+                    if(records[i].hasTag(RaxaEmr_Pharmacy_Controller_Vars.DEFAULT_STOCK_CENTER_LOCATION_TAG)){
+                        localStorage.setItem('stockLocation', records[i].data.uuid);
+                    }
+                }
+            }
+        }
     }
 });
 

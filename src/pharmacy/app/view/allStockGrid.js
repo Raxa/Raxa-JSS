@@ -50,7 +50,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Room Location',
+        text: 'Shelf',
         dataIndex: 'roomLocation',
         width: 100
     },

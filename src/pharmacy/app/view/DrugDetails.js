@@ -14,7 +14,8 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetails', {
         xtype: 'button',
         text: 'Back',
         action: 'backFromDrugDetails',
-        ui: 'raxa-orange-small'
+        ui: 'raxa-orange-small',
+        margin: 5
     }],
     //initializing the first two components, drug details text and drug details grid by filling in a drug's details
     initForDrug: function(drugName){

@@ -42,12 +42,11 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 minChars: 3,
                 typeAhead: true,
                 autoSelect: false,
-                store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
+                store: 'allDrugs',
                 displayField: 'text',
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
-                            comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();
                         }
                         , 
@@ -104,7 +103,9 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                                 var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
                                 var isCurrentDrug = (record.get('drugName')===selectedDrug);
                                 var isBatch = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
-                                return isAvailable && isCurrentDrug && isBatch;
+                                var locationIndex = Ext.getStore('Locations').find('display', Ext.getCmp('issueStockLocationPicker').getValue());
+                                var isAtLocation = (record.get('location').uuid===Ext.getStore('Locations').getAt(locationIndex).data.uuid)
+                                return isAvailable && isCurrentDrug && isBatch && isAtLocation;
                             });
                             comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();
@@ -149,7 +150,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             width: 180
         },{
             xtype: 'gridcolumn',
-            text: 'Location',
+            text: 'Shelf',
             dataIndex: 'roomLocation',
             width: 60
         },        
@@ -157,7 +158,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             xtype: 'actioncolumn',
             width: 22,
             items: [{
-                icon: '../../resources/img/delete.png',
+                icon: '../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
                     issueEditor.fireEvent('deleteIssueDrug', {
