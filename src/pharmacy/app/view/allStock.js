@@ -11,6 +11,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStock', {
     },{
         layout: 'card',
         width: 850,
+        height: 400,
         border: false,
         activeItem: 0,
         id: 'stocklayoutarea',

@@ -20,6 +20,9 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             layout: {
                 type: 'absolute'
             },
+            //TODO: take out drugASearchGrid - not being used
+            //https://raxaemr.atlassian.net/browse/RAXAJSS-411
+            //then take out all instances of addpatientgridarea....getLayout..setactiveitem
             items: [{
                 layout: 'card',
                 id: 'addpatientgridarea',
@@ -46,7 +49,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         columns: [
                         {
                             xtype: 'gridcolumn',
-                            width: 200,
+                            width: 180,
                             text: 'Name Of drug',
                             dataIndex: 'drugname',
                             resizable: false
@@ -86,26 +89,26 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         },
                         {
                             xtype: 'numbercolumn',
-                            width: 170,
+                            width: 130,
                             text: 'Item Price',
                             resizable: false
                         }
                         ]
                     },
-                    {
-                        xtype: 'button',
-                        text: 'Review Prescription',
-                        ui: 'raxa-orange-small',
-                        x: 420,
-                        y: 580
-                    },
+//                    {
+//                        xtype: 'button',
+//                        text: 'Review Prescription',
+//                        ui: 'raxa-orange-small',
+//                        x: 420,
+//                        y: 580
+//                    },
                     {
                         xtype: 'button',
                         width: 60,
-                        text: 'Done',
+                        text: 'Save',
                         action: 'doneWithNewPatientPrescription',
                         ui: 'raxa-aqua-small',
-                        x: 330,
+                        x: 480,
                         y: 580
                     },
                     {
@@ -128,7 +131,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     },{
                         xtype: 'button',
                         width: 60,
-                        text: 'Done',
+                        text: 'Save',
                         action: 'doneWithQueuedPatientPrescription',
                         ui: 'raxa-aqua-small',
                         x: 330,
@@ -146,7 +149,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             },{
                 xtype: 'button',
                 width: 180,
-                text: 'Add Patient',
+                text: 'Prescription for New Patient',
                 action: 'addPatient',
                 x : 0,
                 y: 30    
@@ -169,38 +172,39 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     },
                     ui: 'raxa-panel',
                     collapsed: false,
-                    title: 'Advanced Search',
+                    title: 'Search a Patient',
                     items:[
                     {
                         xtype: 'textfield',
-                        emptyText: 'Patient Name',
+                        emptyText: 'Patient Name or ID',
                         name:'patientName',
                         x: 10,
                         y: 20,
                         id: 'patientNameASearch'
                     },
-                    {
-                        xtype: 'textfield',
-                        emptyText: 'Prescription ID',
-                        x: 10,
-                        y: 60,
-                        id: 'prescriptionIdASearch'
-                    },
-                    {
-                        xtype: 'datefield',
-                        emptyText: 'Prescription Date',
-                        x: 10,
-                        y: 100,
-                        id: 'prescriptionDateASearch'
-                    },
+                    //To be added in after search layer is complete
+//                    {
+//                        xtype: 'textfield',
+//                        emptyText: 'Prescription ID',
+//                        x: 10,
+//                        y: 60,
+//                        id: 'prescriptionIdASearch'
+//                    },
+//                    {
+//                        xtype: 'datefield',
+//                        emptyText: 'Prescription Date',
+//                        x: 10,
+//                        y: 100,
+//                        id: 'prescriptionDateASearch'
+//                    },
                     {
                         xtype: 'panel',
                         border: 0,
                         layout: 'card',
-                        height: 200,
+                        height: 280,
                         width: 180,
                         x: 0,
-                        y: 140,
+                        y: 60,
                         activeItem: 0,
                         id: 'searchGrid',
                         items: [{
@@ -293,7 +297,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                 {
                     xtype: 'patientsgridpanel',
                     id : 'sevenDaysPatientGrid',
-                    title: 'Last 7 Days(145)',
+                    title: 'Last 7 Days',
                      store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
                     listeners: {
                         // as this panal exapands it make the get call for 1 week patient list to update the list
@@ -343,7 +347,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         x: 190,
                         y: 60,
                         items:[{
-                            html: "<img border=\"0\" src=\"../../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"
+                            html: "<img border=\"0\" src=\"../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"
                         }]
                     //TODO: patient image
                     },
