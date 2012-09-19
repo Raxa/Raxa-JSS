@@ -123,7 +123,7 @@ var resourceUuid = {
     },
     "temperature": {
         "resource": "concept",
-        "queryTerm": "TEMPERATURE (C)",
+        "queryTerm": "TEMPERATURE",
         "varName": "temperature",
         "displayName": "TEMPERATURE (C)"
     },
@@ -135,7 +135,7 @@ var resourceUuid = {
     },
     "referred": {
         "resource": "concept",
-        "queryTerm": "REFERRING PERSON",
+        "queryTerm": "REFERRER",
         "varName": "referred",
         "displayName": "REFERRING PERSON"
     },
@@ -376,6 +376,11 @@ var Util = {
         return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
     },
 
+    daysBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs(Math.ceil((future.getTime()-past.getTime())/ONEDAYMS));
+    },
 
     /**
      *Gets the current time

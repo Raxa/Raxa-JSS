@@ -12,7 +12,7 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
         listeners : {
             select : function(rowModel, record, rowIndex) {
                 //on select, go to drug details page
-                Ext.getCmp('mainarea').getLayout().setActiveItem(PHARM_PAGES.DRUGDETAILS.value);
+                Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
                 Ext.getCmp('drugDetails').initForDrug(record.data.drugName);
             },
             scope : this

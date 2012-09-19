@@ -11,8 +11,8 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
         align: 'center'
     },
     items:[{
-        xtype: 'pharmacytopbar',
-        id: 'pharmacytopbar'
+        xtype: 'pharmacyTopBar',
+        id: 'pharmacyTopBar'
     },{
         xtype: 'panel',
         id: 'alertPanel',
