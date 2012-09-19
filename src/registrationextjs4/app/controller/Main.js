@@ -105,7 +105,7 @@ Ext.define('Registration.controller.Main', {
 
     /* this function return to home screen */
     cancel: function () {
-	    Util.DestoryKeyMapButton(Ext.EventObject.ENTER);
+	    Util.DestroyKeyMapButton(Ext.EventObject.ENTER);
         //return to home screen
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
