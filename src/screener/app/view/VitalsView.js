@@ -8,7 +8,6 @@ Ext.define("Screener.view.VitalsView", {
     requires: ['Screener.view.VitalsForm'],
     xtype: 'vitalslist',
     config: {
-        fullscreen: true,
         layout: 'hbox',
         title: 'Add Vitals',
         style: 'background:#96d2f7',

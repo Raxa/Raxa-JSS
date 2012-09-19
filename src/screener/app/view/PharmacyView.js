@@ -8,7 +8,6 @@ Ext.define("Screener.view.PharmacyView", {
     requires: ['Screener.view.PharmacyForm'],
     xtype: 'pharmacylist',
     config: {
-        fullscreen: true,
         layout: 'hbox',
         title: 'Add Drugs',
         style: 'background:#96d2f7',

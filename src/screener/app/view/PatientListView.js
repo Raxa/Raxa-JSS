@@ -6,7 +6,7 @@ Ext.define("Screener.view.PatientListView", {
     extend: 'Ext.Container',
     alias: 'widget.ListView',
     requires: [
-        'Screener.store.NewPatients'
+    'Screener.store.NewPatients'
     ],
 
     config: {
@@ -19,14 +19,14 @@ Ext.define("Screener.view.PatientListView", {
             xtype: 'list',
             itemId: 'patientList',
             itemTpl: [
-                '<table>',
-                '<tr><td>',
-                '<img src="{image}" width=48 height=48 />',
-                '</td>',
-                '<td>',
-                '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',
-                '</td></tr>',
-                '</table>',
+            '<table>',
+            '<tr><td>',
+            '<img src="{image}" width=48 height=48 />',
+            '</td>',
+            '<td>',
+            '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',
+            '</td></tr>',
+            '</table>',
             ].join(''),
             store: 'patientStore',
             items: [{
@@ -52,13 +52,21 @@ Ext.define("Screener.view.PatientListView", {
                     itemId: 'sortName',
                     action: 'sortByName',
                     align: 'left'
-                }, {
+                }, 
+                {
+                    xtype: 'button',
+                    itemId: 'addPatientButton',
+                    text: 'ADD PATIENT',
+                    align: 'right',
+                },
+                {
                     xtype: 'button',
                     text: 'Refresh',
                     itemId: 'refreshButton',
                     action: 'refreshList',
                     align: 'right'
-                }]
+                }
+                ]
             }],
             flex: 1,
         }]
