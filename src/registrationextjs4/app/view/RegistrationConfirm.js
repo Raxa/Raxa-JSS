@@ -61,7 +61,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.OPRN.emptytext'),
                         }]
                     },
- 
                     {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PN'),

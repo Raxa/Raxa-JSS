@@ -52,10 +52,9 @@ Ext.define('Registration.controller.Main', {
     /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
     confirmPage: function () {
         
-        // if condition that check if all the required fields are non-empty or not
-        var fields = ['block', 'street', 'town', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact'];
-        var i;
-        for (i = 0; i < fields.length; i++)
+        // if condition that check if all the required fields are valid
+        var fields = ['patientFirstName', 'patientLastName', 'block', 'street', 'town', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact'];
+        for (var i = 0; i < fields.length; i++)
         {
             if (! Ext.getCmp(fields[i]).isValid())
             {
@@ -67,8 +66,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
         Util.KeyMapButton('submitbutton',Ext.EventObject.ENTER);
-        /*if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {*/
-        
+
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
