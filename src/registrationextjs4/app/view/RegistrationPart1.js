@@ -52,9 +52,37 @@ Ext.define('Registration.view.RegistrationPart1', {
                         type: 'hbox'
                     },
 
-                    items: [{
+                    items: [
+						{
                         xtype: 'container',
                         items: [{
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Centre Id',
+                        layout: 'hbox',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true',
+                            value: 'GAN'
+                        },
+                        items: [{
+                            xtype: 'combo',
+                            name: 'Centre ID',
+                            label: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre'),
+                            id: 'centreId',
+                            layout: 'hbox',
+                            width: 172,
+                            store: new Ext.data.SimpleStore({
+                                fields: ['centre'],
+                                data: [
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.1')],
+                                ]
+                            }),
+                            displayField: 'centre'
+                        }]
+                    },{
                             xtype: 'fieldcontainer',	  	
                             fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),	  	
                             layout: 'hbox',

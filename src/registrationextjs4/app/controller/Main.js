@@ -272,7 +272,7 @@ Ext.define('Registration.controller.Main', {
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
-                identifier: Util.getPatientIdentifier(),
+                identifier: Util.getPatientIdentifier(Ext.getCmp('centreId').store.data.items[0].data.centre),
                 identifierType: identifierType,
                 location: location,
                 preferred: true
