@@ -162,7 +162,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             readOnly: true
                         }]
-                    }, /* TODO: add back in caste
+                    }, 
                        // Current registration system (used by JSS) has caste field in the form
                         {
                         xtype: 'fieldcontainer',
@@ -184,7 +184,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             readOnly: true
                         }]
-                    }, */{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Occupation'),
                         layout: 'hbox',
