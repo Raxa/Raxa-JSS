@@ -23,6 +23,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             //TODO: take out drugASearchGrid - not being used
             //https://raxaemr.atlassian.net/browse/RAXAJSS-411
             //then take out all instances of addpatientgridarea....getLayout..setactiveitem
+            //addpatientarea is being used, dont take that out
             items: [{
                 layout: 'card',
                 id: 'addpatientgridarea',

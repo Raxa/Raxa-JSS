@@ -53,6 +53,10 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'button',
                     width: 60,
                     text: 'Log Out',
+                    handler: function() {
+                        Util.logoutUser();
+                        location.reload();
+                    }
                 }]
             }],
             width: 960,
