@@ -56,6 +56,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
+        text: 'batch',
+        dataIndex: 'batch',
+        width: 80
+    },
+    {
+        xtype: 'gridcolumn',
         text: 'Dispense Location',
         dataIndex: 'locationName',
         width: 120

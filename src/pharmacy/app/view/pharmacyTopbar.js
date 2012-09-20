@@ -147,6 +147,14 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                 }
                 
             }
+        }, {
+            xtype: 'button',
+            width: 60,
+            text: 'Log Out',
+            handler: function() {
+                Util.logoutUser();
+                location.reload();
+            }
         }]
     }]
 })
