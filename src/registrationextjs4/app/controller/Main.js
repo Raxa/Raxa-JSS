@@ -60,11 +60,19 @@ Ext.define('Registration.controller.Main', {
     /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
     Continue: function () {
 
-        var l = Ext.getCmp('mainRegArea').getLayout();
+        var l = Ext.getCmp('mainRegArea').getLayout(); 
         // if condition that check if all the required fields are non-empty or not
-        if (Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
-            l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
-            Util.KeyMapButton('submitbutton', Ext.EventObject.ENTER);
+        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
+        	if(Ext.getCmp('patientAge').rawValue || Ext.getCmp('dob').rawValue)
+ 				{     
+			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
+			        Util.KeyMapButton('submitbutton', Ext.EventObject.ENTER);
+          	    }
+            else
+            {
+            	Ext.Msg.alert('Please enter Age or DOB of the patient');
+            }
+            
         } else {
             alert("Fields invalid");
         }
