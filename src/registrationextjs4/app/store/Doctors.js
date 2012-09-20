@@ -1,7 +1,6 @@
-Ext.define('RaxaEmr.Pharmacy.store.Doctors', {
-    requires: ['RaxaEmr.Pharmacy.model.Doctor'],
+Ext.define('Registration.store.Doctors', {
     extend: 'Ext.data.Store',
-    model: 'RaxaEmr.Pharmacy.model.Doctor',
+    model: 'Registration.model.Doctor',
     proxy: {
         type: 'ajax',
         url: HOST +'/ws/rest/v1/provider',

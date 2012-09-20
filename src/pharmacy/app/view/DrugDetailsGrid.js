@@ -1,12 +1,13 @@
-Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
+Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.allStockGrid',
-    autoHeight: 250,
+    alias: 'widget.drugDetailsGrid',
+    height: 250,
     width: 600,
-    margin: '0 0 0 110',
-    store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
-        storeId: 'stockList'
-    }),
+    layout: {
+        type: 'absolute'
+    },
+    x: 110,
+    store: Ext.getStore('stockList'),
     selModel : Ext.create('Ext.selection.RowModel', {
         listeners : {
             select : function(rowModel, record, rowIndex) {
@@ -37,33 +38,31 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
+        text: 'Type',
+        width: 80
+    },
+    {
+        xtype: 'numbercolumn',
         text: 'Qty',
         dataIndex: 'quantity',
         width: 80
     },
     {
-        xtype: 'gridcolumn',
+        xtype: 'numbercolumn',
         text: 'Days',
-        width: 60,
-        dataIndex: 'days',
-        useNull: true
+        width: 60
     },
     {
         xtype: 'gridcolumn',
-        text: 'Shelf',
-        dataIndex: 'roomLocation',
-        width: 100
-    },
-    {
-        xtype: 'gridcolumn',
-        text: 'batch',
-        dataIndex: 'batch',
-        width: 80
-    },
-    {
-        xtype: 'gridcolumn',
-        text: 'Dispense Location',
+        text: 'Location',
         dataIndex: 'locationName',
-        width: 120
-    }]
+        width: 100
+    }],
+    initForDrug: function(drugName){
+        Ext.getStore('stockList').clearFilter();
+        Ext.getStore('stockList').filter(function(record){
+            return record.get('drugName')===drugName;
+        });
+    }
 });
+

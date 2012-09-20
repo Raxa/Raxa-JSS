@@ -49,6 +49,30 @@ var password;
 var timeoutLimit = 150000;
 var hospitalName = 'JSS Hospital';
 var resourceUuid = {
+    "tablet": {
+        "resource": "concept",
+        "queryTerm": "tablet",
+        "varName": "tablet",
+        "displayName": "tablet"
+    },
+    "ointment": {
+        "resource": "concept",
+        "queryTerm": "ointment",
+        "varName": "ointment",
+        "displayName": "ointment"
+    },
+    "syrup": {
+        "resource": "concept",
+        "queryTerm": "syrup",
+        "varName": "syrup",
+        "displayName": "SYRUP"
+    },
+    "solutionForInjection": {
+        "resource": "concept",
+        "queryTerm": "solution for injection",
+        "varName": "solutionForInjection",
+        "displayName": "SOLUTION FOR INJECTION"
+    },
     "height": {
         "resource": "concept",
         "queryTerm": "height",
@@ -99,7 +123,7 @@ var resourceUuid = {
     },
     "temperature": {
         "resource": "concept",
-        "queryTerm": "TEMPERATURE (C)",
+        "queryTerm": "TEMPERATURE",
         "varName": "temperature",
         "displayName": "TEMPERATURE (C)"
     },
@@ -108,6 +132,24 @@ var resourceUuid = {
         "queryTerm": "BLOOD OXYGEN SATURATION",
         "varName": "bloodoxygensaturation",
         "displayName": "BLOOD OXYGEN SATURATION"
+    },
+    "referred": {
+        "resource": "concept",
+        "queryTerm": "REFERRER",
+        "varName": "referred",
+        "displayName": "REFERRING PERSON"
+    },
+    "notes": {
+        "resource": "concept",
+        "queryTerm": "CLINICIAN NOTES",
+        "varName": "notes",
+        "displayName": "CLINICIAN NOTES"
+    },
+    "regcomplaint": {
+        "resource": "concept",
+        "queryTerm": "REGISTRATION COMPLAINT",
+        "varName": "regcomplaint",
+        "displayName": "REGISTRATION COMPLAINT"
     },
     "basic": {
         "resource": "form",
@@ -150,6 +192,66 @@ var resourceUuid = {
         "queryTerm": "prescriptionfill",
         "varName": "prescriptionfill",
         "displayName": "PRESCRIPTIONFILL - Prescriptionfill encounter"
+    },
+    "primaryrelative": {
+        "resource": "personattributetype",
+        "queryTerm": "primary relative",
+        "varName": "primaryRelative",
+        "displayName": "Primary Relative - Primary Relative"
+    },
+    "secondarycontact": {
+        "resource": "personattributetype",
+        "queryTerm": "secondary contact",
+        "varName": "secondaryContact",
+        "displayName": "Secondary Contact - Secondary Contact"
+    },
+    "primarycontact": {
+        "resource": "personattributetype",
+        "queryTerm": "primary contact",
+        "varName": "primaryContact",
+        "displayName": "Primary Contact - Primary Contact"
+    },
+    "contactbyphone": {
+        "resource": "personattributetype",
+        "queryTerm": "contact by phone",
+        "varName": "contactByPhone",
+        "displayName": "Contact By Phone - Whether to contact this patient by phone"
+    },
+    "district": {
+        "resource": "personattributetype",
+        "queryTerm": "district",
+        "varName": "district",
+        "displayName": "District - District"
+    },
+    "tehsil": {
+        "resource": "personattributetype",
+        "queryTerm": "tehsil",
+        "varName": "tehsil",
+        "displayName": "Tehsil - Tehsil"
+    },
+    "occupation": {
+        "resource": "personattributetype",
+        "queryTerm": "occupation",
+        "varName": "occupation",
+        "displayName": "Occupation - Occupation"
+    },
+    "education": {
+        "resource": "personattributetype",
+        "queryTerm": "education",
+        "varName": "education",
+        "displayName": "Education - Education"
+    },
+    "caste": {
+        "resource": "personattributetype",
+        "queryTerm": "caste",
+        "varName": "caste",
+        "displayName": "Caste - Caste"
+    },
+    "oldpatientidentificationnumber": {
+        "resource": "personattributetype",
+        "queryTerm": "old patient identification number",
+        "varName": "oldPatientIdentificationNumber",
+        "displayName": "Old Patient Identification Number - Old Patient Identification Number"
     }
 };
 
@@ -177,6 +279,8 @@ var BMI_WEIGHT_MIN = 0;
 var KEY = {
     ENTER: 13
 };
+var keyMap = {
+};
 
 // Enum for Registration Module Page Numbers
 var REG_PAGES = {
@@ -192,25 +296,30 @@ var REG_PAGES = {
         value: 2,
         name: "registrationconfirm"
     },
-    REG_BMI: {
+    ILLNESS_DETAILS: {
         value: 3,
+        name: "illnessdetails"
+    },
+    REG_BMI: {
+        value: 4,
         name: "registrationbmi"
     },
     SEARCH_1: {
-        value: 4,
+        value: 5,
         name: "searchpart1"
     },
     SEARCH_2: {
-        value: 5,
+        value: 6,
         name: "searchpart2"
     },
     SEARCH_CONFIRM: {
-        value: 6,
+        value: 7,
         name: "searchconfirm"
     }
 };
 
 var UITIME = 120000;
+var ONEDAYMS = 86400000;
 var diffinUTC_GMT = 5.5;
 //number of hours for everything to be before now
 //OpenMRS checks whether encounters are ahead of current time --
@@ -258,6 +367,28 @@ var Util = {
      */
     getUiTime: function () {
         return UITIME;
+    },
+	
+    /**
+     *Returns how many days are left from now to date passed in
+     */
+    daysFromNow: function(futureDate) {
+        var future = new Date(futureDate);
+        var now = new Date();
+        return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
+    },
+
+    daysBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs(Math.ceil((future.getTime()-past.getTime())/ONEDAYMS));
+    },
+
+    /**
+     *Gets the current time
+     */
+    getCurrentTime: function(){
+        return this.Datetime(new Date(), this.getUTCGMTdiff());
     },
 
     /**
@@ -307,11 +438,13 @@ var Util = {
             url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
-            method: 'DELETE',
-            success: function () {
-            // do nothing
-            }
+            method: 'DELETE'
         });
+        localStorage.removeItem('basicAuthHeader');
+        localStorage.removeItem('privileges');
+        localStorage.removeItem('Username');
+        localStorage.removeItem('loggedInUser');
+        localStorage.removeItem('loggedInProvider');
     },
 
     /**
@@ -343,7 +476,8 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory'];
+        //'registration' (sencha touch version) and 'chw' are removed from the list as they are not being used now
+		return ['login', 'screener', 'registrationextjs4', 'outpatient', 'laboratory','pharmacy'];
     },
 
     getApps: function () {
@@ -466,8 +600,10 @@ var Util = {
 
     KeyMapButton: function(ComponentName,keyName)
     {
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-381 
-        /*
+        if(keyMap.keyName!=null)
+        {
+            this.DestroyKeyMapButton(keyName);
+        }
 	  keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
         {
             key: keyName,
@@ -477,18 +613,16 @@ var Util = {
 		var element = Ext.getCmp(ComponentName);
             element.fireEvent('click',element);
 
+                }
             }
-        }
         ]);
-*/
+
     },
 
-    DestoryKeyMapButton: function(keyName)
+    DestroyKeyMapButton: function(keyName)
     {
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-381 
-        /*
         keyMap.keyName.destroy(true);
-        */
+        keyMap.keyName=null;
     },
         
     getProviderUuidFromPersonUuid: function (uuid) {
@@ -518,14 +652,16 @@ var Util = {
      * Returns the uuid of the logged in provider
      */
     getLoggedInProviderUuid: function(){
-        if(!localStorage.getItem("loggedInUser"))
+        if(!localStorage.getItem("loggedInUser")){
             // TODO: should throw an exception, not return the wrong string
             // Ext.Error.raise('<Error Text>');
             return "provider is not logged in";
-        if(localStorage.getItem("loggedInProvider"))
-            return localStorage.getItem("loggedInProvder");
-        else
-            return this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
+        }
+        if(localStorage.getItem("loggedInProvider")){
+            return localStorage.getItem("loggedInProvider");
+        }
+        this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
+        return "setting provider uuid now";
     },
     
     /**
@@ -541,6 +677,23 @@ var Util = {
         else{
             window.location = "../";
         }
-    }
+    },
 
+    /**
+     * Sends an alert according to given parameters
+     */
+    sendAlert: function(alertParams){
+        var alertParam = Ext.encode(alertParams);
+        Ext.Ajax.request({
+            url: HOST + '/ws/rest/v1/raxacore/raxaalert',
+            method: 'POST',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            params: alertParam,
+            failure: function (response) {
+                console.log('POST alert failed with response status: ' + response.status);
+            }
+        });
+    }
 }
+

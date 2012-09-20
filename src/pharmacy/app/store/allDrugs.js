@@ -7,10 +7,10 @@ Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
     autoSync: false,
     proxy: {
         type: 'rest',
-        url: HOST + '/ws/rest/v1/drug?v=full',
+        url: HOST + '/ws/rest/v1/drug?v=full&limit=300',
         headers: Util.getBasicAuthHeaders(),
         reader: {
-            tyep:'json',
+            type:'json',
             root: 'results'
         }
     }
