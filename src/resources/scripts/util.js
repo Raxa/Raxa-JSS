@@ -109,12 +109,12 @@ var resourceUuid = {
         "varName": "bloodoxygensaturation",
         "displayName": "BLOOD OXYGEN SATURATION"
     },
-    "basic": {
-        "resource": "form",
-        "queryTerm": "basic",
-        "varName": "basic",
-        "displayName": "Basic Form - This form contains only the common/core elements needed for most forms"
-    },
+//    "basic": {
+//        "resource": "form",
+//        "queryTerm": "basic",
+//        "varName": "basic",
+//        "displayName": "Basic Form - This form contains only the common/core elements needed for most forms"
+//    },
     "reg": {
         "resource": "encountertype",
         "queryTerm": "reg",
@@ -309,9 +309,15 @@ var Util = {
             useDefaultXhrHeader: false,
             method: 'DELETE',
             success: function () {
-            // do nothing
+            
+//        localStorage.removeItem('basicAuthHeader');
+//        localStorage.removeItem('privileges');
+//        localStorage.removeItem('Username');
+//        localStorage.removeItem('loggedInUser');
+//        window.location.hash = 'Login';
             }
         });
+        
     },
 
     /**

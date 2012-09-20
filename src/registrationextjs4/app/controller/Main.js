@@ -325,15 +325,15 @@ Ext.define('Registration.controller.Main', {
             });
             jsonencounter.data.obs.push(jsonencounterbmi.data);
         }
-        if(Ext.getCmp('registrationfeespaid').isValid() && Ext.getCmp('registrationfeespaid').value != null){
-            var jsonencounterregfee = Ext.create('Registration.model.obsModel',{
-                obsDatetime : t,
-                person: localStorage.newPatientUuid,
-                concept: localStorage.regfeeUuidconcept,
-                value: Ext.getCmp('registrationfeespaid').value
-            });
-            jsonencounter.data.obs.push(jsonencounterregfee.data);
-        }
+//        if(Ext.getCmp('registrationfeespaid').isValid() && Ext.getCmp('registrationfeespaid').value != null){
+//            var jsonencounterregfee = Ext.create('Registration.model.obsModel',{
+//                obsDatetime : t,
+//                person: localStorage.newPatientUuid,
+//                concept: localStorage.regfeeUuidconcept,
+//                value: Ext.getCmp('registrationfeespaid').value
+//            });
+//            jsonencounter.data.obs.push(jsonencounterregfee.data);
+//        }
 
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
