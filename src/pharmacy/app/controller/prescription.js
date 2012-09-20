@@ -84,7 +84,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 }
             },
             'prescription button[action=doneWithQueuedPatientPrescription]': {
-                click: this.prescriptionFillQueuedPatient
+                click: this.prescriptionFillPatient
             },
             'prescription button[action=printPrescribedDrugs]': {   //Action of Print button in Search Patient
                 click: this.printPrescribedDrugs
@@ -103,6 +103,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 // as the perscription view activates it attaches listners to the 3 fields and 2
                 // girds of advanced search
                 activate: function () {
+                    this.getStartupUuids();
                     // below three listners call searchPatient() as enter key is pressed when cursor is in any of the
                     // field in advanced search form
                     Ext.getCmp('patientNameASearch').on('specialkey', function (field, e) {
@@ -314,19 +315,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // returns dynamically changed URL for getting patientList
     getPatientListUrl: function (reg_UUID, scr_UUID, encountertype) {
         return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + reg_UUID + '&notInList=' + scr_UUID + '&encounterType=' + encountertype);
-    },
-
-    displayForm: function () {
-        //  a new pop window for new patient form
-        var winObj = Ext.create('Ext.window.Window', {
-            width: 868,
-            height: 225,
-            maximizable: false,
-            modal: true,
-            items: [{
-                xtype: 'addPatient'
-            }]
-        }).show()
     },
 
     deleteDrug: function (evtData) {
@@ -895,6 +883,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     submitNewDrug: function() {
+        Ext.getCmp('addDrug').hide();
+        Ext.getCmp('newDrugButton').setText('New Drug');
+        Ext.getCmp('newDrugButton').setUI('default');
         //getting drug concept from OpenMRS
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/concept?q='+Ext.getCmp('addDrugName').getValue()+"&v=full",
@@ -902,10 +893,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             success: function (response) {
-                var jsonResponse = Ext.decode(response);
+                var jsonResponse = Ext.decode(response.responseText);
                 var j=0;
                 var complete=false;
                 while(j<jsonResponse.results.length && !complete){
+                    console.log(jsonResponse.results[j].display);
                     var k=0;
                     var isUpper = true;
                     while (k<jsonResponse.results[j].display.length && isUpper){
@@ -924,35 +916,105 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     if(isUpper){
                         complete = true;
                         console.log("found new drug concept: "+jsonResponse.results[j].display);
-                        var newDrug = {
-                            concept: jsonResponse.results[j].uuid,
-                            name: Ext.getCmp('addDrugName').getValue(),
-                            dosageForm: Ext.getCmp('dosageFormPicker').getValue(),
-                            minimumDailyDose: Ext.getCmp('addDrugMinimumDose').getValue(),
-                            maximumDailyDose: Ext.getCmp('addDrugMaximumDose').getValue(),
-                            units: Ext.getCmp('addDrugUnits')
-                        };
-                        var newDrugParam = Ext.encode(newDrug);
-                        Ext.Ajax.request({
-                            url: HOST + '/ws/rest/v1/raxacore/drug',
-                            method: 'POST',
-                            params: newDrugParam,
-                            disableCaching: false,
-                            headers: Util.getBasicAuthHeaders(),
-                            success: function (response) {
-                                console.log("Drug created: "+newDrug.name);
-                            },
-                            failure: function (response) {
-                                console.log('POST alert failed with response status: ' + response.status);
-                            }
-                        });
+                        this.postNewDrug(jsonResponse.results[j].uuid);
                     }
                     j++;
                 }
+                if(!complete){
+                    //we need to make the concept as we didn't find it
+                    this.postConceptForNewDrug();
+                }
+            },
+            scope: this
+        });
+    },
+
+    postNewDrug: function(conceptUuid) {
+        var newDrug = {
+            concept: conceptUuid,
+            name: Ext.getCmp('addDrugName').getValue(),
+            dosageForm: Ext.getCmp('dosageFormPicker').getValue(),
+            minimumDailyDose: Ext.getCmp('addDrugMinimumDose').getValue(),
+            maximumDailyDose: Ext.getCmp('addDrugMaximumDose').getValue(),
+            units: Ext.getCmp('addDrugUnits').getValue()
+        };
+        console.log(newDrug);
+        var newDrugParam = Ext.encode(newDrug);
+        console.log(newDrugParam);
+        Ext.Ajax.request({
+            url: HOST + '/ws/rest/v1/raxacore/drug',
+            method: 'POST',
+            params: newDrugParam,
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            success: function (response) {
+                console.log("Drug created: "+newDrug.name);
+                Ext.Msg.alert('Drug created successfully');
+            },
+            failure: function (response) {
+                console.log('POST alert failed with response status: ' + response.status);
             }
         });
     },
-    
+
+    postConceptForNewDrug: function(){
+        var newConcept = {
+            names: [{name: Ext.getCmp('addDrugName').getValue(), locale: "en", conceptNameType: "FULLY_SPECIFIED"}],
+            datatype: localStorage.drugConceptDataTypeUuid,
+            conceptClass: localStorage.drugConceptClassUuid
+        };
+        var newConceptParam = Ext.encode(newConcept);
+        Ext.Ajax.request({
+            url: HOST + '/ws/rest/v1/concept',
+            method: 'POST',
+            params: newConceptParam,
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            success: function (response) {
+                var jsonResponse = Ext.decode(response.responseText);
+                console.log(jsonResponse);
+                this.postNewDrug(jsonResponse.uuid);
+            }, scope: this
+        })        
+    },
+
+    //these Uuids should go into Util with the other resources, however OpenMRS has a bug that doesnt allow
+    //searching on conceptdatatype and conceptclass...so they will come into here for now.
+    //TODO: move them into Util once OpenMRS allows searching on these
+    getStartupUuids: function(){
+        if(!localStorage.drugConceptClassUuid || !localStorage.drugConceptDataTypeUuid){
+            Ext.Ajax.request({
+                url: HOST + '/ws/rest/v1/conceptclass',
+                method: 'GET',
+                disableCaching: false,
+                headers: Util.getBasicAuthHeaders(),
+                success: function (response) {
+                    var jsonResponse = Ext.decode(response.responseText);
+                    for(var i=0; i<jsonResponse.results.length; i++){
+                        console.log(jsonResponse.results[i].display);
+                        if(jsonResponse.results[i].display === "Drug - Drug"){
+                            localStorage.setItem('drugConceptClassUuid', jsonResponse.results[i].uuid);
+                            Ext.Ajax.request({
+                                url: HOST + '/ws/rest/v1/conceptdatatype',
+                                method: 'GET',
+                                disableCaching: false,
+                                headers: Util.getBasicAuthHeaders(),
+                                success: function(response) {
+                                    var jsonResponse = Ext.decode(response.responseText);
+                                    for(var j=0; j<jsonResponse.results.length; j++){
+                                        if(jsonResponse.results[j].display === "N/A - Not associated with a datatype (e.g., term answers, sets)"){
+                                            localStorage.setItem('drugConceptDataTypeUuid', jsonResponse.results[j].uuid);
+                                        }
+                                    }
+                                }, scope: this
+                            })
+                        }
+                    }
+                }, scope: this
+            });
+        }
+    },
+
     //creates new drug group
     newDrugGroup: function() {
     },
@@ -1313,6 +1375,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         purchaseOrderStore.sync();
         purchaseOrderStore.on('write', function () {
             RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = false;
+            Ext.getStore('stockList').load();
+            Ext.getCmp('allStockGrid').getView().refresh();
+            Ext.getStore('batches').load();
             console.log('Successful batch decrement');
         }, this);
     },
@@ -1353,10 +1418,16 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         }, this)
     },
     
-    prescriptionFillQueuedPatient: function(){
-        console.log('prescription filling queued patient');
-        this.sendPharmacyEncounter(localStorage.person,localStorage.prescriptionUuidencountertype)
-        this.prescriptionFillNewPatient();
+    prescriptionFillPatient: function(){
+        //checking to see if the item is '1' which means that new patient panel is active
+        //so we are adding a new patient, and we want to save the patient
+        if(Ext.getCmp('addpatientarea').items.indexOf(Ext.getCmp('addpatientarea').getLayout().activeItem)===1){
+            this.savePerson();
+        }
+        else{
+            this.sendPharmacyEncounter(localStorage.person,localStorage.prescriptionUuidencountertype)
+            this.prescriptionFillNewPatient();
+        }
     },
     
     deleteAlert: function(evtData) {

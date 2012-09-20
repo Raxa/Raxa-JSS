@@ -440,6 +440,11 @@ var Util = {
             useDefaultXhrHeader: false,
             method: 'DELETE'
         });
+        localStorage.removeItem('basicAuthHeader');
+        localStorage.removeItem('privileges');
+        localStorage.removeItem('Username');
+        localStorage.removeItem('loggedInUser');
+        localStorage.removeItem('loggedInProvider');
     },
 
     /**
