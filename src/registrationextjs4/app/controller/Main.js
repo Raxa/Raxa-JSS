@@ -75,8 +75,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
         Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
         Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
-        //		This was causing a bug, as none of the fields after this line were copied to confirmation page
-        //      Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
+        Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
         Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
         Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
@@ -154,12 +153,12 @@ Ext.define('Registration.controller.Main', {
                 attributeType: localStorage.oldPatientIdentificationNumberUuidpersonattributetype
             })
         }
-        /*if(Ext.getCmp('caste').getValue() != null){
+        if(Ext.getCmp('caste').getValue() != null){
             jsonperson.data.attributes.push({
                 value : Ext.getCmp('caste').getValue(),
-                attributeType : 'cff6cebc-24e7-46b0-9841-0269b56b01f1'
+                attributeType : localStorage.casteUuidpersonattributetype
             })
-        }*/
+        }
         if (Ext.getCmp('education').getValue() != null) {
             jsonperson.data.attributes.push({
                 value: Ext.getCmp('education').getValue(),
@@ -296,7 +295,6 @@ Ext.define('Registration.controller.Main', {
 
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
     sendEncounterData: function () {
-        console.log(arguments);
         var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
         // creates the encounter json object
         var jsonencounter = Ext.create('Registration.model.encounterModel', {

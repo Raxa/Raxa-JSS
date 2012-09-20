@@ -365,7 +365,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }),
                             displayField: 'education'
                         }]
-                    }, /* TODO: add back in caste after we decide what fields we want
+                    }, 
                         {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Caste',
@@ -398,7 +398,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }),
                             displayField: 'caste'
                         }]
-                    }, */{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation'),
                         layout: 'hbox',
