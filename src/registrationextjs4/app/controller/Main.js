@@ -273,7 +273,7 @@ Ext.define('Registration.controller.Main', {
         var patient = Ext.create('Registration.model.patient', {
             person: personUuid,
             identifiers: [{
-                identifier: Util.getPatientIdentifier(Ext.getCmp('centreId').store.data.items[0].data.centre),
+                identifier: Util.getPatientIdentifier(Ext.getCmp('centreId').getValue()),
                 identifierType: identifierType,
                 location: location,
                 preferred: true
@@ -419,7 +419,7 @@ Ext.define('Registration.controller.Main', {
         store.add(jsonencounter);
         store.sync();
         store.on('write', function () {
-//            Ext.Msg.alert('Encounter saved successfully.');
+            Ext.Msg.alert('Encounter saved successfully.');
             this.cancel();
         }, this);
 

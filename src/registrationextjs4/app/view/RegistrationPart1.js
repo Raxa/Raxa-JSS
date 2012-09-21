@@ -78,6 +78,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 fields: ['centre'],
                                 data: [
                                     [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.1')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.2')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.3')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.4')],
                                 ]
                             }),
                             displayField: 'centre'
