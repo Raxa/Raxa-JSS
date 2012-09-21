@@ -519,12 +519,12 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         //Searches only if Enter key is identified
 
         // Commented code to check if "Enter" Key is pressed or not as list of diagnosis is reduced to JSS prefered only
-        if (e.event.keyIdentifier == "Enter") {
+//        if (e.event.keyIdentifier == "Enter") {
             Ext.getCmp('diagnosisList').setHidden(false);
             Ext.getCmp('diagnosisList').getStore().load();
             this.onSearchKeyUp(Ext.getCmp('diagnosisList').getStore(), field, 'sign', 'type');
             this.signFilter();
-        }
+//        }
     },
 
     //This function is called on every event on searchfield 
