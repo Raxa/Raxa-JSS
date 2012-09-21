@@ -141,19 +141,21 @@ var Startup = {
     myVar: null,
     counter: 0,
     uuidLoading: function(){
+        Ext.getCmp('mainView').setMasked({
+                xtype: 'loadmask',
+                message: 'Loading'
+            });
         var that=this;
-        var counter1=0;
-        var counter2=0;
+        var actualNoOfUuids=0;
+        var noOfUuidsLoaded=0;
         for (var key in resourceUuid) { 
-            counter1++;
+            actualNoOfUuids++;
             if(localStorage.getItem(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource)!=null){ 
-                counter2++;
+                noOfUuidsLoaded++;
             }
         }
         
-        
-        
-        if(counter2 != counter1) {
+        if(noOfUuidsLoaded != actualNoOfUuids) {
             counter++;
             console.log("Uuid's Still Loading...");
             
@@ -166,13 +168,8 @@ var Startup = {
         if ( counter == 10){
             that.removeTimer();
             Ext.getCmp('mainView').setMasked(false);
-            Ext.Msg.alert("Uuid's not loaded");
+            Ext.Msg.alert("","Uuid's could not be loaded");
             Util.logoutUser();
-            localStorage.removeItem('basicAuthHeader');
-            localStorage.removeItem('privileges');
-            localStorage.removeItem('Username');
-            localStorage.removeItem('loggedInUser');
-            window.location.hash = 'Login';
             console.log("Uuid's :");
             for (var key in resourceUuid) { 
                 counter1++;

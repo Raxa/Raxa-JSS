@@ -40,7 +40,7 @@ Ext.application({
     controllers: ['Main', 'BMI','Search','PrintCard'],
 
     launch: function () {
-        if(Util.checkModulePrivilege('registrationextjs4')){
+        if(Util.checkModulePrivilege('registrationextjs4')&& Util.uuidLoadedSuccessfully()){
             Ext.create('Registration.view.Viewport');
         }
     }

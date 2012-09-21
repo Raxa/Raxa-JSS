@@ -67,12 +67,12 @@ var resourceUuid = {
         "varName": "bmi",
         "displayName": "BODY MASS INDEX"
     },
-    "regfee": {
-        "resource": "concept",
-        "queryTerm": "regfee",
-        "varName": "regfee",
-        "displayName": "Registration Fee"
-    },
+//        "regfee": {
+//            "resource": "concept",
+//            "queryTerm": "regfee",
+//            "varName": "regfee",
+//            "displayName": "Registration Fee"
+//        },
     "systolicbloodpressure": {
         "resource": "concept",
         "queryTerm": "SYSTOLIC BLOOD PRESSURE",
@@ -302,23 +302,43 @@ var Util = {
     /**
      * Logout the current user. Ends the current session
      */
-    logoutUser: function () {
+    logoutUser: function () {      
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
             method: 'DELETE',
             success: function () {
-            
-//        localStorage.removeItem('basicAuthHeader');
-//        localStorage.removeItem('privileges');
-//        localStorage.removeItem('Username');
-//        localStorage.removeItem('loggedInUser');
-//        window.location.hash = 'Login';
             }
         });
+        localStorage.removeItem('basicAuthHeader');
+        localStorage.removeItem('privileges');
+        localStorage.removeItem('Username');
+        localStorage.removeItem('loggedInUser');
+        window.location.hash = 'Login';
         
     },
+    
+    uuidLoadedSuccessfully: function(){
+        var that=this;
+        var actualNoOfUuids=0;
+        var noOfUuidsLoaded=0;
+        for (var key in resourceUuid) { 
+            counter1++;
+            if(localStorage.getItem(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource)!=null){ 
+                counter2++;
+            }
+        }
+        console.log("Total Uuid's are "+actualNoOfUuids);
+        console.log("Uuid's loaded are "+noOfUuidsLoaded);
+        if( noOfUuidsLoaded== actualNoOfUuids) {
+            return true;
+        }
+        else {
+            window.location = "../";
+        }
+    },
+    
 
     /**
      * Saves the Basic Authentication header to Localstorage

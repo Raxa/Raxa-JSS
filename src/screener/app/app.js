@@ -54,7 +54,7 @@ Ext.application({
 
 	//entry point
 	launch: function() {
-		if (Util.checkModulePrivilege('screener')) {
+		if (Util.checkModulePrivilege('screener')&& Util.uuidLoadedSuccessfully()) {
             var mainScreen = Ext.create('Screener.view.Main', {
                     fullscreen: true,
                 });
