@@ -67,9 +67,14 @@
                                     />
                                 </p>
                             </td>
-                            <td width="75%">
+                            <td>
                                 <h2 style="text-align: center; ">Jan Swasthya Sahyog <br> Ganiyaari,Bilaspur </h2>
                       
+                            </td>
+                             <td>
+                                <p style="text-align: center; ">
+                                    <img style="float: center; width: 80px; height: 80px; " id="GenderIcon"/>
+                                </p>
                             </td>
                         </table>
                         <table align="center" style="padding:20px 20px 20px 20px; ">
@@ -151,8 +156,17 @@
 				}
 			}
            var currentDate = new Date();
-            document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
-			
+           document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
+			console.log(selectedPatient.Gender);
+		   if(selectedPatient.Gender == "Female")
+		   {
+		   			document.getElementById('GenderIcon').src="../../resources/img/female.png" 
+		   }
+		   if(selectedPatient.Gender == "Male")
+		   {
+		   			document.getElementById('GenderIcon').src="../../resources/img/male.png" 
+		   }
+		   	
             //Print Button is hidden and then window is printed.
             function hideAndPrint() {
                 document.getElementById("printButton").style.visibility = 'hidden';
