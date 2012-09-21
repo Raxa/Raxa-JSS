@@ -223,7 +223,8 @@ Ext.define('Registration.controller.Main', {
         // this statement calls getifentifiers() as soon as the post call is successful
         store.on('write', function () {
             this.getidentifierstype(store.getAt(0).getData().uuid)
-            this.sendEncounterData('send no obs');
+            //we still want to keep the flow the same, we want to make the fields optional
+            //this.sendEncounterData('send no obs');
         }, this)
         //I made this function return this store because i needed this in jasmine unit test
         return store;
