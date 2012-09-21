@@ -47,6 +47,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                         xtype: 'selectfield',
                         label: 'Search In',
                         id: 'diagnosisFilter',
+                        hidden: true,
                         border: '0 0 1 0',
                         style: 'border:solid #DADADA;',
                         valueField: 'filterBy',
