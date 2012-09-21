@@ -141,9 +141,9 @@ var resourceUuid = {
     },
     "notes": {
         "resource": "concept",
-        "queryTerm": "CLINICIAN NOTES",
+        "queryTerm": "REGISTRATION NOTES",
         "varName": "notes",
-        "displayName": "CLINICIAN NOTES"
+        "displayName": "REGISTRATION NOTES"
     },
     "regcomplaint": {
         "resource": "concept",
