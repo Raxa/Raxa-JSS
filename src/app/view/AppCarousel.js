@@ -15,7 +15,9 @@ Ext.define('RaxaEmr.view.AppCarousel', {
         items: [{
             xclass: 'RaxaEmr.view.AppGrid'
         }, {
-            xclass: 'RaxaEmr.view.smartApp'
+            xclass: 'RaxaEmr.view.smartApp',
+	//  Hidden the carousel for Smart App as they are not being used now 
+            hidden: true
         }]
     }
 });

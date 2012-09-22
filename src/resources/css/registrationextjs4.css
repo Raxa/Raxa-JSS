@@ -11614,6 +11614,728 @@ svg, vml {
   background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-small-disabled-bg.gif');
 }
 
+/* line 633, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large {
+  border-color: #ee7136;
+}
+
+/* line 69, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-btn-raxa-orange-large {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  padding: 3px 3px 3px 3px;
+  border-width: 1px;
+  border-style: solid;
+  background-image: none;
+  background-color: #ee7136;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e8a795), color-stop(50%, #ee7136), color-stop(100%, #e8a795));
+  background-image: -webkit-linear-gradient(top, #e8a795, #ee7136, #e8a795);
+  background-image: -moz-linear-gradient(top, #e8a795, #ee7136, #e8a795);
+  background-image: -o-linear-gradient(top, #e8a795, #ee7136, #e8a795);
+  background-image: linear-gradient(top, #e8a795, #ee7136, #e8a795);
+}
+
+/* line 102, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nlg .x-btn-raxa-orange-large-mc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-bg.gif');
+  background-color: #ee7136;
+}
+
+/* line 115, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-orange-large {
+  padding: 0 !important;
+  border-width: 0 !important;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+  background-color: transparent;
+  background-position: 1100303px 1000303px;
+}
+/* line 147, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-orange-large-tl,
+.x-nbr .x-btn-raxa-orange-large-bl,
+.x-nbr .x-btn-raxa-orange-large-tr,
+.x-nbr .x-btn-raxa-orange-large-br,
+.x-nbr .x-btn-raxa-orange-large-tc,
+.x-nbr .x-btn-raxa-orange-large-bc,
+.x-nbr .x-btn-raxa-orange-large-ml,
+.x-nbr .x-btn-raxa-orange-large-mr {
+  zoom: 1;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-corners.gif');
+}
+/* line 168, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-orange-large-ml,
+.x-nbr .x-btn-raxa-orange-large-mr {
+  zoom: 1;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-sides.gif');
+  background-position: 0 0;
+}
+/* line 200, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-orange-large-mc {
+  padding: 1px 1px 1px 1px;
+}
+
+/* line 210, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-strict .x-ie7 .x-btn-raxa-orange-large-tl,
+.x-strict .x-ie7 .x-btn-raxa-orange-large-bl {
+  position: relative;
+  right: 0;
+}
+
+/* line 639, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large .x-btn-inner {
+  font-size: ceil 20px;
+  font-weight: normal;
+  font-family: tahoma, arial, verdana, sans-serif;
+  color: white;
+  background-repeat: no-repeat;
+  padding: 0 3px;
+}
+
+/* line 652, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon button,
+.x-btn-raxa-orange-large-icon a,
+.x-btn-raxa-orange-large-icon .x-btn-inner,
+.x-btn-raxa-orange-large-noicon button,
+.x-btn-raxa-orange-large-noicon a,
+.x-btn-raxa-orange-large-noicon .x-btn-inner {
+  height: 32px;
+  line-height: 32px;
+}
+
+/* line 661, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon button, .x-btn-raxa-orange-large-icon a {
+  padding: 0;
+}
+/* line 665, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon .x-btn-inner {
+  /* even though there is no text we set a width and padding as buttons shrink-wrap around this element */
+  width: 32px;
+  padding: 0;
+}
+/* line 671, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon .x-btn-icon {
+  width: 32px;
+  height: 32px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* line 683, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-left button, .x-btn-raxa-orange-large-icon-text-left a {
+  height: 32px;
+}
+/* line 686, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-left .x-btn-inner {
+  height: 32px;
+  line-height: 32px;
+  padding-left: 36px;
+}
+/* line 692, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-left .x-btn-icon {
+  width: 32px;
+  height: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: auto;
+}
+/* line 701, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-orange-large-icon-text-left .x-btn-icon, .x-quirks .x-btn-raxa-orange-large-icon-text-left .x-btn-icon {
+  height: 32px;
+}
+
+/* line 709, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-right button, .x-btn-raxa-orange-large-icon-text-right a {
+  height: 32px;
+}
+/* line 712, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-right .x-btn-inner {
+  height: 32px;
+  line-height: 32px;
+  padding-right: 36px !important;
+}
+/* line 718, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-right .x-btn-icon {
+  width: 32px;
+  height: auto;
+  top: 0;
+  left: auto;
+  bottom: 0;
+  right: 0;
+}
+/* line 727, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-orange-large-icon-text-right .x-btn-icon, .x-quirks .x-btn-raxa-orange-large-icon-text-right .x-btn-icon {
+  height: 32px;
+}
+
+/* line 734, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-top .x-btn-inner {
+  padding-top: 36px;
+}
+/* line 738, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-top .x-btn-icon {
+  width: auto;
+  height: 32px;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: 0;
+}
+/* line 747, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-orange-large-icon-text-top .x-btn-icon, .x-quirks .x-ie .x-btn-raxa-orange-large-icon-text-top .x-btn-icon {
+  width: 32px;
+}
+
+/* line 754, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-bottom .x-btn-inner {
+  padding-bottom: 36px;
+}
+/* line 758, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-icon-text-bottom .x-btn-icon {
+  width: auto;
+  height: 32px;
+  top: auto;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+/* line 767, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-orange-large-icon-text-bottom .x-btn-icon, .x-quirks .x-ie .x-btn-raxa-orange-large-icon-text-bottom .x-btn-icon {
+  width: 32px;
+}
+
+/* line 773, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-over {
+  background-image: none;
+  background-color: #ee7136;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ee7136), color-stop(50%, #e8a795), color-stop(100%, #ee7136));
+  background-image: -webkit-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: -moz-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: -o-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: linear-gradient(top, #ee7136, #e8a795, #ee7136);
+}
+
+/* line 797, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-focus {
+  background-image: none;
+  background-color: #ee7136;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ee7136), color-stop(50%, #e8a795), color-stop(100%, #ee7136));
+  background-image: -webkit-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: -moz-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: -o-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: linear-gradient(top, #ee7136, #e8a795, #ee7136);
+}
+
+/* line 822, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-menu-active,
+.x-btn-raxa-orange-large-pressed {
+  background-image: none;
+  background-color: #ee7136;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ee7136), color-stop(50%, #e8a795), color-stop(100%, #ee7136));
+  background-image: -webkit-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: -moz-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: -o-linear-gradient(top, #ee7136, #e8a795, #ee7136);
+  background-image: linear-gradient(top, #ee7136, #e8a795, #ee7136);
+}
+
+/* line 846, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-orange-large-disabled {
+  border-color: black;
+  background-image: none;
+  background-color: black;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #000000), color-stop(48%, #000000), color-stop(52%, #000000), color-stop(100%, #000000));
+  background-image: -webkit-linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+  background-image: -moz-linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+  background-image: -o-linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+  background-image: linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+}
+
+/* line 894, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-tl,
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-bl,
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-tr,
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-br,
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-tc,
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-over-corners.gif');
+}
+/* line 898, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-ml,
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-over-sides.gif');
+}
+/* line 901, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-over .x-frame-mc {
+  background-color: #ee7136;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-over-bg.gif');
+}
+/* line 915, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-tl,
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-bl,
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-tr,
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-br,
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-tc,
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-focus-corners.gif');
+}
+/* line 919, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-ml,
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-focus-sides.gif');
+}
+/* line 922, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-focus .x-frame-mc {
+  background-color: #ee7136;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-focus-bg.gif');
+}
+/* line 937, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-tl,
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-bl,
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-tr,
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-br,
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-tc,
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-bc,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-tl,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-bl,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-tr,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-br,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-tc,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-pressed-corners.gif');
+}
+/* line 941, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-ml,
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-mr,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-ml,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-pressed-sides.gif');
+}
+/* line 944, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-menu-active .x-frame-mc,
+.x-nbr .x-btn-raxa-orange-large-pressed .x-frame-mc {
+  background-color: #ee7136;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-pressed-bg.gif');
+}
+/* line 958, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-tl,
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-bl,
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-tr,
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-br,
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-tc,
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-disabled-corners.gif');
+}
+/* line 962, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-ml,
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-disabled-sides.gif');
+}
+/* line 965, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-orange-large-disabled .x-frame-mc {
+  background-color: black;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-disabled-bg.gif');
+}
+
+/* line 978, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-orange-large {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-bg.gif');
+}
+
+/* line 987, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-orange-large-over {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-over-bg.gif');
+}
+
+/* line 996, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-orange-large-focus {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-focus-bg.gif');
+}
+
+/* line 1006, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-orange-large-menu-active,
+.x-nlg .x-btn-raxa-orange-large-pressed {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-pressed-bg.gif');
+}
+
+/* line 1015, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-orange-large-disabled {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-orange-large-disabled-bg.gif');
+}
+
+/* line 633, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large {
+  border-color: #009682;
+}
+
+/* line 69, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-btn-raxa-aqua-large {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  padding: 3px 3px 3px 3px;
+  border-width: 1px;
+  border-style: solid;
+  background-image: none;
+  background-color: #009682;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5bbba8), color-stop(50%, #009682), color-stop(100%, #5bbba8));
+  background-image: -webkit-linear-gradient(top, #5bbba8, #009682, #5bbba8);
+  background-image: -moz-linear-gradient(top, #5bbba8, #009682, #5bbba8);
+  background-image: -o-linear-gradient(top, #5bbba8, #009682, #5bbba8);
+  background-image: linear-gradient(top, #5bbba8, #009682, #5bbba8);
+}
+
+/* line 102, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nlg .x-btn-raxa-aqua-large-mc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-bg.gif');
+  background-color: #009682;
+}
+
+/* line 115, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-aqua-large {
+  padding: 0 !important;
+  border-width: 0 !important;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+  background-color: transparent;
+  background-position: 1100303px 1000303px;
+}
+/* line 147, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-aqua-large-tl,
+.x-nbr .x-btn-raxa-aqua-large-bl,
+.x-nbr .x-btn-raxa-aqua-large-tr,
+.x-nbr .x-btn-raxa-aqua-large-br,
+.x-nbr .x-btn-raxa-aqua-large-tc,
+.x-nbr .x-btn-raxa-aqua-large-bc,
+.x-nbr .x-btn-raxa-aqua-large-ml,
+.x-nbr .x-btn-raxa-aqua-large-mr {
+  zoom: 1;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-corners.gif');
+}
+/* line 168, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-aqua-large-ml,
+.x-nbr .x-btn-raxa-aqua-large-mr {
+  zoom: 1;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-sides.gif');
+  background-position: 0 0;
+}
+/* line 200, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-nbr .x-btn-raxa-aqua-large-mc {
+  padding: 1px 1px 1px 1px;
+}
+
+/* line 210, ../../lib/extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
+.x-strict .x-ie7 .x-btn-raxa-aqua-large-tl,
+.x-strict .x-ie7 .x-btn-raxa-aqua-large-bl {
+  position: relative;
+  right: 0;
+}
+
+/* line 639, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large .x-btn-inner {
+  font-size: ceil 20px;
+  font-weight: normal;
+  font-family: tahoma, arial, verdana, sans-serif;
+  color: white;
+  background-repeat: no-repeat;
+  padding: 0 3px;
+}
+
+/* line 652, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon button,
+.x-btn-raxa-aqua-large-icon a,
+.x-btn-raxa-aqua-large-icon .x-btn-inner,
+.x-btn-raxa-aqua-large-noicon button,
+.x-btn-raxa-aqua-large-noicon a,
+.x-btn-raxa-aqua-large-noicon .x-btn-inner {
+  height: 32px;
+  line-height: 32px;
+}
+
+/* line 661, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon button, .x-btn-raxa-aqua-large-icon a {
+  padding: 0;
+}
+/* line 665, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon .x-btn-inner {
+  /* even though there is no text we set a width and padding as buttons shrink-wrap around this element */
+  width: 32px;
+  padding: 0;
+}
+/* line 671, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon .x-btn-icon {
+  width: 32px;
+  height: 32px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* line 683, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-left button, .x-btn-raxa-aqua-large-icon-text-left a {
+  height: 32px;
+}
+/* line 686, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-left .x-btn-inner {
+  height: 32px;
+  line-height: 32px;
+  padding-left: 36px;
+}
+/* line 692, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-left .x-btn-icon {
+  width: 32px;
+  height: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: auto;
+}
+/* line 701, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-aqua-large-icon-text-left .x-btn-icon, .x-quirks .x-btn-raxa-aqua-large-icon-text-left .x-btn-icon {
+  height: 32px;
+}
+
+/* line 709, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-right button, .x-btn-raxa-aqua-large-icon-text-right a {
+  height: 32px;
+}
+/* line 712, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-right .x-btn-inner {
+  height: 32px;
+  line-height: 32px;
+  padding-right: 36px !important;
+}
+/* line 718, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-right .x-btn-icon {
+  width: 32px;
+  height: auto;
+  top: 0;
+  left: auto;
+  bottom: 0;
+  right: 0;
+}
+/* line 727, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-aqua-large-icon-text-right .x-btn-icon, .x-quirks .x-btn-raxa-aqua-large-icon-text-right .x-btn-icon {
+  height: 32px;
+}
+
+/* line 734, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-top .x-btn-inner {
+  padding-top: 36px;
+}
+/* line 738, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-top .x-btn-icon {
+  width: auto;
+  height: 32px;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: 0;
+}
+/* line 747, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-aqua-large-icon-text-top .x-btn-icon, .x-quirks .x-ie .x-btn-raxa-aqua-large-icon-text-top .x-btn-icon {
+  width: 32px;
+}
+
+/* line 754, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-bottom .x-btn-inner {
+  padding-bottom: 36px;
+}
+/* line 758, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-icon-text-bottom .x-btn-icon {
+  width: auto;
+  height: 32px;
+  top: auto;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+/* line 767, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-ie6 .x-btn-raxa-aqua-large-icon-text-bottom .x-btn-icon, .x-quirks .x-ie .x-btn-raxa-aqua-large-icon-text-bottom .x-btn-icon {
+  width: 32px;
+}
+
+/* line 773, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-over {
+  background-image: none;
+  background-color: #009682;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #009682), color-stop(50%, #5bbba8), color-stop(100%, #009682));
+  background-image: -webkit-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: -moz-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: -o-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: linear-gradient(top, #009682, #5bbba8, #009682);
+}
+
+/* line 797, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-focus {
+  background-image: none;
+  background-color: #009682;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #009682), color-stop(50%, #5bbba8), color-stop(100%, #009682));
+  background-image: -webkit-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: -moz-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: -o-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: linear-gradient(top, #009682, #5bbba8, #009682);
+}
+
+/* line 822, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-menu-active,
+.x-btn-raxa-aqua-large-pressed {
+  background-image: none;
+  background-color: #009682;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #009682), color-stop(50%, #5bbba8), color-stop(100%, #009682));
+  background-image: -webkit-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: -moz-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: -o-linear-gradient(top, #009682, #5bbba8, #009682);
+  background-image: linear-gradient(top, #009682, #5bbba8, #009682);
+}
+
+/* line 846, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-btn-raxa-aqua-large-disabled {
+  border-color: black;
+  background-image: none;
+  background-color: black;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #000000), color-stop(48%, #000000), color-stop(52%, #000000), color-stop(100%, #000000));
+  background-image: -webkit-linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+  background-image: -moz-linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+  background-image: -o-linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+  background-image: linear-gradient(top, #000000, #000000 48%, #000000 52%, #000000);
+}
+
+/* line 894, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-tl,
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-bl,
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-tr,
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-br,
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-tc,
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-over-corners.gif');
+}
+/* line 898, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-ml,
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-over-sides.gif');
+}
+/* line 901, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-over .x-frame-mc {
+  background-color: #009682;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-over-bg.gif');
+}
+/* line 915, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-tl,
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-bl,
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-tr,
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-br,
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-tc,
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-focus-corners.gif');
+}
+/* line 919, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-ml,
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-focus-sides.gif');
+}
+/* line 922, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-focus .x-frame-mc {
+  background-color: #009682;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-focus-bg.gif');
+}
+/* line 937, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-tl,
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-bl,
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-tr,
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-br,
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-tc,
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-bc,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-tl,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-bl,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-tr,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-br,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-tc,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-pressed-corners.gif');
+}
+/* line 941, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-ml,
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-mr,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-ml,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-pressed-sides.gif');
+}
+/* line 944, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-menu-active .x-frame-mc,
+.x-nbr .x-btn-raxa-aqua-large-pressed .x-frame-mc {
+  background-color: #009682;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-pressed-bg.gif');
+}
+/* line 958, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-tl,
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-bl,
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-tr,
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-br,
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-tc,
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-bc {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-disabled-corners.gif');
+}
+/* line 962, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-ml,
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-mr {
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-disabled-sides.gif');
+}
+/* line 965, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nbr .x-btn-raxa-aqua-large-disabled .x-frame-mc {
+  background-color: black;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-disabled-bg.gif');
+}
+
+/* line 978, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-aqua-large {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-bg.gif');
+}
+
+/* line 987, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-aqua-large-over {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-over-bg.gif');
+}
+
+/* line 996, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-aqua-large-focus {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-focus-bg.gif');
+}
+
+/* line 1006, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-aqua-large-menu-active,
+.x-nlg .x-btn-raxa-aqua-large-pressed {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-pressed-bg.gif');
+}
+
+/* line 1015, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
+.x-nlg .x-btn-raxa-aqua-large-disabled {
+  background-repeat: repeat-x;
+  background-image: url('../../lib/extjs/resources/themes/images/default/btn/btn-raxa-aqua-large-disabled-bg.gif');
+}
+
 /* line 253, ../../lib/extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-raxa-panel-not-rounded {
   font-size: 11px;
@@ -12404,14 +13126,14 @@ svg, vml {
   background-position: 0 bottom;
 }
 
-/* line 194, ../sass/registrationextjs4.scss */
+/* line 296, ../sass/registrationextjs4.scss */
 #custom-slider {
   width: 214px;
   padding-top: 6px;
   background-image: url(img/ticks.gif);
 }
 
-/* line 200, ../sass/registrationextjs4.scss */
+/* line 302, ../sass/registrationextjs4.scss */
 .raxa-form-field {
   -webkit-border-radius: 5px 5px;
   -moz-border-radius: 5px 5px;
@@ -12420,34 +13142,34 @@ svg, vml {
   border-radius: 5px 5px;
 }
 
-/* line 217, ../sass/registrationextjs4.scss */
+/* line 319, ../sass/registrationextjs4.scss */
 .x-list.x-list-indexed .x-list-disclosure {
   margin-right: 1em;
 }
 
-/* line 218, ../sass/registrationextjs4.scss */
+/* line 320, ../sass/registrationextjs4.scss */
 .x-list .x-item-selected .x-list-disclosure {
   background: #fff none;
 }
 
-/* line 219, ../sass/registrationextjs4.scss */
+/* line 321, ../sass/registrationextjs4.scss */
 .x-list .x-list-item {
   position: relative;
   color: black;
 }
 
-/* line 220, ../sass/registrationextjs4.scss */
+/* line 322, ../sass/registrationextjs4.scss */
 .x-list .x-list-item .x-list-item-label {
   min-height: 3.9em;
   padding: 0.65em 0.8em;
 }
 
-/* line 221, ../sass/registrationextjs4.scss */
+/* line 323, ../sass/registrationextjs4.scss */
 .x-list .x-list-item.x-item-pressed .x-list-item-label {
   background: #e6eff5 none;
 }
 
-/* line 222, ../sass/registrationextjs4.scss */
+/* line 324, ../sass/registrationextjs4.scss */
 .x-list .x-list-item.x-item-selected .x-list-item-label {
   background-image: none;
   background-color: white;
@@ -12458,12 +13180,12 @@ svg, vml {
   text-shadow: rgba(255, 255, 255, 0.25) 0 0.08em 0;
 }
 
-/* line 223, ../sass/registrationextjs4.scss */
+/* line 325, ../sass/registrationextjs4.scss */
 .x-list-header {
   position: relative;
 }
 
-/* line 224, ../sass/registrationextjs4.scss */
+/* line 326, ../sass/registrationextjs4.scss */
 .x-list-header-swap {
   position: absolute;
   left: 0;
@@ -12471,13 +13193,13 @@ svg, vml {
   z-index: 1;
 }
 
-/* line 225, ../sass/registrationextjs4.scss */
+/* line 327, ../sass/registrationextjs4.scss */
 .x-ios .x-list-header-swap {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-/* line 226, ../sass/registrationextjs4.scss */
+/* line 328, ../sass/registrationextjs4.scss */
 .x-list-normal .x-list-header {
   background-image: none;
   background-color: #5ab5f5;
@@ -12494,44 +13216,44 @@ svg, vml {
   text-shadow: rgba(255, 255, 255, 0.25) 0 0.08em 0;
 }
 
-/* line 227, ../sass/registrationextjs4.scss */
+/* line 329, ../sass/registrationextjs4.scss */
 .x-list-normal .x-list-item .x-list-item-label {
   border-top: 1px solid #dedede;
 }
 
-/* line 228, ../sass/registrationextjs4.scss */
+/* line 330, ../sass/registrationextjs4.scss */
 .x-list-normal .x-list-item:last-child .x-list-item-label {
   border-bottom: 1px solid #dedede;
 }
 
-/* line 229, ../sass/registrationextjs4.scss */
+/* line 331, ../sass/registrationextjs4.scss */
 .x-list-normal .x-list-item:first-child .x-list-item-label {
   border-top: 0;
 }
 
-/* line 230, ../sass/registrationextjs4.scss */
+/* line 332, ../sass/registrationextjs4.scss */
 .x-list-normal .x-list-item.x-item-pressed .x-list-item-label {
   border-top-color: #e6eff5;
   background-color: #e6eff5;
 }
 
-/* line 231, ../sass/registrationextjs4.scss */
+/* line 333, ../sass/registrationextjs4.scss */
 .x-list-normal .x-list-item.x-item-selected .x-list-item-label {
   border-top-color: white;
   border-bottom-color: #d9d9d9;
 }
 
-/* line 232, ../sass/registrationextjs4.scss */
+/* line 334, ../sass/registrationextjs4.scss */
 .x-list-round .x-scroll-view {
   background-color: #EEEEEE !important;
 }
 
-/* line 234, ../sass/registrationextjs4.scss */
+/* line 336, ../sass/registrationextjs4.scss */
 .x-contacts .x-list-item-label {
   font-weight: bold;
 }
 
-/* line 235, ../sass/registrationextjs4.scss */
+/* line 337, ../sass/registrationextjs4.scss */
 .x-contacts .x-list-item-label span {
   display: block;
   font-size: 14px;
@@ -12539,22 +13261,22 @@ svg, vml {
   color: #666;
 }
 
-/* line 236, ../sass/registrationextjs4.scss */
+/* line 338, ../sass/registrationextjs4.scss */
 .x-contacts.x-list {
   background: #EEEEEE;
 }
 
-/* line 237, ../sass/registrationextjs4.scss */
+/* line 339, ../sass/registrationextjs4.scss */
 .x-contacts .x-list-item {
   height: 70px;
 }
 
-/* line 238, ../sass/registrationextjs4.scss */
+/* line 340, ../sass/registrationextjs4.scss */
 .x-contact .x-list-item > * {
   float: left;
 }
 
-/* line 239, ../sass/registrationextjs4.scss */
+/* line 341, ../sass/registrationextjs4.scss */
 .x-contacts .headshot {
   float: left;
   height: 50px;
@@ -12568,7 +13290,7 @@ svg, vml {
   -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
 }
 
-/* line 240, ../sass/registrationextjs4.scss */
+/* line 342, ../sass/registrationextjs4.scss */
 .x-contacts .property {
   float: left;
   height: 56px;
@@ -12581,33 +13303,33 @@ svg, vml {
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
 }
 
-/* line 241, ../sass/registrationextjs4.scss */
+/* line 343, ../sass/registrationextjs4.scss */
 .x-contacts .x-item-pressed, .x-contacts .x-item-selected {
   border-top-color: #D1D1D1 !important;
 }
 
-/* line 242, ../sass/registrationextjs4.scss */
+/* line 344, ../sass/registrationextjs4.scss */
 .x-show-contact {
   background: #EEEEEE;
 }
 
-/* line 243, ../sass/registrationextjs4.scss */
+/* line 345, ../sass/registrationextjs4.scss */
 .x-show-contact.x-list-item {
   background: #EEEEEE;
 }
 
-/* line 244, ../sass/registrationextjs4.scss */
+/* line 346, ../sass/registrationextjs4.scss */
 .x-show-contact .top {
   padding: 15px;
   height: 80px;
 }
 
-/* line 245, ../sass/registrationextjs4.scss */
+/* line 347, ../sass/registrationextjs4.scss */
 .x-show-contact .top > * {
   float: left;
 }
 
-/* line 246, ../sass/registrationextjs4.scss */
+/* line 348, ../sass/registrationextjs4.scss */
 .x-show-contact .top .headshot {
   height: 50px;
   width: 50px;
@@ -12620,7 +13342,7 @@ svg, vml {
   -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
 }
 
-/* line 247, ../sass/registrationextjs4.scss */
+/* line 349, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name {
   width: 195px;
   padding-top: 0;
@@ -12628,7 +13350,7 @@ svg, vml {
   font-weight: bold;
 }
 
-/* line 248, ../sass/registrationextjs4.scss */
+/* line 350, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name span {
   display: block;
   font-size: 14px;
@@ -12636,13 +13358,13 @@ svg, vml {
   color: #666;
 }
 
-/* line 249, ../sass/registrationextjs4.scss */
+/* line 351, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name a:link {
   color: #3f9b26;
   text-decoration: none;
 }
 
-/* line 250, ../sass/registrationextjs4.scss */
+/* line 352, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name_small {
   width: 195px;
   padding-top: 10px;
@@ -12650,7 +13372,7 @@ svg, vml {
   font-weight: bold;
 }
 
-/* line 251, ../sass/registrationextjs4.scss */
+/* line 353, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name_small span {
   display: block;
   font-size: 14px;
@@ -12658,13 +13380,13 @@ svg, vml {
   color: #666;
 }
 
-/* line 252, ../sass/registrationextjs4.scss */
+/* line 354, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name_small a:link {
   color: #3f9b26;
   text-decoration: none;
 }
 
-/* line 253, ../sass/registrationextjs4.scss */
+/* line 355, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name_right {
   width: 195px;
   padding-top: 10px;
@@ -12673,7 +13395,7 @@ svg, vml {
   text-align: right;
 }
 
-/* line 254, ../sass/registrationextjs4.scss */
+/* line 356, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name_right span {
   display: block;
   font-size: 14px;
@@ -12681,7 +13403,7 @@ svg, vml {
   color: #666;
 }
 
-/* line 255, ../sass/registrationextjs4.scss */
+/* line 357, ../sass/registrationextjs4.scss */
 .x-show-contact .top .name_right a:link {
   color: #3f9b26;
   text-decoration: none;

@@ -1,0 +1,15 @@
+.x-slider-field-extended .x-component-outer {
+  padding: 0.5em;
+}
+
+.x-slider-field-extended .x-slider-helper {
+  width: 30%;
+}
+
+.x-slider-field-extended .x-slider-helper .x-slider-helper-input {
+  width: 100%;
+  margin: 0;
+  padding: 0.1em 0.3em;
+  height: 2.2em;
+  border: 1px solid #CCC;
+}

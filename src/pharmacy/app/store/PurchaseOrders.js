@@ -6,6 +6,10 @@ Ext.define('RaxaEmr.Pharmacy.store.PurchaseOrders', {
     proxy: {
         type: 'rest',
         url: HOST + '/ws/rest/v1/raxacore/drugpurchaseorder',
-        headers: Util.getBasicAuthHeaders()
+        headers: Util.getBasicAuthHeaders(),
+        reader: {
+            type: 'json',
+            root: 'results'
+        }
     }
 });

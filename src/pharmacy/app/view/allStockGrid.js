@@ -1,14 +1,24 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.allStockGrid',
-    height: 250,
+    autoHeight: 250,
     width: 600,
-    layout: {
-        type: 'absolute'
-    },
-    x: 110,
-    store: Ext.create('RaxaEmr.Pharmacy.store.StockList'),
+    margin: '0 0 0 110',
+    store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
+        storeId: 'stockList'
+    }),
+    selModel : Ext.create('Ext.selection.RowModel', {
+        listeners : {
+            select : function(rowModel, record, rowIndex) {
+                //on select, go to drug details page
+                Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
+                Ext.getCmp('drugDetails').initForDrug(record.data.drugName);
+            },
+            scope : this
+        }  
+    }),    
     columns: [
+
     {
         xtype: 'rownumberer',
         text: 'S.No',
@@ -27,24 +37,33 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Type',
-        width: 80
-    },
-    {
-        xtype: 'numbercolumn',
         text: 'Qty',
         dataIndex: 'quantity',
         width: 80
     },
     {
-        xtype: 'numbercolumn',
+        xtype: 'gridcolumn',
         text: 'Days',
-        width: 60
+        width: 60,
+        dataIndex: 'days',
+        useNull: true
     },
     {
         xtype: 'gridcolumn',
-        text: 'Location',
-        dataIndex: 'locationName',
+        text: 'Shelf',
+        dataIndex: 'roomLocation',
         width: 100
+    },
+    {
+        xtype: 'gridcolumn',
+        text: 'batch',
+        dataIndex: 'batch',
+        width: 80
+    },
+    {
+        xtype: 'gridcolumn',
+        text: 'Dispense Location',
+        dataIndex: 'locationName',
+        width: 120
     }]
 });

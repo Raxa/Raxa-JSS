@@ -53,6 +53,10 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'button',
                     width: 60,
                     text: 'Log Out',
+                    handler: function() {
+                        Util.logoutUser();
+                        location.reload();
+                    }
                 }]
             }],
             width: 960,
@@ -69,6 +73,8 @@ Ext.define('Registration.view.Viewport', {
                 xtype: REG_PAGES.REG_1.name
             }, {
                 xtype: REG_PAGES.REG_CONFIRM.name
+            }, {
+                xtype: REG_PAGES.ILLNESS_DETAILS.name
             }, {
                 xtype: REG_PAGES.REG_BMI.name
             }, {
