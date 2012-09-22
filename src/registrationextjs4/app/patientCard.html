@@ -84,7 +84,7 @@
                                 <tr>
                                     <td>Registration:</td>
                                     <td>
-                                        <input type="text" id="Id" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                        <input type="text" id="Id" readonly="true" style="border-width: 0px 0px 0px 0px;" size=30>
                                     </td>
                                 </tr>
                                 <tr>
@@ -136,8 +136,18 @@
 			for(var i=0; i<selectedPatientAttributes.length; i++)
 			{
 				if(selectedPatient[selectedPatientAttributes[i]])
-				{
+				{	
+					//Check if old Patient Identifier is present is available or not
+					if(selectedPatientAttributes[i] === 'Id' && selectedPatient.oldPatientIdentifier)
+					{ 	
+						document.getElementById(selectedPatientAttributes[i]).value= selectedPatient[selectedPatientAttributes[i]] +' (Old: '+ selectedPatient.oldPatientIdentifier+ ')';
+					}			
+					else					
 					document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];			
+				}
+				else
+				{
+					document.getElementById(selectedPatientAttributes[i]).value = '-';
 				}
 			}
            var currentDate = new Date();
