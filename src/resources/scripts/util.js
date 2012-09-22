@@ -324,9 +324,9 @@ var Util = {
         var actualNoOfUuids=0;
         var noOfUuidsLoaded=0;
         for (var key in resourceUuid) { 
-            counter1++;
+            actualNoOfUuids++;
             if(localStorage.getItem(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource)!=null){ 
-                counter2++;
+                noOfUuidsLoaded++;
             }
         }
         console.log("Total Uuid's are "+actualNoOfUuids);
