@@ -102,13 +102,18 @@ Ext.define('Registration.view.SearchPart2', {
                                     Ext.getCmp('stretSearchedPatient').setValue(temp.address2)
                                     Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
                                     Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
-                                    /*  var i;
-                                     *  Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 
-                                     *  wherever attributes are required
-                                    for(i=0;temp.attributes.length;i++){
-                                        if(temp.attributes[i].attributeType == casteuuid) Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
-                                        // TODO- make similars "if" conditions for other attributes
-                                    } */
+
+                                    for(var i=0;i<temp.attributes.length;i++){
+                                    	//search function on string returns position is found otherwise returns -1
+										if(temp.attributes[i].attributeType.display.search('Old Patient Identification Number')>=0)
+										{
+											Ext.getCmp('oldPatientIdentifierSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										else
+										{
+											Ext.getCmp('oldPatientIdentifierSearchedPatient').setValue(null);
+										}
+                                    }
                                     var l = Ext.getCmp('mainRegArea').getLayout();
                                     l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value);
                                 }
