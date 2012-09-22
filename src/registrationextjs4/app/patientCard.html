@@ -143,8 +143,8 @@
 				if(selectedPatient[selectedPatientAttributes[i]])
 				{	
 					//Check if old Patient Identifier is available or not
-					if(selectedPatientAttributes[i] === 'Id' && selectedPatient.oldPatientIdentifier)
-					{ 	
+					if(selectedPatientAttributes[i] === 'Id' && selectedPatient.oldPatientIdentifier &&  selectedPatient.oldPatientIdentifier != '-')
+					{ 
 						document.getElementById(selectedPatientAttributes[i]).value= selectedPatient[selectedPatientAttributes[i]] +' (Old: '+ selectedPatient.oldPatientIdentifier+ ')';
 					}			
 					else					
@@ -157,7 +157,8 @@
 			}
            var currentDate = new Date();
            document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
-			console.log(selectedPatient.Gender);
+	 	
+	 	  //Sets Icon on patient registrtion card as per patient's gender
 		   if(selectedPatient.Gender == "Female")
 		   {
 		   			document.getElementById('GenderIcon').src="../../resources/img/female.png" 
