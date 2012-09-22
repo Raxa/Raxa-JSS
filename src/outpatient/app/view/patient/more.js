@@ -28,83 +28,83 @@ Ext.define('RaxaEmr.Outpatient.view.patient.more', {
             id: 'content',
             tpl: ['<div class="top">', '<div style="float:left;width:50%;">', '<div class="headshot" style="float:left;background-image:url({image});">', '</div>', '<div class="name" style="float:left;width:80%;">', '{display}', '</br>', '<span>From : New Delhi, India</span>', '</br>', '</div>', '</div>', '<div style="float:left;width:50%;">', '<div class="name_small" style="float:left;width:50%;">', '<span> Age : {age} </span>', '<span>ID : 16736127</span>', '</br>', '</div>', '<div class="name_right" style="float:left;width:50%;">', '<h3>Dr.Arpana Jain</h3>', '<span></span>', '</div>', '</div>', '</div>'].join('')
         }, {
+            xtype: 'vitalsGrid',
+            height: 84,
+            /*border: 10,*/
+        }, {
             xtype: 'container',
             layout: {
                 type: 'card'
             },
-            border: '1 0 0 0',
-            style: 'border:solid #666666;',
+            /*border: '1 0 0 0',*/
+            /*style: 'border:solid #666666;',*/
             id: 'working-area',
             flex: 1,
             activeItem: 0,
             items: [{
-                xtype: 'container',
-                scrollable: 'vertical',
-                items: [{
-                    xtype: 'grid-grid',
-                    height: 85,
-                    border: 10,
-                }, {
-                    xtype: 'formpanel',
-                    height: 100,
-                    layout: {
-                        pack: 'center',
-                        type: 'hbox'
-                    },
-                    scrollable: 'false',
+                    xtype: 'container',
+                    /*scrollable: 'vertical',*/
                     items: [{
-                        xtype: 'fieldset',
-                        height: 75,
-                        margin: '-10 20 0 -3',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        flex: 1,
-                        items: [{
-                            xtype: 'selectfield',
-                            label: 'Chief Complain',
-                            id: 'cheifComplain',
-                            valueField: 'cheifComplain',
-                            displayField: 'title',
-                            autoComplete: true,
-                            flex: 1,
-                            store: {
-                                data: [{
-                                    cheifComplain: 'Abdominal Pain',
-                                    title: 'Abdominal Pain',
-                                }, {
-                                    cheifComplain: 'Fever',
-                                    title: 'Fever',
-                                }, {
-                                    cheifComplain: 'Nausea',
-                                    title: 'Nausea',
-                                }, {
-                                    cheifComplain: 'Vomiting',
-                                    title: 'Vomiting',
-                                }, {
-                                    cheifComplain: 'Weakness',
-                                    title: 'Weakness',
-                                }]
-                            }
-                        }]
-                    }, {
-                        xtype: 'fieldset',
-                        height: 75,
-                        margin: '-10 0 0 0',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        flex: 1,
-                        items: [{
-                            xtype: 'textareafield',
-                            label: 'Notes',
-                            flex: 1
-                        }]
-                    }]
-                }, {
+                    /*xtype: 'formpanel',*/
+                    /*height: 100,*/
+                    /*layout: {*/
+                    /*pack: 'center',*/
+                    /*type: 'hbox'*/
+                    /*},*/
+                    /*scrollable: 'false',*/
+                    /*items: [{*/
+                    /*xtype: 'fieldset',*/
+                    /*height: 75,*/
+                    /*margin: '-10 20 0 -3',*/
+                    /*layout: {*/
+                    /*type: 'hbox'*/
+                    /*},*/
+                    /*flex: 1,*/
+                    /*items: [{*/
+                    /*xtype: 'selectfield',*/
+                    /*label: 'Chief Complain',*/
+                    /*id: 'cheifComplain',*/
+                    /*valueField: 'cheifComplain',*/
+                    /*displayField: 'title',*/
+                    /*autoComplete: true,*/
+                    /*flex: 1,*/
+                    /*store: {*/
+                    /*data: [{*/
+                    /*cheifComplain: 'Abdominal Pain',*/
+                    /*title: 'Abdominal Pain',*/
+                    /*}, {*/
+                    /*cheifComplain: 'Fever',*/
+                    /*title: 'Fever',*/
+                    /*}, {*/
+                    /*cheifComplain: 'Nausea',*/
+                    /*title: 'Nausea',*/
+                    /*}, {*/
+                    /*cheifComplain: 'Vomiting',*/
+                    /*title: 'Vomiting',*/
+                    /*}, {*/
+                    /*cheifComplain: 'Weakness',*/
+                    /*title: 'Weakness',*/
+                    /*}]*/
+                    /*}*/
+                    /*}]*/
+                    /*}, {*/
+                    /*xtype: 'fieldset',*/
+                    /*height: 75,*/
+                    /*margin: '-10 0 0 0',*/
+                    /*layout: {*/
+                    /*type: 'hbox'*/
+                    /*},*/
+                    /*flex: 1,*/
+                    /*items: [{*/
+                    /*xtype: 'textareafield',*/
+                    /*label: 'Notes',*/
+                    /*flex: 1*/
+                    /*}]*/
+                    /*}]*/
+                    /*}, {*/
                     xtype: 'work'
                 }]
-            }]
+        }]
         }],
         record: null
     },

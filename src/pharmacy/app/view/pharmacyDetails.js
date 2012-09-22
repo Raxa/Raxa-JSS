@@ -116,7 +116,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyDetails', {
                 xtype: 'gridcolumn',
                 width: 54,
                 dataIndex: 'string',
-                text: 'S no'
+                text: '#'
             },
             {
                 xtype: 'gridcolumn',

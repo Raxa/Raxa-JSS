@@ -6,13 +6,20 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
         //we defined it and made the persist property false 
         persist: false 
     }, {
+        name: 'name',
+        type: 'string'
+    }, {
+        name: 'description',
+        type: 'string'
+    }, {
         name: 'status',
-        type: 'string',
-        mapping: 'status'
+        type: 'string'
     }, {
         name: 'quantity',
-        type: 'int',
-        mapping: 'quantity'
+        type: 'int'
+    }, {
+        name: 'originalQuantity',
+        type: 'int'
     },{
         name: 'uuid',
         type: 'string',
@@ -29,5 +36,34 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
     },{
         name: 'locationName',
         mapping: 'location.display'
-    }]
+    },{
+        name: 'batch',
+        type: 'string'
+    },{
+        name: 'batchUuid',
+        type: 'string',
+        persist: false
+    },{
+        name: 'value',
+        type: 'int'
+    },{
+        name: 'expiryDate',
+        type: 'string'
+    },{
+        name: 'days',
+        type: 'int',
+        useNull: true
+    },{
+        name: 'batchQuantity',
+        type: 'string',
+        useNull: true
+    },{
+        name: 'roomLocation',
+        type: 'string'
+    },{
+        name: 'locationUuid',
+        type: 'string',
+        mapping: 'location.uuid'
+    }
+]
 });

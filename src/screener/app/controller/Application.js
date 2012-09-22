@@ -13,11 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/**
- * This class listens for the user input and makes changes to the doctor/patient
- * lists as necessary.
- * TODO: Possible to combine patientUpdate with rest of controller?
- */
+
+// TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-382
+// Scope these appropriately - they shouldn't be fully global, just within this
+// controller. e.g. var outpatientGlobals = {}
 var form_num;
 var lab_num;
 var numberOfStoresWritten;
@@ -27,56 +26,12 @@ var NUMBER_OF_STORES_TO_WRITE = 3;
 var store_patientList;
 var store_assignedPatientList;
 
-var patientUpdate = {
-    //this method updates the title in patients waiting view with no. of patients waiting
-    updatePatientsWaitingTitle: function () {
-        // 3 different views shares this title, all three view get updated with same title
-        var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
-        var patientWaitNumber = Ext.getStore('patientStore').getCount();
-        /*var patientWaitNumber = 5;*/
-        var i;
-        for (i = 0; i < patientsTitles.length; i++) {
-            patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
-        }
-    },
-    //this method sets locally(persist = false) the bmi and encounter time in patients model
-    setBMITime: function (store_patientList) {
-        var i;
-        for (i = 0; i < store_patientList.getCount(); i++) {
-            store_patientList.getAt(i).getData().time = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].encounterDatetime;
-            if (store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs.length !== 0) {
-                store_patientList.getAt(i).getData().bmi = store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs[patientUpdate.getObsBMI(store_patientList.getAt(i).getData().encounters[store_patientList.getAt(i).getData().encounters.length - 1].obs)].value;
-            }
-        }
-        Ext.getStore('patientStore').sort('display');
-    },
-    //this method returns the index of Obs which contain BMI details
-    getObsBMI: function (obs) {
-        var i;
-        var BMI_DESCRIPTION = 'BODY MASS INDEX';
-        for (i = 0; i < obs.length; i++) {
-            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
-                ind = i;
-                return i;
-            }
-        }
-    },
-    // This method sets the UI of sort buttons when pressed.
-    // One button is set as "declined" (pressed) while the other two
-    // are set to "normal" (not pressed).
-    setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
-        this.setCompQuery(string1_decline, 'decline');
-        this.setCompQuery(string2_normal, 'normal');
-        this.setCompQuery(string3_normal, 'normal');
-    },
-    // Queries a component and sets its UI type.
-    // Used as a helper method for setSortButtonUi.
-    setCompQuery: function (string1, uiType) {
-        var i;
-        for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
-            Ext.ComponentQuery.query(string1)[i].setUi(uiType);
-        }
-    }
+Util.PAGES.SCREENER = {
+    TOP_MENU: 0,
+    ASSIGN_PATIENTS: 1,
+    VITALS: 2,
+    PHARMACY_ORDER: 3,
+    LAB_ORDER: 4
 };
 
 /*
@@ -117,7 +72,6 @@ Ext.define("Screener.controller.Application", {
         refs: {
             view: 'mainView',
             topmenu: 'topmenu',
-            navBar: '#navBar',
             patientView: 'patientView',
             patientSummary: 'patientSummary',
             doctorSummary: 'doctorSummary',
@@ -126,7 +80,8 @@ Ext.define("Screener.controller.Application", {
             pharmacyForm: 'pharmacyForm',
             newPatient: 'newPatient',
             sortPanel: 'sortPanel',
-            patientList: '#patientList',
+            patientList: '#patientList', // Assign Patient page
+            vitalsPatientList: '#vitalsPatientList',
             doctorList: '#doctorList',
             expandDoctorList: '#expandDoctorList',
             assignedPatientList: '#assignedPatientList',
@@ -202,11 +157,11 @@ Ext.define("Screener.controller.Application", {
             'patientListView button[action=refreshList]': {
                 tap: 'refreshList'
             },
+            sortByNameButton: {
+                tap: 'sortByName'
+            },
             drugSubmitButton: {
                 tap: 'drugSubmit'
-            },
-            'patientListView button[action=sortByName]': {
-                tap: 'sortByName'
             },
             'patientListView button[action=sortByFIFO]': {
                 tap: 'sortByFIFO'
@@ -259,6 +214,62 @@ Ext.define("Screener.controller.Application", {
         this.preparePatientList();
     },
 
+    // Updates the number of Patients Waiting in the left Title Bar
+    updatePatientsWaitingTitle: function () {
+        console.log("updatePatientsWaitingTitle");
+        // 3 different views shares this title, all three view get updated with same title
+        var patientsTitles = Ext.ComponentQuery.query('ListView #patientsWaiting');
+        var patientWaitNumber = Ext.getStore('patientStore').getCount();
+        /*var patientWaitNumber = 5;*/
+        var i;
+        for (i = 0; i < patientsTitles.length; i++) {
+            patientsTitles[i].setTitle(patientWaitNumber + ' Patients Waiting');
+        }
+    },
+    //this method sets locally(persist = false) the bmi and encounter time in patients model
+    setBMITime: function (store_patientList) {
+        for (var i = 0; i < store_patientList.getCount(); i++) {
+            var currentPatientData = store_patientList.getAt(i).getData();
+            var encounters = currentPatientData.encounters;
+            var mostRecentEncounter = encounters[encounters.length - 1];
+            var observations = mostRecentEncounter.obs;   
+
+            // Update data (time, bmi) in patient list
+            currentPatientData.time = mostRecentEncounter.encounterDatetime;
+            currentPatientData.bmi = this.getObsBMI(observations);
+        }
+        Ext.getStore('patientStore').sort('display');
+    },
+    //helper method - returns BMI value if it exists
+    getObsBMI: function (obs) {
+        var BMI_DESCRIPTION = 'BODY MASS INDEX';
+        for (var i = 0; i < obs.length; i++) {
+            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
+                return obs[i].value;
+            }
+        }
+
+        // TODO: What if NO bmi? needs to handle that case, too
+        // Return null or NaN, ensure other methods handle this possibility
+        return 0;
+    },
+    // This method sets the UI of sort buttons when pressed.
+    // One button is set as "declined" (pressed) while the other two
+    // are set to "normal" (not pressed).
+    setSortButtonUi: function (string1_decline, string2_normal, string3_normal) {
+        this.setCompQuery(string1_decline, 'decline');
+        this.setCompQuery(string2_normal, 'normal');
+        this.setCompQuery(string3_normal, 'normal');
+    },
+    // Queries a component and sets its UI type.
+    // Used as a helper method for setSortButtonUi.
+    setCompQuery: function (string1, uiType) {
+        var i;
+        for (i = 0; i < Ext.ComponentQuery.query(string1).length; i++) {
+            Ext.ComponentQuery.query(string1)[i].setUi(uiType);
+        }
+    },
+
     // Creates an instance of PostList model for posting Registration and Screener List
     preparePatientList: function () {
         var d = new Date();
@@ -284,7 +295,6 @@ Ext.define("Screener.controller.Application", {
     },
     // Creates two different List of Patients Registered and Patients Screened within last 24 hours
     createList: function (list_reg, list_scr, list_out, k) {
-        console.log("createList");
         var store_reg = Ext.create('Screener.store.PostLists');
         var store_scr = Ext.create('Screener.store.PostLists');
         var store_out = Ext.create('Screener.store.PostLists');
@@ -304,7 +314,6 @@ Ext.define("Screener.controller.Application", {
     // Listens for stores to be written. Once all stores have been written,
     // creates the complete patient list to be displayed in Screener
     listenerOnList: function (store, store1, store2, store3) {
-        console.log("listenerOnList");
         store.on('write', function () {
             numberOfStoresWritten++;
             if (numberOfStoresWritten == NUMBER_OF_STORES_TO_WRITE) {
@@ -330,16 +339,21 @@ Ext.define("Screener.controller.Application", {
         );
         store_patientList.load();
         store_assignedPatientList.load();
+        that = this;
         store_patientList.on('load', function () {
             Ext.getCmp('loadMask').setHidden(true);
-            patientUpdate.setBMITime(store_patientList);
+            that.setBMITime(store_patientList);
             // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
                 record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
             });
         }, this);
         // TODO: Pass a function instead of string, to avoid implied "eval"
-        setInterval('patientUpdate.updatePatientsWaitingTitle()', Util.getUiTime());
+        // TODO: Does this actually refresh on the specified interval? tried
+        // with 5000 and it doesnt work..
+        /*setInterval(this.updatePatientsWaitingTitle, Util.getUiTime());*/
+        /*setInterval('this.updatePatientsWaitingTitle', 5000);*/
+        setInterval('this.updatePatientsWaitingTitle', Util.getUiTime());
         setInterval('Ext.getStore(\'patientStore\').load()', Util.getUiTime());
         return store_patientList;
     },
@@ -481,9 +495,9 @@ Ext.define("Screener.controller.Application", {
     // Adds new person to the NewPersons store
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
-
+       
         if (formp.givenname && formp.familyname && formp.choice) {
-            var person = Ext.create('Screener.model.Person', {
+            var person = Ext.create('Screener.model.Person',{
                 gender: formp.choice,
                 names: [{
                     givenName: formp.givenname,
@@ -493,9 +507,9 @@ Ext.define("Screener.controller.Application", {
             var store = Ext.create('Screener.store.NewPersons');
             store.add(person);
             store.sync();
-            store.on('write', function () {
+            store.on('write', function(){
                 this.getidentifierstype(store.getData().getAt(0).getData().uuid)
-            }, this);
+            } ,this);
             Ext.getCmp('newPatient').hide();
             Ext.getCmp('newPatient').reset();
             return store;
@@ -505,17 +519,17 @@ Ext.define("Screener.controller.Application", {
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Screener.store.IdentifierType')
         identifiers.load();
-        identifiers.on('load', function () {
-            this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
-        }, this);
+        identifiers.on('load',function(){
+            this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
+        },this);
     },
     // Get Location using Location store
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Screener.store.Location')
         locations.load();
-        locations.on('load', function () {
-            this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
-        }, this)
+        locations.on('load',function(){
+            this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
+        },this)
     },
     // Creates a new patient using NewPatients store 
     makePatient: function (personUuid, identifierType, location) {
@@ -543,17 +557,17 @@ Ext.define("Screener.controller.Application", {
         if (Ext.getCmp('doctorSummary')) {
             Ext.getCmp('doctorSummary').hide();
         }
-        if (!this.patientView) {
-            this.patientView = Ext.create('Screener.view.PatientView');
-        }
-        this.getView().push(this.patientView);
         
+        this.navigate(Util.PAGES.SCREENER.ASSIGN_PATIENTS, Util.PAGES.SCREENER.TOP_MENU);
+
         // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-360
         // Deselect to prevent lists in other views from affecting
         /*this.getDoctorList().deselectAll();*/
         this.getPatientList().deselectAll();
 
-        patientUpdate.updatePatientsWaitingTitle();
+        console.log('update title');
+        this.updatePatientsWaitingTitle();
+        console.log('count patients');
         this.countPatients();
     },
     // Counts number of patients assigned to a doctor   
@@ -582,11 +596,11 @@ Ext.define("Screener.controller.Application", {
     },
     // Show screen with pharmacy list
     showPharmacy: function () {
-        if (!this.pharmacyView) {
-            this.pharmacyView = Ext.create('Screener.view.PharmacyView');
-            form_num = 0;
-        }
-        this.getView().push(this.pharmacyView);
+        this.navigate(Util.PAGES.SCREENER.PHARMACY_ORDER, Util.PAGES.SCREENER.TOP_MENU);
+        
+        // TODO: I'm not sure if we want to destroy other orders. Might we
+        // instead preserve them in case nurse enters some, leaves page, and
+        // then returns? Only on submit should they reset.
         while (form_num > 0) {
             Ext.getCmp('form' + form_num).remove({
                 autoDestroy: true
@@ -594,13 +608,14 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('form' + form_num).hide();
             form_num--;
         }
-        patientUpdate.updatePatientsWaitingTitle();
+        this.updatePatientsWaitingTitle();
     },
     showLab: function () {
-        if (!this.labOrderView) {
-            this.labOrderView = Ext.create('Screener.view.LabOrderView');
-        }
-        this.getView().push(this.labOrderView);
+        this.navigate(Util.PAGES.SCREENER.LAB_ORDER, Util.PAGES.SCREENER.TOP_MENU);
+       
+        // TODO: I'm not sure if we want to destroy other orders. Might we
+        // instead preserve them in case nurse enters some, leaves page, and
+        // then returns? Only on submit should they reset.
         while (lab_num > 0) {
             Ext.getCmp('lab' + lab_num).remove({
                 autoDestroy: true
@@ -608,20 +623,19 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('lab' + lab_num).hide();
             lab_num--;
         }
-        patientUpdate.updatePatientsWaitingTitle();
+        this.updatePatientsWaitingTitle();
     },
     showVitals: function () {
-        if (!this.vitalsView) {
-            this.vitalsView = Ext.create('Screener.view.VitalsView');
-        }
-        this.getView().push(this.vitalsView);
-        this.getPatientList().deselectAll();
-        
+        this.navigate(Util.PAGES.SCREENER.VITALS, Util.PAGES.SCREENER.TOP_MENU);
+       
+        var vpl = this.getVitalsPatientList().getComponent("patientList"); 
+        vpl.deselectAll();
+
         // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-366
         // Get most recent vitals
 
         // Update # of patients waiting
-        patientUpdate.updatePatientsWaitingTitle();
+        this.updatePatientsWaitingTitle();
     },
     // opens form for patient summary
     showPatientSummary: function (list, item, index) {
@@ -706,22 +720,23 @@ Ext.define("Screener.controller.Application", {
     },
     sortByName: function () {
         Ext.getStore('patientStore').sort('display');
-        patientUpdate.setSortButtonUi('ListView #sortName', 'ListView #sortBMI', 'ListView #sortFIFO');
+        this.setSortButtonUi('ListView #sortName', 'ListView #sortBMI', 'ListView #sortFIFO');
     },
     sortByFIFO: function () {
         Ext.getStore('patientStore').sort('time');
-        patientUpdate.setSortButtonUi('ListView #sortFIFO', 'ListView #sortName', 'ListView #sortBMI');
+        this.setSortButtonUi('ListView #sortFIFO', 'ListView #sortName', 'ListView #sortBMI');
     },
     sortByBMI: function () {
         Ext.getStore('patientStore').sort('bmi');
-        patientUpdate.setSortButtonUi('ListView #sortBMI', 'ListView #sortFIFO', 'ListView #sortName');
+        this.setSortButtonUi('ListView #sortBMI', 'ListView #sortFIFO', 'ListView #sortName');
     },
     //this method refreshes the patientList and also updates the patientWaitingTitle and bmi, encountertime locally in patient model 
     refreshList: function () {
         Ext.getStore('patientStore').load();
+        that = this;
         Ext.getStore('patientStore').on('load', function () {
-            patientUpdate.updatePatientsWaitingTitle();
-            patientUpdate.setBMITime(Ext.getStore('patientStore'));
+            that.updatePatientsWaitingTitle();
+            that.setBMITime(Ext.getStore('patientStore'));
         });
     },
 
@@ -732,8 +747,8 @@ Ext.define("Screener.controller.Application", {
         var currentNumPatients = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('Doctors').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
         this.getPatientList().getSelection()[0].set('patientid', this.currentDoctorIndex);
-        var patient = this.getPatientList().getSelection()[0].data.uuid
-        var provider = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).data.person.uuid
+        var patient = this.getPatientList().getSelection()[0].data.uuid;
+        var provider = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).data.person.uuid;
         Ext.getStore('patientStore').removeAt(this.currentPatientIndex);
         this.getPatientList().deselectAll();
         this.getDoctorList().deselectAll();
@@ -814,7 +829,8 @@ Ext.define("Screener.controller.Application", {
             patient: personUuid, 
             encounterType: encountertype,
             //location: location,
-            provider: provider
+            provider: provider,
+            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
         });
        
         // Handle "Screener Vitals" encounters specially
@@ -836,12 +852,12 @@ Ext.define("Screener.controller.Application", {
 
             console.log("Creating Obs for uuid types...");
             v = Ext.getCmp("vitalsForm").getValues();
-            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField);
-            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField);
-            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField);
-            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField);
-            createObs(localStorage.temperatureUuidconcept, v.temperatureField); 
-            createObs(localStorage.pulseUuidconcept, v.pulseField);
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField[0]);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField[0]);
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField[0]);
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField[0]);
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField[0]); 
+            createObs(localStorage.pulseUuidconcept, v.pulseField[0]);
             observations.sync();
             console.log("... Complete! Created Obs for new uuid types");
         }
@@ -858,24 +874,88 @@ Ext.define("Screener.controller.Application", {
 
     // Create a SCREENER_VITALS encounter and attach vitals observations
     savePatientVitals: function () {
-        var selectedPatient  = this.getPatientList().getSelection()[0];
-        console.log(selectedPatient);
+        var vpl = this.getVitalsPatientList().getComponent("patientList"); 
+        var selectedPatient  = vpl.getSelection()[0];
         if ( ! selectedPatient) {
             Ext.Msg.alert("You must select a patient");
             return;
         }
         var patientUuid = selectedPatient.data.uuid;
-        this.getPatientList().deselectAll();
+        vpl.deselectAll();
 
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-369
-        // Get uuid of logged in provider (likely a nurse?) who is
-        // entering the vitals
-        var providerUuid = "e0ca3719-790a-4343-8a7b-8923e99f75ed";
+        var providerPersonUuid = localStorage.loggedInUser;
+        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerPersonUuid);
+        Ext.Msg.alert("Submitted patient vitals");
+    },
+    
+    sendEncounterData: function (personUuid, encountertype, location, provider) {
+        //funciton to get the date in required format of the openMRS, since the default extjs4 format is not accepted
+        var t = Util.Datetime(new Date(), Util.getUTCGMTdiff());
         
-        console.log("send encounter data");
-        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerUuid);
-        return;
+        // creates the encounter json object
+        // the 3 fields "encounterDatetime, patient, encounterType" are obligatory fields rest are optional
+        var jsonencounter = Ext.create('Screener.model.encounterpost', {
+            encounterDatetime: t,
+            patient: personUuid, 
+            encounterType: encountertype,
+            //location: location,
+            provider: provider,
+            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+        });
+       
+        // Handle "Screener Vitals" encounters specially
+        // Create observations linked to the encounter
+        if (encountertype === localStorage.screenervitalsUuidencountertype)
+        {
+            var observations = jsonencounter.observations();    // Create set of observations
+            
+            var createObs = function (c, v) {
+                // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
+                // Validate before submitting an Obs
+                observations.add({
+                        obsDatetime : t,
+                        person: personUuid,
+                        concept: c,
+                        value: v
+                });
+            };
 
+            console.log("Creating Obs for uuid types...");
+            v = Ext.getCmp("vitalsForm").getValues();
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField[0]);
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField[0]);
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField[0]);
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField[0]);
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField[0]); 
+            createObs(localStorage.pulseUuidconcept, v.pulseField[0]);
+            observations.sync();
+            console.log("... Complete! Created Obs for new uuid types");
+        }
+
+        // Create encounter
+        var store = Ext.create('Screener.store.encounterpost');
+        store.add(jsonencounter);
+        store.sync();
+        store.on('write', function () {
+            Ext.getStore('patientStore').load();
+        }, this);
+        return store;
+    },
+
+    // Create a SCREENER_VITALS encounter and attach vitals observations
+    savePatientVitals: function () {
+        var vpl = this.getVitalsPatientList().getComponent("patientList"); 
+        var selectedPatient  = vpl.getSelection()[0];
+        if ( ! selectedPatient) {
+            Ext.Msg.alert("You must select a patient");
+            return;
+        }
+        var patientUuid = selectedPatient.data.uuid;
+        vpl.deselectAll();
+
+        var providerPersonUuid = localStorage.loggedInUser;
+        this.sendEncounterData(patientUuid, localStorage.screenervitalsUuidencountertype, "", providerPersonUuid);
+        Ext.Msg.alert("Submitted patient vitals");
     },
 
     drugSubmit: function () {
@@ -900,5 +980,15 @@ Ext.define("Screener.controller.Application", {
         Ext.get('drugSubmitButton').on('click', function (e) {
             Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?", Ext.emptyFn);
         });
+    },
+
+    // TODO: Possible to get oldPage via application state?
+    navigate: function(newPage, oldPage) {
+        // Move to new page
+        this.getView().setActiveItem(newPage);
+        
+        // Add back button to toolbar which points to old page
+        var topbar = Ext.getCmp("topbar");
+        topbar.setBackButtonTargetPage(oldPage);
     }
 });

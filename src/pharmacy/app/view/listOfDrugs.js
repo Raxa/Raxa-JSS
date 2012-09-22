@@ -40,7 +40,7 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                     margin: '10 0 0 0',
                     columns: [
                     {
-                        header: 'S no',
+                        header: '#',
                         width: 100
                     },
                     {
@@ -121,7 +121,7 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                             height: 350,
                             columns: [
                             {
-                                header: 'S no',
+                                header: '#',
                                 width: 50
                             },{
                                 header: 'Name Of Drug',
@@ -160,7 +160,7 @@ Ext.define('RaxaEmr.Pharmacy.view.listOfDrugs', {
                     height: 450,
                     columns: [
                     {
-                        header: 'S no',
+                        header: '#',
                         width: 100
                     },
                     {
