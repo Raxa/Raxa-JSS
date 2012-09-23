@@ -433,7 +433,7 @@ var Util = {
     /**
      * Logout the current user. Ends the current session
      */
-    logoutUser: function () {
+    logoutUser: function () {      
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
@@ -445,7 +445,29 @@ var Util = {
         localStorage.removeItem('Username');
         localStorage.removeItem('loggedInUser');
         localStorage.removeItem('loggedInProvider');
+        window.location.hash = 'Login';
     },
+    
+    uuidLoadedSuccessfully: function(){
+        var that=this;
+        var actualNoOfUuids=0;
+        var noOfUuidsLoaded=0;
+        for (var key in resourceUuid) { 
+            actualNoOfUuids++;
+            if(localStorage.getItem(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource)!=null){ 
+                noOfUuidsLoaded++;
+            }
+        }
+        console.log("Total Uuid's are "+actualNoOfUuids);
+        console.log("Uuid's loaded are "+noOfUuidsLoaded);
+        if( noOfUuidsLoaded== actualNoOfUuids) {
+            return true;
+        }
+        else {
+            window.location = "../";
+        }
+    },
+    
 
     /**
      * Saves the Basic Authentication header to Localstorage
@@ -696,4 +718,3 @@ var Util = {
         });
     }
 }
-

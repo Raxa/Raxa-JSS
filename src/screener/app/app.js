@@ -15,13 +15,23 @@
  */
 //this is for debugging only - when production rolls around, we need to put all dependencies in a single .js file
 //<debug>
-Ext.Loader.setPath({
-	'Ext': '../../../lib/touch/src'
+Ext.Loader.setConfig({
+    enabled: true,
+    paths: {
+        'Ext.i18n': '../lib/i18n' //Path to the i18n library
+    }
 });
 
-Ext.Loader.setConfig({
-	enabled: true
+Ext.require('Ext.i18n.Bundle', function(){
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+        bundle: 'RaxaEmrScreener',
+        //Specify language here
+        lang: 'en-US',
+        path: 'app/view', //Path to the .properties file
+        noCache: true
+    });
 });
+
 //</debug>
 Ext.application({
 	name: 'Screener',
@@ -44,7 +54,7 @@ Ext.application({
 
 	//entry point
 	launch: function() {
-		if (Util.checkModulePrivilege('screener')) {
+		if (Util.checkModulePrivilege('screener')&& Util.uuidLoadedSuccessfully()) {
             var mainScreen = Ext.create('Screener.view.Main', {
                     fullscreen: true,
                 });
