@@ -361,7 +361,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         action: 'cancel'
                     }, {
                         xtype: 'button',
-				        id:'submitbutton',
+				        id:'submitButton',
                         margin: '30 0 0 30',
                         text: 'Next',
                         ui: 'raxa-aqua-small',
