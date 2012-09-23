@@ -141,9 +141,9 @@ var resourceUuid = {
     },
     "notes": {
         "resource": "concept",
-        "queryTerm": "CLINICIAN NOTES",
+        "queryTerm": "REGISTRATION NOTES",
         "varName": "notes",
-        "displayName": "CLINICIAN NOTES"
+        "displayName": "REGISTRATION NOTES"
     },
     "regcomplaint": {
         "resource": "concept",
@@ -551,7 +551,7 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        var generatedId = (Math.floor(Math.random()*1000000)).toString();
+        var generatedId = arguments[0]+(Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
         xmlHttp.open( "GET", url , false );
