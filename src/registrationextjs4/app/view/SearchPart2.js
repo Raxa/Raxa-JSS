@@ -75,6 +75,7 @@ Ext.define('Registration.view.SearchPart2', {
                         }, {
                             xtype: 'gridcolumn',
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.PI'),
+                            dataIndex: 'oldPatientIdentifier'
                         }, {
                             xtype: 'gridcolumn',
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.HFN'),
@@ -93,10 +94,10 @@ Ext.define('Registration.view.SearchPart2', {
                             cellClick: {
                                 fn: function () {
 									//All fields are initially set to '-' if data is not available, they remain same otherwise take respective values								
-									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','blockSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occuptionSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','patientSecondaryContactNumberSearchedPatient','patientPrimaryContactNumberSearchedPatient','districtSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient'];
+									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','blockSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient'];
 									for(var j=0 ; j < itemsToReset.length ; j++)
 									{
-										Ext.getCmp(itemsToReset[j]).setValue('-');								
+										Ext.getCmp(itemsToReset[j]).setValue('-');
 									};
 
                                     var temp = this.getSelectionModel().getSelection()[0].getData()

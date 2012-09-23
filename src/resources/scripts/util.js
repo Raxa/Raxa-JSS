@@ -480,6 +480,7 @@ var Util = {
                 uuidsLoadedCount++;
             } else {
                 uuidsNotFound += (item + ", ");
+                this.getAttributeFromREST(resourceUuid[key].resource, resourceUuid[key].queryTerm, resourceUuid[key].varName, resourceUuid[key].displayName);
             }
         }
         

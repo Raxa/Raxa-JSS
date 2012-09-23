@@ -99,12 +99,8 @@ Ext.define('Registration.controller.Main', {
 
     //Navigates to BMI page
     goToBMI: function () {
-        if (Ext.getCmp('registrationfeespaid') != undefined) {
-            var l = Ext.getCmp('mainRegArea').getLayout();
-            l.setActiveItem(REG_PAGES.REG_BMI.value);
-        } else {
-            Ext.Msg.alert('Fill the registration fees')
-        }
+        var l = Ext.getCmp('mainRegArea').getLayout();
+        l.setActiveItem(REG_PAGES.REG_BMI.value);
     },
 
     /* this function return to home screen */
@@ -354,7 +350,7 @@ Ext.define('Registration.controller.Main', {
             Registration.model.encounterModel.getFields()[5].persist = false;
         }
 
-        if ((Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value != null) || (Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value != null) || (Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value != null) || (Ext.getCmp('registrationfeespaid').isValid() && Ext.getCmp('registrationfeespaid').value != null)) {
+        if ((Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value != null) || (Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value != null) || (Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value != null) || (Ext.getCmp('registrationFeesPaid').isValid() && Ext.getCmp('registrationFeesPaid').value != null) || Ext.getCmp('complaintArea').isValid() && Ext.getCmp('complaintArea').value != null || Ext.getCmp('remarksArea').isValid() && Ext.getCmp('remarksArea').value!=null || Ext.getCmp('referredBy').isValid() && Ext.getCmp('referredBy').value != null) {
             Registration.model.encounterModel.getFields()[6].persist = true;
         } else {
             Registration.model.encounterModel.getFields()[6].persist = false;
@@ -417,15 +413,16 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterremarks.data);
             }
-            if (Ext.getCmp('referredBy').isValid() && Ext.getCmp('referredBy').value!= null &&  Ext.getCmp('referredBy').value!= "") {
-                var jsonencounterreferred = Ext.create('Registration.model.obsModel', {
-                    obsDatetime: t,
-                    person: localStorage.newPatientUuid,
-                    concept: localStorage.referredUuidconcept,
-                    value: Ext.getStore('Doctors').data.items[Ext.getStore('Doctors').find('display', Ext.getCmp('referredBy').value)].data.uuid
-                });
-                jsonencounter.data.obs.push(jsonencounterreferred.data);
-            }
+            //TODO: figure out why this isn't working
+//            if (Ext.getCmp('referredBy').isValid() && Ext.getCmp('referredBy').value!= null &&  Ext.getCmp('referredBy').value!= "") {
+//                var jsonencounterreferred = Ext.create('Registration.model.obsModel', {
+//                    obsDatetime: t,
+//                    person: localStorage.newPatientUuid,
+//                    concept: localStorage.referredUuidconcept,
+//                    value: Ext.getStore('Doctors').data.items[Ext.getStore('Doctors').find('display', Ext.getCmp('referredBy').value)].data.uuid
+//                });
+//                jsonencounter.data.obs.push(jsonencounterreferred.data);
+//            }
 
         }
 
