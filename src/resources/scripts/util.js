@@ -53,7 +53,7 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "tablet",
         "varName": "tablet",
-        "displayName": "tablet"
+        "displayName": "TABLET"
     },
     "ointment": {
         "resource": "concept",
@@ -95,7 +95,7 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "regfee",
         "varName": "regfee",
-        "displayName": "Registration Fee"
+        "displayName": "REGISTRATION FEE"
     },
     "systolicbloodpressure": {
         "resource": "concept",
@@ -449,22 +449,35 @@ var Util = {
     },
     
     uuidLoadedSuccessfully: function(){
+        if( this.checkAllUuidsLoaded()) {
+            return true;
+        } else {
+            window.location = "../";
+        }
+    },
+
+    checkAllUuidsLoaded: function() {
         var that=this;
-        var actualNoOfUuids=0;
-        var noOfUuidsLoaded=0;
+        var expectedUuidCount=0;
+        var uuidsLoadedCount=0;
+        var uuidsNotFound = "";
         for (var key in resourceUuid) { 
-            actualNoOfUuids++;
-            if(localStorage.getItem(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource)!=null){ 
-                noOfUuidsLoaded++;
+            expectedUuidCount++;
+            var item = resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource;
+            if(localStorage.getItem(item) != null){ 
+                uuidsLoadedCount++;
+            } else {
+                uuidsNotFound += (item + ", ");
             }
         }
-        console.log("Total Uuid's are "+actualNoOfUuids);
-        console.log("Uuid's loaded are "+noOfUuidsLoaded);
-        if( noOfUuidsLoaded== actualNoOfUuids) {
+        
+        console.log("UUIDs expected = " + expectedUuidCount + ". UUIDs loaded " + uuidsLoadedCount);
+        
+        if (expectedUuidCount == uuidsLoadedCount) {
             return true;
-        }
-        else {
-            window.location = "../";
+        } else {
+            console.log("Uuid's which failed to load were:" + uuidsNotFound);
+            return false;
         }
     },
     

@@ -138,56 +138,38 @@ var Startup = {
         }
     },
     
-    myVar: null,
-    counter: 0,
+    intervalFn: null,
+    uuidLoadAttempts: 0,
     uuidLoading: function(){
+        var MAX_LOAD_ATTEMPTS = 10;
+        var that = this;
         Ext.getCmp('mainView').setMasked({
-                xtype: 'loadmask',
-                message: 'Loading'
-            });
-        var that=this;
-        var actualNoOfUuids=0;
-        var noOfUuidsLoaded=0;
-        for (var key in resourceUuid) { 
-            actualNoOfUuids++;
-            if(localStorage.getItem(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource)!=null){ 
-                noOfUuidsLoaded++;
-            }
-        }
-        
-        if(noOfUuidsLoaded != actualNoOfUuids) {
-            counter++;
-            console.log("Uuid's Still Loading...");
-            
+            xtype: 'loadmask',
+            message: 'Loading'
+        });
+
+        if( ! Util.checkAllUuidsLoaded() ) {
+            uuidLoadAttempts++;
+            console.log("Loading UUIDs... # attempts = " + uuidLoadAttempts + " of " + MAX_LOAD_ATTEMPTS);
         }
         else {
             that.removeTimer();
             Ext.getCmp('mainView').setMasked(false);
         }
         
-        if ( counter == 10){
+        if ( uuidLoadAttempts === MAX_LOAD_ATTEMPTS){
             that.removeTimer();
             Ext.getCmp('mainView').setMasked(false);
-            Ext.Msg.alert("","Uuid's could not be loaded");
+            Ext.Msg.alert("","Unable to load all UUIDs from OpenMRS.");
             Util.logoutUser();
-            console.log("Uuid's :");
-            for (var key in resourceUuid) { 
-                counter1++;
-                if(localStorage.getItem(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource)==null){ 
-                    console.log(resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource);
-                }
-            }
-        
-            console.log("could not be loaded");   
-          
         }
     },
              
     repeatUuidLoadingEverySec: function()
     {
-        counter=0; //No need to put this statement here but without this compiler is giving error
+        uuidLoadAttempts=0; // Without this compiler is giving error
         var that = this;
-        myVar = setInterval(function(){
+        intervalFn = setInterval(function(){
             that.uuidLoading();
         },1000);
     },
@@ -195,8 +177,9 @@ var Startup = {
 
     removeTimer: function()
     {
-        clearInterval(myVar);
+        clearInterval(intervalFn);
     },
+
     /**
      * POST the passed views to the REST services on HOST using AJAX Request
      * @param views: 2-d array for storing view names+URLs
