@@ -37,7 +37,7 @@ LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
 
 var HOST;
-var DEFAULT_HOST = 'http://192.168.1.41:8080/openmrs';
+var DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
 if (localStorage.getItem("host") === null) {
     HOST = DEFAULT_HOST; 
 } else { 
@@ -53,13 +53,13 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "tablet",
         "varName": "tablet",
-        "displayName": "tablet"
+        "displayName": "TABLET"
     },
     "ointment": {
         "resource": "concept",
         "queryTerm": "ointment",
         "varName": "ointment",
-        "displayName": "ointment"
+        "displayName": "OINTMENT"
     },
     "syrup": {
         "resource": "concept",
@@ -72,6 +72,18 @@ var resourceUuid = {
         "queryTerm": "solution for injection",
         "varName": "solutionForInjection",
         "displayName": "SOLUTION FOR INJECTION"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
     },
     "height": {
         "resource": "concept",

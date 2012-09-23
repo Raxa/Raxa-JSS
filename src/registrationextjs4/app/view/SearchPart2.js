@@ -86,6 +86,7 @@ Ext.define('Registration.view.SearchPart2', {
                         }, {
                             xtype: 'gridcolumn',
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.Town'),
+                            
                         }], 
                         //was needed to see the patient profile as we click on one of the patient
                         listeners: {
@@ -102,13 +103,36 @@ Ext.define('Registration.view.SearchPart2', {
                                     Ext.getCmp('stretSearchedPatient').setValue(temp.address2)
                                     Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
                                     Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
-                                    /*  var i;
-                                     *  Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 
-                                     *  wherever attributes are required
-                                    for(i=0;temp.attributes.length;i++){
-                                        if(temp.attributes[i].attributeType == casteuuid) Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
-                                        // TODO- make similars "if" conditions for other attributes
-                                    } */
+                                    for(var i=0;i<temp.attributes.length;i++){
+                                        console.log(temp.attributes[i]);
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.oldPatientIdentificationNumberUuidpersonattributetype){
+                                            Ext.getCmp('oldPatientIdentifierSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.casteUuidpersonattributetype){
+                                            Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.educationUuidpersonattributetype){
+                                            Ext.getCmp('educationSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.occupationUuidpersonattributetype){
+                                            Ext.getCmp('occupationSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.tehsilUuidpersonattributetype){
+                                            Ext.getCmp('tehsilSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.districtUuidpersonattributetype){
+                                            Ext.getCmp('districtSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.contactByPhoneUuidpersonattributetype){
+                                            Ext.getCmp('phoneSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.primaryContactUuidpersonattributetype){
+                                            Ext.getCmp('primaryContactNumberSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                        if(temp.attributes[i].attributeType.uuid === localStorage.secondaryContactUuidpersonattributetype){
+                                            Ext.getCmp('secondaryContactNumberSearchedPatient').setValue(temp.attributes[i].value)
+                                        }
+                                    }
                                     var l = Ext.getCmp('mainRegArea').getLayout();
                                     l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value);
                                 }

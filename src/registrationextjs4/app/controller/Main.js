@@ -3,7 +3,7 @@ Ext.define('Registration.controller.Main', {
     id: 'main',
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'IllnessDetails', 'RegistrationBMI', 'SearchPart1', 'SearchPart2', 'SearchConfirm'],
     stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore', 'Doctors'],
-    models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor'],
+    models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor', 'AttributeType'],
 
     init: function () {
         this.control({
@@ -66,7 +66,7 @@ Ext.define('Registration.controller.Main', {
         	if(Ext.getCmp('patientAge').rawValue || Ext.getCmp('dob').rawValue)
  				{     
 			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
-			        Util.KeyMapButton('submitbutton', Ext.EventObject.ENTER);
+			        Util.KeyMapButton('submitButton', Ext.EventObject.ENTER);
           	    }
             else
             {
@@ -123,6 +123,8 @@ Ext.define('Registration.controller.Main', {
 
     /* this function makes the post call for making the person */
     submit: function () {
+        //have to disable when clicked so user doesn't create 2 patients by clicking twice
+        Ext.getCmp('submitButton').disable();
         //creating the json object to be made
         var jsonperson = Ext.create('Registration.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
@@ -237,19 +239,16 @@ Ext.define('Registration.controller.Main', {
         // this statement calls getlocation() as soon as the get call is successful
         identifiers.on('load', function () {
             var idIterator;
-            var idNo = -1;
+            var idNo = 0;
             for (idIterator = 0; idIterator < identifiers.data.length; idIterator++) {
-                var str = identifiers.data.items[idIterator].raw.display;
+                var str = identifiers.data.items[idIterator].raw.name;
                 if (str.match(idPattern)) {
                     idNo = idIterator;
                 }
             }
-            if (idNo === -1) {
-                this.getlocation(personUuid, identifiers.getAt(0).getData().uuid);
-            } else {
-                // this statement calls getlocation() as soon as the get call is successful
-                this.getlocation(personUuid, identifiers.getAt(idNo).getData().uuid);
-            }
+            //get default identifier if 'RaxaEMR Identification No' isn't in the system
+            var identifierType = identifiers.getAt(idNo).getData().uuid;
+            this.getlocation(personUuid, identifierType);
         }, this);
     },
 
@@ -257,11 +256,23 @@ Ext.define('Registration.controller.Main', {
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Registration.store.location')
         locations.load();
+        var foundLocation = false;
         // this statement calls makePatient() as soon as the get call is successful
         locations.on('load', function () {
-            this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
-            var l = Ext.getCmp('mainRegArea').getLayout();
-            l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);
+            for (var idIterator = 0; idIterator < locations.data.length; idIterator++) {
+                var str = locations.data.items[idIterator].raw.display;
+                console.log(str);
+                console.log(locations);
+                
+                if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1) {
+                    this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
+                    foundLocation = true;
+                }
+            }
+            if(!foundLocation){
+                Ext.Msg.alert('Please select a centre location');
+                Ext.getCmp('submitButton').enable();
+            }
         }, this)
     },
 
@@ -288,14 +299,17 @@ Ext.define('Registration.controller.Main', {
         PatientStore.add(patient);
 
         //makes the post call for creating the patient
-        PatientStore.sync();
-
-        //I made this function return this store because i needed this in jasmine unit test
-        PatientStore.on('load', function () {
-            // going to BMI page
-            var l = Ext.getCmp('mainRegArea').getLayout();
-            l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);
-        }, this);
+        PatientStore.sync({
+            success: function(){
+                var l = Ext.getCmp('mainRegArea').getLayout();
+                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);                
+                Ext.getCmp('submitButton').enable();
+            },
+            failure: function(){
+                Ext.Msg.alert("Failure -- Please check old id number and subcentre location");
+                Ext.getCmp('submitButton').enable();
+            }
+        });
 
         //this function return this store because i needed this in jasmine unit test
         return PatientStore;

@@ -166,7 +166,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, /* TODO: add back in caste
+                    }, 
                         {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste'),
@@ -188,7 +188,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, */{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation'),
                         layout: 'hbox',
@@ -203,7 +203,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         },
                         items: [{
                             name: 'occuption',
-                            id: 'occuptionSearchedPatient',
+                            id: 'occupationSearchedPatient',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation.emptytext'),
 
                             readOnly: true,
@@ -324,7 +324,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'primaryContact',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN.emptytext1'),
-                            id: 'patientPrimaryContactNumberSearchedPatient',
+                            id: 'primaryContactNumberSearchedPatient',
 
                             readOnly: true,
                             flex: 1,
@@ -332,8 +332,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN.emptytext2'),
-                            id: 'patientSecondaryContactNumberSearchedPatient',
-
+                            id: 'secondaryContactNumberSearchedPatient',
                             readOnly: true,
                             flex: 1,
                             margins: '0 0 0 6',
