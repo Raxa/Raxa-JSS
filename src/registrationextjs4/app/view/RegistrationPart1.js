@@ -186,6 +186,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 xtype: 'datefield',
                                 fieldLabel: 'DOB',
                                 id: 'dob',
+                                format: 'd/m/Y',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext1'),
                                 labelAlign: 'right',
                                 labelPad: 20,
