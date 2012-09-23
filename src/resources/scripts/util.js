@@ -53,7 +53,7 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "tablet",
         "varName": "tablet",
-        "displayName": "tablet"
+        "displayName": "TABLET"
     },
     "ointment": {
         "resource": "concept",
@@ -433,7 +433,7 @@ var Util = {
     /**
      * Logout the current user. Ends the current session
      */
-    logoutUser: function () {
+    logoutUser: function () {      
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
@@ -445,7 +445,42 @@ var Util = {
         localStorage.removeItem('Username');
         localStorage.removeItem('loggedInUser');
         localStorage.removeItem('loggedInProvider');
+        window.location.hash = 'Login';
     },
+    
+    uuidLoadedSuccessfully: function(){
+        if( this.checkAllUuidsLoaded()) {
+            return true;
+        } else {
+            window.location = "../";
+        }
+    },
+
+    checkAllUuidsLoaded: function() {
+        var that=this;
+        var expectedUuidCount=0;
+        var uuidsLoadedCount=0;
+        var uuidsNotFound = "";
+        for (var key in resourceUuid) { 
+            expectedUuidCount++;
+            var item = resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource;
+            if(localStorage.getItem(item) != null){ 
+                uuidsLoadedCount++;
+            } else {
+                uuidsNotFound += (item + ", ");
+            }
+        }
+        
+        console.log("UUIDs expected = " + expectedUuidCount + ". UUIDs loaded " + uuidsLoadedCount);
+        
+        if (expectedUuidCount == uuidsLoadedCount) {
+            return true;
+        } else {
+            console.log("Uuid's which failed to load were:" + uuidsNotFound);
+            return false;
+        }
+    },
+    
 
     /**
      * Saves the Basic Authentication header to Localstorage
@@ -696,4 +731,3 @@ var Util = {
         });
     }
 }
-
