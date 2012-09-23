@@ -16,19 +16,19 @@ Ext.define("Screener.view.LabStore", {
             xtype: 'fieldset',
             items: [{
                 xtype: 'selectfield',
-                label: 'Lab Order',
+                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.lab_ord'),
                 name: 'drug',
                 options: [{
-                    text: 'Amylase',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.amylase'),
                     value: 'amylase'
                 }, {
-                    text: 'Basic Metabolic Panel',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.basmetpan'),
                     value: 'bmp'
                 }, {
-                    text: 'Complete Blood Count',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.comblco'),
                     value: 'cbc'
                 }, {
-                    text: 'Fetch from database',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.ffd'),
                     value: 'db'
                 }]
             }]
