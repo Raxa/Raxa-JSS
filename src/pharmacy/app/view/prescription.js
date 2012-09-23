@@ -20,6 +20,10 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             layout: {
                 type: 'absolute'
             },
+            //TODO: take out drugASearchGrid - not being used
+            //https://raxaemr.atlassian.net/browse/RAXAJSS-411
+            //then take out all instances of addpatientgridarea....getLayout..setactiveitem
+            //addpatientarea is being used, dont take that out
             items: [{
                 layout: 'card',
                 id: 'addpatientgridarea',
@@ -46,7 +50,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         columns: [
                         {
                             xtype: 'gridcolumn',
-                            width: 200,
+                            width: 180,
                             text: 'Name Of drug',
                             dataIndex: 'drugname',
                             resizable: false
@@ -64,7 +68,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             text: 'Duration',
                             // gets the duration using start and end date of prescription
                             renderer: function(value, metadata, record){
-                                console.log(record)
                                 var temp = record.getData().endDate - record.getData().startDate
                                 temp = temp/(86400000)
                                 temp = parseInt(temp) + 1
@@ -87,33 +90,33 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         },
                         {
                             xtype: 'numbercolumn',
-                            width: 170,
+                            width: 130,
                             text: 'Item Price',
                             resizable: false
                         }
                         ]
                     },
-                    {
-                        xtype: 'button',
-                        text: 'Review Prescription',
-                        ui: 'raxa-orange-small',
-                        x: 420,
-                        y: 580
-                    },
+//                    {
+//                        xtype: 'button',
+//                        text: 'Review Prescription',
+//                        ui: 'raxa-orange-small',
+//                        x: 420,
+//                        y: 580
+//                    },
                     {
                         xtype: 'button',
                         width: 60,
-                        text: 'Done',
-                        action: 'done',
+                        text: 'Save',
+                        action: 'doneWithNewPatientPrescription',
                         ui: 'raxa-aqua-small',
-                        x: 330,
+                        x: 480,
                         y: 580
                     },
                     {
                         xtype: 'button',
                         width: 60,
                         text: 'Print',
-                        action: 'fillPrescription',
+                        action: 'printPrescribedDrugs',
                         ui: 'raxa-aqua-small',
                         x: 560,
                         y: 580
@@ -125,12 +128,12 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     items:[{
                         xtype: 'prescribedDrugs',
                         x: 190,
-                        y: 270,
+                        y: 270
                     },{
                         xtype: 'button',
                         width: 60,
-                        text: 'Done',
-                        action: 'done2',
+                        text: 'Save',
+                        action: 'doneWithQueuedPatientPrescription',
                         ui: 'raxa-aqua-small',
                         x: 330,
                         y: 580
@@ -147,7 +150,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             },{
                 xtype: 'button',
                 width: 180,
-                text: 'Add Patient',
+                text: 'Prescription for New Patient',
                 action: 'addPatient',
                 x : 0,
                 y: 30    
@@ -170,38 +173,39 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     },
                     ui: 'raxa-panel',
                     collapsed: false,
-                    title: 'Advanced Search',
+                    title: 'Search a Patient',
                     items:[
                     {
                         xtype: 'textfield',
-                        emptyText: 'Patient Name',
+                        emptyText: 'Patient Name or ID',
                         name:'patientName',
                         x: 10,
                         y: 20,
                         id: 'patientNameASearch'
                     },
-                    {
-                        xtype: 'textfield',
-                        emptyText: 'Prescription ID',
-                        x: 10,
-                        y: 60,
-                        id: 'prescriptionIdASearch'
-                    },
-                    {
-                        xtype: 'datefield',
-                        emptyText: 'Prescription Date',
-                        x: 10,
-                        y: 100,
-                        id: 'prescriptionDateASearch'
-                    },
+                    //To be added in after search layer is complete
+//                    {
+//                        xtype: 'textfield',
+//                        emptyText: 'Prescription ID',
+//                        x: 10,
+//                        y: 60,
+//                        id: 'prescriptionIdASearch'
+//                    },
+//                    {
+//                        xtype: 'datefield',
+//                        emptyText: 'Prescription Date',
+//                        x: 10,
+//                        y: 100,
+//                        id: 'prescriptionDateASearch'
+//                    },
                     {
                         xtype: 'panel',
                         border: 0,
                         layout: 'card',
-                        height: 200,
+                        height: 280,
                         width: 180,
                         x: 0,
-                        y: 140,
+                        y: 60,
                         activeItem: 0,
                         id: 'searchGrid',
                         items: [{
@@ -263,7 +267,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         type: 'absolute'
                     },
                     collapsed: true,
-                    title: 'My Panel',
+                    title: 'Patient Queue',
                     items: [
                     {
                         xtype: 'textfield',
@@ -279,7 +283,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         width: 190,
                         title: 'Today', 
                         store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
-   
                         y: 70
                     }
                     ],
@@ -295,7 +298,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                 {
                     xtype: 'patientsgridpanel',
                     id : 'sevenDaysPatientGrid',
-                    title: 'Last 7 Days(145)',
+                    title: 'Last 7 Days',
                      store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
                     listeners: {
                         // as this panal exapands it make the get call for 1 week patient list to update the list
@@ -310,7 +313,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     xtype: 'gridpanel',
                     height: 71,
                     collapsed: true,
-                    title: 'Pending (35)',
+                    title: 'Pending',
                     columnLines: false,
                     columns: [
                     {
