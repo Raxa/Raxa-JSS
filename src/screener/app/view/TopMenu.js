@@ -15,28 +15,28 @@ Ext.define("Screener.view.TopMenu", {
         items: [{
             xtype: 'button',
             id: 'addPatientButton',
-            text: 'Add New Patient',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.add_newp'),
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showPatientsButton',
-            text: 'Assign Patients to Doctors',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.show_ptd'),
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showVitalsButton',
-            text: 'Add Patient Vitals',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.add_pv'),
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showPharmacyButton',
-            text: 'Add Pharmacy Order',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.add_po'),
             ui: 'round',
             height: 80,
             width: 300
@@ -49,7 +49,7 @@ Ext.define("Screener.view.TopMenu", {
             width: 300
         }, {
             xtype: 'loadmask',
-            message: 'Loading',
+            message: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.loading'),
             id: 'loadMask'	
         }]
     }

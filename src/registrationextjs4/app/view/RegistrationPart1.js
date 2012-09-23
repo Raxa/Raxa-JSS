@@ -48,17 +48,48 @@ Ext.define('Registration.view.RegistrationPart1', {
                         msgTarget: 'side'
                     },
                     	
-                   layout: {	  	
+                    layout: {	  	
                         type: 'hbox'
                     },
 
-                    items: [{
+                    items: [
+						{
                         xtype: 'container',
                         items: [{
+                        xtype: 'fieldcontainer',
+                        fieldLabel: 'Centre Id',
+                        layout: 'hbox',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true',
+                            value: 'GAN'
+                        },
+                        items: [{
+                            xtype: 'combo',
+                            name: 'Centre ID',
+                            label: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre'),
+                            id: 'centreId',
+                            layout: 'hbox',
+                            width: 172,
+                            store: new Ext.data.SimpleStore({
+                                fields: ['centre'],
+                                data: [
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.1')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.2')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.3')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.4')],
+                                ]
+                            }),
+                            displayField: 'centre'
+                        }]
+                    },{
                             xtype: 'fieldcontainer',	  	
                             fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),	  	
                             layout: 'hbox',
- 	                        combineErrors: true,
+                            combineErrors: true,
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 200,
@@ -67,7 +98,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
-                                xtype: 'numberfield',
+                                xtype: 'textfield',
                                 cls: 'raxa-form-panel',    
                                 name: 'Old Patient Identifier',
                                 id: 'oldPatientIdentifier',
@@ -91,6 +122,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
+                                xtype: 'textfield',
                                 cls: 'raxa-form-panel',    
                                 name: 'firstName',
                                 id: 'patientFirstName',
@@ -98,6 +130,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 width: 172,
                                 allowBlank: false
                             }, {
+                                xtype: 'textfield',                            
                                 name: 'lastName',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PLN.emptytext'),
                                 id: 'patientLastName',
@@ -119,20 +152,22 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
+                                xtype: 'textfield',                            
                                 name: 'firstName',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
                                 id: 'relativeFirstName',
                                 width:172,
 
-                                allowBlank: false
+                                allowBlank: true
                             }, {
+                                xtype: 'textfield',                            
                                 name: 'lastName',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHLN.emptytext'),
                                 id: 'relativeLastName',
                                 width:172,
                                 margins: '0 0 0 6',
 
-                                allowBlank: false
+                                allowBlank: true
                             }]
                         }, {
                             xtype: 'fieldcontainer',
@@ -202,7 +237,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             align: 'stretch'
                         },
                         items:[{
-                                html: "<img border=\"0\" src=\"/Raxa-JSS/src/resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
+                            html: "<img border=\"0\" src=\"/Raxa-JSS/src/resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         },{
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
@@ -233,7 +268,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelPad: 20,
                         labelWidth: 200,
                         width: 573,
-                        allowBlank: false,
+                        allowBlank: true,
                     //anchor: '95%'
                     }, {
                         xtype: 'textfield',
@@ -243,7 +278,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         id: 'street',
                         labelPad: 20,
                         labelWidth: 200,
-                        allowBlank: false,
+                        allowBlank: true,
                         width: 573
                     }, {
                         xtype: 'textfield',
@@ -251,7 +286,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Town'),
                         labelAlign: 'right',
                         labelPad: 20,
-                        allowBlank: false,
+                        allowBlank: true,
                         id: 'town',
                         labelWidth: 200,
                         width: 573
@@ -297,7 +332,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
                         layout: 'hbox',
                         combineErrors: true,
-                        defaultType: 'numberfield',
+                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 200,
@@ -348,23 +383,24 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'combo',
                             name: 'education',
-                            label: 'Education Details',fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
+                            label: 'Education Details',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
                             id: 'education',
                             layout: 'hbox',
                             width: 172,
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
                                 data: [
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.1')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.2')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.3')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.4')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.5')]
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.1')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.2')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.3')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.4')],
+                                [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED.5')]
                                 ]
                             }),
                             displayField: 'education'
                         }]
-                    }, /* TODO: add back in caste after we decide what fields we want
+                    }, 
                         {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Caste',
@@ -397,7 +433,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }),
                             displayField: 'caste'
                         }]
-                    }, */{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation'),
                         layout: 'hbox',
@@ -455,20 +491,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id:'continuebutton',
                             text: 'Next',
                             ui: 'raxa-aqua-small',
-                            action: 'continue',
-				    
-									              	
-				}]
+                            action: 'continue'
+                        }]
                     }]
                 }]
             }]
         };
         this.callParent();
-
-
-	  
-
-		
     }
 });
 	
