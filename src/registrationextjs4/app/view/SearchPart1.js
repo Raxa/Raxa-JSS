@@ -216,20 +216,20 @@ Ext.define('Registration.view.SearchPart1', {
                             anchor: '75%'
                         }]
                     }*/, {
+                        /*xtype: 'button',*/
+                        /*margin: '10 50 0 270',*/
+                        /*ui: 'raxa-orange-small',*/
+                        /*text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Reset'),*/
+                        /*action: 'reset'*/
+                        /*}, {*/
+                        // TODO: Needs cancel button to return to homescreen
                         xtype: 'button',
-                        margin: '10 50 0 270',
-                        width: 60,
-				id:'searchbutton1',
+                        /*margin: '10 0 0 0',*/
+                        margin: '10 50 0 350',
+				        id:'searchbutton1',
                         ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Search'),
                         action: 'search'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
-                        ui: 'raxa-orange-small',
-                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Reset'),
-                        action: 'reset'
                     }]
                 }]
             }]

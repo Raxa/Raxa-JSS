@@ -184,7 +184,7 @@ Ext.define('Registration.view.SearchPart2', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
-                        ui: 'raxa-orange-small',
+                        ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.MS'),
                         action: 'modifySearch'
                     }]
