@@ -67,7 +67,7 @@ Ext.define('Registration.controller.Main', {
             l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
             Util.KeyMapButton('submitbutton',Ext.EventObject.ENTER);
         } else { 
-            alert("Fields invalid");
+            Ext.Msg.alert("Fields invalid");
         }
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
