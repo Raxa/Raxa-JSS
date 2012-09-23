@@ -16,7 +16,7 @@
  * This script defines the view SearchConfirm of the registration module
  */
 Ext.define('Registration.view.SearchConfirm', {
-    extend: 'Ext.container.Container',
+	extend: 'Ext.form.Panel',
     alias: 'widget.searchconfirm',
     autoScroll: true,
     border: 0,
@@ -37,6 +37,7 @@ Ext.define('Registration.view.SearchConfirm', {
                 bodyPadding: 10,
                 items: [{
                     xtype: 'fieldset',
+                    id : 'fieldsetSearchedPatient',
                     padding: 10,
                     title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.title'),
                     items: [{
@@ -166,8 +167,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, 
-                        {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste'),
                         layout: 'hbox',
@@ -243,7 +243,8 @@ Ext.define('Registration.view.SearchConfirm', {
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
-                    }, {
+                    },/* POST Office & Pincode are no longer in New Patient Registration Form, so removed from here as well
+                     {
                         xtype: 'textfield',
                         id: 'postOfficeSearchedPatient',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PO'),
@@ -265,7 +266,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
-                    }, {
+                    }, */ {
                         xtype: 'textfield',
                         id: 'tehsilSearchedPatient',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Tehsil'),
@@ -277,7 +278,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
-                        xtype: 'numberfield',
+                        xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.District'),
                         id: 'districtSearchedPatient',
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.District.emptytext'),

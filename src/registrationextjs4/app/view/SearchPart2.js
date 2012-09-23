@@ -92,46 +92,84 @@ Ext.define('Registration.view.SearchPart2', {
                         listeners: {
                             cellClick: {
                                 fn: function () {
+									//All fields are initially set to '-' if data is not available, they remain same otherwise take respective values								
+									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','blockSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occuptionSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','patientSecondaryContactNumberSearchedPatient','patientPrimaryContactNumberSearchedPatient','districtSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient'];
+									for(var j=0 ; j < itemsToReset.length ; j++)
+									{
+										Ext.getCmp(itemsToReset[j]).setValue('-');								
+									};
+
                                     var temp = this.getSelectionModel().getSelection()[0].getData()
                                     //saving uuid's here so we can access them in the controllers for encounter POST
                                     localStorage.setItem('searchUuid',temp.uuid)
                                     localStorage.setItem('newPatientUuid', temp.uuid)
+
+//									Sets full Gender string
+									if(temp.gender=="M")
+										temp.gender = "Male";
+									else
+										if(temp.gender=="F")
+											temp.gender = "Female";
+										else 
+											if(temp.gender=="O")
+												temp.gender= "Other";
+
                                     Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)
                                     Ext.getCmp('sexSearchedPatient').setValue(temp.gender)
                                     Ext.getCmp('blockSearchedPatient').setValue(temp.address1)
                                     Ext.getCmp('stretSearchedPatient').setValue(temp.address2)
-                                    Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
+//									Postal Code Removed from New Patient Registration, so removed from Patient Search Result as well				
+//                                  Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
                                     Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
-                                    for(var i=0;i<temp.attributes.length;i++){
-                                        console.log(temp.attributes[i]);
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.oldPatientIdentificationNumberUuidpersonattributetype){
-                                            Ext.getCmp('oldPatientIdentifierSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.casteUuidpersonattributetype){
-                                            Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.educationUuidpersonattributetype){
-                                            Ext.getCmp('educationSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.occupationUuidpersonattributetype){
-                                            Ext.getCmp('occupationSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.tehsilUuidpersonattributetype){
-                                            Ext.getCmp('tehsilSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.districtUuidpersonattributetype){
-                                            Ext.getCmp('districtSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.contactByPhoneUuidpersonattributetype){
-                                            Ext.getCmp('phoneSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.primaryContactUuidpersonattributetype){
-                                            Ext.getCmp('primaryContactNumberSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
-                                        if(temp.attributes[i].attributeType.uuid === localStorage.secondaryContactUuidpersonattributetype){
-                                            Ext.getCmp('secondaryContactNumberSearchedPatient').setValue(temp.attributes[i].value)
-                                        }
+
+//									Sets Patient Attributes at right place in the form
+                                    for(var i=0;i<temp.attributes.length;i++)
+                                    {
+                                    	//search function on string returns position of match (if fouund), otherwise returns -1
+										if(temp.attributes[i].attributeType.display.search('Old Patient Identification Number')>=0)
+										{
+											Ext.getCmp('oldPatientIdentifierSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Occupation')>=0)
+										{
+											Ext.getCmp('occuptionSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Primary Relative')>=0)
+										{
+											Ext.getCmp('relativeNameSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Tehsil')>=0)
+										{
+											Ext.getCmp('tehsilSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Secondary Contact')>=0)
+										{
+											Ext.getCmp('patientSecondaryContactNumberSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Primary Contact')>=0)
+										{
+											Ext.getCmp('patientPrimaryContactNumberSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('District')>=0)
+										{
+											Ext.getCmp('districtSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Contact By Phone')>=0)
+										{
+											if(temp.attributes[i].value)
+												Ext.getCmp('phoneSearchedPatient').setValue('Yes');
+											else
+												Ext.getCmp('phoneSearchedPatient').setValue('No');
+										}
+										if(temp.attributes[i].attributeType.display.search('Caste')>=0)
+										{
+											Ext.getCmp('casteSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Education')>=0)
+										{
+											Ext.getCmp('educationSearchedPatient').setValue(temp.attributes[i].value);
+										}
                                     }
                                     var l = Ext.getCmp('mainRegArea').getLayout();
                                     l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value);

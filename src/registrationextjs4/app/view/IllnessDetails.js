@@ -20,13 +20,15 @@ Ext.define('Registration.view.IllnessDetails', {
                 bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
             },
             padding: 5,
-            title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.title1'),
+//            title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.title1'),
+			title: 'Illness Details',
             fieldDefaults: {
                 msgTarget: 'side'
             },
             items:[{
                 xtype: 'fieldcontainer',
-                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.complaint'),
+//                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.complaint'),
+                fieldLabel: 'Complaint',
                 layout: 'hbox',
                 combineErrors: true,
                 labelAlign: 'right',
@@ -48,7 +50,8 @@ Ext.define('Registration.view.IllnessDetails', {
                 }]
             },{
                 xtype: 'fieldcontainer',
-                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.remarks'),
+//                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.remarks'),
+				fieldLabel: 'Remarks',
                 layout: 'hbox',
                 combineErrors: true,
                 labelAlign: 'right',
@@ -70,10 +73,11 @@ Ext.define('Registration.view.IllnessDetails', {
                 }]
             },{
                 xtype: 'combobox',
-                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.referred'),
+//                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.referred'),
+				fieldLabel: 'Referred by',
                 store: Ext.create('Registration.store.Doctors'),
                 id: 'referredBy',
-                width: 475,
+                width: 375,
                 allowBlank: true,
                 //editable: false,
                 displayField: 'display',
@@ -91,13 +95,15 @@ Ext.define('Registration.view.IllnessDetails', {
                 bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
             },
             padding: 5,
-            title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.title2'),
+//            title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.title2'),
+			title : 'Companion Details',
             fieldDefaults: {
                 msgTarget: 'side'
             },
             items:[{
                 xtype: 'fieldcontainer',
-                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.compname'),
+//                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.compname'),
+				fieldLabel: 'Name',
                 layout: 'hbox',
                 combineErrors: true,
                 labelAlign: 'right',
@@ -117,7 +123,8 @@ Ext.define('Registration.view.IllnessDetails', {
                 }]
             },{
                 xtype: 'fieldcontainer',
-                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.phone'),
+//                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.phone'),
+				fieldLabel: 'Phone No',
                 layout: 'hbox',
                 combineErrors: true,
                 labelAlign: 'right',
@@ -132,12 +139,13 @@ Ext.define('Registration.view.IllnessDetails', {
                     cls: 'raxa-form-panel',    
                     name: 'Phone Number',
                     id: 'phoneNumber',
-                    width: 255,
+                    width: 375,
                     allowBlank: true
                 }]
             },{
                 xtype: 'fieldcontainer',
-                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.relation'),
+//                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.relation'),
+				fieldLabel: 'Relation to Patient',
                 layout: 'hbox',
                 combineErrors: true,
                 labelAlign: 'right',
@@ -152,7 +160,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     cls: 'raxa-form-panel',    
                     name: 'Relation',
                     id: 'relationToPatient',
-                    width: 255,
+                    width: 375,
                     allowBlank: true
                 }]
             }]
@@ -163,13 +171,15 @@ Ext.define('Registration.view.IllnessDetails', {
                 bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
             },
             padding: 5,
-            title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.title3'),
+//            title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.title3'),
+			title: 'New Registration',
             fieldDefaults: {
                 msgTarget: 'side'
             },
             items:[{
                 xtype: 'fieldcontainer',
-                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.RF'),
+//                fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.RF'),
+				fieldLabel: 'Registration Fees',
                 layout: 'hbox',
                 combineErrors: true,
                 labelAlign: 'right',
@@ -197,12 +207,14 @@ Ext.define('Registration.view.IllnessDetails', {
                     items: [{
                         xtype: 'radiofield',
                         name: 'fees',
-                        boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.collected'),
+//                        boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.collected'),
+						boxLabel: 'Fees Collected',
                         checked: true
                     }, {
                         xtype: 'radiofield',
                         name: 'fees',
-                        boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.credit')
+//                        boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.id.credit')
+						boxLabel: 'On Credit'
                     }]
                 }]
             }]
