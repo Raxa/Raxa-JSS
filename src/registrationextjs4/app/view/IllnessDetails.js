@@ -77,7 +77,7 @@ Ext.define('Registration.view.IllnessDetails', {
 				fieldLabel: 'Referred by',
                 store: Ext.create('Registration.store.Doctors'),
                 id: 'referredBy',
-                width: 475,
+                width: 375,
                 allowBlank: true,
                 //editable: false,
                 displayField: 'display',
@@ -139,7 +139,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     cls: 'raxa-form-panel',    
                     name: 'Phone Number',
                     id: 'phoneNumber',
-                    width: 255,
+                    width: 375,
                     allowBlank: true
                 }]
             },{
@@ -160,7 +160,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     cls: 'raxa-form-panel',    
                     name: 'Relation',
                     id: 'relationToPatient',
-                    width: 255,
+                    width: 375,
                     allowBlank: true
                 }]
             }]
