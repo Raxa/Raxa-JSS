@@ -67,9 +67,14 @@
                                     />
                                 </p>
                             </td>
-                            <td width="75%">
+                            <td>
                                 <h2 style="text-align: center; ">Jan Swasthya Sahyog <br> Ganiyaari,Bilaspur </h2>
                       
+                            </td>
+                             <td>
+                                <p style="text-align: center; ">
+                                    <img style="float: center; width: 80px; height: 80px; " id="GenderIcon"/>
+                                </p>
                             </td>
                         </table>
                         <table align="center" style="padding:20px 20px 20px 20px; ">
@@ -137,13 +142,15 @@
 			{
 				if(selectedPatient[selectedPatientAttributes[i]])
 				{	
-					//Check if old Patient Identifier is present is available or not
-					if(selectedPatientAttributes[i] === 'Id' && selectedPatient.oldPatientIdentifier)
-					{ 	
+					//Check if old Patient Identifier is available or not
+					if(selectedPatientAttributes[i] === 'Id' && selectedPatient.oldPatientIdentifier &&  selectedPatient.oldPatientIdentifier != '-')
+					{ 
 						document.getElementById(selectedPatientAttributes[i]).value= selectedPatient[selectedPatientAttributes[i]] +' (Old: '+ selectedPatient.oldPatientIdentifier+ ')';
 					}			
-					else					
-					document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];			
+					else	
+					{				
+						document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];
+					}
 				}
 				else
 				{
@@ -151,8 +158,18 @@
 				}
 			}
            var currentDate = new Date();
-            document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
-			
+           document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
+	 	
+	 	  //Sets Icon on patient registrtion card as per patient's gender
+		   if(selectedPatient.Gender == "Female")
+		   {
+		   			document.getElementById('GenderIcon').src="../../resources/img/female.png" 
+		   }
+		   if(selectedPatient.Gender == "Male")
+		   {
+		   			document.getElementById('GenderIcon').src="../../resources/img/male.png" 
+		   }
+		   	
             //Print Button is hidden and then window is printed.
             function hideAndPrint() {
                 document.getElementById("printButton").style.visibility = 'hidden';
