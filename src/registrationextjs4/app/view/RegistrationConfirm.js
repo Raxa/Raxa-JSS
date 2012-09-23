@@ -345,24 +345,27 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         }]  
                     }]
                 },{
-                    xtype: 'fieldset',
-                    padding: 10,
-                    border: false,
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    border: 0,
+                    padding: 0,
+                    width: 580,
                     items:[{
                         xtype: 'button',
-				id:'submitbutton',
-                        margin: '10 50 0 270',
-                        width: 130,
-                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.SC'),
-                        ui: 'raxa-aqua-small',
-                        action: 'submit'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
+                        margin: '30 0 0 30',
                         ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Cancel'),
                         action: 'cancel'
+                    }, {
+                        xtype: 'button',
+				        id:'submitbutton',
+                        margin: '30 0 0 30',
+                        text: 'Next',
+                        ui: 'raxa-aqua-small',
+                        action: 'submit'
                     }]  
                     
                 }]
