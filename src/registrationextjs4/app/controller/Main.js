@@ -217,13 +217,17 @@ Ext.define('Registration.controller.Main', {
         var store = Ext.create('Registration.store.Person');
         store.add(jsonperson);
         // this statement makes the post call to make the person
-        store.sync();
-        // this statement calls getifentifiers() as soon as the post call is successful
-        store.on('write', function () {
-            this.getidentifierstype(store.getAt(0).getData().uuid)
-            //we still want to keep the flow the same, we want to make the fields optional
-            //this.sendEncounterData('send no obs');
-        }, this)
+        store.sync({
+            success: function(){
+                this.getidentifierstype(store.getAt(0).getData().uuid)
+            }, 
+            failure: function(){
+                Ext.Msg.alert("Failure -- Please try again");
+                Ext.getCmp('submitButton').enable();
+            },
+            scope: this
+        });
+
         //I made this function return this store because i needed this in jasmine unit test
         return store;
     },
@@ -231,45 +235,59 @@ Ext.define('Registration.controller.Main', {
     /* this functions makes a get call to get the patient identifiers type */
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Registration.store.identifiersType')
-        identifiers.load();
-        // this statement calls getlocation() as soon as the get call is successful
-        identifiers.on('load', function () {
-            var idIterator;
-            var idNo = 0;
-            for (idIterator = 0; idIterator < identifiers.data.length; idIterator++) {
-                var str = identifiers.data.items[idIterator].raw.name;
-                if (str.match(idPattern)) {
-                    idNo = idIterator;
+        identifiers.load({
+            scope: this,
+            callback: function(records, operation, success){
+                if(success){
+                    var idIterator;
+                    var idNo = 0;
+                    for (idIterator = 0; idIterator < identifiers.data.length; idIterator++) {
+                        var str = identifiers.data.items[idIterator].raw.name;
+                        if (str.match(idPattern)) {
+                            idNo = idIterator;
+                        }
+                    }
+                    //get default identifier if 'RaxaEMR Identification No' isn't in the system
+                    var identifierType = identifiers.getAt(idNo).getData().uuid;
+                    this.getlocation(personUuid, identifierType);
+                }
+                else{
+                    Ext.Msg.alert("Failure -- Please try again");
+                    Ext.getCmp('submitButton').enable();
                 }
             }
-            //get default identifier if 'RaxaEMR Identification No' isn't in the system
-            var identifierType = identifiers.getAt(idNo).getData().uuid;
-            this.getlocation(personUuid, identifierType);
-        }, this);
+        });
     },
 
     /* this functions makes a get call to get the location uuid */
     getlocation: function (personUuid, identifierType) {
         var locations = Ext.create('Registration.store.location')
-        locations.load();
-        var foundLocation = false;
-        // this statement calls makePatient() as soon as the get call is successful
-        locations.on('load', function () {
-            for (var idIterator = 0; idIterator < locations.data.length; idIterator++) {
-                var str = locations.data.items[idIterator].raw.display;
-                console.log(str);
-                console.log(locations);
-                
-                if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1) {
-                    this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
-                    foundLocation = true;
+        locations.load({
+            scope: this,
+            callback: function(records, operation, success){
+                if(success){
+                    var foundLocation = false;
+                    for (var idIterator = 0; idIterator < locations.data.length; idIterator++) {
+                        var str = locations.data.items[idIterator].raw.display;
+                        console.log(str);
+                        console.log(locations);
+
+                        if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1) {
+                            this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
+                            foundLocation = true;
+                        }
+                    }
+                    if(!foundLocation){
+                        Ext.Msg.alert('Please select a centre location');
+                        Ext.getCmp('submitButton').enable();
+                    }
+                }
+                else{
+                    Ext.Msg.alert("Failure -- Please try again");
+                    Ext.getCmp('submitButton').enable();                    
                 }
             }
-            if(!foundLocation){
-                Ext.Msg.alert('Please select a centre location');
-                Ext.getCmp('submitButton').enable();
-            }
-        }, this)
+        });
     },
 
     /* this functions makes a post call to creat the patient with three parameter which will sent as person, identifiertype 
