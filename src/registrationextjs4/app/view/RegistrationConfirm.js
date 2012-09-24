@@ -316,19 +316,17 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     border: false,
                     items:[{
                         xtype: 'button',
-				id:'submitbutton',
-                        margin: '10 50 0 270',
-                        width: 130,
-                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.SC'),
-                        ui: 'raxa-aqua-small',
-                        action: 'submit'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
+                        margin: '30 0 0 400',
                         ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Cancel'),
                         action: 'cancel'
+                    }, {
+                        xtype: 'button',
+				        id:'submitButton',
+                        margin: '30 0 0 30',
+                        text: 'Next',
+                        ui: 'raxa-aqua-small',
+                        action: 'submit'
                     }]  
                     
                 }]
