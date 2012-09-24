@@ -343,49 +343,49 @@ var Util = {
        *@return [ 'LOGIN', 'SCREENER', ....]
        */
     getSelectModules: function () {
-        var moduleElements=[];
+        var module=[];
         for (var i = 0; i < Util.getModules().length ; i++) {
             var text = Util.getModules()[i];
             var changedText = "";
             switch(text) {
                 case 'login' :
-                    changedText = 'DASHBOARD';
+                    changedText = 'Dashboard';
                     break;
                 case 'screener' :
-                    changedText = 'SCREENER';
+                    changedText = 'Screener';
                     break;
                 case 'registration' :
-                    changedText = 'REGISTRATION';
+                    changedText = 'Registration';
                     break;
                 case 'registrationextjs4':
-                    changedText = 'REGISTRATION Desktop';
+                    changedText = 'Registration Desktop';
                     break;
                 case 'pharmacy' :
-                    changedText = 'PHARMACY';
+                    changedText = 'Pharmacy';
                     break;
                 case 'chw' :
-                    changedText = 'CHW';
+                    changedText = 'Chw';
                     break;
                 case 'outpatient' :
-                    changedText = 'OPD';
+                    changedText = 'Opd';
                     break;
                 case 'laboratory' :
-                    changedText = 'LABORATORY';
+                    changedText = 'Laboratory';
                     break;
                 case  'patientfacing':
-                    changedText = 'PATIENT FACING';
+                    changedText = 'Patient Facing';
                     break;
                 default :
-                    changedText = 'You Dont Have Permission ToAccess Any Module';
+                    changedText = 'You dont have permission to access any Module';
                     break;
             }
-            var obj = {
+            var dropDownObj = {
                 text : changedText , 
                 value:Util.getModules()[i]
             };
-            moduleElements.push(obj);
+            module.push(dropDownObj);
         } 
-        return moduleElements;
+        return module;
     },
     
 
@@ -454,7 +454,7 @@ var Util = {
                 extend: extJsModelConfig.extend,
                 config: extJsModelConfig
             };
-            delete config.config.extend ;
+            delete config.config.extend;
             return config;
         } else {
             Ext.Error.raise('Could not recognize Library');
@@ -526,7 +526,7 @@ var Util = {
 
     DestoryKeyMapButton: function(keyName)
     {
-        keyMap.keyName.destroy(true)
+        keyMap.keyName.destroy(true);
     },
         
     getProviderUuidFromPersonUuid: function (uuid) {

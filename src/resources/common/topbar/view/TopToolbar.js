@@ -15,11 +15,8 @@ Ext.define('Topbar.view.TopToolbar', {
             html: 'JSS',
             itemId: 'JSSLabel',
             margin: 5,
-
             listeners: [{
                 fn: function (component, options) {
-			  
-
                     if(Ext.getCmp('mainView')==null)
                     {
                         var username = localStorage.getItem("username");
@@ -86,6 +83,9 @@ Ext.define('Topbar.view.TopToolbar', {
         }]
     },
     
+   /*
+   * This allows the dynamically fetching of modules in DropDown in screener screen
+   */ 
     
     initialize: function () {
         this.add( {
@@ -97,28 +97,25 @@ Ext.define('Topbar.view.TopToolbar', {
             options: 
             Util.getSelectModules(),
             listeners: {
-                change: function (value) {
+                change: function () {
                     var url = window.location.href;
-                    if(url.indexOf("Dashboard") >= 0)
+                    if(url.indexOf("Dashboard") < 0)
                     {
-                        if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
-                            value: Ext.getCmp('topbarSelectfield').getValue();
-                        window.location = "http://patient-facing.github.com"; 
-                        } else {
-                            window.location = Ext.getCmp('topbarSelectfield').getValue();
-                        }
-                    } else {
                         if(Ext.getCmp('topbarSelectfield').getValue() == 'login') {
                             window.location = '../' ;
                         } else
-                        if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
-                            window.location = "http://patient-facing.github.com"; 
-                        } else {
+                        {
                             var currentUrl = window.location.href;
-                            if(currentUrl.indexOf(Ext.getCmp('topbarSelectfield').getValue()) < 0)
+                            if(currentUrl.indexOf(Ext.getCmp('topbarSelectfield').getValue()) < 0) {
                                 window.location = '../'+Ext.getCmp('topbarSelectfield').getValue();
+                            }
                         }
+                    } else {
+                        window.location = Ext.getCmp('topbarSelectfield').getValue();
                     }
+                    if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
+                        window.location = "http://patient-facing.github.com"; 
+                    } 
                 }
             }
         }     

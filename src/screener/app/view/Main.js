@@ -2,9 +2,7 @@
  * This class defines our main view with navigation.View
  * to allow for easy switching between screens, a back button, etc.
  */
-/*
- * This allows the dynamically fetching of modules in DropDown in screener screen
- */
+
 Ext.define("Screener.view.Main", {
     extend: 'Ext.Container',
     xtype: 'mainView',

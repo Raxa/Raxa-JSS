@@ -47,11 +47,6 @@ Ext.application({
 			var mainScreen = Ext.create('Screener.view.Main', {
 				fullscreen: true,
 			});
-			var topBar = Ext.create('Topbar.view.TopToolbar', {
-				docked: 'top',
-				title: 'JSS Hospital Screener System'
-			});
-			mainScreen.add(topBar);
 		}
 	}
 });
