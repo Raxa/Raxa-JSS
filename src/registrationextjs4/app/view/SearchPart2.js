@@ -94,7 +94,7 @@ Ext.define('Registration.view.SearchPart2', {
                             cellClick: {
                                 fn: function () {
 									//All fields are initially set to '-' if data is not available, they remain same otherwise take respective values								
-									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','blockSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient'];
+									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','residentialAreaSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient'];
 									for(var j=0 ; j < itemsToReset.length ; j++)
 									{
 										Ext.getCmp(itemsToReset[j]).setValue('-');
@@ -118,8 +118,8 @@ Ext.define('Registration.view.SearchPart2', {
                                     Ext.getCmp('patientNameSearchedPatient').setValue(temp.givenName + " " + temp.familyName)
                                     Ext.getCmp('ageSearchedPatient').setValue(temp.age)
                                     Ext.getCmp('sexSearchedPatient').setValue(temp.gender)
-                                    Ext.getCmp('blockSearchedPatient').setValue(temp.address1)
-                                    Ext.getCmp('stretSearchedPatient').setValue(temp.address2)
+                                    Ext.getCmp('stretSearchedPatient').setValue(temp.address1)
+                                    Ext.getCmp('residentialAreaSearchedPatient').setValue(temp.address2)
 //									Postal Code Removed from New Patient Registration, so removed from Patient Search Result as well				
 //                                  Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
                                     Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)

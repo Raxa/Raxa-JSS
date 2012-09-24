@@ -262,17 +262,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                     title: 'Address and Contact Details',
                     items: [{
                         xtype: 'textfield',
-                        id: 'block',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Block'),
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Block'),
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        width: 573,
-                        allowBlank: true,
-                    //anchor: '95%'
-                    }, {
-                        xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Street'),
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Street'),
                         labelAlign: 'right',
@@ -291,6 +280,17 @@ Ext.define('Registration.view.RegistrationPart1', {
                         id: 'town',
                         labelWidth: 200,
                         width: 573
+                    }, {
+                        xtype: 'textfield',
+                        id: 'residentialArea',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.ResidentialArea'),
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.ResidentialArea'),
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        width: 573,
+                        allowBlank: true,
+                    //anchor: '95%'
                     }, {
                         xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Tehsil'),

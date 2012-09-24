@@ -62,7 +62,7 @@ Ext.define('Registration.controller.Main', {
 
         var l = Ext.getCmp('mainRegArea').getLayout(); 
         // if condition that check if all the required fields are non-empty or not
-        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('block').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
+        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
         	if(Ext.getCmp('patientAge').rawValue || Ext.getCmp('dob').rawValue)
  				{     
 			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
@@ -74,7 +74,7 @@ Ext.define('Registration.controller.Main', {
             }
             
         } else {
-            alert("Fields invalid");
+            Ext.Msg.alert("Fields invalid - enter patient name and age");
         }
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
@@ -85,7 +85,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
-        Ext.getCmp('blockConfirm').setValue(Ext.getCmp('block').value);
+        Ext.getCmp('residentialAreaConfirm').setValue(Ext.getCmp('residentialArea').value);
         Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
         if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) {
             Ext.getCmp('phoneConfirm').setValue(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel);
@@ -110,7 +110,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
         //reset all the fields in registration form
-        var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'block', 'street', 'town', 'tehsil', 'district', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'remarksArea', 'referredBy', 'companionName', 'phoneNumber', 'relationToPatient', 'registrationFeesPaid'];
+        var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'remarksArea', 'referredBy', 'companionName', 'phoneNumber', 'relationToPatient', 'registrationFeesPaid'];
 
         for (var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
@@ -129,8 +129,8 @@ Ext.define('Registration.controller.Main', {
                 familyName: Ext.getCmp('patientLastName').value
             }],
             addresses: [{
-                address1: Ext.getCmp('block').value,
-                address2: Ext.getCmp('street').value,
+                address1: Ext.getCmp('street').value,
+                address2: Ext.getCmp('residentialArea').value,
                 cityVillage: Ext.getCmp('town').value
             }],
             attributes: [{
