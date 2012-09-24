@@ -77,24 +77,38 @@ Ext.define('Registration.controller.Main', {
             Ext.Msg.alert("Fields invalid - enter patient name and age");
         }
         //copies all fields from registration form to confirmation screen
-        Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
-        Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
-        Ext.getCmp('relativeNameConfirm').setValue(Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value);
-        Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
-        Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
-        Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
-        Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
-        Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
-        Ext.getCmp('residentialAreaConfirm').setValue(Ext.getCmp('residentialArea').value);
-        Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
+        Ext.getCmp('oldPatientIdentifierConfirm').setText(Ext.getCmp('oldPatientIdentifier').value);
+        Ext.getCmp('patientNameConfirm').setText(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
+        Ext.getCmp('relativeNameConfirm').setText(Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value);
+        Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value);
+        Ext.getCmp('sexConfirm').setText(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
+        Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
+        Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
+        Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
+        Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
+        Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
         if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) {
-            Ext.getCmp('phoneConfirm').setValue(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel);
+            Ext.getCmp('phoneConfirm').setText(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel);
         }
-        Ext.getCmp('patientPrimaryContactNumberConfirm').setValue(Ext.getCmp('patientPrimaryContact').value);
-        Ext.getCmp('patientSecondaryContactNumberConfirm').setValue(Ext.getCmp('patientSecondaryContact').value);
-        Ext.getCmp('townConfirm').setValue(Ext.getCmp('town').value);
-        Ext.getCmp('tehsilConfirm').setValue(Ext.getCmp('tehsil').value);
-        Ext.getCmp('districtConfirm').setValue(Ext.getCmp('district').value);
+		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value == ""))
+		{
+		    Ext.getCmp('patientPrimaryContactNumberConfirm').setText(Ext.getCmp('patientPrimaryContact').value 	+ ' (Pri) ');
+        }
+        else
+        {
+			Ext.getCmp('patientPrimaryContactNumberConfirm').setText('');
+        }
+        if(!(!Ext.getCmp('patientSecondaryContact').value || Ext.getCmp('patientSecondaryContact').value == ""))
+		{
+	        Ext.getCmp('patientSecondaryContactNumberConfirm').setText(Ext.getCmp('patientSecondaryContact').value + ' (Sec)');
+        }
+        else
+        {
+		    Ext.getCmp('patientSecondaryContactNumberConfirm').setText('');
+        }
+        Ext.getCmp('townConfirm').setText(Ext.getCmp('town').value);
+        Ext.getCmp('tehsilConfirm').setText(Ext.getCmp('tehsil').value);
+        Ext.getCmp('districtConfirm').setText(Ext.getCmp('district').value);
     },
 
     //Navigates to BMI page
@@ -306,7 +320,7 @@ Ext.define('Registration.controller.Main', {
         });
         // setting the patientid and paient name fields in bmi screen
         Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
-        Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').getValue());
+        Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').text);
 
         //creating store for posting the patient
         var PatientStore = Ext.create('Registration.store.patient')
