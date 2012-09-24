@@ -212,10 +212,10 @@ Ext.define('Registration.view.SearchConfirm', {
                         }]
                     }, {
                         xtype: 'textfield',
-                        id: 'blockSearchedPatient',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Block'),
+                        id: 'residentialAreaSearchedPatient',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.ResidentialArea'),
                         labelAlign: 'right',
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Block.emptytext'),
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.ResidentialArea.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,

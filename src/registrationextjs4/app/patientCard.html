@@ -51,7 +51,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align: center; ">Smoking can cause cancer, heart diseases and asthama.</td>
+                                    <td style="text-align: center; ">Smoking can cause cancer, heart diseases and asthma.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -77,9 +77,15 @@
                                 </p>
                             </td>
                         </table>
-                        <table align="center" style="padding:20px 20px 20px 20px; ">
+                        <table align="center" style="padding:0px 20px 0px 20px; ">
                             <tbody>
                                 <tr>   <h3 style="text-align: center; "> Registration Card </h3> </tr>
+                                <tr>
+                                    <td>Old Patient id:</td>
+                                    <td>
+                                        <input type="text" id="OldPatientId" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td width="150px">Date:</td>
                                     <td>
@@ -89,7 +95,7 @@
                                 <tr>
                                     <td>EMR Reg id:</td>
                                     <td>
-                                        <input type="text" id="Id" readonly="true" style="border-width: 0px 0px 0px 0px;" size=30>
+                                        <input type="text" id="Id" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
                                 </tr>
                                 <tr>
@@ -137,20 +143,12 @@
         <script>
  			//Retrieve information about last selected Patient from localStorage       
             var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
-            var selectedPatientAttributes = ['Name','Id','Age','Gender','Weight','Village','Tehsil'];
+            var selectedPatientAttributes = ['Name','Id','Age','Gender','Weight','Village','Tehsil', 'OldPatientId'];
 			for(var i=0; i<selectedPatientAttributes.length; i++)
 			{
 				if(selectedPatient[selectedPatientAttributes[i]])
 				{	
-					//Check if old Patient Identifier is available or not
-					if(selectedPatientAttributes[i] === 'Id' && selectedPatient.oldPatientIdentifier &&  selectedPatient.oldPatientIdentifier != '-')
-					{ 
-						document.getElementById(selectedPatientAttributes[i]).value= selectedPatient[selectedPatientAttributes[i]] +' (Old: '+ selectedPatient.oldPatientIdentifier+ ')';
-					}			
-					else	
-					{				
-						document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];
-					}
+                    document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];
 				}
 				else
 				{
