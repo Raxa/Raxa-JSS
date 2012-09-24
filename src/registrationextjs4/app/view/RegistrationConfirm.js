@@ -207,10 +207,10 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         }]
                     }, {
                         xtype: 'textfield',
-                        id: 'blockConfirm',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Block'),
+                        id: 'residentialAreaConfirm',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ResidentialArea'),
                         labelAlign: 'right',
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Block.emptytext'),
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ResidentialArea.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
