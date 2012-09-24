@@ -59,7 +59,7 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "ointment",
         "varName": "ointment",
-        "displayName": "ointment"
+        "displayName": "OINTMENT"
     },
     "syrup": {
         "resource": "concept",
@@ -72,6 +72,18 @@ var resourceUuid = {
         "queryTerm": "solution for injection",
         "varName": "solutionForInjection",
         "displayName": "SOLUTION FOR INJECTION"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
     },
     "height": {
         "resource": "concept",
@@ -468,6 +480,7 @@ var Util = {
                 uuidsLoadedCount++;
             } else {
                 uuidsNotFound += (item + ", ");
+                this.getAttributeFromREST(resourceUuid[key].resource, resourceUuid[key].queryTerm, resourceUuid[key].varName, resourceUuid[key].displayName);
             }
         }
         
