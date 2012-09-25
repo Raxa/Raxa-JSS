@@ -15,13 +15,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     viewConfig: {
         stripeRows: false
     },
-    selType: 'cellmodel',
-    cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
-        clicksToEdit: 1
-    }),
-    viewConfig: {
-        stripeRows: false
-    },
     initComponent: function () {    
         var issueEditor = this;
         this.addEvents(['deleteIssueDrug']);
@@ -146,6 +139,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
         },{
             xtype: 'datecolumn',
             text: 'Expiry Date',
+            format: 'd/m/y',
             dataIndex: 'expiryDate',
             width: 180
         },{

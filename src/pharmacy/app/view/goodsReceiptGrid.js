@@ -105,7 +105,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             editor: {
                 xtype: 'datefield',
                 allowBlank: false,
-                format: 'd/m/Y'
+                format: 'd/m/y',
             }
         },{
             xtype: 'actioncolumn',
