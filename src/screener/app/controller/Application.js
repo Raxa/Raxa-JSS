@@ -157,7 +157,7 @@ Ext.define("Screener.controller.Application", {
             'patientListView button[action=refreshList]': {
                 tap: 'refreshList'
             },
-            sortByNameButton: {
+            'patientListView button[action=sortByName]': {
                 tap: 'sortByName'
             },
             drugSubmitButton: {
