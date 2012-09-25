@@ -32,7 +32,7 @@ Ext.define('Screener.view.PatientSummary', {
         scrollable: true,
         items: [{
             xtype: 'titlebar',
-            title: 'Patient Summary',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PatientSummary.pat_sum'),
             layout: {
                 align: 'center',
                 type: 'hbox'
@@ -40,14 +40,14 @@ Ext.define('Screener.view.PatientSummary', {
         }, {
             xtype: 'textfield',
             id: 'name',
-            label: 'Name',
+            label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PatientListView.name'),
             width: '100%',
             value: '',
             disabled: 'true',
             disabledCls: 'x-item',
         }, {
             xtype: 'titlebar',
-            title: 'Last Encounter',
+            title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PatientSummary.la_en'),
             layout: {
                 align: 'center',
                 type: 'hbox'

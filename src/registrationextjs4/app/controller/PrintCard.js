@@ -45,7 +45,8 @@ Ext.define('Registration.controller.PrintCard', {
             Age: Ext.getCmp('ageSearchedPatient').value,
             Gender: Ext.getCmp('sexSearchedPatient').value,
             Village: Ext.getCmp('townSearchedPatient').value,
-            Tehsil: Ext.getCmp('tehsilSearchedPatient').value
+            Tehsil: Ext.getCmp('tehsilSearchedPatient').value,
+            OldPatientId: Ext.getCmp('oldPatientIdentifierSearchedPatient').value                
         };
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
     },
@@ -59,7 +60,8 @@ Ext.define('Registration.controller.PrintCard', {
             Age: Ext.getCmp('ageConfirm').value,
             Gender: Ext.getCmp('sexConfirm').value,
             Village: Ext.getCmp('townConfirm').value,
-            Tehsil: Ext.getCmp('tehsilConfirm').value
+            Tehsil: Ext.getCmp('tehsilConfirm').value,
+            OldPatientId: Ext.getCmp('oldPatientIdentifierConfirm').value,            
         };
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
     },
@@ -69,14 +71,10 @@ Ext.define('Registration.controller.PrintCard', {
      */
     printPatientCard: function () {
         //This is to check whether weight is entered or not (as it is a field on Registration Card)
-        if (!Ext.getCmp('weightIDkg').value) {
-            Ext.Msg.alert("Please enter weight before printing");
-        } else {
             var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
             selectedPatient.Weight = Ext.getCmp('weightIDkg').value;
             selectedPatient.Id = Ext.getCmp('bmiPatientID').value;
             localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
             popupWindow = window.open('app/patientCard.html', 'popUpWindow', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
-        }
     }
 });

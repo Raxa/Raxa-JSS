@@ -27,6 +27,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             docname: '#docname',
             urgency: '#urgency',
             lastvisit: '#lastvisit',
+            refresh: '#refresh',
             mainTabs: '#maintabs',
             medicationHistory: '#medicationhistory',
             refToDocButton: '#reftodocbutton',
@@ -60,6 +61,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             deleteDiagnosed: '#deleteDiagnosed',
             drugfilterbysearchfield: '#drugfilterbysearchfield',
             druglist: '#drugList',
+            vitalsGrid : '#vitalsGrid',
         },
 
         control: { //to perform action on specific component accessed through it's id above 
@@ -93,6 +95,9 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
             },
             lastvisit: {
                 tap: 'sortByLastVisit'
+            },
+            refresh: {
+                tap: 'refreshList'
             },
             medicationhistorysortbydrugname: {
                 tap: 'medicationHistorySortByDrugName'
@@ -268,7 +273,83 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
 
         this.showContact.setRecord(record);
         this.getMain().push(this.showContact);
+
+        // Persist current patient's details
         myRecord = record;
+       
+        // Helper Function for getting most recent value of an observation type
+        //
+        // Input: display name of Observation and store of Observations
+        // Returns: value of observation, if it exists, else "-"
+        //
+        // Note that the observations store may include only a subset of all
+        // observations (e.g. the most recent 25), so you may not see an
+        // observation if it is not recent enough
+        var getMostRecentObsValue = function (display, store) {
+            var groups = store.getGroups();
+            for (var k=0; k < groups.length; k++)
+            {
+                if (groups[k].name === display && groups[k].children.length) 
+                {
+                    return groups[k].children[0].data.value;
+                }
+            }
+            return "-";
+        };
+        
+        // Load observations for current patient
+        console.log("load obsStore");
+        var obsStore = Ext.create('RaxaEmr.Outpatient.store.obs');
+        console.log(obsStore); 
+            
+        obsStore.getProxy().setUrl(HOST + '/ws/rest/v1/obs?patient=' + myRecord.data.uuid);
+        var that = this;
+        obsStore.load({
+                callback: function() {
+                    // wait for store to load
+                    console.log(obsStore); 
+                    var obsTypes = ['PULSE','TEMPERATURE (C)', 'BLOOD OXYGEN SATURATION', 'DIASTOLIC BLOOD PRESSURE', 'SYSTOLIC BLOOD PRESSURE', 'RESPIRATORY RATE'];
+                    item = {};
+                    item.pulse = '-';
+                    item.temp = '-';
+                    item.oxysat = '-';
+                    item.sbp = '-';
+                    item.dbp = '-';
+                    item.resrate = '-';
+                    for (var i=0; i < obsTypes.length; i++) {
+                        var val = getMostRecentObsValue(obsTypes[i], obsStore)
+                        console.log(obsTypes[i] + " is " + val);
+                        // TODO: Will show undefined if no value is found
+                        switch (obsTypes[i]){
+                            case 'PULSE':
+                                item.pulse = val;
+                                break;
+                            case 'TEMPERATURE (C)':
+                                item.temp = val;
+                                break;
+                            case 'BLOOD OXYGEN SATURATION':
+                                item.oxysat = val;
+                                break;
+                            case 'DIASTOLIC BLOOD PRESSURE': 
+                                item.dbp = val;
+                                break;
+                            case 'SYSTOLIC BLOOD PRESSURE':
+                                item.sbp = val;
+                                break;
+                            case 'RESPIRATORY RATE':
+                                item.resrate = val;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    item.bp = Ext.String.format('{0} / {1}', item.sbp, item.dbp);
+                    
+                    var vitalsGridStore = Ext.getStore("Grid");
+                    vitalsGridStore.clearData();
+                    vitalsGridStore.add(item);
+                }
+        });
     },
 
     addChiefComplain: function () {
@@ -361,15 +442,19 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
     },
 
     sortByDocName: function () {
-        this.sortBy('nameofdoc');
+        this.sortBy('nameofdoc', this.getContact().getStore());
     },
 
     sortByUrgency: function () {
-        this.sortBy('urgency');
+        this.sortBy('urgency', this.getContact().getStore());
     },
 
     sortByLastVisit: function () {
-        this.sortBy('lastvisit');
+        this.sortBy('lastvisit', this.getContact().getStore());
+    },
+    
+    refreshList: function () {
+        this.getContact().getStore().load();
     },
     // for sorting the medication history
     medicationHistorySortByDrugName: function () {

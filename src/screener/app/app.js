@@ -15,13 +15,23 @@
  */
 //this is for debugging only - when production rolls around, we need to put all dependencies in a single .js file
 //<debug>
-Ext.Loader.setPath({
-	'Ext': '../../../lib/touch/src'
+Ext.Loader.setConfig({
+    enabled: true,
+    paths: {
+        'Ext.i18n': '../lib/i18n' //Path to the i18n library
+    }
 });
 
-Ext.Loader.setConfig({
-	enabled: true
+Ext.require('Ext.i18n.Bundle', function(){
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+        bundle: 'RaxaEmrScreener',
+        //Specify language here
+        lang: 'en-US',
+        path: 'app/view', //Path to the .properties file
+        noCache: true
+    });
 });
+
 //</debug>
 Ext.application({
 	name: 'Screener',
@@ -33,20 +43,21 @@ Ext.application({
 	models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
 
 	//here we declare the visual components
-	views: ['Main', 'TopMenu', 'PatientView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary', 'DoctorSummary', ],
+	views: ['Main', 'TopMenu', 'PatientView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary', 'DoctorSummary'],
 
 	//here we declare our controller that will perform actions
 	controllers: ['Application'],
 
 	//the stores will hold our data in a local cache
+    // TODO: remove duplicate member "stores"
 	stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary', 'AssignedPatientList'],
 
 	//entry point
 	launch: function() {
-		if (Util.checkModulePrivilege('screener')) {
-			var mainScreen = Ext.create('Screener.view.Main', {
-				fullscreen: true,
-			});
+		if (Util.checkModulePrivilege('screener')&& Util.uuidLoadedSuccessfully()) {
+            var mainScreen = Ext.create('Screener.view.Main', {
+                    fullscreen: true,
+                });
 			var topBar = Ext.create('Topbar.view.TopToolbar', {
 				docked: 'top',
 				title: 'JSS Hospital Screener System'

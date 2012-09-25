@@ -22,7 +22,7 @@ Ext.define('RaxaEmr.Pharmacy.model.Location', {
     }],
     hasTag: function(tag){
         for(i=0; i< this.get("tags").length; i++)
-            if(tag===this.get("tags")[i].description){
+            if(tag===this.get("tags")[i].name){
                 return true;
             }
         return false;

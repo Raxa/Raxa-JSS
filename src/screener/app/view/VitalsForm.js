@@ -6,7 +6,7 @@
 
 Ext.define("Screener.view.VitalsForm", {
 	xtype: 'vitalsForm',
-    id: 'vitalsForm',
+	id: 'vitalsForm',
 	extend: 'Ext.form.Panel',
 	config: {
 		styleHtmlContent: false,
@@ -15,10 +15,10 @@ Ext.define("Screener.view.VitalsForm", {
 		items: [{
 			xtype: 'titlebar',
 			docked: 'top',
-			title: 'Vitals'
+			title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.vitals')
 		},
 		{
-            // Need a separate panel here, so I can show/hide/disable
+			// Need a separate panel here, so I can show/hide/disable
 			xtype: 'panel',
 			layout: 'vbox',
 			id: 'vitalsInput',
@@ -26,128 +26,85 @@ Ext.define("Screener.view.VitalsForm", {
 				xtype: 'panel',
 				layout: 'hbox',
 				items: [{
-                    // Fieldset for inputting vitals
+					// Fieldset for inputting vitals
 					xtype: 'fieldset',
-					title: 'Input Vitals',
-                    id: 'vitalsFields',
+                    width: '500px', // TODO: layout should fit screen
+					id: 'vitalsFields',
+					// TODO: For all inputs, get bounds from OpenMRS concept dictionary
 					items: [{
 						// Systolic Blood Pressure
-						xtype: 'numberfield',
-						label: 'Systolic Blood Pressure',
+						xtype: 'sliderfieldextended',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.sysbp'),
+                        labelAlign: 'top',
 						minValue: 0,
-						maxValue: 300,
+						maxValue: 250,
+                        value: 0,
 						stepValue: 1,
-						name: 'systolicBloodPressureField',
-						listeners: Util.maxLengthListener(3)
+						name: 'systolicBloodPressureField'
 					},
 					{
 						// Diastolic Blood Pressure
-						xtype: 'numberfield',
-						label: 'Diastolic Blood Pressure',
+						xtype: 'sliderfieldextended',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.diasbp'),
+                        labelAlign: 'top',
 						minValue: 0,
-						maxValue: 300,
+						maxValue: 150,
+                        value: 0,
 						stepValue: 1,
-						name: 'diastolicBloodPressureField',
-						listeners: Util.maxLengthListener(3)
+						name: 'diastolicBloodPressureField'
 					},
 					{
 						// Temperature
-						xtype: 'numberfield',
-						label: 'Temperature',
-						minValue: 0,
-						maxValue: 200,
-						stepValue: 1,
-						name: 'temperatureField',
-						listeners: Util.maxLengthListener(3)
+						xtype: 'sliderfieldextended',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.temp'),
+                        labelAlign: 'top',
+                        id: 'tempSliderExt',
+                        minValue: 25,   // TODO: Fix visual error in Slider. bar starts at far right and cant slide (this is a Sencha bug)
+						maxValue: 43,
+                        value: 25,
+						stepValue: 0.1,
+						name: 'temperatureField'
 					},
 					{
 						// Repiratory Rate
-						xtype: 'numberfield',
-						label: 'Respiratory Rate',
+						xtype: 'sliderfieldextended',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.resp_rate'),
+                        labelAlign: 'top',
 						minValue: 0,
 						maxValue: 200,
+                        value: 0,
 						stepValue: 1,
-						name: 'respiratoryRateField',
-						listeners: Util.maxLengthListener(3)
+						name: 'respiratoryRateField'
 					},
 					{
 						// Pulse
-						xtype: 'numberfield',
-						label: 'Pulse Rate',
+						xtype: 'sliderfieldextended',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.pul_rate'),
+                        labelAlign: 'top',
 						minValue: 0,
-						maxValue: 200,
+						maxValue: 230,
 						stepValue: 1,
-						name: 'pulseField',
-						listeners: Util.maxLengthListener(3)
+						name: 'pulseField'
 					},
 					{
 						// Oxygen Saturation
-						xtype: 'numberfield',
-						label: 'Oxygen Saturation',
+						xtype: 'sliderfieldextended',
+						label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.oxy_sat'),
+                        labelAlign: 'top',
 						minValue: 0,
 						maxValue: 100,
 						stepValue: 1,
-						name: 'bloodOxygenSaturationField',
-						listeners: Util.maxLengthListener(3)
-					}]
-				},{
-                    xtype: 'spacer',
-                    width: '30px'
-				},{
-                    // Fieldset to display most recent vitals readings
-					xtype: 'fieldset',
-					title: 'Most Recent Reading',
-					items: [{
-						// Systolic Blood Pressure
-						xtype: 'textfield',
-						disabled: true,
-						value: '120 - August 20, 2012 (FAKE)',
-						name: 'systolicBloodPressureRecentValue'
-					},
-					{
-						// Diastolic Blood Pressure
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'diastolicBloodPressureRecentValue'
-					},
-					{
-						// Temperature
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'temperatureRecentValue'
-					},
-					{
-						// Repiratory Rate
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'respiratoryRateRecentValue'
-					},
-					{
-						// Pulse Rate
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'pulseRecentValue'
-					},
-					{
-						// Oxygen Saturation
-						xtype: 'textfield',
-						disabled: true,
-						value: '-',
-						name: 'bloodOxygenSaturationRecentValue'
-					}]
+						name: 'bloodOxygenSaturationField'
+                    }]
 				}]
 			},
 			{
-                // Submit Button
+				// Submit Button
 				xtype: 'button',
 				ui: 'confirm',
 				id: 'submitVitalsButton',
-                height: '40px',
-				text: 'submit',
+				height: '40px',
+				text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.submit'),
                 width: '100px'
 			}]
 		}]

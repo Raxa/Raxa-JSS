@@ -162,7 +162,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             readOnly: true
                         }]
-                    }, /* TODO: add back in caste
+                    }, 
                        // Current registration system (used by JSS) has caste field in the form
                         {
                         xtype: 'fieldcontainer',
@@ -184,7 +184,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             flex: 1,
                             readOnly: true
                         }]
-                    }, */{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Occupation'),
                         layout: 'hbox',
@@ -207,10 +207,10 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         }]
                     }, {
                         xtype: 'textfield',
-                        id: 'blockConfirm',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Block'),
+                        id: 'residentialAreaConfirm',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ResidentialArea'),
                         labelAlign: 'right',
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Block.emptytext'),
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ResidentialArea.emptytext'),
  
                         readOnly: true,
                         labelPad: 20,
@@ -313,56 +313,20 @@ Ext.define('Registration.view.RegistrationConfirm', {
                 },{
                     xtype: 'fieldset',
                     padding: 10,
-                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.title2'),
-                    items:[{
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.RF'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            xtype: 'numberfield',
-                            fieldLabel: 'Registration Fees Paid',
-                            id: 'registrationfeespaid',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.RF'),
-                            defaultValue: 0,
-                            labelPad: 20,
-                            labelWidth: 70,
-                            labelAlign: 'right',
-                            anchor: '95%',
-                            margin: '0 10 0 0',
-                            hideTrigger: true,
-                            keyNavEnabled: false,
-                            mouseWheelEnabled: false,
-                            nanText: 'Invalid Input'
-                        }]  
-                    }]
-                },{
-                    xtype: 'fieldset',
-                    padding: 10,
                     border: false,
                     items:[{
                         xtype: 'button',
-				id:'submitbutton',
-                        margin: '10 50 0 270',
-                        width: 130,
-                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.SC'),
-                        ui: 'raxa-aqua-small',
-                        action: 'submit'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
+                        margin: '30 0 0 400',
                         ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Cancel'),
                         action: 'cancel'
+                    }, {
+                        xtype: 'button',
+				        id:'submitButton',
+                        margin: '30 0 0 30',
+                        text: 'Next',
+                        ui: 'raxa-aqua-small',
+                        action: 'submit'
                     }]  
                     
                 }]

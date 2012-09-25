@@ -1,13 +1,9 @@
 Ext.define('RaxaEmr.Pharmacy.store.orderStore', {
     extend: 'Ext.data.Store',
-    fields: ['drugname', 'dosage', 'duration', 'qty', 'unitprice', 'itemprice'],
-    autoLoad: true,
-    autoSync: false,
-    proxy: {
-        type: 'ajax',
-        url: 'data/drugs.json',
-        reader: {
-            type: 'json'
-        }
-    }
+    fields: ['drugName', 
+        { 
+            name: 'dosage',
+            type: 'float'
+        },
+         'duration', 'qty', 'unitprice', 'itemprice', 'batchQuantity', 'batchUuid', 'drugUuid']
 });

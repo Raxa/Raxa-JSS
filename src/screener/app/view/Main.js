@@ -3,8 +3,7 @@
  * to allow for easy switching between screens, a back button, etc.
  */
 Ext.define("Screener.view.Main", {
-    extend: 'Ext.NavigationView',
-	requires: ['Screener.view.TopMenu', 'Screener.view.LabOrderView', 'Screener.view.PharmacyView', 'Screener.view.PatientView', 'Screener.view.VitalsView'],
+    extend: 'Ext.Container',
 	xtype: 'mainView',
 	id: "mainView",
 	config: {
@@ -14,7 +13,15 @@ Ext.define("Screener.view.Main", {
         fullscreen: true,
 		items: [{
 			xclass: 'Screener.view.TopMenu'
-		}]
+        },{
+            xclass: 'Screener.view.PatientView'
+        },{
+            xclass: 'Screener.view.VitalsView'
+        },{
+            xclass: 'Screener.view.PharmacyView'
+        },{
+	        xclass: 'Screener.view.LabOrderView' 
+        }]
 	}
 });
 

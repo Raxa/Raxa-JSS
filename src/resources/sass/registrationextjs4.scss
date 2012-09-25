@@ -176,6 +176,108 @@ $toolbar-text-color: #FFFFFF;
     $icon-size: $button-small-icon-size
 );
 
+@include extjs-button-ui(
+    'raxa-orange-large',
+
+    $border-radius: $button-large-border-radius,
+    $border-width: $button-large-border-width,  
+    $border-color: #ee7136,
+    $border-color-over: #ee7136,
+    $border-color-focus: #ee7136,
+    $border-color-pressed: #ee7136,
+    $border-color-disabled: black,
+    $padding: $button-large-padding,
+    $text-padding: $button-large-text-padding,
+
+    $background-color: #ee7136,
+    $background-color-over: #ee7136,
+    $background-color-focus: #ee7136,
+    $background-color-pressed: #ee7136,
+    $background-color-disabled: black,
+
+    $background-gradient: color_stops(#e8a795, #ee7136, #e8a795),
+    $background-gradient-over: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-focus: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-pressed: color_stops(#ee7136, #e8a795, #ee7136),
+    $background-gradient-disabled: $button-default-background-gradient-disabled,
+
+    $color: $button-default-color,
+    $color-over: $button-default-color-over,
+    $color-focus: $button-default-color-focus,
+    $color-pressed: $button-default-color-pressed,
+    $color-disabled: $button-default-color-disabled,
+
+    $font-size: $button-large-font-size,
+    $font-size-over: $button-large-font-size-over,
+    $font-size-focus: $button-large-font-size-focus,
+    $font-size-pressed: $button-large-font-size-pressed,
+    $font-size-disabled: $button-large-font-size-disabled,
+    $font-weight: $button-large-font-weight,
+    $font-weight-over: $button-large-font-weight-over,
+    $font-weight-focus: $button-large-font-weight-focus,
+    $font-weight-pressed: $button-large-font-weight-pressed,
+    $font-weight-disabled: $button-large-font-weight-disabled,
+    $font-family: $button-large-font-family,
+    $font-family-over: $button-large-font-family-over,
+    $font-family-focus: $button-large-font-family-focus,
+    $font-family-pressed: $button-large-font-family-pressed,
+    $font-family-disabled: $button-large-font-family-disabled,
+    $icon-size: $button-large-icon-size
+);
+
+
+
+
+@include extjs-button-ui(
+    'raxa-aqua-large',
+
+    $border-radius: $button-large-border-radius,
+    $border-width: $button-large-border-width,  
+    $border-color: #009682,
+    $border-color-over: #009682,
+    $border-color-focus: #009682,
+    $border-color-pressed: #009682,
+    $border-color-disabled: black,
+    $padding: $button-large-padding,
+    $text-padding: $button-large-text-padding,
+
+    $background-color: #009682,
+    $background-color-over: #009682,
+    $background-color-focus: #009682,
+    $background-color-pressed: #009682,
+    $background-color-disabled: black,
+
+    $background-gradient: color_stops(#5bbba8, #009682, #5bbba8),
+    $background-gradient-over: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-focus: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-pressed: color_stops(#009682, #5bbba8, #009682),
+    $background-gradient-disabled: $button-default-background-gradient-disabled,
+
+    $color: $button-default-color,
+    $color-over: $button-default-color-over,
+    $color-focus: $button-default-color-focus,
+    $color-pressed: $button-default-color-pressed,
+    $color-disabled: $button-default-color-disabled,
+
+    $font-size: $button-large-font-size,
+    $font-size-over: $button-large-font-size-over,
+    $font-size-focus: $button-large-font-size-focus,
+    $font-size-pressed: $button-large-font-size-pressed,
+    $font-size-disabled: $button-large-font-size-disabled,
+    $font-weight: $button-large-font-weight,
+    $font-weight-over: $button-large-font-weight-over,
+    $font-weight-focus: $button-large-font-weight-focus,
+    $font-weight-pressed: $button-large-font-weight-pressed,
+    $font-weight-disabled: $button-large-font-weight-disabled,
+    $font-family: $button-large-font-family,
+    $font-family-over: $button-large-font-family-over,
+    $font-family-focus: $button-large-font-family-focus,
+    $font-family-pressed: $button-large-font-family-pressed,
+    $font-family-disabled: $button-large-font-family-disabled,
+    $icon-size: $button-large-icon-size
+);
+
+
 @include extjs-panel-ui(
     'raxa-panel-not-rounded',
     $ui-body-background-color: #c9cdd0,

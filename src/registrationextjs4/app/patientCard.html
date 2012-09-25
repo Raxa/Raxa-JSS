@@ -51,7 +51,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align: center; ">Smoking can cause cancer, heart diseases and asthama.</td>
+                                    <td style="text-align: center; ">Smoking can cause cancer, heart diseases and asthma.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -67,14 +67,25 @@
                                     />
                                 </p>
                             </td>
-                            <td width="75%">
+                            <td>
                                 <h2 style="text-align: center; ">Jan Swasthya Sahyog <br> Ganiyaari,Bilaspur </h2>
                       
                             </td>
+                             <td>
+                                <p style="text-align: center; ">
+                                    <img style="float: center; width: 80px; height: 80px; " id="GenderIcon"/>
+                                </p>
+                            </td>
                         </table>
-                        <table align="center" style="padding:20px 20px 20px 20px; ">
+                        <table align="center" style="padding:0px 20px 0px 20px; ">
                             <tbody>
                                 <tr>   <h3 style="text-align: center; "> Registration Card </h3> </tr>
+                                <tr>
+                                    <td>Old Patient id:</td>
+                                    <td>
+                                        <input type="text" id="OldPatientId" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td width="150px">Date:</td>
                                     <td>
@@ -82,7 +93,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Registration:</td>
+                                    <td>EMR Reg id:</td>
                                     <td>
                                         <input type="text" id="Id" readonly="true" style="border-width: 0px 0px 0px 0px;">
                                     </td>
@@ -132,17 +143,31 @@
         <script>
  			//Retrieve information about last selected Patient from localStorage       
             var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
-            var selectedPatientAttributes = ['Name','Id','Age','Gender','Weight','Village','Tehsil'];
+            var selectedPatientAttributes = ['Name','Id','Age','Gender','Weight','Village','Tehsil', 'OldPatientId'];
 			for(var i=0; i<selectedPatientAttributes.length; i++)
 			{
 				if(selectedPatient[selectedPatientAttributes[i]])
+				{	
+                    document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];
+				}
+				else
 				{
-					document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];			
+					document.getElementById(selectedPatientAttributes[i]).value = '-';
 				}
 			}
            var currentDate = new Date();
-            document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
-			
+           document.getElementById("Date").value = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+	 	
+	 	  //Sets Icon on patient registrtion card as per patient's gender
+		   if(selectedPatient.Gender == "Female")
+		   {
+		   			document.getElementById('GenderIcon').src="../../resources/img/female.png" 
+		   }
+		   if(selectedPatient.Gender == "Male")
+		   {
+		   			document.getElementById('GenderIcon').src="../../resources/img/male.png" 
+		   }
+		   	
             //Print Button is hidden and then window is printed.
             function hideAndPrint() {
                 document.getElementById("printButton").style.visibility = 'hidden';
