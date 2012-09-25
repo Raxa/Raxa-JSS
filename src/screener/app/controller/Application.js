@@ -748,7 +748,7 @@ Ext.define("Screener.controller.Application", {
         that = this;
         Ext.getStore('patientStore').on('load', function () {
             that.updatePatientsWaitingTitle();
-            that.setBMITime(Ext.getStore('patientStore'));
+            that.setComplaintBMITime(Ext.getStore('patientStore'));
         });
     },
 
