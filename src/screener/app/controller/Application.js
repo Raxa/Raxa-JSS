@@ -803,6 +803,7 @@ Ext.define("Screener.controller.Application", {
                         headers: Util.getBasicAuthHeaders()
                     });
                 }
+                Ext.getStore('patientStore').load()
                 objectRef.showPatients()
             } else {}
         });
