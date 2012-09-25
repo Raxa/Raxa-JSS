@@ -39,32 +39,32 @@ Util.PAGES.SCREENER = {
  */
 Ext.define("Screener.controller.Application", {
     requires: [
-        'Screener.store.AssignedPatientList',
-        'Screener.store.Doctors',
-        'Screener.store.drugConcept',
-        'Screener.store.drugEncounter',
-        'Screener.store.druglist',
-        'Screener.store.encounterpost',
-        'Screener.store.encounters',
-        'Screener.store.IdentifierType',
-        'Screener.store.Location',
-        'Screener.store.NewPatients',   // Cant find this store
-        'Screener.store.NewPersons',
-        'Screener.store.PatientList',
-        'Screener.store.Patients',
-        'Screener.store.PatientSummary',
-        'Screener.store.PostLists',
-	    'Screener.model.observation',	
-        'Screener.view.PharmacyForm', 
-        'Screener.view.PatientListView',
-        'Screener.view.VitalsView',
-        'Screener.view.VitalsForm'
+    'Screener.store.AssignedPatientList',
+    'Screener.store.Doctors',
+    'Screener.store.drugConcept',
+    'Screener.store.drugEncounter',
+    'Screener.store.druglist',
+    'Screener.store.encounterpost',
+    'Screener.store.encounters',
+    'Screener.store.IdentifierType',
+    'Screener.store.Location',
+    'Screener.store.NewPatients',   // Cant find this store
+    'Screener.store.NewPersons',
+    'Screener.store.PatientList',
+    'Screener.store.Patients',
+    'Screener.store.PatientSummary',
+    'Screener.store.PostLists',
+    'Screener.model.observation',	
+    'Screener.view.PharmacyForm', 
+    'Screener.view.PatientListView',
+    'Screener.view.VitalsView',
+    'Screener.view.VitalsForm'
     ],
     models: [
-        'Screener.model.Person', 
-        'Screener.model.PostList', 
-        'Screener.model.Patients',
-	    'Screener.model.observation'
+    'Screener.model.Person', 
+    'Screener.model.PostList', 
+    'Screener.model.Patients',
+    'Screener.model.observation'
     ],
     extend: 'Ext.app.Controller',
     config: {
@@ -227,7 +227,7 @@ Ext.define("Screener.controller.Application", {
         }
     },
     //this method sets locally(persist = false) the bmi and encounter time in patients model
-    setBMITime: function (store_patientList) {
+    setComplaintBMITime: function (store_patientList) {
         for (var i = 0; i < store_patientList.getCount(); i++) {
             var currentPatientData = store_patientList.getAt(i).getData();
             var encounters = currentPatientData.encounters;
@@ -235,6 +235,7 @@ Ext.define("Screener.controller.Application", {
             var observations = mostRecentEncounter.obs;   
 
             // Update data (time, bmi) in patient list
+            currentPatientData.complaint = this.getObsComplaint(observations);
             currentPatientData.time = mostRecentEncounter.encounterDatetime;
             currentPatientData.bmi = this.getObsBMI(observations);
         }
@@ -251,7 +252,18 @@ Ext.define("Screener.controller.Application", {
 
         // TODO: What if NO bmi? needs to handle that case, too
         // Return null or NaN, ensure other methods handle this possibility
-        return 0;
+        return '-';
+    },
+    
+    getObsComplaint: function(obs){
+        var Complaint_DESCRIPTION = 'REGISTRATION COMPLAINT';
+        for (var i = 0; i<obs.length; i++){
+            if(obs[i].display.indexOf(Complaint_DESCRIPTION) != -1){
+                return obs[i].value;
+            }
+        }
+        //If No Complaint registered
+        return '-';
     },
     // This method sets the UI of sort buttons when pressed.
     // One button is set as "declined" (pressed) while the other two
@@ -328,21 +340,21 @@ Ext.define("Screener.controller.Application", {
                 store_regEncounter.getData().getAt(0).getData().uuid, 
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
                 localStorage.regUuidencountertype
-            )
-        );
+                )
+            );
         store_assignedPatientList.getProxy().setUrl(
             this.getPatientListUrl(
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
                 store_outEncounter.getData().getAt(0).getData().uuid, 
                 localStorage.screenerUuidencountertype
-            )
-        );
+                )
+            );
         store_patientList.load();
         store_assignedPatientList.load();
         that = this;
         store_patientList.on('load', function () {
             Ext.getCmp('loadMask').setHidden(true);
-            that.setBMITime(store_patientList);
+            that.setComplaintBMITime(store_patientList);
             // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
                 record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
@@ -464,7 +476,7 @@ Ext.define("Screener.controller.Application", {
                         encounterStore.sync()
                         encounterStore.on('write', function () {
                             Ext.Msg.alert('successfull')
-                            //Note- if we want add a TIMEOUT it shown added somewhere here
+                        //Note- if we want add a TIMEOUT it shown added somewhere here
                         }, this)
 
                     }
@@ -830,7 +842,7 @@ Ext.define("Screener.controller.Application", {
             encounterType: encountertype,
             //location: location,
             provider: provider,
-            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+        /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
         });
        
         // Handle "Screener Vitals" encounters specially
@@ -843,10 +855,10 @@ Ext.define("Screener.controller.Application", {
                 // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
                 // Validate before submitting an Obs
                 observations.add({
-                        obsDatetime : t,
-                        person: personUuid,
-                        concept: c,
-                        value: v
+                    obsDatetime : t,
+                    person: personUuid,
+                    concept: c,
+                    value: v
                 });
             };
 
@@ -900,7 +912,7 @@ Ext.define("Screener.controller.Application", {
             encounterType: encountertype,
             //location: location,
             provider: provider,
-            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+        /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
         });
        
         // Handle "Screener Vitals" encounters specially
@@ -913,10 +925,10 @@ Ext.define("Screener.controller.Application", {
                 // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
                 // Validate before submitting an Obs
                 observations.add({
-                        obsDatetime : t,
-                        person: personUuid,
-                        concept: c,
-                        value: v
+                    obsDatetime : t,
+                    person: personUuid,
+                    concept: c,
+                    value: v
                 });
             };
 
