@@ -691,7 +691,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var Url = HOST + '/ws/rest/v1/order?patient=';
         Url = Url + x + '&&v=full';
         // setting up the proxy here because url is not fixed
-        console.log(drugOrderGrid);
         Ext.getCmp(drugOrderGrid).getStore().setProxy({
             type: 'rest',
             url: Url,
@@ -719,7 +718,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp(searchPanel).getLayout().setActiveItem(0)
         // makes the Get call for the patient list
         Ext.getCmp(searchGrid).getStore().filterBy(function(record){
-            console.log(record);
             if(record.data.display.toLowerCase().indexOf(Ext.getCmp(nameField).getValue().toLowerCase())!==-1){
                 return true;
             }
