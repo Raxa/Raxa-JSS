@@ -345,7 +345,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         }
                     }
                 },
-///////////////////////////////////
                 {
                     xtype: 'panel',
                     layout: {
@@ -426,7 +425,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         }
                     }
                 },
-///////////////////////////////
                 {
                     xtype: 'gridpanel',
                     height: 71,

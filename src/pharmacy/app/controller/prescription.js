@@ -81,7 +81,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "prescription button[action=doneWithNewPatientPrescription]": {
                 click: function(){
                     this.savePerson();
-                    this.prescriptionFillNewPatient();
                 }
             },
             'prescription button[action=doneWithQueuedPatientPrescription]': {
@@ -562,9 +561,23 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 var enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + drugs.items[i1].data.duration);
                 // model for drug order is created here
                 var newDosage = drugs.items[i1].data.dosage.toFixed(2);
+                var newInstructions = drugs.items[i1].data.instructions;
+                if(drugs.items[i1].data.takeInMorning){
+                    newInstructions += "Take one dose in morning. "
+                }
+                if(drugs.items[i1].data.takeInDay){
+                    newInstructions += "Take one dose during the day. "
+                }
+                if(drugs.items[i1].data.takeInEvening){
+                    newInstructions += "Take one dose in the evening. "
+                }
+                if(drugs.items[i1].data.takeInNight){
+                    newInstructions += "Take one dose in the night. "
+                }
                 order.push({
                     patient: uuid,
                     drug: drugs.items[i1].data.drugUuid,
+                    instructions: newInstructions,
                     startDate: startdate,
                     autoExpireDate: enddate,
                     dose: newDosage,
@@ -596,37 +609,31 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
                         encounterStore.add(encounter)
                         // make post call for encounter
-                        encounterStore.sync()
-                        encounterStore.on('write', function () {
-                            Ext.Msg.alert('Successful');
-                            Ext.getStore('orderStore').removeAll();
-                        }, this)
+                        encounterStore.sync({
+                            scope: this,
+                            success: function(){
+                                Ext.Msg.alert('Successful')
+                                var l = Ext.getCmp('mainarea').getLayout();
+                                l.setActiveItem(0);
+                                var l1 = Ext.getCmp('addpatientarea').getLayout();
+                                l1.setActiveItem(0);
+                                var l2 = Ext.getCmp('addpatientgridarea').getLayout();
+                                l2.setActiveItem(0);
+                                Ext.getCmp('drugASearchGrid').getStore().removeAll();
+                                Ext.getCmp('prescriptionDate').setValue('');
+                                Ext.getStore('orderStore').removeAll();
+                                this.sendPrescriptionFill();
+                            }, 
+                            failure: function(){
+                                Ext.Msg.alert("Failure -- Please try again");
+                            }
+                        });
                     }
                 }, this);
             }
             else{
-                if (i1 == drugs.items.length - 1) {
-                    for (var j = 0; j < concept.length; j++) {
-                        order[j].concept = concept[j].getAt(0).getData().uuid;
-                    }
-                    var time = this.ISODateString(new Date());
-                    // model for posting the encounter for given drug orders
-                    var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
-                        patient: uuid,
-                        // this is the encounter for the prescription encounterType
-                        encounterType: typeOfEncounter,
-                        encounterDatetime: time,
-                        provider: localStorage.loggedInUser,
-                        orders: order
-                    })
-                    var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
-                    encounterStore.add(encounter)
-                    // make post call for encounter
-                    encounterStore.sync();
-                    encounterStore.on('write', function () {
-                        Ext.Msg.alert('Successful')
-                    }, this)
-                }
+                Ext.Msg.alert('Error: enter a drug');
+                return;
             }
         }
     },
@@ -1398,7 +1405,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         }, this);
     },
     
-    prescriptionFillNewPatient: function() {
+    sendPrescriptionFill: function() {
         var time = Util.getCurrentTime();
         //set persist false for orders (we have already sent them as a prescription encounter, dont want to send again)
         //https://raxaemr.atlassian.net/browse/RAXAJSS-411
@@ -1421,16 +1428,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         //https://raxaemr.atlassian.net/browse/RAXAJSS-411
         //TODO: make this index not a magic number
         RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = true;
-        encounterStore.on('write', function () {
-            var l = Ext.getCmp('mainarea').getLayout();
-            l.setActiveItem(0);
-            var l1 = Ext.getCmp('addpatientarea').getLayout();
-            l1.setActiveItem(0);
-            var l2 = Ext.getCmp('addpatientgridarea').getLayout();
-            l2.setActiveItem(0);
-            Ext.getCmp('drugASearchGrid').getStore().removeAll();
-            Ext.getCmp('prescriptionDate').setValue('');
-        }, this)
     },
     
     prescriptionFillPatient: function(){
@@ -1441,7 +1438,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         }
         else{
             this.sendPharmacyEncounter(localStorage.person,localStorage.prescriptionUuidencountertype)
-            this.prescriptionFillNewPatient();
         }
     },
     
