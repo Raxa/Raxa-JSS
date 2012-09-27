@@ -202,7 +202,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'panel',
                         border: 0,
                         layout: 'card',
-                        height: 280,
+                        height: 300,
                         width: 180,
                         x: 0,
                         y: 60,
@@ -211,7 +211,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         items: [{
                             xtype: 'gridpanel',
                             id: 'patientASearchGrid',
-                            border: 0,
+                            border: true,
+                            height: 300,
                             title: 'Search Results',
                             store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderPatient'),
                             columns: [
@@ -229,63 +230,112 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             }
                             ]
                         }, {
-                            xtype: 'gridpanel',
-                            title: 'prescriptions',
-                            border: 0,
-                            id: 'drugOrderASearchGrid',
-                            store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
-                            columns: [
-                            {
-                                xtype: 'gridcolumn',
+                            xtype: 'panel',
+                            layout: 'vbox',
+                            items:[{
+                                xtype: 'gridpanel',
+                                title: 'prescriptions',
+                                border: 0,
+                                height: 270,
+                                id: 'drugOrderASearchGrid',
+                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
+                                columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 80,
+                                    text: 'drug',
+                                    dataIndex : 'drugname'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 80,
+                                    text: 'Date',
+                                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
+                                    dataIndex : 'startDate'
+                                }
+                                ]
+                            }, {
+                                xtype: 'button',
                                 width: 80,
-                                text: 'drug',
-                                dataIndex : 'drugname'
-                            },
-                            {
-                                xtype: 'gridcolumn',
-                                width: 80,
-                                text: 'Date',
-                                renderer: Ext.util.Format.dateRenderer('d.m.Y'),
-                                dataIndex : 'startDate'
-                            }
-                            ]
+                                x: 50,
+                                y: 330,
+                                text: 'Back',
+                                ui: 'raxa-orange-small',
+                                action: 'back'
+                            }]
                         }]
-                    }, {
-                        xtype: 'button',
-                        width: 80,
-                        x: 50,
-                        y: 340,
-                        text: 'Back',
-                        ui: 'raxa-orange-small',
-                        action: 'back'
                     }]
                 },
                 {
                     xtype: 'panel',
-                    height: 270,
                     layout: {
                         type: 'absolute'
                     },
                     collapsed: true,
-                    title: 'Patient Queue',
-                    items: [
+                    title: 'Patient Queue (Today)',
+                    items:[
                     {
                         xtype: 'textfield',
-                        fieldLabel: '',
-                        emptyText: 'Search Patient',
-                        x: 20,
-                        y: 30
+                        emptyText: 'Patient Name',
+                        name:'todayPatientName',
+                        x: 10,
+                        y: 20,
+                        enableKeyEvents: true,
+                        id: 'todayPatientNameSearch'
                     },
                     {
-                        xtype: 'patientsgridpanel',
-                        id: 'todayPatientGrid',
-                        height: 270,
-                        width: 190,
-                        title: 'Today', 
-                        store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
-                        y: 70
-                    }
-                    ],
+                        xtype: 'panel',
+                        border: 0,
+                        layout: 'card',
+                        height: 300,
+                        width: 180,
+                        x: 0,
+                        y: 60,
+                        activeItem: 0,
+                        //to switch between the orders and patient lists, use setActiveItem on this component
+                        id: 'todayPatientPanel',
+                        items: [{
+                            xtype: 'patientsgridpanel',
+                            id: 'todayPatientGrid',
+                            height: 300,
+                            width: 190,
+                            title: 'Today', 
+                            store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
+                            y: 0
+                        }, {
+                            xtype: 'panel',
+                            layout: 'vbox',
+                            items:[{
+                                xtype: 'gridpanel',
+                                title: 'Prescriptions',
+                                height: 270,
+                                border: 0,
+                                id: 'todayPatientsDrugOrders',
+                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
+                                columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 80,
+                                    text: 'drug',
+                                    dataIndex : 'drugname'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 80,
+                                    text: 'Date',
+                                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
+                                    dataIndex : 'startDate'
+                                }
+                                ]
+                            }, {
+                                xtype: 'button',
+                                width: 80,
+                                text: 'Back',
+                                ui: 'raxa-orange-small',
+                                action: 'back'
+                            }]
+                        }]
+                    }],
                     listeners: {
                         // as this panal exapands it make the get call for todays patient list to update the list
                         expand: {
@@ -296,12 +346,78 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     }
                 },
                 {
-                    xtype: 'patientsgridpanel',
-                    id : 'sevenDaysPatientGrid',
-                    title: 'Last 7 Days',
-                     store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
+                    xtype: 'panel',
+                    layout: {
+                        type: 'absolute'
+                    },
+                    collapsed: true,
+                    title: 'Patient Queue (Past 7 Days)',
+                    items:[
+                    {
+                        xtype: 'textfield',
+                        emptyText: 'Patient Name',
+                        name:'sevenDaysPatientName',
+                        x: 10,
+                        y: 20,
+                        enableKeyEvents: true,
+                        id: 'sevenDaysPatientNameSearch'
+                    },
+                    {
+                        xtype: 'panel',
+                        border: 0,
+                        layout: 'card',
+                        height: 300,
+                        width: 180,
+                        x: 0,
+                        y: 60,
+                        activeItem: 0,
+                        //to switch between the orders and patient lists, use setActiveItem on this component
+                        id: 'sevenDaysPatientPanel',
+                        items: [{
+                            xtype: 'patientsgridpanel',
+                            id : 'sevenDaysPatientGrid',
+                            title: 'Last 7 Days',
+                            height: 300,
+                            width: 190,
+                            title: 'Last 7 Days', 
+                            store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
+                            y: 0
+                        }, {
+                            xtype: 'panel',
+                            layout: 'vbox',
+                            items:[{
+                                xtype: 'gridpanel',
+                                title: 'Prescriptions',
+                                height: 270,
+                                border: 0,
+                                id: 'sevenDaysPatientsDrugOrders',
+                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
+                                columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 80,
+                                    text: 'drug',
+                                    dataIndex : 'drugname'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 80,
+                                    text: 'Date',
+                                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
+                                    dataIndex : 'startDate'
+                                }
+                                ]
+                            }, {
+                                xtype: 'button',
+                                width: 80,
+                                text: 'Back',
+                                ui: 'raxa-orange-small',
+                                action: 'backFromSevenDays'
+                            }]
+                        }]
+                    }],
                     listeners: {
-                        // as this panal exapands it make the get call for 1 week patient list to update the list
+                        // as this panel expands it makes the get call for 1 week patient list to update the list
                         expand: {
                             fn: function(){
                                 Ext.getCmp('sevenDaysPatientGrid').getStore().load()

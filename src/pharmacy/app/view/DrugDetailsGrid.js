@@ -49,7 +49,7 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
     },
     {
         xtype: 'numbercolumn',
-        text: 'Days',
+        text: 'Months',
         width: 60
     },
     {
