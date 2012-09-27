@@ -975,11 +975,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             success: function (response) {
-                console.log("Drug created: "+newDrug.name);
+                Ext.getStore('stockList').load();
+                Ext.getCmp('allStockGrid').getView().refresh();
+                Ext.getStore('batches').load();
                 Ext.Msg.alert('Drug created successfully');
             },
             failure: function (response) {
-                console.log('POST alert failed with response status: ' + response.status);
+                Ext.Msg.alert('Error: unable to write to server. Enter all fields.')
             }
         });
     },
@@ -1167,24 +1169,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             store.remove(record);
         }
     },
-    
-    updateStockListFields: function(theStore){
-        for(var i=0; i<this.data.items.length; i++){
-            if(theStore.data.items[i].data.batch!==null && theStore.data.items[i].data.batch!=="" && theStore.data.items[i].data.quantity!==0){
-                theStore.data.items[i].set("batchQuantity", theStore.data.items[i].data.batch+" ("+theStore.data.items[i].data.quantity+")");
-            }
-            else{
-                theStore.data.items[i].set("batchQuantity", null);
-            }
-            if(theStore.data.items[i].data.expiryDate!==""){
-                theStore.data.items[i].set("months", Util.monthsFromNow(theStore.data.items[i].data.expiryDate));
-            }
-            else{
-                theStore.data.items[i].set("months", null);
-            }
-        }        
-    },
-    
+        
     /**
          * checks whether the issue is valid -- returns with error message, or null if issue is valid
          */
@@ -1532,15 +1517,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     filterDrugs: function(comboBox) {
-        console.log(comboBox);
         Ext.getCmp(comboBox).getStore().filterBy(function(record){
-            console.log(record);
             if(record.data.display.toLowerCase().indexOf(Ext.getCmp(comboBox).getValue().toLowerCase())!==-1){
                 return true;
             }
             return false;
         });
     }
-
 
 });

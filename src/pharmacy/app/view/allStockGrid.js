@@ -15,13 +15,13 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
                         storeId: 'drugInfos',
                         listeners: {
                             load: function() {
-                                Ext.getCmp('allStockGrid').addManufacturerFields();
+                                Ext.getCmp('allStockGrid').updateFields();
                             }
                         }
                     })
                 }
                 else {
-                    Ext.getCmp('allStockGrid').addManufacturerFields();
+                    Ext.getCmp('allStockGrid').updateFields();
                 }
             }
         }
@@ -39,12 +39,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         }  
     }),    
     columns: [
-
     {
-        xtype: 'rownumberer',
-        text: 'S.No',
-        width: 25
-    },{
         xtype: 'gridcolumn',
         text: 'Status',
         dataIndex: 'status',
@@ -114,7 +109,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         }]
     }],
     
-    addManufacturerFields: function() {
+    updateFields: function() {
+        console.log('is updating');
         var infoStore = Ext.getStore('drugInfos');
         var myStore = this.getStore();
         for(var i=0; i<myStore.data.items.length; i++){
@@ -123,6 +119,19 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             if(index!==-1){
                 item.set("manufacturer", infoStore.getAt(index).data.description);
             }
-        }                            
+            if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
+                item.set("batchQuantity", item.data.batch+" ("+item.data.quantity+")");
+            }
+            else{
+                item.set("batchQuantity", null);
+            }
+            
+            if(item.data.expiryDate!==""){
+                item.set("months", Util.monthsFromNow(item.data.expiryDate));
+            }
+            else{
+                item.set("months", null);
+            }
+        }
     }
 });
