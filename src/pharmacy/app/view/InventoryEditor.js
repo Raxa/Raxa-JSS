@@ -85,6 +85,7 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
             margin: '20 20 20 20',
             width: 60,
             text: 'Save',
+            id: 'updateInventoryButton',
             action: 'updateInventory',
             ui: 'raxa-aqua-small',
             x: 600

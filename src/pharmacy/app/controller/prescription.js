@@ -52,7 +52,7 @@ var RaxaEmr_Pharmacy_Controller_Vars = {
         BATCH_UUID_INDEX: 12
     },
     
-    MONTHS_TO_EXPIRE: 60,
+    MONTHS_TO_EXPIRE: 2,
     STOCK_OUT_LIMIT: 80,
     
     TOP_BAR_HEIGHT: 65
@@ -830,9 +830,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     submitReceipt: function(){
         var drugInventories = new Array();
         var receipts = Ext.getStore('newReceipt').data;
-        var receiptLocationIndex = Ext.getStore("receiptLocations").find('display', Ext.getCmp("receiptLocationPicker").value);
+        var receiptLocationUuid = Ext.getCmp("receiptLocationPicker").lastSelection[0].data.uuid;
         var stockLocationUuid = localStorage.stockLocation;
-        var receiptLocationString = Ext.getStore("receiptLocations").getAt(receiptLocationIndex).data.display.toString().split(" - ")[0];
+        var receiptLocationString = Ext.getCmp("receiptLocationPicker").lastSelection[0].data.display.toString().split(" - ")[0];
         var purchaseOrderUuid = Ext.getCmp('receiptPurchaseOrderPicker').getValue();
         for (var i = 0; i < receipts.items.length; i++) {
             if(receipts.items[i].data.drugname != ""){
@@ -848,7 +848,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     originalQuantity: receipts.items[i].data.quantity,
                     expiryDate: receipts.items[i].data.expiryDate,
                     roomLocation: receipts.items[i].data.roomLocation,
-                    location: Ext.getStore("receiptLocations").getAt(receiptLocationIndex).data.uuid
+                    location: receiptLocationUuid
                 });
                 if(purchaseOrderUuid!==null){
                     drugInventories[i].uuid = receipts.items[i].data.uuid;
@@ -863,7 +863,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             received: "true",
             provider: Util.getLoggedInProviderUuid(),
             stockLocation: stockLocationUuid,
-            dispenseLocation: Ext.getStore("receiptLocations").getAt(receiptLocationIndex).data.uuid,
+            dispenseLocation: receiptLocationUuid,
             drugPurchaseOrderDate: time,
             inventories: drugInventories
         });
@@ -873,14 +873,23 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         if(purchaseOrderUuid!==null){
             purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder/'+purchaseOrderUuid;
         }
-        purchaseOrderStore.sync();
-        purchaseOrderStore.on('write', function () {
-            purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';
-            Ext.getStore('stockList').load();
-            Ext.getCmp('allStockGrid').getView().refresh();
-            Ext.getStore('batches').load();
-            Ext.Msg.alert('Successful');
-        }, this);
+        Ext.getCmp('submitReceiptButton').disable();
+        purchaseOrderStore.sync({
+            success: function(){
+                purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';
+                Ext.getStore('stockList').load();
+                Ext.getCmp('allStockGrid').getView().refresh();
+                Ext.getStore('batches').load();
+                Ext.getStore('newReceipt').removeAll();
+                Ext.Msg.alert('Successful');
+                Ext.getCmp('submitReceiptButton').enable();
+            },
+            failure: function(){
+                purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';                
+                Ext.getCmp('submitReceiptButton').enable();
+                Ext.Msg.alert('Error: unable to write to server');
+            }
+        });
     },
 
 
@@ -1116,8 +1125,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
          * Populates issue drug fields with drugs + quantites from the purchase order
          */
     populateIssueFromPurchaseOrder: function(combo, records){
-        Ext.getCmp('issuedispenseLocationPicker').setValue(records[0].data.dispenseLocationName);
-        Ext.getCmp('issueStockLocationPicker').setValue(records[0].data.stockLocationName);
+        Ext.getCmp('issuedispenseLocationPicker').setValue(records[0].data.dispenseLocation.uuid);
+        Ext.getCmp('issueStockLocationPicker').setValue(records[0].data.stockLocation.uuid);
         //emptying previous fields
         Ext.getStore('newIssue').removeAll();
         Ext.ComponentQuery.query('goodsIssueGrid')[0].getSelectionModel().deselectAll();
@@ -1180,6 +1189,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
          * checks whether the issue is valid -- returns with error message, or null if issue is valid
          */
     validateIssue: function(issues){
+        console.log(issues);
         if(issues.items.length === 0){
             return "Please enter a drug";
         }
@@ -1191,7 +1201,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             if (Ext.getStore('allDrugs').find('text', issues.items[i].data.drugName)===-1){
                 return "Drug "+issues.items[i].data.drugName+" not found";
             }
-            var batchIndex = Ext.getStore('stockList').find('batchQuantity', issues.items[i].data.batch);
+            var batchIndex = Ext.getStore('stockList').find('uuid', issues.items[i].data.batchUuid);
             if (batchIndex===-1){
                 return "Batch "+issues.items[i].data.batch+" not found";
             }
@@ -1216,10 +1226,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             return;
         }
         RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = true;
-        var issuedispenseLocationIndex = Ext.getStore("issuedispenseLocations").find('display', Ext.getCmp("issuedispenseLocationPicker").value);
-        var issueStockLocationIndex = Ext.getStore("issueStockLocations").find('display', Ext.getCmp("issueStockLocationPicker").value);
+        var issuedispenseLocationUuid = Ext.getCmp("issuedispenseLocationPicker").value;
+        var issueStockLocationUuid = Ext.getCmp("issueStockLocationPicker").value;
         var purchaseOrderUuid = Ext.getCmp('issuePurchaseOrderPicker').getValue();
-        var issueStockLocationString = Ext.getStore("issueStockLocations").getAt(issueStockLocationIndex).data.display.toString().split(" - ")[0];
+        var issueStockLocationString = Ext.getCmp("issueStockLocationPicker").rawValue.split(" - ")[0];
         for (var i = 0; i < issues.items.length; i++) {
             //getting index of drug in store
             var drugIndex = Ext.getStore('allDrugs').find('text', issues.items[i].data.drugName);
@@ -1231,7 +1241,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 quantity: issues.items[i].data.quantity,
                 originalQuantity: issues.items[i].data.quantity,
                 expiryDate: issues.items[i].data.expiryDate,
-                location: Ext.getStore("issuedispenseLocations").getAt(issuedispenseLocationIndex).data.uuid
+                location: issuedispenseLocationUuid
             });
             if(purchaseOrderUuid!==null){
                 drugInventories[i].uuid = issues.items[i].data.uuid;
@@ -1244,8 +1254,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             description: "Issue from "+issueStockLocationString+ " on "+time.toString().substr(0, 10),
             received: "false",
             provider: Util.getLoggedInProviderUuid(),
-            stockLocation: Ext.getStore("issueStockLocations").getAt(issueStockLocationIndex).data.uuid,
-            dispenseLocation: Ext.getStore("issuedispenseLocations").getAt(issuedispenseLocationIndex).data.uuid,
+            stockLocation: issueStockLocationUuid,
+            dispenseLocation: issuedispenseLocationUuid,
             drugPurchaseOrderDate: time,
             inventories: drugInventories
         });
@@ -1255,26 +1265,37 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         if(purchaseOrderUuid!==null){
             purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder/'+purchaseOrderUuid;
         }
-        purchaseOrderStore.sync();
+        Ext.getCmp('submitIssueButton').disable();
+        purchaseOrderStore.sync({
+            success: function(){
+                //sending alert that requisition has been made
+                var alertParams = {
+                    name: "Issue from "+issueStockLocationString+ " on "+time.toString().substr(0, 10),
+                    toLocation: issueStockLocationUuid,
+                    fromLocation: issuedispenseLocationUuid,
+                    providerSent: Util.getLoggedInProviderUuid(),
+                    alertType: "newIssue",
+                    defaultTask: "newReceipt",
+                    time: Util.getCurrentTime()
+                };
+                Util.sendAlert(alertParams);
+                Ext.getCmp('alertButton').setUI('raxa-orange-small');
+                purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';
+                RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = false;
+                Ext.getCmp('submitIssueButton').enable();
+                Ext.getStore('stockList').load();
+                Ext.getCmp('allStockGrid').getView().refresh();
+                Ext.getStore('stockIssues');
+                Ext.Msg.alert('Successful');
+            },
+            failure: function() {
+                purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';
+                RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = false;
+                Ext.getCmp('submitIssueButton').enable();
+                Ext.Msg.alert('Error: unable to write to server');                
+            }
+        });
         purchaseOrderStore.on('write', function () {
-            //sending alert that requisition has been made
-            var alertParams = {
-                name: "Issue from "+issueStockLocationString+ " on "+time.toString().substr(0, 10),
-                toLocation: Ext.getStore("issueStockLocations").getAt(issueStockLocationIndex).data.uuid,
-                fromLocation: Ext.getStore("issuedispenseLocations").getAt(issuedispenseLocationIndex).data.uuid,
-                providerSent: Util.getLoggedInProviderUuid(),
-                alertType: "newIssue",
-                defaultTask: "newReceipt",
-                time: Util.getCurrentTime()
-            };
-            Util.sendAlert(alertParams);
-            Ext.getCmp('alertButton').setUI('raxa-orange-small');
-            purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';
-            RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = false;
-            Ext.getStore('stockList').load();
-            Ext.getCmp('allStockGrid').getView().refresh();
-            Ext.getStore('stockIssues');
-            Ext.Msg.alert('Successful');
         }, this);
     },
     
@@ -1486,6 +1507,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         if(Ext.getCmp('inventoryEditorRoomLocation').getValue()!==""){
             inventory.roomLocation=Ext.getCmp('inventoryEditorRoomLocation').getValue()
         }
+        Ext.getCmp('updateInventoryButton').disable();
         //this call is made with an Ajax call, rather than a traditional model+store because the fields to be sent
         //are much different than the normal drug inventory fields.
         Ext.Ajax.request({
@@ -1499,9 +1521,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.getStore('stockList').load();
                 Ext.getCmp('allStockGrid').getView().refresh();
                 Ext.getStore('batches').load();
+                Ext.getCmp('updateInventoryButton').enable();
                 Ext.Msg.alert("Edit Successful");
             },
             failure: function (){
+                Ext.getCmp('updateInventoryButton').enable();
                 Ext.Msg.alert("Error: unable to write to server");
             }
         });

@@ -43,7 +43,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     {
         xtype: 'rownumberer',
         text: 'S.No',
-        width: 40
+        width: 25
     },{
         xtype: 'gridcolumn',
         text: 'Status',
@@ -73,7 +73,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         xtype: 'gridcolumn',
         text: 'Shelf',
         dataIndex: 'roomLocation',
-        width: 100
+        width: 50
     },
     {
         xtype: 'gridcolumn',
@@ -117,10 +117,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     addManufacturerFields: function() {
         var infoStore = Ext.getStore('drugInfos');
         var myStore = this.getStore();
-        console.log(infoStore);
         for(var i=0; i<myStore.data.items.length; i++){
             var item = myStore.data.items[i];
-            console.log(item.data.drugUuid);
             var index = infoStore.find('drugUuid', item.data.drugUuid);
             if(index!==-1){
                 item.set("manufacturer", infoStore.getAt(index).data.description);
