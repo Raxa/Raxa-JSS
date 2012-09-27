@@ -27,9 +27,11 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             editor: {
                 xtype: 'combobox',
                 allowBlank: false,
-                editable: false,
+                editable: true,
                 store: 'allDrugs',
+                id: 'prescriptionDrugPicker',
                 displayField: 'text',
+                enableKeyEvents: true,
                 forceSelection: true,
                 listeners: {
                     'focus': {
@@ -46,6 +48,18 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                             Ext.getStore('orderStore').getAt(row).set('drugUuid', drugUuid);
                         }
                     }
+//                    ,
+//                    'keydown': {
+//                        fn: function(comboBox, e){
+//                            comboBox.getStore().clearFilter();
+//                            comboBox.getStore().filterBy(function(record){
+//                                if(record.data.text.toLowerCase().indexOf(comboBox.getValue().toLowerCase())!==-1){
+//                                    return true;
+//                                }
+//                                return false;
+//                            });
+//                        }
+//                    }
                 }
             }
         },
@@ -237,7 +251,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             },
             items: ['->',{
                 text: 'Add Drug',
-                iconCls: 'icon-add'
+                iconCls: 'icon-add',
+                action: 'addDrugToPrescription'
             }]
         }];
         this.callParent(arguments);

@@ -52,7 +52,7 @@ var RaxaEmr_Pharmacy_Controller_Vars = {
         BATCH_UUID_INDEX: 12
     },
     
-    DAYS_TO_EXPIRE: 30,
+    MONTHS_TO_EXPIRE: 60,
     STOCK_OUT_LIMIT: 80,
     
     TOP_BAR_HEIGHT: 65
@@ -68,8 +68,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     'allStockPanel', 'allStockGrid', 'allStockForm', 'allStock', 'addDrug', 'allStock', 'prescribedDrugs', 'patientsGridPanel', 'requisition',
     'requisitionText', 'requisitionGrid', 'DrugDetails', 'DrugDetailsText', 'DrugDetailsGrid', 'alertGrid', 'InventoryEditor'],
     
-    stores: ['orderStore', 'Doctors', 'Identifiers', 'Locations', 'Patients', 'Persons', 'drugOrderPatient', 'drugOrderSearch', 'drugConcept', 'drugEncounter', 'allDrugs', 'Alerts'],
-    models: ['Address', 'Doctor', 'Identifier', 'Name', 'Patient', 'Person', 'drugOrderPatient', 'drugOrderSearch', 'drugOrder', 'drugEncounter', 'LocationTag', 'Location', 'PurchaseOrder', 'Alert', 'Provider'],
+    stores: ['orderStore', 'Doctors', 'Identifiers', 'Locations', 'Patients', 'Persons', 'drugOrderPatient', 'drugOrderSearch', 'drugConcept', 'drugEncounter', 'allDrugs', 'Alerts', 'DrugInfos'],
+    models: ['Address', 'Doctor', 'Identifier', 'Name', 'Patient', 'Person', 'drugOrderPatient', 'drugOrderSearch', 'drugOrder', 'drugEncounter', 'LocationTag', 'Location', 'PurchaseOrder', 'Alert', 'Provider', 'DrugInfo'],
     
     init: function () {
         //setting Logged in Provider
@@ -89,12 +89,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'prescription button[action=printPrescribedDrugs]': {   //Action of Print button in Search Patient
                 click: this.printPrescribedDrugs
             },
+            'prescribedDrugs button[action=addDrugToPrescription]': {
+                click: this.addDrug
+            },
             'prescribedDrugs': {
                 deleteDrug: this.deleteDrug
 
-            },
-            'prescribedDrugs button': {
-                click: this.addDrug
             },
             'patientsgridpanel': {
                 click: function(x) {
@@ -275,7 +275,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     getpatientlist: function (enddate, backwardtime, forwardtime, patientGridId) {
         var d = new Date();
         var list_preEncounter = Ext.create('RaxaEmr.Pharmacy.model.PostList', {
-            name: "Prescription Encounter",
+            name: "Registration Encounter",
             // defining the seach query according to the current date and period of time for prescription encounter
             //changing this to REGISTRATION encounter, until the OPD is complete to give prescriptions
             searchQuery: "?encounterType=" + localStorage.regUuidencountertype + "&startDate=" + Util.Datetime(enddate, backwardtime) + "&endDate=" + Util.Datetime(enddate,forwardtime)
@@ -1168,10 +1168,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 theStore.data.items[i].set("batchQuantity", null);
             }
             if(theStore.data.items[i].data.expiryDate!==""){
-                theStore.data.items[i].set("days", Util.daysFromNow(theStore.data.items[i].data.expiryDate));
+                theStore.data.items[i].set("months", Util.monthsFromNow(theStore.data.items[i].data.expiryDate));
             }
             else{
-                theStore.data.items[i].set("days", null);
+                theStore.data.items[i].set("months", null);
             }
         }        
     },
@@ -1323,7 +1323,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getStore('stockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
         Ext.getStore('stockList').filterBy(function(record, id){
-            return(Util.daysFromNow(record.data.expiryDate)<RaxaEmr_Pharmacy_Controller_Vars.DAYS_TO_EXPIRE)
+            return(Util.monthsFromNow(record.data.expiryDate)<RaxaEmr_Pharmacy_Controller_Vars.MONTHS_TO_EXPIRE)
         });
         Ext.getStore('stockList').filter('status', RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
     },
@@ -1496,11 +1496,27 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             headers: Util.getBasicAuthHeaders(),
             success: function (response) {
                 Ext.getCmp('inventoryEditor').hide();        
+                Ext.getStore('stockList').load();
+                Ext.getCmp('allStockGrid').getView().refresh();
+                Ext.getStore('batches').load();
                 Ext.Msg.alert("Edit Successful");
             },
             failure: function (){
                 Ext.Msg.alert("Error: unable to write to server");
             }
         });
+    },
+    
+    filterDrugs: function(comboBox) {
+        console.log(comboBox);
+        Ext.getCmp(comboBox).getStore().filterBy(function(record){
+            console.log(record);
+            if(record.data.display.toLowerCase().indexOf(Ext.getCmp(comboBox).getValue().toLowerCase())!==-1){
+                return true;
+            }
+            return false;
+        });
     }
+
+
 });

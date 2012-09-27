@@ -98,10 +98,10 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
         stock.clearFilter();
         var inventory = stock.getAt(stock.find('uuid', uuid));
         Ext.getCmp('inventoryEditorStatusPicker').setValue(inventory.data.status);
-        Ext.getCmp('inventoryEditorDrugPicker').setValue(inventory.data.drugName);
-        Ext.getCmp('inventoryEditorDrugPicker').setRawValue(inventory.data.drug.uuid);
-        Ext.getCmp('inventoryEditorLocationPicker').setValue(inventory.data.locationName);
-        Ext.getCmp('inventoryEditorLocationPicker').setRawValue(inventory.data.locationUuid);
+        //Ext.getCmp('inventoryEditorDrugPicker').setRawValue(inventory.data.drugName);
+        Ext.getCmp('inventoryEditorDrugPicker').setValue(inventory.data.drug.uuid);
+        //Ext.getCmp('inventoryEditorLocationPicker').setRawValue(inventory.data.locationName);
+        Ext.getCmp('inventoryEditorLocationPicker').setValue(inventory.data.locationUuid);
         Ext.getCmp('inventoryEditorQuantity').setValue(inventory.data.quantity);
         Ext.getCmp('inventoryEditorBatch').setValue(inventory.data.batch);
         if(inventory.data.expiryDate!==""){

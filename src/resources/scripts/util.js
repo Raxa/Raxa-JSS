@@ -332,6 +332,7 @@ var REG_PAGES = {
 
 var UITIME = 120000;
 var ONEDAYMS = 86400000;
+var MONTHSINAYEAR = 12;
 var diffinUTC_GMT = 5.5;
 //number of hours for everything to be before now
 //OpenMRS checks whether encounters are ahead of current time --
@@ -390,10 +391,22 @@ var Util = {
         return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
     },
 
+    monthsFromNow: function(futureDate) {
+        var future = new Date(futureDate);
+        var now = new Date();
+        return Math.ceil((future.getFullYear()-now.getFullYear())*MONTHSINAYEAR + future.getMonth()-now.getMonth());
+    },
+
     daysBetween: function(pastDate, futureDate) {
         var future = new Date(futureDate);
         var past = new Date(pastDate);
         return Math.abs(Math.ceil((future.getTime()-past.getTime())/ONEDAYMS));
+    },
+
+    monthsBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs((future.getFullYear()-past.getFullYear())*MONTHSINAYEAR + future.getMonth()-past.getMonth())
     },
 
     /**

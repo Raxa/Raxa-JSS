@@ -417,7 +417,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         }]
                     }],
                     listeners: {
-                        // as this panal exapands it make the get call for todays patient list to update the list
+                        // as this panel expands it makes the get call for 1 week patient list to update the list
                         expand: {
                             fn: function(){
                                 Ext.getCmp('sevenDaysPatientGrid').getStore().load()

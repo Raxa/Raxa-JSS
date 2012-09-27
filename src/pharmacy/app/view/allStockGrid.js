@@ -1,11 +1,31 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.allStockGrid',
+    id: 'allStockGrid',
     autoHeight: 250,
     width: 600,
     margin: '0 0 0 110',
     store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
-        storeId: 'stockList'
+        storeId: 'stockList',
+        listeners: {
+            load: function() {
+                //we need a second store to get the manufacturer, as OpenMRS doesn't have it in the normal drug
+                if(!Ext.getStore('drugInfos')){
+                    var store = Ext.create('RaxaEmr.Pharmacy.store.DrugInfos',{
+                        storeId: 'drugInfos',
+                        listeners: {
+                            load: function() {
+                                Ext.getCmp('allStockGrid').addManufacturerFields();
+                            }
+                        }
+                    })
+                }
+                else {
+                    Ext.getCmp('allStockGrid').addManufacturerFields();
+                }
+            }
+        }
+        
     }),
     selModel : Ext.create('Ext.selection.CellModel', {
         listeners : {
@@ -44,9 +64,9 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Days',
+        text: 'Months',
         width: 60,
-        dataIndex: 'days',
+        dataIndex: 'months',
         useNull: true
     },
     {
@@ -68,6 +88,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         width: 120
     },        
     {
+        xtype: 'gridcolumn',
+        text: 'Manufacturer',
+        dataIndex: 'manufacturer',
+        width: 120
+    },        
+    {
         xtype: 'actioncolumn',
         width: 22,
         items: [{
@@ -86,5 +112,19 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
                 }
             }
         }]
-    }]
+    }],
+    
+    addManufacturerFields: function() {
+        var infoStore = Ext.getStore('drugInfos');
+        var myStore = this.getStore();
+        console.log(infoStore);
+        for(var i=0; i<myStore.data.items.length; i++){
+            var item = myStore.data.items[i];
+            console.log(item.data.drugUuid);
+            var index = infoStore.find('drugUuid', item.data.drugUuid);
+            if(index!==-1){
+                item.set("manufacturer", infoStore.getAt(index).data.description);
+            }
+        }                            
+    }
 });
