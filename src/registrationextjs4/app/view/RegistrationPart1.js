@@ -457,13 +457,16 @@ Ext.define('Registration.view.RegistrationPart1', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['occupation'],
                                 data: [
-                                ['Unemployed'],
-                                ['Student'],
-                                ['Agriculture Related'],
-                                ['Bank Related'],
-                                ['Medical Related'],
-                                ['Engineering Related'],
-                                ['Not Mentioned']
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.1')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.2')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.3')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.4')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.5')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.6')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.7')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.8')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.9')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.10')]
                                 ]
                             }),
                             displayField: 'occupation'

@@ -50,7 +50,7 @@ Ext.define('RaxaEmr.Pharmacy.view.newdrugform', {
                     text: 'Chemical'
                 },
                 {
-                    xtype: 'datecolumn',
+                    xtype: 'gridcolumn',
                     width: 101,
                     dataIndex: 'string',
                     text: 'Strength'
