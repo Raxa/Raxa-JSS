@@ -80,7 +80,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             text: 'Times',
             width: 80,
             renderer: function (value, metadata, record) {
-                console.log(record.get('takeInMorning')+" "+record.get('takeInDay')+" "+record.get('takeInEvening')+" "+record.get('takeInNight'));
                 if (record.get('takeInMorning')) {
                     Ext.getCmp('prescribedDrugs').columns[2].items[0].icon = '../resources/img/sunriseselected.png';
                 } else {
