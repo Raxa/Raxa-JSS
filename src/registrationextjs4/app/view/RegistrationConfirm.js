@@ -127,21 +127,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ResidentialArea'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'text',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                        id: 'residentialAreaConfirm',
-                    }]},{
-                        xtype: 'fieldcontainer',
 						fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Street'),
                         layout: 'hbox',
                         combineErrors: true,
@@ -170,6 +155,21 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         },
                         items: [{
                         id: 'townConfirm'
+                    }]},{
+                        xtype: 'fieldcontainer',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.ResidentialArea'),
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'text',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                        id: 'residentialAreaConfirm',
                     }]},{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Tehsil'),
