@@ -397,15 +397,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     //adds a drug to the current prescription
     addDrug: function() {
         var newDrug;
-        drugStore = Ext.getStore('orderStore');
-        // add blank item to store -- will automatically add new row to grid
-        newDrug = drugStore.add({
+        Ext.getStore('orderStore').add({
             drugname: '',
             dosage: '',
             duration: '',
             unitprice: '',
             itemprice: ''
-        })[0];
+        });
     },
     
     //when a patient from the queue is clicked, this function makes the orders appear
@@ -543,17 +541,16 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             // value of Url for get call is made here using name of drug
             if(drugs.items[i1].data.drugName != ""){
                 k2++;
-                var Url = HOST + '/ws/rest/v1/concept?q='
-                Url = Url + drugs.items[i1].data.drugName
-                concept.push(Ext.create('RaxaEmr.Pharmacy.store.drugConcept'))
+                var Url = HOST + '/ws/rest/v1/raxacore/drug/'
+                Url = Url + drugs.items[i1].data.drugUuid;
+                concept.push(Ext.create('RaxaEmr.Pharmacy.store.drugConcept'));
                 // setting up the proxy for store with the above Url
                 concept[k++].setProxy({
                     type: 'rest',
                     url: Url,
                     headers: Util.getBasicAuthHeaders(),
                     reader: {
-                        type: 'json',
-                        root: 'results'
+                        type: 'json'
                     }
                 })
                 var startdate = new Date();
@@ -586,50 +583,58 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     type: 'drugorder'
                 })
                 // here it makes the get call for concept of related drug
-                concept[i1].load();
-                // added a counter k which increment as a concept load successfully, after all the concept are loaded
-                // value of k should be equal to the no. of drug forms
-                concept[i1].on('load', function () {
-                    k1++;
-                    if (k == drugs.items.length && k1 == k2) {
-                        for (var j = 0; j < concept.length; j++) {
-                            order[j].concept = concept[j].getAt(0).getData().uuid;
-                        }
-                        var time = this.ISODateString(new Date());
-                        // model for posting the encounter for given drug orders
-                        RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = true;
-                        var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
-                            patient: uuid,
-                            // this is the encounter for the prescription encounterType
-                            encounterType: typeOfEncounter,
-                            encounterDatetime: time,
-                            orders: order,
-                            provider: localStorage.loggedInUser
-                        })
-                        var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
-                        encounterStore.add(encounter)
-                        // make post call for encounter
-                        encounterStore.sync({
-                            scope: this,
-                            success: function(){
-                                Ext.Msg.alert('Successful')
-                                var l = Ext.getCmp('mainarea').getLayout();
-                                l.setActiveItem(0);
-                                var l1 = Ext.getCmp('addpatientarea').getLayout();
-                                l1.setActiveItem(0);
-                                var l2 = Ext.getCmp('addpatientgridarea').getLayout();
-                                l2.setActiveItem(0);
-                                Ext.getCmp('drugASearchGrid').getStore().removeAll();
-                                Ext.getCmp('prescriptionDate').setValue('');
-                                Ext.getStore('orderStore').removeAll();
-                                this.sendPrescriptionFill();
-                            }, 
-                            failure: function(){
-                                Ext.Msg.alert("Failure -- Please try again");
+                concept[i1].load({
+                    scope: this,
+                    callback: function(records, operation, success){
+                        if(success){
+                            // added a counter k which increment as a concept load successfully, after all the concept are loaded
+                            // value of k should be equal to the no. of drug forms
+                            k1++;
+                            console.log(k1+" "+k+" "+k2);
+                            if (k == drugs.items.length && k1 == k2) {
+                                for (var j = 0; j < concept.length; j++) {
+                                    order[j].concept = concept[j].getAt(0).getData().concept;
+                                }
+                                var time = this.ISODateString(new Date());
+                                // model for posting the encounter for given drug orders
+                                RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = true;
+                                var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
+                                    patient: uuid,
+                                    // this is the encounter for the prescription encounterType
+                                    encounterType: typeOfEncounter,
+                                    encounterDatetime: time,
+                                    orders: order,
+                                    provider: localStorage.loggedInUser
+                                })
+                                var encounterStore = Ext.create('RaxaEmr.Pharmacy.store.drugEncounter')
+                                encounterStore.add(encounter)
+                                // make post call for encounter
+                                encounterStore.sync({
+                                    scope: this,
+                                    success: function(){
+                                        Ext.Msg.alert('Successful')
+                                        var l = Ext.getCmp('mainarea').getLayout();
+                                        l.setActiveItem(0);
+                                        var l1 = Ext.getCmp('addpatientarea').getLayout();
+                                        l1.setActiveItem(0);
+                                        var l2 = Ext.getCmp('addpatientgridarea').getLayout();
+                                        l2.setActiveItem(0);
+                                        Ext.getCmp('drugASearchGrid').getStore().removeAll();
+                                        Ext.getCmp('prescriptionDate').setValue('');
+                                        Ext.getStore('orderStore').removeAll();
+                                        this.sendPrescriptionFill();
+                                    }, 
+                                    failure: function(){
+                                        Ext.Msg.alert("Failure -- Please try again");
+                                    }
+                                });
                             }
-                        });
+                        }
+                        else{
+                            Ext.Msg.alert("Error: failed to read from server");
+                        }
                     }
-                }, this);
+                });
             }
             else{
                 Ext.Msg.alert('Error: enter a drug');
@@ -712,7 +717,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp(drugOrderGrid).getStore().on('load', function () {
             this.makeNewPrescriptionForSearchPatient();
             if(Ext.getCmp(drugOrderGrid).getStore().count()>0){
-                Ext.getCmp(searchPanel).getLayout().setActiveItem(1);
                 // show prescriptions grid(drugOrderASearchGrid) when drug orders are loaded
                 Ext.getCmp(searchPanel).getLayout().setActiveItem(1)
             }
