@@ -13,7 +13,7 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
             select : function(rowModel, record, rowIndex) {
                 //on select, go to drug details page
                 Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
-                Ext.getCmp('drugDetails').initForDrug(record.data.drugName);
+                Ext.getCmp('drugDetails').initForDrug(record.data.drugUuid);
             },
             scope : this
         }  
@@ -48,8 +48,9 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
         width: 80
     },
     {
-        xtype: 'numbercolumn',
+        xtype: 'gridcolumn',
         text: 'Months',
+        dataIndex: 'months',
         width: 60
     },
     {
@@ -58,10 +59,10 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
         dataIndex: 'locationName',
         width: 100
     }],
-    initForDrug: function(drugName){
+    initForDrug: function(drugUuid){
         Ext.getStore('stockList').clearFilter();
         Ext.getStore('stockList').filter(function(record){
-            return record.get('drugName')===drugName;
+            return record.get('drugUuid')===drugUuid;
         });
     }
 });

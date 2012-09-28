@@ -9,7 +9,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         storeId: 'stockList',
         listeners: {
             load: function() {
-                //we need a second store to get the manufacturer, as OpenMRS doesn't have it in the normal drug
+                //we need a second store to get the supplier, as OpenMRS doesn't have it in the normal drug
                 if(!Ext.getStore('drugInfos')){
                     var store = Ext.create('RaxaEmr.Pharmacy.store.DrugInfos',{
                         storeId: 'drugInfos',
@@ -32,7 +32,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             select : function(selectionModel, record, row) {
                 //on select, go to drug details page
                 Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
-                Ext.getCmp('drugDetails').initForDrug(record.data.drugName);
+                Ext.getCmp('drugDetails').initForDrug(record.data.drugUuid);
                 selectionModel.deselectAll();                
             },
             scope : this
@@ -84,8 +84,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },        
     {
         xtype: 'gridcolumn',
-        text: 'Manufacturer',
-        dataIndex: 'manufacturer',
+        text: 'Supplier',
+        dataIndex: 'supplier',
         width: 120
     },        
     {
@@ -110,14 +110,13 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     }],
     
     updateFields: function() {
-        console.log('is updating');
         var infoStore = Ext.getStore('drugInfos');
         var myStore = this.getStore();
         for(var i=0; i<myStore.data.items.length; i++){
             var item = myStore.data.items[i];
             var index = infoStore.find('drugUuid', item.data.drugUuid);
             if(index!==-1){
-                item.set("manufacturer", infoStore.getAt(index).data.description);
+                item.set("supplier", infoStore.getAt(index).data.description);
             }
             if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
                 item.set("batchQuantity", item.data.batch+" ("+item.data.quantity+")");
