@@ -110,7 +110,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
         //reset all the fields in registration form
-        var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'remarksArea', 'referredBy', 'companionName', 'phoneNumber', 'relationToPatient', 'registrationFeesPaid'];
+        var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
 
         for (var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
@@ -422,15 +422,7 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencountercomplaint.data);
             }
-            if (Ext.getCmp('remarksArea').isValid() && Ext.getCmp('remarksArea').value!= null && Ext.getCmp('remarksArea').value!= "") {
-                var jsonencounterremarks = Ext.create('Registration.model.obsModel', {
-                    obsDatetime: t,
-                    person: localStorage.newPatientUuid,
-                    concept: localStorage.notesUuidconcept,
-                    value: Ext.getCmp('remarksArea').value
-                });
-                jsonencounter.data.obs.push(jsonencounterremarks.data);
-            }
+
             //TODO: figure out why this isn't working
 //            if (Ext.getCmp('referredBy').isValid() && Ext.getCmp('referredBy').value!= null &&  Ext.getCmp('referredBy').value!= "") {
 //                var jsonencounterreferred = Ext.create('Registration.model.obsModel', {
