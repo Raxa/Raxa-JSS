@@ -80,6 +80,9 @@ Ext.define('Registration.view.IllnessDetails', {
                     name: 'Registration Fees',
                     id: 'registrationFeesPaid',
                     width: 175,
+                    minValue: 0,
+                    value: 5,
+                    hideTrigger: true,
                     allowBlank: false
                 }]
             }]

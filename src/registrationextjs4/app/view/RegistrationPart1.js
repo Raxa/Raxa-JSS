@@ -199,6 +199,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 xtype: 'numberfield',
                                 fieldLabel: 'Current Patient Age',
                                 id: 'patientAge',
+                                minValue: 0,
+                                hideTrigger: true,
                                 width: 172,
                                 margins: '0 0 0 6',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext2'),
