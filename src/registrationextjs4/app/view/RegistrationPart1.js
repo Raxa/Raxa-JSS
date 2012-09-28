@@ -312,24 +312,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                         hideTrigger: true,
                         width: 573
                     }, {
-                        xtype: 'radiogroup',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM'),
-                        id: 'phoneContactInformation',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        allowBlank: true,
-                        width: 573,
-                        items: [{
-                            xtype: 'radiofield',
-                            name: 'contact',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM.1')
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'contact',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM.2')
-                        }]
-                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
                         layout: 'hbox',

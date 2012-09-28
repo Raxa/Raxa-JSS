@@ -62,7 +62,7 @@ Ext.define('Registration.controller.Main', {
 
         var l = Ext.getCmp('mainRegArea').getLayout(); 
         // if condition that check if all the required fields are non-empty or not
-        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
+        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
         	if(Ext.getCmp('patientAge').rawValue || Ext.getCmp('dob').rawValue)
  				{     
 			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
@@ -87,9 +87,6 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
         Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
         Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
-        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) {
-            Ext.getCmp('phoneConfirm').setText(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel);
-        }
 		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value == ""))
 		{
 		    Ext.getCmp('patientPrimaryContactNumberConfirm').setText(Ext.getCmp('patientPrimaryContact').value 	+ ' (Pri) ');
@@ -202,19 +199,6 @@ Ext.define('Registration.controller.Main', {
                 value: Ext.getCmp('district').getValue(),
                 attributeType: localStorage.districtUuidpersonattributetype
             })
-        }
-        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) {
-            if (Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel == "Yes") {
-                jsonperson.data.attributes.push({
-                    value: "true",
-                    attributeType: localStorage.contactByPhoneUuidpersonattributetype
-                })
-            } else {
-                jsonperson.data.attributes.push({
-                    value: "false",
-                    attributeType: localStorage.contactByPhoneUuidpersonattributetype
-                })
-            }
         }
         if (Ext.getCmp('patientPrimaryContact').getValue() != null) {
             jsonperson.data.attributes.push({

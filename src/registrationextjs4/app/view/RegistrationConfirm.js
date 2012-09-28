@@ -203,25 +203,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CM'),
-                        combineErrors: true,
-                        defaultType: 'text',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'phone',
-                            id: 'phoneConfirm',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CM.emptytext'),
-                            flex: 1,
-                            readOnly: true
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CN'),
                         layout: 'hbox',
                         combineErrors: true,
