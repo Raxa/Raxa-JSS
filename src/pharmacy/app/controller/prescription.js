@@ -533,18 +533,18 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     sendPharmacyEncounter: function(uuid, typeOfEncounter) {
         concept = new Array();
         order = new Array();
-        var k = 0,k1 = 0,k2 = 0;
+        var conceptsSent = 0, conceptsReceived = 0;
         var drugs = Ext.getStore('orderStore').data;
-        var noofdrugs = drugs.items.length;
-        for (var i1 = 0; i1 < drugs.items.length; i1++) {
+        var numDrugs = drugs.items.length;
+        for (var i1 = 0; i1 < numDrugs; i1++) {
             // value of Url for get call is made here using name of drug
-            if(drugs.items[i1].data.drugName != ""){
-                k2++;
+            var drugData = drugs.items[i1].data;
+            if(drugData.drugName != ""){
                 var Url = HOST + '/ws/rest/v1/raxacore/drug/'
-                Url = Url + drugs.items[i1].data.drugUuid;
+                Url = Url + drugData.drugUuid;
                 concept.push(Ext.create('RaxaEmr.Pharmacy.store.drugConcept'));
                 // setting up the proxy for store with the above Url
-                concept[k++].setProxy({
+                concept[conceptsSent++].setProxy({
                     type: 'rest',
                     url: Url,
                     headers: Util.getBasicAuthHeaders(),
@@ -554,30 +554,30 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 })
                 var startdate = new Date();
                 // value of end date depending on the duration in days
-                var enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + drugs.items[i1].data.duration);
+                var enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + drugData.duration);
                 // model for drug order is created here
-                var newDosage = drugs.items[i1].data.dosage.toFixed(2);
-                var newInstructions = drugs.items[i1].data.instructions;
-                if(drugs.items[i1].data.takeInMorning){
+                var newDosage = drugData.dosage.toFixed(2);
+                var newInstructions = drugData.instructions;
+                if(drugData.takeInMorning){
                     newInstructions += "Take one dose in morning. "
                 }
-                if(drugs.items[i1].data.takeInDay){
+                if(drugData.takeInDay){
                     newInstructions += "Take one dose during the day. "
                 }
-                if(drugs.items[i1].data.takeInEvening){
+                if(drugData.takeInEvening){
                     newInstructions += "Take one dose in the evening. "
                 }
-                if(drugs.items[i1].data.takeInNight){
+                if(drugData.takeInNight){
                     newInstructions += "Take one dose in the night. "
                 }
                 order.push({
                     patient: uuid,
-                    drug: drugs.items[i1].data.drugUuid,
+                    drug: drugData.drugUuid,
                     instructions: newInstructions,
                     startDate: startdate,
                     autoExpireDate: enddate,
                     dose: newDosage,
-                    quantity: drugs.items[i1].data.qty,
+                    quantity: drugData.qty,
                     // type should be "drugorder" in order to post a drug order
                     type: 'drugorder'
                 })
@@ -588,14 +588,14 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         if(success){
                             // added a counter k which increment as a concept load successfully, after all the concept are loaded
                             // value of k should be equal to the no. of drug forms
-                            k1++;
-                            console.log(k1+" "+k+" "+k2);
-                            if (k == drugs.items.length && k1 == k2) {
+                            conceptsReceived++;
+                            if (conceptsSent === numDrugs && conceptsReceived === numDrugs) {
                                 for (var j = 0; j < concept.length; j++) {
                                     order[j].concept = concept[j].getAt(0).getData().concept;
                                 }
                                 var time = this.ISODateString(new Date());
                                 // model for posting the encounter for given drug orders
+                                //setting 'orders' in the encounter to be sent
                                 RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = true;
                                 var encounter = Ext.create('RaxaEmr.Pharmacy.model.drugEncounter', {
                                     patient: uuid,
