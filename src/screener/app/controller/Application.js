@@ -344,9 +344,9 @@ Ext.define("Screener.controller.Application", {
             Ext.getCmp('loadMask').setHidden(true);
             that.setBMITime(store_patientList);
             // TODO: Add photos to patients in screener list
-            store_patientList.each(function (record) {
-                record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
-            });
+            //store_patientList.each(function (record) {
+                //record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
+            //});
         }, this);
         // TODO: Pass a function instead of string, to avoid implied "eval"
         // TODO: Does this actually refresh on the specified interval? tried
