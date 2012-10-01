@@ -11,6 +11,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
     items: [{
         xtype: 'datefield',
         id: 'dob',
+        format: 'd/m/Y',
         width: 260,
         fieldLabel: 'Date',
         x: 10,

@@ -59,7 +59,7 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "ointment",
         "varName": "ointment",
-        "displayName": "ointment"
+        "displayName": "OINTMENT"
     },
     "syrup": {
         "resource": "concept",
@@ -72,6 +72,18 @@ var resourceUuid = {
         "queryTerm": "solution for injection",
         "varName": "solutionForInjection",
         "displayName": "SOLUTION FOR INJECTION"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
     },
     "height": {
         "resource": "concept",
@@ -320,6 +332,7 @@ var REG_PAGES = {
 
 var UITIME = 120000;
 var ONEDAYMS = 86400000;
+var MONTHSINAYEAR = 12;
 var diffinUTC_GMT = 5.5;
 //number of hours for everything to be before now
 //OpenMRS checks whether encounters are ahead of current time --
@@ -378,10 +391,22 @@ var Util = {
         return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
     },
 
+    monthsFromNow: function(futureDate) {
+        var future = new Date(futureDate);
+        var now = new Date();
+        return Math.ceil((future.getFullYear()-now.getFullYear())*MONTHSINAYEAR + future.getMonth()-now.getMonth());
+    },
+
     daysBetween: function(pastDate, futureDate) {
         var future = new Date(futureDate);
         var past = new Date(pastDate);
         return Math.abs(Math.ceil((future.getTime()-past.getTime())/ONEDAYMS));
+    },
+
+    monthsBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs((future.getFullYear()-past.getFullYear())*MONTHSINAYEAR + future.getMonth()-past.getMonth())
     },
 
     /**
@@ -468,6 +493,7 @@ var Util = {
                 uuidsLoadedCount++;
             } else {
                 uuidsNotFound += (item + ", ");
+                this.getAttributeFromREST(resourceUuid[key].resource, resourceUuid[key].queryTerm, resourceUuid[key].varName, resourceUuid[key].displayName);
             }
         }
         

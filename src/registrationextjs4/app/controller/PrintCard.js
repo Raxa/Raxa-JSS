@@ -46,7 +46,7 @@ Ext.define('Registration.controller.PrintCard', {
             Gender: Ext.getCmp('sexSearchedPatient').value,
             Village: Ext.getCmp('townSearchedPatient').value,
             Tehsil: Ext.getCmp('tehsilSearchedPatient').value,
-            oldPatientIdentifier: Ext.getCmp('oldPatientIdentifierSearchedPatient').value                
+            OldPatientId: Ext.getCmp('oldPatientIdentifierSearchedPatient').value                
         };
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
     },
@@ -61,7 +61,7 @@ Ext.define('Registration.controller.PrintCard', {
             Gender: Ext.getCmp('sexConfirm').value,
             Village: Ext.getCmp('townConfirm').value,
             Tehsil: Ext.getCmp('tehsilConfirm').value,
-            oldPatientIdentifier: Ext.getCmp('oldPatientIdentifierConfirm').value,            
+            OldPatientId: Ext.getCmp('oldPatientIdentifierConfirm').value,            
         };
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
     },

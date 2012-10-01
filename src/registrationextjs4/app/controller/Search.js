@@ -8,6 +8,9 @@ Ext.define('Registration.controller.Search', {
             "searchpart1 button[action=search]": {
                 click: this.search
             },
+            "searchpart1 button[action=cancel]": {
+                click: this.cancel
+            },
             "searchpart1 button[action=reset]": {
                 click: this.reset
             },
@@ -61,6 +64,11 @@ Ext.define('Registration.controller.Search', {
         } else {
             alert("invalid fields");
         }
+    },
+    
+    //cancels search, goes back to home page
+    cancel: function(){
+        Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.HOME.value);
     },
 
     //function which reset all the field in search patient form
