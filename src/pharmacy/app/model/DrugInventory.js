@@ -72,7 +72,7 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
         name: 'drugUuid',
         mapping: 'drug.uuid'
     },{
-        name: 'manufacturer',
+        name: 'supplier',
         type: 'string',
         persist: false
     }
