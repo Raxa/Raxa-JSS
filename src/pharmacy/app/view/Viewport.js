@@ -26,6 +26,12 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
             xtype: 'alertGrid'
         }]
     },{
+        xtype: 'inventoryEditor',
+        floating: true,
+        x: 100,
+        y: 100,
+        hidden: true
+    },{
         xtype: 'addDrug'
     },{
         autoScroll: true,

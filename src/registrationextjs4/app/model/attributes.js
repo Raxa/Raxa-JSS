@@ -6,6 +6,10 @@ Ext.define('Registration.model.attributes', {
         name: 'value'
     }, {
         name: 'attributeType',
-        model: 'string'
+        model: 'Registration.model.AttributeType'
+    }, {
+        name: 'display'
+    }, {
+        name: 'uuid'
     }]
 });

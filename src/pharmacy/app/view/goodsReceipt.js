@@ -18,6 +18,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
     },
     {
         xtype: 'button',
+        id: 'submitReceiptButton',
         width: 60,
         text: 'Submit',
         action: 'submitReceipt',

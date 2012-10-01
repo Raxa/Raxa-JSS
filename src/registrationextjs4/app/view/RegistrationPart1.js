@@ -186,6 +186,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 xtype: 'datefield',
                                 fieldLabel: 'DOB',
                                 id: 'dob',
+                                format: 'd/m/Y',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext1'),
                                 labelAlign: 'right',
                                 labelPad: 20,
@@ -201,7 +202,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 width: 172,
                                 margins: '0 0 0 6',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext2'),
-                                allowBlank: false
+                                allowBlank: false,
+                                allowDecimals: false
                             },
 
                             ]
@@ -261,17 +263,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                     title: 'Address and Contact Details',
                     items: [{
                         xtype: 'textfield',
-                        id: 'block',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Block'),
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Block'),
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        width: 573,
-                        allowBlank: true,
-                    //anchor: '95%'
-                    }, {
-                        xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Street'),
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Street'),
                         labelAlign: 'right',
@@ -290,6 +281,17 @@ Ext.define('Registration.view.RegistrationPart1', {
                         id: 'town',
                         labelWidth: 200,
                         width: 573
+                    }, {
+                        xtype: 'textfield',
+                        id: 'residentialArea',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.ResidentialArea'),
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.ResidentialArea'),
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        width: 573,
+                        allowBlank: true,
+                    //anchor: '95%'
                     }, {
                         xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Tehsil'),
@@ -455,13 +457,16 @@ Ext.define('Registration.view.RegistrationPart1', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['occupation'],
                                 data: [
-                                ['Unemployed'],
-                                ['Student'],
-                                ['Agriculture Related'],
-                                ['Bank Related'],
-                                ['Medical Related'],
-                                ['Engineering Related'],
-                                ['Not Mentioned']
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.1')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.2')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.3')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.4')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.5')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.6')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.7')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.8')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.9')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.10')]
                                 ]
                             }),
                             displayField: 'occupation'
