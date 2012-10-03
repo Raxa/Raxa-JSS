@@ -330,6 +330,8 @@ var REG_PAGES = {
     }
 };
 
+var DEFAULT_LOCATION = "GAN";
+
 var UITIME = 120000;
 var ONEDAYMS = 86400000;
 var MONTHSINAYEAR = 12;
@@ -577,7 +579,10 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        var generatedId = arguments[0]+(Math.floor(Math.random()*1000000)).toString();
+        var locationString = arguments[0];
+        if(arguments[0] === undefined)
+            locationString = DEFAULT_LOCATION;
+        var generatedId = locationString +(Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
         xmlHttp.open( "GET", url , false );
