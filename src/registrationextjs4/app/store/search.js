@@ -15,9 +15,9 @@ Ext.define('Registration.store.search', {
                     var temp = Ext.create('Registration.model.searchPatient', {
                         id: i + 1,
                         uuid: Data[i].uuid,
-                        birthdate: Data[i].birthdate,
-                        gender: Data[i].gender,
-                        age: Data[i].age,
+                        birthdate: Data[i].person.birthdate,
+                        gender: Data[i].person.gender,
+                        age: Data[i].person.age,
                         givenName: Data[i].person.preferredName.givenName,
                         familyName: Data[i].person.preferredName.familyName,
                         //  we dont get identifiers in patient search GET call so for now its commented
