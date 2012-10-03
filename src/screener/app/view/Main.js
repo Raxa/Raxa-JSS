@@ -7,6 +7,7 @@ Ext.define("Screener.view.Main", {
     extend: 'Ext.Container',
 	xtype: 'mainView',
 	id: "mainView",
+        
 	config: {
 		layout: {
 			type: 'card'
