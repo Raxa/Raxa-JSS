@@ -134,7 +134,7 @@ Ext.define('Registration.view.SearchPart2', {
 										}
 										if(temp.attributes[i].attributeType.display.search('Occupation')>=0)
 										{
-											Ext.getCmp('occuptionSearchedPatient').setValue(temp.attributes[i].value);
+											Ext.getCmp('occupationSearchedPatient').setValue(temp.attributes[i].value);
 										}
 										if(temp.attributes[i].attributeType.display.search('Primary Relative')>=0)
 										{
@@ -146,11 +146,11 @@ Ext.define('Registration.view.SearchPart2', {
 										}
 										if(temp.attributes[i].attributeType.display.search('Secondary Contact')>=0)
 										{
-											Ext.getCmp('patientSecondaryContactNumberSearchedPatient').setValue(temp.attributes[i].value);
+											Ext.getCmp('secondaryContactNumberSearchedPatient').setValue(temp.attributes[i].value);
 										}
 										if(temp.attributes[i].attributeType.display.search('Primary Contact')>=0)
 										{
-											Ext.getCmp('patientPrimaryContactNumberSearchedPatient').setValue(temp.attributes[i].value);
+											Ext.getCmp('primaryContactNumberSearchedPatient').setValue(temp.attributes[i].value);
 										}
 										if(temp.attributes[i].attributeType.display.search('District')>=0)
 										{
