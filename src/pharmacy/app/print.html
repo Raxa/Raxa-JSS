@@ -18,21 +18,29 @@
 -->
 <html>
 <head>
-    <title>Patient Registration Card</title>
+    <title>JSS Pharmacy Prescription</title>
 </head>
 <body>
-    <form>
-    <input type="button" value="Continue to Print" id="printButton" onclick="hideAndPrint();"
-        align="right">
-    </form>
+    <table align="center" style="width: 500px; align:center;" >
+        <td>
+            <p style="text-align: center; ">
+                <img src="../../resources/img/jss-icon.png" style="float: center; width: 100px; height: 100px; "
+                />
+            </p>
+        </td>
+        <td width="75%">
+            <h2 style="text-align: center; ">Jan Swasthya Sahyog <br> Ganiari, Bilaspur </h2>
+
+        </td>
+    </table>
     <table border="1" cellpadding="1" cellspacing="1" style="width: 100%; height: auto">
         <tbody>
             <tr>
-                <td style='width: 30%'>
+                <td style='width: 20%'>
                     <div id='tab1' style='width: 100%'>
                     </div>
                 </td>
-                <td style='width: 70%'>
+                <td style='width: 80%'>
                     <div id='tab2' style='width: 100%'>
                     </div>
                 </td>
@@ -42,7 +50,7 @@
     <script>
         var total = 0;
         var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
-        var selectedPatientAttributes = ['GiveName', 'FamilyName', 'village', 'block', 'District', 'Doctor', 'Dob', 'Age', 'Gender'];
+        var selectedPatientAttributes = ['Name', 'Age'];
         var tab = '<table style="width:100%"><tbody>';
         for (i = 0; i < selectedPatientAttributes.length; i++) {
             if (selectedPatient[selectedPatientAttributes[i]]) {
@@ -56,7 +64,7 @@
         tab = '<table border="1"  style="width:100%" text-align="center"><tbody><tr><td>Drugs</td><td>Dosage</td><td>Duration</td><td>qty</td><td>UnitPrice</td><td>ItemPrice</td></tr>';
         for (var j = 0; j < selectedPatient['Length']; j++) {
             tab += '<tr>';
-            tab += '<td>' + selectedPatient['DrugGrid'][j].drugname + '</td>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].drugName + '</td>';
             tab += '<td>' + selectedPatient['DrugGrid'][j].dosage + '</td>';
             tab += '<td>' + selectedPatient['DrugGrid'][j].duration + '</td>';
             tab += '<td>' + selectedPatient['DrugGrid'][j].qty + '</td>';

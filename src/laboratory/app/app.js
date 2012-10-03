@@ -39,7 +39,7 @@ Ext.application({
 'LabOrderList'],
   
       launch: function () {
-        if(Util.checkModulePrivilege('laboratory')){
+        if(Util.checkModulePrivilege('laboratory') && Util.uuidLoadedSuccessfully()){
             Ext.create('Laboratory.view.Viewport');
         }
     }

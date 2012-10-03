@@ -15,13 +15,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     viewConfig: {
         stripeRows: false
     },
-    selType: 'cellmodel',
-    cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
-        clicksToEdit: 1
-    }),
-    viewConfig: {
-        stripeRows: false
-    },
     initComponent: function () {    
         var issueEditor = this;
         this.addEvents(['deleteIssueDrug']);
@@ -42,12 +35,11 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 minChars: 3,
                 typeAhead: true,
                 autoSelect: false,
-                store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
+                store: 'allDrugs',
                 displayField: 'text',
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
-                            comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();
                         }
                         , 
@@ -74,8 +66,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             editor: {
                 xtype: 'numberfield',
                 allowBlank: true,
-                decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0
             }
         },
         {
@@ -104,7 +96,9 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                                 var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
                                 var isCurrentDrug = (record.get('drugName')===selectedDrug);
                                 var isBatch = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
-                                return isAvailable && isCurrentDrug && isBatch;
+                                var locationUuid = Ext.getCmp('issueStockLocationPicker').value;
+                                var isAtLocation = (record.get('location').uuid===locationUuid)
+                                return isAvailable && isCurrentDrug && isBatch && isAtLocation;
                             });
                             comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();
@@ -145,11 +139,12 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
         },{
             xtype: 'datecolumn',
             text: 'Expiry Date',
+            format: 'd/m/y',
             dataIndex: 'expiryDate',
             width: 180
         },{
             xtype: 'gridcolumn',
-            text: 'Location',
+            text: 'Shelf',
             dataIndex: 'roomLocation',
             width: 60
         },        
@@ -157,7 +152,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             xtype: 'actioncolumn',
             width: 22,
             items: [{
-                icon: '../../resources/img/delete.png',
+                icon: '../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
                     issueEditor.fireEvent('deleteIssueDrug', {

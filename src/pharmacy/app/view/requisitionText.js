@@ -19,7 +19,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
             storeId: 'dispenseLocations'
             }),
-        fieldLabel: 'Your Location:',
+        fieldLabel: 'Your Location',
         displayField: 'display',
         emptyText: 'Location',
         listeners: {
@@ -42,7 +42,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
             storeId: 'stockLocations'
         }),
-        fieldLabel: 'Stock Location:',
+        fieldLabel: 'Stock Location',
         displayField: 'display',
         emptyText: 'Location',
         listeners: {

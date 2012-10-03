@@ -53,13 +53,13 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "tablet",
         "varName": "tablet",
-        "displayName": "tablet"
+        "displayName": "TABLET"
     },
     "ointment": {
         "resource": "concept",
         "queryTerm": "ointment",
         "varName": "ointment",
-        "displayName": "ointment"
+        "displayName": "OINTMENT"
     },
     "syrup": {
         "resource": "concept",
@@ -72,6 +72,18 @@ var resourceUuid = {
         "queryTerm": "solution for injection",
         "varName": "solutionForInjection",
         "displayName": "SOLUTION FOR INJECTION"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
     },
     "height": {
         "resource": "concept",
@@ -95,7 +107,7 @@ var resourceUuid = {
         "resource": "concept",
         "queryTerm": "regfee",
         "varName": "regfee",
-        "displayName": "Registration Fee"
+        "displayName": "REGISTRATION FEE"
     },
     "systolicbloodpressure": {
         "resource": "concept",
@@ -123,7 +135,7 @@ var resourceUuid = {
     },
     "temperature": {
         "resource": "concept",
-        "queryTerm": "TEMPERATURE (C)",
+        "queryTerm": "TEMPERATURE",
         "varName": "temperature",
         "displayName": "TEMPERATURE (C)"
     },
@@ -135,15 +147,15 @@ var resourceUuid = {
     },
     "referred": {
         "resource": "concept",
-        "queryTerm": "REFERRING PERSON",
+        "queryTerm": "REFERRER",
         "varName": "referred",
         "displayName": "REFERRING PERSON"
     },
     "notes": {
         "resource": "concept",
-        "queryTerm": "CLINICIAN NOTES",
+        "queryTerm": "REGISTRATION NOTES",
         "varName": "notes",
-        "displayName": "CLINICIAN NOTES"
+        "displayName": "REGISTRATION NOTES"
     },
     "regcomplaint": {
         "resource": "concept",
@@ -320,6 +332,7 @@ var REG_PAGES = {
 
 var UITIME = 120000;
 var ONEDAYMS = 86400000;
+var MONTHSINAYEAR = 12;
 var diffinUTC_GMT = 5.5;
 //number of hours for everything to be before now
 //OpenMRS checks whether encounters are ahead of current time --
@@ -378,6 +391,23 @@ var Util = {
         return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
     },
 
+    monthsFromNow: function(futureDate) {
+        var future = new Date(futureDate);
+        var now = new Date();
+        return Math.ceil((future.getFullYear()-now.getFullYear())*MONTHSINAYEAR + future.getMonth()-now.getMonth());
+    },
+
+    daysBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs(Math.ceil((future.getTime()-past.getTime())/ONEDAYMS));
+    },
+
+    monthsBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs((future.getFullYear()-past.getFullYear())*MONTHSINAYEAR + future.getMonth()-past.getMonth())
+    },
 
     /**
      *Gets the current time
@@ -428,14 +458,55 @@ var Util = {
     /**
      * Logout the current user. Ends the current session
      */
-    logoutUser: function () {
+    logoutUser: function () {      
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
             method: 'DELETE'
         });
+        localStorage.removeItem('basicAuthHeader');
+        localStorage.removeItem('privileges');
+        localStorage.removeItem('Username');
+        localStorage.removeItem('loggedInUser');
+        localStorage.removeItem('loggedInProvider');
+        window.location.hash = 'Login';
     },
+    
+    uuidLoadedSuccessfully: function(){
+        if( this.checkAllUuidsLoaded()) {
+            return true;
+        } else {
+            window.location = "../";
+        }
+    },
+
+    checkAllUuidsLoaded: function() {
+        var that=this;
+        var expectedUuidCount=0;
+        var uuidsLoadedCount=0;
+        var uuidsNotFound = "";
+        for (var key in resourceUuid) { 
+            expectedUuidCount++;
+            var item = resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource;
+            if(localStorage.getItem(item) != null){ 
+                uuidsLoadedCount++;
+            } else {
+                uuidsNotFound += (item + ", ");
+                this.getAttributeFromREST(resourceUuid[key].resource, resourceUuid[key].queryTerm, resourceUuid[key].varName, resourceUuid[key].displayName);
+            }
+        }
+        
+        console.log("UUIDs expected = " + expectedUuidCount + ". UUIDs loaded " + uuidsLoadedCount);
+        
+        if (expectedUuidCount == uuidsLoadedCount) {
+            return true;
+        } else {
+            console.log("Uuid's which failed to load were:" + uuidsNotFound);
+            return false;
+        }
+    },
+    
 
     /**
      * Saves the Basic Authentication header to Localstorage
@@ -557,7 +628,7 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        var generatedId = (Math.floor(Math.random()*1000000)).toString();
+        var generatedId = arguments[0]+(Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
         xmlHttp.open( "GET", url , false );
@@ -737,4 +808,3 @@ var Util = {
         });
     }
 }
-

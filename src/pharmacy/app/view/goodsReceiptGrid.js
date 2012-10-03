@@ -24,7 +24,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
         {
             xtype: 'gridcolumn',
             width: 25,
-            text: 'S no'
+            text: '#'
         },
         {
             xtype: 'gridcolumn',
@@ -37,12 +37,11 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 minChars: 3,
                 typeAhead: true,
                 autoSelect: false,
-                store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
+                store: 'allDrugs',
                 displayField: 'text',
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
-                            comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();
                         },
                         scope: this
@@ -60,7 +59,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0             
             }
         },
         {
@@ -73,13 +73,14 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0
             }
         },
         {
             xtype: 'gridcolumn',
             width: 80,
-            text: 'Location',
+            text: 'Shelf',
             dataIndex: 'roomLocation',
             editor: {
                 xtype: 'textfield',
@@ -106,13 +107,13 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             editor: {
                 xtype: 'datefield',
                 allowBlank: false,
-                format: 'd/m/Y'
+                format: 'd/m/y',
             }
         },{
             xtype: 'actioncolumn',
             width: 22,
             items: [{
-                icon: '../../resources/img/delete.png',
+                icon: '../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
                     receiptEditor.fireEvent('deleteReceiptDrug', {

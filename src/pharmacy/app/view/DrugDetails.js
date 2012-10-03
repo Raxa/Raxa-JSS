@@ -14,11 +14,12 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetails', {
         xtype: 'button',
         text: 'Back',
         action: 'backFromDrugDetails',
-        ui: 'raxa-orange-small'
+        ui: 'raxa-orange-small',
+        margin: 5
     }],
     //initializing the first two components, drug details text and drug details grid by filling in a drug's details
-    initForDrug: function(drugName){
-        this.items.items[0].initForDrug(drugName);
-        this.items.items[1].initForDrug(drugName);
+    initForDrug: function(drugUuid){
+        this.items.items[0].initForDrug(drugUuid);
+        this.items.items[1].initForDrug(drugUuid);
     }
 });
