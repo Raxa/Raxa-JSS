@@ -38,7 +38,8 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         width: 240,
         fieldLabel: 'Age',
         x: 10,
-        y: 120
+        y: 120,
+        minValue: 0
     }, {
         xtype: 'radiogroup',
         id: 'sexRadioGroup',
