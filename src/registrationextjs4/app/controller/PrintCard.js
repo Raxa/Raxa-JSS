@@ -56,12 +56,12 @@ Ext.define('Registration.controller.PrintCard', {
      */
     storePatientDatafromRegistration: function () {
         var selectedPatient = {
-            Name: Ext.getCmp('patientNameConfirm').value,
-            Age: Ext.getCmp('ageConfirm').value,
-            Gender: Ext.getCmp('sexConfirm').value,
-            Village: Ext.getCmp('townConfirm').value,
-            Tehsil: Ext.getCmp('tehsilConfirm').value,
-            OldPatientId: Ext.getCmp('oldPatientIdentifierConfirm').value,            
+            Name: Ext.getCmp('patientNameConfirm').text,
+            Age: Ext.getCmp('ageConfirm').text,
+            Gender: Ext.getCmp('sexConfirm').text,
+            Village: Ext.getCmp('townConfirm').text,
+            Tehsil: Ext.getCmp('tehsilConfirm').text,
+            OldPatientId: Ext.getCmp('oldPatientIdentifierConfirm').text,            
         };
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
     },
