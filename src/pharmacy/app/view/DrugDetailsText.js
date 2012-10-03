@@ -17,23 +17,30 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsText', {
             layout: 'vbox',
             items:[{
                 xtype: 'displayfield',
-                margin: 5,
                 fieldLabel: 'Drug Details',
                 id: 'drugDetailsName',
                 width: '500',
                 value: 'N/A'
-            }
+            },
 //            ,{
 //                xtype: 'displayfield',
 //                fieldLabel: 'Drug Id',
 //                itemId: 'drugDetailsId',
 //                value: 'N/A'
-//            },{
-//                xtype: 'displayfield',
-//                fieldLabel: 'Manufacturer',
-//                itemId: 'drugDetailsManufacturer',
-//                value: 'N/A'
-//            },{
+//            },
+            {
+                xtype: 'displayfield',
+                fieldLabel: 'Manufacturer',
+                id: 'drugDetailsManufacturer',
+                value: 'N/A'
+            },
+            {
+                xtype: 'displayfield',
+                fieldLabel: 'Supplier',
+                id: 'drugDetailsSupplier',
+                value: 'N/A'
+            }
+//            {
 //                xtype: 'displayfield',
 //                fieldLabel: 'Drug Type',
 //                itemId: 'drugDetailsDrugType',
@@ -68,12 +75,13 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsText', {
         }
         ]
     }],
-    initForDrug: function(drugName){
-        var drug = Ext.getStore('allDrugs').getAt(Ext.getStore('allDrugs').find('text', drugName));
-        console.log(drug);
-        console.log(drugName);
+    initForDrug: function(drugUuid){
+        var drug = Ext.getStore('allDrugs').getAt(Ext.getStore('allDrugs').find('uuid', drugUuid));
+        var drugInfo = Ext.getStore('drugInfos').getAt(Ext.getStore('drugInfos').find('drugUuid', drug.data.uuid));
         Ext.getCmp('drugDetailsName').setWidth(300);
         Ext.getCmp('drugDetailsName').setValue(drug.data.text);
+        Ext.getCmp('drugDetailsManufacturer').setValue(drugInfo.data.name);
+        Ext.getCmp('drugDetailsSupplier').setValue(drugInfo.data.description);
     }
 });
 
