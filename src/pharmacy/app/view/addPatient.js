@@ -57,6 +57,10 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
             xtype: 'radiofield',
             boxLabel: 'Female',
             name: 'sex'
+        },{
+            xtype: 'radiofield',
+            boxLabel: 'Other',
+            name: 'sex'
         }]
     }, {
         xtype: 'textfield',
