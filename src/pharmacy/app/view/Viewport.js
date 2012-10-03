@@ -1,13 +1,32 @@
+PHARMACYTOPBARHEIGHT = 65;
+
 Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     extend: 'Ext.container.Viewport',
+    requires: 'RaxaEmr.Pharmacy.view.pharmacyTopbar',
     autoScroll: true,
     width: 960,
+    autoHeight: 800,
     layout: {
         type: 'vbox',
         align: 'center'
     },
     items:[{
-        xtype: 'pharmacytopbar'
+        xtype: 'pharmacytopbar',
+        id: 'pharmacytopbar'
+    },{
+        xtype: 'panel',
+        id: 'alertPanel',
+        floating: true,
+        x: 500,
+        y: 65,
+        width: 300,
+        height: 200,
+        hidden: true,
+        items: [{
+            xtype: 'alertGrid'
+        }]
+    },{
+        xtype: 'addDrug'
     },{
         autoScroll: true,
         layout: 'auto',
@@ -19,7 +38,7 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
             items:[{
                 xtype: 'prescription'
             },{
-                xtype: 'goodsdetails'
+                xtype: 'goodsIssue'
             },{
                 xtype: 'reports'
             },{
@@ -29,7 +48,9 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
             },{
                 xtype: 'requisition'
             },{
-                xtype: 'goodReceipt'
+                xtype: 'goodsReceipt'
+            },{
+                xtype: 'drugDetails'
             }]
         }]
     }]

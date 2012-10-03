@@ -27,14 +27,21 @@ Ext.define('Screener.model.encounterpost', {
 			name: 'location',
 			type: 'string',
 			persist: false
-		}],
-        
+		},
+        /*
+        {
+            name: 'uuid',
+            type: 'string'
+        }
+        */
+        ],
         hasMany: {
             model: 'Screener.model.observation', 
             name: 'observations',
             // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-370
             // Can we handle the hasMany + REST scenario better?
             foreignKey: 'encounter', 
+            associationKey: 'observations',
         }
 	}
 });

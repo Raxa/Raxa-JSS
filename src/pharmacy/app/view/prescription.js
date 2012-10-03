@@ -64,7 +64,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             text: 'Duration',
                             // gets the duration using start and end date of prescription
                             renderer: function(value, metadata, record){
-                                console.log(record)
                                 var temp = record.getData().endDate - record.getData().startDate
                                 temp = temp/(86400000)
                                 temp = parseInt(temp) + 1
@@ -104,7 +103,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Done',
-                        action: 'done',
+                        action: 'doneWithNewPatientPrescription',
                         ui: 'raxa-aqua-small',
                         x: 330,
                         y: 580
@@ -113,7 +112,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Print',
-                        action: 'fillPrescription',
+                        action: 'printPrescribedDrugs',
                         ui: 'raxa-aqua-small',
                         x: 560,
                         y: 580
@@ -125,12 +124,12 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     items:[{
                         xtype: 'prescribedDrugs',
                         x: 190,
-                        y: 270,
+                        y: 270
                     },{
                         xtype: 'button',
                         width: 60,
                         text: 'Done',
-                        action: 'done2',
+                        action: 'doneWithQueuedPatientPrescription',
                         ui: 'raxa-aqua-small',
                         x: 330,
                         y: 580
@@ -263,7 +262,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         type: 'absolute'
                     },
                     collapsed: true,
-                    title: 'My Panel',
+                    title: 'Patient Queue',
                     items: [
                     {
                         xtype: 'textfield',
@@ -279,7 +278,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         width: 190,
                         title: 'Today', 
                         store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
-   
                         y: 70
                     }
                     ],
@@ -310,7 +308,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     xtype: 'gridpanel',
                     height: 71,
                     collapsed: true,
-                    title: 'Pending (35)',
+                    title: 'Pending',
                     columnLines: false,
                     columns: [
                     {
@@ -345,7 +343,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         x: 190,
                         y: 60,
                         items:[{
-                            html: "<img border=\"0\" src=\"../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"
+                            html: "<img border=\"0\" src=\"../../resources/img/pharmacy.png\" alt=\"Patient Image\" width=\"110\" height=\"110\" />"
                         }]
                     //TODO: patient image
                     },

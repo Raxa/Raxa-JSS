@@ -11,6 +11,7 @@ Ext.define('RaxaEmr.Pharmacy.view.stockIssue', {
         x : 400
     },{
         xtype: 'stockIssueGrid',
+        id: 'stockIssueGrid',
         x : 400
     }]
 });

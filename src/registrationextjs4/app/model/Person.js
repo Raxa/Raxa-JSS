@@ -27,10 +27,6 @@ Ext.define('Registration.model.Person', {
         model: 'Registration.model.addresses'
     }, {
         name: 'attributes',
-        model: 'Registration.model.attributes',
-        //this is false because there is a bug in openmrs due to which sending attributes in body leads 
-        //to 500 response status 
-        //TODO: remove this once the open mrs server is updated to latest one
-        persist: false 
+        model: 'Registration.model.attributes'
     }]
 });

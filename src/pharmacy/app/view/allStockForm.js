@@ -4,7 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
     border: false,
     height: 50,
     width: 840,
-    x:110,
+    margin: '0 0 0 110',
     activeItem: 0,
     layout: {
         type: 'hbox'
@@ -14,16 +14,20 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
     {
         margin: 5,
         xtype: 'combobox',
-        width: 190,
-        labelWidth: 60,
-        fieldLabel: 'Group by',
-        emptyText: 'Location',
+        width: 220,
+        labelWidth: 80,
+        fieldLabel: 'Your Location',
+        store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
+            storeId: 'currentLocations'
+        }),
+        displayField: 'display',
+        emptyText: 'Location'
     },{
         margin: 5,
         xtype: 'button',
         width: 100,
         text: 'New Requisition',
-        id: 'newrequisitionbutton',
+        id: 'newRequisitionButton',
         action: 'newRequisition'
     },
     {
@@ -31,15 +35,15 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
         xtype: 'button',
         width: 90,
         text: 'New Issue',
-        id: 'newissuebutton',
+        id: 'newIssueButton',
         action: 'newIssue'
     },
     {
         margin: 5,
         xtype: 'button',
         width: 90,
-        text: 'New Reciept',
-        id: 'newreceiptbutton',
+        text: 'New Receipt',
+        id: 'newReceiptButton',
         action: 'newReceipt'
     },
     {
@@ -47,7 +51,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
         xtype: 'button',
         width: 90,
         text: 'New Drug',
-        id: 'newdrugbutton',
+        id: 'newDrugButton',
         action: 'newDrug'
     },
     {
@@ -55,7 +59,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
         xtype: 'button',
         width: 90,
         text: 'New Drug Group',
-        id: 'newdruggroupbutton',
+        id: 'newDrugGroupButton',
         action: 'newDrugGroup'
     },
     ]
