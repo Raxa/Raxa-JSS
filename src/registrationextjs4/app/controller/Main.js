@@ -121,7 +121,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
         //reset all the fields in registration form
-   var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
+   var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
  
         for (var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
