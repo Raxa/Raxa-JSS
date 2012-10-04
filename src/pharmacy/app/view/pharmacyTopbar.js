@@ -132,7 +132,16 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             width: 60,
             height: 30,
             handler: function(){
-                Ext.getStore('alerts').load();
+                Ext.getStore('alerts').load({
+                    scope: this,
+                    callback: function(records, operation, success){
+                        if(success){
+                        }
+                        else{
+                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                        }
+                    }
+                });
                 if(Ext.getCmp('alertPanel').isHidden()){
                     Ext.getCmp('alertPanel').show();
                     this.setText('Close');

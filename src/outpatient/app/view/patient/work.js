@@ -108,8 +108,17 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
 					var drugList = Ext.create('Screener.store.druglist', {
 						storeId: 'drugStore'
 					});
-					drugList.load();
-					Ext.getCmp('drug-name').setStore(drugList);
+					drugList.load({
+                        scope: this,
+                        callback: function(records, operation, success){
+                            if(success){
+                                Ext.getCmp('drug-name').setStore(drugList);
+                            }
+                            else{
+                                Ext.Msg.alert(Util.getLoadErrorMessage());
+                            }
+                        }
+                    });
                 }
             }]
         }]

@@ -760,5 +760,19 @@ var Util = {
                 console.log('POST alert failed with response status: ' + response.status);
             }
         });
+    },
+    
+    /**
+     * The message to send when a resource fails to load from the server
+     */
+    getLoadErrorMessage: function() {
+        return "Unable to read from server";
+    },
+    
+    /**
+     * Message to send when a resource fails to write to a server
+     */
+    getSyncErrorMessage: function() {
+        return "Unable to write to server";
     }
 }
