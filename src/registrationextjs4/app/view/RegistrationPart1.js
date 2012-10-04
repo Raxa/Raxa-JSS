@@ -193,7 +193,8 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 labelWidth: 200,
                                 anchor: '75%',
                                 width:172,
-                                allowBlank: false
+                                allowBlank: false,
+                                maxValue: new Date()  
                             }, {
                                 name: 'Age',
                                 xtype: 'numberfield',
