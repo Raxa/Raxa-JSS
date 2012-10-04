@@ -7,24 +7,19 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
         persist: false 
     }, {
         name: 'name',
-        type: 'string',
-        mapping: 'name'
+        type: 'string'
     }, {
         name: 'description',
-        type: 'string',
-        mapping: 'description'
+        type: 'string'
     }, {
         name: 'status',
-        type: 'string',
-        mapping: 'status'
+        type: 'string'
     }, {
         name: 'quantity',
-        type: 'int',
-        mapping: 'quantity'
+        type: 'int'
     }, {
         name: 'originalQuantity',
-        type: 'int',
-        mapping: 'originalQuantity'
+        type: 'int'
     },{
         name: 'uuid',
         type: 'string',
@@ -43,35 +38,43 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
         mapping: 'location.display'
     },{
         name: 'batch',
-        type: 'string',
-        mapping: 'batch'
+        type: 'string'
     },{
         name: 'batchUuid',
         type: 'string',
-        mapping: 'batchUuid',
         persist: false
     },{
         name: 'value',
-        type: 'int',
-        mapping: 'value'
+        type: 'int'
     },{
         name: 'expiryDate',
-        type: 'string',
-        mapping: 'expiryDate'
+        type: 'string'
     },{
         name: 'days',
         type: 'int',
-        mapping: 'days',
         useNull: true
     },{
         name: 'batchQuantity',
         type: 'string',
-        mapping: 'batchQuantity',
         useNull: true
     },{
         name: 'roomLocation',
+        type: 'string'
+    },{
+        name: 'locationUuid',
         type: 'string',
-        mapping: 'roomLocation'
+        mapping: 'location.uuid'
+    },{
+        name: 'months',
+        type: 'int',
+        persist: false
+    },{
+        name: 'drugUuid',
+        mapping: 'drug.uuid'
+    },{
+        name: 'supplier',
+        type: 'string',
+        persist: false
     }
 ]
 });

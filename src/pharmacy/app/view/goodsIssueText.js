@@ -33,7 +33,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
                 }
                 ]
             }),
-            fieldLabel: 'Fill Requisition (optional):',
+            fieldLabel: 'Fill Requisition (optional)',
             valueField: 'uuid',
             displayField: 'description',
             listeners: {
@@ -52,7 +52,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
             margin: 5,
             height: 22,
             width: 22,
-            icon: '../../resources/img/delete.png',
+            icon: '../resources/img/delete.png',
             tooltip: 'Cancel',
             action: 'cancelIssuePurchaseOrder'
         }]
@@ -66,8 +66,9 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
             storeId: 'issueStockLocations'
         }),
-        fieldLabel: 'Stock Location:',
+        fieldLabel: 'Stock Location',
         displayField: 'display',
+        valueField: 'uuid',
         emptyText: 'Location'
     },
     {
@@ -79,8 +80,9 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
             storeId: 'issuedispenseLocations'
         }),
-        fieldLabel: 'Dispense Location:',
+        fieldLabel: 'Dispense Location',
         displayField: 'display',
+        valueField: 'uuid',
         emptyText: 'Location'
     }]
 });

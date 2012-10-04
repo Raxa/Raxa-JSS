@@ -13,6 +13,9 @@ Ext.define('RaxaEmr.Pharmacy.model.drugEncounter', {
     }, {
         name: 'encounterDatetime'
     }, {
+        name: 'provider'
+    },
+    {
         name: 'orders',
         model: 'RaxaEmr.Pharmacy.model.drugOrder'
     }]

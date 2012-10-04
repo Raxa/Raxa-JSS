@@ -5,13 +5,14 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     requires: 'RaxaEmr.Pharmacy.view.pharmacyTopbar',
     autoScroll: true,
     width: 960,
+    autoHeight: 800,
     layout: {
         type: 'vbox',
         align: 'center'
     },
     items:[{
-        xtype: 'pharmacytopbar',
-        id: 'pharmacytopbar'
+        xtype: 'pharmacyTopBar',
+        id: 'pharmacyTopBar'
     },{
         xtype: 'panel',
         id: 'alertPanel',
@@ -24,6 +25,12 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
         items: [{
             xtype: 'alertGrid'
         }]
+    },{
+        xtype: 'inventoryEditor',
+        floating: true,
+        x: 100,
+        y: 100,
+        hidden: true
     },{
         xtype: 'addDrug'
     },{

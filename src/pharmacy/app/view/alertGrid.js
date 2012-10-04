@@ -3,10 +3,14 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
     alias: 'widget.alertGrid',
     styleHtmlContent: false,
     height: 200,
-    width: 300,
+    width: 400,
     store: Ext.create('RaxaEmr.Pharmacy.store.Alerts',{
         autoLoad: true,
-        storeId: 'alerts'
+        storeId: 'alerts',
+        filters: [{
+            property: 'seen',
+            value: false
+        }]
     }),
     selType: 'cellmodel',
     cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
@@ -17,16 +21,12 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
     },
     hideHeaders: true,
     initComponent: function () {
-        var receiptEditor = this;
+        var alertEditor = this;
+        this.addEvents(['deleteAlert']);
         this.columns= [
         {
             xtype: 'gridcolumn',
-            width: 25,
-            text: ''
-        },
-        {
-            xtype: 'gridcolumn',
-            width: 250,
+            width: 278,
             dataIndex: 'name'
         },
         {
@@ -35,13 +35,20 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
             dataIndex: 'description',
             hidden: true
         },
-        //THIS is still in progress. I hope to finish it soon
-//        {
-//            xtype: 'checkcolumn',
-//            width: 20,
-//            dataIndex: 'seen'
-//        }
-        ],
+        {
+            xtype: 'actioncolumn',
+            width: 22,
+            items: [{
+                    icon: '../resources/img/delete.png',
+                    tooltip: 'Delete',
+                    handler: function(grid, rowIndex, colIndex) {
+                        alertEditor.fireEvent('deleteAlert', {
+                            rowIndex: rowIndex,
+                            colIndex: colIndex
+                        });
+                    }
+                }]
+        }],
         this.plugins = [this.cellEditor];
         this.callParent(arguments);
     }

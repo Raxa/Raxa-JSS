@@ -13,7 +13,8 @@ Ext.define('RaxaEmr.Pharmacy.view.patientsGridPanel', {
         xtype: 'gridcolumn',
         width: 40,
         dataIndex: 'age',
-        text: 'Age'
+        text: 'Age',
+        minValue: 0
     }
     ]
 });

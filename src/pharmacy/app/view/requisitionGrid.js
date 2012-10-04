@@ -33,12 +33,11 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                     minChars: 3,
                     typeAhead: true,
                     autoSelect: false,
-                    store: Ext.create('RaxaEmr.Pharmacy.store.allDrugs'),
+                    store: 'allDrugs',
                     displayField: 'text',
                     listeners: {
                         'focus': {
                             fn: function (comboField) {
-                                comboField.doQuery(comboField.allQuery, true);
                                 comboField.expand();
                             }
                             , scope: this
@@ -55,13 +54,14 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                     xtype: 'numberfield',
                     allowBlank: true,
                     decimalPrecision: 0,
-                    allowDecimals: false
+                    allowDecimals: false,
+                    minValue: 0
                 }
             },{
                 xtype: 'actioncolumn',
                 width: 22,
                 items: [{
-                        icon: '../../resources/img/delete.png',
+                        icon: '../resources/img/delete.png',
                         tooltip: 'Delete',
                         handler: function(grid, rowIndex, colIndex) {
                             requisitionEditor.fireEvent('deleteRequisitionDrug', {
