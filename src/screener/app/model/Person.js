@@ -19,6 +19,17 @@ Ext.define('Screener.model.Person',{
         }, {
             name: 'names',
             model: 'Screener.model.Names'
-        }]
+        }, 
+        {
+            name: 'age',
+            type: 'int',
+           // persist: false
+        },
+         {
+           name: 'dateOfBirth',
+            type: 'date',
+            persist: false
+         },
+    ]
     }
 });

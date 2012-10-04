@@ -495,15 +495,20 @@ Ext.define("Screener.controller.Application", {
     // Adds new person to the NewPersons store
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
-       
-        if (formp.givenname && formp.familyname && formp.choice) {
+       console.log("ddddddddddddddddddddddinside save person");
+        if (formp.givenname && formp.familyname && formp.choice && (formp.age || formp.dateOfBirth )) {
             var person = Ext.create('Screener.model.Person',{
                 gender: formp.choice,
+                age:formp.age,
                 names: [{
                     givenName: formp.givenname,
                     familyName: formp.familyname
-                }]
+                }],
             });
+//            check?
+//                person.age = dglksjdgklj;
+            console.log("inside save person");
+            console.log(person);
             var store = Ext.create('Screener.store.NewPersons');
             store.add(person);
             store.sync();

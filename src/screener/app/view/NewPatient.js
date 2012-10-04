@@ -14,7 +14,7 @@ Ext.define("Screener.view.NewPatient", {
         hidden: true,
         // Set the width and height of the panel
         width: 500,
-        height: 240,
+        height: 310,
 
         items: [{
             xtype: 'textfield',
@@ -26,7 +26,31 @@ Ext.define("Screener.view.NewPatient", {
             id: 'familyName',
             name: 'familyname',
             label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.fam_name')
-        }, {
+        }, 
+        {
+            xtype  : 'container',
+            id: 'ageDateOfBirth',
+            layout : {
+                type  : 'hbox'
+            },
+            items : [
+            {
+                xtype: 'textfield',
+                id: 'age',
+                name: 'age',
+                labelWidth: 70,
+                label: "Age"
+            },
+            {
+                xtype: 'textfield',
+                id: 'dateOfBirth',
+                name: 'dateOfBirth',
+                labelWidth: 70,
+                label: "DateOfBirth"
+            }
+            ]
+        },
+        {
             xtype  : 'container',
             id: 'sexRadioGroup',
             layout : {
@@ -34,30 +58,30 @@ Ext.define("Screener.view.NewPatient", {
                 align : 'strech'
             },
             items  : [
-                {
-                    xtype : 'radiofield',
-                    label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.male'),
-                    value: 'M',
-                    name  : 'choice',
-                    labelWidth: 70,
-                    flex  : 1
-                },
-                {
-                    xtype : 'radiofield',
-                    label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.female'),
-                    value: 'F',
-                    name  : 'choice',
-                    labelWidth: 90,
-                    flex  : 1
-                },
-                {
-                    xtype : 'radiofield',
-                    label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.other'),
-                    value: 'O',
-                    name  : 'choice',
-                    labelWidth: 70,
-                    flex  : 1
-                }
+            {
+                xtype : 'radiofield',
+                label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.male'),
+                value: 'M',
+                name  : 'choice',
+                labelWidth: 70,
+                flex  : 1
+            },
+            {
+                xtype : 'radiofield',
+                label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.female'),
+                value: 'F',
+                name  : 'choice',
+                labelWidth: 90,
+                flex  : 1
+            },
+            {
+                xtype : 'radiofield',
+                label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.other'),
+                value: 'O',
+                name  : 'choice',
+                labelWidth: 70,
+                flex  : 1
+            }
             ]
         },{
             xtype: 'button',

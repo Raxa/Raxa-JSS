@@ -14,7 +14,7 @@ Ext.define('Screener.store.IdentifierType', {
             url: HOST + '/ws/rest/v1/patientidentifiertype',
             headers: Util.getBasicAuthHeaders(),
             reader: {
-              type: 'json',
+              type: 'json', 
               rootProperty: 'results'
             },
             writer: {
