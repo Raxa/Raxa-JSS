@@ -8,10 +8,6 @@ Ext.define("Screener.view.Main", {
     xtype: 'mainView',
     id: "mainView",
     config: {
-        layout: {
-            type: 'hbox',
-            
-        },
         height: 600,
         items: [
         {
@@ -19,7 +15,7 @@ Ext.define("Screener.view.Main", {
             border: '1 1 1 0',
             margin: '0 10 10 0',
             animation: 'flip',
-            flex: 1,
+            width:'100%',
             id: 'maintabs',
             activeItem : 0,
             tabBar: {
