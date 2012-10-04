@@ -573,16 +573,25 @@ Ext.define("Screener.controller.Application", {
     // Counts number of patients assigned to a doctor   
     countPatients: function () {
         //store = Ext.create('Screener.store.AssignedPatientList');
-        store = Ext.getStore('assPatientStore')
-        docStore = Ext.create('Screener.store.Doctors')
+        var patientStore = Ext.getStore('assPatientStore')
+        var docStore = Ext.getStore('doctorStore');
+        if(!Ext.getStore('doctorStore')){
+            docStore = Ext.create('Screener.store.Doctors',{
+                storeId: 'doctorStore'
+            });
+        }
+        else{
+            docStore.load();
+        }
+        console.log(docStore);
         docStore.on('load', function () {
-            store.load();
-            store.on('load', function () {
+            patientStore.load();
+            patientStore.on('load', function () {
                 for (var i = 0; i < docStore.getData().length; i++) {
                     var count = 0;
-                    for (var j = 0; j < store.getData().items[0].getData().patients.length; j++) {
+                    for (var j = 0; j < patientStore.getData().items[0].getData().patients.length; j++) {
                         if (docStore.data.items[i].data.person != null) {
-                            if (docStore.data.items[i].data.person.uuid == store.getData().items[0].getData().patients[j].encounters[0].provider) {
+                            if (docStore.data.items[i].data.person.uuid == patientStore.getData().items[0].getData().patients[j].encounters[0].provider) {
                                 count = count + 1;
                             }
                         }
@@ -591,8 +600,8 @@ Ext.define("Screener.controller.Application", {
                 }
                 Ext.getCmp('doctorList').setStore(docStore)
                 return docStore
-            })
-        })
+            }, this)
+        }, this)
     },
     // Show screen with pharmacy list
     showPharmacy: function () {

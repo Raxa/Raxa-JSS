@@ -345,6 +345,9 @@ var Util = {
     
     // Enum to capture pages in each app. E.g. Util.PAGES.SCREENER.PAGE_NAME
     PAGES: {},
+    
+    //string to know whether a patient is able to be screened to
+    DOCTOR_ATTRIBUTE: 'Outpatient - true',
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha

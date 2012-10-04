@@ -19,7 +19,19 @@ Ext.define('Screener.store.Doctors', {
                 rootProperty: 'results'
             }
         },
-        autoLoad: true
+        autoLoad: true,
+        listeners:{
+            'load': function() {
+                this.filterBy(function(record){
+                    console.log(record);
+                    if(record.data.attributes.length > 0){
+                        return record.data.attributes[0].display === Util.DOCTOR_ATTRIBUTE;
+                    }
+                    return false;
+                });
+            
+            }
+        }
     }
 }); 
 
