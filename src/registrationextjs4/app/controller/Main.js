@@ -6,20 +6,17 @@ Ext.define('Registration.controller.Main', {
     models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor', 'AttributeType'],
 
     init: function () {
+        // connect the actions to eventHandlers
         this.control({
-            //clicking continue button on registraion form 2 calls continue()
             "registrationpart1 button[action=continue]": {
                 click: this.confirmPage
             },
-            //clicking cancel button on registraion form 2 calls cancel()
             "registrationpart1 button[action=cancel]": {
                 click: this.cancel
             },
-            //clicking cancel button on confirmation screen calls cancel()
-            "registrationconfirm button[action=cancel]": {
-                click: this.cancel
+            "registrationconfirm button[action=back]": {
+                click: this.backToPage1
             },
-            //clicking submit button on confirmation screen calls submit()
             "registrationconfirm button[action=submit]": {
                 click: this.submit
             },
@@ -49,8 +46,6 @@ Ext.define('Registration.controller.Main', {
         l.setActiveItem(REG_PAGES.REG_1.value); //Going to Registration Part-1 Page
         Util.KeyMapButton('continuebutton', Ext.EventObject.ENTER);
     },
-
-
 
     searchPatient: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
@@ -112,6 +107,12 @@ Ext.define('Registration.controller.Main', {
     goToBMI: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.REG_BMI.value);
+    },
+
+    //Navigates to BMI page
+    backToPage1: function () {
+        var l = Ext.getCmp('mainRegArea').getLayout();
+        l.setActiveItem(REG_PAGES.REG_1.value);
     },
 
     /* this function return to home screen */

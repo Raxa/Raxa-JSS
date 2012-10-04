@@ -283,9 +283,8 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     items:[{
                         xtype: 'button',
                         margin: '30 0 0 400',
-                        ui: 'raxa-orange-small',
-                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Cancel'),
-                        action: 'cancel'
+                        text: 'Back',
+                        action: 'back'
                     }, {
                         xtype: 'button',
 				        id:'submitButton',
