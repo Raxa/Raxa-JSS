@@ -470,7 +470,6 @@ Ext.define("Screener.controller.Application", {
     },
     // Opens form for creating new patient
     addPerson: function () {
-        console.log("hey");
         if (!this.newPatient) {
             this.newPatient = Ext.create('Screener.view.NewPatient');
             Ext.Viewport.add(this.newPatient);

@@ -56,7 +56,7 @@ Ext.define("Screener.view.PatientListView", {
                 {
                     xtype: 'button',
                     itemId: 'addPatientButton',
-                    text: 'ADD PATIENT',
+                    text: 'Add Patient',
                     align: 'right',
                 },
                 {
