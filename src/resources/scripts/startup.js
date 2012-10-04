@@ -71,10 +71,9 @@ var Startup = {
                         Util.getAttributeFromREST(res.resource, res.queryTerm, res.varName, res.displayName);
                     }
                 }
-            }            
+            }
         });
     },
-    
     /**
      * for each of the modules defined in Util.getModules(), create a GET
      * request and send to server for the app/app.js file
@@ -138,11 +137,54 @@ var Startup = {
             Startup.createViewGetRequest(currModuleAddr, modules[i], views, callback);
         }
     },
+    
+    intervalFn: null,
+    uuidLoadAttempts: 0,
+    uuidLoading: function(){
+        var MAX_LOAD_ATTEMPTS = 10;
+        var that = this;
+        Ext.getCmp('mainView').setMasked({
+            xtype: 'loadmask',
+            message: 'Loading'
+        });
+
+        if( ! Util.checkAllUuidsLoaded() ) {
+            uuidLoadAttempts++;
+            console.log("Loading UUIDs... # attempts = " + uuidLoadAttempts + " of " + MAX_LOAD_ATTEMPTS);
+        }
+        else {
+            that.removeTimer();
+            Ext.getCmp('mainView').setMasked(false);
+        }
+        
+        if ( uuidLoadAttempts === MAX_LOAD_ATTEMPTS){
+            that.removeTimer();
+            Ext.getCmp('mainView').setMasked(false);
+            Ext.Msg.alert("","Unable to load all UUIDs from OpenMRS.");
+            Util.logoutUser();
+        }
+    },
+             
+    repeatUuidLoadingEverySec: function()
+    {
+        uuidLoadAttempts=0; // Without this compiler is giving error
+        var that = this;
+        intervalFn = setInterval(function(){
+            that.uuidLoading();
+        },1000);
+    },
+    
+
+    removeTimer: function()
+    {
+        clearInterval(intervalFn);
+    },
+
     /**
-    * POST the passed views to the REST services on HOST using AJAX Request
-    * @param views: 2-d array for storing view names+URLs
-    * @param callback: function to be called after AJAX GETs are finished, 
-    */
+     * POST the passed views to the REST services on HOST using AJAX Request
+     * @param views: 2-d array for storing view names+URLs
+     * @param callback: function to be called after AJAX GETs are finished, 
+     */
     postPrivilege: function (views, callback) {
         //Counts the successful POST AJAX Calls
         postSuccessCount = 0;

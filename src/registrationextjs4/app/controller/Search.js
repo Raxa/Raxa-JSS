@@ -8,6 +8,9 @@ Ext.define('Registration.controller.Search', {
             "searchpart1 button[action=search]": {
                 click: this.search
             },
+            "searchpart1 button[action=cancel]": {
+                click: this.cancel
+            },
             "searchpart1 button[action=reset]": {
                 click: this.reset
             },
@@ -15,7 +18,7 @@ Ext.define('Registration.controller.Search', {
                 click: this.modifySearch
             },
             "searchconfirm button[action=bmipage]":{
-                click: this.gotoBMIpage
+                click: this.gotoIllnessDetails
             }
         });
     },
@@ -62,6 +65,11 @@ Ext.define('Registration.controller.Search', {
             alert("invalid fields");
         }
     },
+    
+    //cancels search, goes back to home page
+    cancel: function(){
+        Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.HOME.value);
+    },
 
     //function which reset all the field in search patient form
     reset: function () {
@@ -88,7 +96,7 @@ Ext.define('Registration.controller.Search', {
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen
     },
     
-    gotoBMIpage: function() {
+    gotoIllnessDetails: function() {
         Ext.Ajax.request({
             url : HOST+'/ws/rest/v1/patient/'+localStorage.searchUuid,
             method: 'GET',
@@ -102,7 +110,7 @@ Ext.define('Registration.controller.Search', {
                 Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
                 Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameSearchedPatient').getValue());
                 var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.REG_BMI.value); 
+                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value); 
             }
         });
     }

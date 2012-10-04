@@ -21,14 +21,15 @@
 var TABS = {
     HISTORY: 0,
     EXAMINATION: 1,
-    DIAGNOSIS: 2,
-    TREATMENT: 3
+    DATA: 2,
+    DIAGNOSIS: 3,
+    TREATMENT: 4
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.work', {
     extend: 'Ext.Container',
     xtype: 'work',
-    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.examination', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
+    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.examination', 'RaxaEmr.Outpatient.view.patient.dataPanel', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
     config: {
         layout: {
             type: 'hbox'

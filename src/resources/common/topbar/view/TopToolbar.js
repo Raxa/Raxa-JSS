@@ -29,7 +29,7 @@ Ext.define('Topbar.view.TopToolbar', {
 						if (username == null) {
 							username = 'Guest';
 						}
-						this.parent.getComponent('UsernameLabel').setHtml(username);
+						//this.parent.getComponent('UsernameLabel').setHtml(username);
 						var buttonUrlSettings = this.parent.add({
 							xtype: 'urlSettingsButton',
 							margin: 5,
@@ -41,7 +41,7 @@ Ext.define('Topbar.view.TopToolbar', {
 					}
 					else {
 						if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
-							this.parent.getComponent('UsernameLabel').setHtml('Guest');
+							//this.parent.getComponent('UsernameLabel').setHtml('Guest');
 							var buttonUrlSettings = this.parent.add({
 								xtype: 'urlSettingsButton',
 								margin: 5,
@@ -112,6 +112,41 @@ Ext.define('Topbar.view.TopToolbar', {
 			delegate: '#LogoutButton'
 		}]
 	},
+        
+        initialize: function () {
+        this.add( {
+            xtype: 'selectfield',
+            id: 'topbarSelectfield',
+            centered: true ,
+            selected : true,
+            value : " ",
+            options: 
+            Util.getSelectModules(),
+            listeners: {
+                change: function () {
+                    var url = window.location.href;
+                    if(url.indexOf("Dashboard") < 0)
+                    {
+                        if(Ext.getCmp('topbarSelectfield').getValue() == 'login') {
+                            window.location = '../' ;
+                        } else
+                        {
+                            var currentUrl = window.location.href;
+                            if(currentUrl.indexOf(Ext.getCmp('topbarSelectfield').getValue()) < 0) {
+                                window.location = '../'+Ext.getCmp('topbarSelectfield').getValue();
+                            }
+                        }
+                    } else {
+                        window.location = Ext.getCmp('topbarSelectfield').getValue();
+                    }
+                    if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
+                        window.location = "http://patient-facing.github.com"; 
+                    } 
+                }
+            }
+        }     
+        )
+    },
 
 	onLogoutButtonTap: function(button, e, options) {
 		var logconfirm = button.LogoutButton;

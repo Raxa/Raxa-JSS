@@ -2,6 +2,7 @@
  * This class defines our main view with navigation.View
  * to allow for easy switching between screens, a back button, etc.
  */
+
 Ext.define("Screener.view.Main", {
     extend: 'Ext.Container',
     xtype: 'mainView',
@@ -77,4 +78,3 @@ Ext.define("Screener.view.Main", {
     }
     
 });
-

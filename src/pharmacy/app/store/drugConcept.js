@@ -2,7 +2,7 @@
 Ext.define('RaxaEmr.Pharmacy.store.drugConcept', {
     extend: 'Ext.data.Store',
     fields: [{
-        name: 'uuid',
+        name: 'concept',
         type: 'string'
     }]
 })
