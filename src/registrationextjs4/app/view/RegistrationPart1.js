@@ -183,7 +183,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
-                                xtype: 'datefield',
+                                xtype: 'dobdatefield',
                                 fieldLabel: 'DOB',
                                 id: 'dob',
                                 format: 'd/m/Y',
@@ -193,8 +193,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 labelWidth: 200,
                                 anchor: '75%',
                                 width:172,
-                                allowBlank: false,
-                                maxValue: new Date()  
+                                allowBlank: false
                             }, {
                                 name: 'Age',
                                 xtype: 'numberfield',
