@@ -200,6 +200,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 fieldLabel: 'Current Patient Age',
                                 id: 'patientAge',
                                 minValue: 0,
+                                maxValue: MAX_AGE_OF_PATIENT,
                                 hideTrigger: true,
                                 width: 172,
                                 margins: '0 0 0 6',

@@ -30,17 +30,6 @@ Ext.apply(Ext.form.VTypes, {
     phoneMask: /[ \d\-\(\)]/
 });
 
-// Maximum age of Patient till which REST WS works is 119
-var MAX_AGE_OF_PATIENT = 119;
-
-//Creates a xtype: dobdatefield (that links adds limit to
-Ext.define('dobdatefield', {
-    extend:'Ext.form.DateField',
-    alias: 'widget.dobdatefield',
-    maxValue: new Date(),
-    minValue: new Date(new Date().setFullYear(new Date().getFullYear() - MAX_AGE_OF_PATIENT))
-});
-	
 // Set host. If host has been configured in localStorage, use that host.
 // Otherwise, use the default host.
 LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
