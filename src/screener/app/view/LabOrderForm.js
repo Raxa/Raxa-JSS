@@ -42,7 +42,7 @@ Ext.define("Screener.view.LabOrderForm", {
             width: '200px'
         }, {
             xtype: 'spacer',
-            height: 10
+            height: 20
         }, {
             xtype: 'button',
             ui: 'confirm',
