@@ -700,6 +700,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     //function to be call when a patient is selected in the patient search results gird of advanced search
     //sets the fields realted to patient in main screen and then calls for function getDrugOrders()
     patientSelect: function (x, searchPanel, drugOrderGrid) {
+        console.log(x);
         Ext.getCmp('prescriptionPatientName').setValue(x.display);
         //below its commented as the identifier are not sent in patient search results
         //Ext.getCmp('prescriptionPatientId').setValue(x.identifier)
@@ -731,6 +732,15 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 
     //function for the get call for drugorder for related patient
     getDrugOrders: function (x, searchPanel, drugOrderGrid) {
+        Ext.getCmp(searchPanel).getLayout().setActiveItem(0);
+        if(!Ext.getCmp("searchLoadMask")){
+            var myMask = new Ext.LoadMask(Ext.getCmp(searchPanel), {
+                msg:"Searching",
+                id:"searchLoadMask"
+            });
+        }
+        console.log(x);
+        Ext.getCmp("searchLoadMask").show();
         var Url = HOST + '/ws/rest/v1/order?patient=';
         Url = Url + x + '&&v=full';
         // setting up the proxy here because url is not fixed
@@ -747,6 +757,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp(drugOrderGrid).getStore().load({
             scope: this,
             callback: function(records, operation, success){
+                Ext.getCmp("searchLoadMask").hide();
                 if(success){
                     this.makeNewPrescriptionForSearchPatient();
                     if(Ext.getCmp(drugOrderGrid).getStore().count()>0){
@@ -774,7 +785,14 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 
     //function that make the get call when enter is pressed within any of the 3 text fieds in advanced search
     searchPatient: function (searchPanel, nameField, searchGrid) {
-        Ext.getCmp(searchPanel).getLayout().setActiveItem(0)
+        Ext.getCmp(searchPanel).getLayout().setActiveItem(0);
+        if(!Ext.getCmp("searchLoadMask")){
+            var myMask = new Ext.LoadMask(Ext.getCmp(searchPanel), {
+                msg:"Searching",
+                id:"searchLoadMask"
+            });
+        }
+        Ext.getCmp("searchLoadMask").show();
         if (Ext.getCmp(nameField).getValue() != "") {
             // setting up url with the query for given patient name
             var Url = HOST + '/ws/rest/v1/patient?q=' + Ext.getCmp(nameField).getValue() + "&v=full";
@@ -793,8 +811,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 scope: this,
                 callback: function(records, operation, success){
                     if(success){
+                       Ext.getCmp("searchLoadMask").hide();
                     }
                     else{
+                        Ext.getCmp("searchLoadMask").hide();
                         Ext.Msg.alert(Util.getLoadErrorMessage());
                     }
                 }
