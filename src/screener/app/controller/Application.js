@@ -234,18 +234,20 @@ Ext.define("Screener.controller.Application", {
             var mostRecentEncounter = encounters[encounters.length - 1];
             var observations = mostRecentEncounter.obs;   
 
-            // Update data (time, bmi) in patient list
-            currentPatientData.complaint = this.getObsComplaint(observations);
+            // Update data (time, bmi, complaint) in patient list
+            var COMPLAINT_DESCRIPTION = 'REGISTRATION COMPLAINT';
+            var BMI_DESCRIPTION = 'BODY MASS INDEX';
+                
+            currentPatientData.complaint = this.getObsByDisplayName(observations, COMPLAINT_DESCRIPTION);
             currentPatientData.time = mostRecentEncounter.encounterDatetime;
-            currentPatientData.bmi = this.getObsBMI(observations);
+            currentPatientData.bmi = this.getObsByDisplayName(observations, BMI_DESCRIPTION);
         }
         Ext.getStore('patientStore').sort('display');
     },
     //helper method - returns BMI value if it exists
-    getObsBMI: function (obs) {
-        var BMI_DESCRIPTION = 'BODY MASS INDEX';
+    getObsByDisplayName: function (obs,displayName) {
         for (var i = 0; i < obs.length; i++) {
-            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
+            if (obs[i].display.indexOf(displayName) != -1) {
                 return obs[i].value;
             }
         }
@@ -255,16 +257,6 @@ Ext.define("Screener.controller.Application", {
         return '-';
     },
     
-    getObsComplaint: function(obs){
-        var Complaint_DESCRIPTION = 'REGISTRATION COMPLAINT';
-        for (var i = 0; i<obs.length; i++){
-            if(obs[i].display.indexOf(Complaint_DESCRIPTION) != -1){
-                return obs[i].value;
-            }
-        }
-        //If No Complaint registered
-        return '-';
-    },
     // This method sets the UI of sort buttons when pressed.
     // One button is set as "declined" (pressed) while the other two
     // are set to "normal" (not pressed).
