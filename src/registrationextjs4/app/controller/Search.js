@@ -24,6 +24,9 @@ Ext.define('Registration.controller.Search', {
     },
     //function making the rest call to get the patient with given search quiry
     search: function () {
+        //Basic mask
+        Ext.getBody().mask('Searching...', 'x-mask-loading');
+        
         if (Ext.getCmp('patientFirstNameSearch').isValid() || Ext.getCmp('PatientIdentifierSearch').isValid()) {
             // concatenating the identifier and patient name to make the url for get call
             var Url = HOST + '/ws/rest/v1/patient?q='; // Ext.getCmp('PatientIdentifierSearch').getValue() + "&&v=full";
@@ -58,10 +61,12 @@ Ext.define('Registration.controller.Search', {
                 var l = Ext.getCmp('mainRegArea').getLayout();
                 l.setActiveItem(REG_PAGES.SEARCH_2.value);
                 Ext.getCmp('patientGrid').view.refresh();
-            }, this);
+                Ext.getBody().unmask();
+            }, this);         
             // I return the store so as to use it in the jasmine test
             return store;
         } else {
+            Ext.getBody().unmask();
             alert("invalid fields");
         }
     },
@@ -74,15 +79,15 @@ Ext.define('Registration.controller.Search', {
     //function which reset all the field in search patient form
     reset: function () {
         var fields = [
-            'OldPatientIdentifierSearch',
-            'PatientIdentifierSearch',
-            'patientFirstNameSearch',
-            'patientLastNameSearch',
-            'relativeFirstNameSearch',
-            'relativeLastSearch',
-            'DOBSearch',
-            'Town/Village/CitySearch',
-            'phoneNumberSearch'
+        'OldPatientIdentifierSearch',
+        'PatientIdentifierSearch',
+        'patientFirstNameSearch',
+        'patientLastNameSearch',
+        'relativeFirstNameSearch',
+        'relativeLastSearch',
+        'DOBSearch',
+        'Town/Village/CitySearch',
+        'phoneNumberSearch'
         ];
 
         for (var i=0; i < fields.length; i++)
