@@ -79,8 +79,8 @@ Ext.define('Registration.controller.Main', {
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setText(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setText(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
-        Ext.getCmp('relativeNameConfirm').setText(Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value);
-        Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value);
+        Ext.getCmp('relativeNameConfirm').setText((Ext.getCmp('relativeFirstName').value || "")+ " " + (Ext.getCmp('relativeLastName').value || ""));
+        Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value || "");
         Ext.getCmp('sexConfirm').setText(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
         Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
@@ -121,7 +121,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
         //reset all the fields in registration form
-   var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
+   var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
  
         for (var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();

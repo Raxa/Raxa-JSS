@@ -183,7 +183,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
-                                xtype: 'datefield',
+                                xtype: 'dobdatefield',
                                 fieldLabel: 'DOB',
                                 id: 'dob',
                                 format: 'd/m/Y',
@@ -200,6 +200,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 fieldLabel: 'Current Patient Age',
                                 id: 'patientAge',
                                 minValue: 0,
+                                maxValue: MAX_AGE_OF_PATIENT,
                                 hideTrigger: true,
                                 width: 172,
                                 margins: '0 0 0 6',
@@ -241,7 +242,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             align: 'stretch'
                         },
                         items:[{
-                            html: "<img border=\"0\" src=\"/Raxa-JSS/src/resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
+                            html: "<img border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         },{
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
