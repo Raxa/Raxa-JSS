@@ -138,7 +138,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                         if(success){
                         }
                         else{
-                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
                     }
                 });

@@ -74,7 +74,7 @@ var helper = {
                         if(success){
                         }
                         else{
-                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
                     }
                 });
@@ -95,7 +95,7 @@ var helper = {
                         Ext.getCmp('viewPort').setActiveItem(PAGES.illnessList)
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });
@@ -122,7 +122,7 @@ var helper = {
                         Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });
@@ -176,7 +176,7 @@ var helper = {
                         Ext.getCmp('viewPort').setActiveItem(PAGES.illnessDetails)
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });
@@ -213,13 +213,13 @@ var helper = {
                                     Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
                                 }
                                 else{
-                                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                                 }
                             }
                         });
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });
@@ -242,7 +242,7 @@ var helper = {
                     })
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });

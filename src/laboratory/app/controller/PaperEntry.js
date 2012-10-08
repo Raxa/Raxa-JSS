@@ -97,7 +97,7 @@ Ext.define('Laboratory.controller.PaperEntry', {
                 },
 
                 failure: function (response) {
-                    Ext.Msg.alert(Util.getSyncErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageSyncError());
                 },
 
                 success: function (response) {
@@ -140,7 +140,7 @@ Ext.define('Laboratory.controller.PaperEntry', {
                 "Content-Type": "application/json"
             },
             failure: function (response) {
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             },
             success: function (response) {
                 var JSONResult = JSON.parse(response.responseText);
@@ -153,7 +153,7 @@ Ext.define('Laboratory.controller.PaperEntry', {
                         if(success){
                         }
                         else{
-                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
                     }
                 });

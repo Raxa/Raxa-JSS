@@ -308,7 +308,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 }
             },
             failure: function(){
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
         store_prefill.sync({
@@ -321,7 +321,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 }
             },
             failure: function(){
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
     },
@@ -486,7 +486,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     Ext.getCmp('addPatient').getForm().reset();
                 },
                 failure: function(){
-                    Ext.Msg.alert(Util.getSyncErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageSyncError());
                 }
             }); 
             //I made this funtion return this store because i needed this in jasmine unit test
@@ -507,7 +507,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     this.getlocation(personUuid, identifiers.getAt(0).getData().uuid)
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -523,7 +523,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     this.makePatient(personUuid, identifierType, locations.getAt(0).getData().uuid)
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -550,7 +550,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 this.sendPharmacyEncounter(personUuid, localStorage.prescriptionUuidencountertype);
             },
             failure: function(){
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
     },
@@ -766,7 +766,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     }
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -815,7 +815,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     }
                     else{
                         Ext.getCmp("searchLoadMask").hide();
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });
@@ -1025,7 +1025,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 }
             },
             failure: function() {
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             },
             scope: this
         });
@@ -1077,7 +1077,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 this.postNewDrug(jsonResponse.uuid);
             },
             failure: function() {
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             },
             scope: this
         })        
@@ -1198,7 +1198,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.Msg.alert('Successful');
             },
             failure: function(){
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
     },
@@ -1491,7 +1491,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.getStore('batches').load();
             },
             failure: function(){
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
     },
@@ -1517,7 +1517,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // make post call for encounter
         encounterStore.sync({
             failure: function(){
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
         //https://raxaemr.atlassian.net/browse/RAXAJSS-411
@@ -1554,7 +1554,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     console.log('Alert marked as seen');
                 },
                 failure: function() {
-                    Ext.Msg.alert(Util.getSyncErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageSyncError());
                 }
             });
         }

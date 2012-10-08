@@ -330,8 +330,6 @@ var REG_PAGES = {
     }
 };
 
-var DEFAULT_LOCATION = "GAN";
-
 var UITIME = 120000;
 var ONEDAYMS = 86400000;
 var MONTHSINAYEAR = 12;
@@ -347,6 +345,8 @@ var Util = {
     
     // Enum to capture pages in each app. E.g. Util.PAGES.SCREENER.PAGE_NAME
     PAGES: {},
+
+    DEFAULT_LOCATION: "GAN",
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
@@ -580,8 +580,9 @@ var Util = {
      */
     getPatientIdentifier: function () {
         var locationString = arguments[0];
-        if(arguments[0] === undefined)
-            locationString = DEFAULT_LOCATION;
+        if(arguments[0] === undefined){
+            locationString = this.DEFAULT_LOCATION;
+        }
         var generatedId = locationString +(Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
@@ -765,14 +766,14 @@ var Util = {
     /**
      * The message to send when a resource fails to load from the server
      */
-    getLoadErrorMessage: function() {
+    getMessageLoadError: function() {
         return "Unable to read from server";
     },
     
     /**
      * Message to send when a resource fails to write to a server
      */
-    getSyncErrorMessage: function() {
+    getMessageSyncError: function() {
         return "Unable to write to server";
     }
 }

@@ -115,7 +115,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                                 Ext.getCmp('drug-name').setStore(drugList);
                             }
                             else{
-                                Ext.Msg.alert(Util.getLoadErrorMessage());
+                                Ext.Msg.alert("Error", Util.getMessageLoadError());
                             }
                         }
                     });

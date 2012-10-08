@@ -219,7 +219,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                     Ext.getCmp('contact').setStore(store_patientList);//setting store for the patient list
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -333,7 +333,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                     //do the things here
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -422,7 +422,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                     Ext.getCmp('refToDocPanel').setStore(docList);
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -436,7 +436,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 if(success){
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -465,7 +465,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 if(success){
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -608,7 +608,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                 if(success){
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -781,7 +781,7 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                         }
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });

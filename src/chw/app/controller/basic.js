@@ -243,7 +243,7 @@ Ext.define('chw.controller.basic', {
                                 });
                             }
                             else{
-                                Ext.Msg.alert(Util.getLoadErrorMessage());
+                                Ext.Msg.alert("Error", Util.getMessageLoadError());
                             }
                         }
                     });
@@ -289,7 +289,7 @@ Ext.define('chw.controller.basic', {
                             }
                         }
                         else{
-                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
                     }
                 });
@@ -491,13 +491,13 @@ Ext.define('chw.controller.basic', {
                                     Ext.getCmp('illnessNames').setStore(istore)
                                 }
                                 else{
-                                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                                 }
                             }
                         });
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });
@@ -558,7 +558,7 @@ Ext.define('chw.controller.basic', {
                     Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList);
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -636,7 +636,7 @@ Ext.define('chw.controller.basic', {
                         Ext.getCmp('visitDetailsPanel').refresh();
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });

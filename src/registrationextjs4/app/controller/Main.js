@@ -452,7 +452,7 @@ Ext.define('Registration.controller.Main', {
                 Ext.Msg.alert('Encounter saved successfully.');
             },
             failure: function(){
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
         return store;

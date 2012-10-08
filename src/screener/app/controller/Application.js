@@ -349,7 +349,7 @@ Ext.define("Screener.controller.Application", {
                     });
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -475,7 +475,7 @@ Ext.define("Screener.controller.Application", {
                             }
                         }
                         else{
-                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
                     }
                 });
@@ -535,7 +535,7 @@ Ext.define("Screener.controller.Application", {
                     this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -550,7 +550,7 @@ Ext.define("Screener.controller.Application", {
                     this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -762,7 +762,7 @@ Ext.define("Screener.controller.Application", {
                     this.setBMITime(Ext.getStore('patientStore'));
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
@@ -801,7 +801,7 @@ Ext.define("Screener.controller.Application", {
                 objectRef.showPatients()
             },
             failure: function() {
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
         this.getRemoveButton().disable();
@@ -821,7 +821,7 @@ Ext.define("Screener.controller.Application", {
                         method: 'DELETE',
                         headers: Util.getBasicAuthHeaders(),
                         failure: function() {
-                            Ext.Msg.alert(Util.getSyncErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageSyncError());
                         }
                     });
                 }

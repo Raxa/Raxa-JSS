@@ -61,7 +61,7 @@ Ext.define('Registration.controller.Search', {
                         Ext.getCmp('patientGrid').view.refresh();
                     }
                     else{
-                        Ext.Msg.alert(Util.getLoadErrorMessage());
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
                     }
                 }
             });
@@ -108,7 +108,7 @@ Ext.define('Registration.controller.Search', {
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             failure: function (response) { 
-                Ext.Msg.alert(Util.getLoadErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageLoadError());
             },
             success: function (response) {
                 var string = JSON.parse(response.responseText).identifiers[0].display;

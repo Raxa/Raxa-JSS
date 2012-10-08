@@ -88,7 +88,7 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                 "Content-Type": "application/json"
             },
             failure: function (response) {
-                Ext.Msg.alert(Util.getSyncErrorMessage());
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             },
             success: function (response) {
                 console.log('Lab Paper Entry for' + 'POST successful with response status' + response.status);
@@ -99,7 +99,7 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                             //do the things here
                         }
                         else{
-                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
                     }
                 });
@@ -110,7 +110,7 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                         //do the things here
                         }
                         else{
-                            Ext.Msg.alert(Util.getLoadErrorMessage());
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
                     }
                 });
@@ -146,7 +146,7 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                     //do the things here
                 }
                 else{
-                    Ext.Msg.alert(Util.getLoadErrorMessage());
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
                 }
             }
         });
