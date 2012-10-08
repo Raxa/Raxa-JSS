@@ -25,7 +25,7 @@ Ext.define("Screener.view.PatientListView", {
                 '<img src="{image}" width=48 height=48 />',
                 '</td>',
                 '<td>',
-                '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi} ',
+                '{display}<br>Gender: {gender} Age: {age}<br>BMI: {bmi}<br>Complaint: {complaint}',
                 '</td></tr>',
                 '</table>',
             ].join(''),
