@@ -514,7 +514,7 @@ Ext.define("Screener.controller.Application", {
                 var dt = new Date();
                 console.log("inside if date of birth")
                 console.log(formp.dob);
-                dt = Ext.Date.parse(formp.dob, "Y-m-d");
+                dt = Ext.Date.parse(formp.dob, "Y-m-d" , true);
                 console.log(dt);
                 newPatient. birthdate = formp.dob
             } 
