@@ -39,26 +39,27 @@ Util.PAGES.SCREENER = {
  */
 Ext.define("Screener.controller.Application", {
     requires: [
-    'Screener.store.AssignedPatientList',
-    'Screener.store.Doctors',
-    'Screener.store.drugConcept',
-    'Screener.store.drugEncounter',
-    'Screener.store.druglist',
-    'Screener.store.encounterpost',
-    'Screener.store.encounters',
-    'Screener.store.IdentifierType',
-    'Screener.store.Location',
-    'Screener.store.NewPatients',   // Cant find this store
-    'Screener.store.NewPersons',
-    'Screener.store.PatientList',
-    'Screener.store.Patients',
-    'Screener.store.PatientSummary',
-    'Screener.store.PostLists',
-    'Screener.model.observation',	
-    'Screener.view.PharmacyForm', 
-    'Screener.view.PatientListView',
-    'Screener.view.VitalsView',
-    'Screener.view.VitalsForm'
+        'Screener.store.AssignedPatientList',
+        'Screener.store.Doctors',
+        'Screener.store.drugConcept',
+        'Screener.store.drugEncounter',
+        'Screener.store.druglist',
+        'Screener.store.encounterpost',
+        'Screener.store.encounters',
+        'Screener.store.IdentifierType',
+        'Screener.store.Location',
+        'Screener.store.NewPatients',   // Cant find this store
+        'Screener.store.NewPersons',
+        'Screener.store.PatientList',
+        'Screener.store.Patients',
+        'Screener.store.PatientSummary',
+        'Screener.store.PostLists',
+	'Screener.model.observation',	
+        'Screener.view.PharmacyForm', 
+        'Screener.view.PatientListView',
+        'Screener.view.VitalsView',
+        'Screener.view.VitalsForm',
+        'Screener.view.Main',
     ],
     models: [
     'Screener.model.Person', 
@@ -71,7 +72,6 @@ Ext.define("Screener.controller.Application", {
         // Here we name the elements we need from the page
         refs: {
             view: 'mainView',
-            topmenu: 'topmenu',
             patientView: 'patientView',
             patientSummary: 'patientSummary',
             doctorSummary: 'doctorSummary',
@@ -89,11 +89,7 @@ Ext.define("Screener.controller.Application", {
             doctorStore: 'doctorStore',
             "'form'+form_num": 'form' + form_num,
             formid: '#formid',
-            addPatientButton: '#addPatientButton',
-            showPatientsButton: '#showPatientsButton',
-            showPharmacyButton: '#showPharmacyButton',
-            showLabButton: '#showLabButton',
-            showVitalsButton: '#showVitalsButton',
+            addPatientButton: 'patientListView #addPatientButton',
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
             submitVitalsButton: '#submitVitalsButton',
@@ -124,9 +120,6 @@ Ext.define("Screener.controller.Application", {
             addPatientButton: {
                 tap: 'addPerson'
             },
-            showPatientsButton: {
-                tap: 'showPatients'
-            },
             savePatientButton: {
                 tap: 'savePerson'
             },
@@ -135,15 +128,6 @@ Ext.define("Screener.controller.Application", {
             },
             showDoctorsButton: {
                 tap: 'showDoctors'
-            },
-            showPharmacyButton: {
-                tap: 'showPharmacy'
-            },
-            showLabButton: {
-                tap: 'showLab'
-            },
-            showVitalsButton: {
-                tap: 'showVitals'
             },
             assignButton: {
                 tap: 'assignPatient'
@@ -202,6 +186,8 @@ Ext.define("Screener.controller.Application", {
     },
 
     // Called on startup
+    
+    
     init: function () {
         form_num = 0;
         lab_num = 0;
@@ -345,8 +331,7 @@ Ext.define("Screener.controller.Application", {
         store_assignedPatientList.load();
         that = this;
         store_patientList.on('load', function () {
-            Ext.getCmp('loadMask').setHidden(true);
-            that.setComplaintBMITime(store_patientList);
+            that.setBMITime(store_patientList);
             // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
                 record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
@@ -989,11 +974,6 @@ Ext.define("Screener.controller.Application", {
 
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
-        // Move to new page
         this.getView().setActiveItem(newPage);
-        
-        // Add back button to toolbar which points to old page
-        var topbar = Ext.getCmp("topbar");
-        topbar.setBackButtonTargetPage(oldPage);
     }
 });
