@@ -63,6 +63,7 @@ var RaxaEmr_Pharmacy_Controller_Vars = {
     DEFAULT_STOCK_CENTER_LOCATION_TAG: "Default Stock Center",
     DEFAULT_PHARMACY_LOCATION_TAG: "Default Pharmacy",
     DEFAULT_STOCK_LOCATION: "Unknown Location",
+    PHARMACY_TAG: "canHaveDrugs",
     
     DRUG_INVENTORY_MODEL:{
         UUID_INDEX: 6,
