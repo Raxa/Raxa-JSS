@@ -18,6 +18,7 @@ Ext.define("Screener.view.PatientListView", {
         {
             xtype: 'list',
             itemId: 'patientList',
+            allowDeselect: true,
             itemTpl: [
                 '<table>',
                 '<tr><td>',
