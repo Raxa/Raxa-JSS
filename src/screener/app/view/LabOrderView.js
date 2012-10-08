@@ -10,9 +10,8 @@ Ext.define("Screener.view.LabOrderView", {
     requires: ['Screener.view.LabOrderForm'],
 
     config: {
-        fullscreen: true,
         layout: 'hbox',
-        title: 'Add Lab Orders',
+        title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderView.alo'),
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
         {

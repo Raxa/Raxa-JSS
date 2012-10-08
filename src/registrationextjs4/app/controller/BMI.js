@@ -30,7 +30,7 @@ Ext.define('Registration.controller.BMI', {
                 }
             }
 
-        })
+        });
     },
 
     //Get values from view registrationbmi and call neccessary methods to calculate bmi & display on screen
@@ -67,7 +67,7 @@ Ext.define('Registration.controller.BMI', {
             return {
                 status: status,
                 bmi: bmi
-            }
+            };
         } else {
             var height_m = height_cm / 100; //Convert cm to m
             var bmi = (weight_kg) / (height_m * height_m); //bmi Calculation
@@ -101,7 +101,7 @@ Ext.define('Registration.controller.BMI', {
             return {
                 status: status,
                 bmi: bmi
-            }
+            };
         }
     },
 

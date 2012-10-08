@@ -1,48 +1,55 @@
 /**
  * This screen defines the main menu buttons for:
- * Add a Patient,
- * Show Patients,
- * Show Doctors
+ * Add New Patient
+ * Assign Patients to Doctors
+ * Add Patient Vitals
+ * Add Pharmacy order
+ * Add Lab Order
  */
 Ext.define("Screener.view.TopMenu", {
     extend: 'Ext.Container',
     xtype: 'topmenu',
-    id: 'mainView',
     config: {
-        fullscreen: true,
         layout: 'vbox',
-        centered: true,
+        /*centered: true,*/
         items: [{
             xtype: 'button',
             id: 'addPatientButton',
-            text: 'Add New Patient',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.add_newp'),
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showPatientsButton',
-            text: 'Show Unassigned Patients',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.show_ptd'),
+            ui: 'round',
+            height: 80,
+            width: 300
+        }, {
+            xtype: 'button',
+            id: 'showVitalsButton',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.add_pv'),
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showPharmacyButton',
-            text: 'Pharmacy Order',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.add_po'),
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'button',
             id: 'showLabButton',
-            text: 'Lab Order',
+            text: 'Add Lab Order',
             ui: 'round',
             height: 80,
             width: 300
         }, {
             xtype: 'loadmask',
-            message: 'Loading',
+            message: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.TopMenu.loading'),
             id: 'loadMask'	
         }]
     }

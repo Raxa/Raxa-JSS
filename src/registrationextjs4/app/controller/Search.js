@@ -8,6 +8,9 @@ Ext.define('Registration.controller.Search', {
             "searchpart1 button[action=search]": {
                 click: this.search
             },
+            "searchpart1 button[action=cancel]": {
+                click: this.cancel
+            },
             "searchpart1 button[action=reset]": {
                 click: this.reset
             },
@@ -15,18 +18,27 @@ Ext.define('Registration.controller.Search', {
                 click: this.modifySearch
             },
             "searchconfirm button[action=bmipage]":{
-                click: this.gotoBMIpage
+                click: this.gotoIllnessDetails
             }
-        })
+        });
     },
     //function making the rest call to get the patient with given search quiry
     search: function () {
         if (Ext.getCmp('patientFirstNameSearch').isValid() || Ext.getCmp('PatientIdentifierSearch').isValid()) {
             // concatenating the identifier and patient name to make the url for get call
             var Url = HOST + '/ws/rest/v1/patient?q='; // Ext.getCmp('PatientIdentifierSearch').getValue() + "&&v=full";
-            if (Ext.getCmp('PatientIdentifierSearch').isValid()) Url = Url + Ext.getCmp('PatientIdentifierSearch').getValue() + "&"
-            if (Ext.getCmp('patientFirstNameSearch').isValid()) Url = Url + Ext.getCmp('patientFirstNameSearch').getValue() + "&"
-            if (Ext.getCmp('patientLastNameSearch').isValid()) Url = Url + Ext.getCmp('patientLastNameSearch').getValue() + "&"
+            if (Ext.getCmp('PatientIdentifierSearch').isValid()) 
+            {
+                Url = Url + Ext.getCmp('PatientIdentifierSearch').getValue() + "&";
+            }
+            if (Ext.getCmp('patientFirstNameSearch').isValid()) 
+            {
+                Url = Url + Ext.getCmp('patientFirstNameSearch').getValue() + "&";
+            }
+            if (Ext.getCmp('patientLastNameSearch').isValid()) 
+            {
+                Url = Url + Ext.getCmp('patientLastNameSearch').getValue() + "&";
+            }
             Url = Url + "&v=full";
             store = Ext.create('Registration.store.search');
             // setting up the proxy here because url is not fixed
@@ -38,7 +50,7 @@ Ext.define('Registration.controller.Search', {
                     type: 'json',
                     root: 'results'
                 }
-            })
+            });
             Ext.getCmp('patientGrid').view.store = store;
             store.load();
             // this is required to load the page after the data is beging loaded successfully
@@ -46,25 +58,37 @@ Ext.define('Registration.controller.Search', {
                 var l = Ext.getCmp('mainRegArea').getLayout();
                 l.setActiveItem(REG_PAGES.SEARCH_2.value);
                 Ext.getCmp('patientGrid').view.refresh();
-            }, this)
+            }, this);
             // I return the store so as to use it in the jasmine test
             return store;
         } else {
-            alert("invalid fields")
+            alert("invalid fields");
         }
+    },
+    
+    //cancels search, goes back to home page
+    cancel: function(){
+        Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.HOME.value);
     },
 
     //function which reset all the field in search patient form
     reset: function () {
-        Ext.getCmp('OldPatientIdentifierSearch').reset()
-        Ext.getCmp('PatientIdentifierSearch').reset()
-        Ext.getCmp('patientFirstNameSearch').reset()
-        Ext.getCmp('patientLastNameSearch').reset()
-        Ext.getCmp('relativeFirstNameSearch').reset()
-        Ext.getCmp('relativeLastSearch').reset()
-        Ext.getCmp('DOBSearch').reset()
-        Ext.getCmp('Town/Village/CitySearch').reset()
-        Ext.getCmp('phoneNumberSearch').reset()
+        var fields = [
+            'OldPatientIdentifierSearch',
+            'PatientIdentifierSearch',
+            'patientFirstNameSearch',
+            'patientLastNameSearch',
+            'relativeFirstNameSearch',
+            'relativeLastSearch',
+            'DOBSearch',
+            'Town/Village/CitySearch',
+            'phoneNumberSearch'
+        ];
+
+        for (var i=0; i < fields.length; i++)
+        {
+            Ext.getCmp(fields[i]).reset();
+        }
     },
 
     modifySearch: function () {
@@ -72,7 +96,7 @@ Ext.define('Registration.controller.Search', {
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen
     },
     
-    gotoBMIpage: function() {
+    gotoIllnessDetails: function() {
         Ext.Ajax.request({
             url : HOST+'/ws/rest/v1/patient/'+localStorage.searchUuid,
             method: 'GET',
@@ -86,7 +110,7 @@ Ext.define('Registration.controller.Search', {
                 Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
                 Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameSearchedPatient').getValue());
                 var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.REG_BMI.value); 
+                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value); 
             }
         });
     }

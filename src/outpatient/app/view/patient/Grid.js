@@ -18,7 +18,8 @@
  
 Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
     extend: 'Ext.ux.touch.grid.View',
-    xtype: 'grid-grid',
+    xtype: 'vitalsGrid',
+    id: 'vitalsGrid',
 
     requires: ['Ext.ux.touch.grid.feature.Feature', 'Ext.field.Number', 'RaxaEmr.Outpatient.store.Grid'],
 
@@ -58,7 +59,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
         }, {
             header: 'Blood Pressure',
             dataIndex: 'bp',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
             renderer: function (value) {
                 // TODO: Determine how to pass 2 BMI values into one grid panel
@@ -73,22 +74,22 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
         }, {
             header: 'Pulse',
             dataIndex: 'pulse',
-            width: '10%',
+            width: '20%',
             cls: 'centered-cell',
         }, {
             header: 'Respiratory Rate',
             dataIndex: 'resrate',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
         }, {
             header: 'Temperature',
             dataIndex: 'temp',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
         }, {
             header: 'Oxygen Saturation',
             dataIndex: 'oxysat',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
         }]
     }

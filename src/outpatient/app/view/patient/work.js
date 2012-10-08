@@ -21,19 +21,20 @@
 var TABS = {
     HISTORY: 0,
     EXAMINATION: 1,
-    DIAGNOSIS: 2,
-    TREATMENT: 3
+    DATA: 2,
+    DIAGNOSIS: 3,
+    TREATMENT: 4
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.work', {
     extend: 'Ext.Container',
     xtype: 'work',
-    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.examination', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
+    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.examination', 'RaxaEmr.Outpatient.view.patient.dataPanel', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
     config: {
         layout: {
             type: 'hbox'
         },
-        height: 490,
+        height: 600,
         items: [{
             xtype: 'tabpanel',
             border: '1 1 1 0',
@@ -45,7 +46,9 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 xtype: 'history-panel'
             }, {
                 xtype: 'examination-panel'
-            }, {
+            },{
+            	xtype: 'data-panel'
+            },{
                 xtype: 'diagnosis-panel'
             }, {
                 xtype: 'treatment-panel'
@@ -59,7 +62,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
             docked: 'left',
             margin: '0 0 0 15',
             width: 40,
-            height: 480,
+            height: 600,
             layout: {
                 type: 'vbox'
             },
@@ -91,6 +94,16 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
                 width: 40,
                 flex: 1,
                 cls: 'x-button-vikas',
+                icon: '../outpatient/resources/images/data.png',
+                padding: '0 0 0 0',
+                handler: function () {
+                    Ext.getCmp('maintabs').setActiveItem(TABS.DATA) 	//switch the view to Data tab 
+                }
+            }, {
+                xtype: 'button',
+                width: 40,
+                flex: 1,
+                cls: 'x-button-vikas',
                 icon: '../outpatient/resources/images/diagnosis.png',
                 padding: '0 0 0 0',
                 handler: function () {
@@ -109,8 +122,8 @@ Ext.define('RaxaEmr.Outpatient.view.patient.work', {
 						storeId: 'drugStore'
 					});
 					drugList.load();
-					Ext.getCmp('drug-name').setStore(drugList);
-                }
+//					Ext.getCmp('drug-name').setStore(drugList);
+                }          
             }]
         }]
     }

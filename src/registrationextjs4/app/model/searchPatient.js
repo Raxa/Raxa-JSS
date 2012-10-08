@@ -23,14 +23,13 @@ Ext.define('Registration.model.searchPatient', {
         name: 'age',
         type: 'number',
         useNull: true
-    },
-    /* {  //as the we dont get the identifiers of patients in search list for now i commented them
-        name: 'identifier',
-        type: 'string',
-        mapping: 'identifiers.identifier'
-    },*/
-    // Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 wherever attributes are required
-    {
+    }, { 
+        name: 'raxaIdentifier',
+        type: 'string'
+    }, { 
+        name: 'oldPatientIdentifier',
+        type: 'string'
+    }, {
         name: 'attributes',
         model: 'Registration.model.attributes'
     }, {

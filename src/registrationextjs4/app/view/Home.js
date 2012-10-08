@@ -44,7 +44,7 @@ Ext.define('Registration.view.Home', {
                     height: 130,
                     margin: '0 0 20 0',
                     width: 130,
-                    src: '../../resources/img/logo.png'
+                    src: '../resources/img/logo.png'
                 }, {
                     xtype: 'button',
                     height: 35,

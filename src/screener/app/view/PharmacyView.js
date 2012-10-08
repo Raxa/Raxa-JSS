@@ -10,19 +10,16 @@ Ext.define("Screener.view.PharmacyView", {
     config: {
         fullscreen: true,
         layout: 'hbox',
-        title: 'Add Drugs',
-        cls: 'pharmacyview',
+        title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyView.add_d'),
         style: 'background:#96d2f7',
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
         {
             xtype: 'patientListView',
-            flex: 1,
-            margin : '5 5 5 5'           
+            flex: 1
         }, {
             xtype: 'pharmacyForm',
-            flex: 1,
-            margin : '5 5 5 5'
+            flex: 1
         }]
     }
 });

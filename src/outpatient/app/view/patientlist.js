@@ -55,7 +55,7 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
             xtype: 'toolbar',
             docked: 'top',
 
-            items: [{
+            items: [ {
                 xtype: 'segmentedbutton',
                 allowDepress: false,
                 items: [{
@@ -79,20 +79,29 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
                     text: 'Last Visit',
                     id: 'lastvisit'
                 }]
-            }]
+            },{
+                xtype: 'spacer'
+            },{
+                    xtype: 'button',
+                    width: 130,
+                    text: 'Refresh',
+                    id: 'refresh',
+                    action: 'refreshList',
+                    align: 'right'
+                }]
         }],
 		//list items  are shown by this
 		itemTpl: new Ext.XTemplate(
 			'<div class="headshot" style="background-image:url({image});"></div>', '<div style="float:left;width:25%;">', '{display}', '<span>Gender : {[this.gender(values.gender)]}</span>', '<span>From : ----</span>', '</div>', '<div style="float:left;width:25%;">', '<span>----</span>', '<span>Disease : ----</span>', '<span>Age : {age}</span>', '</div>', '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">8</div>', '<div style="float:right;width:25%;">', '<span>Last Visit : ----</span>', '<span>No. of Visits : --</span>', '<span>ID : ----</span>', '</div>',
 			{
 				date: function(str){
-					return str.encounters[0].encounterDatetime.split("T")[0]
+                    return str.encounters[0].encounterDatetime.split("T")[0];
 				},
 				gender: function(str){
 					if(str == 'M'){
 						return 'Male';
 					}else if(str == 'F'){
-						return 'Female' 
+                        return 'Female';
 					}
 				  }
 			}

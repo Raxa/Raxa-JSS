@@ -62,6 +62,10 @@ Ext.define('RaxaEmr.controller.Session', {
      * @param userInfo: contains a link to the full information listing of a user
      */
     storeUserPrivileges: function (userInfo) {
+        Ext.getCmp('mainView').setMasked({
+                xtype: 'loadmask',
+                message: 'Loading'
+            });
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
             Ext.Ajax.setTimeout(Util.getTimeoutLimit());
@@ -94,6 +98,8 @@ Ext.define('RaxaEmr.controller.Session', {
                         }
                     }
                     localStorage.setItem("privileges", Ext.encode(privilegesArray));
+                    //saving the provider uuid into localstorage
+                    Util.getLoggedInProviderUuid();
                     this.loginSuccess();
                 },
                 failure: function () {
@@ -175,6 +181,7 @@ Ext.define('RaxaEmr.controller.Session', {
      */
     loginSuccess: function () {
         Startup.getResourceUuid();
+        Startup.repeatUuidLoadingEverySec();
         var numAppsAvailable = this.addModulesToDashboard();
         //if only 1 app available, send to that page
         if (numAppsAvailable === 1) {
@@ -182,7 +189,7 @@ Ext.define('RaxaEmr.controller.Session', {
         }
         //if no apps available, alert the user
         else if (numAppsAvailable === 0) {
-            Ext.Msg.alert("No Privileges Found", "Contact your system administrator")
+            Ext.Msg.alert("No Privileges Found", "Contact your system administrator");
         }
         //otherwise show the AppGrid
         else {
@@ -240,7 +247,7 @@ Ext.define('RaxaEmr.controller.Session', {
             }, {
                 xclass: 'RaxaEmr.view.AppCarousel'
             }]
-        }),
+        });
         this.getLoginState();
     },
 

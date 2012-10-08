@@ -15,6 +15,12 @@
  *
  * This class provides util methods and constants that are shared by the core, apps and modules
  */
+
+// TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-382
+// Move everything inside of Util so not in global scope. Then update
+// references from other parts of application. E.g. page enums is a low hanging
+// fruit to start with 
+
 /* Phone Number Validation */
 Ext.apply(Ext.form.VTypes, {
     phone: function (value, field) {
@@ -24,43 +30,242 @@ Ext.apply(Ext.form.VTypes, {
     phoneMask: /[ \d\-\(\)]/
 });
 
+// Set host. If host has been configured in localStorage, use that host.
+// Otherwise, use the default host.
 LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
 LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
-	
-if (localStorage.getItem("host") == null) {
-    var HOST = 'http://test.raxa.org:8080/openmrs';
-} else HOST = localStorage.getItem("host");
+
+var HOST;
+var DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
+if (localStorage.getItem("host") === null) {
+    HOST = DEFAULT_HOST; 
+} else { 
+    HOST = localStorage.getItem("host"); 
+}
+
 var username;
 var password;
 var timeoutLimit = 150000;
 var hospitalName = 'JSS Hospital';
-var keyMap={
-    
+var resourceUuid = {
+    "tablet": {
+        "resource": "concept",
+        "queryTerm": "tablet",
+        "varName": "tablet",
+        "displayName": "TABLET"
+    },
+    "ointment": {
+        "resource": "concept",
+        "queryTerm": "ointment",
+        "varName": "ointment",
+        "displayName": "OINTMENT"
+    },
+    "syrup": {
+        "resource": "concept",
+        "queryTerm": "syrup",
+        "varName": "syrup",
+        "displayName": "SYRUP"
+    },
+    "solutionForInjection": {
+        "resource": "concept",
+        "queryTerm": "solution for injection",
+        "varName": "solutionForInjection",
+        "displayName": "SOLUTION FOR INJECTION"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
+    },
+    "capsule": {
+        "resource": "concept",
+        "queryTerm": "capsule",
+        "varName": "capsule",
+        "displayName": "CAPSULE"
+    },
+    "height": {
+        "resource": "concept",
+        "queryTerm": "height",
+        "varName": "height",
+        "displayName": "HEIGHT (CM)"
+    },
+    "weight": {
+        "resource": "concept",
+        "queryTerm": "weight",
+        "varName": "weight",
+        "displayName": "WEIGHT (KG)"
+    },
+    "bmi": {
+        "resource": "concept",
+        "queryTerm": "bmi",
+        "varName": "bmi",
+        "displayName": "BODY MASS INDEX"
+    },
+    "regfee": {
+        "resource": "concept",
+        "queryTerm": "regfee",
+        "varName": "regfee",
+        "displayName": "REGISTRATION FEE"
+    },
+    "systolicbloodpressure": {
+        "resource": "concept",
+        "queryTerm": "SYSTOLIC BLOOD PRESSURE",
+        "varName": "systolicbloodpressure",
+        "displayName": "SYSTOLIC BLOOD PRESSURE"
+    },
+    "diastolicbloodpressure": {
+        "resource": "concept",
+        "queryTerm": "DIASTOLIC BLOOD PRESSURE",
+        "varName": "diastolicbloodpressure",
+        "displayName": "DIASTOLIC BLOOD PRESSURE"
+    },
+    "pulse": {
+        "resource": "concept",
+        "queryTerm": "pulse",
+        "varName": "pulse",
+        "displayName": "PULSE"
+    },
+    "respiratoryRate": {
+        "resource": "concept",
+        "queryTerm": "RESPIRATORY RATE",
+        "varName": "respiratoryRate",
+        "displayName": "RESPIRATORY RATE"
+    },
+    "temperature": {
+        "resource": "concept",
+        "queryTerm": "TEMPERATURE",
+        "varName": "temperature",
+        "displayName": "TEMPERATURE (C)"
+    },
+    "bloodoxygensaturation": {
+        "resource": "concept",
+        "queryTerm": "BLOOD OXYGEN SATURATION",
+        "varName": "bloodoxygensaturation",
+        "displayName": "BLOOD OXYGEN SATURATION"
+    },
+    "referred": {
+        "resource": "concept",
+        "queryTerm": "REFERRER",
+        "varName": "referred",
+        "displayName": "REFERRING PERSON"
+    },
+    "notes": {
+        "resource": "concept",
+        "queryTerm": "REGISTRATION NOTES",
+        "varName": "notes",
+        "displayName": "REGISTRATION NOTES"
+    },
+    "regcomplaint": {
+        "resource": "concept",
+        "queryTerm": "REGISTRATION COMPLAINT",
+        "varName": "regcomplaint",
+        "displayName": "REGISTRATION COMPLAINT"
+    },
+    "basic": {
+        "resource": "form",
+        "queryTerm": "basic",
+        "varName": "basic",
+        "displayName": "Basic Form - This form contains only the common/core elements needed for most forms"
+    },
+    "reg": {
+        "resource": "encountertype",
+        "queryTerm": "reg",
+        "varName": "reg",
+        "displayName": "REGISTRATION - Registration encounter"
+    },
+    "screener": {
+        "resource": "encountertype",
+        "queryTerm": "screener",
+        "varName": "screener",
+        "displayName": "SCREENER - Screener encounter"
+    },
+    "screenervitals": {
+        "resource": "encountertype",
+        "queryTerm": "screenervitals",
+        "varName": "screenervitals",
+        "displayName": "SCREENERVITALS - Screener Vitals encounter"
+    },
+    "out": {
+        "resource": "encountertype",
+        "queryTerm": "out",
+        "varName": "out",
+        "displayName": "OUTPATIENT - Outpatient encounter"
+    },
+    "prescription": {
+        "resource": "encountertype",
+        "queryTerm": "prescription",
+        "varName": "prescription",
+        "displayName": "PRESCRIPTION - Prescription encounter"
+    },
+    "prescriptionfill": {
+        "resource": "encountertype",
+        "queryTerm": "prescriptionfill",
+        "varName": "prescriptionfill",
+        "displayName": "PRESCRIPTIONFILL - Prescriptionfill encounter"
+    },
+    "primaryrelative": {
+        "resource": "personattributetype",
+        "queryTerm": "primary relative",
+        "varName": "primaryRelative",
+        "displayName": "Primary Relative - Primary Relative"
+    },
+    "secondarycontact": {
+        "resource": "personattributetype",
+        "queryTerm": "secondary contact",
+        "varName": "secondaryContact",
+        "displayName": "Secondary Contact - Secondary Contact"
+    },
+    "primarycontact": {
+        "resource": "personattributetype",
+        "queryTerm": "primary contact",
+        "varName": "primaryContact",
+        "displayName": "Primary Contact - Primary Contact"
+    },
+    "contactbyphone": {
+        "resource": "personattributetype",
+        "queryTerm": "contact by phone",
+        "varName": "contactByPhone",
+        "displayName": "Contact By Phone - Whether to contact this patient by phone"
+    },
+    "district": {
+        "resource": "personattributetype",
+        "queryTerm": "district",
+        "varName": "district",
+        "displayName": "District - District"
+    },
+    "tehsil": {
+        "resource": "personattributetype",
+        "queryTerm": "tehsil",
+        "varName": "tehsil",
+        "displayName": "Tehsil - Tehsil"
+    },
+    "occupation": {
+        "resource": "personattributetype",
+        "queryTerm": "occupation",
+        "varName": "occupation",
+        "displayName": "Occupation - Occupation"
+    },
+    "education": {
+        "resource": "personattributetype",
+        "queryTerm": "education",
+        "varName": "education",
+        "displayName": "Education - Education"
+    },
+    "caste": {
+        "resource": "personattributetype",
+        "queryTerm": "caste",
+        "varName": "caste",
+        "displayName": "Caste - Caste"
+    },
+    "oldpatientidentificationnumber": {
+        "resource": "personattributetype",
+        "queryTerm": "old patient identification number",
+        "varName": "oldPatientIdentificationNumber",
+        "displayName": "Old Patient Identification Number - Old Patient Identification Number"
+    }
 };
-var resourceUuid = [
-['concept', 'height', 'HEIGHT (CM)'],
-['concept', 'weight', 'WEIGHT (KG)'],
-['concept', 'bmi', 'BODY MASS INDEX'],
-['concept', 'regfee', 'Registration Fee'],
-['concept', 'patientHistory', 'PATIENT HISTORY'],
-['concept', 'pastMedicationHistory', 'PAST MEDICATION HISTORY'],
-['concept', 'alcoholIntake', 'ALCOHOL INTAKE'],
-['concept', 'tobaccoIntake', 'TOBACCO INTAKE'],
-['concept', 'otherHistory', 'OTHER HISTORY'],
-['concept', 'familyHistory', 'FAMILY HISTORY'],
-['concept', 'examlist', 'EXAMINATION LIST'],
-['concept', 'neurologicalDiagnosis', 'NEUROLOGICAL DIAGNOSIS'],
-['concept', 'cadiologicalDiagnosis', 'CARDIOLOGICAL DIAGNOSIS'],
-['form', 'basic', 'Basic Form - This form contains only the common/core elements needed for most forms'],
-['encountertype', 'reg', 'REGISTRATION - Registration encounter'],
-['encountertype', 'screener', 'SCREENER - Screener encounter'],
-['encountertype', 'out', 'OUTPATIENT - Outpatient encounter'],
-['encountertype', 'prescription', 'PRESCRIPTION - Prescription encounter'],
-['encountertype', 'prescriptionfill', 'PRESCRIPTIONFILL - Prescriptionfill encounter'],
-['location', 'screener', 'Screener Registration Disk - registration desk in a screener module'],
-['location', 'waiting', 'Waiting Patient: Screener - patients assigned to a doctor']
-];
 
 // This is the name of the Patient Identifier Type that is being Auto-Generated by the IDGen Module.
 // Put the Identifier Type Name in between the /.* and the .*/
@@ -86,6 +291,8 @@ var BMI_WEIGHT_MIN = 0;
 var KEY = {
     ENTER: 13
 };
+var keyMap = {
+};
 
 // Enum for Registration Module Page Numbers
 var REG_PAGES = {
@@ -101,35 +308,64 @@ var REG_PAGES = {
         value: 2,
         name: "registrationconfirm"
     },
-    REG_BMI: {
+    ILLNESS_DETAILS: {
         value: 3,
+        name: "illnessdetails"
+    },
+    REG_BMI: {
+        value: 4,
         name: "registrationbmi"
     },
     SEARCH_1: {
-        value: 4,
+        value: 5,
         name: "searchpart1"
     },
     SEARCH_2: {
-        value: 5,
+        value: 6,
         name: "searchpart2"
     },
     SEARCH_CONFIRM: {
-        value: 6,
+        value: 7,
         name: "searchconfirm"
     }
 };
 
 var UITIME = 120000;
+var ONEDAYMS = 86400000;
+var MONTHSINAYEAR = 12;
 var diffinUTC_GMT = 5.5;
 //number of hours for everything to be before now
 //OpenMRS checks whether encounters are ahead of current time --
 //if a system clock is ahead of OpenMRS clock, some things can't be posted
 //therefore, we need to fudge our time a few mins behind
-var TIME_BEFORE_NOW = .1;
+var TIME_BEFORE_NOW = 0.1;
 
 // The Util class provids several methods that are shared by the core, apps and modules
 var Util = {
-	
+    
+    // Enum to capture pages in each app. E.g. Util.PAGES.SCREENER.PAGE_NAME
+    PAGES: {},
+
+    /*
+     * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
+     * Number field fails to enforce maxLength, so must add JavaScript listener
+     * http://stackoverflow.com/questions/9613743/maxlength-attribute-of-numberfield-in-sencha-touch
+     */
+    maxLengthListener: function(maxLength) {
+        return {
+            keyup: function(textfield, e, eOpts) {
+                var value = textfield.getValue() + '';
+                var length = value.length;
+
+                var MAX_LENGTH = maxLength;
+                if (length > MAX_LENGTH) {
+                    textfield.setValue(value.substring(0, MAX_LENGTH));
+                    return false;
+                }
+            }
+        };
+    },
+
     /**
      *Returns the value of time difference in UTC and GMT
      *@return diffinUTC_GMT
@@ -144,6 +380,40 @@ var Util = {
      */
     getUiTime: function () {
         return UITIME;
+    },
+	
+    /**
+     *Returns how many days are left from now to date passed in
+     */
+    daysFromNow: function(futureDate) {
+        var future = new Date(futureDate);
+        var now = new Date();
+        return Math.ceil((future.getTime()-now.getTime())/ONEDAYMS);
+    },
+
+    monthsFromNow: function(futureDate) {
+        var future = new Date(futureDate);
+        var now = new Date();
+        return Math.ceil((future.getFullYear()-now.getFullYear())*MONTHSINAYEAR + future.getMonth()-now.getMonth());
+    },
+
+    daysBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs(Math.ceil((future.getTime()-past.getTime())/ONEDAYMS));
+    },
+
+    monthsBetween: function(pastDate, futureDate) {
+        var future = new Date(futureDate);
+        var past = new Date(pastDate);
+        return Math.abs((future.getFullYear()-past.getFullYear())*MONTHSINAYEAR + future.getMonth()-past.getMonth())
+    },
+
+    /**
+     *Gets the current time
+     */
+    getCurrentTime: function(){
+        return this.Datetime(new Date(), this.getUTCGMTdiff());
     },
 
     /**
@@ -160,9 +430,9 @@ var Util = {
         var k = new Date(d - (60 * hours) * MS_PER_MINUTE);
 
         function pad(n) {
-            return n < 10 ? '0' + n : n
+            return n < 10 ? '0' + n : n;
         }
-        return k.getFullYear() + '-' + pad(k.getMonth() + 1) + '-' + pad(k.getDate()) + 'T' + pad(k.getHours()) + ':' + pad(k.getMinutes()) + ':' + pad(k.getSeconds()) + 'Z'
+        return k.getFullYear() + '-' + pad(k.getMonth() + 1) + '-' + pad(k.getDate()) + 'T' + pad(k.getHours()) + ':' + pad(k.getMinutes()) + ':' + pad(k.getSeconds()) + 'Z';
     },
     getTimeoutLimit: function () {
         return timeoutLimit;
@@ -181,24 +451,62 @@ var Util = {
             "Authorization": localStorage.getItem("basicAuthHeader"),
             "Accept": "application/json",
             "Content-Type": "application/json"
-        }
+        };
         return headers;
     },
 
     /**
      * Logout the current user. Ends the current session
      */
-    logoutUser: function () {
+    logoutUser: function () {      
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/session',
             withCredentials: true,
             useDefaultXhrHeader: false,
-            method: 'DELETE',
-            success: function () {
-            // do nothing
-            }
+            method: 'DELETE'
         });
+        localStorage.removeItem('basicAuthHeader');
+        localStorage.removeItem('privileges');
+        localStorage.removeItem('Username');
+        localStorage.removeItem('loggedInUser');
+        localStorage.removeItem('loggedInProvider');
+        window.location.hash = 'Login';
     },
+    
+    uuidLoadedSuccessfully: function(){
+        if( this.checkAllUuidsLoaded()) {
+            return true;
+        } else {
+            window.location = "../";
+        }
+    },
+
+    checkAllUuidsLoaded: function() {
+        var that=this;
+        var expectedUuidCount=0;
+        var uuidsLoadedCount=0;
+        var uuidsNotFound = "";
+        for (var key in resourceUuid) { 
+            expectedUuidCount++;
+            var item = resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource;
+            if(localStorage.getItem(item) != null){ 
+                uuidsLoadedCount++;
+            } else {
+                uuidsNotFound += (item + ", ");
+                this.getAttributeFromREST(resourceUuid[key].resource, resourceUuid[key].queryTerm, resourceUuid[key].varName, resourceUuid[key].displayName);
+            }
+        }
+        
+        console.log("UUIDs expected = " + expectedUuidCount + ". UUIDs loaded " + uuidsLoadedCount);
+        
+        if (expectedUuidCount == uuidsLoadedCount) {
+            return true;
+        } else {
+            console.log("Uuid's which failed to load were:" + uuidsNotFound);
+            return false;
+        }
+    },
+    
 
     /**
      * Saves the Basic Authentication header to Localstorage
@@ -213,7 +521,7 @@ var Util = {
         xmlReq.setRequestHeader("Accept", "application/json");
         xmlReq.setRequestHeader("Authorization", "Basic " + window.btoa(username + ":" + password));
         xmlReq.send();
-        if (xmlReq.status = "200") {
+        if (xmlReq.status == "200") {
             var authenticated = Ext.decode(xmlReq.responseText).authenticated;
             if (authenticated) {
                 localStorage.setItem("basicAuthHeader", "Basic " + window.btoa(username + ":" + password));
@@ -238,49 +546,49 @@ var Util = {
        *@return [ 'LOGIN', 'SCREENER', ....]
        */
     getSelectModules: function () {
-        var moduleElements=[];
+        var module=[];
         for (var i = 0; i < Util.getModules().length ; i++) {
             var text = Util.getModules()[i];
             var changedText = "";
             switch(text) {
                 case 'login' :
-                    changedText = 'DASHBOARD';
+                    changedText = 'Dashboard';
                     break;
                 case 'screener' :
-                    changedText = 'SCREENER';
+                    changedText = 'Screener';
                     break;
                 case 'registration' :
-                    changedText = 'REGISTRATION';
+                    changedText = 'Registration';
                     break;
                 case 'registrationextjs4':
-                    changedText = 'REGISTRATION Desktop';
+                    changedText = 'Registration Desktop';
                     break;
                 case 'pharmacy' :
-                    changedText = 'PHARMACY';
+                    changedText = 'Pharmacy';
                     break;
                 case 'chw' :
-                    changedText = 'CHW';
+                    changedText = 'Chw';
                     break;
                 case 'outpatient' :
-                    changedText = 'OPD';
+                    changedText = 'Opd';
                     break;
                 case 'laboratory' :
-                    changedText = 'LABORATORY';
+                    changedText = 'Laboratory';
                     break;
                 case  'patientfacing':
-                    changedText = 'PATIENT FACING';
+                    changedText = 'Patient Facing';
                     break;
                 default :
-                    changedText = 'You Dont Have Permission ToAccess Any Module';
+                    changedText = 'You dont have permission to access any Module';
                     break;
             }
-            var obj = {
+            var dropDownObj = {
                 text : changedText , 
                 value:Util.getModules()[i]
             };
-            moduleElements.push(obj);
+            module.push(dropDownObj);
         } 
-        return moduleElements;
+        return module;
     },
     
 
@@ -297,7 +605,7 @@ var Util = {
     getDeviceId: function () {
         var deviceId;
         //Checks if localStorage already has deviceId stored in it        
-        if (localStorage.getItem("deviceId") == null) {
+        if (localStorage.getItem("deviceId") === null) {
             var randomNumber = [];
             for (var i = 0; i < 6; i++) {
                 //generates random digit from 0 to 10
@@ -320,20 +628,24 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        //TODO: add this back in once ID Gen is working properly
-        //https://raxaemr.atlassian.net/browse/JLM-45 (is accidentally a JLM issue)
-        //        var patientIDRequest = new XMLHttpRequest();
-        //        patientIDRequest.open("GET", HOST + '/module/idgen/generateIdentifier.form?source=1&comment=New%20Patient', false);
-        //        patientIDRequest.setRequestHeader("Accept", "*/*");
-        //        patientIDRequest.send();
-        //        if (patientIDRequest.status = "200") {
-        //            var pid = patientIDRequest.responseText;
-        //            return pid;
-        //        } else {
-        //            console.log('ERROR Code on creating patient identifier: ' + patientIDRequest.status);
-        //        }
-        return (Math.floor(Math.random()*1000000)).toString();
+        var generatedId = arguments[0]+(Math.floor(Math.random()*1000000)).toString();
+        url = HOST + '/ws/rest/v1/patient?q='+generatedId,
+        xmlHttp = new XMLHttpRequest(); 
+        xmlHttp.open( "GET", url , false );
+        xmlHttp.setRequestHeader("Accept", "application/json");
+        xmlHttp.setRequestHeader("Authorization", localStorage.getItem("basicAuthHeader"));
+        xmlHttp.send();
+        var jsonData = JSON.parse(xmlHttp.responseText);
+        if (xmlHttp.status == "200") {
+            if(jsonData.results.length > 0) {
+                return(Util.getPatientIdentifier());
+            } else {
+                 return generatedId;
+            }
+        }
     },
+    
+  //  getX: function(){return 5},
 
     //Function to help share Models between ExtJS and Sencha Touch 2
     platformizeModelConfig: function (extJsModelConfig) {
@@ -352,8 +664,7 @@ var Util = {
         }
     },
 
-    getAttributeFromREST: function (resource, queryParameter, display) {
-
+    getAttributeFromREST: function (resource, queryParameter, varName, display) {
         //Ajax Request to get Height / Weight / Bmi Attribiutes from Concept Resource
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/' + resource + '?q=' + queryParameter, //'/ws/rest/v1/concept?q=height',
@@ -364,13 +675,13 @@ var Util = {
                 console.log('GET failed with response status: ' + response.status); // + response.status);
             },
             success: function (response) {
+                console.log("getAttributeFromRest ... resource: " + resource + ", queryParameter: " + queryParameter + ", varName:" + varName + " RESPONSE: " + response.responseText);
                 for (var i = 0; i < JSON.parse(response.responseText).results.length; ++i) {
                     if (JSON.parse(response.responseText).results[i].display == display) {
                         if (resource != 'location') {
-                            localStorage.setItem(queryParameter + "Uuid" + resource, JSON.parse(response.responseText).results[i].uuid)
+                            localStorage.setItem(varName + "Uuid" + resource, JSON.parse(response.responseText).results[i].uuid)
                         } else {
-                            console.log
-                            localStorage.setItem(queryParameter + "Uuid" + resource, display)
+                            localStorage.setItem(varName + "Uuid" + resource, display)
                         }
                     }
                 }
@@ -391,14 +702,21 @@ var Util = {
                 if (console.log(JSON.parse(response.responseText).person.uuid) != null) {
                     return JSON.parse(response.responseText).person.uuid;
                 } else {
+                    // TODO: should throw an exception, not return the wrong string
+                    // Ext.Error.raise('<Error Text>');
                     return "provider with given uuid does not exist";
                 }
             }
         });
     },
+
     KeyMapButton: function(ComponentName,keyName)
     {
-        keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
+        if(keyMap.keyName!=null)
+        {
+            this.DestroyKeyMapButton(keyName);
+        }
+	  keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
         {
             key: keyName,
             shift: false,
@@ -407,15 +725,17 @@ var Util = {
                 var element = Ext.getCmp(ComponentName);
                 element.fireEvent('click',element);
 
+                }
             }
-        }
         ]);
+
     },
-    DestoryKeyMapButton: function(keyName)
+
+    DestroyKeyMapButton: function(keyName)
     {
-        keyMap.keyName.destroy(true)
+        keyMap.keyName.destroy(true);
+        keyMap.keyName=null;
     },
-    
         
     getProviderUuidFromPersonUuid: function (uuid) {
         Ext.Ajax.request({
@@ -444,12 +764,16 @@ var Util = {
      * Returns the uuid of the logged in provider
      */
     getLoggedInProviderUuid: function(){
-        if(!localStorage.getItem("loggedInUser"))
+        if(!localStorage.getItem("loggedInUser")){
+            // TODO: should throw an exception, not return the wrong string
+            // Ext.Error.raise('<Error Text>');
             return "provider is not logged in";
-        if(localStorage.getItem("loggedInProvider"))
-            return localStorage.getItem("loggedInProvder");
-        else
-            return this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
+        }
+        if(localStorage.getItem("loggedInProvider")){
+            return localStorage.getItem("loggedInProvider");
+        }
+        this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
+        return "setting provider uuid now";
     },
     
     /**
@@ -465,6 +789,22 @@ var Util = {
         else{
             window.location = "../";
         }
-    }
+    },
 
+    /**
+     * Sends an alert according to given parameters
+     */
+    sendAlert: function(alertParams){
+        var alertParam = Ext.encode(alertParams);
+        Ext.Ajax.request({
+            url: HOST + '/ws/rest/v1/raxacore/raxaalert',
+            method: 'POST',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            params: alertParam,
+            failure: function (response) {
+                console.log('POST alert failed with response status: ' + response.status);
+            }
+        });
+    }
 }
