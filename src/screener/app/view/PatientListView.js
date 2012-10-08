@@ -57,7 +57,7 @@ Ext.define("Screener.view.PatientListView", {
                     xtype: 'button',
                     itemId: 'addPatientButton',
                     text: 'Add Patient',
-                    align: 'right',
+                    align: 'right'
                 },
                 {
                     xtype: 'button',
@@ -65,10 +65,11 @@ Ext.define("Screener.view.PatientListView", {
                     itemId: 'refreshButton',
                     action: 'refreshList',
                     align: 'right'
-                }
+                },
                 ]
             }],
             flex: 1
+            
         }]
     }
 });

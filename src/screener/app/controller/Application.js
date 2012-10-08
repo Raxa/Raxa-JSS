@@ -327,7 +327,6 @@ Ext.define("Screener.controller.Application", {
         store_assignedPatientList.load();
         that = this;
         store_patientList.on('load', function () {
-            //Ext.getCmp('loadMask').setHidden(true);
             that.setBMITime(store_patientList);
             // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
@@ -970,11 +969,6 @@ Ext.define("Screener.controller.Application", {
 
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
-        // Move to new page
         this.getView().setActiveItem(newPage);
-        
-        // Add back button to toolbar which points to old page
-        var topbar = Ext.getCmp("topbar");
-        //topbar.setBackButtonTargetPage(oldPage);
     }
 });
