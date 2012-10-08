@@ -583,15 +583,15 @@ Ext.define("Screener.controller.Application", {
         else{
             docStore.load();
         }
-        console.log(docStore);
         docStore.on('load', function () {
             patientStore.load();
             patientStore.on('load', function () {
                 for (var i = 0; i < docStore.getData().length; i++) {
                     var count = 0;
-                    for (var j = 0; j < patientStore.getData().items[0].getData().patients.length; j++) {
+                    var patients = patientStore.getData().items[0].getData().patients;
+                    for (var j = 0; j < patients.length; j++) {
                         if (docStore.data.items[i].data.person != null) {
-                            if (docStore.data.items[i].data.person.uuid == patientStore.getData().items[0].getData().patients[j].encounters[0].provider) {
+                            if (docStore.data.items[i].data.person.uuid == patients[j].encounters[0].provider) {
                                 count = count + 1;
                             }
                         }

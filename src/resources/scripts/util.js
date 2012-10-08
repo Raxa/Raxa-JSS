@@ -347,7 +347,7 @@ var Util = {
     PAGES: {},
     
     //string to know whether a patient is able to be screened to
-    DOCTOR_ATTRIBUTE: 'Outpatient - true',
+    DOCTOR_ATTRIBUTE: 'isOutpatientDoctor - true',
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
