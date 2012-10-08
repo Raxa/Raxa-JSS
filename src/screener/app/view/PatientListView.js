@@ -6,7 +6,7 @@ Ext.define("Screener.view.PatientListView", {
     extend: 'Ext.Container',
     alias: 'widget.ListView',
     requires: [
-        'Screener.store.NewPatients'
+    'Screener.store.NewPatients'
     ],
 
     config: {
@@ -53,15 +53,24 @@ Ext.define("Screener.view.PatientListView", {
                     itemId: 'sortName',
                     action: 'sortByName',
                     align: 'left'
-                }, {
+                }, 
+                {
+                    xtype: 'button',
+                    itemId: 'addPatientButton',
+                    text: 'Add Patient',
+                    align: 'right'
+                },
+                {
                     xtype: 'button',
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PatientListView.refresh'),
                     itemId: 'refreshButton',
                     action: 'refreshList',
                     align: 'right'
-                }]
+                },
+                ]
             }],
             flex: 1
+            
         }]
     }
 });

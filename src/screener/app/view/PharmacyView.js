@@ -8,7 +8,6 @@ Ext.define("Screener.view.PharmacyView", {
     requires: ['Screener.view.PharmacyForm'],
     xtype: 'pharmacylist',
     config: {
-        fullscreen: true,
         layout: 'hbox',
         title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyView.add_d'),
         style: 'background:#96d2f7',
