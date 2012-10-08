@@ -35,18 +35,20 @@ Ext.define("Screener.view.NewPatient", {
             },
             items : [
             {
-                xtype: 'textfield',
-                id: 'age',
-                name: 'age',
+                xtype: 'numberfield',
+                id: 'patientAge',
+                name: 'patientAge',
                 labelWidth: 70,
-                label: "Age"
+                label: "Age",
+                minValue: 0,
+                allowDecimals: false
             },
             {
                 xtype: 'textfield',
-                id: 'dateOfBirth',
-                name: 'dateOfBirth',
+                id: 'dob',
+                name: 'dob',
                 labelWidth: 70,
-                label: "DateOfBirth"
+                label: "DateOfBirth",
             }
             ]
         },
