@@ -54,24 +54,24 @@ Ext.define("Screener.controller.Application", {
         'Screener.store.Patients',
         'Screener.store.PatientSummary',
         'Screener.store.PostLists',
-	    'Screener.model.observation',	
+	'Screener.model.observation',	
         'Screener.view.PharmacyForm', 
         'Screener.view.PatientListView',
         'Screener.view.VitalsView',
-        'Screener.view.VitalsForm'
+        'Screener.view.VitalsForm',
+        'Screener.view.Main',
     ],
     models: [
-        'Screener.model.Person', 
-        'Screener.model.PostList', 
-        'Screener.model.Patients',
-	    'Screener.model.observation'
+    'Screener.model.Person', 
+    'Screener.model.PostList', 
+    'Screener.model.Patients',
+    'Screener.model.observation'
     ],
     extend: 'Ext.app.Controller',
     config: {
         // Here we name the elements we need from the page
         refs: {
             view: 'mainView',
-            topmenu: 'topmenu',
             patientView: 'patientView',
             patientSummary: 'patientSummary',
             doctorSummary: 'doctorSummary',
@@ -89,11 +89,7 @@ Ext.define("Screener.controller.Application", {
             doctorStore: 'doctorStore',
             "'form'+form_num": 'form' + form_num,
             formid: '#formid',
-            addPatientButton: '#addPatientButton',
-            showPatientsButton: '#showPatientsButton',
-            showPharmacyButton: '#showPharmacyButton',
-            showLabButton: '#showLabButton',
-            showVitalsButton: '#showVitalsButton',
+            addPatientButton: 'patientListView #addPatientButton',
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
             submitVitalsButton: '#submitVitalsButton',
@@ -124,9 +120,6 @@ Ext.define("Screener.controller.Application", {
             addPatientButton: {
                 tap: 'addPerson'
             },
-            showPatientsButton: {
-                tap: 'showPatients'
-            },
             savePatientButton: {
                 tap: 'savePerson'
             },
@@ -135,15 +128,6 @@ Ext.define("Screener.controller.Application", {
             },
             showDoctorsButton: {
                 tap: 'showDoctors'
-            },
-            showPharmacyButton: {
-                tap: 'showPharmacy'
-            },
-            showLabButton: {
-                tap: 'showLab'
-            },
-            showVitalsButton: {
-                tap: 'showVitals'
             },
             assignButton: {
                 tap: 'assignPatient'
@@ -157,7 +141,7 @@ Ext.define("Screener.controller.Application", {
             'patientListView button[action=refreshList]': {
                 tap: 'refreshList'
             },
-            sortByNameButton: {
+            'patientListView button[action=sortByName]': {
                 tap: 'sortByName'
             },
             drugSubmitButton: {
@@ -202,6 +186,8 @@ Ext.define("Screener.controller.Application", {
     },
 
     // Called on startup
+    
+    
     init: function () {
         form_num = 0;
         lab_num = 0;
@@ -227,32 +213,36 @@ Ext.define("Screener.controller.Application", {
         }
     },
     //this method sets locally(persist = false) the bmi and encounter time in patients model
-    setBMITime: function (store_patientList) {
+    setComplaintBMITime: function (store_patientList) {
         for (var i = 0; i < store_patientList.getCount(); i++) {
             var currentPatientData = store_patientList.getAt(i).getData();
             var encounters = currentPatientData.encounters;
             var mostRecentEncounter = encounters[encounters.length - 1];
             var observations = mostRecentEncounter.obs;   
 
-            // Update data (time, bmi) in patient list
+            // Update data (time, bmi, complaint) in patient list
+            var COMPLAINT_DESCRIPTION = 'REGISTRATION COMPLAINT';
+            var BMI_DESCRIPTION = 'BODY MASS INDEX';
+                
+            currentPatientData.complaint = this.getObsByDisplayName(observations, COMPLAINT_DESCRIPTION);
             currentPatientData.time = mostRecentEncounter.encounterDatetime;
-            currentPatientData.bmi = this.getObsBMI(observations);
+            currentPatientData.bmi = this.getObsByDisplayName(observations, BMI_DESCRIPTION);
         }
         Ext.getStore('patientStore').sort('display');
     },
     //helper method - returns BMI value if it exists
-    getObsBMI: function (obs) {
-        var BMI_DESCRIPTION = 'BODY MASS INDEX';
+    getObsByDisplayName: function (obs,displayName) {
         for (var i = 0; i < obs.length; i++) {
-            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
+            if (obs[i].display.indexOf(displayName) != -1) {
                 return obs[i].value;
             }
         }
 
         // TODO: What if NO bmi? needs to handle that case, too
         // Return null or NaN, ensure other methods handle this possibility
-        return 0;
+        return '-';
     },
+    
     // This method sets the UI of sort buttons when pressed.
     // One button is set as "declined" (pressed) while the other two
     // are set to "normal" (not pressed).
@@ -328,20 +318,19 @@ Ext.define("Screener.controller.Application", {
                 store_regEncounter.getData().getAt(0).getData().uuid, 
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
                 localStorage.regUuidencountertype
-            )
-        );
+                )
+            );
         store_assignedPatientList.getProxy().setUrl(
             this.getPatientListUrl(
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
                 store_outEncounter.getData().getAt(0).getData().uuid, 
                 localStorage.screenerUuidencountertype
-            )
-        );
+                )
+            );
         store_patientList.load();
         store_assignedPatientList.load();
         that = this;
         store_patientList.on('load', function () {
-            Ext.getCmp('loadMask').setHidden(true);
             that.setBMITime(store_patientList);
             // TODO: Add photos to patients in screener list
             store_patientList.each(function (record) {
@@ -464,7 +453,7 @@ Ext.define("Screener.controller.Application", {
                         encounterStore.sync()
                         encounterStore.on('write', function () {
                             Ext.Msg.alert('successfull')
-                            //Note- if we want add a TIMEOUT it shown added somewhere here
+                        //Note- if we want add a TIMEOUT it shown added somewhere here
                         }, this)
 
                     }
@@ -745,7 +734,7 @@ Ext.define("Screener.controller.Application", {
         that = this;
         Ext.getStore('patientStore').on('load', function () {
             that.updatePatientsWaitingTitle();
-            that.setBMITime(Ext.getStore('patientStore'));
+            that.setComplaintBMITime(Ext.getStore('patientStore'));
         });
     },
 
@@ -800,6 +789,7 @@ Ext.define("Screener.controller.Application", {
                         headers: Util.getBasicAuthHeaders()
                     });
                 }
+                Ext.getStore('patientStore').load()
                 objectRef.showPatients()
             } else {}
         });
@@ -839,7 +829,7 @@ Ext.define("Screener.controller.Application", {
             encounterType: encountertype,
             //location: location,
             provider: provider,
-            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+        /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
         });
        
         // Handle "Screener Vitals" encounters specially
@@ -852,10 +842,10 @@ Ext.define("Screener.controller.Application", {
                 // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
                 // Validate before submitting an Obs
                 observations.add({
-                        obsDatetime : t,
-                        person: personUuid,
-                        concept: c,
-                        value: v
+                    obsDatetime : t,
+                    person: personUuid,
+                    concept: c,
+                    value: v
                 });
             };
 
@@ -909,7 +899,7 @@ Ext.define("Screener.controller.Application", {
             encounterType: encountertype,
             //location: location,
             provider: provider,
-            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+        /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
         });
        
         // Handle "Screener Vitals" encounters specially
@@ -922,10 +912,10 @@ Ext.define("Screener.controller.Application", {
                 // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
                 // Validate before submitting an Obs
                 observations.add({
-                        obsDatetime : t,
-                        person: personUuid,
-                        concept: c,
-                        value: v
+                    obsDatetime : t,
+                    person: personUuid,
+                    concept: c,
+                    value: v
                 });
             };
 
@@ -993,11 +983,6 @@ Ext.define("Screener.controller.Application", {
 
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
-        // Move to new page
         this.getView().setActiveItem(newPage);
-        
-        // Add back button to toolbar which points to old page
-        var topbar = Ext.getCmp("topbar");
-        topbar.setBackButtonTargetPage(oldPage);
     }
 });
