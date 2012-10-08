@@ -12,13 +12,14 @@ Ext.define("Screener.view.PatientView", {
 		items: [
 		//our patient list is built on the Patients store, and has a title and sort button
 		{
-			xtype: 'patientListView',
+                        xtype: 'patientListView',
 			flex: 1
 		},
 		{
 			//our doctor list is built on the Doctors store, and has a title and assign button
 			xtype: 'list',
 			id: 'doctorList',
+                        allowDeselect: true,
 			itemTpl: new Ext.XTemplate('<div>({numpatients}){[this.splitter(values.display)]}</div>', {
 				splitter: function(str) {
 					var name = str.split("- ")[1];
