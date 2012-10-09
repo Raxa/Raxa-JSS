@@ -58,7 +58,8 @@ Ext.define("Screener.controller.Application", {
     'Screener.view.PharmacyForm', 
     'Screener.view.PatientListView',
     'Screener.view.VitalsView',
-    'Screener.view.VitalsForm'
+    'Screener.view.VitalsForm',
+    'Screener.view.NewPatient'
     ],
     models: [
     'Screener.model.Person', 
@@ -111,10 +112,14 @@ Ext.define("Screener.controller.Application", {
             removePatientButton: '#removePatientButton',
             removeAllPatientsButton: '#removeAllPatientsButton',
             patientListView: '#patientListViewId',
-            PatientsWaiting: '#patientsWaiting'
+            PatientsWaiting: '#patientsWaiting',
+            dob: '#dob'
         },
         // Now we define all our listening methods
         control: {
+            dob: {
+                change: 'onDateChange' 
+            },
             addDrugFormButton: {
                 tap: 'addDrugForm'
             },
@@ -510,14 +515,14 @@ Ext.define("Screener.controller.Application", {
                 console.log(patentAge);
                 newPatient.age = formp.patientAge;
             }   
+          //  var dateFormat = new Array("Y-n-j", "j-n-Y", "Y-m-d" , "d-m-Y" , "Y/n/j", "j/n/Y", "Y/m/d" , "d/m/Y");
+            
             if(Ext.getCmp('dob').getValue() !== "" && Ext.getCmp('dob').getValue().length > 0) {
-                var dt = new Date();
-                console.log("inside if date of birth")
-                console.log(formp.dob);
-                dt = Ext.Date.parse(formp.dob, "Y-m-d" , true);
-                console.log(dt);
-                newPatient. birthdate = formp.dob
-            } 
+            //    for(var i =0; i< dateFormat.length ; i++) { 
+                   // console.log("dateFormat"+dateFormat[i]);
+                newPatient. birthdate =  formp.dob;
+            //} 
+            }
             console.log("new patient");
             console.log(newPatient);
             var newPatientParam = Ext.encode(newPatient);
@@ -551,7 +556,7 @@ Ext.define("Screener.controller.Application", {
          
     },
       
-   // Get IdentifierType using IdentifierType store 
+    // Get IdentifierType using IdentifierType store 
     getidentifierstype: function (personUuid) {
         console.log("inside getidentifierstype");
         console.log(personUuid);
@@ -937,7 +942,7 @@ Ext.define("Screener.controller.Application", {
             patient: personUuid, 
             encounterType: encountertype,
             //location: location,
-            provider: provider,
+            provider: provider
         /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
         });
        
@@ -1028,5 +1033,42 @@ Ext.define("Screener.controller.Application", {
         // Add back button to toolbar which points to old page
         var topbar = Ext.getCmp("topbar");
         topbar.setBackButtonTargetPage(oldPage);
+    },
+    
+    onDateChange: function() {
+        if(Ext.getCmp('dob').getValue() !== "" && Ext.getCmp('dob').getValue().length > 0) {
+            var dt = new Date();
+            var currentDate = new Date();
+            console.log("inside if date of birth")
+            console.log(Ext.getCmp('dob').getValue());
+            //var dateFormat = new Array( "j/n/Y","d/m/Y");
+            //for(var i =0; i< dateFormat.length ; i++) { 
+            dt = Ext.Date.parse(Ext.getCmp('dob').getValue(), "Y-n-j" , true);
+            console.log("dateValidated"+dt);
+            if(dt === null || dt === undefined) {
+                console.log("inside 2nd if");
+                Ext.Msg.alert("Invalid date format")
+                return false;
+            } else {
+            if(dt.getFullYear() > currentDate.getFullYear()) {
+                Ext.Msg.alert("Entered Date should not be greater then current Date")
+                return false;
+            }
+            if(dt.getFullYear() === currentDate.getFullYear()) {
+                if(dt.getMonth() > currentDate.getMonth()) {
+                    Ext.Msg.alert("Entered Date should not be greater then current Date")
+                    return false
+                }
+                if(dt.getMonth() === currentDate.getMonth()) {
+                    if(dt.getDate() > currentDate.getDate()) {
+                        Ext.Msg.alert("Entered Date should not be greater then current Date")
+                        return false
+                    }
+                }
+            }  
+        }
+            return true;
+           // }
+        }
     }
 });
