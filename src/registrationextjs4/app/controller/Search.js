@@ -55,15 +55,19 @@ Ext.define('Registration.controller.Search', {
                 }
             });
             Ext.getCmp('patientGrid').view.store = store;
-            store.load();
-            // this is required to load the page after the data is beging loaded successfully
-            store.on('datachanged', function () {
-                var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.SEARCH_2.value);
-                Ext.getCmp('patientGrid').view.refresh();
-                Ext.getBody().unmask();
-            }, this);         
-            // I return the store so as to use it in the jasmine test
+            store.load({
+                scope: this,
+                callback: function(records, operation, success){
+                    if(success){
+                        var l = Ext.getCmp('mainRegArea').getLayout();
+                        l.setActiveItem(REG_PAGES.SEARCH_2.value);
+                        Ext.getCmp('patientGrid').view.refresh();
+                    }
+                    else{
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
+                    }
+                }
+            });
             return store;
         } else {
             alert("invalid fields");
@@ -107,7 +111,7 @@ Ext.define('Registration.controller.Search', {
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             failure: function (response) { 
-                console.log('GET failed with response status: '+ response.status); // + response.status);
+                Ext.Msg.alert("Error", Util.getMessageLoadError());
             },
             success: function (response) {
                 var string = JSON.parse(response.responseText).identifiers[0].display;

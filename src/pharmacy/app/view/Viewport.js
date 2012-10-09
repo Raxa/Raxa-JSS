@@ -24,7 +24,23 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
         hidden: true,
         items: [{
             xtype: 'alertGrid'
-        }]
+        }],
+        listeners:{
+            'afterrender': function() {
+                this.mon(Ext.getBody(), 'click', this.checkCloseClick, this);
+            }
+        },
+            
+        checkCloseClick: function (event) {
+            var cx = event.getX(), cy = event.getY(),
+            box = this.getBox();
+            if (cx < box.x || cx > box.x + box.width || cy > box.y + box.height) {
+                Ext.getCmp('alertPanel').hide();
+                Ext.getCmp('alertButton').setText('Alerts');
+                Ext.getCmp('alertButton').setUI('default');
+            }
+        }
+
     },{
         xtype: 'inventoryEditor',
         floating: true,

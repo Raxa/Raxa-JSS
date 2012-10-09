@@ -422,12 +422,15 @@ Ext.define('Registration.controller.Main', {
 
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
-        store.sync();
-        store.on('write', function () {
-            Ext.Msg.alert('Encounter saved successfully.');
-            this.cancel();
-        }, this);
-
+        store.sync({
+            scope: this,
+            success: function(){
+                Ext.Msg.alert('Encounter saved successfully.');
+            },
+            failure: function(){
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
+            }
+        });
         return store;
     }
 });
