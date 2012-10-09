@@ -25,6 +25,9 @@ Ext.define('Registration.controller.Search', {
     //function making the rest call to get the patient with given search quiry
     search: function () {
         if (Ext.getCmp('patientFirstNameSearch').isValid() || Ext.getCmp('PatientIdentifierSearch').isValid()) {
+            
+            Ext.getBody().mask('Searching...', 'x-mask-loading');
+            
             // concatenating the identifier and patient name to make the url for get call
             var Url = HOST + '/ws/rest/v1/patient?q='; // Ext.getCmp('PatientIdentifierSearch').getValue() + "&&v=full";
             if (Ext.getCmp('PatientIdentifierSearch').isValid()) 
@@ -79,15 +82,15 @@ Ext.define('Registration.controller.Search', {
     //function which reset all the field in search patient form
     reset: function () {
         var fields = [
-            'OldPatientIdentifierSearch',
-            'PatientIdentifierSearch',
-            'patientFirstNameSearch',
-            'patientLastNameSearch',
-            'relativeFirstNameSearch',
-            'relativeLastSearch',
-            'DOBSearch',
-            'Town/Village/CitySearch',
-            'phoneNumberSearch'
+        'OldPatientIdentifierSearch',
+        'PatientIdentifierSearch',
+        'patientFirstNameSearch',
+        'patientLastNameSearch',
+        'relativeFirstNameSearch',
+        'relativeLastSearch',
+        'DOBSearch',
+        'Town/Village/CitySearch',
+        'phoneNumberSearch'
         ];
 
         for (var i=0; i < fields.length; i++)

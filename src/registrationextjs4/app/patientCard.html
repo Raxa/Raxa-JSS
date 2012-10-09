@@ -21,11 +21,7 @@
         <title>Patient Registration Card</title>
     </head>
     
-    <body>
-        <form>
-            <input type="button" value="Continue to Print" id="printButton" onClick="hideAndPrint();"
-            align="right">
-        </form>
+    <body onload="Print();">
         <table border="1" cellpadding="1" cellspacing="1" style="width: 500px; ">
             <tbody>
                 <tr>
@@ -169,8 +165,7 @@
 		   }
 		   	
             //Print Button is hidden and then window is printed.
-            function hideAndPrint() {
-                document.getElementById("printButton").style.visibility = 'hidden';
+            function Print() {
                 window.print();
             }
         </script>

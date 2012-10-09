@@ -54,24 +54,24 @@ Ext.define("Screener.controller.Application", {
         'Screener.store.Patients',
         'Screener.store.PatientSummary',
         'Screener.store.PostLists',
-	    'Screener.model.observation',	
+	'Screener.model.observation',	
         'Screener.view.PharmacyForm', 
         'Screener.view.PatientListView',
         'Screener.view.VitalsView',
-        'Screener.view.VitalsForm'
+        'Screener.view.VitalsForm',
+        'Screener.view.Main',
     ],
     models: [
-        'Screener.model.Person', 
-        'Screener.model.PostList', 
-        'Screener.model.Patients',
-	    'Screener.model.observation'
+    'Screener.model.Person', 
+    'Screener.model.PostList', 
+    'Screener.model.Patients',
+    'Screener.model.observation'
     ],
     extend: 'Ext.app.Controller',
     config: {
         // Here we name the elements we need from the page
         refs: {
             view: 'mainView',
-            topmenu: 'topmenu',
             patientView: 'patientView',
             patientSummary: 'patientSummary',
             doctorSummary: 'doctorSummary',
@@ -89,11 +89,7 @@ Ext.define("Screener.controller.Application", {
             doctorStore: 'doctorStore',
             "'form'+form_num": 'form' + form_num,
             formid: '#formid',
-            addPatientButton: '#addPatientButton',
-            showPatientsButton: '#showPatientsButton',
-            showPharmacyButton: '#showPharmacyButton',
-            showLabButton: '#showLabButton',
-            showVitalsButton: '#showVitalsButton',
+            addPatientButton: 'patientListView #addPatientButton',
             showDoctorsButton: '#showDoctorsButton',
             savePatientButton: '#savePatientButton',
             submitVitalsButton: '#submitVitalsButton',
@@ -124,9 +120,6 @@ Ext.define("Screener.controller.Application", {
             addPatientButton: {
                 tap: 'addPerson'
             },
-            showPatientsButton: {
-                tap: 'showPatients'
-            },
             savePatientButton: {
                 tap: 'savePerson'
             },
@@ -135,15 +128,6 @@ Ext.define("Screener.controller.Application", {
             },
             showDoctorsButton: {
                 tap: 'showDoctors'
-            },
-            showPharmacyButton: {
-                tap: 'showPharmacy'
-            },
-            showLabButton: {
-                tap: 'showLab'
-            },
-            showVitalsButton: {
-                tap: 'showVitals'
             },
             assignButton: {
                 tap: 'assignPatient'
@@ -157,7 +141,7 @@ Ext.define("Screener.controller.Application", {
             'patientListView button[action=refreshList]': {
                 tap: 'refreshList'
             },
-            sortByNameButton: {
+            'patientListView button[action=sortByName]': {
                 tap: 'sortByName'
             },
             drugSubmitButton: {
@@ -202,6 +186,8 @@ Ext.define("Screener.controller.Application", {
     },
 
     // Called on startup
+    
+    
     init: function () {
         form_num = 0;
         lab_num = 0;
@@ -227,32 +213,36 @@ Ext.define("Screener.controller.Application", {
         }
     },
     //this method sets locally(persist = false) the bmi and encounter time in patients model
-    setBMITime: function (store_patientList) {
+    setComplaintBMITime: function (store_patientList) {
         for (var i = 0; i < store_patientList.getCount(); i++) {
             var currentPatientData = store_patientList.getAt(i).getData();
             var encounters = currentPatientData.encounters;
             var mostRecentEncounter = encounters[encounters.length - 1];
             var observations = mostRecentEncounter.obs;   
 
-            // Update data (time, bmi) in patient list
+            // Update data (time, bmi, complaint) in patient list
+            var COMPLAINT_DESCRIPTION = 'REGISTRATION COMPLAINT';
+            var BMI_DESCRIPTION = 'BODY MASS INDEX';
+                
+            currentPatientData.complaint = this.getObsByDisplayName(observations, COMPLAINT_DESCRIPTION);
             currentPatientData.time = mostRecentEncounter.encounterDatetime;
-            currentPatientData.bmi = this.getObsBMI(observations);
+            currentPatientData.bmi = this.getObsByDisplayName(observations, BMI_DESCRIPTION);
         }
         Ext.getStore('patientStore').sort('display');
     },
     //helper method - returns BMI value if it exists
-    getObsBMI: function (obs) {
-        var BMI_DESCRIPTION = 'BODY MASS INDEX';
+    getObsByDisplayName: function (obs,displayName) {
         for (var i = 0; i < obs.length; i++) {
-            if (obs[i].display.indexOf(BMI_DESCRIPTION) != -1) {
+            if (obs[i].display.indexOf(displayName) != -1) {
                 return obs[i].value;
             }
         }
 
         // TODO: What if NO bmi? needs to handle that case, too
         // Return null or NaN, ensure other methods handle this possibility
-        return 0;
+        return '-';
     },
+    
     // This method sets the UI of sort buttons when pressed.
     // One button is set as "declined" (pressed) while the other two
     // are set to "normal" (not pressed).
@@ -328,8 +318,8 @@ Ext.define("Screener.controller.Application", {
                 store_regEncounter.getData().getAt(0).getData().uuid, 
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
                 localStorage.regUuidencountertype
-            )
-        );
+                )
+            );
         store_assignedPatientList.getProxy().setUrl(
             this.getPatientListUrl(
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
@@ -342,7 +332,7 @@ Ext.define("Screener.controller.Application", {
             callback: function(records, operation, success){
                 if(success){
                     Ext.getCmp('loadMask').setHidden(true);
-                    that.setBMITime(store_patientList);
+                    this.setBMITime(store_patientList);
                     // TODO: Add photos to patients in screener list
                     store_patientList.each(function (record) {
                         record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
@@ -471,7 +461,6 @@ Ext.define("Screener.controller.Application", {
                                 encounterStore.on('write', function () {
                                     Ext.Msg.alert('Successful')
                                 }, this)
-
                             }
                         }
                         else{
@@ -595,16 +584,25 @@ Ext.define("Screener.controller.Application", {
     // Counts number of patients assigned to a doctor   
     countPatients: function () {
         //store = Ext.create('Screener.store.AssignedPatientList');
-        store = Ext.getStore('assPatientStore')
-        docStore = Ext.create('Screener.store.Doctors')
+        var patientStore = Ext.getStore('assPatientStore')
+        var docStore = Ext.getStore('doctorStore');
+        if(!Ext.getStore('doctorStore')){
+            docStore = Ext.create('Screener.store.Doctors',{
+                storeId: 'doctorStore'
+            });
+        }
+        else{
+            docStore.load();
+        }
         docStore.on('load', function () {
-            store.load();
-            store.on('load', function () {
+            patientStore.load();
+            patientStore.on('load', function () {
                 for (var i = 0; i < docStore.getData().length; i++) {
                     var count = 0;
-                    for (var j = 0; j < store.getData().items[0].getData().patients.length; j++) {
+                    var patients = patientStore.getData().items[0].getData().patients;
+                    for (var j = 0; j < patients.length; j++) {
                         if (docStore.data.items[i].data.person != null) {
-                            if (docStore.data.items[i].data.person.uuid == store.getData().items[0].getData().patients[j].encounters[0].provider) {
+                            if (docStore.data.items[i].data.person.uuid == patients[j].encounters[0].provider) {
                                 count = count + 1;
                             }
                         }
@@ -613,8 +611,8 @@ Ext.define("Screener.controller.Application", {
                 }
                 Ext.getCmp('doctorList').setStore(docStore)
                 return docStore
-            })
-        })
+            }, this)
+        }, this)
     },
     // Show screen with pharmacy list
     showPharmacy: function () {
@@ -825,6 +823,7 @@ Ext.define("Screener.controller.Application", {
                         }
                     });
                 }
+                Ext.getStore('patientStore').load()
                 objectRef.showPatients()
             } else {}
         });
@@ -863,8 +862,7 @@ Ext.define("Screener.controller.Application", {
             patient: personUuid, 
             encounterType: encountertype,
             //location: location,
-            provider: provider,
-            /*uuid: '',   // TODO: see if sending a nonnull UUID allows the server to update with the real value*/
+            provider: provider
         });
        
         // Handle "Screener Vitals" encounters specially
@@ -877,10 +875,10 @@ Ext.define("Screener.controller.Application", {
                 // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-368
                 // Validate before submitting an Obs
                 observations.add({
-                        obsDatetime : t,
-                        person: personUuid,
-                        concept: c,
-                        value: v
+                    obsDatetime : t,
+                    person: personUuid,
+                    concept: c,
+                    value: v
                 });
             };
 
@@ -964,11 +962,6 @@ Ext.define("Screener.controller.Application", {
 
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
-        // Move to new page
         this.getView().setActiveItem(newPage);
-        
-        // Add back button to toolbar which points to old page
-        var topbar = Ext.getCmp("topbar");
-        topbar.setBackButtonTargetPage(oldPage);
     }
 });
