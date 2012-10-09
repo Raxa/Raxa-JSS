@@ -345,6 +345,11 @@ var Util = {
     
     // Enum to capture pages in each app. E.g. Util.PAGES.SCREENER.PAGE_NAME
     PAGES: {},
+    
+    //string to know whether a patient is able to be screened to
+    DOCTOR_ATTRIBUTE: 'isOutpatientDoctor - true',
+
+    DEFAULT_LOCATION: "GAN",
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
@@ -628,7 +633,11 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        var generatedId = arguments[0]+(Math.floor(Math.random()*1000000)).toString();
+        var locationString = arguments[0];
+        if(arguments[0] === undefined){
+            locationString = this.DEFAULT_LOCATION;
+        }
+        var generatedId = locationString +(Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
         xmlHttp.open( "GET", url , false );
@@ -806,5 +815,19 @@ var Util = {
                 console.log('POST alert failed with response status: ' + response.status);
             }
         });
+    },
+    
+    /**
+     * The message to send when a resource fails to load from the server
+     */
+    getMessageLoadError: function() {
+        return "Unable to read from server";
+    },
+    
+    /**
+     * Message to send when a resource fails to write to a server
+     */
+    getMessageSyncError: function() {
+        return "Unable to write to server";
     }
 }

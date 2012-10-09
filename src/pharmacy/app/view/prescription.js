@@ -214,19 +214,19 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             border: true,
                             height: 300,
                             title: 'Search Results',
-                            store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderPatient'),
+                            store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
                             columns: [
                             {
                                 xtype: 'gridcolumn',
-                                width: 120,
+                                width: 100,
                                 text: 'Patient Name',
-                                dataIndex : 'display'
+                                dataIndex : 'name'
                             },
                             {
                                 xtype: 'gridcolumn',
-                                width: 40,
-                                dataIndex: 'age',
-                                text: 'Age'
+                                width: 75,
+                                dataIndex: 'identifier',
+                                text: 'ID'
                             }
                             ]
                         }, {
