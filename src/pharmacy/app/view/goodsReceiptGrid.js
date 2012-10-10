@@ -59,7 +59,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0             
             }
         },
         {
@@ -72,7 +73,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0
             }
         },
         {

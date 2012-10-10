@@ -45,7 +45,8 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
         xtype: 'numbercolumn',
         text: 'Qty',
         dataIndex: 'quantity',
-        width: 80
+        width: 80,
+        minValue: 0
     },
     {
         xtype: 'gridcolumn',

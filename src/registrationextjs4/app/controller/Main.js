@@ -62,7 +62,7 @@ Ext.define('Registration.controller.Main', {
 
         var l = Ext.getCmp('mainRegArea').getLayout(); 
         // if condition that check if all the required fields are non-empty or not
-        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('phoneContactInformation').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
+        if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
         	if(Ext.getCmp('patientAge').rawValue || Ext.getCmp('dob').rawValue)
  				{     
 			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
@@ -77,24 +77,35 @@ Ext.define('Registration.controller.Main', {
             Ext.Msg.alert("Fields invalid - enter patient name and age");
         }
         //copies all fields from registration form to confirmation screen
-        Ext.getCmp('oldPatientIdentifierConfirm').setValue(Ext.getCmp('oldPatientIdentifier').value);
-        Ext.getCmp('patientNameConfirm').setValue(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
-        Ext.getCmp('relativeNameConfirm').setValue(Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value);
-        Ext.getCmp('ageConfirm').setValue(Ext.getCmp('patientAge').value);
-        Ext.getCmp('sexConfirm').setValue(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
-        Ext.getCmp('educationConfirm').setValue(Ext.getCmp('education').value);
-        Ext.getCmp('casteConfirm').setValue(Ext.getCmp('caste').value);
-        Ext.getCmp('occupationConfirm').setValue(Ext.getCmp('occupation').value);
-        Ext.getCmp('residentialAreaConfirm').setValue(Ext.getCmp('residentialArea').value);
-        Ext.getCmp('stretConfirm').setValue(Ext.getCmp('street').value);
-        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) {
-            Ext.getCmp('phoneConfirm').setValue(Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel);
+        Ext.getCmp('oldPatientIdentifierConfirm').setText(Ext.getCmp('oldPatientIdentifier').value);
+        Ext.getCmp('patientNameConfirm').setText(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
+        Ext.getCmp('relativeNameConfirm').setText((Ext.getCmp('relativeFirstName').value || "")+ " " + (Ext.getCmp('relativeLastName').value || ""));
+        Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value || "");
+        Ext.getCmp('sexConfirm').setText(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
+        Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
+        Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
+        Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
+        Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
+        Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
+		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value == ""))
+		{
+		    Ext.getCmp('patientPrimaryContactNumberConfirm').setText(Ext.getCmp('patientPrimaryContact').value 	+ ' (Pri) ');
         }
-        Ext.getCmp('patientPrimaryContactNumberConfirm').setValue(Ext.getCmp('patientPrimaryContact').value);
-        Ext.getCmp('patientSecondaryContactNumberConfirm').setValue(Ext.getCmp('patientSecondaryContact').value);
-        Ext.getCmp('townConfirm').setValue(Ext.getCmp('town').value);
-        Ext.getCmp('tehsilConfirm').setValue(Ext.getCmp('tehsil').value);
-        Ext.getCmp('districtConfirm').setValue(Ext.getCmp('district').value);
+        else
+        {
+			Ext.getCmp('patientPrimaryContactNumberConfirm').setText('');
+        }
+        if(!(!Ext.getCmp('patientSecondaryContact').value || Ext.getCmp('patientSecondaryContact').value == ""))
+		{
+	        Ext.getCmp('patientSecondaryContactNumberConfirm').setText(Ext.getCmp('patientSecondaryContact').value + ' (Sec)');
+        }
+        else
+        {
+		    Ext.getCmp('patientSecondaryContactNumberConfirm').setText('');
+        }
+        Ext.getCmp('townConfirm').setText(Ext.getCmp('town').value);
+        Ext.getCmp('tehsilConfirm').setText(Ext.getCmp('tehsil').value);
+        Ext.getCmp('districtConfirm').setText(Ext.getCmp('district').value);
     },
 
     //Navigates to BMI page
@@ -110,8 +121,13 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
         //reset all the fields in registration form
+<<<<<<< HEAD
         var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'phoneContactInformation', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
 
+=======
+   var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
+ 
+>>>>>>> a5985f755c1e7b519b9412b5ad1aa7bb4cc466a9
         for (var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
         }
@@ -189,19 +205,6 @@ Ext.define('Registration.controller.Main', {
                 attributeType: localStorage.districtUuidpersonattributetype
             })
         }
-        if (Ext.getCmp('phoneContactInformation').getChecked().length > 0) {
-            if (Ext.getCmp('phoneContactInformation').getChecked()[0].boxLabel == "Yes") {
-                jsonperson.data.attributes.push({
-                    value: "true",
-                    attributeType: localStorage.contactByPhoneUuidpersonattributetype
-                })
-            } else {
-                jsonperson.data.attributes.push({
-                    value: "false",
-                    attributeType: localStorage.contactByPhoneUuidpersonattributetype
-                })
-            }
-        }
         if (Ext.getCmp('patientPrimaryContact').getValue() != null) {
             jsonperson.data.attributes.push({
                 value: Ext.getCmp('patientPrimaryContact').getValue(),
@@ -269,8 +272,6 @@ Ext.define('Registration.controller.Main', {
                     var foundLocation = false;
                     for (var idIterator = 0; idIterator < locations.data.length; idIterator++) {
                         var str = locations.data.items[idIterator].raw.display;
-                        console.log(str);
-                        console.log(locations);
 
                         if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1) {
                             this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
@@ -306,7 +307,7 @@ Ext.define('Registration.controller.Main', {
         });
         // setting the patientid and paient name fields in bmi screen
         Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
-        Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').getValue());
+        Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').text);
 
         //creating store for posting the patient
         var PatientStore = Ext.create('Registration.store.patient')
@@ -426,12 +427,15 @@ Ext.define('Registration.controller.Main', {
 
         var store = Ext.create('Registration.store.encounterStore');
         store.add(jsonencounter);
-        store.sync();
-        store.on('write', function () {
-            Ext.Msg.alert('Encounter saved successfully.');
-            this.cancel();
-        }, this);
-
+        store.sync({
+            scope: this,
+            success: function(){
+                Ext.Msg.alert('Encounter saved successfully.');
+            },
+            failure: function(){
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
+            }
+        });
         return store;
     }
 });

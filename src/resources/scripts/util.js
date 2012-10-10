@@ -345,6 +345,11 @@ var Util = {
     
     // Enum to capture pages in each app. E.g. Util.PAGES.SCREENER.PAGE_NAME
     PAGES: {},
+    
+    //string to know whether a patient is able to be screened to
+    DOCTOR_ATTRIBUTE: 'isOutpatientDoctor - true',
+
+    DEFAULT_LOCATION: "GAN",
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
@@ -537,9 +542,60 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        //'registration' (sencha touch version) and 'chw' are removed from the list as they are not being used now
-		return ['login', 'screener', 'registrationextjs4', 'outpatient', 'laboratory','pharmacy'];
+        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing'];
+        
     },
+
+      /**
+       *Return selected module in Raxa and by changing the module text font .
+       *@return [ 'LOGIN', 'SCREENER', ....]
+       */
+    getSelectModules: function () {
+        var module=[];
+        for (var i = 0; i < Util.getModules().length ; i++) {
+            var text = Util.getModules()[i];
+            var changedText = "";
+            switch(text) {
+                case 'login' :
+                    changedText = 'Dashboard';
+                    break;
+                case 'screener' :
+                    changedText = 'Screener';
+                    break;
+                case 'registration' :
+                    changedText = 'Registration';
+                    break;
+                case 'registrationextjs4':
+                    changedText = 'Registration Desktop';
+                    break;
+                case 'pharmacy' :
+                    changedText = 'Pharmacy';
+                    break;
+                case 'chw' :
+                    changedText = 'Chw';
+                    break;
+                case 'outpatient' :
+                    changedText = 'Opd';
+                    break;
+                case 'laboratory' :
+                    changedText = 'Laboratory';
+                    break;
+                case  'patientfacing':
+                    changedText = 'Patient Facing';
+                    break;
+                default :
+                    changedText = 'You dont have permission to access any Module';
+                    break;
+            }
+            var dropDownObj = {
+                text : changedText , 
+                value:Util.getModules()[i]
+            };
+            module.push(dropDownObj);
+        } 
+        return module;
+    },
+    
 
     getApps: function () {
         //always keep login at first position as its app path is different
@@ -577,7 +633,11 @@ var Util = {
      * Note: The Identifier type must be the 3rd in the list (ie at position 2) for this to work properly.
      */
     getPatientIdentifier: function () {
-        var generatedId = arguments[0]+(Math.floor(Math.random()*1000000)).toString();
+        var locationString = arguments[0];
+        if(arguments[0] === undefined){
+            locationString = this.DEFAULT_LOCATION;
+        }
+        var generatedId = locationString +(Math.floor(Math.random()*1000000)).toString();
         url = HOST + '/ws/rest/v1/patient?q='+generatedId,
         xmlHttp = new XMLHttpRequest(); 
         xmlHttp.open( "GET", url , false );
@@ -670,9 +730,9 @@ var Util = {
             key: keyName,
             shift: false,
             ctrl: false,
-	      fn:function(){
-		var element = Ext.getCmp(ComponentName);
-            element.fireEvent('click',element);
+            fn:function(){
+                var element = Ext.getCmp(ComponentName);
+                element.fireEvent('click',element);
 
                 }
             }
@@ -755,5 +815,19 @@ var Util = {
                 console.log('POST alert failed with response status: ' + response.status);
             }
         });
+    },
+    
+    /**
+     * The message to send when a resource fails to load from the server
+     */
+    getMessageLoadError: function() {
+        return "Unable to read from server";
+    },
+    
+    /**
+     * Message to send when a resource fails to write to a server
+     */
+    getMessageSyncError: function() {
+        return "Unable to write to server";
     }
 }

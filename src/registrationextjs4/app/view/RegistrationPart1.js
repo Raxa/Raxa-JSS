@@ -183,7 +183,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 hideLabel: 'true'
                             },
                             items: [{
-                                xtype: 'datefield',
+                                xtype: 'dobdatefield',
                                 fieldLabel: 'DOB',
                                 id: 'dob',
                                 format: 'd/m/Y',
@@ -199,6 +199,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 xtype: 'numberfield',
                                 fieldLabel: 'Current Patient Age',
                                 id: 'patientAge',
+                                minValue: 0,
+                                maxValue: MAX_AGE_OF_PATIENT,
+                                hideTrigger: true,
                                 width: 172,
                                 margins: '0 0 0 6',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext2'),
@@ -239,7 +242,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             align: 'stretch'
                         },
                         items:[{
-                            html: "<img border=\"0\" src=\"/Raxa-JSS/src/resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
+                            html: "<img border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         },{
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
@@ -311,24 +314,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelWidth: 200,
                         hideTrigger: true,
                         width: 573
-                    }, {
-                        xtype: 'radiogroup',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM'),
-                        id: 'phoneContactInformation',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        allowBlank: true,
-                        width: 573,
-                        items: [{
-                            xtype: 'radiofield',
-                            name: 'contact',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM.1')
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'contact',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM.2')
-                        }]
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
