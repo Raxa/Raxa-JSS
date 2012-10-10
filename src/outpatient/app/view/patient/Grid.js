@@ -62,8 +62,6 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             cls: 'centered-cell',
             renderer: function (value ) {
                 if(value == "--" || value == undefined) {    
-                    console.log("bmi");
-                    console.log(value);
                     return "-";
                 }
             }
@@ -75,8 +73,6 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             cls: 'centered-cell',
             renderer: function (value ) {
                 // TODO: Determine how to pass 2 BMI values into one grid panel
-                console.log("inside 2 rendered");
-                console.log(value);
                 if(value == "--" || value == "- / -") {
                     return "-";
                 }
@@ -99,12 +95,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             header: 'Temperature',
             dataIndex: 'temp',
             width: '20%',
-            cls: 'centered-cell',
+            cls: 'centered-cell'
         }, {
             header: 'Oxygen Saturation',
             dataIndex: 'oxysat',
             width: '20%',
-            cls: 'centered-cell',
+            cls: 'centered-cell'
         }]
     }
 });
