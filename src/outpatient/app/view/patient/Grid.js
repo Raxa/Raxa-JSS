@@ -33,8 +33,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '10%',
             cls: 'centered-cell',
             renderer: function (value, values) {
-                if(value == "--") {
-                    return '<span>' + value  + '</span>';
+                console.log("inside renderer");
+                console.log(value);
+                console.log(values);
+                if(value == "--" || value == undefined) {
+                    return '<span>' + "-" + '</span>';
                 } else {
                     return '<span>' + value + ' cm' + '</span>';
                 }// to change the view of the data feched
@@ -45,26 +48,37 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '10%',
             cls: 'centered-cell',
             renderer: function (value , values) {
-                if(value == "--")  {
-                    return '<span>' + value + '</span>';  
+                if(value == "--" || value == undefined)  {
+                    return '<span>' + "-" +'</span>';  
                 } else {
                     return '<span>' + value + ' kg' + '</span>';
                 }// to change the view of the data feched
             }
-        }, {
+        }, 
+        {
             header: 'BMI',
             dataIndex: 'bmi',
             width: '10%',
             cls: 'centered-cell',
-        }, {
+            renderer: function (value ) {
+                if(value == "--" || value == undefined) {    
+                    console.log("bmi");
+                    console.log(value);
+                    return "-";
+                }
+            }
+        }, 
+        {
             header: 'Blood Pressure',
             dataIndex: 'bp',
             width: '20%',
             cls: 'centered-cell',
-            renderer: function (value) {
+            renderer: function (value ) {
                 // TODO: Determine how to pass 2 BMI values into one grid panel
-                if(value == "--") {
-                    return Ext.String.format( value);
+                console.log("inside 2 rendered");
+                console.log(value);
+                if(value == "--" || value == "- / -") {
+                    return "-";
                 }
                 else {
                     var bmi = 68;
@@ -75,12 +89,12 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             header: 'Pulse',
             dataIndex: 'pulse',
             width: '20%',
-            cls: 'centered-cell',
+            cls: 'centered-cell'
         }, {
             header: 'Respiratory Rate',
             dataIndex: 'resrate',
             width: '20%',
-            cls: 'centered-cell',
+            cls: 'centered-cell'
         }, {
             header: 'Temperature',
             dataIndex: 'temp',
