@@ -58,6 +58,7 @@ Ext.define('Registration.controller.Search', {
             store.load({
                 scope: this,
                 callback: function(records, operation, success){
+                    Ext.getBody().unmask();
                     if(success){
                         var l = Ext.getCmp('mainRegArea').getLayout();
                         l.setActiveItem(REG_PAGES.SEARCH_2.value);
