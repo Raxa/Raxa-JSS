@@ -374,7 +374,7 @@ Ext.define('Registration.controller.Main', {
         //POST Encounter with no observation if called immediately after creating Patient. (RAXAJSS-386)
         if (arguments[0] != 'send no obs') { 
             //get the values of each obs from the bmi or registration field
-            if (Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value) {
+            if (Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value != null) {
                 var jsonencounterheight = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -383,7 +383,7 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterheight.data);
             }
-            if (Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value) {
+            if (Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value!= null  && Ext.getCmp('weightIDkg').value!= "") {
                 var jsonencounterweight = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -392,7 +392,7 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterweight.data);
             }
-            if (Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value) {
+            if (Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value!= null && Ext.getCmp('bmiNumberfieldID').value!= "") {
                 var jsonencounterbmi = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -401,7 +401,7 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterbmi.data);
             }
-            if (Ext.getCmp('registrationFeesPaid').isValid() && Ext.getCmp('registrationFeesPaid').value) {
+            if (Ext.getCmp('registrationFeesPaid').isValid() && Ext.getCmp('registrationFeesPaid').value!= null && Ext.getCmp('registrationFeesPaid').value!= "") {
                 var jsonencounterregfee = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -410,7 +410,7 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterregfee.data);
             }  ;         
-            if (Ext.getCmp('complaintArea').isValid() && Ext.getCmp('complaintArea').value) {
+            if (Ext.getCmp('complaintArea').isValid() && Ext.getCmp('complaintArea').value!= null  && Ext.getCmp('complaintArea').value!= "") {
                 var jsonencountercomplaint = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
