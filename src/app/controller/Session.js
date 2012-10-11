@@ -63,9 +63,9 @@ Ext.define('RaxaEmr.controller.Session', {
      */
     storeUserPrivileges: function (userInfo) {
         Ext.getCmp('mainView').setMasked({
-                xtype: 'loadmask',
-                message: 'Loading'
-            });
+            xtype: 'loadmask',
+            message: 'Loading'
+        });
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
             Ext.Ajax.setTimeout(Util.getTimeoutLimit());
@@ -169,9 +169,14 @@ Ext.define('RaxaEmr.controller.Session', {
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
             success: this.storeUserPrivileges,
-            failure: function () {
+            failure: function (response) {
                 Ext.getCmp('mainView').setMasked(false);
-                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
+                if(response.status === 401) {
+                    Ext.Msg.alert('','The username or password you entered is incorrect');  
+                }
+                else {
+                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
+                }
             }
         });
     },
