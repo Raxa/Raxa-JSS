@@ -27,3 +27,16 @@ Ext.define('dobdatefield', {
     minValue: new Date(new Date().setFullYear(new Date().getFullYear() - MAX_AGE_OF_PATIENT))
 });
 
+//generates error warning on textfield if phone number is not of 10 digit
+function validatePhoneNumber(component) {
+	if(isNaN(Ext.getCmp(component).value))
+		{	
+			Ext.getCmp(component).setActiveError('Non integers are found in input for phone number');
+		}
+   if(!(Ext.getCmp(component).value.length==10 || Ext.getCmp(component).value.length))
+		{
+			Ext.getCmp(component).setActiveError('Please check length of contact number');
+		}
+
+}
+

@@ -345,19 +345,30 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaults: {
                             hideLabel: 'true'
                         },
+    					    
                         items: [{
                             name: 'primaryContact',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.1'),
                             id: 'patientPrimaryContact',
                             width:172,
-                            allowBlank: true
+                            allowBlank: true,
+                            listeners:{
+         					'change': function() {
+								validatePhoneNumber('patientPrimaryContact');
+         					}
+							}
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.2'),
                             id: 'patientSecondaryContact',
                             width:172,
                             margins: '0 0 0 6',
-                            allowBlank: true
+                            allowBlank: true,
+                            listeners:{
+         					'change': function() {
+								validatePhoneNumber('patientSecondaryContact');
+         						}
+         					}
                         }]
                     }]
                 }]
