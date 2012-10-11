@@ -169,9 +169,42 @@ Ext.define('Registration.view.RegistrationPart1', {
 
                                 allowBlank: true
                             }]
-                        }, {
+                        },{
                             xtype: 'fieldcontainer',
                             fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age'),
+                            layout: 'hbox',
+                            combineErrors: true,
+                            defaultType: 'textfield',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true'
+                            },
+                            items: [{
+                                name: 'Age',
+                                xtype: 'numberfield',
+                                id: 'patientAge',
+                                mptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext'),
+                                minValue: 0,
+                                maxValue: MAX_AGE_OF_PATIENT,
+                                hideTrigger: true,
+                                width: 40,
+                                maxLength: 3,
+                                enforceMaxLength : true,
+                                emptyText: 'Age',
+                                allowBlank: false,
+                                allowDecimals: false
+                            },{
+                            	xtype:'text',
+                            	text: 'years',
+                            	autosize: true
+                            }
+                            ]
+                        }, {
+                            xtype: 'fieldcontainer',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.DOB'),
                             layout: 'hbox',
                             combineErrors: true,
                             defaultType: 'textfield',
@@ -187,29 +220,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 fieldLabel: 'DOB',
                                 id: 'dob',
                                 format: 'd/m/Y',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext1'),
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.DOB.emptytext'),
                                 labelAlign: 'right',
                                 labelPad: 20,
                                 labelWidth: 200,
                                 anchor: '75%',
                                 width:172,
                                 allowBlank: false
-                            }, {
-                                name: 'Age',
-                                xtype: 'numberfield',
-                                fieldLabel: 'Current Patient Age',
-                                id: 'patientAge',
-                                minValue: 0,
-                                maxValue: MAX_AGE_OF_PATIENT,
-                                hideTrigger: true,
-                                width: 172,
-                                margins: '0 0 0 6',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext2'),
-                                allowBlank: false,
-                                allowDecimals: false
-                            },
-
-                            ]
+                            }]
                         }, {
                             xtype: 'radiogroup',
                             fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender'),
