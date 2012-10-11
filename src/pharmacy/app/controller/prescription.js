@@ -1595,11 +1595,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             headers: Util.getBasicAuthHeaders(),
             success: function (response) {
                 Ext.getCmp('inventoryEditor').hide();        
+                Ext.getCmp('updateInventoryButton').enable();
+                Ext.Msg.alert("Edit Successful");
                 Ext.getStore('stockList').load();
                 Ext.getCmp('allStockGrid').getView().refresh();
                 Ext.getStore('batches').load();
-                Ext.getCmp('updateInventoryButton').enable();
-                Ext.Msg.alert("Edit Successful");
             },
             failure: function (){
                 Ext.getCmp('updateInventoryButton').enable();
