@@ -44,7 +44,6 @@ Ext.define('Registration.model.searchPatient', {
     }, {
         name: 'cityVillage',
         type: 'string',
-        mapping: 'person.preferredAddress.cityVillage',
         useNull: true
     }]
 })
