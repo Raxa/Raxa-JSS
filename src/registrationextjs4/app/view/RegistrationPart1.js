@@ -223,9 +223,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.DOB.emptytext'),
                                 labelAlign: 'right',
                                 labelPad: 20,
-                                labelWidth: 200,
+                                labelWidth: 150,
                                 anchor: '75%',
-                                width:172,
+                                width: 110,
                                 allowBlank: false
                             }]
                         }, {
