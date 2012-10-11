@@ -128,7 +128,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 id: 'patientFirstName',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
                                 width: 172,
-                                allowBlank: false
+                                allowBlank: false,
+                                listeners:{
+         							'blur': function() {
+										autoTextFormat(this);
+         						}
+         					}
                             }, {
                                 xtype: 'textfield',                            
                                 name: 'lastName',
@@ -136,7 +141,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 id: 'patientLastName',
                                 width: 172,
                                 margins: '0 0 0 6',
-                                allowBlank: false
+                                allowBlank: false,
+                                listeners:{
+         							'blur': function() {
+										autoTextFormat(this);
+         						}
+         					}                                
                             }]
                         }, {
                             xtype: 'fieldcontainer',
@@ -157,8 +167,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
                                 id: 'relativeFirstName',
                                 width:172,
-
-                                allowBlank: true
+                                allowBlank: true,
+                                listeners:{
+         							'blur': function() {
+										autoTextFormat(this);
+         						}
+         					}                                
                             }, {
                                 xtype: 'textfield',                            
                                 name: 'lastName',
@@ -166,8 +180,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 id: 'relativeLastName',
                                 width:172,
                                 margins: '0 0 0 6',
-
-                                allowBlank: true
+                                allowBlank: true,
+                                listeners:{
+         							'blur': function() {
+										autoTextFormat(this);
+         						}
+         					}                                
                             }]
                         },{
                             xtype: 'fieldcontainer',
@@ -301,7 +319,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                         allowBlank: true,
                         id: 'town',
                         labelWidth: 200,
-                        width: 573
+                        width: 573,
+                        listeners:{
+ 							'blur': function() {
+								autoTextFormat(this);
+ 						}
+ 					}                        
                     }, {
                         xtype: 'textfield',
                         id: 'residentialArea',
@@ -312,7 +335,11 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelWidth: 200,
                         width: 573,
                         allowBlank: true,
-                    //anchor: '95%'
+                        listeners:{
+ 							'blur': function() {
+								autoTextFormat(this);
+ 						}
+ 					}                        
                     }, {
                         xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Tehsil'),
@@ -321,7 +348,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 200,
-                        width: 573
+                        width: 573,
+                        listeners:{
+ 							'blur': function() {
+								autoTextFormat(this);
+ 						}
+ 					}                        
                     }, {
                         xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.District'),
@@ -331,7 +363,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelPad: 20,
                         labelWidth: 200,
                         hideTrigger: true,
-                        width: 573
+                        width: 573,
+                        listeners:{
+ 							'blur': function() {
+								autoTextFormat(this);
+ 						}
+ 					}                                                
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
@@ -345,7 +382,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                         defaults: {
                             hideLabel: 'true'
                         },
-    					    
                         items: [{
                             name: 'primaryContact',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.1'),
