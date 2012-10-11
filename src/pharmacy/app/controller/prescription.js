@@ -868,7 +868,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
      * Populates issue drug fields with drugs + quantites from the purchase order
      */
     populateReceiptFromPurchaseOrder: function(combo, records){
-        Ext.getCmp('receiptLocationPicker').setValue(records[0].data.dispenseLocationName);
+        console.log(records[0]);
+        Ext.getCmp('receiptLocationPicker').setValue(records[0].data.dispenseLocation.uuid);
+        Ext.getCmp('receiptLocationPicker').setRawValue(records[0].data.dispenseLocationName);
         //emptying previous fields
         Ext.getStore('newReceipt').removeAll();
         Ext.ComponentQuery.query('goodsReceiptGrid')[0].getSelectionModel().deselectAll();
@@ -899,9 +901,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     submitReceipt: function(){
         var drugInventories = new Array();
         var receipts = Ext.getStore('newReceipt').data;
-        var receiptLocationUuid = Ext.getCmp("receiptLocationPicker").lastSelection[0].data.uuid;
+        var receiptLocationUuid = Ext.getCmp("receiptLocationPicker").value;
         var stockLocationUuid = localStorage.stockLocation;
-        var receiptLocationString = Ext.getCmp("receiptLocationPicker").lastSelection[0].data.display.toString().split(" - ")[0];
+        var receiptLocationString = Ext.getCmp("receiptLocationPicker").rawValue.split(" - ")[0];
         var purchaseOrderUuid = Ext.getCmp('receiptPurchaseOrderPicker').getValue();
         for (var i = 0; i < receipts.items.length; i++) {
             if(receipts.items[i].data.drugname != ""){
