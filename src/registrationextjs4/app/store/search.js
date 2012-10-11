@@ -20,8 +20,7 @@ Ext.define('Registration.store.search', {
                         age: Data[i].person.age,
                         givenName: Data[i].person.preferredName.givenName,
                         familyName: Data[i].person.preferredName.familyName,
-                        //  we dont get identifiers in patient search GET call so for now its commented
-                        // identifier: Data[i].identifers.identifier,
+                        identifier: Data[i].identifiers[0].identifier,
                         attributes: Data[i].person.attributes
                     })
                     if (Data[i].person.birthdate == null) temp.data.birthdate = 0
