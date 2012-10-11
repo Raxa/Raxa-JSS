@@ -353,7 +353,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             width:172,
                             allowBlank: true,
                             listeners:{
-         					'change': function() {
+         					'blur': function() {
 								validatePhoneNumber('patientPrimaryContact');
          					}
 							}
@@ -365,7 +365,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             margins: '0 0 0 6',
                             allowBlank: true,
                             listeners:{
-         					'change': function() {
+         					'blur': function() {
 								validatePhoneNumber('patientSecondaryContact');
          						}
          					}
