@@ -447,7 +447,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     savePerson: function () {
-        if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid() && (Ext.getCmp('dob').getValue() != null || Ext.getCmp('age').getValue() != null)){
+        if(Ext.getCmp('givenName').isValid() && Ext.getCmp('familyName').isValid() && Ext.getCmp('village').isValid() && Ext.getCmp('block').isValid() && Ext.getCmp('District').isValid() && Ext.getCmp('doctor').isValid() && (Ext.getCmp('dob').getValue() != null || Ext.getCmp('age').getValue() != null) && Ext.getStore('orderStore').data.items.length > 0){
             var jsonperson = Ext.create('RaxaEmr.Pharmacy.model.Person', {
                 gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
                 addresses: [{
@@ -543,9 +543,17 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         });
         var PatientStore = Ext.create('RaxaEmr.Pharmacy.store.Patients')
         PatientStore.add(patient);
+        RaxaEmr.Pharmacy.model.Patient.getFields()[3].persist = false;
+        RaxaEmr.Pharmacy.model.Patient.getFields()[4].persist = false;
+        RaxaEmr.Pharmacy.model.Patient.getFields()[5].persist = false;
         //makes the post call for creating the patient
         PatientStore.sync({
             scope: this,
+            callback: function(){
+                RaxaEmr.Pharmacy.model.Patient.getFields()[3].persist = true;
+                RaxaEmr.Pharmacy.model.Patient.getFields()[4].persist = true;
+                RaxaEmr.Pharmacy.model.Patient.getFields()[5].persist = true;
+            },
             success: function(){
                 this.sendPharmacyEncounter(personUuid, localStorage.prescriptionUuidencountertype);
             },
