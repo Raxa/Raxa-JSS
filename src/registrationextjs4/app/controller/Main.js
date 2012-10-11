@@ -123,6 +123,7 @@ Ext.define('Registration.controller.Main', {
         //reset all the fields in registration form
    var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
  
+
         for (var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
         }

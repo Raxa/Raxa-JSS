@@ -315,7 +315,6 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
         obsStore.load({
             callback: function(records, operation, success){
                 if(success){
-                    callback: function() {
                         // wait for store to load
                         console.log(obsStore); 
                         var obsTypes = ['PULSE','TEMPERATURE (C)', 'BLOOD OXYGEN SATURATION', 'DIASTOLIC BLOOD PRESSURE', 'SYSTOLIC BLOOD PRESSURE', 'RESPIRATORY RATE'];
@@ -358,7 +357,6 @@ Ext.define('RaxaEmr.Outpatient.controller.patientlist', {
                         var vitalsGridStore = Ext.getStore("Grid");
                         vitalsGridStore.clearData();
                         vitalsGridStore.add(item);
-                    }
                     //do the things here
                 }
                 else{
