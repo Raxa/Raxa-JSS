@@ -85,6 +85,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
+        Ext.getCmp('religionConfirm').setText(Ext.getCmp('religion').value);
         Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
         Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
 		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value == ""))
@@ -106,6 +107,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('townConfirm').setText(Ext.getCmp('town').value);
         Ext.getCmp('tehsilConfirm').setText(Ext.getCmp('tehsil').value);
         Ext.getCmp('districtConfirm').setText(Ext.getCmp('district').value);
+        Ext.getCmp('stateConfirm').setText(Ext.getCmp('state').value);
     },
 
     //Navigates to BMI page
@@ -143,7 +145,10 @@ Ext.define('Registration.controller.Main', {
             addresses: [{
                 address1: Ext.getCmp('street').value,
                 address2: Ext.getCmp('residentialArea').value,
-                cityVillage: Ext.getCmp('town').value
+                address3: Ext.getCmp('tehsil').value,
+                cityVillage: Ext.getCmp('town').value,
+                stateProvince: Ext.getCmp('state').value,
+                countyDistrict: Ext.getCmp('district').value
             }],
             attributes: [{
                 value: Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value,
@@ -189,6 +194,12 @@ Ext.define('Registration.controller.Main', {
                 attributeType: localStorage.occupationUuidpersonattributetype
             })
         }
+        if (Ext.getCmp('religion').getValue() != null) {
+            jsonperson.data.attributes.push({
+                value: Ext.getCmp('religion').getValue(),
+                attributeType: localStorage.religionUuidpersonattributetype
+            })
+        }   
         if (Ext.getCmp('tehsil').getValue() != "") {
             jsonperson.data.attributes.push({
                 value: Ext.getCmp('tehsil').getValue(),
@@ -483,11 +494,13 @@ Ext.define('Registration.controller.Main', {
         'residentialArea',
         'tehsil',
         'district',
+        'state',
         'patientPrimaryContact',
         'patientSecondaryContact',
         'education',
         'caste',
         'occupation',
+        'religion',
         'complaintArea'
         ];
 

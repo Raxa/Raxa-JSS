@@ -203,6 +203,22 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }]
                     }, {
                         xtype: 'fieldcontainer',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.State'),
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'text',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                        id: 'stateConfirm',
+                    }]
+                    }, {
+                        xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CN'),
                         layout: 'hbox',
                         combineErrors: true,
@@ -275,6 +291,23 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             name: 'occuption',
                             id: 'occupationConfirm',
                         }]
+                    }, {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Religion'),
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'text',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            name: 'religion',
+                            id: 'religionConfirm',
+                        }]
                     }]
                 },{
                     xtype: 'fieldset',
@@ -282,14 +315,23 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     border: false,
                     items:[{
                         xtype: 'button',
-                        margin: '30 0 0 400',
+                        margin: '50 100 50 100',
                         ui: 'raxa-orange-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Cancel'),
                         action: 'cancel'
-                    }, {
+                    },{
+                        xtype: 'button',
+						width: '10%',
+                        margin: '50 100 50 100',
+                        ui: 'raxa-orange-small',
+                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Back'),
+	                    handler: function() {
+							Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.REG_1.value);
+    	                }
+                    },{
                         xtype: 'button',
 				        id:'submitButton',
-                        margin: '30 0 0 30',
+                        margin: '50 0 50 100',
                         text: 'Next',
                         ui: 'raxa-aqua-small',
                         action: 'submit'
