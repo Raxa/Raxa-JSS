@@ -194,6 +194,12 @@ Ext.define('Registration.controller.Main', {
                 attributeType: localStorage.occupationUuidpersonattributetype
             })
         }
+        if (Ext.getCmp('religion').getValue() != null) {
+            jsonperson.data.attributes.push({
+                value: Ext.getCmp('religion').getValue(),
+                attributeType: localStorage.religionUuidpersonattributetype
+            })
+        }   
         if (Ext.getCmp('tehsil').getValue() != "") {
             jsonperson.data.attributes.push({
                 value: Ext.getCmp('tehsil').getValue(),
