@@ -1,50 +1,136 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.allStockGrid',
-    height: 250,
-    width: 830,
-    layout: {
-        type: 'absolute'
-    },
-    x: 110,
+    id: 'allStockGrid',
+    autoHeight: 250,
+    width: 600,
+    margin: '0 0 0 110',
+    store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
+        storeId: 'stockList',
+        listeners: {
+            load: function() {
+                //we need a second store to get the supplier, as OpenMRS doesn't have it in the normal drug
+                if(!Ext.getStore('drugInfos')){
+                    var store = Ext.create('RaxaEmr.Pharmacy.store.DrugInfos',{
+                        storeId: 'drugInfos',
+                        listeners: {
+                            load: function() {
+                                Ext.getCmp('allStockGrid').updateFields();
+                            }
+                        }
+                    })
+                }
+                else {
+                    Ext.getCmp('allStockGrid').updateFields();
+                }
+            }
+        }
+        
+    }),
+    selModel : Ext.create('Ext.selection.CellModel', {
+        listeners : {
+            select : function(selectionModel, record, row) {
+                //on select, go to drug details page
+                Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
+                Ext.getCmp('drugDetails').initForDrug(record.data.drugUuid);
+                selectionModel.deselectAll();                
+            },
+            scope : this
+        }  
+    }),    
     columns: [
     {
-        xtype: 'rownumberer',
-        text: 'S.No',
-        width: 40
+        xtype: 'gridcolumn',
+        text: 'Status',
+        dataIndex: 'status',
+        width: 60
     },
     {
         xtype: 'gridcolumn',
-        text: 'Name of Drug',
+        text: 'Name',
+        dataIndex: 'drugName',
         width: 120
-    },{
-        xtype: 'numbercolumn',
-        text: 'Stock Status',
-        width: 100
     },
     {
-        xtype: 'numbercolumn',
+        xtype: 'gridcolumn',
         text: 'Qty',
+        dataIndex: 'quantity',
         width: 80
     },
     {
-        xtype: 'numbercolumn',
-        text: 'Qty expiring',
-        width: 100
+        xtype: 'gridcolumn',
+        text: 'Months',
+        width: 60,
+        dataIndex: 'months',
+        useNull: true
     },
     {
         xtype: 'gridcolumn',
-        text: 'Days of Stock',
-        width: 100
+        text: 'Shelf',
+        dataIndex: 'roomLocation',
+        width: 50
     },
     {
-        xtype: 'datecolumn',
-        text: 'Order Due Date',
-        width: 100
+        xtype: 'gridcolumn',
+        text: 'batch',
+        dataIndex: 'batch',
+        width: 80
     },
     {
-        xtype: 'numbercolumn',
-        text: 'Qty orderdered',
-        width: 90
-    }]
+        xtype: 'gridcolumn',
+        text: 'Dispense Location',
+        dataIndex: 'locationName',
+        width: 120
+    },        
+    {
+        xtype: 'gridcolumn',
+        text: 'Supplier',
+        dataIndex: 'supplier',
+        width: 120
+    },        
+    {
+        xtype: 'actioncolumn',
+        width: 22,
+        items: [{
+            icon: '../resources/img/edit.png',
+            tooltip: 'Edit Inventory',
+            handler: function(grid, rowIndex, colIndex) {
+                var rec = grid.getStore().getAt(rowIndex);
+                if(Ext.getCmp('inventoryEditor').isHidden()){
+                    Ext.getCmp('inventoryEditor').show();
+                    var x = Ext.getCmp('mainarea').getEl().getX() + (Ext.getCmp('mainarea').getWidth()-Ext.getCmp('inventoryEditor').getWidth())/2;
+                    Ext.getCmp('inventoryEditor').setPosition(x, 100);
+                    localStorage.setItem('currentInventory', rec.get('uuid'));
+                    Ext.getCmp('inventoryEditor').initForInventory(rec.get('uuid'));
+                }else{
+                    Ext.getCmp('inventoryEditor').hide();
+                }
+            }
+        }]
+    }],
+    
+    updateFields: function() {
+        var infoStore = Ext.getStore('drugInfos');
+        var myStore = this.getStore();
+        for(var i=0; i<myStore.data.items.length; i++){
+            var item = myStore.data.items[i];
+            var index = infoStore.find('drugUuid', item.data.drugUuid);
+            if(index!==-1){
+                item.set("supplier", infoStore.getAt(index).data.description);
+            }
+            if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
+                item.set("batchQuantity", item.data.batch+" ("+item.data.quantity+")");
+            }
+            else{
+                item.set("batchQuantity", null);
+            }
+            
+            if(item.data.expiryDate!==""){
+                item.set("months", Util.monthsFromNow(item.data.expiryDate));
+            }
+            else{
+                item.set("months", null);
+            }
+        }
+    }
 });

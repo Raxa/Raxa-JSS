@@ -17,104 +17,73 @@
 Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
     extend: 'Ext.Container',
     xtype: 'diagnosis-panel',
+    requires: ['RaxaEmr.Outpatient.view.patient.diagnosedlist','RaxaEmr.Outpatient.view.patient.diagnosislist'],
     id: 'diagnosis-panel',
     config: {
         layout: {
-            type: 'hbox'
+            type: 'vbox'
         },
         title: 'Diagnosis',
-        items: [{
-            xtype: 'formpanel',
-            flex: 1,
-            scrollable: 'false',
+        items: [
+{
+            xtype: 'container',
+            layout: {
+                type: 'hbox'
+            },
             items: [{
-                xtype: 'fieldset',
+                xtype: 'container',
+                flex: 1,
+                layout: {
+                    type: 'vbox'
+                },
                 items: [{
-                    xtype: 'selectfield',
-                    label: 'Diagnosis Category',
-                    valueField: 'diagnosisCategory',
-                    displayField: 'title',
-                    store: {
-                        data: [{
-                            diagnosisCategory: '',
-                            title: '',
-                        }, {
-                            diagnosisCategory: 'Cardiovascular',
-                            title: 'Cardiovascular',
-                        }, {
-                            diagnosisCategory: 'Endocrine',
-                            title: 'Endocrine',
-                        }, {
-                            diagnosisCategory: 'Gastrointestinal',
-                            title: 'Gastrointestinal',
-                        }, {
-                            diagnosisCategory: 'Genitourinary',
-                            title: 'Genitourinary',
-                        }, {
-                            diagnosisCategory: 'Musculoskeletal',
-                            title: 'Musculoskeletal',
-                        }, {
-                            diagnosisCategory: 'Neurological',
-                            title: 'Neurological',
-                        }, {
-                            diagnosisCategory: 'Orthopedic',
-                            title: 'Orthopedic',
-                        }, {
-                            diagnosisCategory: 'Respiratory',
-                            title: 'Respiratory',
-                        }]
-                    }
+                    xtype: 'formpanel',
+                    border: '0 0 1 0',
+                    padding: '0 0 0 0',
+                    style: 'border:solid #DADADA;',
+                    scrollable: false,
+                    height: 93,
+                    items: [{
+                        xtype: 'selectfield',
+                        label: 'Search In',
+                        id: 'diagnosisFilter',
+                        hidden: true,
+                        border: '0 0 1 0',
+                        style: 'border:solid #DADADA;',
+                        valueField: 'filterBy',
+                        displayField: 'title',
+                        store: {
+                            data: [{
+                                filterBy: 'all',
+                                title: 'All',
+                            }]
+                        }
+                    }, {
+                        xtype: 'searchfield',
+                        id: 'diagnosisfilterbysearchfield',
+                    }]
                 }, {
-                    xtype: 'selectfield',
-                    label: 'Diagnosis',
-                    valueField: 'diagnosisCategory',
-                    displayField: 'title',
-                    store: {
-                        data: [{
-                            diagnosisCategory: '',
-                            title: '',
-                        }, {
-                            diagnosisCategory: 'Chronic Diarrhea',
-                            title: 'Chronic Diarrhea',
-                        }, {
-                            diagnosisCategory: 'Hookworm Infestation',
-                            title: 'Hookworm Infestation',
-                        }, {
-                            diagnosisCategory: 'Infectious Diarrhea',
-                            title: 'Infectious Diarrhea',
-                        }, {
-                            diagnosisCategory: 'Menetrier\'s Disease',
-                            title: 'Menetrier\'s Disease',
-                        }]
-                    }
-                }, {
-                    xtype: 'textareafield',
-                    label: 'Notes'
+                    xtype: 'Diagnosis-List',
+                    flex: 1,
                 }]
             }, {
                 xtype: 'container',
-                layout: {
-                    pack: 'center',
-                    type: 'hbox'
-                },
-                /*items: [{*/
-                /*xtype: 'button',*/
-                /*ui: 'decline',*/
-                /*text: 'Cancel',*/
-                /*flex: 1*/
-                /*}, {*/
-                /*xtype: 'button',*/
-                /*margin: '0 10 0 10',*/
-                /*text: 'Clear',*/
-                /*flex: 1*/
-                /*}, {*/
-                /*xtype: 'button',*/
-                /*ui: 'confirm',*/
-                /*text: 'Done',*/
-                /*flex: 1*/
-                /*}]*/
+                flex: 1,
+                items: [{
+                    xtype: 'container',
+                    margin: '0 0 20 0',
+                    border: '0 0 0 3',
+                    style: 'border:solid #DADADA;',
+                    height: 576,
+                    layout: {
+                        type: 'fit'
+                    },
+                    items: [{
+                        xtype: 'Diagnosed-List',
+                    }]
+                }]
             }]
-        }, {
+        }, {// side buttons for refer to doc nad to add another diagnosis
             xtype: 'container',
             width: 60,
             items: [{
@@ -130,6 +99,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                 xtype: 'button',
                 docked: 'top',
                 height: 40,
+		id : 'addDiagnosis',
                 margin: '10 20 0 0',
                 width: 40,
                 icon: '../outpatient/resources/images/add.png',

@@ -25,6 +25,7 @@ Ext.define('Registration.view.RegistrationPart1', {
         type: 'hbox',
         pack: 'center'
     },
+
     initComponent: function () {
         this.items = {
             xtype: 'panel',
@@ -34,181 +35,272 @@ Ext.define('Registration.view.RegistrationPart1', {
             items: [{
                 xtype: 'container',
                 bodyPadding: 0,
+
                 items: [{
                     xtype: 'fieldset',
                     //first element in bodyStyle is not working, passing it twice
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     padding: 5,
                     title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.title'),
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
+
+                    layout: {
+                        type: 'hbox'
+                    },
+
                     items: [{
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
+                        xtype: 'container',
                         items: [{
-                            xtype: 'numberfield',
-                            cls: 'raxa-form-panel',    
-                            name: 'Old Patient Identifier',
-                            id: 'oldPatientIdentifier',
-                            fieldLabel: 'Old Patient Identifier',
-                            width: 353,
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPI.emptytext'),
-                            allowBlank: true
-
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PN'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            cls: 'raxa-form-panel',    
-                            name: 'firstName',
-                            id: 'patientFirstName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
-                            width: 172,
-                            allowBlank: false
-                        }, {
-                            name: 'lastName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PLN.emptytext'),
-                            id: 'patientLastName',
-                            width: 172,
-                            margins: '0 0 0 6',
-                            allowBlank: false
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHN'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'firstName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
-                            id: 'relativeFirstName',
-                            width:172,
-
-                            allowBlank: false
-                        }, {
-                            name: 'lastName',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHLN.emptytext'),
-                            id: 'relativeLastName',
-                            width:172,
-                            margins: '0 0 0 6',
-
-                            allowBlank: false
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            xtype: 'datefield',
-                            fieldLabel: 'DOB',
-                            id: 'dob',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext1'),
+                            xtype: 'fieldcontainer',
+                            fieldLabel: 'Centre Id',
+                            layout: 'hbox',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 200,
-                            anchor: '75%',
-                            width:172,
-                            allowBlank: false
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true',
+                                value: 'GAN'
+                            },
+                            items: [{
+                                xtype: 'combo',
+                                name: 'Centre ID',
+                                label: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre'),
+                                id: 'centreId',
+                                layout: 'hbox',
+                                width: 172,
+		                        typeAhead: true,
+		                        minChars: 1,
+		                        queryMode: 'local',
+                                store: new Ext.data.SimpleStore({
+                                    fields: ['centre'],
+                                    data: [
+                                        [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.1')],
+                                        [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.2')],
+                                        [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.3')],
+                                        [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre.4')], ]
+                                }),
+                                displayField: 'centre'
+                            }]
                         }, {
-                            name: 'Age',
-                            xtype: 'numberfield',
-                            fieldLabel: 'Current Patient Age',
-                            id: 'patientAge',
-                            width: 172,
-                            margins: '0 0 0 6',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext2'),
-                            allowBlank: false
-                        },
+                            xtype: 'fieldcontainer',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPRN'),
+                            layout: 'hbox',
+                            combineErrors: true,
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true'
+                            },
+                            items: [{
+                                xtype: 'textfield',
+                                cls: 'raxa-form-panel',
+                                name: 'Old Patient Identifier',
+                                id: 'oldPatientIdentifier',
+                                fieldLabel: 'Old Patient Identifier',
+                                width: 353,
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPI.emptytext'),
+                                allowBlank: true
 
-                        ]
+                            }]
+                        }, {
+                            xtype: 'fieldcontainer',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PN'),
+                            layout: 'hbox',
+                            combineErrors: true,
+                            defaultType: 'textfield',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true'
+                            },
+                            items: [{
+                                xtype: 'textfield',
+                                cls: 'raxa-form-panel',
+                                name: 'firstName',
+                                id: 'patientFirstName',
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
+                                width: 172,
+                                allowBlank: false,
+                                listeners: {
+                                    'blur': function () {
+                                        autoTextFormat(this);
+                                    }
+                                }
+                            }, {
+                                xtype: 'textfield',
+                                name: 'lastName',
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PLN.emptytext'),
+                                id: 'patientLastName',
+                                width: 172,
+                                margins: '0 0 0 6',
+                                allowBlank: false,
+                                listeners: {
+                                    'blur': function () {
+                                        autoTextFormat(this);
+                                    }
+                                }
+                            }]
+                        }, {
+                            xtype: 'fieldcontainer',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHN'),
+                            layout: 'hbox',
+                            combineErrors: true,
+                            defaultType: 'textfield',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true'
+                            },
+                            items: [{
+                                xtype: 'textfield',
+                                name: 'firstName',
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
+                                id: 'relativeFirstName',
+                                width: 172,
+                                allowBlank: true,
+                                listeners: {
+                                    'blur': function () {
+                                        autoTextFormat(this);
+                                    }
+                                }
+                            }, {
+                                xtype: 'textfield',
+                                name: 'lastName',
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHLN.emptytext'),
+                                id: 'relativeLastName',
+                                width: 172,
+                                margins: '0 0 0 6',
+                                allowBlank: true,
+                                listeners: {
+                                    'blur': function () {
+                                        autoTextFormat(this);
+                                    }
+                                }
+                            }]
+                        }, {
+                            xtype: 'fieldcontainer',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age'),
+                            layout: 'hbox',
+                            combineErrors: true,
+                            defaultType: 'textfield',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true'
+                            },
+                            items: [{
+                                name: 'Age',
+                                xtype: 'numberfield',
+                                id: 'patientAge',
+                                mptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext'),
+                                minValue: 0,
+                                maxValue: MAX_AGE_OF_PATIENT,
+                                hideTrigger: true,
+                                width: 40,
+                                maxLength: 3,
+                                enforceMaxLength: true,
+                                emptyText: 'Age',
+                                allowBlank: false,
+                                allowDecimals: false
+                            }, {
+                                xtype: 'text',
+                                text: 'years',
+                                autosize: true
+                            }]
+                        }, {
+                            xtype: 'fieldcontainer',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.DOB'),
+                            layout: 'hbox',
+                            combineErrors: true,
+                            defaultType: 'textfield',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true'
+                            },
+                            items: [{
+                                xtype: 'dobdatefield',
+                                fieldLabel: 'DOB',
+                                id: 'dob',
+                                format: 'd/m/Y',
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.DOB.emptytext'),
+                                labelAlign: 'right',
+                                labelPad: 20,
+                                labelWidth: 150,
+                                anchor: '75%',
+                                width: 110,
+                                allowBlank: false
+                            }]
+                        }, {
+                            xtype: 'radiogroup',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender'),
+                            id: 'sexRadioGroup',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            width: 570,
+                            allowBlank: false,
+                            items: [{
+                                xtype: 'radiofield',
+                                name: 'sex',
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Male'),
+                                checked: true
+                            }, {
+                                xtype: 'radiofield',
+                                name: 'sex',
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female'),
+                            }, {
+                                xtype: 'radiofield',
+                                name: 'sex',
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other'),
+                            }]
+                        }]
                     }, {
-                        xtype: 'radiogroup',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender'),
-                        id: 'sexRadioGroup',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        width: 570,
-                        allowBlank: false,
+                        xtype: 'panel',
+                        ui: 'raxa-panel',
+                        layout: {
+                            type: 'vbox',
+                            align: 'stretch'
+                        },
                         items: [{
-                            xtype: 'radiofield',
-                            name: 'sex',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Male'),
-                            checked: true
+                            html: "<img border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         }, {
-                            xtype: 'radiofield',
-                            name: 'sex',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female'),
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'sex',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other'),
+                            xtype: 'button',
+                            ui: 'raxa-aqua-small',
+                            xtype: 'button',
+                            width: 80,
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.TakePhoto'),
+                            action: 'takePhoto'
                         }]
                     }]
                 }]
-            },{
+            }, {
                 xtype: 'container',
                 border: 0,
                 bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     padding: 5,
                     title: 'Address and Contact Details',
                     items: [{
-                        xtype: 'textfield',
-                        id: 'block',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Block'),
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Block'),
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        width: 573,
-                        allowBlank: false,
-                    //anchor: '95%'
-                    }, {
                         xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Street'),
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Street'),
@@ -216,7 +308,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         id: 'street',
                         labelPad: 20,
                         labelWidth: 200,
-                        allowBlank: false,
+                        allowBlank: true,
                         width: 573
                     }, {
                         xtype: 'textfield',
@@ -224,10 +316,30 @@ Ext.define('Registration.view.RegistrationPart1', {
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Town'),
                         labelAlign: 'right',
                         labelPad: 20,
-                        allowBlank: false,
+                        allowBlank: true,
                         id: 'town',
                         labelWidth: 200,
-                        width: 573
+                        width: 573,
+                        listeners: {
+                            'blur': function () {
+                                autoTextFormat(this);
+                            }
+                        }
+                    }, {
+                        xtype: 'textfield',
+                        id: 'residentialArea',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.ResidentialArea'),
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.ResidentialArea'),
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 200,
+                        width: 573,
+                        allowBlank: true,
+                        listeners: {
+                            'blur': function () {
+                                autoTextFormat(this);
+                            }
+                        }
                     }, {
                         xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.Tehsil'),
@@ -236,9 +348,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 200,
-                        width: 573
+                        width: 573,
+                        listeners: {
+                            'blur': function () {
+                                autoTextFormat(this);
+                            }
+                        }
                     }, {
-                        xtype: 'textfield',
+                        xtype: 'combo',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.District'),
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.District'),
                         id: 'district',
@@ -246,31 +363,82 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelPad: 20,
                         labelWidth: 200,
                         hideTrigger: true,
-                        width: 573
-                    }, {
-                        xtype: 'radiogroup',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM'),
-                        id: 'phoneContactInformation',
+                        width: 573,
+                        typeAhead: true,
+                        minChars: 2,
+                        queryMode: 'local',
+                        store: Ext.create('Registration.store.autoCompleteAddress'),
+                        displayField: 'district',
+                        listeners:{
+                        	//Sets corresponding state for selected district
+    					     scope: this,
+         					 'select': function() {
+         							Ext.getCmp('state').setValue(Ext.getCmp('district').lastSelection[0].data.state);
+         						},
+         					 'change': function() {
+         							Ext.getCmp('state').setValue('');
+         						}
+    						}
+    					},{
+                        xtype: 'combo',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.State'),
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.State'),
+                        id: 'state',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 200,
-                        allowBlank: true,
+                        hideTrigger: true,
                         width: 573,
-                        items: [{
-                            xtype: 'radiofield',
-                            name: 'contact',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM.1')
-                        }, {
-                            xtype: 'radiofield',
-                            name: 'contact',
-                            boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CM.2')
-                        }]
+                        typeAhead: true,
+                        minChars: 1,
+                        queryMode: 'local',
+                        store: new Ext.data.SimpleStore({
+                            fields: ['stateid','stateName'],
+                            data: [
+									[1,'Andhra Pradesh'],
+									[2,'Arunachal Pradesh'],
+									[3,'Assam'],
+									[4,'Bihar'],
+									[5,'Chhattisgarh'],
+									[6,'Goa'],
+									[7,'Gujarat'],
+									[8,'Haryana'],
+									[9,'Himachal Pradesh'],
+									[10,'Jammu and Kashmir'],
+									[11,'Jharkhand'],
+									[12,'Karnataka'],
+									[13,'Kerala'],
+									[14,'Madhya Pradesh'],
+									[15,'Maharashtra'],
+									[16,'Manipur'],
+									[17,'Meghalaya'],
+									[18,'Mizoram'],
+									[19,'Nagaland'],
+									[20,'Orissa'],
+									[21,'Punjab'],
+									[22,'Rajasthan'],
+									[23,'Sikkim'],
+									[24,'Tamil Nadu'],
+									[25,'Tripura'],
+									[26,'Uttar Pradesh'],
+									[27,'Uttarakhand'],
+									[28,'West Bengal'],
+									['A','Andaman and Nicobar'],
+									['B','Chandigarh'],
+									['C','Dadra and Nagar Haveli'],
+									['D','Daman and Diu'],
+									['E','Lakshadweep'],
+									['F','Delhi'],
+									['G','Pondicherry']
+                            ]
+                        }),
+                        displayField: 'stateName'                    
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
                         layout: 'hbox',
                         combineErrors: true,
-                        defaultType: 'numberfield',
+                        defaultType: 'textfield',
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 200,
@@ -282,26 +450,36 @@ Ext.define('Registration.view.RegistrationPart1', {
                             name: 'primaryContact',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.1'),
                             id: 'patientPrimaryContact',
-                            width:172,
-                            allowBlank: true
+                            width: 172,
+                            allowBlank: true,
+                            listeners: {
+                                'blur': function () {
+                                    validatePhoneNumber('patientPrimaryContact');
+                                }
+                            }
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.2'),
                             id: 'patientSecondaryContact',
-                            width:172,
+                            width: 172,
                             margins: '0 0 0 6',
-                            allowBlank: true
+                            allowBlank: true,
+                            listeners: {
+                                'blur': function () {
+                                    validatePhoneNumber('patientSecondaryContact');
+                                }
+                            }
                         }]
                     }]
                 }]
-            },{
+            }, {
                 xtype: 'container',
                 border: 0,
                 bodyPadding: 0,
                 items: [{
                     xtype: 'fieldset',
-                    style:{
-                        bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
+                    style: {
+                        bodyStyle: 'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     padding: 5,
                     title: 'Secondary Information',
@@ -321,10 +499,14 @@ Ext.define('Registration.view.RegistrationPart1', {
                         items: [{
                             xtype: 'combo',
                             name: 'education',
-                            label: 'Education Details',fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
+                            label: 'Education Details',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.ED'),
                             id: 'education',
                             layout: 'hbox',
                             width: 172,
+                            typeAhead: true,
+                            minChars: 1,
+                            queryMode: 'local',
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
                                 data: [
@@ -337,8 +519,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }),
                             displayField: 'education'
                         }]
-                    }, /* TODO: add back in caste after we decide what fields we want
-                        {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'Caste',
                         layout: 'hbox',
@@ -358,6 +539,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id: 'caste',
                             layout: 'hbox',
                             width: 172,
+                            typeAhead: true,
+                            minChars: 1,
+                            queryMode: 'local',
                             store: new Ext.data.SimpleStore({
                                 fields: ['caste'],
                                 data: [
@@ -370,7 +554,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }),
                             displayField: 'caste'
                         }]
-                    }, */{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation'),
                         layout: 'hbox',
@@ -389,19 +573,26 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id: 'occupation',
                             layout: 'hbox',
                             width: 172,
+                            typeAhead: true,
+                            minChars: 1,
+                            queryMode: 'local',
                             store: new Ext.data.SimpleStore({
                                 fields: ['occupation'],
                                 data: [
-                                ['Unemployed'],
-                                ['Student'],
-                                ['Agriculture Related'],
-                                ['Bank Related'],
-                                ['Medical Related'],
-                                ['Engineering Related'],
-                                ['Not Mentioned']
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.1')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.2')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.3')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.4')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.5')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.6')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.7')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.8')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.9')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Occupation.10')]
                                 ]
                             }),
                             displayField: 'occupation'
+
                         }]
                     }, {
                         xtype: 'container',
@@ -419,10 +610,12 @@ Ext.define('Registration.view.RegistrationPart1', {
                             text: 'Cancel',
                             ui: 'raxa-orange-small',
                             action: 'cancel'
+
                         }, {
                             xtype: 'button',
                             margin: '30 0 0 30',
                             width: 60,
+                            id: 'continuebutton',
                             text: 'Next',
                             ui: 'raxa-aqua-small',
                             action: 'continue'

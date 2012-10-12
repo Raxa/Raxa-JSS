@@ -13,14 +13,13 @@ Ext.define("Screener.view.PharmacyForm", {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Pharmacy Orders'
+            title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyForm.phar_ord')
         }, {
             layout: 'hbox',
             items: [{
                 xtype: 'drugStore',
-                width: '350px',
+                width: '500px',
                 id: 'form0',
-                height: '320px',
                 scrollable: false
             }, {
                 layout: 'vbox',
@@ -30,7 +29,7 @@ Ext.define("Screener.view.PharmacyForm", {
                 }, {
                     xtype: 'button',
                     ui: 'round',
-                    text: '+',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyForm.plus'),
                     id: 'addDrugFormButton',
                     height: '40px',
                     width: '100px'
@@ -40,7 +39,7 @@ Ext.define("Screener.view.PharmacyForm", {
                 }, {
                     xtype: 'button',
                     ui: 'round',
-                    text: '-',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyForm.minus'),
                     id: 'removeDrugFormButton',
                     height: '40px',
                     width: '100px'
@@ -52,7 +51,7 @@ Ext.define("Screener.view.PharmacyForm", {
                     ui: 'confirm',
                     id: 'drugSubmitButton',
                     height: '40px',
-                    text: 'submit',
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyForm.submit'),
                     width: '100px'
                 }]
             }]

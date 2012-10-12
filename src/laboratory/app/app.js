@@ -21,7 +21,9 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Laboratory',
-    controllers: ['Main'],
+    models: ['LabOrderSearch','Concept','LabPanel','LabPatientSearch'],
+    controllers: ['Main','PaperEntry','LabOrderCreation'],
+    stores:['LabOrderSearch','concept','LabPanelSection','LabPatientSearch'],
     views: [
 'Viewport',
 'Home',
@@ -33,9 +35,13 @@ Ext.application({
 'LabOrderCreation1','LabOrderCreation2','LabOrderCreation3','LabOrderCreation4','LabOrderCreation5','LabOrderCreation6','LabOrderCreation7','LabOrderCreation8','LabOrderCreation9','LabOrderCreation10','LabOrderCreation11','LabOrderCreation12',
 'SpecimenRegistration1','SpecimenRegistration2','SpecimenRegistration3','SpecimenRegistration4','SpecimenRegistration5','SpecimenRegistration6','SpecimenRegistration7','SpecimenRegistration8','SpecimenRegistration9','SpecimenRegistration10','SpecimenRegistration11','SpecimenRegistration12','SpecimenRegistration13',
 'ResultEntry1','ResultEntry2','ResultEntry3','ResultEntry4','ResultEntry5',
-'ReportApproval1','ReportApproval2','ReportApproval3','ReportApproval4'],
+'ReportApproval1','ReportApproval2','ReportApproval3','ReportApproval4',
+'LabOrderList'],
   
       launch: function () {
-        Ext.create('Laboratory.view.Viewport');
+        if(Util.checkModulePrivilege('laboratory') && Util.uuidLoadedSuccessfully()){
+            Ext.create('Laboratory.view.Viewport');
+        }
     }
 });
+

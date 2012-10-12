@@ -35,11 +35,14 @@ Ext.require('Ext.i18n.Bundle', function(){
 
 Ext.application({
     name: 'Registration',
-    views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'RegistrationBMI',
+    views: ['Viewport', 'Home', 'RegistrationPart1', 'IllnessDetails', 'RegistrationConfirm', 'RegistrationBMI',
     'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    controllers: ['Main', 'BMI','Search'],
+    controllers: ['Main', 'BMI','Search','PrintCard'],
 
     launch: function () {
-        Ext.create('Registration.view.Viewport');
+        if(Util.checkModulePrivilege('registrationextjs4')&& Util.uuidLoadedSuccessfully()){
+            Ext.create('Registration.view.Viewport');
+        }
     }
 });
+

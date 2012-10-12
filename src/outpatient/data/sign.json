@@ -1,0 +1,389 @@
+[{
+    "sign": "BRONCHOSPASM",
+    "id": "108AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ABDOMINAL PAIN",
+    "id": "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "BURNING SENSATION",
+    "id": "379AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "HEADACHE",
+    "id": "620AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "PRESSURE SENSATION",
+    "id": "705AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "Chest Tightness",
+    "id": "705AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SHARP SENSATION",
+    "id": "762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "DIZZINESS",
+    "id": "877AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "HEMOPTYSIS",
+    "id": "967AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "DIARRHEA, CHRONIC",
+    "id": "5018AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "CHRONIC DIARRHEA",
+    "id": "5018AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "CHRONIC DIARRHOEA",
+    "id": "5018AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "Persistent diarrhea",
+    "id": "5018AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ABDOMINAL PAIN",
+    "id": "5106AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ORAL SORES",
+    "id": "5244AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "FATIGUE",
+    "id": "5949AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "HEARING DIFFICULTY",
+    "id": "5952AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "VISION DIFFICULTIES",
+    "id": "5953AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SWALLOWING DIFFICULTIES",
+    "id": "5954AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SHORTNESS OF BREATH",
+    "id": "5960AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SOB",
+    "id": "5960AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SOB",
+    "id": "5960AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "NAUSEA",
+    "id": "5978AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "VOMITING",
+    "id": "5980AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "EMESIS",
+    "id": "5980AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "MENOPAUSAL",
+    "id": "5990AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SWELLING",
+    "id": "6001AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "PARESTHESIA",
+    "id": "6004AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "paraesthesia",
+    "id": "6004AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "REFUSAL TO FEED",
+    "id": "6017AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "DYSURIA",
+    "id": "6020AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "OLIGURIA",
+    "id": "6021AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "NIGHT SWEATS",
+    "id": "6029AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "MUSCLE PAIN",
+    "id": "6034AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "PAIN, LOWER EXTREMITIES",
+    "id": "6035AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "COUGH",
+    "id": "107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "Dyspepsia",
+    "id": "111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "HEARTBURN",
+    "id": "111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "INDIGESTION",
+    "id": "111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "CHEST PAIN",
+    "id": "136AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "Rash",
+    "id": "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "Skin rash",
+    "id": "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "Hematuria",
+    "id": "840AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "Bloody urine",
+    "id": "840AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "HISTORY OF PNEUMONIA",
+    "id": "1145AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ASYMMETRIC REFLEXES",
+    "id": "1199AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "PAROTID ENLARGEMENT",
+    "id": "1210AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ACTIVE NOT ON ARVS",
+    "id": "1461AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ON ANTIRETROVIRALS",
+    "id": "1462AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "EVERY DAY",
+    "id": "1464AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "NOSTRIL FLARING",
+    "id": "1861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "nostril flaring",
+    "id": "1861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "FLARING OF THE NARES",
+    "id": "1861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "NOSE FLARING",
+    "id": "1861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SKIN COLD TO TOUCH",
+    "id": "1866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "MASS, ABDOMINAL",
+    "id": "5103AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ABDOMINAL MASS",
+    "id": "5103AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "DECREASED SENSATION",
+    "id": "5135AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "NUCHAL RIGIDITY",
+    "id": "5170AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "NECK STIFFNESS",
+    "id": "5170AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "STIFF NECK",
+    "id": "5170AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "WHEEZE",
+    "id": "5209AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "WEAKNESS",
+    "id": "5226AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "IRRITABLE",
+    "id": "5263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "APATHETIC",
+    "id": "5265AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "INDIFFERENT",
+    "id": "5265AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "JOINT SWELLING",
+    "id": "5312AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "MUSCLE TENDERNESS",
+    "id": "5313AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "WHO HIV - CHRONIC DIARRHEA",
+    "id": "5335AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "THRUSH",
+    "id": "5542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "WEIGHT GAIN",
+    "id": "5544AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "LEARNING PROBLEMS",
+    "id": "5550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "FEVER",
+    "id": "5945AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "PRODUCTIVE COUGH",
+    "id": "5957AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SHORTNESS OF BREATH AT REST",
+    "id": "5961AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SOB REST",
+    "id": "5961AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SOB AT REST",
+    "id": "5961AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SHORTNESS OF BREATH WITH EXERTION",
+    "id": "5963AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SOB EXERTION",
+    "id": "5963AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "SOB WITH EXERTION",
+    "id": "5963AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "HISTORY OF JAUNDICE",
+    "id": "5986AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "MENSTRUATING",
+    "id": "5989AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "VAGINAL DISCHARGE",
+    "id": "5993AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "URETHRAL DISCHARGE",
+    "id": "5995AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "FOCAL WEAKNESS",
+    "id": "6005AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "CONFUSION",
+    "id": "6006AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "NASAL DISCHARGE",
+    "id": "6016AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "ABDOMINAL SWELLING",
+    "id": "6019AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "IRRITABILITY",
+    "id": "6023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "IRRITABLE",
+    "id": "6023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "POOR APPETITE",
+    "id": "6031AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "MENTAL ILLNESS",
+    "id": "6036AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "MEMORY PROBLEMS",
+    "id": "6037AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "cough lasting more than 2 weeks",
+    "id": "159799AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "danger signs, pregnancy",
+    "id": "159857AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "danger signs, baby",
+    "id": "159860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}, {
+    "sign": "unable to drink or breastfeed",
+    "id": "159861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "type": "all"
+}]

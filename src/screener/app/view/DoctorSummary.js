@@ -19,7 +19,7 @@ Ext.define('Screener.view.DoctorSummary', {
                 
     },{
         xtype: 'button',
-        text: 'Remove All',
+        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DoctorSummary.rem_all'),
         id: 'removeAllPatientsButton',
         width: 390,
         height: 50,
@@ -27,7 +27,7 @@ Ext.define('Screener.view.DoctorSummary', {
         
     },{
         xtype: 'button',
-        text: 'Remove',
+        text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.DoctorSummary.remove'),
         id: 'removeButton',
         width: 390,
         height: 50,

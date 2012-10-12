@@ -13,361 +13,140 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
+//view of treatment tab
+//enum for switching the panels in the treatment tab
 var TREATMENT = {
-    ADD : 0,
-    INSTRUCTIONS : 1,
-    DRUGPANEL : 2,
-    SUMMERY : 3
+    ADD: 0,
+    DRUGPANEL: 1
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
     extend: 'Ext.Container',
     xtype: 'treatment-panel',
-    requires: ['RaxaEmr.Outpatient.view.patient.drugpanel', 'RaxaEmr.Outpatient.view.patient.treatmentsummery'],
+    requires: ['RaxaEmr.Outpatient.view.patient.drugpanel', 'RaxaEmr.Outpatient.view.patient.treatmentsummery', 'Screener.store.druglist', 'Screener.model.druglist', 'RaxaEmr.Outpatient.view.patient.druglist', 'RaxaEmr.Outpatient.view.patient.drugform', 'RaxaEmr.Outpatient.view.patient.DrugGrid'],
     id: 'treatment-panel',
+
     config: {
         layout: {
             type: 'card'
         },
         title: 'Treatment',
-        activeItem: 0,
+        activeItem: 1,
         items: [{
+            xtype: 'drug-panel'
+        }, {
             xtype: 'container',
-            layout: {
-                type: 'hbox'
-            },
             items: [{
-                xtype: 'formpanel',
-                flex: 1,
-                scrollable: 'false',
+                xtype: 'container',
+                layout: 'hbox',
                 items: [{
-                    xtype: 'fieldset',
-                    width: '100%',
-                    items: [{
-                        xtype: 'selectfield',
-                        label: 'Treatment Type',
-                        valueField: 'value',
-                        displayField: 'title',
-                        store: {
-                            data: [{
-                                value: '',
-                                title: '',
-                            }, {
-                                value: 'Pharmaceutical',
-                                title: 'Pharmaceutical',
-                            }]
-                        }
-                    }, {
-                        xtype: 'selectfield',
-                        label: 'Name of Drug',
-                        valueField: 'value',
-                        displayField: 'title',
-                        store: {
-                            data: [{
-                                value: '',
-                                title: '',
-                            }, {
-                                value: 'Cialis (Tadalafil)',
-                                title: 'Cialis (Tadalafil)',
-                            }, {
-                                value: 'Cidofovir (Vistide)',
-                                title: 'Cidofovir (Vistide)',
-                            }, {
-                                value: 'Cinacalcet (Sensipar)',
-                                title: 'Cinacalcet (Sensipar)',
-                            }, {
-                                value: 'Ciprofloxacin (Cipro)',
-                                title: 'Ciprofloxacin (Cipro)',
-                            }, {
-                                value: 'Cisplatin (Cisplatin Injection)',
-                                title: 'Cisplatin (Cisplatin Injection)',
-                            }, {
-                                value: 'Citalopram Hydrobromide (Celexa)',
-                                title: 'Citalopram Hydrobromide (Celexa)',
-                            }]
-                        }
-                    }, {
-                        xtype: 'selectfield',
-                        label: 'Dosage',
-                        valueField: 'value',
-                        displayField: 'title',
-                        store: {
-                            data: [{
-                                value: '',
-                                title: '',
-                            }, {
-                                value: '100mg',
-                                title: '100mg'
-                            }, {
-                                value: '200mg',
-                                title: '200mg'
-                            }, {
-                                value: '500mg',
-                                title: '500mg'
-                            }]
-                        }
-                    }, {
-                        xtype: 'fieldset',
-                        baseCls: 'x-form-fieldset-mod',
-                        margin: '0 0 0 0',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        items: [{
-                            xtype: 'selectfield',
-                            label: 'Frequency',
-                            border: 0,
-                            labelWidth: '46.1538%',
-                            flex: 13,
-                            valueField: 'value',
-                            displayField: 'title',
-                            store: {
-                                data: [{
-                                    value: '',
-                                    title: '',
-                                }, {
-                                    value: 'onceDaily',
-                                    title: 'Once Daily'
-                                }, {
-                                    value: 'twiceDaily',
-                                    title: 'Twice Daily'
-                                }, {
-                                    value: 'thriceDaily',
-                                    title: 'Thrice Daily'
-                                }]
+                    xtype: 'button',
+                    height: 40,
+                    margin: '20 20 0 0',
+                    width: '150',
+                    icon: '../outpatient/resources/images/add.png',
+                    text: 'Add Drugs',
+                    padding: '0 10 10 0',
+                    handler: function () {
+
+                        Ext.getCmp('drugForm').setHidden(false);
+                        Ext.getCmp('drugaddform').reset();
+                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.ADD); // to add more than one treatment
+                    }
+                }, {
+                    xtype: 'spacer',
+                    width: '0%'
+                }, {
+                    xtype: 'button',
+                    ui: 'confirm',
+                    height: 40,
+                    margin: '20 20 0 0',
+                    width: '150',
+                    text: 'Confirm Drug Order',
+                    padding: '0 10 10 0',
+                    handler: function () {
+						//Loads the drug order from drugpanel store and POST encounter with order inside it
+                        drugOrderInDrugPanel = Ext.getStore('drugpanel');
+                        drugListStore = Ext.getStore('druglist')
+                        order = [];
+                        for (var i = 0; i < drugOrderInDrugPanel.data.length; i++) {
+                            for (var j = 0; j < drugListStore.data.length; j++) {
+                                if (drugOrderInDrugPanel.data.items[i].data.drugname == drugListStore.data.items[j].data.drug) {
+                                    var druguuid = drugListStore.data.items[i].data.uuid;
+                                    break;
+                                }
                             }
-                        }, {
-                            xtype: 'selectfield',
-                            border: 0,
-                            flex: 7,
-                            valueField: 'value',
-                            displayField: 'title',
-                            store: {
-                                data: [{
-                                    value: '',
-                                    title: '',
-                                }, {
-                                    value: 'emptyStomach',
-                                    title: 'Empty Stomach',
-                                }, {
-                                    value: 'withMeals',
-                                    title: 'With Meals',
-                                }, {
-                                    value: 'afterFood',
-                                    title: 'After Meals',
-                                }]
-                            }
-                        }]
-                    }, {
-                        xtype: 'textfield',
-                        label: 'Duration (days)',
-                    }]
-                }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Done',
-                    handler: function () {
-                        /*Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.INSTRUCTIONS)*/
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.SUMMERY)
+
+                            concept = new Array();
+
+                            var duration = drugOrderInDrugPanel.data.items[i].data.duration;
+                            var strength = drugOrderInDrugPanel.data.items[i].data.strength;
+                            var quantity = drugOrderInDrugPanel.data.items[i].data.duration;
+                            var frequency = drugOrderInDrugPanel.data.items[i].data.frequency;
+                            var instruction = drugOrderInDrugPanel.data.items[i].data.instruction;
+
+                            Ext.Ajax.request({
+                                url: HOST + '/ws/rest/v1/concept?q=' + drugOrderInDrugPanel.data.items[i].data.drugname,
+                                method: 'GET',
+                                disableCaching: false,
+                                headers: Util.getBasicAuthHeaders(),
+                                failure: function (response) {
+                                    console.log('GET call on concept failed with response status' + response.status);
+                                },
+                                success: function (response) {
+                                    console.log('GET call on concept was successful with response status' + response.status);
+
+                                    var JSONResult = JSON.parse(response.responseText);
+
+                                    var currentdate = new Date();
+                                    var startdate = Util.Datetime(startdate, Util.getUTCGMTdiff())
+                                    order.push({
+                                        patient: Ext.getCmp('contact').selected.items[0].data.uuid,
+                                        drug: druguuid,
+                                        startDate: currentdate,
+                                        autoExpireDate: new Date(currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDate() + duration),
+                                        dose: strength,
+                                        quantity: duration,
+                                        frequency: frequency,
+                                        instructions: instruction,
+                                        // type should be "drugorder" in order to post a drug order
+                                        type: 'drugorder',
+                                        concept: JSONResult.results[0].uuid
+                                    });
+                                }
+                            });
+                        }
+
+                        var currentdate = new Date();
+                        var time = Util.Datetime(currentdate, Util.getUTCGMTdiff());
+
+                        // model for posting the encounter for given drug orders
+                        var encounter = Ext.create('RaxaEmr.Outpatient.model.drugEncounter', {
+                            patient: Ext.getCmp('contact').selected.items[0].data.uuid,
+
+                            // this is the encounter for the prescription encounterType
+                            encounterType: localStorage.outUuidencountertype,
+                            encounterDatetime: time,
+                            provider: localStorage.loggedInUser,
+                            orders: order
+                        });
+
+                        var encounterStore = Ext.create('RaxaEmr.Outpatient.store.drugEncounter')
+                        encounterStore.add(encounter)
+                        // make post call for encounter
+                        encounterStore.sync()
+
+                        var i = 0;
+                        var j = 0;
+                        var k = 0;
                     }
                 }]
             }, {
-                xtype: 'container',
-                width: 60,
-                items: [{
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '20 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
-                }, {
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '10 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/problemlist.png',
-                    padding: '0 10 10 0'
-                }]
-            }]
-        }, {
-            xtype: 'container',
-            layout: {
-                type: 'hbox'
-            },
-            items: [{
-                xtype: 'formpanel',
-                flex: 1,
-                items: [{
-                    xtype: 'fieldset',
-                    items: [{
-                        xtype: 'selectfield',
-                        label: 'Treatment'
-                    }, {
-                        xtype: 'textareafield',
-                        label: 'Instructions'
-                    }, {
-                        xtype: 'togglefield',
-                        label: 'Admit'
-                    }]
-                }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Done',
-                    handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.DRUGPANEL)
-                    }
-                }]
-            }, {
-                xtype: 'container',
-                width: 60,
-                items: [{
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '20 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
-                }, {
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '10 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/problemlist.png',
-                    padding: '0 10 10 0'
-                }]
-            }]
-        }, {
-            xtype: 'container',
-            layout: {
-                type: 'hbox'
-            },
-            items: [{
-                xtype: 'container',
-                flex: 1,
-                margin: '20 20 20 20',
-                items: [{
-                    xtype: 'Drug-Panel',
-                    height: 258
-                }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Done',
-                    margin: '20 0 0 0',
-                    handler: function () {
-                        Ext.getCmp('treatment-panel').setActiveItem(TREATMENT.SUMMERY)
-                    }
-                }]
-            }, {
-                xtype: 'container',
-                width: 60,
-                items: [{
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '20 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
-                }, {
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '10 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/problemlist.png',
-                    padding: '0 10 10 0'
-                }]
-            }]
-        }, {
-            xtype: 'container',
-            layout: {
-                type: 'hbox'
-            },
-            items: [{
-                xtype: 'container',
-                flex: 1,
-                margin: '20 20 20 20',
-                items: [{
-                    xtype: 'container',
-                    margin: '0 0 20 0',
-                    border: '1 1 1 1',
-                    style: 'border:solid #DADADA;',
-                    height: 265,
-                    layout: {
-                        type: 'fit'
-                    },
-                    items: [{
-                        xtype: 'Treatment-Summery'
-                    }]
-                }, {
-                    xtype: 'formpanel',
-                    height: 100,
-                    layout: {
-                        pack: 'center',
-                        type: 'hbox'
-                    },
-                    scrollable: 'false',
-                    items: [{
-                        xtype: 'fieldset',
-                        height: 75,
-                        margin: '-17 20 0 -17',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        flex: 1,
-                        items: [{
-                            xtype: 'datepickerfield',
-                            label: 'Follow Up',
-                            value: new Date(),
-                            flex: 1
-                        }]
-                    }, {
-                        xtype: 'fieldset',
-                        height: 75,
-                        margin: '-17 -17 0 0',
-                        layout: {
-                            type: 'hbox'
-                        },
-                        flex: 1,
-                        items: [{
-                            xtype: 'textareafield',
-                            label: 'Plans for Treatment',
-                            flex: 1
-                        }]
-                    }]
-                }, {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Done',
-                    handler: function () {}
-                }]
-            }, {
-                xtype: 'container',
-                width: 60,
-                items: [{
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '20 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/add.png',
-                    padding: '0 10 10 0'
-                }, {
-                    xtype: 'button',
-                    docked: 'top',
-                    height: 40,
-                    margin: '10 20 0 0',
-                    width: 40,
-                    icon: '../outpatient/resources/images/problemlist.png',
-                    padding: '0 10 10 0'
-                }]
-            }]
+                xtype: 'drug-grid',
+                id: 'orderedDrugGrid',
+                height: 250,
+                border: 10,
+            }, ]
         }]
     }
 });

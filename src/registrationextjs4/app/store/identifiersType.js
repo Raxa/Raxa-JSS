@@ -8,7 +8,7 @@ Ext.define('Registration.store.identifiersType', {
     }],
     proxy: { //proxy for GET rest call
         type: 'rest',
-        url: HOST + '/ws/rest/v1/patientidentifiertype',
+        url: HOST + '/ws/rest/v1/patientidentifiertype?v=full',
         headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',

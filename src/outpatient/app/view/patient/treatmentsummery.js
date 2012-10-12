@@ -14,12 +14,15 @@
  * the License.
  */
 
+ //final lsit of the treatment tab
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.treatmentsummery', {
     extend: 'Ext.dataview.List',
     xtype: 'Treatment-Summery',
+	id: 'drugList',
     config: {
         store: 'drugpanel',
-        itemTpl: ['<div>{drugname} {strength} mg</br>{dosage} {instruction}</br>Continue for {duration} days</div>']
+        itemTpl: ['<div>{drugname} {strength} mg</br>{frequency} {instruction}</br>Continue for {duration} days</div>']
     }
 
 });

@@ -14,9 +14,12 @@
  * the License.
  */
 
+//info about the patient when we click on a patient like weight, height etc. is shown by this grid
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
     extend: 'Ext.ux.touch.grid.View',
-    xtype: 'grid-grid',
+    xtype: 'vitalsGrid',
+    id: 'vitalsGrid',
 
     requires: ['Ext.ux.touch.grid.feature.Feature', 'Ext.field.Number', 'RaxaEmr.Outpatient.store.Grid'],
 
@@ -30,15 +33,23 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '10%',
             cls: 'centered-cell',
             renderer: function (value, values) {
-                return '<span>' + value + ' cm' + '</span>';
+                if(value == "--") {
+                    return '<span>' + value  + '</span>';
+                } else {
+                    return '<span>' + value + ' cm' + '</span>';
+                }// to change the view of the data feched
             }
         }, {
             header: 'Weight',
             dataIndex: 'weight',
             width: '10%',
             cls: 'centered-cell',
-            renderer: function (value, values) {
-                return '<span>' + value + ' kg' + '</span>';
+            renderer: function (value , values) {
+                if(value == "--")  {
+                    return '<span>' + value + '</span>';  
+                } else {
+                    return '<span>' + value + ' kg' + '</span>';
+                }// to change the view of the data feched
             }
         }, {
             header: 'BMI',
@@ -48,32 +59,37 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
         }, {
             header: 'Blood Pressure',
             dataIndex: 'bp',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
             renderer: function (value) {
                 // TODO: Determine how to pass 2 BMI values into one grid panel
-                var bmi = 68;
-                return Ext.String.format('{0}/{1}', value, bmi);
+                if(value == "--") {
+                    return Ext.String.format( value);
+                }
+                else {
+                    var bmi = 68;
+                    return Ext.String.format('{0}/{1}', value, bmi);
+                }// to change the view of the data feched
             }
         }, {
             header: 'Pulse',
             dataIndex: 'pulse',
-            width: '10%',
+            width: '20%',
             cls: 'centered-cell',
         }, {
             header: 'Respiratory Rate',
             dataIndex: 'resrate',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
         }, {
             header: 'Temperature',
             dataIndex: 'temp',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
         }, {
             header: 'Oxygen Saturation',
             dataIndex: 'oxysat',
-            width: '15%',
+            width: '20%',
             cls: 'centered-cell',
         }]
     }

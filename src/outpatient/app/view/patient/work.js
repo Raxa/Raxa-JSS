@@ -13,95 +13,54 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+//bottom half view of the patient details (history , examination, diagnosis and treatment tab)
+ 
+//enum to swich the tabs
+ 
 var TABS = {
     HISTORY: 0,
     EXAMINATION: 1,
-    DIAGNOSIS: 2,
-    TREATMENT: 3
+    DATA: 2,
+    DIAGNOSIS: 3,
+    TREATMENT: 4
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.work', {
     extend: 'Ext.Container',
     xtype: 'work',
-    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.examination', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
+    requires: ['RaxaEmr.Outpatient.view.patient.history', 'RaxaEmr.Outpatient.view.patient.examination', 'RaxaEmr.Outpatient.view.patient.dataPanel', 'RaxaEmr.Outpatient.view.patient.treatment', 'RaxaEmr.Outpatient.view.patient.diagnosis'],
     config: {
         layout: {
             type: 'hbox'
         },
         height: 490,
-        items: [{
+        items: [
+        {
             xtype: 'tabpanel',
-            border: '1 1 1 0',
-            margin: '0 20 10 0',
-            style: 'border:solid #aaaaaa;',
+            style: 'background-color: #0f0',
+            animation: 'flip',
             flex: 1,
             id: 'maintabs',
-            items: [{
-                xtype: 'history-panel'
-            }, {
-                xtype: 'examination-panel'
-            }, {
-                xtype: 'diagnosis-panel'
-            }, {
-                xtype: 'treatment-panel'
-            }],
             tabBar: {
-                docked: 'top',
-                hidden: true
-            }
-        }, {
-            xtype: 'segmentedbutton',
-            docked: 'left',
-            margin: '0 0 0 15',
-            width: 40,
-            height: 480,
-            layout: {
-                type: 'vbox'
+                docked: 'left',
             },
-            cls: 'x-segmentedbutton-vertical',
             items: [{
-                xtype: 'button',
-                width: 40,
-                flex: 1,
-                cls: 'x-button-vikas',
-                icon: '../outpatient/resources/images/history.png',
-                padding: '0 0 0 0',
-                pressed: true,
-                handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.HISTORY)
-                }
+                xtype: 'history-panel',
+                style: 'background-color:red;',
+                title : '<div style ="height:105px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">History</div>',
             }, {
-                xtype: 'button',
-                width: 40,
-                flex: 1,
-                id: 'examtabbutton',
-                cls: 'x-button-vikas',
-                icon: '../outpatient/resources/images/examination.png',
-                padding: '0 0 0 0',
-                handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.EXAMINATION)
-                }
+                xtype: 'examination-panel',
+                title : '<div style ="height:105px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">Examination</div>', 
             }, {
-                xtype: 'button',
-                width: 40,
-                flex: 1,
-                cls: 'x-button-vikas',
-                icon: '../outpatient/resources/images/diagnosis.png',
-                padding: '0 0 0 0',
-                handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.DIAGNOSIS)
-                }
+                xtype: 'diagnosis-panel',
+                title : '<div style ="height:105px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">Diagnosis</div>', 
             }, {
-                xtype: 'button',
-                width: 40,
-                flex: 1,
-                cls: 'x-button-vikas',
-                icon: '../outpatient/resources/images/treatment.png',
-                padding: '0 0 0 0',
-                handler: function () {
-                    Ext.getCmp('maintabs').setActiveItem(TABS.TREATMENT)
-                }
-            }]
-        }]
+                xtype: 'treatment-panel',
+                title : '<div style ="height:105px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">Treatment</div>', 
+            }],
+           
+        },
+        ]
     }
 });

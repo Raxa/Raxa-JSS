@@ -16,10 +16,7 @@
  * This script initiates the registration module
  */
 
-
-
-//the store for an encounter. Sends all filledd fields to the server
-
+//the store for an encounter. Sends all filled fields to the server
 Ext.define('Registration.store.encounterStore', {
     extend: 'Ext.data.Store',
     model: 'Registration.model.encounterModel',
@@ -33,13 +30,14 @@ Ext.define('Registration.store.encounterStore', {
         writer: {
             type: 'json'
         }, 
+        // TODO: Move this to controller. View updating logic should happen in
+        // the controller, not in the model
         afterRequest:function(request,success){         //prints if request is successful
-            Ext.Msg.alert('Encounter saved successfully.');
-            var l = Ext.getCmp('mainRegArea').getLayout();
-            l.setActiveItem(REG_PAGES.HOME.value);
-            Ext.getCmp('heightIDcm').reset()
-            Ext.getCmp('weightIDkg').reset()
-            Ext.getCmp('bmiNumberfieldID').reset()
+            /*var l = Ext.getCmp('mainRegArea').getLayout();*/
+            /*l.setActiveItem(REG_PAGES.HOME.value);*/
+            /*Ext.getCmp('heightIDcm').reset();*/
+            /*Ext.getCmp('weightIDkg').reset();*/
+            /*Ext.getCmp('bmiNumberfieldID').reset();*/
         }
     }
 });

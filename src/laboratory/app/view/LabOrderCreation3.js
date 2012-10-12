@@ -23,47 +23,49 @@ Ext.define('Laboratory.view.LabOrderCreation3', {
 
     items: [{
         xtype: 'gridpanel',
+        id: 'patientSearchCreateLabOrder',
         autoScroll: true,
         title: 'Lab order search result',
+        store: Ext.create('Laboratory.store.LabPatientSearch'),
         columns: [{
             xtype: 'gridcolumn',
-            dataIndex: 'string',
-            text: 'First Name'
+            dataIndex: 'FirstName',
+            text: 'First Name',
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'LastName',
             text: 'Last Name'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Sex',
             text: 'Sex'
         }, {
             xtype: 'datecolumn',
+            dataIndex: 'DOB',
             text: 'DOB'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'RelativeName',
             text: 'Husband\'s / Father\'s Name'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Village',
             text: 'Village'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Panchayat',
             text: 'Panchayat'
         }, {
             xtype: 'gridcolumn',
+            dataIndex: 'Town',
             text: 'Town'
         }],
-        viewConfig: {
-
-        }
-    },{
+    }, {
         xtype: 'button',
         text: 'Continue',
         handler: function () {
             var l = Ext.getCmp('mainLabArea').getLayout();
             l.setActiveItem(LAB_PAGES.LAB_ORDER_PATIENT_DETAILS.value);
-        }        
-    },
-    
-    
-    ]
-
+        }
+    }]
 });

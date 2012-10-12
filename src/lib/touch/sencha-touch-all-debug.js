@@ -69415,7 +69415,6 @@ Ext.define('Ext.dataview.DataView', {
         var me = this,
             bindEvents = Ext.apply({}, me.storeEventHooks, { scope: me }),
             proxy, reader;
-
         if (store) {
             store = Ext.data.StoreManager.lookup(store);
             if (store && Ext.isObject(store) && store.isStore) {

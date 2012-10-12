@@ -13,7 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
+ 
+ //view of refer to doc grid
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Refer-To-Doc',
@@ -22,18 +24,51 @@ Ext.define('RaxaEmr.Outpatient.view.patient.refertodoc', {
 
     config: {
         title: 'Refer to Doctor',
-        store: 'refertodoc',
+        id: 'refToDocPanel',
+        items: [{
+            xtype: 'toolbar',
+            docked: 'top',
+            items: [{
+                xtype: 'segmentedbutton',
+                margin: '0 0 0 10',
+                allowDepress: false,
+                items: [{
+                    xtype: 'button',
+                    text: 'Sort By Drug Name',
+                    id: 'reftodocsortbydocname',
+                    pressed: true,
+                    width: 200,
+                }, {
+                    xtype: 'button',
+                    id: 'reftodocsortbyopdno',
+                    text: 'Sort By OPD No.',
+                    width: 200,
+                }]
+            }, {
+                xtype: 'spacer'
+            }, {
+				xtype: 'button',
+				id: 'referpatient',
+				text: 'Refer',
+				ui: 'confirm',
+				width: 100,
+			}, {
+                xtype: 'searchfield',
+                id: 'reftodocsearchfield',
+                placeHolder: 'Search...'
+            }]
+        }],
         columns: [{
             header: 'Doctor Name',
-            dataIndex: 'docname',
+            dataIndex: 'display',
             width: '50%',
             cls: 'centered-cell',
-            renderer: function (value, values) {
-                return '<span>' + value + '</span>';
+            renderer: function (value) {
+                return value.split("- ")[1];
             }
         }, {
-            header: 'OPD Number',
-            dataIndex: 'opdno',
+            header: 'Identifier',
+            dataIndex: 'identifier',
             width: '50%',
             cls: 'centered-cell'
         }]

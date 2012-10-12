@@ -30,13 +30,13 @@ Ext.define('Registration.controller.BMI', {
                 }
             }
 
-        })
+        });
     },
 
     //Get values from view registrationbmi and call neccessary methods to calculate bmi & display on screen
     getBMIData: function () {
-        var height_cm = parseInt(Ext.getCmp('heightIDcm').getValue()); //Get height value from view registrationbmi
-        var weight_kg = parseInt(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view registrationbmi
+        var height_cm = parseFloat(Ext.getCmp('heightIDcm').getValue()); //Get height value from view registrationbmi
+        var weight_kg = parseFloat(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view registrationbmi
         var bmiInfo = this.calculateBMI(height_cm, weight_kg); //Calculate bmi
         this.updateBMIDisplay(bmiInfo.status, bmiInfo.bmi); //Update the value displayed
         Ext.getCmp('bmiSliderID').setDisabled(true); //Disable the bmiSlider
@@ -67,7 +67,7 @@ Ext.define('Registration.controller.BMI', {
             return {
                 status: status,
                 bmi: bmi
-            }
+            };
         } else {
             var height_m = height_cm / 100; //Convert cm to m
             var bmi = (weight_kg) / (height_m * height_m); //bmi Calculation
@@ -101,7 +101,7 @@ Ext.define('Registration.controller.BMI', {
             return {
                 status: status,
                 bmi: bmi
-            }
+            };
         }
     },
 

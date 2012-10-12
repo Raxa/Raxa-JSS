@@ -13,10 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+ 
+ //examination tab view
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
     extend: 'Ext.Container',
     xtype: 'examination-panel',
-    requires: ['RaxaEmr.Outpatient.view.patient.examinationlist'],
+    requires: ['RaxaEmr.Outpatient.view.patient.examinationlist', 'RaxaEmr.Outpatient.view.patient.signlist'],
     id: 'examination-panel',
     config: {
         layout: {
@@ -30,17 +33,48 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                 type: 'hbox'
             },
             items: [{
-                xtype: 'image',
-                height: 480, // 476
-                width: 443, // 441
-                src: 'resources/images/theman.png',
+                xtype: 'container',
+                flex: 1,
+                layout: {
+                    type: 'vbox'
+                },
+                items: [{
+                    xtype: 'formpanel',
+                    border: '0 0 1 0',
+                    padding: '0 0 0 0',
+                    style: 'border:solid #DADADA;',
+                    scrollable: false,
+                    height: 93,
+                    items: [{
+                        xtype: 'selectfield',
+                        label: 'Search In',
+                        id: 'signFilter',
+                        hidden: true,
+                        border: '0 0 1 0',
+                        style: 'border:solid #DADADA;',
+                        valueField: 'filterBy',
+                        displayField: 'title',
+                        store: {
+                            data: [{
+                                filterBy: 'all',
+                                title: 'All',
+                            }]
+                        }
+                    }, {
+                        xtype: 'searchfield',
+                        id: 'signfilterbysearchfield',
+                    }]
+                }, {
+                    xtype: 'Sign-List',
+                    flex: 1,
+                }]
             }, {
                 xtype: 'container',
                 flex: 1,
                 items: [{
                     xtype: 'container',
                     margin: '0 0 20 0',
-                    border: '1 1 1 1',
+                    border: '0 0 0 3',
                     style: 'border:solid #DADADA;',
                     height: 576,
                     layout: {
@@ -51,9 +85,6 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                     }, {
                         xtype: 'actionsheet',
                         id: 'durationPicker',
-                        // layout: {
-                        // type: 'fit',
-                        // },
                         hidden: true,
                         items: [{
                             xtype: 'formpanel',
@@ -77,7 +108,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                                 xtype: 'button',
                                 text: 'Cancel',
                                 handler: function () {
-                                    Ext.getCmp('durationPicker').setHidden(true);
+                                    Ext.getCmp('durationPicker').setHidden(true);// to hide the duration picker field
                                 }
                             }]
                         }]

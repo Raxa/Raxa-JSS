@@ -14,22 +14,28 @@
  * the License.
  */
 Ext.Loader.setPath({
-    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid'
+    'Ext.ux.touch.grid': '../lib/touch/Ext.ux.touch.grid',//Path to grid code so that grid fuctionalities and view can be accessed
+    'Screener': '../screener/app'//Path to screener module so that store and models of screener can be accessed 
 });
 
 Ext.Loader.setConfig({
-    enabled: true
+    enabled: true,
+    paths: {
+        'Ext.i18n': 'lib/i18n' //Path to the i18n library
+    }
 });
 
 Ext.application({
     name: 'RaxaEmr.Outpatient',
-
-    models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
-    stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain'],
-    views: ['Viewport'],
+	// models, stores, controller and views used in the OPD directly
+    models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign','diagnosis','diagnosedDisease','druglist','Observation'],
+    stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign','diagnosis','diagnosedDisease','druglist'],
+    views: ['Viewport'], 
     controllers: ['patientlist'],
-
+    // to launch the module view
     launch: function () {
-        Ext.create('RaxaEmr.Outpatient.view.Viewport');
+        if(Util.checkModulePrivilege('outpatient')&& Util.uuidLoadedSuccessfully()){
+            Ext.create('RaxaEmr.Outpatient.view.Viewport');
+        }
     }
 });

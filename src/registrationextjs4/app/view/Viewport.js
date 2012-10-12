@@ -32,7 +32,7 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'image',
                     height: 35,
                     width: 40,
-                    src: '../../resources/img/iconWhite.png'
+                    src: '../resources/img/iconWhite.png'
                 }, {
                     xtype: 'tbfill'
                 },{
@@ -42,17 +42,21 @@ Ext.define('Registration.view.Viewport', {
                       text: 'Registration Home Page',
                       handler: function () {
                           var l = Ext.getCmp('mainRegArea').getLayout();
-                          l.setActiveItem(LAB_PAGES.HOME.name);
+                          l.setActiveItem(REG_PAGES.HOME.home);
                       }
                 }, {
                     xtype: 'tbtext',
-                    text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + username
+                    text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + localStorage.getItem('username')
                 }, {
                     xtype: 'tbseparator'
                 }, {
                     xtype: 'button',
                     width: 60,
                     text: 'Log Out',
+                    handler: function() {
+                        Util.logoutUser();
+                        location.reload();
+                    }
                 }]
             }],
             width: 960,
@@ -69,6 +73,8 @@ Ext.define('Registration.view.Viewport', {
                 xtype: REG_PAGES.REG_1.name
             }, {
                 xtype: REG_PAGES.REG_CONFIRM.name
+            }, {
+                xtype: REG_PAGES.ILLNESS_DETAILS.name
             }, {
                 xtype: REG_PAGES.REG_BMI.name
             }, {

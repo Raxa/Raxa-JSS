@@ -18,6 +18,7 @@
 Ext.define('Registration.view.SearchPart1', {
     extend: 'Ext.container.Container',
     alias: 'widget.searchpart1',
+    	
     border: 0,
     padding: 10,
     autoScroll: true,
@@ -29,6 +30,7 @@ Ext.define('Registration.view.SearchPart1', {
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
+	      id:'Searchpart1', 
             width: 800,
             padding: 20,
             items: [{
@@ -42,7 +44,10 @@ Ext.define('Registration.view.SearchPart1', {
                     fieldDefaults: {
                         msgTarget: 'side'
                     },
-                    items: [{
+                    items: [
+                        //TODO: add these in when search layer is complete
+                        //https://raxaemr.atlassian.net/browse/RAXAJSS-230
+                        /*{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.OPRN'),
                         layout: 'hbox',
@@ -63,7 +68,7 @@ Ext.define('Registration.view.SearchPart1', {
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.OPRN.emptytext'),
                             allowBlank: true
                         }]
-                    }, {
+                    }, */{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PRN'),
                         layout: 'hbox',
@@ -79,7 +84,7 @@ Ext.define('Registration.view.SearchPart1', {
                         items: [{
                             name: 'Patient Identifier',
                             id: 'PatientIdentifierSearch',
-                            fieldLabel: 'Patient Identifier',
+                            fieldLabel: 'Raxa Patient Identifier',
                             width: 303,
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.PRN.emptytext'),
                             allowBlank: false
@@ -110,7 +115,10 @@ Ext.define('Registration.view.SearchPart1', {
                             width: 147,
                             margins: '0 0 0 6'
                         }]
-                    }, {
+                    }//TODO: add these in when search layer is complete
+                    //https://raxaemr.atlassian.net/browse/RAXAJSS-230
+                    /*
+                    ,{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.FHN'),
                         layout: 'hbox',
@@ -210,24 +218,34 @@ Ext.define('Registration.view.SearchPart1', {
                             width: 147,
                             anchor: '75%'
                         }]
-                    }, {
+                    }*/,{
                         xtype: 'button',
                         margin: '10 50 0 270',
-                        width: 60,
+                        ui: 'raxa-orange-small',
+                        text: 'Cancel',
+                        action: 'cancel'
+                    }, {
+                        /*xtype: 'button',*/
+                        /*margin: '10 50 0 270',*/
+                        /*ui: 'raxa-orange-small',*/
+                        /*text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Reset'),*/
+                        /*action: 'reset'*/
+                        /*}, {*/
+                        xtype: 'button',
+                        /*margin: '10 0 0 0',*/
+                        margin: '10 50 0 0',
+				        id:'searchbutton1',
                         ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Search'),
                         action: 'search'
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
-                        width: 60,
-                        ui: 'raxa-orange-small',
-                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Reset'),
-                        action: 'reset'
                     }]
                 }]
             }]
+		
         };
         this.callParent();
+	
+	  
+
     }
 });

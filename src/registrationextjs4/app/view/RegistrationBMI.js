@@ -26,6 +26,7 @@ Ext.define('Registration.view.RegistrationBMI', {
         pack: 'center'
     },
     initComponent: function () {
+    	localStorage.setItem('printtaken', false);
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
@@ -71,6 +72,8 @@ Ext.define('Registration.view.RegistrationBMI', {
                             labelWidth: 70,
                             labelAlign: 'right',
                             anchor: '95%',
+                            minValue: 10,
+                            maxValue: 228,
                             width: 172,
                             margin: '0 10 0 0',
                             hideTrigger: true,
@@ -85,6 +88,8 @@ Ext.define('Registration.view.RegistrationBMI', {
                             labelPad: 20,
                             labelWidth: 95,
                             labelAlign: 'right',
+                            minValue: 0,
+                            maxValue: 250,                            
                             width: 200,
                             anchor: '95%',
                             margin: '0 10 0 0',
@@ -109,6 +114,8 @@ Ext.define('Registration.view.RegistrationBMI', {
                         id: 'bmiNumberfieldID',
                         readOnly: true,
                         width: 172,
+                        minValue: 0,
+                        maxValue: 100,
                         labelAlign: 'right',
                         labelWidth: 70,
                         hideTrigger: true,
@@ -168,7 +175,13 @@ Ext.define('Registration.view.RegistrationBMI', {
                             xtype: 'button',
                             margin: '30 0 0 30',
                             align: 'right',
-                            width: 60,
+                            action: 'printPatientCard',
+                            id: 'printPatientCard',
+                            text: 'Print Patient Card' // Does not post BMI, just launches a pop-up window
+                        },{
+                            xtype: 'button',
+                            margin: '30 0 0 30',
+                            align: 'right',
                             ui: 'raxa-aqua-small',
                             action: 'bmiSubmit',
                             id: 'submitBMI',

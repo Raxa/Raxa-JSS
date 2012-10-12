@@ -1,15 +1,16 @@
 Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
     extend: 'Ext.data.Store',
     id: 'allDrugs',
-    fields: [{name: 'text', type: 'string', mapping: 'name'}],
+    fields: [{name: 'text', type: 'string', mapping: 'name'},
+        {name: 'uuid', type: 'string', mapping: 'uuid'}],
     autoLoad: true,
     autoSync: false,
     proxy: {
         type: 'rest',
-        url: HOST + '/ws/rest/v1/drug?v=full',
+        url: HOST + '/ws/rest/v1/drug?v=full&limit=300',
         headers: Util.getBasicAuthHeaders(),
         reader: {
-            tyep:'json',
+            type:'json',
             root: 'results'
         }
     }

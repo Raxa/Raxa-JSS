@@ -13,11 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
+ 
+//medication history panel
+ 
 Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
     extend: 'Ext.ux.touch.grid.View',
     xtype: 'Drug-Panel',
-
+    store: 'drugpanel',
     requires: ['Ext.ux.touch.grid.feature.Feature'],
 
     config: {
@@ -26,7 +28,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
         columns: [{
             header: 'Drug Name',
             dataIndex: 'drugname',
-            width: '20%',
+            width: '25%',
             cls: 'centered-cell',
             renderer: function (value, values) {
                 return '<span>' + value + '</span>';
@@ -34,25 +36,20 @@ Ext.define('RaxaEmr.Outpatient.view.patient.drugpanel', {
         }, {
             header: 'Strength',
             dataIndex: 'strength',
-            width: '20%',
+            width: '25%',
             cls: 'centered-cell',
             renderer: function (value, values) {
                 return '<span>' + value + ' mg' + '</span>';
             }
         }, {
             header: 'Dosage',
-            dataIndex: 'dosage',
-            width: '20%',
+            dataIndex: 'frequency',
+            width: '25%',
             cls: 'centered-cell',
         }, {
             header: 'Instruction',
             dataIndex: 'instruction',
-            width: '20%',
-            cls: 'centered-cell',
-        }, {
-            header: 'Route of Administration',
-            dataIndex: 'routeofadministration',
-            width: '20.3%',
+            width: '25%',
             cls: 'centered-cell',
         }]
     }
