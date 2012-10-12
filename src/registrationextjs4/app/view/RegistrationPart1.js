@@ -73,6 +73,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 id: 'centreId',
                                 layout: 'hbox',
                                 width: 172,
+		                        typeAhead: true,
+		                        minChars: 1,
+		                        queryMode: 'local',
                                 store: new Ext.data.SimpleStore({
                                     fields: ['centre'],
                                     data: [
@@ -501,6 +504,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id: 'education',
                             layout: 'hbox',
                             width: 172,
+                            typeAhead: true,
+                            minChars: 1,
+                            queryMode: 'local',
                             store: new Ext.data.SimpleStore({
                                 fields: ['education'],
                                 data: [
@@ -533,6 +539,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id: 'caste',
                             layout: 'hbox',
                             width: 172,
+                            typeAhead: true,
+                            minChars: 1,
+                            queryMode: 'local',
                             store: new Ext.data.SimpleStore({
                                 fields: ['caste'],
                                 data: [
@@ -564,6 +573,9 @@ Ext.define('Registration.view.RegistrationPart1', {
                             id: 'occupation',
                             layout: 'hbox',
                             width: 172,
+                            typeAhead: true,
+                            minChars: 1,
+                            queryMode: 'local',
                             store: new Ext.data.SimpleStore({
                                 fields: ['occupation'],
                                 data: [
