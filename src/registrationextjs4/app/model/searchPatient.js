@@ -45,5 +45,8 @@ Ext.define('Registration.model.searchPatient', {
         name: 'cityVillage',
         type: 'string',
         useNull: true
+    },{
+        name: 'stateProvince',
+        type: 'string'
     }]
 })

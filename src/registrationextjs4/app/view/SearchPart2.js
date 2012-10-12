@@ -93,7 +93,7 @@ Ext.define('Registration.view.SearchPart2', {
                             cellClick: {
                                 fn: function () {
 									//All fields are initially set to '-' if data is not available, they remain same otherwise take respective values								
-									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','residentialAreaSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient'];
+									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','residentialAreaSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','stateSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient','religionSearchedPatient'];
 									for(var j=0 ; j < itemsToReset.length ; j++)
 									{
 										Ext.getCmp(itemsToReset[j]).setValue('-');
@@ -122,7 +122,7 @@ Ext.define('Registration.view.SearchPart2', {
 //									Postal Code Removed from New Patient Registration, so removed from Patient Search Result as well				
 //                                  Ext.getCmp('pinSearchedPatient').setValue(temp.postalCode)
                                     Ext.getCmp('townSearchedPatient').setValue(temp.cityVillage)
-
+									Ext.getCmp('stateSearchedPatient').setValue(temp.stateProvince)
 //									Sets Patient Attributes at right place in the form
                                     for(var i=0;i<temp.attributes.length;i++)
                                     {
@@ -169,6 +169,10 @@ Ext.define('Registration.view.SearchPart2', {
 										if(temp.attributes[i].attributeType.display.search('Education')>=0)
 										{
 											Ext.getCmp('educationSearchedPatient').setValue(temp.attributes[i].value);
+										}
+										if(temp.attributes[i].attributeType.display.search('Religion')>=0)
+										{
+											Ext.getCmp('religionSearchedPatient').setValue(temp.attributes[i].value);
 										}
                                     }
                                     var l = Ext.getCmp('mainRegArea').getLayout();

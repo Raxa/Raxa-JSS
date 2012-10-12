@@ -91,7 +91,7 @@ Ext.define('Registration.controller.Search', {
         'relativeLastSearch',
         'DOBSearch',
         'Town/Village/CitySearch',
-        'phoneNumberSearch'
+        'phoneNumberSearch',
         ];
 
         for (var i=0; i < fields.length; i++)

@@ -211,6 +211,27 @@ Ext.define('Registration.view.SearchConfirm', {
                             allowBlank: false
                         }]
                     }, {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion'),
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            name: 'religion',
+                            id: 'religionSearchedPatient',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion.emptytext'),
+                            readOnly: true,
+                            flex: 1,
+                            allowBlank: false
+                        }]
+                    }, {
                         xtype: 'textfield',
                         id: 'residentialAreaSearchedPatient',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.ResidentialArea'),
@@ -283,6 +304,17 @@ Ext.define('Registration.view.SearchConfirm', {
                         id: 'districtSearchedPatient',
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.District.emptytext'),
 
+                        readOnly: true,
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        hideTrigger: true,
+                        anchor: '95%'
+                    },{
+                        xtype: 'textfield',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.State'),
+                        id: 'stateSearchedPatient',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.State.emptytext'),
                         readOnly: true,
                         labelAlign: 'right',
                         labelPad: 20,

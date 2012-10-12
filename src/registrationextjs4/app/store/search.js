@@ -24,12 +24,17 @@ Ext.define('Registration.store.search', {
                             identifier: Data[i].identifiers[0].identifier,
                             attributes: Data[i].person.attributes
                         })
-                        if (Data[i].person.birthdate == null) temp.data.birthdate = 0
-                        if (Data[i].person.preferredAddress != null) temp.data.cityVillage = Data[i].person.preferredAddress.cityVillage;
-                        else temp.data.cityVillage = null;
-                        if (Data[i].person.preferredAddress != null) temp.data.address1 = Data[i].person.preferredAddress.address1
-                        if (Data[i].person.preferredAddress != null) temp.data.address2 = Data[i].person.preferredAddress.address2
-                        if (Data[i].person.preferredAddress != null) temp.data.postalCode = Data[i].person.preferredAddress.postalCode
+                        if (Data[i].person.birthdate == null) temp.data.birthdate = "-"
+
+                        if (Data[i].person.preferredAddress) 
+                        {
+                        if(Data[i].person.preferredAddress.state)
+	                        temp.data.address1 = Data[i].person.preferredAddress.address1
+	                        temp.data.address2 = Data[i].person.preferredAddress.address2
+	                        temp.data.cityVillage = Data[i].person.preferredAddress.cityVillage
+							temp.data.postalCode = Data[i].person.preferredAddress.postalCode
+	                        temp.data.stateProvince = Data[i].person.preferredAddress.stateProvince
+						}
                         for(var j=0; j<Data[i].person.attributes.length; j++){
                             if(Data[i].person.attributes[j].display.indexOf("Old Patient") !== -1){
                                 temp.data.oldPatientIdentifier = Data[i].person.attributes[j].value;
