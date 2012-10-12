@@ -494,11 +494,13 @@ Ext.define('Registration.controller.Main', {
         'residentialArea',
         'tehsil',
         'district',
+        'state',
         'patientPrimaryContact',
         'patientSecondaryContact',
         'education',
         'caste',
         'occupation',
+        'religion',
         'complaintArea'
         ];
 
