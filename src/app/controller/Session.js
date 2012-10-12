@@ -213,7 +213,7 @@ Ext.define('RaxaEmr.controller.Session', {
                 userModules[userModules.length] = allModules[i];
             }
         }
-        Ext.getCmp('appGrid').addModules(userModules);
+        Ext.getCmp('appGrid').addModules(userModules); 
         Ext.getCmp('smartApp').addApps(allApps);
         return userModules.length;
     },
