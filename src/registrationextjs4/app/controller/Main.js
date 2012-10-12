@@ -428,6 +428,7 @@ Ext.define('Registration.controller.Main', {
             scope: this,
             success: function(){
             	Ext.Msg.alert('Encounter saved successfully.');
+            	this.resetNewPatientRegistrationForm();
 		      	if(localStorage.getItem('navigation')==='New Registration')
 		      		{
 		      			Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.REG_1.value);
@@ -465,5 +466,34 @@ Ext.define('Registration.controller.Main', {
 				this
 				);
     		}
-    }
+    },
+    
+    //function which reset all the fields in new patient registertation form
+    resetNewPatientRegistrationForm: function () {
+        var fields = [
+        'oldPatientIdentifier',
+        'patientFirstName',
+        'patientLastName',
+        'relativeFirstName',
+        'relativeLastName',
+        'patientAge',
+        'dob',
+        'street',
+        'town',
+        'residentialArea',
+        'tehsil',
+        'district',
+        'patientPrimaryContact',
+        'patientSecondaryContact',
+        'education',
+        'caste',
+        'occupation',
+        'complaintArea'
+        ];
+
+        for (var i=0; i < fields.length; i++)
+        {
+            Ext.getCmp(fields[i]).reset();
+        }
+    },
 });
