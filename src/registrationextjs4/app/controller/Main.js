@@ -85,6 +85,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
+        Ext.getCmp('religionConfirm').setText(Ext.getCmp('religion').value);
         Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
         Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
 		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value == ""))
@@ -106,6 +107,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('townConfirm').setText(Ext.getCmp('town').value);
         Ext.getCmp('tehsilConfirm').setText(Ext.getCmp('tehsil').value);
         Ext.getCmp('districtConfirm').setText(Ext.getCmp('district').value);
+        Ext.getCmp('stateConfirm').setText(Ext.getCmp('state').value);
     },
 
     //Navigates to BMI page
