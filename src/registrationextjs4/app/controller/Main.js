@@ -218,8 +218,9 @@ Ext.define('Registration.controller.Main', {
         // this statement makes the post call to make the person
         store.sync({
             success: function(){
-                this.getidentifierstype(store.getAt(0).getData().uuid)
-            }, 
+                this.getidentifierstype(store.getAt(0).getData().uuid);
+                localStorage.setItem('navigation', 'New Registration');
+            },
             failure: function(){
                 Ext.Msg.alert("Failure -- Please try again");
                 Ext.getCmp('submitButton').enable();
@@ -426,7 +427,15 @@ Ext.define('Registration.controller.Main', {
         store.sync({
             scope: this,
             success: function(){
-                Ext.Msg.alert('Encounter saved successfully.');
+            	Ext.Msg.alert('Encounter saved successfully.');
+		      	if(localStorage.getItem('navigation')==='New Registration')
+		      		{
+		      			Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.REG_1.value);
+		      		}
+		      	else
+		       		{
+						Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.HOME.value);
+		       		}
             },
             failure: function(){
                 Ext.Msg.alert("Error", Util.getMessageSyncError());
