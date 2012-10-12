@@ -172,7 +172,7 @@ Ext.define('RaxaEmr.controller.Session', {
             failure: function (response) {
                 Ext.getCmp('mainView').setMasked(false);
                 if(response.status === 401) {
-                    Ext.Msg.alert('','The username or password you entered is incorrect');  
+                    Ext.Msg.alert('Invalid',Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.invalidUser'));
                 }
                 else {
                     Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
