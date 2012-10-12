@@ -63,7 +63,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout(); 
         // if condition that check if all the required fields are non-empty or not
         if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
-        	if(Ext.getCmp('patientAge').rawValue || Ext.getCmp('dob').rawValue)
+        	if(Ext.getCmp('patientAge').isValid() || Ext.getCmp('dob').isValid())
  				{     
 			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
 			        Util.KeyMapButton('submitButton', Ext.EventObject.ENTER);
