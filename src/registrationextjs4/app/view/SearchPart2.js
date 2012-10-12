@@ -69,9 +69,8 @@ Ext.define('Registration.view.SearchPart2', {
                             dataIndex: 'gender'
                         }, {
                             xtype: 'gridcolumn',
-                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.DOB'),
-                            renderer: Ext.util.Format.dateRenderer('d.m.Y'),
-                            dataIndex: 'birthdate'
+                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.Age'),
+                            dataIndex: 'age'
                         }, {
                             xtype: 'gridcolumn',
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.PI'),
