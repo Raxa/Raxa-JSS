@@ -527,7 +527,7 @@ var Util = {
         xmlReq.setRequestHeader("Accept", "application/json");
         xmlReq.setRequestHeader("Authorization", "Basic " + window.btoa(username + ":" + password));
         xmlReq.send();
-        function transferFailed() {
+        function transferFailed(){
             Ext.Msg.alert('Network Error',Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.network'));
         }
         if (xmlReq.status == "200") {
