@@ -93,7 +93,7 @@ Ext.define('Registration.view.SearchPart2', {
                             cellClick: {
                                 fn: function () {
 									//All fields are initially set to '-' if data is not available, they remain same otherwise take respective values								
-									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','residentialAreaSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','stateSearchedPatient','phoneSearchedPatient','casteSearchedPatient','educationSearchedPatient','religionSearchedPatient'];
+									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','residentialAreaSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','stateSearchedPatient','casteSearchedPatient','educationSearchedPatient','religionSearchedPatient'];
 									for(var j=0 ; j < itemsToReset.length ; j++)
 									{
 										Ext.getCmp(itemsToReset[j]).setValue('-');
@@ -154,13 +154,6 @@ Ext.define('Registration.view.SearchPart2', {
 										if(temp.attributes[i].attributeType.display.search('District')>=0)
 										{
 											Ext.getCmp('districtSearchedPatient').setValue(temp.attributes[i].value);
-										}
-										if(temp.attributes[i].attributeType.display.search('Contact By Phone')>=0)
-										{
-											if(temp.attributes[i].value)
-												Ext.getCmp('phoneSearchedPatient').setValue('Yes');
-											else
-												Ext.getCmp('phoneSearchedPatient').setValue('No');
 										}
 										if(temp.attributes[i].attributeType.display.search('Caste')>=0)
 										{

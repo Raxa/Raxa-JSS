@@ -323,26 +323,6 @@ Ext.define('Registration.view.SearchConfirm', {
                         anchor: '95%'
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CM'),
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'phoneNo.',
-                            id: 'phoneSearchedPatient',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CM.emptytext'),
-                            flex: 1,
-                            readOnly: true,
-                            allowBlank: false
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN'),
                         layout: 'hbox',
                         combineErrors: true,
