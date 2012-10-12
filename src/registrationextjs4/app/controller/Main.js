@@ -269,7 +269,7 @@ Ext.define('Registration.controller.Main', {
                     for (var idIterator = 0; idIterator < locations.data.length; idIterator++) {
                         var str = locations.data.items[idIterator].raw.display;
 
-                        if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1) {
+                        if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1 && !foundLocation) {
                             this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
                             foundLocation = true;
                         }
