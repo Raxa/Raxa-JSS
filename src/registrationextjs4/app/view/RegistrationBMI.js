@@ -26,6 +26,7 @@ Ext.define('Registration.view.RegistrationBMI', {
         pack: 'center'
     },
     initComponent: function () {
+    	localStorage.setItem('printtaken', false);
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',

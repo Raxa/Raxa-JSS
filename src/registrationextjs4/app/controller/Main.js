@@ -39,7 +39,7 @@ Ext.define('Registration.controller.Main', {
                 click: this.searchPatient
             },
             'registrationbmi button[action=bmiSubmit]': {
-                click: this.sendEncounterData
+                click: this.checkPrintedCard
             }
         });
     },
@@ -436,11 +436,34 @@ Ext.define('Registration.controller.Main', {
 		       		{
 						Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.HOME.value);
 		       		}
+		       		localStorage.setItem('printtaken', false);
             },
             failure: function(){
                 Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
         return store;
+       
+    },
+    
+    //Warns user if he is pressing Submit without printing card
+    checkPrintedCard: function() {
+    	var printtaken = localStorage.getItem('printtaken'); 
+    	if(printtaken=='true')
+    		{
+    			this.sendEncounterData();
+    		}
+    		else
+    		{
+				Ext.Msg.confirm("Confirmation",
+				"Are you sure you want to submit without printing card?",
+				function (btn) {
+				if (btn === 'yes') {
+					this.sendEncounterData(); 
+					}
+				},
+				this
+				);
+    		}
     }
 });
