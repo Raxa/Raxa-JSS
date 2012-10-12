@@ -145,7 +145,9 @@ Ext.define('Registration.controller.Main', {
             addresses: [{
                 address1: Ext.getCmp('street').value,
                 address2: Ext.getCmp('residentialArea').value,
-                cityVillage: Ext.getCmp('town').value
+                cityVillage: Ext.getCmp('town').value,
+                stateProvince: Ext.getCmp('state').value,
+                countyDistrict: Ext.getCmp('district').value
             }],
             attributes: [{
                 value: Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value,

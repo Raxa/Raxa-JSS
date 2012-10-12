@@ -12,6 +12,12 @@ Ext.define('Registration.model.addresses', {
         name: 'cityVillage',
         type: 'string'
     }, {
+    	name: 'stateProvince',
+    	type: 'string'
+    },  {
+    	name: 'countyDistrict',
+    	type: 'string'
+    }, { 
         name: 'postalCode',
         type: 'boolean'
     }]
