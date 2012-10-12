@@ -33,7 +33,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '10%',
             cls: 'centered-cell',
             renderer: function (value, values) {
-                if(value == "--" || value == undefined) {
+                if(value == undefined) {
                     return '<span>' + "-" + '</span>';
                 } else {
                     return '<span>' + value + ' cm' + '</span>';
@@ -45,7 +45,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '10%',
             cls: 'centered-cell',
             renderer: function (value , values) {
-                if(value == "--" || value == undefined)  {
+                if(value == undefined)  {
                     return '<span>' + "-" +'</span>';  
                 } else {
                     return '<span>' + value + ' kg' + '</span>';
@@ -58,7 +58,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             width: '10%',
             cls: 'centered-cell',
             renderer: function (value ) {
-                if(value == "--" || value == undefined) {    
+                if(value == undefined) {    
                     return "-";
                 }
             }
@@ -70,7 +70,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.Grid', {
             cls: 'centered-cell',
             renderer: function (value ) {
                 // TODO: Determine how to pass 2 BMI values into one grid panel
-                if(value == "--" || value == "- / -") {
+                if(value == "- / -" || value == undefined ) {
                     return "-";
                 }
                 else {
