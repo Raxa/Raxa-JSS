@@ -352,7 +352,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }
                         }
                     }, {
-                        xtype: 'textfield',
+                        xtype: 'combo',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.District'),
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.District'),
                         id: 'district',
@@ -361,12 +361,22 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelWidth: 200,
                         hideTrigger: true,
                         width: 573,
-                        listeners: {
-                            'blur': function () {
-                                autoTextFormat(this);
-                            }
-                        }
-                    },{
+                        typeAhead: true,
+                        minChars: 2,
+                        queryMode: 'local',
+                        store: Ext.create('Registration.store.autoCompleteAddress'),
+                        displayField: 'district',
+                        listeners:{
+                        	//Sets corresponding state for selected district
+    					     scope: this,
+         					 'select': function() {
+         							Ext.getCmp('state').setValue(Ext.getCmp('district').lastSelection[0].data.state);
+         						},
+         					 'change': function() {
+         							Ext.getCmp('state').setValue('');
+         						}
+    						}
+    					},{
                         xtype: 'combo',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.State'),
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.State'),
