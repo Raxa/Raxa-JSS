@@ -71,7 +71,7 @@ Ext.define('RaxaEmr.controller.Session', {
             Ext.Ajax.setTimeout(Util.getTimeoutLimit());
             Ext.Ajax.request({
                 scope: this,
-                url: userInfoJson.results[0].links[0].uri + '?v=full',
+                url: HOST + '/ws/rest/v1/user/' + userInfoJson.results[0].uuid + '?v=full',
                 method: 'GET',
                 withCredentials: true,
                 useDefaultXhrHeader: false,
