@@ -44,6 +44,7 @@ function validatePhoneNumber(component) {
 function autoTextFormat(component) {
 	//Sets first character in uppercase and rest in lowercase
 	var string = component.value; 
+	if(string)
 	component.setValue(string.charAt(0).toUpperCase() + string.toLowerCase().substr(1));
 }
 
