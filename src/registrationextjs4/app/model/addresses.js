@@ -8,6 +8,9 @@ Ext.define('Registration.model.addresses', {
     }, {
         name: 'address2',
         type: 'string'
+    },{
+        name: 'address3',
+        type: 'string'
     }, {
         name: 'cityVillage',
         type: 'string'
