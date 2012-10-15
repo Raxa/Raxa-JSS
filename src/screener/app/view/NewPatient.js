@@ -30,7 +30,6 @@ Ext.define("Screener.view.NewPatient", {
         {
             xtype  : 'container',
             id: 'ageDateOfBirth',
-            //label: "Age(Enter Age or DOB)",
             layout : {
                 type  : 'hbox'
             },
@@ -40,7 +39,7 @@ Ext.define("Screener.view.NewPatient", {
                 id: 'patientAge',
                 name: 'patientAge',
                 labelWidth: 70,
-                label: "Age(Enter Age or DOB)",
+                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.age_dob'),
                 minValue: 0,
                 maxValue: 119,
                 allowDecimals: false,
@@ -51,8 +50,7 @@ Ext.define("Screener.view.NewPatient", {
                 id: 'dob',
                 name: 'dob',
                 labelWidth: 70,
-                //label: "DateOfBirth",
-                placeHolder: 'D/M/YYYY'
+                placeHolder: 'YYYY-M-D'
             }
             ]
         },
@@ -101,5 +99,9 @@ Ext.define("Screener.view.NewPatient", {
     },
     saveForm: function () {
         return this.getValues();
+    },
+    
+    initialise : function() {
+        
     }
 });

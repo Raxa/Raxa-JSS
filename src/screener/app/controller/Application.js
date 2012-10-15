@@ -39,27 +39,27 @@ Util.PAGES.SCREENER = {
  */
 Ext.define("Screener.controller.Application", {
     requires: [
-        'Screener.store.AssignedPatientList',
-        'Screener.store.Doctors',
-        'Screener.store.drugConcept',
-        'Screener.store.drugEncounter',
-        'Screener.store.druglist',
-        'Screener.store.encounterpost',
-        'Screener.store.encounters',
-        'Screener.store.IdentifierType',
-        'Screener.store.Location',
-        'Screener.store.NewPatients',   // Cant find this store
-        'Screener.store.NewPersons',
-        'Screener.store.PatientList',
-        'Screener.store.Patients',
-        'Screener.store.PatientSummary',
-        'Screener.store.PostLists',
-	'Screener.model.observation',	
-        'Screener.view.PharmacyForm', 
-        'Screener.view.PatientListView',
-        'Screener.view.VitalsView',
-        'Screener.view.VitalsForm',
-        'Screener.view.Main',
+    'Screener.store.AssignedPatientList',
+    'Screener.store.Doctors',
+    'Screener.store.drugConcept',
+    'Screener.store.drugEncounter',
+    'Screener.store.druglist',
+    'Screener.store.encounterpost',
+    'Screener.store.encounters',
+    'Screener.store.IdentifierType',
+    'Screener.store.Location',
+    'Screener.store.NewPatients',   // Cant find this store
+    'Screener.store.NewPersons',
+    'Screener.store.PatientList',
+    'Screener.store.Patients',
+    'Screener.store.PatientSummary',
+    'Screener.store.PostLists',
+    'Screener.model.observation',	
+    'Screener.view.PharmacyForm', 
+    'Screener.view.PatientListView',
+    'Screener.view.VitalsView',
+    'Screener.view.VitalsForm',
+    'Screener.view.Main',
     ],
     models: [
     'Screener.model.Person', 
@@ -329,8 +329,8 @@ Ext.define("Screener.controller.Application", {
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
                 store_outEncounter.getData().getAt(0).getData().uuid, 
                 localStorage.screenerUuidencountertype
-            )
-        );
+                )
+            );
         store_patientList.load({
             scope: this,
             callback: function(records, operation, success){
@@ -507,21 +507,12 @@ Ext.define("Screener.controller.Application", {
                 }] 
             };
             if (Ext.getCmp('patientAge').getValue() !== null) {
-                console.log("inside if")    
                 patentAge = formp.patientAge;
-                console.log(patentAge);
                 newPatient.age = formp.patientAge;
             }   
-          //  var dateFormat = new Array("Y-n-j", "j-n-Y", "Y-m-d" , "d-m-Y" , "Y/n/j", "j/n/Y", "Y/m/d" , "d/m/Y");
-            
             if(Ext.getCmp('dob').getValue() !== "" && Ext.getCmp('dob').getValue().length > 0) {
-            //    for(var i =0; i< dateFormat.length ; i++) { 
-                   // console.log("dateFormat"+dateFormat[i]);
                 newPatient. birthdate =  formp.dob;
-            //} 
             }
-            console.log("new patient");
-            console.log(newPatient);
             var newPatientParam = Ext.encode(newPatient);
             Ext.Ajax.request({
                 scope:this,
@@ -531,16 +522,10 @@ Ext.define("Screener.controller.Application", {
                 disableCaching: false,
                 headers: Util.getBasicAuthHeaders(),
                 success: function (response) {
-                    console.log("success");
-                    console.log(response);
-                    console.log(JSON.parse(response.responseText));
-                    console.log(JSON.parse(response.responseText).uuid);
-                    console.log(this);
                     this.getidentifierstype(JSON.parse(response.responseText).uuid);
                 },
                 failure: function (response) {
                     Ext.Msg.alert('Error: unable to write to server. Enter all fields.')
-                    console.log(response);
                 }
             });
             Ext.getCmp('newPatient').hide();
@@ -549,8 +534,6 @@ Ext.define("Screener.controller.Application", {
         else {
             Ext.Msg.alert ("Please Enter all the mandatory fields");
         }
-                 
-         
     },
       
     // Get IdentifierType using IdentifierType store 
@@ -1005,43 +988,24 @@ Ext.define("Screener.controller.Application", {
     navigate: function(newPage, oldPage) {
         this.getView().setActiveItem(newPage);
         
-        // Add back button to toolbar which points to old page
+    // Add back button to toolbar which points to old page
     },
     
     onDateChange: function() {
         if(Ext.getCmp('dob').getValue() !== "" && Ext.getCmp('dob').getValue().length > 0) {
-            var dt = new Date();
+            var enteredDate = new Date();
             var currentDate = new Date();
-            console.log("inside if date of birth")
-            console.log(Ext.getCmp('dob').getValue());
-            //var dateFormat = new Array( "j/n/Y","d/m/Y");
-            //for(var i =0; i< dateFormat.length ; i++) { 
-            dt = Ext.Date.parse(Ext.getCmp('dob').getValue(), "Y-n-j" , true);
-            console.log("dateValidated"+dt);
-            if(dt === null || dt === undefined) {
-                console.log("inside 2nd if");
-                Ext.Msg.alert("Invalid date format")
+            enteredDate = Ext.Date.parse(Ext.getCmp('dob').getValue(), "Y-n-j" , true);
+            if(enteredDate === null || enteredDate === undefined) {
+                Ext.Msg.alert("","Invalid date format")
                 return false;
-            } else {
-            if(dt.getFullYear() > currentDate.getFullYear()) {
-                Ext.Msg.alert("Entered Date should not be greater then current Date")
-                return false;
+            } else 
+{
+                if(enteredDate > currentDate ) {
+                    Ext.Msg.alert("","Entered Date should not be greater then current Date")
+                }
             }
-            if(dt.getFullYear() === currentDate.getFullYear()) {
-                if(dt.getMonth() > currentDate.getMonth()) {
-                    Ext.Msg.alert("Entered Date should not be greater then current Date")
-                    return false
-                }
-                if(dt.getMonth() === currentDate.getMonth()) {
-                    if(dt.getDate() > currentDate.getDate()) {
-                        Ext.Msg.alert("Entered Date should not be greater then current Date")
-                        return false
-                    }
-                }
-            }  
-        }
             return true;
-           // }
         }
     }
 });
