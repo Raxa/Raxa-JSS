@@ -74,6 +74,23 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             name: 'patientName',
                             id: 'patientNameConfirm',
                         }]
+                    },{
+                        xtype: 'fieldcontainer',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PNHindi'),
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'text',
+                        labelAlign: 'right',
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            name: 'patientNameHindi',
+                            id: 'patientNameHindiConfirm',
+                        }]
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.FHN'),

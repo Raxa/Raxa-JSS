@@ -111,6 +111,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }]
                         }, {
                             xtype: 'fieldcontainer',
+                            html:'1,2',
                             fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PN'),
                             layout: 'hbox',
                             combineErrors: true,
@@ -127,7 +128,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 cls: 'raxa-form-panel',
                                 name: 'firstName',
                                 id: 'patientFirstName',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFN.emptytext'),
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FN.emptytext'),
                                 width: 172,
                                 allowBlank: false,
                                 listeners: {
@@ -138,8 +139,48 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }, {
                                 xtype: 'textfield',
                                 name: 'lastName',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PLN.emptytext'),
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.LN.emptytext'),
                                 id: 'patientLastName',
+                                width: 172,
+                                margins: '0 0 0 6',
+                                allowBlank: false,
+                                listeners: {
+                                    'blur': function () {
+                                        autoTextFormat(this);
+                                    }
+                                }
+                            }]
+                        }, {
+                            xtype: 'fieldcontainer',
+                            fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.PFNHindi'),
+                            layout: 'hbox',
+                            combineErrors: true,
+                            defaultType: 'textfield',
+                            labelAlign: 'right',
+                            labelPad: 20,
+                            labelWidth: 200,
+                            anchor: '95%',
+                            defaults: {
+                                hideLabel: 'true'
+                            },
+                            items: [{
+                                xtype: 'textfield',
+                                cls: 'raxa-form-panel',
+                                name: 'firstName',
+                                id: 'patientFirstNameHindi',
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FN.emptytext'),
+                                width: 172,
+                                allowBlank: false,
+                                listeners: {
+                                    'blur': function () {
+                                        autoTextFormat(this);
+                                    }
+                                }
+                            }, {
+                                xtype: 'textfield',
+                                name: 'lastNameHindi',
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.LN.emptytext'),
+                                id: 'patientLastNameHindi',
                                 width: 172,
                                 margins: '0 0 0 6',
                                 allowBlank: false,
@@ -165,7 +206,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             items: [{
                                 xtype: 'textfield',
                                 name: 'firstName',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHFN.emptytext'),
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FN.emptytext'),
                                 id: 'relativeFirstName',
                                 width: 172,
                                 allowBlank: true,
@@ -177,7 +218,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }, {
                                 xtype: 'textfield',
                                 name: 'lastName',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FHLN.emptytext'),
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FN.emptytext'),
                                 id: 'relativeLastName',
                                 width: 172,
                                 margins: '0 0 0 6',

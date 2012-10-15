@@ -79,6 +79,7 @@ Ext.define('Registration.controller.Main', {
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setText(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setText(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
+        Ext.getCmp('patientNameHindiConfirm').setText(Ext.getCmp('patientFirstNameHindi').value + " " + Ext.getCmp('patientLastNameHindi').value);
         Ext.getCmp('relativeNameConfirm').setText((Ext.getCmp('relativeFirstName').value || "")+ " " + (Ext.getCmp('relativeLastName').value || ""));
         Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value || "");
         Ext.getCmp('sexConfirm').setText(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
@@ -141,6 +142,9 @@ Ext.define('Registration.controller.Main', {
             names: [{
                 givenName: Ext.getCmp('patientFirstName').value,
                 familyName: Ext.getCmp('patientLastName').value
+            },{
+                givenName: Ext.getCmp('patientFirstNameHindi').value,
+                familyName: Ext.getCmp('patientLastNameHindi').value
             }],
             addresses: [{
                 address1: Ext.getCmp('street').value,
