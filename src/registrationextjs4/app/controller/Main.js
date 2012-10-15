@@ -123,6 +123,7 @@ Ext.define('Registration.controller.Main', {
         //reset all the fields in registration form
    var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
  
+
         for (var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
         }
@@ -268,7 +269,7 @@ Ext.define('Registration.controller.Main', {
                     for (var idIterator = 0; idIterator < locations.data.length; idIterator++) {
                         var str = locations.data.items[idIterator].raw.display;
 
-                        if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1) {
+                        if (str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1 && !foundLocation) {
                             this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
                             foundLocation = true;
                         }
