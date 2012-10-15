@@ -99,9 +99,5 @@ Ext.define("Screener.view.NewPatient", {
     },
     saveForm: function () {
         return this.getValues();
-    },
-    
-    initialise : function() {
-        
     }
-});
+ });

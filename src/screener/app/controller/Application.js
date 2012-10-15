@@ -538,8 +538,6 @@ Ext.define("Screener.controller.Application", {
       
     // Get IdentifierType using IdentifierType store 
     getidentifierstype: function (personUuid) {
-        console.log("inside getidentifierstype");
-        console.log(personUuid);
         var identifiers = Ext.create('Screener.store.IdentifierType')
         identifiers.load({
             scope: this,
