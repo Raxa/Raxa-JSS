@@ -584,17 +584,20 @@ Ext.define("Screener.controller.Application", {
     // Counts number of patients assigned to a doctor   
     countPatients: function () {
         //store = Ext.create('Screener.store.AssignedPatientList');
+        console.log("inside count patient");
         var patientStore = Ext.getStore('assPatientStore')
         var docStore = Ext.getStore('doctorStore');
         if(!Ext.getStore('doctorStore')){
             docStore = Ext.create('Screener.store.Doctors',{
                 storeId: 'doctorStore'
             });
+//            Ext.getCmp('doctorList').setStore(docStore);
         }
         else{
             docStore.load();
         }
         docStore.on('load', function () {
+            console.log("inside load");
             patientStore.load();
             patientStore.on('load', function () {
                 for (var i = 0; i < docStore.getData().length; i++) {
@@ -607,9 +610,11 @@ Ext.define("Screener.controller.Application", {
                             }
                         }
                     }
+                    console.log(count);
                     docStore.getAt(i).getData().numpatients = count
                 }
                 Ext.getCmp('doctorList').setStore(docStore)
+                console.log(docStore);
                 return docStore
             }, this)
         }, this)
@@ -770,6 +775,7 @@ Ext.define("Screener.controller.Application", {
     //if patient and doctor are both selected, removes patient from list, increases numpatients for doctor,
     //and adds patient to the patients() store in the doctor
     assignPatient: function () {
+        console.log("inside assign patient");
         var currentNumPatients = Ext.getStore('Doctors').getAt(this.currentDoctorIndex).get('numpatients') + 1;
         Ext.getStore('Doctors').getAt(this.currentDoctorIndex).set('numpatients', currentNumPatients);
         this.getPatientList().getSelection()[0].set('patientid', this.currentDoctorIndex);
