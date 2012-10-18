@@ -358,30 +358,36 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     }, 
     printPrescribedDrugs: function() {
         var Grid=this.readGrid();
-        if(Ext.getCmp('familyName').getValue()!==""){
-            var selectedPatient = {
-                Name: Ext.getCmp('givenName').getValue()+Ext.getCmp('familyName').getValue(),
-                Doctor: Ext.getCmp('doctor').getValue(),
-                Dob: Ext.getCmp('dob').getValue(),
-                Age: Ext.getCmp('age').getValue(),
-                Gender:Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
-                Length : Grid.length,
-                DrugGrid:Grid
-            };
-        }
-        else {
-            var selectedPatient = {
-                Name: Ext.getCmp('prescriptionPatientName').getValue(),
-                Doctor: Ext.getCmp('doctor').getValue(),
-                Dob: Ext.getCmp('dob').getValue(),
-                Age: Ext.getCmp('prescriptionPatientAge').getValue(),
-                Gender:Ext.getCmp('prescriptionPatientGender').getValue(),
-                Length : Grid.length,
-                DrugGrid:Grid
+        var noofdrugs = Ext.getStore('orderStore').data.items.length;
+        if(noofdrugs > 0){
+            if(Ext.getCmp('familyName').getValue()!==""){
+                var selectedPatient = {
+                    Name: Ext.getCmp('givenName').getValue()+Ext.getCmp('familyName').getValue(),
+                    Doctor: Ext.getCmp('doctor').getValue(),
+                    Dob: Ext.getCmp('dob').getValue(),
+                    Age: Ext.getCmp('age').getValue(),
+                    Gender:Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
+                    Length : Grid.length,
+                    DrugGrid:Grid
+                };
             }
+            else {
+                var selectedPatient = {
+                    Name: Ext.getCmp('prescriptionPatientName').getValue(),
+                    Doctor: Ext.getCmp('doctor').getValue(),
+                    Dob: Ext.getCmp('dob').getValue(),
+                    Age: Ext.getCmp('prescriptionPatientAge').getValue(),
+                    Gender:Ext.getCmp('prescriptionPatientGender').getValue(),
+                    Length : Grid.length,
+                    DrugGrid:Grid
+                }
+            }
+            localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
+            var printWindow = window.open('app/print.html', 'Fill Prescription', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
         }
-        localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
-        var printWindow = window.open('app/print.html', 'Fill Prescription', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+        else{
+            Ext.Msg.alert('No drugs are prescribed');
+        }
     },
     readGrid: function() {
         var drugs = Ext.getStore('orderStore').data;
@@ -811,7 +817,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 scope: this,
                 callback: function(records, operation, success){
                     if(success){
-                       Ext.getCmp("searchLoadMask").hide();
+                        Ext.getCmp("searchLoadMask").hide();
                     }
                     else{
                         Ext.getCmp("searchLoadMask").hide();
@@ -1061,7 +1067,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 
     postConceptForNewDrug: function(){
         var newConcept = {
-            names: [{name: Ext.getCmp('addDrugName').getValue(), locale: "en", conceptNameType: "FULLY_SPECIFIED"}],
+            names: [{
+                name: Ext.getCmp('addDrugName').getValue(), 
+                locale: "en", 
+                conceptNameType: "FULLY_SPECIFIED"
+            }],
             datatype: localStorage.drugConceptDataTypeUuid,
             conceptClass: localStorage.drugConceptClassUuid
         };
@@ -1110,11 +1120,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                                             localStorage.setItem('drugConceptDataTypeUuid', jsonResponse.results[j].uuid);
                                         }
                                     }
-                                }, scope: this
+                                }, 
+                                scope: this
                             })
                         }
                     }
-                }, scope: this
+                }, 
+                scope: this
             });
         }
     },
@@ -1363,7 +1375,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             }
         });
         purchaseOrderStore.on('write', function () {
-        }, this);
+            }, this);
     },
     
     cancelIssuePurchaseOrder: function() {
