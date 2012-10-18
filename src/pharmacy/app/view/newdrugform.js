@@ -89,22 +89,26 @@ Ext.define('RaxaEmr.Pharmacy.view.newdrugform', {
                 {
                     xtype: 'numberfield',
                     fieldLabel: 'Quantity',
-                    anchor: '100%'
+                    anchor: '100%',
+                    minValue: 0
                 },
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Packaging Unit',
-                    anchor: '100%'
+                    anchor: '100%',
+                    minValue: 0
                 },
                 {
                     xtype: 'numberfield',
                     fieldLabel: 'Number Field',
-                    anchor: '100%'
+                    anchor: '100%',
+                    minValue: 0
                 },
                 {
                     xtype: 'numberfield',
                     fieldLabel: 'Total',
-                    anchor: '100%'
+                    anchor: '100%',
+                    minValue: 0
                 }]
             }]
         }]

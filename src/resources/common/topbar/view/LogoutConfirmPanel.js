@@ -57,9 +57,7 @@ Ext.define('Topbar.view.LogoutConfirmPanel', {
 
     onLogoutConfirmYesTap: function (button, e, options) {
         Util.logoutUser();
-        Ext.getCmp('mainView').setActiveItem(0);
-        var logconfirm = this.parent.getComponent('LogoutConfirmPanel');
-        logconfirm.hide();
+        location.reload();
     },
 
     onLogoutConfirmNoTap: function (button, e, options) {
