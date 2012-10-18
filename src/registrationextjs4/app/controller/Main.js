@@ -39,7 +39,7 @@ Ext.define('Registration.controller.Main', {
                 click: this.searchPatient
             },
             'registrationbmi button[action=bmiSubmit]': {
-                click: this.sendEncounterData
+                click: this.checkPrintedCard
             }
         });
     },
@@ -63,7 +63,7 @@ Ext.define('Registration.controller.Main', {
         var l = Ext.getCmp('mainRegArea').getLayout(); 
         // if condition that check if all the required fields are non-empty or not
         if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
-        	if(Ext.getCmp('patientAge').rawValue || Ext.getCmp('dob').rawValue)
+        	if(Ext.getCmp('patientAge').isValid() || Ext.getCmp('dob').isValid())
  				{     
 			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
 			        Util.KeyMapButton('submitButton', Ext.EventObject.ENTER);
@@ -79,12 +79,14 @@ Ext.define('Registration.controller.Main', {
         //copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setText(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setText(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
+        Ext.getCmp('patientNameHindiConfirm').setText(Ext.getCmp('patientFirstNameHindi').value + " " + Ext.getCmp('patientLastNameHindi').value);
         Ext.getCmp('relativeNameConfirm').setText((Ext.getCmp('relativeFirstName').value || "")+ " " + (Ext.getCmp('relativeLastName').value || ""));
         Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value || "");
         Ext.getCmp('sexConfirm').setText(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
         Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
+        Ext.getCmp('religionConfirm').setText(Ext.getCmp('religion').value);
         Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
         Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
 		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value == ""))
@@ -106,6 +108,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('townConfirm').setText(Ext.getCmp('town').value);
         Ext.getCmp('tehsilConfirm').setText(Ext.getCmp('tehsil').value);
         Ext.getCmp('districtConfirm').setText(Ext.getCmp('district').value);
+        Ext.getCmp('stateConfirm').setText(Ext.getCmp('state').value);
     },
 
     //Navigates to BMI page
@@ -139,11 +142,17 @@ Ext.define('Registration.controller.Main', {
             names: [{
                 givenName: Ext.getCmp('patientFirstName').value,
                 familyName: Ext.getCmp('patientLastName').value
+            },{
+                givenName: Ext.getCmp('patientFirstNameHindi').value,
+                familyName: Ext.getCmp('patientLastNameHindi').value
             }],
             addresses: [{
                 address1: Ext.getCmp('street').value,
                 address2: Ext.getCmp('residentialArea').value,
-                cityVillage: Ext.getCmp('town').value
+                address3: Ext.getCmp('tehsil').value,
+                cityVillage: Ext.getCmp('town').value,
+                stateProvince: Ext.getCmp('state').value,
+                countyDistrict: Ext.getCmp('district').value
             }],
             attributes: [{
                 value: Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value,
@@ -189,6 +198,12 @@ Ext.define('Registration.controller.Main', {
                 attributeType: localStorage.occupationUuidpersonattributetype
             })
         }
+        if (Ext.getCmp('religion').getValue() != null) {
+            jsonperson.data.attributes.push({
+                value: Ext.getCmp('religion').getValue(),
+                attributeType: localStorage.religionUuidpersonattributetype
+            })
+        }   
         if (Ext.getCmp('tehsil').getValue() != "") {
             jsonperson.data.attributes.push({
                 value: Ext.getCmp('tehsil').getValue(),
@@ -218,8 +233,9 @@ Ext.define('Registration.controller.Main', {
         // this statement makes the post call to make the person
         store.sync({
             success: function(){
-                this.getidentifierstype(store.getAt(0).getData().uuid)
-            }, 
+                this.getidentifierstype(store.getAt(0).getData().uuid);
+                localStorage.setItem('navigation', 'New Registration');
+            },
             failure: function(){
                 Ext.Msg.alert("Failure -- Please try again");
                 Ext.getCmp('submitButton').enable();
@@ -426,12 +442,75 @@ Ext.define('Registration.controller.Main', {
         store.sync({
             scope: this,
             success: function(){
-                Ext.Msg.alert('Encounter saved successfully.');
+            	Ext.Msg.alert('Encounter saved successfully.');
+            	this.resetNewPatientRegistrationForm();
+		      	if(localStorage.getItem('navigation')==='New Registration')
+		      		{
+		      			Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.REG_1.value);
+		      		}
+		      	else
+		       		{
+						Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.HOME.value);
+		       		}
+		       		localStorage.setItem('printtaken', false);
             },
             failure: function(){
                 Ext.Msg.alert("Error", Util.getMessageSyncError());
             }
         });
         return store;
-    }
+       
+    },
+    
+    //Warns user if he is pressing Submit without printing card
+    checkPrintedCard: function() {
+    	var printtaken = localStorage.getItem('printtaken'); 
+    	if(printtaken=='true')
+    		{
+    			this.sendEncounterData();
+    		}
+    		else
+    		{
+				Ext.Msg.confirm("Confirmation",
+				"Are you sure you want to submit without printing card?",
+				function (btn) {
+				if (btn === 'yes') {
+					this.sendEncounterData(); 
+					}
+				},
+				this
+				);
+    		}
+    },
+    
+    //function which reset all the fields in new patient registertation form
+    resetNewPatientRegistrationForm: function () {
+        var fields = [
+        'oldPatientIdentifier',
+        'patientFirstName',
+        'patientLastName',
+        'relativeFirstName',
+        'relativeLastName',
+        'patientAge',
+        'dob',
+        'street',
+        'town',
+        'residentialArea',
+        'tehsil',
+        'district',
+        'state',
+        'patientPrimaryContact',
+        'patientSecondaryContact',
+        'education',
+        'caste',
+        'occupation',
+        'religion',
+        'complaintArea'
+        ];
+
+        for (var i=0; i < fields.length; i++)
+        {
+            Ext.getCmp(fields[i]).reset();
+        }
+    },
 });
