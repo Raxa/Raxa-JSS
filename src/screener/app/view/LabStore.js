@@ -12,6 +12,7 @@ Ext.define("Screener.view.LabStore", {
     config: {
         autoscroll: true,
         layout: 'vbox',
+        padding: 0,
         items: [{
             xtype: 'fieldset',
             items: [{
