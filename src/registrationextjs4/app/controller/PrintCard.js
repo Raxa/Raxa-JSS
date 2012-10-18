@@ -56,7 +56,11 @@ Ext.define('Registration.controller.PrintCard', {
      */
     storePatientDatafromRegistration: function () {
     	
-    	var NameInMultipleLang = Ext.getCmp('patientNameHindiConfirm').text   + ' (' + Ext.getCmp('patientNameConfirm').text + ')';
+    	var NameInMultipleLang = Ext.getCmp('patientNameConfirm').text
+    	if(!(((Ext.getCmp('patientNameHindiConfirm').text >='a' && Ext.getCmp('patientNameHindiConfirm').text <='z')|| (Ext.getCmp('patientNameHindiConfirm').text >='A' && Ext.getCmp('patientNameHindiConfirm').text <='Z') ||  Ext.getCmp('patientNameHindiConfirm').text ==" " )))
+    	{
+    	    NameInMultipleLang = NameInMultipleLang + ' (' + Ext.getCmp('patientNameHindiConfirm').text + ')';
+    	}
     	
         var selectedPatient = {
             Name: NameInMultipleLang,
