@@ -171,7 +171,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     layout: {
                         type: 'absolute'
                     },
-                    ui: 'raxa-panel',
                     collapsed: false,
                     title: 'Search a Patient',
                     items:[
@@ -441,7 +440,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                     },
                     {
                         xtype: 'gridcolumn',
-                        width: 146,
+                        width: 138,
                         text: 'Patient Name'
                     }]
                 }]
