@@ -28,13 +28,13 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'RaxaEmr.Outpatient',
 	// models, stores, controller and views used in the OPD directly
-    models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign', 'Observation'],
-    stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign'],
+    models: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign','diagnosis','diagnosedDisease','druglist','Observation'],
+    stores: ['patientlist', 'Grid', 'medicationhistory', 'refertodoc', 'labresulthistory', 'drugpanel', 'cheifcomplain', 'sign','diagnosis','diagnosedDisease','druglist'],
     views: ['Viewport'], 
     controllers: ['patientlist'],
     // to launch the module view
     launch: function () {
-        if(Util.checkModulePrivilege('outpatient')){
+        if(Util.checkModulePrivilege('outpatient')&& Util.uuidLoadedSuccessfully()){
             Ext.create('RaxaEmr.Outpatient.view.Viewport');
         }
     }

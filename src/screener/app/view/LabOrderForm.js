@@ -18,7 +18,7 @@ Ext.define("Screener.view.LabOrderForm", {
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Lab Investigation Orders'
+            title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.lio')
         }, {
             xtype: 'labStore',
             width: '350px',
@@ -30,23 +30,23 @@ Ext.define("Screener.view.LabOrderForm", {
                 xtype: 'checkboxfield',
                 name: 'urgent',
                 labelWidth: '80px',
-                label: 'Urgent',
+                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.urg'),
                 value: '0'
             }]
         }, {
             xtype: 'button',
             ui: 'round',
-            text: 'add additional test',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.add_adt'),
             id: 'addLabOrderButton',
             height: '40px',
             width: '200px'
         }, {
             xtype: 'spacer',
-            height: 10
+            height: 20
         }, {
             xtype: 'button',
             ui: 'confirm',
-            text: 'Submit',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.submit'),
             id: 'sumbitLabButton',
             height: '40px',
             width: '100px'

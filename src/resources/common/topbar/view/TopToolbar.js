@@ -112,6 +112,42 @@ Ext.define('Topbar.view.TopToolbar', {
 			delegate: '#LogoutButton'
 		}]
 	},
+        
+        initialize: function () {
+        this.add( {
+            xtype: 'selectfield',
+            id: 'topbarSelectfield',
+            centered: true ,
+            selected : true,
+            value : " ",
+            options: 
+            Util.getSelectModules(),
+            listeners: {
+                change: function () {
+                    console.log("inside change function");
+                    var url = window.location.href;
+                    if(url.indexOf("Dashboard") < 0)
+                    {
+                        if(Ext.getCmp('topbarSelectfield').getValue() == 'login') {
+                            window.location = '../' ;
+                        } else
+                        {
+                            var currentUrl = window.location.href;
+                            if(currentUrl.indexOf(Ext.getCmp('topbarSelectfield').getValue()) < 0) {
+                                window.location = '../'+Ext.getCmp('topbarSelectfield').getValue();
+                            }
+                        }
+                    } else {
+                        window.location = Ext.getCmp('topbarSelectfield').getValue();
+                    }
+                    if(Ext.getCmp('topbarSelectfield').getValue() == 'patientfacing') {
+                        window.location = "http://patient-facing.github.com"; 
+                    } 
+                }
+            }
+        }     
+        )
+    },
 
 	onLogoutButtonTap: function(button, e, options) {
 		var logconfirm = button.LogoutButton;

@@ -6,11 +6,11 @@ Ext.define('Registration.model.searchPatient', {
         type: 'string'
     }, {
         name: 'givenName',
-        mapping: 'preferredName.givenName',
+        mapping: 'person.preferredName.givenName',
         type: 'string'
     }, {
         name: 'familyName',
-        mapping: 'preferredName.familyName',
+        mapping: 'person.preferredName.familyName',
         type: 'string'
     }, {
         name: 'gender',
@@ -23,14 +23,13 @@ Ext.define('Registration.model.searchPatient', {
         name: 'age',
         type: 'number',
         useNull: true
-    },
-    /* {  //as the we dont get the identifiers of patients in search list for now i commented them
-        name: 'identifier',
-        type: 'string',
-        mapping: 'identifiers.identifier'
-    },*/
-    // Please reference this ticket: https://raxaemr.atlassian.net/browse/RAXAJSS-206 wherever attributes are required
-    {
+    }, { 
+        name: 'raxaIdentifier',
+        type: 'string'
+    }, { 
+        name: 'oldPatientIdentifier',
+        type: 'string'
+    }, {
         name: 'attributes',
         model: 'Registration.model.attributes'
     }, {
@@ -45,7 +44,9 @@ Ext.define('Registration.model.searchPatient', {
     }, {
         name: 'cityVillage',
         type: 'string',
-        mapping: 'preferredAddress.cityVillage',
         useNull: true
+    },{
+        name: 'stateProvince',
+        type: 'string'
     }]
 })

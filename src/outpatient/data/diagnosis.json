@@ -1,0 +1,238 @@
+[
+	{
+		"sign": "DERMATITIS",
+		"id": "151700AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "ABSCESS",
+		"id": "150632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "ANEMIA",
+		"id": "3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Bite of Animal",
+		"id": "121604AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Breast cancer, female",
+		"id": "113753AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Ca Cervix - Screening Done",
+		"id": "146602AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Chronic obstructive airways disease ",
+		"id": "1295AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "DEPRESSION",
+		"id": "207AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "HEART DISEASE",
+		"id": "139071AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Diabetes",
+		"id": "119481AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Pulmonary Tuberculosis",
+		"id": "113492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "EPTB (extrapulmonary tuberculosis)",
+		"id": "5042AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "HIV Positive",
+		"id": "138571AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Hypertension",
+		"id": "117399AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},	
+	{
+		"sign": "MALARIA",
+		"id": "906AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "MEASLES",
+		"id": "134561AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "seropositive rheumatoid arthritis, unspecified site",
+		"id": "158794AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Seizure Disorder",
+		"id": "126814AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Sickle cell disease",
+		"id": "117703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Venomous Snake Bite",
+		"id": "111555AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Undernutrition",
+		"id": "111689AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "TINEA CORPORIS",
+		"id": "835AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	//ABDOMINAL PAIN is in FINDING
+	{
+	        "sign": "ABDOMINAL PAIN",
+		"id": "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "CHICKEN POX",
+		"id": "892AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "PREGNANCY",
+		"id": "110896AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Cough",
+		"id": "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Intestinal Hernia",
+		"id": "136695AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "UTI (urinary tract infection)",
+		"id": "111633AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Retroverted Gravid Uterus",
+		"id": "113249AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "IUD Contraception",
+		"id": "136452AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Large Nose",
+		"id": "136136AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Weight Loss Finding",
+		"id": "122885AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Menstrual Disorder",
+		"id": "119125AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "EYE PROBLEM OTHER",
+		"id": "118AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Other Dental Disorder",
+		"id": "151733AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "increased mucus in stool",
+		"id": "156768AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Rheumatic Fever",
+		"id": "127447AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Vaginal Infection",
+		"id": "117010AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Portal Hypertension",
+		"id": "129484AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "chronic anemia",
+		"id": "155551AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "preterm premature rupture of membranes",
+		"id": "158511AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "headache",
+		"id": "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "BULLOUS IMPETIGO",
+		"id": "137692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Hydrocele",
+		"id": "117474AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "CERVICAL CANCER",
+		"id": "116023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "HANSEN'S DISEASE",
+		"id": "890AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	},
+	{
+		"sign": "Peptic ulcer disease ",
+		"id": "114262AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"type": "all"
+	}
+]

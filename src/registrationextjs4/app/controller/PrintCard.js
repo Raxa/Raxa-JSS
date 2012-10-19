@@ -45,7 +45,8 @@ Ext.define('Registration.controller.PrintCard', {
             Age: Ext.getCmp('ageSearchedPatient').value,
             Gender: Ext.getCmp('sexSearchedPatient').value,
             Village: Ext.getCmp('townSearchedPatient').value,
-            Tehsil: Ext.getCmp('tehsilSearchedPatient').value
+            Tehsil: Ext.getCmp('tehsilSearchedPatient').value,
+            OldPatientId: Ext.getCmp('oldPatientIdentifierSearchedPatient').value                
         };
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
     },
@@ -54,12 +55,20 @@ Ext.define('Registration.controller.PrintCard', {
      *  be used to get details while printing of Registration card
      */
     storePatientDatafromRegistration: function () {
+    	
+    	var NameInMultipleLang = Ext.getCmp('patientNameConfirm').text
+    	if(!(((Ext.getCmp('patientNameHindiConfirm').text >='a' && Ext.getCmp('patientNameHindiConfirm').text <='z')|| (Ext.getCmp('patientNameHindiConfirm').text >='A' && Ext.getCmp('patientNameHindiConfirm').text <='Z') ||  Ext.getCmp('patientNameHindiConfirm').text ==" " )))
+    	{
+    	    NameInMultipleLang = NameInMultipleLang + ' (' + Ext.getCmp('patientNameHindiConfirm').text + ')';
+    	}
+    	
         var selectedPatient = {
-            Name: Ext.getCmp('patientNameConfirm').value,
-            Age: Ext.getCmp('ageConfirm').value,
-            Gender: Ext.getCmp('sexConfirm').value,
-            Village: Ext.getCmp('townConfirm').value,
-            Tehsil: Ext.getCmp('tehsilConfirm').value
+            Name: NameInMultipleLang,
+            Age: Ext.getCmp('ageConfirm').text,
+            Gender: Ext.getCmp('sexConfirm').text,
+            Village: Ext.getCmp('townConfirm').text,
+            Tehsil: Ext.getCmp('tehsilConfirm').text,
+            OldPatientId: Ext.getCmp('oldPatientIdentifierConfirm').text,            
         };
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
     },

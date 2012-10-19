@@ -8,9 +8,8 @@ Ext.define("Screener.view.VitalsView", {
     requires: ['Screener.view.VitalsForm'],
     xtype: 'vitalslist',
     config: {
-        fullscreen: true,
         layout: 'hbox',
-        title: 'Add Vitals',
+        title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsView.add_vit'),
         style: 'background:#96d2f7',
         items: [
         //our patient list is built on the Patients store, and has a title and sort button
