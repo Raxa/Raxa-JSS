@@ -2,7 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
     extend: 'Ext.form.Panel',
     id: 'inventoryEditor',
     alias: 'widget.inventoryEditor',
-    height: 380,
+    height: 400,
     width: 400,
     modal: true,
     centered: true,
@@ -65,6 +65,11 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
         id: 'inventoryEditorRoomLocation'
     },
     {
+        xtype: 'textfield',
+        fieldLabel: 'Supplier',
+        id: 'inventoryEditorSupplier'
+    },
+    {
         xtype: 'panel',
         border: false,
         layout: {
@@ -110,5 +115,6 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
             Ext.getCmp('inventoryEditorExpiryDate').setValue(date);
         }
         Ext.getCmp('inventoryEditorRoomLocation').setValue(inventory.data.roomLocation);
+        Ext.getCmp('inventoryEditorSupplier').setValue(inventory.data.supplier);
     }
 });
