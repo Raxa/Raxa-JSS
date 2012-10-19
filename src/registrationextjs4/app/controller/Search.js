@@ -25,6 +25,9 @@ Ext.define('Registration.controller.Search', {
     //function making the rest call to get the patient with given search quiry
     search: function () {
         if (Ext.getCmp('patientFirstNameSearch').isValid() || Ext.getCmp('PatientIdentifierSearch').isValid()) {
+            
+            Ext.getBody().mask('Searching...', 'x-mask-loading');
+            
             // concatenating the identifier and patient name to make the url for get call
             var Url = HOST + '/ws/rest/v1/patient?q='; // Ext.getCmp('PatientIdentifierSearch').getValue() + "&&v=full";
             if (Ext.getCmp('PatientIdentifierSearch').isValid()) 
@@ -52,14 +55,20 @@ Ext.define('Registration.controller.Search', {
                 }
             });
             Ext.getCmp('patientGrid').view.store = store;
-            store.load();
-            // this is required to load the page after the data is beging loaded successfully
-            store.on('datachanged', function () {
-                var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.SEARCH_2.value);
-                Ext.getCmp('patientGrid').view.refresh();
-            }, this);
-            // I return the store so as to use it in the jasmine test
+            store.load({
+                scope: this,
+                callback: function(records, operation, success){
+                    Ext.getBody().unmask();
+                    if(success){
+                        var l = Ext.getCmp('mainRegArea').getLayout();
+                        l.setActiveItem(REG_PAGES.SEARCH_2.value);
+                        Ext.getCmp('patientGrid').view.refresh();
+                    }
+                    else{
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
+                    }
+                }
+            });
             return store;
         } else {
             alert("invalid fields");
@@ -74,15 +83,15 @@ Ext.define('Registration.controller.Search', {
     //function which reset all the field in search patient form
     reset: function () {
         var fields = [
-            'OldPatientIdentifierSearch',
-            'PatientIdentifierSearch',
-            'patientFirstNameSearch',
-            'patientLastNameSearch',
-            'relativeFirstNameSearch',
-            'relativeLastSearch',
-            'DOBSearch',
-            'Town/Village/CitySearch',
-            'phoneNumberSearch'
+        'OldPatientIdentifierSearch',
+        'PatientIdentifierSearch',
+        'patientFirstNameSearch',
+        'patientLastNameSearch',
+        'relativeFirstNameSearch',
+        'relativeLastSearch',
+        'DOBSearch',
+        'Town/Village/CitySearch',
+        'phoneNumberSearch',
         ];
 
         for (var i=0; i < fields.length; i++)
@@ -103,14 +112,15 @@ Ext.define('Registration.controller.Search', {
             disableCaching: false,
             headers: Util.getBasicAuthHeaders(),
             failure: function (response) { 
-                console.log('GET failed with response status: '+ response.status); // + response.status);
+                Ext.Msg.alert("Error", Util.getMessageLoadError());
             },
             success: function (response) {
                 var string = JSON.parse(response.responseText).identifiers[0].display;
                 Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
                 Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameSearchedPatient').getValue());
                 var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value); 
+                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);
+                localStorage.setItem('navigation', 'Searching Patient'); 
             }
         });
     }

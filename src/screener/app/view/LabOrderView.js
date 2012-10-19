@@ -8,6 +8,7 @@ Ext.define("Screener.view.LabOrderView", {
     id: 'labOrderView',
 
     requires: ['Screener.view.LabOrderForm'],
+    xtype: 'labOrder',
 
     config: {
         layout: 'hbox',

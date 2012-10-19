@@ -63,15 +63,15 @@ Ext.define('RaxaEmr.controller.Session', {
      */
     storeUserPrivileges: function (userInfo) {
         Ext.getCmp('mainView').setMasked({
-                xtype: 'loadmask',
-                message: 'Loading'
-            });
+            xtype: 'loadmask',
+            message: 'Loading'
+        });
         var userInfoJson = Ext.decode(userInfo.responseText);
         if (userInfoJson.results.length !== 0) {
             Ext.Ajax.setTimeout(Util.getTimeoutLimit());
             Ext.Ajax.request({
                 scope: this,
-                url: userInfoJson.results[0].links[0].uri + '?v=full',
+                url: HOST + '/ws/rest/v1/user/' + userInfoJson.results[0].uuid + '?v=full',
                 method: 'GET',
                 withCredentials: true,
                 useDefaultXhrHeader: false,
@@ -169,9 +169,14 @@ Ext.define('RaxaEmr.controller.Session', {
             method: 'GET',
             headers: Util.getBasicAuthHeaders(),
             success: this.storeUserPrivileges,
-            failure: function () {
+            failure: function (response) {
                 Ext.getCmp('mainView').setMasked(false);
-                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
+                if(response.status === 401) {
+                    Ext.Msg.alert('Invalid',Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.invalidUser'));
+                }
+                else {
+                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
+                }
             }
         });
     },
@@ -213,7 +218,7 @@ Ext.define('RaxaEmr.controller.Session', {
                 userModules[userModules.length] = allModules[i];
             }
         }
-        Ext.getCmp('appGrid').addModules(userModules);
+        Ext.getCmp('appGrid').addModules(userModules); 
         Ext.getCmp('smartApp').addApps(allApps);
         return userModules.length;
     },

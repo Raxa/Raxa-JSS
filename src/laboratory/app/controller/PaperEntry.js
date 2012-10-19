@@ -97,7 +97,7 @@ Ext.define('Laboratory.controller.PaperEntry', {
                 },
 
                 failure: function (response) {
-                    console.log('Lab Paper Entry for' + Ext.getCmp('results').store.data.items[i].data.Result + 'POST failed with response status' + response.status);
+                    Ext.Msg.alert("Error", Util.getMessageSyncError());
                 },
 
                 success: function (response) {
@@ -140,14 +140,23 @@ Ext.define('Laboratory.controller.PaperEntry', {
                 "Content-Type": "application/json"
             },
             failure: function (response) {
-                console.log('GET on laborder failed with response status: ' + response.status);
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             },
             success: function (response) {
                 var JSONResult = JSON.parse(response.responseText);
                 conceptUuid = JSONResult.concept.uuid;
                 // This is to change the proxy by getting corresponding concept uuid from order
                 resultGrid.store.getProxy().url = LAB_HOME + '/ws/rest/v1/concept/' + conceptUuid + '?v=full';
-                resultGrid.store.load();
+                resultGrid.store.load({
+                    scope: this,
+                    callback: function(records, operation, success){
+                        if(success){
+                        }
+                        else{
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
+                        }
+                    }
+                });
             }
         });
     },

@@ -6,11 +6,11 @@ Ext.define('Registration.model.searchPatient', {
         type: 'string'
     }, {
         name: 'givenName',
-        mapping: 'preferredName.givenName',
+        mapping: 'person.preferredName.givenName',
         type: 'string'
     }, {
         name: 'familyName',
-        mapping: 'preferredName.familyName',
+        mapping: 'person.preferredName.familyName',
         type: 'string'
     }, {
         name: 'gender',
@@ -44,7 +44,9 @@ Ext.define('Registration.model.searchPatient', {
     }, {
         name: 'cityVillage',
         type: 'string',
-        mapping: 'preferredAddress.cityVillage',
         useNull: true
+    },{
+        name: 'stateProvince',
+        type: 'string'
     }]
 })
