@@ -333,8 +333,7 @@ var REG_PAGES = {
 var UITIME = 120000;
 var ONEDAYMS = 86400000;
 var MONTHSINAYEAR = 12;
-//var diffinUTC_GMT = 5.5;    // TODO: Fix this hack, which only works in timzeones <= IST :) instead should get time from OpenMRS server, ideally
-var diffinUTC_GMT = 8;    // TODO: Fix this hack, which only works in timzeones <= IST :) instead should get time from OpenMRS server, ideally
+var diffinUTC_GMT = 5.5;    // TODO: Fix this hack, which only works in timzeones <= IST :) instead should get time from OpenMRS server, ideally
 
 //number of hours for everything to be before now
 //OpenMRS checks whether encounters are ahead of current time --
