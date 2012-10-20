@@ -304,11 +304,11 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }, {
                                 xtype: 'radiofield',
                                 name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female'),
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female')
                             }, {
                                 xtype: 'radiofield',
                                 name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other'),
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other')
                             }]
                         }]
                     }, {
@@ -323,7 +323,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                         }, {
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
-                            xtype: 'button',
                             width: 80,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.TakePhoto'),
                             action: 'takePhoto'
@@ -473,7 +472,7 @@ Ext.define('Registration.view.RegistrationPart1', {
 									['G','Pondicherry']
                             ]
                         }),
-                        displayField: 'stateName'                    
+                        displayField: 'stateName'
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),

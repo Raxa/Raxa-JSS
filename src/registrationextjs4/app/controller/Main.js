@@ -112,28 +112,23 @@ Ext.define('Registration.controller.Main', {
         l.setActiveItem(REG_PAGES.REG_BMI.value);
     },
 
-    //Navigates to BMI page
     backToPage1: function () {
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.REG_1.value);
     },
 
-    /* this function return to home screen */
+    // Return to home screen
     cancel: function () {
         Util.DestroyKeyMapButton(Ext.EventObject.ENTER);
-        //return to home screen
+        // Return to home screen
         var l = Ext.getCmp('mainRegArea').getLayout();
         l.setActiveItem(REG_PAGES.HOME.value); //going to home page
-        //reset all the fields in registration form
-   var fields = ['patientFirstName', 'patientLastName', 'relativeFirstName', 'relativeLastName', 'sexRadioGroup', 'education', 'dob', 'patientAge', 'occupation', 'residentialArea', 'street', 'town', 'tehsil', 'district', 'patientPrimaryContact', 'patientSecondaryContact', 'oldPatientIdentifier', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'complaintArea', 'registrationFeesPaid'];
- 
 
-        for (var i = 0; i < fields.length; i++) {
-            Ext.getCmp(fields[i]).reset();
-        }
+        // Reset all the fields in registration form
+        this._resetNewPatientRegistrationForm();
     },
 
-    /* this function makes the post call for making the person */
+    // Make the post call for making the person
     submit: function () {
         //have to disable when clicked so user doesn't create 2 patients by clicking twice
         Ext.getCmp('submitButton').disable();
@@ -444,7 +439,7 @@ Ext.define('Registration.controller.Main', {
             scope: this,
             success: function(){
             	Ext.Msg.alert('Encounter saved successfully.');
-            	this.resetNewPatientRegistrationForm();
+            	this._resetNewPatientRegistrationForm();
 		      	if(localStorage.getItem('navigation')==='New Registration')
 		      		{
 		      			Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.REG_1.value);
@@ -485,11 +480,13 @@ Ext.define('Registration.controller.Main', {
     },
     
     //function which reset all the fields in new patient registertation form
-    resetNewPatientRegistrationForm: function () {
+    _resetNewPatientRegistrationForm: function () {
         var fields = [
         'oldPatientIdentifier',
         'patientFirstName',
         'patientLastName',
+        'patientFirstNameHindi',
+        'patientLastNameHindi',
         'relativeFirstName',
         'relativeLastName',
         'patientAge',
