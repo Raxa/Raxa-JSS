@@ -52,29 +52,31 @@ Ext.define('Registration.controller.Main', {
         l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Page
         Util.KeyMapButton('searchbutton1', Ext.EventObject.ENTER);
     },
-    /* continue function copy values of all fields from registrations form to the fields in confirmation screen */
-    confirmPage: function () {
 
-        var l = Ext.getCmp('mainRegArea').getLayout(); 
-        // if condition that check if all the required fields are non-empty or not
+    // Copy values of all fields from registrations form to the fields in confirmation screen
+    confirmPage: function () {
+        var l = Ext.getCmp('mainRegArea').getLayout();
+        
+        // Check if all the required fields are non-empty or not
         if (Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid()  && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
-        	if(Ext.getCmp('patientAge').isValid() || Ext.getCmp('dob').isValid())
- 				{     
-			        l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
-			        Util.KeyMapButton('submitButton', Ext.EventObject.ENTER);
-          	    }
+            if(Ext.getCmp('patientAge').isValid() || Ext.getCmp('dob').isValid())
+            {
+                l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
+                Util.KeyMapButton('submitButton', Ext.EventObject.ENTER);
+            }
             else
             {
-            	Ext.Msg.alert('Please enter Age or DOB of the patient');
+                Ext.Msg.alert('Please enter Age or DOB of the patient');
             }
             
         } else {
             Ext.Msg.alert("Fields invalid - enter patient name and age");
         }
-        //copies all fields from registration form to confirmation screen
+
+        // Copies all fields from registration form to confirmation screen
         Ext.getCmp('oldPatientIdentifierConfirm').setText(Ext.getCmp('oldPatientIdentifier').value);
         Ext.getCmp('patientNameConfirm').setText(Ext.getCmp('patientFirstName').value + " " + Ext.getCmp('patientLastName').value);
-        Ext.getCmp('patientNameHindiConfirm').setText(Ext.getCmp('patientFirstNameHindi').value + " " + Ext.getCmp('patientLastNameHindi').value);
+        Ext.getCmp('patientNameHindiConfirm').setText((Ext.getCmp('patientFirstNameHindi').value || "") + " " + (Ext.getCmp('patientLastNameHindi').value || ""));
         Ext.getCmp('relativeNameConfirm').setText((Ext.getCmp('relativeFirstName').value || "")+ " " + (Ext.getCmp('relativeLastName').value || ""));
         Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value || "");
         Ext.getCmp('sexConfirm').setText(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
@@ -84,13 +86,13 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('religionConfirm').setText(Ext.getCmp('religion').value);
         Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
         Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
-		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value == ""))
+		if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value === ""))
 		{
-		    Ext.getCmp('patientPrimaryContactNumberConfirm').setText(Ext.getCmp('patientPrimaryContact').value 	+ ' (Pri) ');
+            Ext.getCmp('patientPrimaryContactNumberConfirm').setText(Ext.getCmp('patientPrimaryContact').value 	+ ' (Pri) ');
         }
         else
         {
-			Ext.getCmp('patientPrimaryContactNumberConfirm').setText('');
+            Ext.getCmp('patientPrimaryContactNumberConfirm').setText('');
         }
         if(!(!Ext.getCmp('patientSecondaryContact').value || Ext.getCmp('patientSecondaryContact').value == ""))
 		{
@@ -98,7 +100,7 @@ Ext.define('Registration.controller.Main', {
         }
         else
         {
-		    Ext.getCmp('patientSecondaryContactNumberConfirm').setText('');
+            Ext.getCmp('patientSecondaryContactNumberConfirm').setText('');
         }
         Ext.getCmp('townConfirm').setText(Ext.getCmp('town').value);
         Ext.getCmp('tehsilConfirm').setText(Ext.getCmp('tehsil').value);
@@ -120,9 +122,9 @@ Ext.define('Registration.controller.Main', {
     // Return to home screen
     cancel: function () {
         Util.DestroyKeyMapButton(Ext.EventObject.ENTER);
-        // Return to home screen
+        
         var l = Ext.getCmp('mainRegArea').getLayout();
-        l.setActiveItem(REG_PAGES.HOME.value); //going to home page
+        l.setActiveItem(REG_PAGES.HOME.value);
 
         // Reset all the fields in registration form
         this._resetNewPatientRegistrationForm();
@@ -132,16 +134,27 @@ Ext.define('Registration.controller.Main', {
     submit: function () {
         //have to disable when clicked so user doesn't create 2 patients by clicking twice
         Ext.getCmp('submitButton').disable();
+
+        // By default, just include "regular" name
+        var patientNames = [{
+            givenName: Ext.getCmp('patientFirstName').value,
+            familyName: Ext.getCmp('patientLastName').value
+        }];
+
+        // Add Hindi name IFF it exists 
+        var firstNameHindi = Ext.getCmp('patientFirstNameHindi').value || "";
+        var lastNameHindi = Ext.getCmp('patientLastNameHindi').value || "";
+        if (firstNameHindi !== "" && lastNameHindi !== "") {
+            patientNames.push({
+                givenName: firstNameHindi,
+                familyName: lastNameHindi
+            });
+        }
+
         //creating the json object to be made
         var jsonperson = Ext.create('Registration.model.Person', {
             gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
-            names: [{
-                givenName: Ext.getCmp('patientFirstName').value,
-                familyName: Ext.getCmp('patientLastName').value
-            },{
-                givenName: Ext.getCmp('patientFirstNameHindi').value,
-                familyName: Ext.getCmp('patientLastNameHindi').value
-            }],
+            names: patientNames,
             addresses: [{
                 address1: Ext.getCmp('street').value,
                 address2: Ext.getCmp('residentialArea').value,
