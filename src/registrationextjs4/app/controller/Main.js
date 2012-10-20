@@ -378,7 +378,18 @@ Ext.define('Registration.controller.Main', {
             Registration.model.encounterModel.getFields()[5].persist = false;
         }
 
-        if((Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value !== null) || (Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value !== null) || (Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value !== null) || (Ext.getCmp('registrationFeesPaid').isValid() && Ext.getCmp('registrationFeesPaid').value !== null) || Ext.getCmp('complaintArea').isValid() && Ext.getCmp('complaintArea').value !== null || Ext.getCmp('remarksArea').isValid() && Ext.getCmp('remarksArea').value !== null || Ext.getCmp('referredBy').isValid() && Ext.getCmp('referredBy').value !== null) {
+        
+        var observationTypes = ['heightIDcm', 'weightIDkg', 'bmiNumberfieldID', 'registrationFeesPaid', 'complaintArea'];
+        var shouldSubmitObs = false;
+        for (var i=0; i < observationTypes.length; i++) {
+            var cmp = Ext.getCmp(observationTypes[i]);
+            if (cmp.isValid() && cmp.value !== null) {
+                shouldSubmitObs = true;
+                break;
+            }
+        }
+
+        if(shouldSubmitObs) {
             Registration.model.encounterModel.getFields()[6].persist = true;
         } else {
             Registration.model.encounterModel.getFields()[6].persist = false;
@@ -386,8 +397,19 @@ Ext.define('Registration.controller.Main', {
 
         //POST Encounter with no observation if called immediately after creating Patient. (RAXAJSS-386)
         if(arguments[0] != 'send no obs') {
+            // {
+            //     {
+            //         id : '',
+            //         type : 'string'
+            //     },
+            //     {
+
+            //     }
+            // }
+
             //get the values of each obs from the bmi or registration field
-            if(Ext.getCmp('heightIDcm').isValid() && Ext.getCmp('heightIDcm').value !== null) {
+            if(this._isOkToSendByREST('heightIDcm')) {
+                console.log("pushing obs.. heightIDcm");
                 var jsonencounterheight = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -396,7 +418,8 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterheight.data);
             }
-            if(Ext.getCmp('weightIDkg').isValid() && Ext.getCmp('weightIDkg').value !== null && Ext.getCmp('weightIDkg').value !== "") {
+            if(this._isOkToSendByREST('weightIDkg')) {
+                console.log("pushing obs.. weightIDkg");
                 var jsonencounterweight = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -405,7 +428,8 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterweight.data);
             }
-            if(Ext.getCmp('bmiNumberfieldID').isValid() && Ext.getCmp('bmiNumberfieldID').value !== null && Ext.getCmp('bmiNumberfieldID').value !== "") {
+            if(this._isOkToSendByREST('bmiNumberfieldID')) {
+                console.log("pushing obs.. bmiNumberfieldID");
                 var jsonencounterbmi = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -414,7 +438,8 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterbmi.data);
             }
-            if(Ext.getCmp('registrationFeesPaid').isValid() && Ext.getCmp('registrationFeesPaid').value !== null && Ext.getCmp('registrationFeesPaid').value !== "") {
+            if(this._isOkToSendByREST('registrationFeesPaid')) {
+                console.log("pushing obs.. registrationFeesPaid");
                 var jsonencounterregfee = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -423,7 +448,8 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterregfee.data);
             }
-            if(Ext.getCmp('complaintArea').isValid() && Ext.getCmp('complaintArea').value !== null && Ext.getCmp('complaintArea').value !== "") {
+            if(this._isOkToSendByREST('complaintArea')) {
+                console.log("pushing obs.. complaintArea");
                 var jsonencountercomplaint = Ext.create('Registration.model.obsModel', {
                     obsDatetime: t,
                     person: localStorage.newPatientUuid,
@@ -454,6 +480,17 @@ Ext.define('Registration.controller.Main', {
         });
         return store;
 
+    },
+
+    // Checks if would send values such as "" or undefined, which cause whole REST call
+    // to be rejected by OpenMRS REST WebServices module
+    _isOkToSendByREST: function(componentId) {
+        var cmp = Ext.getCmp(componentId);
+        if (!cmp.isValid() || cmp.value === null || cmp.value === "" || cmp.value === undefined) {
+            return false;
+        } else {
+            return true;
+        }
     },
 
     //Warns user if he is pressing Submit without printing card
