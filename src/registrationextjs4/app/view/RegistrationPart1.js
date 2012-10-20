@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- * This script defines the view RegistrationPart1 of the registration module
  */
 Ext.define('Registration.view.RegistrationPart1', {
     extend: 'Ext.container.Container',
