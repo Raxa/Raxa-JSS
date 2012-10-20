@@ -373,6 +373,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelPad: 20,
                         labelWidth: 200,
                         width: 573,
+                        hidden: true,   // Hiding to preserve logic, while JSS decides for sure if they want this field
                         allowBlank: true,
                         listeners: {
                             'blur': function () {
