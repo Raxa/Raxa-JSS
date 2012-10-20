@@ -113,7 +113,7 @@ Ext.define('Registration.view.IllnessDetails', {
                 margin: '30 0 0 30',
                 /*width: 60,*/
                 text: 'Next',
-                ui: 'raxa-aqua-small',
+                // ui: 'raxa-aqua-small',
                 action: 'goToBMI'
             }]
         }]
