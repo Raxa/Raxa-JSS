@@ -165,8 +165,9 @@
 		   }
 		   	
             //Print Button is hidden and then window is printed.
-            function Print() {
+            function Print() { 
                 window.print();
+                localStorage.setItem('printtaken', true);
             }
         </script>
     </body>

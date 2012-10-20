@@ -80,8 +80,10 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsText', {
         var drugInfo = Ext.getStore('drugInfos').getAt(Ext.getStore('drugInfos').find('drugUuid', drug.data.uuid));
         Ext.getCmp('drugDetailsName').setWidth(300);
         Ext.getCmp('drugDetailsName').setValue(drug.data.text);
-        Ext.getCmp('drugDetailsManufacturer').setValue(drugInfo.data.name);
-        Ext.getCmp('drugDetailsSupplier').setValue(drugInfo.data.description);
+        if(drugInfo !== undefined){
+            Ext.getCmp('drugDetailsManufacturer').setValue(drugInfo.data.name);
+            Ext.getCmp('drugDetailsSupplier').setValue(drugInfo.data.description);
+        }
     }
 });
 

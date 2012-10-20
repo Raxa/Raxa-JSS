@@ -124,6 +124,7 @@ Ext.define('Topbar.view.TopToolbar', {
             Util.getSelectModules(),
             listeners: {
                 change: function () {
+                    console.log("inside change function");
                     var url = window.location.href;
                     if(url.indexOf("Dashboard") < 0)
                     {
