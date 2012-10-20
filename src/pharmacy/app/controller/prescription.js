@@ -717,7 +717,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             dosage: x.data.dosage,
             drugUuid: x.data.drugUuid,
             duration: Util.daysBetween(x.data.startDate, x.data.endDate)
-        });
+        })[0];
         Ext.getCmp('prescriptionDate').setValue(x.getData().startDate.toLocaleDateString());
     },
 
@@ -751,7 +751,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getStore('orderStore').add({
             drugName: '',
             quantity: ''
-        });
+        })[0];
     },
 
     //function for the get call for drugorder for related patient
@@ -882,7 +882,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getStore('newReceipt').add({
             drugname: '',
             quantity: ''
-        });
+        })[0];
     },
 
     // Cancels a change to inventory, goes back to stock overview page
@@ -919,7 +919,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 expiryDate: records[0].data.inventories[i].expiryDate,
                 uuid: records[0].data.inventories[i].uuid,
                 supplier: records[0].data.inventories[i].supplier
-            });
+            })[0];
         }
         //setting value so that store keeps same filter -- otherwise will stop listening
         Ext.getCmp('receiptPurchaseOrderPicker').setValue(records[0]);
@@ -1164,7 +1164,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getStore('RequisitionItems').add({
             drugname: '',
             quantity: ''
-        });
+        })[0];
     },
         
     submitRequisition: function(){
@@ -1257,7 +1257,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 quantity: records[0].data.inventories[i].quantity,
                 drugName: records[0].data.inventories[i].drug.display,
                 uuid: records[0].data.inventories[i].uuid
-            });
+            })[0];
         }
         // Setting value so that store keeps same filter -- otherwise will stop listening
         Ext.getCmp('issuePurchaseOrderPicker').setValue(records[0]);
@@ -1269,7 +1269,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getStore('newIssue').add({
             drugname: '',
             quantity: ''
-        });
+        })[0];
     },
 
     // Deletes current row of issue grid
@@ -1400,7 +1400,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getStore('newIssue').add({
             drugname: '',
             quantity: ''
-        });
+        })[0];
     },
     
     //Called when all stock location has been cleared (no location selected for stock grid)
