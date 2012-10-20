@@ -217,7 +217,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }, {
                                 xtype: 'textfield',
                                 name: 'lastName',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FN.emptytext'),
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.LN.emptytext'),
                                 id: 'relativeLastName',
                                 width: 172,
                                 margins: '0 0 0 6',
