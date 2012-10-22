@@ -15,30 +15,26 @@
  * 
  * This script defines the view RegistrationConfirm of the registration module
  */
-Ext.define('Registration.view.RegistrationConfirm', {
+Ext.define('Registration.view.ConfirmFields', {
     extend: 'Ext.container.Container',
-    alias: 'widget.registrationconfirm',
-    border: 0,
-    padding: 50,
-    autoScroll: true,
-    layout: {
-        type: 'hbox',
-        pack: 'center'
-    },
-    initComponent: function () {
-        this.items = {
-            xtype: 'panel',
-            ui: 'raxa-panel',
-            width: 800,
-            padding: 20,
-            items: [{
-                xtype: 'container',
-                border: 0,
-                bodyPadding: 10,
+    alias: 'widget.confirmfields',
+    config: {
+        //items: [{
+                //ui: 'raxa-panel',
+                //xtype: 'panel',
+                //width: 800,
+                //padding: 20,
                 items: [{
-                    xtype: 'fieldset',
-                    padding: 10,
-                    title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.title1'),
+                        xtype: 'container',
+                        border: 0,
+                        bodyPadding: 10,
+                        items: [{
+                                //Title
+                                xtype: 'fieldset',
+                                padding: 10,
+                                title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.title1'),
+
+                    // Fields
                     items: [{
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.OPRN'),
@@ -73,23 +69,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         items: [{
                             name: 'patientName',
                             id: 'patientNameConfirm',
-                        }]
-                    },{
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.PNHindi'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'text',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'patientNameHindi',
-                            id: 'patientNameHindiConfirm',
                         }]
                     }, {
                         xtype: 'fieldcontainer',
@@ -220,22 +199,6 @@ Ext.define('Registration.view.RegistrationConfirm', {
                     }]
                     }, {
                         xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.State'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'text',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                        id: 'stateConfirm',
-                    }]
-                    }, {
-                        xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.CN'),
                         layout: 'hbox',
                         combineErrors: true,
@@ -306,57 +269,31 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         },
                         items: [{
                             name: 'occuption',
-                            id: 'occupationConfirm'
-                        }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Religion'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'text',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'religion',
-                            id: 'religionConfirm'
+                            id: 'occupationConfirm',
                         }]
                     }]
-                },{
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'end'
-                        },
-                        border: 0,
-                        padding: 0,
-                        width: 580,
-                        items:[{
-                            xtype: 'button',
-                            margin: '30 0 0 30',
-                            width: 60,
-                            text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Back'),
-                            handler: function() {
-                                Ext.getCmp('mainRegArea').getLayout().setActiveItem(REG_PAGES.REG_1.value);
-                            }
-                        },{
-                            xtype: 'button',
-                            id:'submitButton',
-                            margin: '30 0 0 30',
-                            width: 60,
-                            text: 'Next',
-                            // ui: 'raxa-aqua-small',
-                            action: 'submit'
-                        }]
-                    }
-                ]
-            }]
-        };
-        this.callParent();
+                //},
+                //// Navigation Buttons
+                //{
+                    //xtype: 'fieldset',
+                    //padding: 10,
+                    //border: false,
+                    //items:[{
+                        //xtype: 'button',
+                        //margin: '30 0 0 400',
+                        //text: 'Back',
+                        //action: 'back'
+                    //}, {
+                        //xtype: 'button',
+				        //id:'submitButton',
+                        //margin: '30 0 0 30',
+                        //text: 'Next',
+                        //ui: 'raxa-aqua-small',
+                        //action: 'submit'
+                    //}]  
+                    
+                }]
+        }]
+    //}]
     }
 });
-

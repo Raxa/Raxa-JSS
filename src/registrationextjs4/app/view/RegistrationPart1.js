@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- * This script defines the view RegistrationPart1 of the registration module
  */
 Ext.define('Registration.view.RegistrationPart1', {
     extend: 'Ext.container.Container',
@@ -299,7 +298,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }, {
                                 xtype: 'radiofield',
                                 name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female'),
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female')
                             }, {
                                 xtype: 'radiofield',
                                 name: 'sex',
@@ -318,7 +317,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                             html: "<img border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         }, {
                             xtype: 'button',
-                            // ui: 'raxa-aqua-small',
                             width: 80,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.TakePhoto'),
                             action: 'takePhoto'
@@ -370,6 +368,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelPad: 20,
                         labelWidth: 200,
                         width: 573,
+                        hidden: true,   // Hiding to preserve logic, while JSS decides for sure if they want this field
                         allowBlank: true,
                         listeners: {
                             'blur': function () {
@@ -468,7 +467,7 @@ Ext.define('Registration.view.RegistrationPart1', {
 									['G','Pondicherry']
                             ]
                         }),
-                        displayField: 'stateName'                    
+                        displayField: 'stateName'
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
@@ -678,16 +677,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                             margin: '30 0 0 30',
                             width: 60,
                             text: 'Cancel',
-                            // ui: 'raxa-orange-small',
                             action: 'cancel'
-
                         }, {
                             xtype: 'button',
                             margin: '30 0 0 30',
                             width: 60,
                             id: 'continuebutton',
                             text: 'Next',
-                            // ui: 'raxa-aqua-small',
                             action: 'continue'
                         }]
                     }]
