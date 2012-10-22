@@ -36,14 +36,14 @@ Ext.define('Registration.view.Viewport', {
                 }, {
                     xtype: 'tbfill'
                 },{
-                      xtype: 'button',
-                      height: 35,
-                      width: 200,
-                      text: 'Registration Home Page',
-                      handler: function () {
-                          var l = Ext.getCmp('mainRegArea').getLayout();
-                          l.setActiveItem(REG_PAGES.HOME.home);
-                      }
+                    xtype: 'button',
+                    height: 35,
+                    width: 200,
+                    text: 'Registration Home Page',
+                    handler: function () {
+                        var l = Ext.getCmp('mainRegArea').getLayout();
+                        l.setActiveItem(REG_PAGES.HOME.home);
+                    }
                 }, {
                     xtype: 'tbtext',
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + localStorage.getItem('username')
@@ -54,8 +54,16 @@ Ext.define('Registration.view.Viewport', {
                     width: 60,
                     text: 'Log Out',
                     handler: function() {
-                        Util.logoutUser();
-                        location.reload();
+                        
+                        Ext.Msg.confirm(
+                            "Confirmation",
+                            "Are you sure?",
+                            function(btn){
+                                if(btn =='yes'){
+                                    Util.logoutUser();
+                                    location.reload();
+                                }
+                            });  
                     }
                 }]
             }],
