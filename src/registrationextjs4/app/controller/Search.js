@@ -91,7 +91,7 @@ Ext.define('Registration.controller.Search', {
         'relativeLastSearch',
         'DOBSearch',
         'Town/Village/CitySearch',
-        'phoneNumberSearch'
+        'phoneNumberSearch',
         ];
 
         for (var i=0; i < fields.length; i++)
@@ -119,7 +119,8 @@ Ext.define('Registration.controller.Search', {
                 Ext.getCmp('bmiPatientID').setValue(string.substring(string.indexOf('=')+2,string.length));
                 Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameSearchedPatient').getValue());
                 var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value); 
+                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);
+                localStorage.setItem('navigation', 'Searching Patient'); 
             }
         });
     }
