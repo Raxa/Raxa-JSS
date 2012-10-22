@@ -45,6 +45,16 @@ Ext.define('RaxaEmr.Pharmacy.view.addDrug', {
                 xtype: 'textfield',
                 fieldLabel: 'Dose Strength',
                 id: 'addDrugDoseStrength'
+            },
+            {
+                xtype: 'textfield',
+                fieldLabel: 'Manufacturer',
+                id: 'addDrugManufacturer'
+            },
+            {
+                xtype: 'textfield',
+                fieldLabel: 'Supplier',
+                id: 'addDrugSupplier'
             }
             ]
         },
@@ -69,8 +79,14 @@ Ext.define('RaxaEmr.Pharmacy.view.addDrug', {
                 id: 'addDrugMaximumDose'
             },
             {
-                xtype: 'combobox',
-                fieldLabel: 'Route'
+                xtype: 'textfield',
+                fieldLabel: 'Purchase Price',
+                id: 'addDrugPrice'
+            },
+            {
+                xtype: 'textfield',
+                fieldLabel: 'Sale Price',
+                id: 'addDrugCost'
             }
             ]
         }]
