@@ -509,7 +509,7 @@ Ext.define('Registration.controller.Main', {
 
     //function which reset all the fields in new patient registertation form
     _resetNewPatientRegistrationForm: function() {
-        var fields = ['oldPatientIdentifier', 'patientFirstName', 'patientLastName', 'patientFirstNameHindi', 'patientLastNameHindi', 'relativeFirstName', 'relativeLastName', 'patientAge', 'dob', 'street', 'town', 'residentialArea', 'tehsil', 'district', 'state', 'patientPrimaryContact', 'patientSecondaryContact', 'education', 'caste', 'occupation', 'religion', 'complaintArea'];
+        var fields = ['oldPatientIdentifier', 'patientFirstName', 'patientLastName', 'patientFirstNameHindi', 'patientLastNameHindi', 'relativeFirstName', 'relativeLastName', 'patientAge', 'dob', 'street', 'town', 'residentialArea', 'tehsil', 'district', 'state', 'patientPrimaryContact', 'patientSecondaryContact', 'education', 'caste', 'occupation', 'religion', 'complaintArea', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID'];
 
         for(var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
