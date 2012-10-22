@@ -14,7 +14,7 @@ Ext.define("Screener.view.LabStore", {
         layout: 'vbox',
         padding: 0,
         items: [{
-            xtype: 'fieldset',
+			xtype: 'fieldset',
             items: [{
                 xtype: 'selectfield',
                 label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.lab_ord'),
@@ -32,6 +32,12 @@ Ext.define("Screener.view.LabStore", {
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabStore.ffd'),
                     value: 'db'
                 }]
+			}, {
+                xtype: 'checkboxfield',
+                name: 'urgent',
+                labelWidth: '80px',
+                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.urg'),
+                value: '0'
             }]
         }]
     }

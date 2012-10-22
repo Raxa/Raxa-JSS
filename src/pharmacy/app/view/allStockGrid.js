@@ -47,6 +47,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
+        text: 'Type',
+        dataIndex: 'dosageForm',
+        width: 60
+    },
+    {
+        xtype: 'gridcolumn',
         text: 'Name',
         dataIndex: 'drugName',
         width: 120
@@ -55,12 +61,12 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         xtype: 'gridcolumn',
         text: 'Qty',
         dataIndex: 'quantity',
-        width: 80
+        width: 60
     },
     {
         xtype: 'gridcolumn',
         text: 'Months',
-        width: 60,
+        width: 45,
         dataIndex: 'months',
         useNull: true
     },
@@ -74,7 +80,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         xtype: 'gridcolumn',
         text: 'batch',
         dataIndex: 'batch',
-        width: 80
+        width: 60
     },
     {
         xtype: 'gridcolumn',
@@ -115,7 +121,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         for(var i=0; i<myStore.data.items.length; i++){
             var item = myStore.data.items[i];
             var index = infoStore.find('drugUuid', item.data.drugUuid);
-            if(index!==-1){
+            if(index!==-1 && (item.data.supplier===null || item.data.supplier==="")){
                 item.set("supplier", infoStore.getAt(index).data.description);
             }
             if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
