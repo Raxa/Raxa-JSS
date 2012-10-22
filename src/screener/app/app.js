@@ -56,12 +56,13 @@ Ext.application({
 	launch: function() {
 		if (Util.checkModulePrivilege('screener')&& Util.uuidLoadedSuccessfully()) {
             var mainScreen = Ext.create('Screener.view.Main', {
-                fullscreen: true,
+                fullscreen: true
             });
             var topBar = Ext.create('Topbar.view.TopToolbar', {
                 });
             mainScreen.add(topBar);
             Ext.getCmp('topbarSelectfield').setValue("Screener");
+               // console.log("Inside screener module");
         }
     }
 });

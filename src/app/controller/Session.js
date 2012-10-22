@@ -185,6 +185,7 @@ Ext.define('RaxaEmr.controller.Session', {
      * Called when login is successful for the given user, populates AppGrid with the user's modules
      */
     loginSuccess: function () {
+        Util.getValidationUrl();
         Startup.getResourceUuid();
         Startup.repeatUuidLoadingEverySec();
         var numAppsAvailable = this.addModulesToDashboard();

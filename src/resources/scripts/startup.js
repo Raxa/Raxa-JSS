@@ -148,7 +148,7 @@ var Startup = {
             message: 'Loading'
         });
 
-        if( ! Util.checkAllUuidsLoaded() ) {
+        if( ! Util.checkAllUuidsNValidationLoaded() ) {
             uuidLoadAttempts++;
             console.log("Loading UUIDs... # attempts = " + uuidLoadAttempts + " of " + MAX_LOAD_ATTEMPTS);
         }
@@ -157,7 +157,7 @@ var Startup = {
             Ext.getCmp('mainView').setMasked(false);
         }
         
-        if ( uuidLoadAttempts === MAX_LOAD_ATTEMPTS){
+        if ( uuidLoadAttempts >= MAX_LOAD_ATTEMPTS){
             that.removeTimer();
             Ext.getCmp('mainView').setMasked(false);
             Ext.Msg.alert("","Unable to load all UUIDs from OpenMRS.");
