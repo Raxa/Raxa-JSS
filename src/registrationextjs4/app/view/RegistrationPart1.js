@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * 
- * This script defines the view RegistrationPart1 of the registration module
  */
 Ext.define('Registration.view.RegistrationPart1', {
     extend: 'Ext.container.Container',
@@ -218,7 +217,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }, {
                                 xtype: 'textfield',
                                 name: 'lastName',
-                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FN.emptytext'),
+                                emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.LN.emptytext'),
                                 id: 'relativeLastName',
                                 width: 172,
                                 margins: '0 0 0 6',
@@ -304,11 +303,11 @@ Ext.define('Registration.view.RegistrationPart1', {
                             }, {
                                 xtype: 'radiofield',
                                 name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female'),
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female')
                             }, {
                                 xtype: 'radiofield',
                                 name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other'),
+                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other')
                             }]
                         }]
                     }, {
@@ -323,7 +322,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                         }, {
                             xtype: 'button',
                             ui: 'raxa-aqua-small',
-                            xtype: 'button',
                             width: 80,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.TakePhoto'),
                             action: 'takePhoto'
@@ -375,6 +373,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                         labelPad: 20,
                         labelWidth: 200,
                         width: 573,
+                        hidden: true,   // Hiding to preserve logic, while JSS decides for sure if they want this field
                         allowBlank: true,
                         listeners: {
                             'blur': function () {
@@ -473,7 +472,7 @@ Ext.define('Registration.view.RegistrationPart1', {
 									['G','Pondicherry']
                             ]
                         }),
-                        displayField: 'stateName'                    
+                        displayField: 'stateName'
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo'),
