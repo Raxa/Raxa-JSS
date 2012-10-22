@@ -14,9 +14,3 @@
  * the License.
  *
  */
-
-Ext.define('Registration.model.autoCompleteAddress', {
-	extend: 'Ext.data.Model',
-
-	fields: ['district', 'state']
-})
