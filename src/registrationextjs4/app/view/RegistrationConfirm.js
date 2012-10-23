@@ -338,6 +338,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         width: 580,
                         items:[{
                             xtype: 'button',
+                            id:'confirmationBackButton',
                             margin: '30 0 0 30',
                             width: 60,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Back'),
