@@ -29,7 +29,7 @@ Ext.define('Registration.view.SearchConfirm', {
     initComponent: function () {
         this.items = {
             xtype: 'panel',
-            ui: 'raxa-panel',
+            // ui: 'raxa-panel',
             width: 800,
             padding: 20,
             items: [{
