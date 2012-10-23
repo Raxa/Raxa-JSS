@@ -181,6 +181,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
+                        hidden: true, // TODO: RAXAJSS-607: Hidden until they decide if they do/dont want mohalla
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
