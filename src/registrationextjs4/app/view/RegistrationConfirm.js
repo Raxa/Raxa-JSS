@@ -181,6 +181,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
+                        hidden: true, // TODO: RAXAJSS-607: Hidden until they decide if they do/dont want mohalla
                         anchor: '95%',
                         defaults: {
                             hideLabel: 'true'
@@ -337,6 +338,7 @@ Ext.define('Registration.view.RegistrationConfirm', {
                         width: 580,
                         items:[{
                             xtype: 'button',
+                            id:'confirmationBackButton',
                             margin: '30 0 0 30',
                             width: 60,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Back'),
