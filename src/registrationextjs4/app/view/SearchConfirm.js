@@ -21,21 +21,21 @@ Ext.define('Registration.view.SearchConfirm', {
     alias: 'widget.searchconfirm',
     autoScroll: true,
     border: 0,
-    padding: 10,
+    // padding: 10,
     layout: {
         type: 'hbox',
         pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            xtype: 'panel',
-            ui: 'raxa-panel',
-            width: 800,
-            padding: 20,
-            items: [{
+            // xtype: 'panel',
+            // // ui: 'raxa-panel',
+            // width: 800,
+            // // padding: 20,
+            // items: [{
                 xtype: 'container',
                 border: 0,
-                bodyPadding: 10,
+                // bodyPadding: 10,
                 items: [{
                     xtype: 'fieldset',
                     id : 'fieldsetSearchedPatient',
@@ -377,7 +377,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         action: 'bmipage'
                     }]
                 }]
-            }]
+            // }]
         };
         this.callParent();
     }
