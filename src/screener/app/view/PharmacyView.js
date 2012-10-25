@@ -8,9 +8,8 @@ Ext.define("Screener.view.PharmacyView", {
     requires: ['Screener.view.PharmacyForm'],
     xtype: 'pharmacylist',
     config: {
-        fullscreen: true,
         layout: 'hbox',
-        title: 'Add Drugs',
+        title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyView.add_d'),
         style: 'background:#96d2f7',
         items: [
         //our patient list is built on the Patients store, and has a title and sort button

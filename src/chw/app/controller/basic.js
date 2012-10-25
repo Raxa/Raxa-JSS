@@ -180,10 +180,12 @@ Ext.define('chw.controller.basic', {
                     
                     familyStore.add(familyModel);
                     familyStore.sync();
-                    Ext.getCmp('familyName').reset();
-                    Ext.getCmp('address').reset();
-                    Ext.getCmp('description').reset();
-                    Ext.getCmp('viewPort').setActiveItem(PAGES.familyList);
+                    familyStore.on('write', function() {
+                        Ext.getCmp('familyName').reset();
+                        Ext.getCmp('address').reset();
+                        Ext.getCmp('description').reset();
+                        Ext.getCmp('viewPort').setActiveItem(PAGES.familyList);                        
+                    });
                 }
             } else if(step==='patient') {
                 //Add a patient
@@ -215,64 +217,82 @@ Ext.define('chw.controller.basic', {
                     patientCount = patientCount+1;
                     //After counting, re-apply whatever filter it had.
                     patientStore.setFilters(saveFilter);
-                    patientStore.load();
-                    
-                    var patientModel = Ext.create('chw.model.patient',{
-                        familyId: familyIdVal,
-                        patientId: patientCount,
-                        firstName: firstNameVal,
-                        familyName: lastNameVal,
-                        patientGender: gender,
-                        birthDate: birthDay,
-                        patientAge: patientAgeVal,
-                        //Currenty, image needs to be specified by user. In the future
-                        //this will be replaced by letting the user take a picture, after
-                        //which the location should be inserted here
-                        patientImage: imageLocation
+                    patientStore.load({
+                        scope: this,
+                        callback: function(records, operation, success){
+                            if(success){
+                                var patientModel = Ext.create('chw.model.patient',{
+                                    familyId: familyIdVal,
+                                    patientId: patientCount,
+                                    firstName: firstNameVal,
+                                    familyName: lastNameVal,
+                                    patientGender: gender,
+                                    birthDate: birthDay,
+                                    patientAge: patientAgeVal,
+                                    //Currenty, image needs to be specified by user. In the future
+                                    //this will be replaced by letting the user take a picture, after
+                                    //which the location should be inserted here
+                                    patientImage: imageLocation
+                                });
+
+                                patientStore.add(patientModel);
+                                patientStore.sync();
+                                patientStore.on('write', function() {
+                                    Ext.getCmp('ext-AddPatient-1').reset();
+                                    Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails);
+                                });
+                            }
+                            else{
+                                Ext.Msg.alert("Error", Util.getMessageLoadError());
+                            }
+                        }
                     });
                     
-                    patientStore.add(patientModel);
-                    patientStore.sync();
-                    Ext.getCmp('ext-AddPatient-1').reset();
-                    Ext.getCmp('viewPort').setActiveItem(PAGES.familyDetails);
                 }
             } else if (step==='illness') {
                 //Add an illness
                 var patientIdVal = Ext.ComponentQuery.query('addIllness #patientIdField')[0].getValue();
                 var patientStore = Ext.getStore('patients')
-                patientStore.load();
-                // console.log(patientStore.data.all[patientIdVal - 1].getData())
-                // console.log(patientStore)
-                // var patientDetailsVal = patientStore.getAt(patientIdVal - 1).getData();
-                var patientDetailsVal = patientStore.data.all[patientIdVal-1].getData()
-                var illnessIdVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
-                var illnessDetailsVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data;
-                var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
-                var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
-                var illnessTreatmentVal = Ext.ComponentQuery.query('addIllness #illnessTreatmentField')[0].getValue();
-                var illnessNotesVal = Ext.ComponentQuery.query('addIllness #illnessNotesField')[0].getValue();
-                if (illnessDetailsVal===''||illnessStartVal===''||illnessEndVal===''||illnessTreatmentVal===''||illnessNotesVal==='') {
-                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
-                } else {
-                    var piStore = Ext.getStore('patientsIllnesses');
-                    if (!piStore) {
-                        Ext.create('chw.store.patientIllnesses')
+                patientStore.load({
+                    scope: this,
+                    callback: function(records, operation, success){
+                        if(success){
+                            var patientDetailsVal = patientStore.data.all[patientIdVal-1].getData()
+                            var illnessIdVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data.illnessId;
+                            var illnessDetailsVal = Ext.ComponentQuery.query('addIllness #illnessNameField')[0].getRecord().data;
+                            var illnessStartVal = Ext.ComponentQuery.query('addIllness #illnessStartDate')[0].getValue();
+                            var illnessEndVal = Ext.ComponentQuery.query('addIllness #illnessEndDate')[0].getValue();
+                            var illnessTreatmentVal = Ext.ComponentQuery.query('addIllness #illnessTreatmentField')[0].getValue();
+                            var illnessNotesVal = Ext.ComponentQuery.query('addIllness #illnessNotesField')[0].getValue();
+                            if (illnessDetailsVal===''||illnessStartVal===''||illnessEndVal===''||illnessTreatmentVal===''||illnessNotesVal==='') {
+                                Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.error'), Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.fillAllFieldsError'));
+                            } else {
+                                var piStore = Ext.getStore('patientsIllnesses');
+                                if (!piStore) {
+                                    Ext.create('chw.store.patientIllnesses')
+                                }
+                                var piModel = Ext.create('chw.model.patientIllness', {
+                                    patientId: patientIdVal,
+                                    illnessId: illnessIdVal,
+                                    illnessDetails: illnessDetailsVal,
+                                    illnessStartDate: illnessStartVal,
+                                    illnessEndDate: illnessEndVal,
+                                    illnessTreatment: illnessTreatmentVal,
+                                    illnessNotes: illnessNotesVal,
+                                    patientDetails: patientDetailsVal
+                                });
+                                piStore.add(piModel);
+                                piStore.sync();
+                                piStore.on('write', function() {
+                                    Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)                                    
+                                });
+                            }
+                        }
+                        else{
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
+                        }
                     }
-                    var piModel = Ext.create('chw.model.patientIllness', {
-                        patientId: patientIdVal,
-                        illnessId: illnessIdVal,
-                        illnessDetails: illnessDetailsVal,
-                        illnessStartDate: illnessStartVal,
-                        illnessEndDate: illnessEndVal,
-                        illnessTreatment: illnessTreatmentVal,
-                        illnessNotes: illnessNotesVal,
-                        patientDetails: patientDetailsVal
-                    });
-                    piStore.add(piModel);
-                    piStore.sync();
-                    // TODO: reset form
-                    Ext.getCmp('viewPort').setActiveItem(PAGES.patientDetails)
-                }
+                });
             }
         }
     },
@@ -455,15 +475,32 @@ Ext.define('chw.controller.basic', {
             if (!fstore) {
                 Ext.create('chw.store.families')
             }
-            fstore.load();
-            Ext.getCmp('familyLists').setStore(fstore)
-            // Set up store for list organized by illness
-            var istore = Ext.getStore('illnesses');
-            if (!istore) {
-                Ext.create('chw.store.illnesses')
-            }
-            istore.load();
-            Ext.getCmp('illnessNames').setStore(istore)
+            fstore.load({
+                scope: this,
+                callback: function(records, operation, success){
+                    if(success){
+                        Ext.getCmp('familyLists').setStore(fstore)
+                        // Set up store for list organized by illness
+                        var istore = Ext.getStore('illnesses');
+                        if (!istore) {
+                            Ext.create('chw.store.illnesses')
+                        }
+                        istore.load({
+                            callback: function(records, operation, success){
+                                if(success){
+                                    Ext.getCmp('illnessNames').setStore(istore)
+                                }
+                                else{
+                                    Ext.Msg.alert("Error", Util.getMessageLoadError());
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
+                    }
+                }
+            });
         }
     },
     doOption: function (arg) {
@@ -513,10 +550,18 @@ Ext.define('chw.controller.basic', {
         if (!nstore) {
             Ext.create('chw.store.pills');
         }
-        nstore.load();
-        Ext.getCmp('inventoryLists').setStore(nstore);
-        // console.log(Ext.getCmp('inventoryLists').getStore())
-        Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList);
+        nstore.load({
+            scope: this,
+            callback: function(records, operation, success){
+                if(success){
+                    Ext.getCmp('inventoryLists').setStore(nstore);
+                    Ext.getCmp('viewPort').setActiveItem(PAGES.inventoryList);
+                }
+                else{
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
+                }
+            }
+        });
     },
     
     toolbarLogout: function(){
@@ -551,41 +596,50 @@ Ext.define('chw.controller.basic', {
             });
             // get store for visit details
             var visitStore = Ext.getStore('visits');
-            visitStore.load();
-            // create buttons for each task
-            for (var i = 0; i < taskList.length; i++) {
-                var t = visitStore.getAt(taskList[i]);
-                var u = 'confirm';
-                var d = false;
-                if (t.get('visitComplete')) {
-                    u = 'decline',
-                    d = true
-                }
-                var cell = Ext.create('Ext.Panel', {
-                    padding: '0px 20px 0px 20px',
-                    items: [{
-                        layout: 'vbox',
-                        xtype: 'button',
-                        id: t.get('id'),
-                        text: t.get('visitText'),
-                        ui: u,
-                        disabled: d,
-                        listeners: {
-                            tap: function () {
-                                helper.doVis(this.id)
+            visitStore.load({
+                scope: this,
+                callback: function(records, operation, success){
+                    if(success){
+                        // create buttons for each task
+                        for (var i = 0; i < taskList.length; i++) {
+                            var t = visitStore.getAt(taskList[i]);
+                            var u = 'confirm';
+                            var d = false;
+                            if (t.get('visitComplete')) {
+                                u = 'decline',
+                                d = true
                             }
+                            var cell = Ext.create('Ext.Panel', {
+                                padding: '0px 20px 0px 20px',
+                                items: [{
+                                    layout: 'vbox',
+                                    xtype: 'button',
+                                    id: t.get('id'),
+                                    text: t.get('visitText'),
+                                    ui: u,
+                                    disabled: d,
+                                    listeners: {
+                                        tap: function () {
+                                            helper.doVis(this.id)
+                                        }
+                                    }
+                                }, {
+                                    xtype: 'audio',
+                                    id: t.get('id') + '_audio',
+                                    url: t.get('visitAudio'),
+                                    hidden: true
+                                }]
+                            })
+                            cont.add(cell);
                         }
-                    }, {
-                        xtype: 'audio',
-                        id: t.get('id') + '_audio',
-                        url: t.get('visitAudio'),
-                        hidden: true
-                    }]
-                })
-                cont.add(cell);
-            }
-            c.add(cont)
-            Ext.getCmp('visitDetailsPanel').refresh();
+                        c.add(cont)
+                        Ext.getCmp('visitDetailsPanel').refresh();
+                    }
+                    else{
+                        Ext.Msg.alert("Error", Util.getMessageLoadError());
+                    }
+                }
+            });
         }
     }
 })

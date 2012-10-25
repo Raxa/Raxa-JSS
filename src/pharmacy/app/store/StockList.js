@@ -1,4 +1,5 @@
 Ext.define('RaxaEmr.Pharmacy.store.StockList', {
+    requires: ['RaxaEmr.Pharmacy.store.DrugInfos'],
     extend: 'Ext.data.Store',
     model: 'RaxaEmr.Pharmacy.model.DrugInventory',
     autoLoad: true,
@@ -13,7 +14,7 @@ Ext.define('RaxaEmr.Pharmacy.store.StockList', {
         }
     },
     listeners:{
-        //calculating days left before expiry date on each drug in inventory
+        //calculating months left before expiry date on each drug in inventory
         //setting batch + quantity for as one field for easy display
         'load': {
             fn: function(){
@@ -34,12 +35,11 @@ Ext.define('RaxaEmr.Pharmacy.store.StockList', {
             }
             
             if(item.data.expiryDate!==""){
-                item.set("days", Util.daysFromNow(item.data.expiryDate));
+                item.set("months", Util.monthsFromNow(item.data.expiryDate));
             }
             else{
-                item.set("days", null);
+                item.set("months", null);
             }
         }
-
     }
 });

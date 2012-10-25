@@ -20,6 +20,7 @@ Ext.define('RaxaEmr.Pharmacy.view.stockIssueGrid', {
     },
     {
         xtype: 'datecolumn',
+        format: 'd/m/y',
         text: 'Issue Date',
         width: 120
     },

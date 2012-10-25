@@ -11,6 +11,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
     items: [{
         xtype: 'datefield',
         id: 'dob',
+        format: 'd/m/Y',
         width: 260,
         fieldLabel: 'Date',
         x: 10,
@@ -37,7 +38,8 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         width: 240,
         fieldLabel: 'Age',
         x: 10,
-        y: 120
+        y: 120,
+        minValue: 0
     }, {
         xtype: 'radiogroup',
         id: 'sexRadioGroup',
@@ -54,6 +56,10 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         }, {
             xtype: 'radiofield',
             boxLabel: 'Female',
+            name: 'sex'
+        },{
+            xtype: 'radiofield',
+            boxLabel: 'Other',
             name: 'sex'
         }]
     }, {

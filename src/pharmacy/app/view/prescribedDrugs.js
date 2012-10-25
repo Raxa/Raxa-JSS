@@ -27,9 +27,11 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             editor: {
                 xtype: 'combobox',
                 allowBlank: false,
-                editable: false,
+                editable: true,
                 store: 'allDrugs',
+                id: 'prescriptionDrugPicker',
                 displayField: 'text',
+                enableKeyEvents: true,
                 forceSelection: true,
                 listeners: {
                     'focus': {
@@ -46,20 +48,91 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                             Ext.getStore('orderStore').getAt(row).set('drugUuid', drugUuid);
                         }
                     }
+//                    ,
+//                    'keydown': {
+//                        fn: function(comboBox, e){
+//                            comboBox.getStore().clearFilter();
+//                            comboBox.getStore().filterBy(function(record){
+//                                if(record.data.text.toLowerCase().indexOf(comboBox.getValue().toLowerCase())!==-1){
+//                                    return true;
+//                                }
+//                                return false;
+//                            });
+//                        }
+//                    }
                 }
             }
         },
         {
             xtype: 'numbercolumn',
-            width: 100,
+            width: 80,
             dataIndex: 'dosage',
-            text: 'Dosage (mg/mL)',
+            text: 'Dose (mg/mL)',
             resizable: false,
             editor: {
                 xtype: 'numberfield',
                 allowDecimals: true,
-                allowBlank: true
+                allowBlank: true,
+                minValue: 0,
             }
+        },
+        {
+            xtype: 'actioncolumn',
+            text: 'Times',
+            width: 80,
+            renderer: function (value, metadata, record) {
+                if (record.get('takeInMorning')) {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[0].icon = '../resources/img/sunriseselected.png';
+                } else {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[0].icon = '../resources/img/sunrise.png';
+                }
+                if (record.get('takeInDay')) {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[1].icon = '../resources/img/sunselected.png';
+                } else {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[1].icon = '../resources/img/sun.png';
+                }
+                if (record.get('takeInEvening')) {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[2].icon = '../resources/img/sunsetselected.png';
+                } else {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[2].icon = '../resources/img/sunset.png';
+                }
+                if (record.get('takeInNight')) {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[3].icon = '../resources/img/moonselected.png';
+                } else {
+                    Ext.getCmp('prescribedDrugs').columns[2].items[3].icon = '../resources/img/moon.png';
+                }
+            },
+            items: [{
+                margin: '0 0 0 0',
+                icon: '../resources/img/sunrise.png',
+                tooltip: 'Morning',
+                handler: function(grid, rowIndex, colIndex) {
+                    grid.getStore().getAt(rowIndex).data.takeInMorning = !grid.getStore().getAt(rowIndex).data.takeInMorning;
+                    Ext.getCmp('prescribedDrugs').getView().refresh();
+                }
+            },{
+                margin: '0 0 0 0',
+                icon: '../resources/img/sun.png',
+                tooltip: 'Day',
+                handler: function(grid, rowIndex, colIndex) {
+                    grid.getStore().getAt(rowIndex).data.takeInDay = !grid.getStore().getAt(rowIndex).data.takeInDay;
+                    Ext.getCmp('prescribedDrugs').getView().refresh();
+                }
+            },{
+                icon: '../resources/img/sunset.png',
+                tooltip: 'Evening',
+                handler: function(grid, rowIndex, colIndex) {
+                    grid.getStore().getAt(rowIndex).data.takeInEvening = !grid.getStore().getAt(rowIndex).data.takeInEvening;
+                    Ext.getCmp('prescribedDrugs').getView().refresh();
+                }
+            },{
+                icon: '../resources/img/moon.png',
+                tooltip: 'Night',
+                handler: function(grid, rowIndex, colIndex) {
+                    grid.getStore().getAt(rowIndex).data.takeInNight = !grid.getStore().getAt(rowIndex).data.takeInNight;
+                    Ext.getCmp('prescribedDrugs').getView().refresh();
+                }
+            }]
         },
         {
             xtype: 'gridcolumn',
@@ -69,7 +142,9 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             resizable: false,
             editor: {
                 xtype: 'numberfield',
-                allowBlank: true
+                allowBlank: true,
+                minValue: 0,
+                allowDecimal:false
             }
         },
         {
@@ -80,7 +155,9 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             resizable: false,
             editor: {
                 xtype: 'numberfield',
-                allowBlank: true
+                allowBlank: true,
+                minValue: 0,
+                allowDecimal:false
             }
         },
         {
@@ -145,36 +222,16 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             }
         },
         {
-            xtype: 'numbercolumn',
-            text: 'Unit Price',
-            width: 80,
+            xtype: 'gridcolumn',
+            width: 120,
+            dataIndex: 'instructions',
+            text: 'Notes',
             resizable: false,
-            dataIndex: 'unitprice',
             editor: {
-                xtype: 'numberfield',
-                allowBlank: true,
-                listeners: {
-                    'change': {
-                        fn: function (numberField, newValue) {
-                            var x = Ext.getCmp('prescribedDrugs').getSelectionModel().getSelection()
-                            if(x[0].data.qty != null){
-                                x[0].data.itemprice = newValue*x[0].data.qty;
-                                Ext.getCmp('prescribedDrugs').getView().refresh();
-                            }
-                        }
-                        , 
-                        scope: this
-                    }
-                }
+                xtype: 'textfield',
+                allowDecimals: true,
+                allowBlank: true
             }
-        },
-        {
-            xtype: 'numbercolumn',
-            width: 80,
-            dataIndex: 'itemprice',
-            text: 'Item Price',
-            resizable: false,
-            id: 'itemprice'
         },{
             xtype: 'actioncolumn',
             width: 22,
@@ -198,7 +255,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
             },
             items: ['->',{
                 text: 'Add Drug',
-                iconCls: 'icon-add'
+                iconCls: 'icon-add',
+                action: 'addDrugToPrescription'
             }]
         }];
         this.callParent(arguments);

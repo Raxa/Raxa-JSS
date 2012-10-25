@@ -15,13 +15,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     viewConfig: {
         stripeRows: false
     },
-    selType: 'cellmodel',
-    cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
-        clicksToEdit: 1
-    }),
-    viewConfig: {
-        stripeRows: false
-    },
     initComponent: function () {    
         var issueEditor = this;
         this.addEvents(['deleteIssueDrug']);
@@ -73,8 +66,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             editor: {
                 xtype: 'numberfield',
                 allowBlank: true,
-                decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0
             }
         },
         {
@@ -103,8 +96,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                                 var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
                                 var isCurrentDrug = (record.get('drugName')===selectedDrug);
                                 var isBatch = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
-                                var locationIndex = Ext.getStore('Locations').find('display', Ext.getCmp('issueStockLocationPicker').getValue());
-                                var isAtLocation = (record.get('location').uuid===Ext.getStore('Locations').getAt(locationIndex).data.uuid)
+                                var locationUuid = Ext.getCmp('issueStockLocationPicker').value;
+                                var isAtLocation = (record.get('location').uuid===locationUuid)
                                 return isAvailable && isCurrentDrug && isBatch && isAtLocation;
                             });
                             comboField.doQuery(comboField.allQuery, true);
@@ -146,6 +139,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
         },{
             xtype: 'datecolumn',
             text: 'Expiry Date',
+            format: 'd/m/y',
             dataIndex: 'expiryDate',
             width: 180
         },{

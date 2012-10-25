@@ -16,17 +16,17 @@ Ext.define("Screener.view.Sort", {
         items: [{
             xtype: 'button',
             id: 'sortByNameButton',
-            text: 'Sort by Name',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.Sort.name'),
             ui: 'round'
         }, {
             xtype: 'button',
             id: 'sortByFIFOButton',
-            text: 'Sort by FIFO',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.Sort.fifo'),
             ui: 'round'
         }, {
             xtype: 'button',
             id: 'sortByBMIButton',
-            text: 'Sort By BMI',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.Sort.bmi'),
             ui: 'round'
         }]
     },

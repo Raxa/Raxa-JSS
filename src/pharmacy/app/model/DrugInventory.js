@@ -64,6 +64,20 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
         name: 'locationUuid',
         type: 'string',
         mapping: 'location.uuid'
+    },{
+        name: 'months',
+        type: 'int',
+        persist: false
+    },{
+        name: 'drugUuid',
+        mapping: 'drug.uuid'
+    },{
+        name: 'supplier',
+        type: 'string',
+        persist: false
+    },{
+        name: 'dosageForm',
+        mapping: 'drug.dosageForm'
     }
 ]
 });
