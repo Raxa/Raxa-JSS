@@ -12,19 +12,8 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         align: 'stretch'
     },
     // renderTo: Ext.getBody(),
-    // border: 1,
-    // style: { 
-    //     borderColor: '#000000',
-    //     borderStyle: 'solid',
-    //     borderWidth: '1px'
-    // },
     defaults: {
-    //     labelWidth: 80,
-    //     xtype: 'datefield',
         flex: 1,
-    //     style: {
-    //         padding: '10px'
-    //     }
     },
     clearButtonsUI: function(){
         // Ext.getCmp('patientsButton').setUI('default');
@@ -126,9 +115,14 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             xtype: 'button',
             height: BUTTON_HEIGHT,
             text: 'Log Out',
+            
             handler: function() {
-                Util.logoutUser();
-                location.reload();
+                Ext.Msg.confirm("Log Out", "Are you sure?", function(btn){
+                    if(btn =='yes'){
+                        Util.logoutUser();
+                        location.reload();
+                    }
+                });
             }
         }]
     }]
