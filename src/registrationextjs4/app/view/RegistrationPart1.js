@@ -103,7 +103,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 name: 'Old Patient Identifier',
                                 id: 'oldPatientIdentifier',
                                 fieldLabel: 'Old Patient Identifier',
-                                width: 353,
+                                width: 172,
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPI.emptytext'),
                                 allowBlank: true
 
@@ -245,20 +245,15 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 name: 'Age',
                                 xtype: 'numberfield',
                                 id: 'patientAge',
-                                mptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext'),
                                 minValue: 0,
                                 maxValue: MAX_AGE_OF_PATIENT,
                                 hideTrigger: true,
                                 width: 40,
                                 maxLength: 3,
                                 enforceMaxLength: true,
-                                emptyText: 'Age',
+                                emptyText: 'Years',
                                 allowBlank: false,
                                 allowDecimals: false
-                            }, {
-                                xtype: 'text',
-                                text: 'years',
-                                autosize: true
                             }]
                         }, {
                             xtype: 'fieldcontainer',
@@ -313,6 +308,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                     }, {
                         xtype: 'panel',
                         ui: 'raxa-panel',
+                        margin: 5,
                         layout: {
                             type: 'vbox',
                             align: 'stretch'
@@ -321,7 +317,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                             html: "<img border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         }, {
                             xtype: 'button',
-                            ui: 'raxa-aqua-small',
                             width: 80,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.TakePhoto'),
                             action: 'takePhoto'
@@ -502,7 +497,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.2'),
                             id: 'patientSecondaryContact',
                             width: 172,
-                            margins: '0 0 0 6',
+                            margins: '0 0 0 9',
                             allowBlank: true,
                             listeners: {
                                 'blur': function () {
@@ -682,16 +677,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                             margin: '30 0 0 30',
                             width: 60,
                             text: 'Cancel',
-                            ui: 'raxa-orange-small',
                             action: 'cancel'
-
                         }, {
                             xtype: 'button',
                             margin: '30 0 0 30',
                             width: 60,
                             id: 'continuebutton',
                             text: 'Next',
-                            ui: 'raxa-aqua-small',
                             action: 'continue'
                         }]
                     }]

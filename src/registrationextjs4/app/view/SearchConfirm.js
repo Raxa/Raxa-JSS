@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2012, Raxa
  *
@@ -354,7 +355,7 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'button',
                         margin: '10 10 0 200',
-                        ui: 'raxa-orange-small',
+                        // ui: 'raxa-orange-small',
                         text: 'Cancel', // Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
@@ -372,7 +373,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         xtype: 'button',
                         margin: '10 0 0 10',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.BMI'),
-                        ui: 'raxa-aqua-small',
+                        // ui: 'raxa-aqua-small',
                         action: 'bmipage'
                     }]
                 }]
