@@ -221,7 +221,7 @@ Ext.define('Registration.view.SearchPart1', {
                     }*/,{
                         xtype: 'button',
                         margin: '10 50 0 270',
-                        ui: 'raxa-orange-small',
+                        // ui: 'raxa-orange-small',
                         text: 'Cancel',
                         action: 'cancel'
                     }, {
@@ -235,7 +235,7 @@ Ext.define('Registration.view.SearchPart1', {
                         /*margin: '10 0 0 0',*/
                         margin: '10 50 0 0',
 				        id:'searchbutton1',
-                        ui: 'raxa-aqua-small',
+                        // ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp1.Search'),
                         action: 'search'
                     }]

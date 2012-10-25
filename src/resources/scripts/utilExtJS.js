@@ -27,24 +27,30 @@ Ext.define('dobdatefield', {
     minValue: new Date(new Date().setFullYear(new Date().getFullYear() - MAX_AGE_OF_PATIENT))
 });
 
-//generates error warning on textfield if phone number is not of 10 digit
-function validatePhoneNumber(component) {
-	if(isNaN(Ext.getCmp(component).value))
-		{	
-			Ext.getCmp(component).setActiveError('Non integers are found in input for phone number');
-		}
-   if(!(Ext.getCmp(component).value.length==10 || Ext.getCmp(component).value.length))
+var UtilExtJs = {
+	//generates error warning on textfield if phone number is not of 10 digit
+	validatePhoneNumber: function (component) {
+		var EXPECTED_LENGTH = 10;
+		var cmp = Ext.getCmp(component);
+		var val = cmp.value;
+		if (val && val.length > 0)
 		{
-			Ext.getCmp(component).setActiveError('Please check length of contact number');
+			if(isNaN(val)) {
+				cmp.setActiveError('Contains text other than numbers');
+			} else if (val.length != EXPECTED_LENGTH) {
+				cmp.setActiveError('Expected length of ' + EXPECTED_LENGTH);
+			}
 		}
+	}
+};
 
-}
-
-//sets neccessary text formatting like autoCapitalize function 
+// Sets neccessary text formatting like autoCapitalize function
 function autoTextFormat(component) {
-	//Sets first character in uppercase and rest in lowercase
-	var string = component.value; 
+	// Sets first character in uppercase and rest in lowercase
+	var string = component.value;
 	if(string)
-	component.setValue(string.charAt(0).toUpperCase() + string.toLowerCase().substr(1));
+	{
+		component.setValue(string.charAt(0).toUpperCase() + string.toLowerCase().substr(1));
+	}
 }
 

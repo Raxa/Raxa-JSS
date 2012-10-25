@@ -101,6 +101,7 @@ Ext.define("Screener.controller.Application", {
             addDrugFormButton: '#addDrugFormButton',
             addLabOrderButton: '#addLabOrderButton',
             removeDrugFormButton: '#removeDrugFormButton',
+			removeLabOrderButton: '#removeLabOrderButton',
             sortByNameButton: '#sortByNameButton',
             sortByFIFOButton: '#sortByFIFOButton',
             sortByBMIButton: '#sortByBMIButton',
@@ -116,6 +117,9 @@ Ext.define("Screener.controller.Application", {
             },
             addLabOrderButton: {
                 tap: 'addLabOrder'
+            },
+			removeLabOrderButton: {
+                tap: 'removeLabOrder'
             },
             addPatientButton: {
                 tap: 'addPerson'
@@ -370,6 +374,7 @@ Ext.define("Screener.controller.Application", {
             scrollable: false
         });
     },
+	// remove last drug order form
     removeDrugForm: function () {
         if (form_num > 0) {
             Ext.getCmp('form' + form_num).remove({
@@ -471,6 +476,8 @@ Ext.define("Screener.controller.Application", {
             }
         } else Ext.Msg.alert("please select a patient")
     },
+
+	// Adds another lab order form
     addLabOrder: function () {
         lab_num++;
         var endOfForm = 6;
@@ -478,8 +485,19 @@ Ext.define("Screener.controller.Application", {
             xtype: 'labStore',
             id: 'lab' + lab_num,
             width: '350px',
-            height: '70px'
+            height: '150px'
         });
+    },
+	
+	// Removes last lab order form
+	removeLabOrder: function () {
+        if (lab_num > 0) {
+            Ext.getCmp('lab' + lab_num).remove({
+                autoDestroy: true
+            });
+            Ext.getCmp('lab' + lab_num).hide();
+            lab_num--;
+        }
     },
     // Opens form for creating new patient
     addPerson: function () {
@@ -584,16 +602,8 @@ Ext.define("Screener.controller.Application", {
     // Counts number of patients assigned to a doctor   
     countPatients: function () {
         //store = Ext.create('Screener.store.AssignedPatientList');
-        var patientStore = Ext.getStore('assPatientStore')
-        var docStore = Ext.getStore('doctorStore');
-        if(!Ext.getStore('doctorStore')){
-            docStore = Ext.create('Screener.store.Doctors',{
-                storeId: 'doctorStore'
-            });
-        }
-        else{
-            docStore.load();
-        }
+        var patientStore = Ext.getStore('assPatientStore');
+        var docStore = Ext.create('Screener.store.Doctors');
         docStore.on('load', function () {
             patientStore.load();
             patientStore.on('load', function () {
