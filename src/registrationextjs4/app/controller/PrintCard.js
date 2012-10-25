@@ -55,8 +55,15 @@ Ext.define('Registration.controller.PrintCard', {
      *  be used to get details while printing of Registration card
      */
     storePatientDatafromRegistration: function () {
+    	
+    	var NameInMultipleLang = Ext.getCmp('patientNameConfirm').text
+    	if ( Ext.getCmp('patientNameHindiConfirm').text !==" ")
+        {
+            NameInMultipleLang = NameInMultipleLang + ' (' + Ext.getCmp('patientNameHindiConfirm').text + ')';
+        }
+    	
         var selectedPatient = {
-            Name: Ext.getCmp('patientNameConfirm').text,
+            Name: NameInMultipleLang,
             Age: Ext.getCmp('ageConfirm').text,
             Gender: Ext.getCmp('sexConfirm').text,
             Village: Ext.getCmp('townConfirm').text,

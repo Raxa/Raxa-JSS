@@ -75,6 +75,9 @@ Ext.define('RaxaEmr.Pharmacy.model.DrugInventory', {
         name: 'supplier',
         type: 'string',
         persist: false
+    },{
+        name: 'dosageForm',
+        mapping: 'drug.dosageForm'
     }
 ]
 });

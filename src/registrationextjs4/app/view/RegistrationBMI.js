@@ -26,6 +26,7 @@ Ext.define('Registration.view.RegistrationBMI', {
         pack: 'center'
     },
     initComponent: function () {
+        localStorage.setItem('printtaken', false);
         this.items = {
             xtype: 'panel',
             ui: 'raxa-panel',
@@ -37,9 +38,9 @@ Ext.define('Registration.view.RegistrationBMI', {
                 items: [{
                     xtype: 'displayfield',
                     fieldLabel: 'Patient Identifier',
-                    value: 'Patient ID comes here', 
+                    value: 'Patient ID comes here',
                     id: 'bmiPatientID',
-                    readOnly: true,
+                    readOnly: true
                 },{
                     xtype: 'displayfield',
                     fieldLabel: 'Patient Name',
@@ -54,9 +55,9 @@ Ext.define('Registration.view.RegistrationBMI', {
                         bodyStyle:'border-right:none;border-right:none;border-bottom:none;border-left:none;'
                     },
                     items: [{
-                        xtype: 'form',
+                        xtype: 'container',
                         id: 'heightWeightID',
-                        ui: 'raxa-panel',
+                        // ui: 'raxa-panel',
                         border: 0,
                         layout: {
                             align: 'stretch',
@@ -71,6 +72,8 @@ Ext.define('Registration.view.RegistrationBMI', {
                             labelWidth: 70,
                             labelAlign: 'right',
                             anchor: '95%',
+                            minValue: 10,
+                            maxValue: 228,
                             width: 172,
                             margin: '0 10 0 0',
                             hideTrigger: true,
@@ -85,6 +88,8 @@ Ext.define('Registration.view.RegistrationBMI', {
                             labelPad: 20,
                             labelWidth: 95,
                             labelAlign: 'right',
+                            minValue: 0,
+                            maxValue: 250,
                             width: 200,
                             anchor: '95%',
                             margin: '0 10 0 0',
@@ -109,30 +114,14 @@ Ext.define('Registration.view.RegistrationBMI', {
                         id: 'bmiNumberfieldID',
                         readOnly: true,
                         width: 172,
+                        minValue: 0,
+                        maxValue: 100,
                         labelAlign: 'right',
                         labelWidth: 70,
                         hideTrigger: true,
                         keyNavEnabled: false,
                         mouseWheelEnabled: false,
                         nanText: 'Invalid Input'
-                    }, {
-                        xtype: 'container',
-                        height: 40,
-                        border: 0,
-                        layout: {
-                            align: 'stretch',
-                            pack: 'center',
-                            type: 'vbox',
-                            padding: 30
-                        },
-                        items: {
-                            xtype: 'slider',
-                            id: 'bmiSliderID',
-                            disabledCls: 'x-form-readonly',
-                            readOnly: true,
-                            minValue: 1,
-                            maxValue: BMI_MAX
-                        }
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: 'BMI Status',
@@ -155,31 +144,32 @@ Ext.define('Registration.view.RegistrationBMI', {
                             emptyText: 'BMI Status Value',
                             allowBlank: true
                         }
-                    }, {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'end'
-                        },
-                        border: 0,
-                        padding: 0,
-                        width: 580,
-                        items: [{
-                            xtype: 'button',
-                            margin: '30 0 0 30',
-                            align: 'right',
-                            action: 'printPatientCard',
-                            id: 'printPatientCard',
-                            text: 'Print Patient Card' // Does not post BMI, just launches a pop-up window
-                        },{
-                            xtype: 'button',
-                            margin: '30 0 0 30',
-                            align: 'right',
-                            ui: 'raxa-aqua-small',
-                            action: 'bmiSubmit',
-                            id: 'submitBMI',
-                            text: 'Submit' //Going Back to Home Page - BMI to be Posted Here
-                        }]
+                    }]
+                },
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    border: 0,
+                    padding: 0,
+                    width: 580,
+                    items: [{
+                        xtype: 'button',
+                        margin: '30 0 0 30',
+                        align: 'right',
+                        action: 'printPatientCard',
+                        id: 'printPatientCard',
+                        text: 'Print Patient Card' // Does not post BMI, just launches a pop-up window
+                    },{
+                        xtype: 'button',
+                        margin: '30 0 0 30',
+                        align: 'right',
+                        // ui: 'raxa-aqua-small',
+                        action: 'bmiSubmit',
+                        id: 'submitBMI',
+                        text: 'Submit' //Going Back to Home Page - BMI to be Posted Here
                     }]
                 }]
             }]
