@@ -13,7 +13,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
         xtype: 'button',
         text: 'Cancel',
         action: 'cancelReceipt',
-        ui: 'raxa-orange-small',
         x: 500
     },
     {
@@ -22,7 +21,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
         width: 60,
         text: 'Submit',
         action: 'submitReceipt',
-        ui: 'raxa-aqua-small',
         x: 600
     }]
 });

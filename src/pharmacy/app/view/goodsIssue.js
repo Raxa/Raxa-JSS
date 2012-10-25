@@ -13,7 +13,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssue', {
         xtype: 'button',
         text: 'Cancel',
         action: 'cancelIssue',
-        ui: 'raxa-orange-small',
         x: 500
     },
     {
@@ -22,7 +21,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssue', {
         width: 60,
         text: 'Submit',
         action: 'submitIssue',
-        ui: 'raxa-aqua-small',
         x: 600
     }]
 });
