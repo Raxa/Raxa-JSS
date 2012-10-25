@@ -137,43 +137,69 @@ Ext.define('Registration.controller.Main', {
         // Ext.getCmp('confirmationBackButton').disable();
         Ext.getCmp('submitButton').disable();
 
+        // Gender
+        var personGender = Ext.getCmp('sexComboBox').value || "Unknown";
+
+        // Names
         // By default, just include "regular" name
-        var patientNames = [{
+        var personNames = [{
             givenName: Ext.getCmp('patientFirstName').value,
             familyName: Ext.getCmp('patientLastName').value
         }];
 
-        // Add Hindi name IFF it exists
+        // Add Hindi name IFF both Given and Family names exist (required by OpenMRS to have both)
         var firstNameHindi = Ext.getCmp('patientFirstNameHindi').value || "";
         var lastNameHindi = Ext.getCmp('patientLastNameHindi').value || "";
         if(firstNameHindi !== "" && lastNameHindi !== "") {
-            patientNames.push({
+            personNames.push({
                 givenName: firstNameHindi,
                 familyName: lastNameHindi
             });
         }
 
-        //creating the json object to be made
-        var personGender = Ext.getCmp('sexComboBox').value || "Unknown";
-        var jsonperson = Ext.create('Registration.model.Person', {
-            gender: personGender,
-            names: patientNames,
-            // TODO: All of these get submitted with null values if there's no input
-            addresses: [{
-                address1: Ext.getCmp('street').value,
-                address2: Ext.getCmp('residentialArea').value,
-                address3: Ext.getCmp('tehsil').value,
-                cityVillage: Ext.getCmp('town').value,
-                stateProvince: Ext.getCmp('state').value,
-                countyDistrict: Ext.getCmp('district').value
-            }],
-            attributes: [{
-                value: Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value,
+        // Addresses
+        var personAddresses = {};
+        var addressItems = [
+            {componentId:'street', name:'address1'},
+            // {componentId:'residentialArea', name:'address2'},
+            {componentId:'tehsil', name:'address3'},
+            {componentId:'town', name:'cityVillage'},
+            {componentId:'state', name:'stateProvince'},
+            {componentId:'district', name:'countyDistrict'}
+        ];
+
+        for (var i=0; i < addressItems.length; i++) {
+            var val = Ext.getCmp(addressItems[i].componentId).value;
+            if (val) {
+                personAddresses[addressItems[i].name] = val;
+            }
+        }
+
+        // Add relative name if first OR last name exists
+        // TODO: move this down with other attributes. it's just a special case because it combines two fields
+        var personAttributes =  {};
+        var relativeFirstName = Ext.getCmp('relativeFirstName').value || "";
+        var relativeLastName = Ext.getCmp('relativeLastName').value || "";
+        if(relativeFirstName !== "" || relativeLastName !== "") {
+            personAttributes =  {
+                // TODO: Introduces an unnecessary space if just one name added
+                value: relativeFirstName + " " + relativeLastName,
                 attributeType: localStorage.primaryRelativeUuidpersonattributetype
-            }]
-        });
-        //this if else statement change the persist property of age field in Person model so that if its
-        //empty it should not be sent to server in the body of post call
+            };
+        }
+        
+        // Creating the json object to be saved via REST
+        var person = {
+            gender: personGender,
+            names: personNames,
+            addresses: [personAddresses],
+            attributes: [personAttributes]
+        };
+        var jsonperson = Ext.create('Registration.model.Person', person);
+
+        // This if else statement change the persist property of age field in Person model so that if its
+        // empty it should not be sent to server in the body of post call
+        // TODO: What happens if Age and DOB are inconsistent?
         if(Ext.getCmp('patientAge').isValid()) {
             jsonperson.data.age = Ext.getCmp('patientAge').value;
             Registration.model.Person.getFields()[2].persist = true;
