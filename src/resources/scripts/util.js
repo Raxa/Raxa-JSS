@@ -489,7 +489,6 @@ var Util = {
     },
     
     uuidLoadedSuccessfully: function(){
-        console.log("inside uuidLoadedSuccessfully")
         if( this.checkAllUuidsNValidationLoaded() ) {
             return true;
         } else {
@@ -498,7 +497,6 @@ var Util = {
     },
 
     checkAllUuidsNValidationLoaded: function() {
-        console.log("inside checkAllUuidsNValidationLoaded")
         var that=this;
         var expectedUuidCount=0;
         var uuidsLoadedCount=0;

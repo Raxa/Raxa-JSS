@@ -62,7 +62,6 @@ Ext.application({
                 });
             mainScreen.add(topBar);
             Ext.getCmp('topbarSelectfield').setValue("Screener");
-               // console.log("Inside screener module");
         }
     }
 });
