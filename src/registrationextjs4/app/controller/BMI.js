@@ -39,7 +39,6 @@ Ext.define('Registration.controller.BMI', {
         var weight_kg = parseFloat(Ext.getCmp('weightIDkg').getValue()); //Get weight value from view registrationbmi
         var bmiInfo = this.calculateBMI(height_cm, weight_kg); //Calculate bmi
         this.updateBMIDisplay(bmiInfo.status, bmiInfo.bmi); //Update the value displayed
-        Ext.getCmp('bmiSliderID').setDisabled(true); //Disable the bmiSlider
     },
 
     //Function to Calculate bmi 
@@ -109,8 +108,5 @@ Ext.define('Registration.controller.BMI', {
     updateBMIDisplay: function (bmiStatusText, bmi) {
         Ext.getCmp('bmiStatusID').setValue(bmiStatusText); //update bmi status
         Ext.getCmp('bmiNumberfieldID').setValue(bmi); //update bmi numberfield
-        Ext.getCmp('bmiSliderID').setValue(bmi); //update bmi slider
     }
-
-
 });

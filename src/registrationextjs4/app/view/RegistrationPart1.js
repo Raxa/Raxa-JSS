@@ -70,6 +70,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 name: 'Centre ID',
                                 label: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Centre'),
                                 id: 'centreId',
+                                allowBlank: false,
                                 layout: 'hbox',
                                 width: 172,
 		                        typeAhead: true,
@@ -103,7 +104,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 name: 'Old Patient Identifier',
                                 id: 'oldPatientIdentifier',
                                 fieldLabel: 'Old Patient Identifier',
-                                width: 353,
+                                width: 172,
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.OPI.emptytext'),
                                 allowBlank: true
 
@@ -169,7 +170,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 id: 'patientFirstNameHindi',
                                 emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.FNHindi.emptytext'),
                                 width: 172,
-                                allowBlank: false,
+                                allowBlank: true,
                                 listeners: {
                                     'blur': function () {
                                         autoTextFormat(this);
@@ -182,7 +183,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 id: 'patientLastNameHindi',
                                 width: 172,
                                 margins: '0 0 0 6',
-                                allowBlank: false,
+                                allowBlank: true,
                                 listeners: {
                                     'blur': function () {
                                         autoTextFormat(this);
@@ -245,20 +246,15 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 name: 'Age',
                                 xtype: 'numberfield',
                                 id: 'patientAge',
-                                mptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Age.emptytext'),
                                 minValue: 0,
                                 maxValue: MAX_AGE_OF_PATIENT,
                                 hideTrigger: true,
                                 width: 40,
                                 maxLength: 3,
                                 enforceMaxLength: true,
-                                emptyText: 'Age',
+                                emptyText: 'Years',
                                 allowBlank: false,
                                 allowDecimals: false
-                            }, {
-                                xtype: 'text',
-                                text: 'years',
-                                autosize: true
                             }]
                         }, {
                             xtype: 'fieldcontainer',
@@ -287,32 +283,27 @@ Ext.define('Registration.view.RegistrationPart1', {
                                 allowBlank: false
                             }]
                         }, {
-                            xtype: 'radiogroup',
+                            xtype: 'combo',
                             fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender'),
-                            id: 'sexRadioGroup',
+                            id: 'sexComboBox',
                             labelAlign: 'right',
                             labelPad: 20,
                             labelWidth: 200,
-                            width: 570,
-                            allowBlank: false,
-                            items: [{
-                                xtype: 'radiofield',
-                                name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Male'),
-                                checked: true
-                            }, {
-                                xtype: 'radiofield',
-                                name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female')
-                            }, {
-                                xtype: 'radiofield',
-                                name: 'sex',
-                                boxLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other')
-                            }]
+                            allowBlank: true,
+                            store: new Ext.data.SimpleStore({
+                                fields: ['gender'],
+                                data: [
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Male')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Female')],
+                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Gender.Other')]
+                                ]
+                            }),
+                            displayField: 'gender'
                         }]
                     }, {
                         xtype: 'panel',
                         ui: 'raxa-panel',
+                        margin: 5,
                         layout: {
                             type: 'vbox',
                             align: 'stretch'
@@ -321,7 +312,6 @@ Ext.define('Registration.view.RegistrationPart1', {
                             html: "<img border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         }, {
                             xtype: 'button',
-                            ui: 'raxa-aqua-small',
                             width: 80,
                             text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.TakePhoto'),
                             action: 'takePhoto'
@@ -409,17 +399,17 @@ Ext.define('Registration.view.RegistrationPart1', {
                         queryMode: 'local',
                         store: Ext.create('Registration.store.autoCompleteAddress'),
                         displayField: 'district',
-                        listeners:{
-                        	//Sets corresponding state for selected district
-    					     scope: this,
-         					 'select': function() {
-         							Ext.getCmp('state').setValue(Ext.getCmp('district').lastSelection[0].data.state);
-         						},
-         					 'change': function() {
-         							Ext.getCmp('state').setValue('');
-         						}
-    						}
-    					},{
+                        listeners: {
+                            //Sets corresponding state for selected district
+                            scope: this,
+                            'select': function() {
+                                Ext.getCmp('state').setValue(Ext.getCmp('district').lastSelection[0].data.state);
+                            },
+                            'change': function() {
+                                Ext.getCmp('state').setValue('');
+                            }
+                        }
+                    },{
                         xtype: 'combo',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.State'),
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.State'),
@@ -494,7 +484,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             allowBlank: true,
                             listeners: {
                                 'blur': function () {
-                                    validatePhoneNumber('patientPrimaryContact');
+                                    UtilExtJs.validatePhoneNumber('patientPrimaryContact');
                                 }
                             }
                         }, {
@@ -502,11 +492,11 @@ Ext.define('Registration.view.RegistrationPart1', {
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp2.CNo.2'),
                             id: 'patientSecondaryContact',
                             width: 172,
-                            margins: '0 0 0 6',
+                            margins: '0 0 0 9',
                             allowBlank: true,
                             listeners: {
                                 'blur': function () {
-                                    validatePhoneNumber('patientSecondaryContact');
+                                    UtilExtJs.validatePhoneNumber('patientSecondaryContact');
                                 }
                             }
                         }]
@@ -682,16 +672,13 @@ Ext.define('Registration.view.RegistrationPart1', {
                             margin: '30 0 0 30',
                             width: 60,
                             text: 'Cancel',
-                            ui: 'raxa-orange-small',
                             action: 'cancel'
-
                         }, {
                             xtype: 'button',
                             margin: '30 0 0 30',
                             width: 60,
                             id: 'continuebutton',
                             text: 'Next',
-                            ui: 'raxa-aqua-small',
                             action: 'continue'
                         }]
                     }]
