@@ -88,12 +88,32 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
                 "Content-Type": "application/json"
             },
             failure: function (response) {
-                console.log('Lab order for' + 'POST failed with response status' + response.status);
+                Ext.Msg.alert("Error", Util.getMessageSyncError());
             },
             success: function (response) {
                 console.log('Lab Paper Entry for' + 'POST successful with response status' + response.status);
-                Ext.getCmp('labOrderListPaperEntry').store.load();
-                Ext.getCmp('labOrderListPaperEntry4').store.load();
+                Ext.getCmp('labOrderListPaperEntry').store.load({
+                    scope: this,
+                    callback: function(records, operation, success){
+                        if(success){
+                            //do the things here
+                        }
+                        else{
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
+                        }
+                    }
+                });
+                Ext.getCmp('labOrderListPaperEntry4').store.load({
+                    scope: this,
+                    callback: function(records, operation, success){
+                        if(success){
+                        //do the things here
+                        }
+                        else{
+                            Ext.Msg.alert("Error", Util.getMessageLoadError());
+                        }
+                    }
+                });
             }
         });
     },
@@ -119,7 +139,17 @@ Ext.define('Laboratory.controller.LabOrderCreation', {
             var searchPatientName = Ext.getCmp('patientFirstNameLabOrderCreation11').value + '+' + Ext.getCmp('patientLastNameLabOrderCreation11').value;
         };
         Ext.getCmp('patientSearchCreateLabOrder').store.getProxy().url = LAB_HOME + '/ws/rest/v1/patient?q=' + searchPatientName + '&v=full';
-        Ext.getCmp('patientSearchCreateLabOrder').store.load();
+        Ext.getCmp('patientSearchCreateLabOrder').store.load({
+            scope: this,
+            callback: function(records, operation, success){
+                if(success){
+                    //do the things here
+                }
+                else{
+                    Ext.Msg.alert("Error", Util.getMessageLoadError());
+                }
+            }
+        });
     },
 
     /* This function is triggered after patient is selected from grid (patientSearchCreateLabOrder) in LabOrderCreation3 showing list 

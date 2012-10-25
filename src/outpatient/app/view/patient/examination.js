@@ -49,23 +49,15 @@ Ext.define('RaxaEmr.Outpatient.view.patient.examination', {
                         xtype: 'selectfield',
                         label: 'Search In',
                         id: 'signFilter',
+                        hidden: true,
                         border: '0 0 1 0',
                         style: 'border:solid #DADADA;',
                         valueField: 'filterBy',
                         displayField: 'title',
                         store: {
                             data: [{
-                                filterBy: '',
-                                title: '',
-                            }, {
-                                filterBy: 'pelvic',
-                                title: 'Pelvic',
-                            }, {
-                                filterBy: 'chest',
-                                title: 'Chest',
-                            }, {
-                                filterBy: 'extremities',
-                                title: 'Extremities',
+                                filterBy: 'all',
+                                title: 'All',
                             }]
                         }
                     }, {

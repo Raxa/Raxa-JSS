@@ -20,12 +20,12 @@ Ext.define("Screener.view.NewPatient", {
             xtype: 'textfield',
             id: 'givenName',
             name: 'givenname',
-            label: 'Given Name'
+            label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.giv_name')
         }, {
             xtype: 'textfield',
             id: 'familyName',
             name: 'familyname',
-            label: 'Family Name'
+            label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.fam_name')
         }, {
             xtype  : 'container',
             id: 'sexRadioGroup',
@@ -36,7 +36,7 @@ Ext.define("Screener.view.NewPatient", {
             items  : [
                 {
                     xtype : 'radiofield',
-                    label : 'Male',
+                    label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.male'),
                     value: 'M',
                     name  : 'choice',
                     labelWidth: 70,
@@ -44,7 +44,7 @@ Ext.define("Screener.view.NewPatient", {
                 },
                 {
                     xtype : 'radiofield',
-                    label : 'Female',
+                    label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.female'),
                     value: 'F',
                     name  : 'choice',
                     labelWidth: 90,
@@ -52,7 +52,7 @@ Ext.define("Screener.view.NewPatient", {
                 },
                 {
                     xtype : 'radiofield',
-                    label : 'Other',
+                    label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.other'),
                     value: 'O',
                     name  : 'choice',
                     labelWidth: 70,
@@ -62,7 +62,7 @@ Ext.define("Screener.view.NewPatient", {
         },{
             xtype: 'button',
             id: 'savePatientButton',
-            text: 'Save Patient',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.save_p'),
             ui: 'action'
         }]
     },

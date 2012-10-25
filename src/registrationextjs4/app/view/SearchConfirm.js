@@ -16,7 +16,7 @@
  * This script defines the view SearchConfirm of the registration module
  */
 Ext.define('Registration.view.SearchConfirm', {
-    extend: 'Ext.container.Container',
+	extend: 'Ext.form.Panel',
     alias: 'widget.searchconfirm',
     autoScroll: true,
     border: 0,
@@ -37,6 +37,7 @@ Ext.define('Registration.view.SearchConfirm', {
                 bodyPadding: 10,
                 items: [{
                     xtype: 'fieldset',
+                    id : 'fieldsetSearchedPatient',
                     padding: 10,
                     title: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.title'),
                     items: [{
@@ -166,8 +167,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, /* TODO: add back in caste
-                        {
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Caste'),
                         layout: 'hbox',
@@ -188,7 +188,7 @@ Ext.define('Registration.view.SearchConfirm', {
                             readOnly: true,
                             allowBlank: false
                         }]
-                    }, */{
+                    }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation'),
                         layout: 'hbox',
@@ -203,7 +203,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         },
                         items: [{
                             name: 'occuption',
-                            id: 'occuptionSearchedPatient',
+                            id: 'occupationSearchedPatient',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Occupation.emptytext'),
 
                             readOnly: true,
@@ -211,11 +211,32 @@ Ext.define('Registration.view.SearchConfirm', {
                             allowBlank: false
                         }]
                     }, {
-                        xtype: 'textfield',
-                        id: 'blockSearchedPatient',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Block'),
+                        xtype: 'fieldcontainer',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion'),
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
                         labelAlign: 'right',
-                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Block.emptytext'),
+                        labelPad: 20,
+                        labelWidth: 250,
+                        anchor: '95%',
+                        defaults: {
+                            hideLabel: 'true'
+                        },
+                        items: [{
+                            name: 'religion',
+                            id: 'religionSearchedPatient',
+                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion.emptytext'),
+                            readOnly: true,
+                            flex: 1,
+                            allowBlank: false
+                        }]
+                    }, {
+                        xtype: 'textfield',
+                        id: 'residentialAreaSearchedPatient',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.ResidentialArea'),
+                        labelAlign: 'right',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.ResidentialArea.emptytext'),
 
                         readOnly: true,
                         labelPad: 20,
@@ -243,7 +264,8 @@ Ext.define('Registration.view.SearchConfirm', {
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
-                    }, {
+                    },/* POST Office & Pincode are no longer in New Patient Registration Form, so removed from here as well
+                     {
                         xtype: 'textfield',
                         id: 'postOfficeSearchedPatient',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.PO'),
@@ -265,7 +287,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         labelPad: 20,
                         labelWidth: 250,
                         anchor: '95%'
-                    }, {
+                    }, */ {
                         xtype: 'textfield',
                         id: 'tehsilSearchedPatient',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Tehsil'),
@@ -277,7 +299,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         labelWidth: 250,
                         anchor: '95%'
                     }, {
-                        xtype: 'numberfield',
+                        xtype: 'textfield',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.District'),
                         id: 'districtSearchedPatient',
                         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.District.emptytext'),
@@ -288,26 +310,17 @@ Ext.define('Registration.view.SearchConfirm', {
                         labelWidth: 250,
                         hideTrigger: true,
                         anchor: '95%'
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CM'),
-                        combineErrors: true,
-                        defaultType: 'textfield',
+                    },{
+                        xtype: 'textfield',
+                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.State'),
+                        id: 'stateSearchedPatient',
+                        emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.State.emptytext'),
+                        readOnly: true,
                         labelAlign: 'right',
                         labelPad: 20,
                         labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'phoneNo.',
-                            id: 'phoneSearchedPatient',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CM.emptytext'),
-                            flex: 1,
-                            readOnly: true,
-                            allowBlank: false
-                        }]
+                        hideTrigger: true,
+                        anchor: '95%'
                     }, {
                         xtype: 'fieldcontainer',
                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN'),
@@ -324,7 +337,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         items: [{
                             name: 'primaryContact',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN.emptytext1'),
-                            id: 'patientPrimaryContactNumberSearchedPatient',
+                            id: 'primaryContactNumberSearchedPatient',
 
                             readOnly: true,
                             flex: 1,
@@ -332,8 +345,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         }, {
                             name: 'lastName',
                             emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.CN.emptytext2'),
-                            id: 'patientSecondaryContactNumberSearchedPatient',
-
+                            id: 'secondaryContactNumberSearchedPatient',
                             readOnly: true,
                             flex: 1,
                             margins: '0 0 0 6',
@@ -342,9 +354,8 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'button',
                         margin: '10 10 0 200',
-                        width: 120,
                         ui: 'raxa-orange-small',
-                        text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
+                        text: 'Cancel', // Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
@@ -352,9 +363,7 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',
-                        width: 160,
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Return'),
-                        ui: 'raxa-orange-small',
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
                             l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Screen (Result List)
@@ -362,7 +371,6 @@ Ext.define('Registration.view.SearchConfirm', {
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 10',
-                        width: 160,
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.BMI'),
                         ui: 'raxa-aqua-small',
                         action: 'bmipage'

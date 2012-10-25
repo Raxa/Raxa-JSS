@@ -45,6 +45,14 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                             comboField.expand();
                         },
                         scope: this
+                    },
+                    'select': {
+                        fn: function(comboField, records){
+                            var row = Ext.ComponentQuery.query('goodsReceiptGrid')[0].getSelectionModel().selection.row;
+                            var supplierIndex = (Ext.getStore('drugInfos').find("drugName",records[0].data.text));
+                            if(supplierIndex!==-1)
+                                Ext.getStore('newReceipt').getAt(row).set('supplier', Ext.getStore('drugInfos').getAt(supplierIndex).data.description);
+                        }
                     }
                 }
             }
@@ -59,7 +67,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0             
             }
         },
         {
@@ -72,7 +81,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 decimalPrecision: 0,
-                allowDecimals: false
+                allowDecimals: false,
+                minValue: 0
             }
         },
         {
@@ -90,7 +100,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             editable: true,
             text: 'Batch no',
             dataIndex: 'batch',
-            width: 150,
+            width: 80,
             editor: {
                 xtype: 'textfield',
                 allowBlank: true
@@ -101,13 +111,25 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             editable: true,
             text: 'Expiry Date',
             dataIndex: 'expiryDate',
-            width: 150,
+            width: 80,
             editor: {
                 xtype: 'datefield',
                 allowBlank: false,
-                format: 'd/m/Y'
+                format: 'd/m/y'
             }
-        },{
+        },
+        {
+            xtype: 'gridcolumn',
+            editable: true,
+            text: 'Supplier',
+            dataIndex: 'supplier',
+            width: 80,
+            editor: {
+                xtype: 'textfield',
+                allowBlank: true
+            }
+        },
+        {
             xtype: 'actioncolumn',
             width: 22,
             items: [{

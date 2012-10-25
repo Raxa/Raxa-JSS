@@ -14,42 +14,47 @@ Ext.define("Screener.view.LabOrderForm", {
         styleHtmlContent: false,
         xtype: 'orderform',
         autoscroll: true,
-        layout: 'vbox',
         items: [{
             xtype: 'titlebar',
             docked: 'top',
-            title: 'Lab Investigation Orders'
+            title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.lio')
         }, {
-            xtype: 'labStore',
-            width: '350px',
-            height: '70px'
-        }, {
-            xtype: 'fieldset',
-            width: '200px',
-            items: [{
-                xtype: 'checkboxfield',
-                name: 'urgent',
-                labelWidth: '80px',
-                label: 'Urgent',
-                value: '0'
-            }]
-        }, {
-            xtype: 'button',
-            ui: 'round',
-            text: 'add additional test',
-            id: 'addLabOrderButton',
-            height: '40px',
-            width: '200px'
-        }, {
-            xtype: 'spacer',
-            height: 10
-        }, {
-            xtype: 'button',
-            ui: 'confirm',
-            text: 'Submit',
-            id: 'sumbitLabButton',
-            height: '40px',
-            width: '100px'
-        }]
+			layout: 'hbox',
+			items: [{
+		        xtype: 'labStore',
+		        width: '350px',
+		        height: '150px'
+		    }, {
+				layout: 'vbox',
+				items: [{
+				    xtype: 'button',
+				    ui: 'round',
+				    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.plus'),
+				    id: 'addLabOrderButton',
+				    height: '40px',
+				    width: '100px'
+				}, {
+				    xtype: 'spacer',
+				    height: 10
+				}, {
+					xtype: 'button',
+				    ui: 'round',
+				    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.minus'),
+				    id: 'removeLabOrderButton',
+				    height: '40px',
+				    width: '100px'
+				}, {
+				    xtype: 'spacer',
+				    height: 10
+				}, {
+				    xtype: 'button',
+				    ui: 'confirm',
+				    text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.LabOrderForm.submit'),
+				    id: 'sumbitLabButton',
+				    height: '40px',
+				    width: '100px'
+				}]
+			}]
+		}]
     }
 });
