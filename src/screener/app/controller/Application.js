@@ -525,7 +525,8 @@ Ext.define("Screener.controller.Application", {
                 }] 
             };
             if (Ext.getCmp('patientAge').getValue() !== null) {
-                newPatient.age = formp.patientAge;
+               // newPatient.age = formp.patientAge;
+               newPatient.age = "";
             }   
             if(Ext.getCmp('dob').getValue() !== "" && Ext.getCmp('dob').getValue().length > 0) {
                 newPatient.birthdate =  formp.dob;
