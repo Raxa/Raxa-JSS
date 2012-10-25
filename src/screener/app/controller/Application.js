@@ -584,8 +584,8 @@ Ext.define("Screener.controller.Application", {
     // Counts number of patients assigned to a doctor   
     countPatients: function () {
         //store = Ext.create('Screener.store.AssignedPatientList');
-        var patientStore = Ext.getStore('assPatientStore')
-        docStore = Ext.create('Screener.store.Doctors')//,{
+        var patientStore = Ext.getStore('assPatientStore');
+        var docStore = Ext.create('Screener.store.Doctors');
         docStore.on('load', function () {
             patientStore.load();
             patientStore.on('load', function () {
