@@ -350,7 +350,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // makes the GET call to get the list with patients with prescription encounter and not prescription fill
         Ext.getCmp(patientGridId).getStore().load();
         Ext.getCmp('pharmacyTopBar').clearButtonsUI();
-        Ext.getCmp('patientsButton').setUI('raxa-orange-large');
+        // Ext.getCmp('patientsButton').setUI('raxa-orange-large');
     },
     // returns dynamically changed URL for getting patientList
     _getPatientListUrl: function (inList, notInList, encountertype) {
@@ -1004,7 +1004,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getCmp('addDrug').show();
             var x = Ext.getCmp('pharmacyTopBar').x + Ext.getCmp('pharmacyTopBar').width - Ext.getCmp('alertPanel').width;
             Ext.getCmp('newDrugButton').setText('Close');
-            Ext.getCmp('newDrugButton').setUI('raxa-orange-small');
+            // Ext.getCmp('newDrugButton').setUI('raxa-orange-small');
 
         }else{
             Ext.getCmp('addDrug').hide();
@@ -1217,7 +1217,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     time: Util.getCurrentTime()
                 };
                 Util.sendAlert(alertParams);
-                Ext.getCmp('alertButton').setUI('raxa-orange-small');
+                // Ext.getCmp('alertButton').setUI('raxa-orange-small');
                 Ext.getStore('stockList').load();
                 Ext.getCmp('allStockGrid').getView().refresh();
                 Ext.getStore('fillRequisitions').load();
@@ -1374,7 +1374,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     time: Util.getCurrentTime()
                 };
                 Util.sendAlert(alertParams);
-                Ext.getCmp('alertButton').setUI('raxa-orange-small');
+                // Ext.getCmp('alertButton').setUI('raxa-orange-small');
                 purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';
                 RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = false;
                 Ext.getCmp('submitIssueButton').enable();
@@ -1420,7 +1420,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     //Called when 'stock analysis' button is pressed
     showAvailableStock: function(){
         this._clearAllStockPanelButtonsUI();
-        Ext.getCmp('availableStockButton').setUI('raxa-orange-small');
+        // Ext.getCmp('availableStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
         if(Ext.getCmp('allStockLocationPicker').getValue()!==null){
@@ -1432,7 +1432,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     //Called when 'Expiring Stock' button is pressed
     showExpiringStock: function(){
         this._clearAllStockPanelButtonsUI();
-        Ext.getCmp('expiringStockButton').setUI('raxa-orange-small');
+        // Ext.getCmp('expiringStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
         if(Ext.getCmp('allStockLocationPicker').getValue()!==null){
@@ -1446,7 +1446,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     showStockOut: function(){
         this._clearAllStockPanelButtonsUI();
-        Ext.getCmp('lowStockButton').setUI('raxa-orange-small');
+        // Ext.getCmp('lowStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
         if(Ext.getCmp('allStockLocationPicker').getValue()!==null){
@@ -1460,7 +1460,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     showAllOrders: function(){
         this._clearAllStockPanelButtonsUI();
-        Ext.getCmp('allOrdersButton').setUI('raxa-orange-small');
+        // Ext.getCmp('allOrdersButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
     },
     
