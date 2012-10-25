@@ -397,6 +397,31 @@ Ext.define('Registration.controller.Main', {
 
         //POST Encounter with no observation if called immediately after creating Patient. (RAXAJSS-386)
         if(arguments[0] != 'send no obs') {
+            // TODO: Refactor ...
+
+            
+            // function validateAndAddObs(componentId, personUuid, conceptUuid) {
+            //     if(this._isOkToSendByREST()) {
+            //         console.log("pushing obs for component: '" + componentId + "'");
+            //         var val = Ext.getCmp(componentId).getValue();
+            //         if (type == "int") { 
+            //             val = parseInt(val); 
+            //         } else if (type == "float") { 
+            //             val = parseFloat(val);
+            //         }
+
+            //         var o = Ext.create('Registration.model.obsModel', {
+            //             obsDatetime: t,
+            //             person: personUuid,
+            //             concept: conceptUuid,
+            //             value: val
+            //         });
+            //         jsonencounter.data.obs.push(o.data);
+            //     }
+            // }
+            //
+            // validateAndAddObs('heightIDcm', localStorage.newPatientUuid, localStorage.heightUuidconcept, date());
+                
             // {
             //     {
             //         id : '',
