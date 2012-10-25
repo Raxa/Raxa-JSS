@@ -211,27 +211,28 @@ Ext.define('Registration.view.SearchConfirm', {
                             flex: 1,
                             allowBlank: false
                         }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'religion',
-                            id: 'religionSearchedPatient',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion.emptytext'),
-                            readOnly: true,
-                            flex: 1,
-                            allowBlank: false
-                        }]
+                    // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
+                    // }, {
+                    //     xtype: 'fieldcontainer',
+                    //     fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion'),
+                    //     layout: 'hbox',
+                    //     combineErrors: true,
+                    //     defaultType: 'textfield',
+                    //     labelAlign: 'right',
+                    //     labelPad: 20,
+                    //     labelWidth: 250,
+                    //     anchor: '95%',
+                    //     defaults: {
+                    //         hideLabel: 'true'
+                    //     },
+                    //     items: [{
+                    //         name: 'religion',
+                    //         id: 'religionSearchedPatient',
+                    //         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion.emptytext'),
+                    //         readOnly: true,
+                    //         flex: 1,
+                    //         allowBlank: false
+                    //     }]
                     }, {
                         xtype: 'textfield',
                         id: 'residentialAreaSearchedPatient',
