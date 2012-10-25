@@ -22,6 +22,8 @@
 // fruit to start with 
 
 /* Phone Number Validation */
+
+
 Ext.apply(Ext.form.VTypes, {
     phone: function (value, field) {
         return value.replace(/[ \-\(\)]/g, '').length == 10;
@@ -35,8 +37,8 @@ Ext.apply(Ext.form.VTypes, {
 LAB_HOST= 'http://openmrs.gielow.me/openmrs-1.8.4';
 LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
-
-var HOST;
+    http://test.raxa.org:8080/openmrs/ws/rest/v1/concept?q=tablet
+    var HOST;
 var DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
 if (localStorage.getItem("host") === null) {
     HOST = DEFAULT_HOST; 
@@ -151,6 +153,7 @@ var resourceUuid = {
         "varName": "referred",
         "displayName": "REFERRING PERSON"
     },
+    
     "notes": {
         "resource": "concept",
         "queryTerm": "REGISTRATION NOTES",
@@ -336,11 +339,11 @@ var REG_PAGES = {
     }
 };
 
-var UITIME = 120000;
-var ONEDAYMS = 86400000;
 var MONTHSINAYEAR = 12;
 var diffinUTC_GMT = 5.5;
 //number of hours for everything to be before now
+var UITIME = 120000;
+var ONEDAYMS = 86400000;
 //OpenMRS checks whether encounters are ahead of current time --
 //if a system clock is ahead of OpenMRS clock, some things can't be posted
 //therefore, we need to fudge our time a few mins behind
@@ -356,6 +359,7 @@ var Util = {
     DOCTOR_ATTRIBUTE: 'isOutpatientDoctor - true',
 
     DEFAULT_LOCATION: "GAN",
+    
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
@@ -485,20 +489,27 @@ var Util = {
     },
     
     uuidLoadedSuccessfully: function(){
-        if( this.checkAllUuidsLoaded()) {
+        if( this.checkAllUuidsNValidationLoaded() ) {
             return true;
         } else {
             window.location = "../";
         }
     },
 
-    checkAllUuidsLoaded: function() {
+    checkAllUuidsNValidationLoaded: function() {
         var that=this;
         var expectedUuidCount=0;
         var uuidsLoadedCount=0;
         var uuidsNotFound = "";
+        var storValAttrs = JSON.parse(localStorage.getItem('validateAttribute'));
         for (var key in resourceUuid) { 
             expectedUuidCount++;
+            if(resourceUuid[key].resource == "concept") {
+                if(!(key in storValAttrs))  {
+                    console.log("Concept for which validation failed to load is:"+ resourceUuid[key].displayName)    
+                    return false;
+                } 
+            }   
             var item = resourceUuid[key].varName + "Uuid" + resourceUuid[key].resource;
             if(localStorage.getItem(item) != null){ 
                 uuidsLoadedCount++;
@@ -507,12 +518,13 @@ var Util = {
                 this.getAttributeFromREST(resourceUuid[key].resource, resourceUuid[key].queryTerm, resourceUuid[key].varName, resourceUuid[key].displayName);
             }
         }
-        
         console.log("UUIDs expected = " + expectedUuidCount + ". UUIDs loaded " + uuidsLoadedCount);
         
         if (expectedUuidCount == uuidsLoadedCount) {
             return true;
-        } else {
+        } 
+          
+        else {
             console.log("Uuid's which failed to load were:" + uuidsNotFound);
             return false;
         }
@@ -552,7 +564,7 @@ var Util = {
         
     },
 
-      /**
+    /**
        *Return selected module in Raxa and by changing the module text font .
        *@return [ 'LOGIN', 'SCREENER', ....]
        */
@@ -655,12 +667,12 @@ var Util = {
             if(jsonData.results.length > 0) {
                 return(Util.getPatientIdentifier());
             } else {
-                 return generatedId;
+                return generatedId;
             }
         }
     },
     
-  //  getX: function(){return 5},
+    //  getX: function(){return 5},
 
     //Function to help share Models between ExtJS and Sencha Touch 2
     platformizeModelConfig: function (extJsModelConfig) {
@@ -703,7 +715,90 @@ var Util = {
             }
         });
     },
-
+    
+    
+        //Function for applying validation on concept resources
+    getValidationUrl: function() {
+        if(localStorage.getItem("validateAttribute") === null) {
+            localStorage.setItem("validateAttribute","{}");
+        }
+        for (var k in resourceUuid) {
+            var res = resourceUuid[k];
+            if(res.resource == "concept") {
+                Ext.Ajax.request({
+                    url : HOST+'/ws/rest/v1/' + res.resource + '?q=' + res.queryTerm,
+                    method: 'GET',
+                    disableCaching: false,
+                    headers: Util.getBasicAuthHeaders(),
+                    failure: function (response) {
+                        console.log('GET failed with response status: '+ response.status); // + response.status);
+                    },
+                    success: function (response) {
+                        var rt = JSON.parse(response.responseText);
+                        for(var i=0;i < rt.results.length;++i){
+                            for (var k in resourceUuid) {
+                                if(rt.results[i].display == resourceUuid[k].displayName) {
+                                    var varName = resourceUuid[k].varName;
+                                    var  conceptUrl = rt.results[i].links[i].uri;
+                                }
+                            }
+                            Util.getValidationAttributeRest(conceptUrl,varName);                        
+                        } 
+                    }
+                });    
+            }
+        }
+    },
+    
+    // Get the maximum and minimum bounds set by OpenMRS concept dictionary
+    getValidationBounds: function(resource , type) {
+        if(type == "max") {
+            var maxValue = JSON.parse(localStorage.getItem('validateAttribute'))[resource.varName].hiAbsolute;
+            if(maxValue == null) {
+                // We need this in the Screener module, sliders must have min and max value
+                var DEFAULT_MAX_VALUE_FOR_SLIDER = 100;
+                return DEFAULT_MAX_VALUE_FOR_SLIDER;
+            } else {
+                return maxValue;
+            }
+        } else
+        if(type == "min") {
+            var minValue = JSON.parse(localStorage.getItem('validateAttribute'))[resource.varName].lowAbsolute;
+            if(minValue == null) {
+                 var DEFAULT_MIN_VALUE_FOR_SLIDER = 0;
+                return DEFAULT_MIN_VALUE_FOR_SLIDER;
+            } else {
+                return minValue;
+            }
+        }
+    },
+    
+    getValidationAttributeRest: function( conceptUrl , varName ) {
+        var validateAttributes=[];
+        Ext.Ajax.request({
+            //url: HOST + '/ws/rest/v1/' + resource + '?q=' + queryParameter, //'/ws/rest/v1/concept?q=height',
+            url : conceptUrl+'?v=full',
+            method: 'GET',
+            disableCaching: false,
+            headers: Util.getBasicAuthHeaders(),
+            failure: function (response) {
+                console.log('GET failed with response status: ' + response.status);// + response.status);
+                return 0;
+            },
+            success: function (response) {
+                var validateAttribute = {
+                    "dataType": JSON.parse(response.responseText).datatype.name,
+                    "hiAbsolute": JSON.parse(response.responseText).hiAbsolute,
+                    "lowAbsolute": JSON.parse(response.responseText).lowAbsolute
+                };
+                var validateAttributes = JSON.parse(localStorage.getItem("validateAttribute"));
+                validateAttributes[varName] = validateAttribute;
+                localStorage.setItem("validateAttribute",JSON.stringify(validateAttributes))
+            }
+              
+        });
+    },
+    
     getPersonUuidFromProviderUuid: function (uuid) {
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/provider/' + uuid,
@@ -731,7 +826,7 @@ var Util = {
         {
             this.DestroyKeyMapButton(keyName);
         }
-	  keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
+        keyMap.keyName = Ext.create('Ext.util.KeyMap',Ext.getBody(), [
         {
             key: keyName,
             shift: false,
@@ -740,8 +835,8 @@ var Util = {
                 var element = Ext.getCmp(ComponentName);
                 element.fireEvent('click',element);
 
-                }
             }
+        }
         ]);
 
     },
