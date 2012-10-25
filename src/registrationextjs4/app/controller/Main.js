@@ -55,19 +55,28 @@ Ext.define('Registration.controller.Main', {
 
     // Copy values of all fields from registrations form to the fields in confirmation screen
     confirmPage: function() {
-        var l = Ext.getCmp('mainRegArea').getLayout();
+        // Before proceeding to confirmation page, check if all the required fields are valid
+        var requiredFields = ['patientFirstName', 'patientLastName', 'centreId'];
+        var allFieldsAreValid = true;
+        for (var i=0; i<requiredFields.length; i++) {
+            if (!Ext.getCmp(requiredFields[i]).isValid()) {
+                allFieldsAreValid = false;
+            }
+        }
 
-        // Check if all the required fields are non-empty or not
-        if(Ext.getCmp('patientFirstName').isValid() && Ext.getCmp('patientLastName').isValid() && Ext.getCmp('relativeFirstName').isValid() && Ext.getCmp('relativeLastName').isValid() && Ext.getCmp('residentialArea').isValid() && Ext.getCmp('street').isValid() && Ext.getCmp('town').isValid() && Ext.getCmp('patientPrimaryContact').isValid() && Ext.getCmp('patientSecondaryContact').isValid()) {
+        // Check if all fields are valid, else warn user that she cannot continue
+        if(allFieldsAreValid) {
+            // Handle Age and Date of Birth separately, since we only need one of these
             if(Ext.getCmp('patientAge').isValid() || Ext.getCmp('dob').isValid()) {
+                var l = Ext.getCmp('mainRegArea').getLayout();
                 l.setActiveItem(REG_PAGES.REG_CONFIRM.value);
+                // TODO: Bug. After first use, keymap get set to go directly to illness screen
                 Util.KeyMapButton('submitButton', Ext.EventObject.ENTER);
             } else {
-                Ext.Msg.alert('Please enter Age or DOB of the patient');
+                Ext.Msg.alert('Fields Invalid', 'Please enter age or date of birth');
             }
-
         } else {
-            Ext.Msg.alert("Fields invalid - enter patient name and age");
+            Ext.Msg.alert('Fields Invalid', 'Please enter all required fields');
         }
 
         // Copies all fields from registration form to confirmation screen
@@ -76,7 +85,8 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('patientNameHindiConfirm').setText((Ext.getCmp('patientFirstNameHindi').value || "") + " " + (Ext.getCmp('patientLastNameHindi').value || ""));
         Ext.getCmp('relativeNameConfirm').setText((Ext.getCmp('relativeFirstName').value || "") + " " + (Ext.getCmp('relativeLastName').value || ""));
         Ext.getCmp('ageConfirm').setText(Ext.getCmp('patientAge').value || "");
-        Ext.getCmp('sexConfirm').setText(Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel);
+        var gender = Ext.getCmp('sexComboBox').value || "Unknown";    // TODO: Come up with better solution. For now, gender dropdown defaults to giving a value of other if not inputted
+        Ext.getCmp('sexConfirm').setText(gender);
         Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
@@ -124,43 +134,72 @@ Ext.define('Registration.controller.Main', {
     // Make the post call for making the person
     submit: function() {
         //have to disable when clicked so user doesn't create 2 patients by clicking twice
+        // Ext.getCmp('confirmationBackButton').disable();
         Ext.getCmp('submitButton').disable();
 
+        // Gender
+        var personGender = Ext.getCmp('sexComboBox').value || "Unknown";
+
+        // Names
         // By default, just include "regular" name
-        var patientNames = [{
+        var personNames = [{
             givenName: Ext.getCmp('patientFirstName').value,
             familyName: Ext.getCmp('patientLastName').value
         }];
 
-        // Add Hindi name IFF it exists
+        // Add Hindi name IFF both Given and Family names exist (required by OpenMRS to have both)
         var firstNameHindi = Ext.getCmp('patientFirstNameHindi').value || "";
         var lastNameHindi = Ext.getCmp('patientLastNameHindi').value || "";
         if(firstNameHindi !== "" && lastNameHindi !== "") {
-            patientNames.push({
+            personNames.push({
                 givenName: firstNameHindi,
                 familyName: lastNameHindi
             });
         }
 
-        //creating the json object to be made
-        var jsonperson = Ext.create('Registration.model.Person', {
-            gender: Ext.getCmp('sexRadioGroup').getChecked()[0].boxLabel.charAt(0),
-            names: patientNames,
-            addresses: [{
-                address1: Ext.getCmp('street').value,
-                address2: Ext.getCmp('residentialArea').value,
-                address3: Ext.getCmp('tehsil').value,
-                cityVillage: Ext.getCmp('town').value,
-                stateProvince: Ext.getCmp('state').value,
-                countyDistrict: Ext.getCmp('district').value
-            }],
-            attributes: [{
-                value: Ext.getCmp('relativeFirstName').value + " " + Ext.getCmp('relativeLastName').value,
+        // Addresses
+        var personAddresses = {};
+        var addressItems = [
+            {componentId:'street', name:'address1'},
+            // {componentId:'residentialArea', name:'address2'},
+            {componentId:'tehsil', name:'address3'},
+            {componentId:'town', name:'cityVillage'},
+            {componentId:'state', name:'stateProvince'},
+            {componentId:'district', name:'countyDistrict'}
+        ];
+
+        for (var i=0; i < addressItems.length; i++) {
+            var val = Ext.getCmp(addressItems[i].componentId).value;
+            if (val) {
+                personAddresses[addressItems[i].name] = val;
+            }
+        }
+
+        // Add relative name if first OR last name exists
+        // TODO: move this down with other attributes. it's just a special case because it combines two fields
+        var personAttributes =  {};
+        var relativeFirstName = Ext.getCmp('relativeFirstName').value || "";
+        var relativeLastName = Ext.getCmp('relativeLastName').value || "";
+        if(relativeFirstName !== "" || relativeLastName !== "") {
+            personAttributes =  {
+                // TODO: Introduces an unnecessary space if just one name added
+                value: relativeFirstName + " " + relativeLastName,
                 attributeType: localStorage.primaryRelativeUuidpersonattributetype
-            }]
-        });
-        //this if else statement change the persist property of age field in Person model so that if its
-        //empty it should not be sent to server in the body of post call
+            };
+        }
+        
+        // Creating the json object to be saved via REST
+        var person = {
+            gender: personGender,
+            names: personNames,
+            addresses: [personAddresses],
+            attributes: [personAttributes]
+        };
+        var jsonperson = Ext.create('Registration.model.Person', person);
+
+        // This if else statement change the persist property of age field in Person model so that if its
+        // empty it should not be sent to server in the body of post call
+        // TODO: What happens if Age and DOB are inconsistent?
         if(Ext.getCmp('patientAge').isValid()) {
             jsonperson.data.age = Ext.getCmp('patientAge').value;
             Registration.model.Person.getFields()[2].persist = true;
@@ -173,61 +212,39 @@ Ext.define('Registration.controller.Main', {
         } else {
             Registration.model.Person.getFields()[3].persist = false;
         }
-        if(Ext.getCmp('oldPatientIdentifier').getValue() !== null) {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('oldPatientIdentifier').getValue(),
-                //the attributeType will change if we change the server so change them if server changes
-                attributeType: localStorage.oldPatientIdentificationNumberUuidpersonattributetype
-            });
+
+        // Adds an attribute, if it's present in the UI and valid.
+        var controller = this;
+        // TODO: Can generalize this fn to add attribute, obs, whatever.
+        //      just need to ensure that valid, nonblank, etc is the right way to validate
+        //      in all scenarios. is "" ever the proper input?
+        var addAttribute = function (componentId, attributeTypeUuid) {
+            if(controller._isOkToSendByREST(componentId)) {
+                jsonperson.data.attributes.push({
+                    value: Ext.getCmp(componentId).getValue(),
+                    attributeType: attributeTypeUuid
+                });
+            }
+        };
+
+        // Person attributes
+        var attributes = [
+            {componentId: 'oldPatientIdentifier', uuid: localStorage.oldPatientIdentificationNumberUuidpersonattributetype},
+            {componentId: 'caste', uuid: localStorage.casteUuidpersonattributetype},
+            {componentId: 'education', uuid: localStorage.educationUuidpersonattributetype},
+            {componentId: 'occupation', uuid: localStorage.occupationUuidpersonattributetype},
+            {componentId: 'religion', uuid: localStorage.religionUuidpersonattributetype},
+            {componentId: 'tehsil', uuid: localStorage.tehsilUuidpersonattributetype},
+            {componentId: 'district', uuid: localStorage.districtUuidpersonattributetype},
+            {componentId: 'patientPrimaryContact', uuid: localStorage.primaryContactUuidpersonattributetype},
+            {componentId: 'patientSecondaryContact', uuid: localStorage.secondaryContactUuidpersonattributetype}
+        ];
+
+        // Add attributes, if they exist
+        for (var i = 0; i < attributes.length; i++) {
+            addAttribute(attributes[i].componentId, attributes[i].uuid );
         }
-        if(Ext.getCmp('caste').getValue() !== null) {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('caste').getValue(),
-                attributeType: localStorage.casteUuidpersonattributetype
-            });
-        }
-        if(Ext.getCmp('education').getValue() !== null) {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('education').getValue(),
-                attributeType: localStorage.educationUuidpersonattributetype
-            });
-        }
-        if(Ext.getCmp('occupation').getValue() !== null) {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('occupation').getValue(),
-                attributeType: localStorage.occupationUuidpersonattributetype
-            });
-        }
-        if(Ext.getCmp('religion').getValue() !== null) {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('religion').getValue(),
-                attributeType: localStorage.religionUuidpersonattributetype
-            });
-        }
-        if(Ext.getCmp('tehsil').getValue() !== "") {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('tehsil').getValue(),
-                attributeType: localStorage.tehsilUuidpersonattributetype
-            });
-        }
-        if(Ext.getCmp('district').getValue() !== "") {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('district').getValue(),
-                attributeType: localStorage.districtUuidpersonattributetype
-            });
-        }
-        if(Ext.getCmp('patientPrimaryContact').getValue() !== null) {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('patientPrimaryContact').getValue(),
-                attributeType: localStorage.primaryContactUuidpersonattributetype
-            });
-        }
-        if(Ext.getCmp('patientSecondaryContact').getValue() !== null) {
-            jsonperson.data.attributes.push({
-                value: Ext.getCmp('patientSecondaryContact').getValue(),
-                attributeType: localStorage.secondaryContactUuidpersonattributetype
-            });
-        }
+
         var store = Ext.create('Registration.store.Person');
         store.add(jsonperson);
         // this statement makes the post call to make the person
@@ -239,6 +256,7 @@ Ext.define('Registration.controller.Main', {
             failure: function() {
                 Ext.Msg.alert("Failure -- Please try again");
                 Ext.getCmp('submitButton').enable();
+                // Ext.getCmp('confirmationBackButton').disable();
             },
             scope: this
         });
@@ -283,7 +301,8 @@ Ext.define('Registration.controller.Main', {
                     var foundLocation = false;
                     for(var idIterator = 0; idIterator < locations.data.length; idIterator++) {
                         var str = locations.data.items[idIterator].raw.display;
-
+                        // TODO: Fix bug. Presently, if location that doesnt exist, e.g. just "G" instead of "GAN", then code will create a openMRS resource for the PERSON but not for the PATIENT
+                        //  Can we wrap preson inside of patient and create both at once, via one REST call?
                         if(str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1 && !foundLocation) {
                             this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
                             foundLocation = true;
