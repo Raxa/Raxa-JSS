@@ -625,40 +625,41 @@ Ext.define('Registration.view.RegistrationPart1', {
 
                         }]
                     }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 200,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            xtype: 'combo',
-                            name: 'religion',
-                            id: 'religion',
-                            layout: 'hbox',
-                            width: 172,
-                            typeAhead: true,
-                            minChars: 1,
-                            queryMode: 'local',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['religion'],
-                                data: [
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.1')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.2')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.3')],
-                                    [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.4')]
-                                ]
-                            }),
-                            displayField: 'religion'
+                    // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
+                    //     xtype: 'fieldcontainer',
+                    //     fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion'),
+                    //     layout: 'hbox',
+                    //     combineErrors: true,
+                    //     defaultType: 'textfield',
+                    //     labelAlign: 'right',
+                    //     labelPad: 20,
+                    //     labelWidth: 200,
+                    //     anchor: '95%',
+                    //     defaults: {
+                    //         hideLabel: 'true'
+                    //     },
+                    //     items: [{
+                    //         xtype: 'combo',
+                    //         name: 'religion',
+                    //         id: 'religion',
+                    //         layout: 'hbox',
+                    //         width: 172,
+                    //         typeAhead: true,
+                    //         minChars: 1,
+                    //         queryMode: 'local',
+                    //         store: new Ext.data.SimpleStore({
+                    //             fields: ['religion'],
+                    //             data: [
+                    //                 [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.1')],
+                    //                 [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.2')],
+                    //                 [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.3')],
+                    //                 [Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rp1.Religion.4')]
+                    //             ]
+                    //         }),
+                    //         displayField: 'religion'
 
-                        }]
-                    }, {
+                    //     }]
+                    // }, {
                         xtype: 'container',
                         layout: {
                             type: 'hbox',
