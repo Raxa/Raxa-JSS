@@ -81,7 +81,7 @@ Ext.define('Registration.view.IllnessDetails', {
                     id: 'registrationFeesPaid',
                     width: 175,
                     minValue: 0,
-                    value: 5,
+                    value: 10,
                     hideTrigger: true,
                     allowBlank: false
                 }]
@@ -96,24 +96,10 @@ Ext.define('Registration.view.IllnessDetails', {
             padding: 0,
             width: 580,
             items: [{
-                    /*xtype: 'button',*/
-                    /*margin: '30 0 0 30',*/
-                    /**//*width: 60,*/
-                    /**//*text: 'Back',*/
-                    /*ui: 'raxa-orange-small',*/
-                    /**//*action: 'back'*/
-                    /**//*},{*/
-                    /**//*xtype: 'button',*/
-                    /**//*margin: '30 0 0 30',*/
-                    /**//*width: 60,*/
-                    /*text: 'Cancel',*/
-                    /*action: 'cancel'*/
-                    /*}, {*/
                 xtype: 'button',
                 margin: '30 0 0 30',
-                /*width: 60,*/
                 text: 'Next',
-                ui: 'raxa-aqua-small',
+                // ui: 'raxa-aqua-small',
                 action: 'goToBMI'
             }]
         }]
