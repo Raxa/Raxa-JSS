@@ -30,9 +30,8 @@ Ext.define("Screener.view.VitalsForm", {
                     xtype: 'fieldset',
                     width: '500px', // TODO: layout should fit screen
                     id: 'vitalsFields',
-                    // TODO: For all inputs, get bounds from OpenMRS concept dictionary
                     items: [{
-                        scope: this,
+                        // Systolic Blood Pressure    
                         xtype: 'sliderfieldextended',
                         label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.sysbp'),
                         labelAlign: 'top',
@@ -43,8 +42,8 @@ Ext.define("Screener.view.VitalsForm", {
                         name: 'systolicBloodPressureField'
                     },
                     {
+                        // Diastolic Blood Pressure
                         xtype: 'sliderfieldextended',
-                        id: 'sliderrrrr',
                         label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsForm.diasbp'),
                         labelAlign: 'top',
                         maxValue: Util.getValidationBounds(resourceUuid.diastolicbloodpressure , "max"),
@@ -83,7 +82,6 @@ Ext.define("Screener.view.VitalsForm", {
                         labelAlign: 'top',
                         maxValue: Util.getValidationBounds(resourceUuid.pulse , "max"),
                         minValue: Util.getValidationBounds(resourceUuid.pulse , "min"), 
-
                         stepValue: 1,
                         name: 'pulseField'
                     },
@@ -94,7 +92,6 @@ Ext.define("Screener.view.VitalsForm", {
                         labelAlign: 'top',
                         maxValue: Util.getValidationBounds(resourceUuid.bloodoxygensaturation , "max"),
                         minValue: Util.getValidationBounds(resourceUuid.bloodoxygensaturation , "min"), 
-
                         stepValue: 1,
                         name: 'bloodOxygenSaturationField'
                     }]

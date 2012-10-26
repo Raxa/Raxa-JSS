@@ -148,7 +148,7 @@ var Startup = {
             message: 'Loading'
         });
 
-        if( ! Util.checkAllUuidsNValidationLoaded() ) {
+        if( ! Util.checkAllUuidsAndValidationLoaded() ) {
             uuidLoadAttempts++;
             console.log("Loading UUIDs... # attempts = " + uuidLoadAttempts + " of " + MAX_LOAD_ATTEMPTS);
         }

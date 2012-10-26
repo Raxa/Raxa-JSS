@@ -335,7 +335,6 @@ Ext.define("Screener.controller.Application", {
             scope: this,
             callback: function(records, operation, success){
                 if(success){
-                    Ext.getCmp('loadMask').setHidden(true);
                     this.setBMITime(store_patientList);
                     // TODO: Add photos to patients in screener list
                     store_patientList.each(function (record) {
