@@ -329,10 +329,6 @@ var REG_PAGES = {
         value: 5,
         name: "searchpart1"
     },
-    SEARCH_2: {
-        value: 6,
-        name: "searchpart2"
-    },
     SEARCH_CONFIRM: {
         value: 7,
         name: "searchconfirm"

@@ -368,7 +368,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Return'),
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Screen (Result List)
+                            l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen (Result List)
                         }
                     }, {
                         xtype: 'button',
