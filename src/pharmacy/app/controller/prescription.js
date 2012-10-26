@@ -381,7 +381,27 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             }
         }
         localStorage.setItem('selectedPatient', JSON.stringify(selectedPatient));
-        var printWindow = window.open('app/print.html', 'Fill Prescription', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+        
+        // Checking DrugName and Quantity are enetered for each row entered.
+        var qtyanddrugNameFlag=0;     // Flag to check for empty entries for either drugname or quantity         
+        for (var i=0;i<selectedPatient['DrugGrid'].length;i++){
+            if (selectedPatient['DrugGrid'][i].drugName=="" && selectedPatient['DrugGrid'][i].qty==0){
+                // To remove empty rows.
+            }            
+            else {
+                if (selectedPatient['DrugGrid'][i].drugName=="" || selectedPatient['DrugGrid'][i].qty==0){
+                    qtyanddrugNameFlag++;
+                }
+            }
+        }
+        
+          if (selectedPatient['DrugGrid'].length==0 || qtyanddrugNameFlag!=0) {
+               Ext.Msg.alert("Invalid","Please enter drug and corresponding quantity."); 
+            }
+        else{                         
+                     var printWindow = window.open('app/print.html', 'Fill Prescription', 'height=500,width=1100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+            }
+                
     },
     readGrid: function() {
         var drugs = Ext.getStore('orderStore').data;
