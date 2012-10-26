@@ -35,13 +35,11 @@ Ext.define("Screener.view.NewPatient", {
             },
             items : [
             {
-                xtype: 'numberfield',
+                xtype: 'textfield',
                 id: 'patientAge',
                 name: 'patientAge',
                 labelWidth: 70,
                 label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.age_dob'),
-                minValue: 0,
-                maxValue: 119,
                 allowDecimals: false,
                 placeHolder: 'Age'
             },

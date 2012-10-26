@@ -101,7 +101,7 @@ Ext.define("Screener.controller.Application", {
             addDrugFormButton: '#addDrugFormButton',
             addLabOrderButton: '#addLabOrderButton',
             removeDrugFormButton: '#removeDrugFormButton',
-			removeLabOrderButton: '#removeLabOrderButton',
+            removeLabOrderButton: '#removeLabOrderButton',
             sortByNameButton: '#sortByNameButton',
             sortByFIFOButton: '#sortByFIFOButton',
             sortByBMIButton: '#sortByBMIButton',
@@ -109,12 +109,16 @@ Ext.define("Screener.controller.Application", {
             removeAllPatientsButton: '#removeAllPatientsButton',
             patientListView: '#patientListViewId',
             PatientsWaiting: '#patientsWaiting',
-            dob: '#dob'
+            dob: '#dob',
+            patientAge: '#patientAge'
         },
         // Now we define all our listening methods
         control: {
             dob: {
                 change: 'onDateChange' 
+            },
+            patientAge: {
+                change: 'onAgeChange' 
             },
             addDrugFormButton: {
                 tap: 'addDrugForm'
@@ -122,7 +126,7 @@ Ext.define("Screener.controller.Application", {
             addLabOrderButton: {
                 tap: 'addLabOrder'
             },
-			removeLabOrderButton: {
+            removeLabOrderButton: {
                 tap: 'removeLabOrder'
             },
             addPatientButton: {
@@ -377,7 +381,7 @@ Ext.define("Screener.controller.Application", {
             scrollable: false
         });
     },
-	// remove last drug order form
+    // remove last drug order form
     removeDrugForm: function () {
         if (form_num > 0) {
             Ext.getCmp('form' + form_num).remove({
@@ -480,7 +484,7 @@ Ext.define("Screener.controller.Application", {
         } else Ext.Msg.alert("please select a patient")
     },
 
-	// Adds another lab order form
+    // Adds another lab order form
     addLabOrder: function () {
         lab_num++;
         var endOfForm = 6;
@@ -492,8 +496,8 @@ Ext.define("Screener.controller.Application", {
         });
     },
 	
-	// Removes last lab order form
-	removeLabOrder: function () {
+    // Removes last lab order form
+    removeLabOrder: function () {
         if (lab_num > 0) {
             Ext.getCmp('lab' + lab_num).remove({
                 autoDestroy: true
@@ -524,11 +528,12 @@ Ext.define("Screener.controller.Application", {
                     familyName: formp.familyname
                 }] 
             };
-            if (Ext.getCmp('patientAge').getValue() !== null) {
-               // newPatient.age = formp.patientAge;
-               newPatient.age = "";
-            }   
-            if(Ext.getCmp('dob').getValue() !== "" && Ext.getCmp('dob').getValue().length > 0) {
+            console.log("inside savePerson");
+            //console.log(this.onAgeChange());
+            //if ( this.isAgeValidate() ) {
+                newPatient.age = formp.patientAge ;   
+            //}
+            if( this.isDateValidate() ) {
                 newPatient.birthdate =  formp.dob;
             }
             var newPatientParam = Ext.encode(newPatient);
@@ -547,7 +552,7 @@ Ext.define("Screener.controller.Application", {
                 }
             });
             Ext.getCmp('newPatient').hide();
-            Ext.getCmp('newPatient').reset();
+         //   Ext.getCmp('newPatient').reset();
         }
         else {
             Ext.Msg.alert ("Please Enter all the mandatory fields");
@@ -1008,20 +1013,61 @@ Ext.define("Screener.controller.Application", {
     },
     
     onDateChange: function() {
-        if(Ext.getCmp('dob').getValue() !== "" && Ext.getCmp('dob').getValue().length > 0) {
-            var enteredDate = new Date();
+        console.log("inside onDateChange");
+        if( !(this.isDateValidate()) ) {
+            Ext.getCmp('dob').reset();
+            Ext.Msg.alert("Invalid date format","Should be in correct format and less then current date");
+        }
+       
+    },
+    
+    onAgeChange : function() {
+        console.log("inside onAgeChange");
+       // console.log(this.isAgeValidate());
+        if( !(this.isAgeValidate()) ) {
+            Ext.getCmp('patientAge').reset();
+            Ext.Msg.alert("Error" , 'Age should be an integer and in between 0 and 119');
+        }
+    },
+    
+    isDateValidate: function() {
+        console.log("inside isDateValidate");
+        var dob = Ext.getCmp('dob').getValue();
+        if( dob !== "" && dob.length > 0 ) {
             var currentDate = new Date();
-            enteredDate = Ext.Date.parse(Ext.getCmp('dob').getValue(), "Y-n-j" , true);
+            var enteredDate = Ext.Date.parse(dob, "Y-n-j" , true);
             if(enteredDate === null || enteredDate === undefined) {
-                Ext.Msg.alert("","Invalid date format")
+              //  Ext.getCmp('dob').reset();
                 return false;
-            } else 
-{
-                if(enteredDate > currentDate ) {
-                    Ext.Msg.alert("","Entered Date should not be greater then current Date")
-                }
+            } 
+            else if(enteredDate > currentDate ) {
+                //Ext.getCmp('dob').reset();
+                return false;
             }
             return true;
         }
+        return false;
+    },
+    
+    isAgeValidate: function() {
+        var patientAge = Ext.getCmp('patientAge').getValue();
+        console.log("inside isAgeValidate");
+      //  console.log(patientAge);
+      //  console.log(patientAge.length);
+      //  console.log(Ext.isNumeric(patientAge));
+      //  console.log(patientAge < 120);
+      //  console.log(patientAge >= 0 );
+      //  console.log(Util.OPEN_MRS_MAX_AGE);
+      //  console.log(Util.OPEN_MRS_MIN_AGE);
+        if ( patientAge !== "") {
+            if( Ext.isNumeric(patientAge) && patientAge < Util.OPEN_MRS_MAX_AGE && patientAge >= Util.OPEN_MRS_MIN_AGE ) {
+                return true;
+            } else {
+               // Ext.getCmp('patientAge').reset();
+               // Ext.Msg.alert("Error" , 'Age must be an integer and in between 0 and 119');
+                return false;
+            }
+        }
+        return false;
     }
 });
