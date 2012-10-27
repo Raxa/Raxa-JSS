@@ -34,7 +34,7 @@ var RaxaEmr_Pharmacy_Controller_Vars = {
         }
     },
 
-    DOSAGE_FORM_PREFIX: {
+    DOSAGE_FORM_SUFFIX: {
         TABLET: 'tab',
         CAPSULE: 'cap',
         SYRUP: 'syr',
