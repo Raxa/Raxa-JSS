@@ -1622,5 +1622,4 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             return false;
         });
     }
-
 });
