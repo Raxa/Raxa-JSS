@@ -1,7 +1,9 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStock', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.panel.Panel',
     alias: 'widget.allStock',
+    title: 'Stock >> Overview',
     items: [{
+        margin: '10 0 0 0',
         xtype: 'allStockForm'
     }, {
         xtype: 'allStockPanel'

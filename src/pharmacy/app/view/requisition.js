@@ -6,6 +6,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisition', {
     title: 'Orders >> Request Drugs',
     width: 780,
     items:[{
+        margin: '10 0 0 0',
         xtype: 'requisitionText'
     },{
         xtype: 'requisitionGrid'

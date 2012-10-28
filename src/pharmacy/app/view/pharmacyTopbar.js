@@ -13,14 +13,10 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     },
     // renderTo: Ext.getBody(),
     defaults: {
-        flex: 1,
+        flex: 1
     },
     clearButtonsUI: function(){
-        // Ext.getCmp('patientsButton').setUI('default');
-        // Ext.getCmp('inventoryButton').setUI('default');
-        // Ext.getCmp('adminButton').setUI('default');
-        // Ext.getCmp('reportsButton').setUI('default');
-        // Ext.getCmp('recordsButton').setUI('default');
+        // TODO: remove
     },
     items: [{
         xtype: 'toolbar',

@@ -6,6 +6,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
     width: 780,
     title: 'Orders >> Update Stock',
     items:[{
+        margin: '10 0 0 0',
         xtype: 'goodsReceiptText'
     },{
         xtype: 'goodsReceiptGrid'

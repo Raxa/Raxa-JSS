@@ -5,6 +5,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssue', {
     alias: 'widget.goodsIssue',
     title: 'Orders >> Send Drugs',
     items:[{
+        margin: '10 0 0 0',
         xtype: 'goodsIssueText'
     },{
         xtype: 'goodsIssueGrid'

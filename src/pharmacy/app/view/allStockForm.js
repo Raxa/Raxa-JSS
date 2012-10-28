@@ -1,18 +1,13 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.allStockForm',
-    border: false,
     width: 780,
-    activeItem: 0,
-    title: 'Stock >> Overview',
-    layout: {
-        type: 'vbox'
-    },
+    border: false,
     items: [
         {
             layout: 'hbox',
             width: 780,
-            border: true,
+            border: false,
             items: [{
                 margin: 5,
                 xtype: 'combobox',
