@@ -12,12 +12,14 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
     },{
         xtype: 'button',
         text: 'Cancel',
-        action: 'cancelReceipt'
+        action: 'cancelReceipt',
+        margin: 5
     },
     {
         xtype: 'button',
         id: 'submitReceiptButton',
         text: 'Submit',
-        action: 'submitReceipt'
+        action: 'submitReceipt',
+        margin: 5
     }]
 });

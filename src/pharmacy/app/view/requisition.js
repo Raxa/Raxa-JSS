@@ -12,12 +12,13 @@ Ext.define('RaxaEmr.Pharmacy.view.requisition', {
     },{
         xtype: 'button',
         text: 'Cancel',
-        action: 'cancelRequisition'
+        action: 'cancelRequisition',
+        margin: 5
     },
     {
         xtype: 'button',
-        // width: 60,
         text: 'Submit',
-        action: 'submitRequisition'
+        action: 'submitRequisition',
+        margin: 5
     }]
 });

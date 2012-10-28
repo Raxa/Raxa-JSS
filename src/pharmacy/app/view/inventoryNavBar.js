@@ -13,14 +13,15 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
     items: [{
         xtype: 'text',
         margin: 10,
-        html: 'STOCK'
+        html: '<b><u>STOCK</u></b>'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
         margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
         text: 'Overview',
         id: 'inventoryOverviewButton',
-        action: 'navigateInventoryOverview'
+        action: 'navigateInventoryOverview',
+        pressed: true
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
@@ -32,33 +33,33 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
     }, {
         xtype: 'text',
         margin: 10,
-        html: 'ORDERS'
+        html: '<b><u>ORDERS</u></b>'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
         margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
-        text: 'New Requisition',
+        text: 'Request Drugs',
         id: 'newRequisitionButton',
         action: 'newRequisition'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
         margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
-        text: 'New Issue',
+        text: 'Send Drugs',
         id: 'newIssueButton',
         action: 'newIssue'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
         margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
-        text: 'New Receipt',
+        text: 'Update Stock',
         id: 'newReceiptButton',
         action: 'newReceipt'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
         margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
-        text: 'New Drug',
+        text: 'Add New Drug',
         id: 'newDrugButton',
         action: 'newDrug'
     }
