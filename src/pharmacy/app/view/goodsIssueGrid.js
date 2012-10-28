@@ -41,8 +41,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                     'focus': {
                         fn: function (comboField) {
                             comboField.expand();
-                        }
-                        , 
+                        },
                         scope: this
                     },
                     'select':{

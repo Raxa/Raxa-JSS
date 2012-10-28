@@ -1,8 +1,10 @@
 Ext.define('RaxaEmr.Pharmacy.view.requisition', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.panel.Panel',
     id: '.requisition',
     autoScroll: true,
     alias: 'widget.requisition',
+    title: 'Orders >> Request Drugs',
+    width: 780,
     items:[{
         xtype: 'requisitionText'
     },{
@@ -14,7 +16,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisition', {
     },
     {
         xtype: 'button',
-        width: 60,
+        // width: 60,
         text: 'Submit',
         action: 'submitRequisition'
     }]

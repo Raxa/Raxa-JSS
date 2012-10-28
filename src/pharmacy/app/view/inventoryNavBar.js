@@ -1,12 +1,13 @@
 var INVENTORY_NAV_BAR = {
+    WIDTH : 180,
     BUTTON_WIDTH : 170,
-    BUTTON_MARGIN : 5,
-}
+    BUTTON_MARGIN : 5
+};
 
 Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
     extend: 'Ext.container.Container',
     alias: 'widget.inventoryNavBar',
-    width: 180,
+    width: INVENTORY_NAV_BAR.WIDTH,
     layout: 'vbox',
     // border: true,
     items: [{
@@ -26,7 +27,8 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
         margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
         text: 'Reports',
         id: 'inventoryReportsButton',
-        action: 'navigateInventoryReports'
+        action: 'navigateInventoryReports',
+        disabled: true
     }, {
         xtype: 'text',
         margin: 10,

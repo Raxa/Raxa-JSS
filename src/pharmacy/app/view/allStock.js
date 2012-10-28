@@ -7,8 +7,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStock', {
         xtype: 'allStockPanel'
     }, {
         layout: 'card',
-        width: 760,
-        height: 400,
+        // width: 760,
+        // height: 400,
         border: false,
         activeItem: 0,
         id: 'stocklayoutarea',

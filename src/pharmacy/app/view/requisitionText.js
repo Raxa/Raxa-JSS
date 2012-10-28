@@ -1,24 +1,17 @@
 Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.requisitionText',
     layout: {
         type: 'vbox'
     },
     items: [
     {
-        margin: 5,
-        xtype: 'displayfield',
-        value: 'New Requisition'
-    },
-    {
-        xtype: 'panel',
+        xtype: 'container',
         border: false,
-        // margin: 5,
         layout: 'hbox',
         items: [{
             margin: 5,
             xtype: 'combobox',
-            //width: 190,
             labelWidth: 90,
             id: "dispenseLocationPicker",
             store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
@@ -32,8 +25,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
                     fn: function (comboField) {
                         comboField.doQuery(comboField.allQuery, true);
                         comboField.expand();
-                    }
-                    , 
+                    },
                     scope: this
                 }
             }
@@ -41,7 +33,6 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
         {
             margin: 5,
             xtype: 'combobox',
-            //width: 190,
             labelWidth: 90,
             id: "stockLocationPicker",
             store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
@@ -55,11 +46,10 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
                     fn: function (comboField) {
                         comboField.doQuery(comboField.allQuery, true);
                         comboField.expand();
-                    }
-                    , 
+                    },
                     scope: this
                 }
             }
-        }]  
+        }]
     }]
 });
