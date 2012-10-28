@@ -1,5 +1,5 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.allStockPanel',
     id: 'allStockPanel',
     border: false,
@@ -14,7 +14,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
         id: 'availableStockButton',
         margin: '0 10 0 0',
         text: 'Available Stock',
-        action: 'showAvailableStock'
+        action: 'showAvailableStock',
+        pressed: true
     },{
         xtype: 'button',
         id: 'expiringStockButton',
@@ -33,6 +34,5 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
         margin: '0 10 0 0',
         text: 'All Orders',
         action: 'showAllOrders'
-    }
-    ]
+    }],
 });

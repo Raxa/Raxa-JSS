@@ -2,8 +2,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.allStockGrid',
     id: 'allStockGrid',
-    autoHeight: 250,
-    width: 760,
+    height: 250,
+    width: 780 - 2, // Total pixels - Border
     margin: '0 0 0 0',
     store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
         storeId: 'stockList',
@@ -18,7 +18,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
                                 Ext.getCmp('allStockGrid').updateFields();
                             }
                         }
-                    })
+                    });
                 }
                 else {
                     Ext.getCmp('allStockGrid').updateFields();
@@ -33,11 +33,11 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
                 //on select, go to drug details page
                 Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
                 Ext.getCmp('drugDetails').initForDrug(record.data.drugUuid);
-                selectionModel.deselectAll();                
+                selectionModel.deselectAll();
             },
             scope : this
-        }  
-    }),    
+        }
+    }),
     columns: [
     {
         xtype: 'gridcolumn',
@@ -87,13 +87,13 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         text: 'Dispense Location',
         dataIndex: 'locationName',
         width: 120
-    },        
+    },
     {
         xtype: 'gridcolumn',
         text: 'Supplier',
         dataIndex: 'supplier',
         width: 120
-    },        
+    },
     {
         xtype: 'actioncolumn',
         width: 22,
