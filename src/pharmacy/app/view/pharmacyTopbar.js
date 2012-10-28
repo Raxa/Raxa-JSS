@@ -115,7 +115,6 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             xtype: 'button',
             height: BUTTON_HEIGHT,
             text: 'Log Out',
-            
             handler: function() {
                 Ext.Msg.confirm("Log Out", "Are you sure?", function(btn){
                     if(btn =='yes'){

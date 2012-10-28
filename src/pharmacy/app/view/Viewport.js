@@ -2,7 +2,7 @@ PHARMACYTOPBARHEIGHT = 65;
 
 Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     extend: 'Ext.container.Viewport',
-    requires: 'RaxaEmr.Pharmacy.view.pharmacyTopbar',
+    requires: ['RaxaEmr.Pharmacy.view.pharmacyTopbar','RaxaEmr.Pharmacy.view.Inventory'],
     autoScroll: true,
     width: 960,
     autoHeight: 800,
@@ -66,7 +66,7 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
             },{
                 xtype: 'drugGroups'
             },{
-                xtype: 'allStock'
+                xtype: 'Inventory'
             },{
                 xtype: 'requisition'
             },{
