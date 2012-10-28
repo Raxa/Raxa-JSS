@@ -2,8 +2,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.allStockForm',
     border: false,
-    width: 840,
-    margin: '10 0 0 110',
+    width: 760,
+    margin: '10 0 0 0',
     activeItem: 0,
     layout: {
         type: 'vbox'

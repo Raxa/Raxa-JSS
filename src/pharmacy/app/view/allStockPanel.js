@@ -3,11 +3,11 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockPanel', {
     alias: 'widget.allStockPanel',
     id: 'allStockPanel',
     border: false,
-    width: 840,
+    width: 760,
     layout: {
         type: 'hbox'
     },
-    margin: '10 0 10 110',
+    margin: '10 0 10 0',
     items: [
     {
         xtype: 'button',
