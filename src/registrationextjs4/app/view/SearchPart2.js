@@ -92,8 +92,10 @@ Ext.define('Registration.view.SearchPart2', {
                         listeners: {
                             cellClick: {
                                 fn: function () {
-									//All fields are initially set to '-' if data is not available, they remain same otherwise take respective values								
-									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','residentialAreaSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','stateSearchedPatient','casteSearchedPatient','educationSearchedPatient','religionSearchedPatient'];
+									//All fields are initially set to '-' if data is not available, they remain same otherwise take respective values			
+                                    // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
+                                    // 'religionSearchedPatient'
+									var itemsToReset = ['patientNameSearchedPatient','ageSearchedPatient','sexSearchedPatient','residentialAreaSearchedPatient','stretSearchedPatient','townSearchedPatient','oldPatientIdentifierSearchedPatient','occupationSearchedPatient','relativeNameSearchedPatient','tehsilSearchedPatient','secondaryContactNumberSearchedPatient','primaryContactNumberSearchedPatient','districtSearchedPatient','stateSearchedPatient','casteSearchedPatient','educationSearchedPatient'];
 									for(var j=0 ; j < itemsToReset.length ; j++)
 									{
 										Ext.getCmp(itemsToReset[j]).setValue('-');
@@ -163,10 +165,11 @@ Ext.define('Registration.view.SearchPart2', {
 										{
 											Ext.getCmp('educationSearchedPatient').setValue(temp.attributes[i].value);
 										}
-										if(temp.attributes[i].attributeType.display.search('Religion')>=0)
-										{
-											Ext.getCmp('religionSearchedPatient').setValue(temp.attributes[i].value);
-										}
+                                        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
+										// if(temp.attributes[i].attributeType.display.search('Religion')>=0)
+                                        // {
+                                        //     Ext.getCmp('religionSearchedPatient').setValue(temp.attributes[i].value);
+                                        // }
                                     }
                                     var l = Ext.getCmp('mainRegArea').getLayout();
                                     l.setActiveItem(REG_PAGES.SEARCH_CONFIRM.value);
@@ -181,7 +184,7 @@ Ext.define('Registration.view.SearchPart2', {
                         xtype: 'button',
                         margin: '10 50 0 270',
                         width: 120,
-                        ui: 'raxa-aqua-small',
+                        // ui: 'raxa-aqua-small',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sp2.MS'),
                         action: 'modifySearch'
                     }]
