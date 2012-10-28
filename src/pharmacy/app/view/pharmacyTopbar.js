@@ -61,7 +61,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             width: 80,
             handler: function(){
                 var l = Ext.getCmp('mainarea').getLayout();
-                l.setActiveItem(4);
+                l.setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.ALLSTOCK.value);
             }
         }, {
         // // Bill Records

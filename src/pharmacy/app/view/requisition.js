@@ -4,22 +4,18 @@ Ext.define('RaxaEmr.Pharmacy.view.requisition', {
     autoScroll: true,
     alias: 'widget.requisition',
     items:[{
-        xtype: 'requisitionText',
-        x : 100
+        xtype: 'requisitionText'
     },{
-        xtype: 'requisitionGrid',
-        x : 100
+        xtype: 'requisitionGrid'
     },{
         xtype: 'button',
         text: 'Cancel',
-        action: 'cancelRequisition',
-        x: 500
+        action: 'cancelRequisition'
     },
     {
         xtype: 'button',
         width: 60,
         text: 'Submit',
-        action: 'submitRequisition',
-        x: 600
+        action: 'submitRequisition'
     }]
 });

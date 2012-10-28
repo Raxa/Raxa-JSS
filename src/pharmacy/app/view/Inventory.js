@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.Pharmacy.view.Inventory', {
     extend: 'Ext.container.Container',
-    requires: ['RaxaEmr.Pharmacy.view.inventoryNavBar'],
+    requires: ['RaxaEmr.Pharmacy.view.inventoryNavBar', 'RaxaEmr.Pharmacy.view.requisition'],
     alias: 'widget.Inventory',
     layout: {
         type: 'hbox'
@@ -15,9 +15,12 @@ Ext.define('RaxaEmr.Pharmacy.view.Inventory', {
         layout: 'card',
         items: [{
             xtype: 'allStock'
-        },{
-            xtype: 'text',
-            html: 'yo'
+        }, {
+            xtype: 'requisition'
+        }, {
+            xtype: 'goodsIssue'
+        }, {
+            xtype: 'goodsReceipt'
         }]
     }]
 });

@@ -15,7 +15,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     viewConfig: {
         stripeRows: false
     },
-    initComponent: function () {    
+    initComponent: function () {
         var issueEditor = this;
         this.addEvents(['deleteIssueDrug']);
         this.columns = [

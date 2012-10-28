@@ -1,16 +1,15 @@
 Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.goodsIssueText',
-    height: 250,
+    // height: 250,
     width: 743,
     layout: {
         type: 'vbox'
     },
     items: [
     {
-        
         xtype: 'displayfield',
-        value: 'New Stock Issue',
+        value: 'New Stock Issue'
     },
     {
         xtype: 'panel',

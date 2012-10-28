@@ -56,21 +56,15 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
         items:[{
             layout: 'card',
             id: 'mainarea',
-            activeItem: 4,
+            activeItem: 3,
             items:[{
                 xtype: 'prescription'
-            },{
-                xtype: 'goodsIssue'
             },{
                 xtype: 'reports'
             },{
                 xtype: 'drugGroups'
             },{
                 xtype: 'Inventory'
-            },{
-                xtype: 'requisition'
-            },{
-                xtype: 'goodsReceipt'
             },{
                 xtype: 'drugDetails'
             }]

@@ -4,11 +4,10 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
     id: 'requisitionGrid',
     height: 250,
     styleHtmlContent: false,
-    width: 520,
+    width: 600,
     layout: {
         type: 'absolute'
     },
-    x: 200,
     store: 'RequisitionItems',
     autoScroll: true,
     selType: 'cellmodel',

@@ -4,36 +4,32 @@ var RaxaEmr_Pharmacy_Controller_Vars = {
             value: 0,
             name: "prescription"
         },
-        GOODSDETAILS: {
-            value: 1,
-            name: "goodsdetails"
-        },
+
         REPORTS: {
-            value: 2,
+            value: 1,
             name: "reports"
         },
         DRUGGROUPS: {
-            value: 3,
+            value: 2,
             name: "drugGroups"
         },
         ALLSTOCK: {
-            value: 4,
+            value: 3,
             name: "allStock"
         },
-        REQUISITION: {
-            value: 5,
-            name: "requisition"
-        },
-        GOODSRECEIPT: {
-            value: 6,
-            name: "goodsReceipt"
-        },
         DRUGDETAILS: {
-            value: 7,
+            value: 4,
             name: "drugDetails"
         }
     },
-    
+
+    INVENTORY_PAGES : {
+        OVERVIEW: {value:0, name: "overview"},
+        REQUISITION: {value:1, name: "requisition"},
+        ISSUE: {value:2, name: "goodsIssue"},
+        RECEIPT: {value:3, name: "goodsReceipt"}
+    },
+
     //Here we store all the various strings to keep track of where the inventory is.
     STOCK_STATUS: {
         AVAILABLE: 'available',
@@ -158,19 +154,22 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "allStockForm button[action=newPurchaseOrder]": {
                 click: this.newPurchaseOrder
             },
-            "allStockForm button[action=newRequisition]": {
+            "inventoryNavBar button[action=navigateInventoryOverview]": {
+                click: this.navigateInventoryOverview
+            },
+            "inventoryNavBar button[action=newRequisition]": {
                 click: this.newRequisition
             },
-            "allStockForm button[action=newIssue]": {
+            "inventoryNavBar button[action=newIssue]": {
                 click: this.newIssue
             },
-            "allStockForm button[action=newReceipt]": {
+            "inventoryNavBar button[action=newReceipt]": {
                 click: this.newReceipt
             },
-            "allStockForm button[action=newDrug]": {
+            "inventoryNavBar button[action=newDrug]": {
                 click: this.newDrug
             },
-            "allStockForm button[action=newDrugGroup]": {
+            "inventoryNavBar button[action=newDrugGroup]": {
                 click: this.newDrugGroup
             },
             "allStockForm button[action=cancelAllStockLocationPicker]": {
@@ -850,20 +849,37 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     goBack: function () {
         Ext.getCmp('searchGrid').getLayout().setActiveItem(0);
     },
-    
-    // Creates a new purchase order
-    newPurchaseOrder: function() {
-        // TODO
+
+    ////////////////////////////////
+    //////     Navigation     //////
+    ////////////////////////////////
+
+    navigateInventoryOverview: function() {
+        var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.OVERVIEW.value;
+        Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
     },
-    
+        
+    //creates new requisition
+    newRequisition: function() {
+        var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.REQUISITION.value;
+        Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
+    },
+
     // Creates new stock issue
     newIssue: function(){
-        Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.GOODSDETAILS.value);
+        var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.ISSUE.value;
+        Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
     },
     
     // Creates new receipt
     newReceipt: function() {
-        Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.GOODSRECEIPT.value);
+        var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.RECEIPT.value;
+        Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
+    },
+
+    // Creates a new purchase order
+    newPurchaseOrder: function() {
+        // TODO
     },
     
     //deletes current row of requisition grid
@@ -990,12 +1006,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.Msg.alert('Error: unable to write to server');
             }
         });
-    },
-
-
-    //creates new requisition
-    newRequisition: function() {
-        Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.REQUISITION.value);
     },
     
     //creates new drug
@@ -1412,7 +1422,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     filterAllStocksByLocation: function() {
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
-        if(Ext.getCmp('allStockLocationPicker').getValue()!==null){
+        if(Ext.getCmp('allStockLocationPicker').getValue()){
             Ext.getStore('stockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
     },
@@ -1423,7 +1433,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // Ext.getCmp('availableStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
-        if(Ext.getCmp('allStockLocationPicker').getValue()!==null){
+        if(Ext.getCmp('allStockLocationPicker').getValue()){
             Ext.getStore('stockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
         Ext.getStore('stockList').filter('status', 'available');
@@ -1435,7 +1445,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // Ext.getCmp('expiringStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
-        if(Ext.getCmp('allStockLocationPicker').getValue()!==null){
+        if(Ext.getCmp('allStockLocationPicker').getValue()){
             Ext.getStore('stockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
         Ext.getStore('stockList').filterBy(function(record, id){
@@ -1449,7 +1459,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // Ext.getCmp('lowStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
-        if(Ext.getCmp('allStockLocationPicker').getValue()!==null){
+        if(Ext.getCmp('allStockLocationPicker').getValue()){
             Ext.getStore('stockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
         Ext.getStore('stockList').filterBy(function(record, id){
