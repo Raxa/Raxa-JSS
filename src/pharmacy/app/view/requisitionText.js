@@ -8,7 +8,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
     {
         xtype: 'container',
         border: false,
-        layout: 'hbox',
+        layout: 'vbox',
         items: [{
             margin: 5,
             xtype: 'combobox',

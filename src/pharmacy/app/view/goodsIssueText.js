@@ -8,7 +8,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
     items: [{
         xtype: 'container',
         border: false,
-        margin: 5,
         layout: 'hbox',
         items: [{
             xtype: 'combobox',
@@ -48,7 +47,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         }]
     },
     {
-        margin: 5,
         xtype: 'combobox',
         id: "issueStockLocationPicker",
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
@@ -60,7 +58,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         emptyText: 'Location'
     },
     {
-        margin: 5,
         xtype: 'combobox',
         id: "issuedispenseLocationPicker",
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {

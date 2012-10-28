@@ -6,6 +6,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
     },
     autoScroll: true,
     items: [{
+        margin: 5,
         xtype: 'combobox',
         id: "receiptLocationPicker",
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
@@ -16,6 +17,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
         valueField: 'uuid',
         emptyText: 'Location'
     }, {
+        margin: 5,
         xtype: 'combobox',
         id: "receiptPurchaseOrderPicker",
         store: Ext.create('RaxaEmr.Pharmacy.store.PurchaseOrders', {
