@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     alias: 'widget.goodsReceiptGrid',
     styleHtmlContent: false,
     height: 250,
-    width: 743,
+    width: 780 - 2, // Total pixels - Border
     store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
         autoLoad: false,
         storeId: 'newReceipt'
@@ -67,7 +67,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 allowBlank: true,
                 decimalPrecision: 0,
                 allowDecimals: false,
-                minValue: 0             
+                minValue: 0
             }
         },
         {
@@ -149,8 +149,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 items: [
                     '->',
                     {
-                        text: 'Add Drug',
-                        iconCls: 'icon-add',
+                        text: '(+) Add Drug',
                         action: 'addReceiptDrug'
                     }]
             }];

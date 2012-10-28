@@ -3,8 +3,8 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
     alias: 'widget.requisitionGrid',
     id: 'requisitionGrid',
     height: 250,
+    width: 780 - 2, // Total pixels - Border
     styleHtmlContent: false,
-    width: 600,
     layout: {
         type: 'absolute'
     },
@@ -17,7 +17,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
     viewConfig: {
         stripeRows: false
     },
-    initComponent: function () {    
+    initComponent: function () {
         var requisitionEditor = this;
         this.addEvents(['deleteRequisitionDrug']);
         this.columns = [
@@ -38,8 +38,8 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                         'focus': {
                             fn: function (comboField) {
                                 comboField.expand();
-                            }
-                            , scope: this
+                            },
+                            scope: this
                         }
                     }
                 }
@@ -77,8 +77,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                 items: [
                     '->',
                     {
-                        text: 'Add Drug',
-                        iconCls: 'icon-add',
+                        text: '(+) Add Drug',
                         action: 'addRequisitionDrug'
                     }]
             }];

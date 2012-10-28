@@ -866,24 +866,37 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     navigateInventoryOverview: function() {
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.OVERVIEW.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
+        this._updateHighlightedButtonInventoryNavBar('inventoryOverviewButton');
     },
         
     //creates new requisition
     newRequisition: function() {
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.REQUISITION.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
+        this._updateHighlightedButtonInventoryNavBar('newRequisitionButton');
     },
 
     // Creates new stock issue
     newIssue: function(){
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.ISSUE.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
+        this._updateHighlightedButtonInventoryNavBar('newIssueButton');
     },
     
     // Creates new receipt
     newReceipt: function() {
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.RECEIPT.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
+        this._updateHighlightedButtonInventoryNavBar('newReceiptButton');
+    },
+
+    _updateHighlightedButtonInventoryNavBar: function(id) {
+        var btns = ['inventoryOverviewButton', 'newRequisitionButton', 'newIssueButton', 'newReceiptButton'];
+        for (var i=0; i < btns.length; i++) {
+
+            Ext.getCmp(btns[i]).toggle(false);
+        }
+        Ext.getCmp(id).toggle(true);
     },
 
     // Creates a new purchase order
@@ -1424,7 +1437,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     //Called when all stock location has been cleared (no location selected for stock grid)
     showAllStock: function(){
-        this._clearAllStockPanelButtonsUI();
+        // this._clearAllStockPanelButtonsUI('');
         Ext.getStore('stockList').clearFilter();
     },
     
@@ -1438,7 +1451,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     //Called when 'stock analysis' button is pressed
     showAvailableStock: function(){
-        this._clearAllStockPanelButtonsUI();
+        this._clearAllStockPanelButtonsUI('availableStockButton');
         // Ext.getCmp('availableStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
@@ -1450,7 +1463,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     //Called when 'Expiring Stock' button is pressed
     showExpiringStock: function(){
-        this._clearAllStockPanelButtonsUI();
+        this._clearAllStockPanelButtonsUI('expiringStockButton');
         // Ext.getCmp('expiringStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
@@ -1464,7 +1477,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     showStockOut: function(){
-        this._clearAllStockPanelButtonsUI();
+        this._clearAllStockPanelButtonsUI('lowStockButton');
         // Ext.getCmp('lowStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
@@ -1478,16 +1491,18 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     showAllOrders: function(){
-        this._clearAllStockPanelButtonsUI();
+        this._clearAllStockPanelButtonsUI('allOrdersButton');
         // Ext.getCmp('allOrdersButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
     },
     
-    _clearAllStockPanelButtonsUI: function(){
-        Ext.getCmp('availableStockButton').setUI('default');
-        Ext.getCmp('expiringStockButton').setUI('default');
-        Ext.getCmp('lowStockButton').setUI('default');
-        Ext.getCmp('allOrdersButton').setUI('default');
+    _clearAllStockPanelButtonsUI: function(id){
+        var btns = ['availableStockButton', 'expiringStockButton', 'lowStockButton', 'allOrdersButton'];
+        for (var i=0; i < btns.length; i++) {
+
+            Ext.getCmp(btns[i]).toggle(false);
+        }
+        Ext.getCmp(id).toggle(true);
     },
     
     // Reduces the batch quantity in back end
