@@ -16,7 +16,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     viewConfig: {
         stripeRows: false
     },
-    x: 110,
     initComponent: function () {
         var receiptEditor = this;
         this.addEvents(['deleteReceiptDrug']);
