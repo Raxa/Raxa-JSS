@@ -3,8 +3,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     alias: 'widget.allStockGrid',
     id: 'allStockGrid',
     autoHeight: 250,
-    width: 600,
-    margin: '0 0 0 110',
+    width: 760,
+    margin: '0 0 0 0',
     store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
         storeId: 'stockList',
         listeners: {

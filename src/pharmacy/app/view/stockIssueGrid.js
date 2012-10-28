@@ -2,7 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.view.stockIssueGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.stockIssueGrid',
     height: 250,
-    width: 840,
+    width: 760,
     layout: {
         type: 'absolute'
     },

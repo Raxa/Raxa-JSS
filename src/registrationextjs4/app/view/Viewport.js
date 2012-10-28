@@ -54,16 +54,12 @@ Ext.define('Registration.view.Viewport', {
                     width: 60,
                     text: 'Log Out',
                     handler: function() {
-                        
-                        Ext.Msg.confirm(
-                            "Confirmation",
-                            "Are you sure?",
-                            function(btn){
-                                if(btn =='yes'){
-                                    Util.logoutUser();
-                                    location.reload();
-                                }
-                            });  
+                        Ext.Msg.confirm("Log Out", "Are you sure?", function(btn){
+                            if(btn =='yes'){
+                                Util.logoutUser();
+                                location.reload();
+                            }
+                        });
                     }
                 }]
             }],

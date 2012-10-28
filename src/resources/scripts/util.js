@@ -342,7 +342,8 @@ var REG_PAGES = {
 var UITIME = 120000;
 var ONEDAYMS = 86400000;
 var MONTHSINAYEAR = 12;
-var diffinUTC_GMT = 5.5;
+var diffinUTC_GMT = 5.5;    // TODO: Fix this hack, which only works in timzeones <= IST :) instead should get time from OpenMRS server, ideally
+
 //number of hours for everything to be before now
 //OpenMRS checks whether encounters are ahead of current time --
 //if a system clock is ahead of OpenMRS clock, some things can't be posted
@@ -790,6 +791,12 @@ var Util = {
         if(localStorage.getItem("loggedInProvider")){
             return localStorage.getItem("loggedInProvider");
         }
+        // TODO: The side effect of getLoggedInProviderUuid is confusing.
+        //      I would think that it shouldnt coincidentally set the ID.
+        //
+        //      Morever, it certainly shouldnt return any string other than
+        //      (1) a UUID or (2) null (or an exception, etc. something which consistly indicates
+        //      that no UUID was found. else the calling function has to handle this string).
         this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
         return "setting provider uuid now";
     },

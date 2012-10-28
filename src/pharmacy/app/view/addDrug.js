@@ -102,7 +102,6 @@ Ext.define('RaxaEmr.Pharmacy.view.addDrug', {
             xtype: 'button',
             text: 'Cancel',
             action: 'cancelNewDrug',
-            ui: 'raxa-orange-small',
             margin: '0 20 20 20'
         },
         {
