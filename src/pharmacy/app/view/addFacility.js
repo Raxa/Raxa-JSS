@@ -46,12 +46,15 @@ Ext.define('RaxaEmr.Pharmacy.view.addFacility', {
                 },{
                     xtype: 'numberfield',
                     fieldLabel: 'Contact No.',
-                    keyNavEnabled: false,
-                    mouseWheelEnabled: false,
                     spinDownEnabled: false,
                     spinUpEnabled: false,
                     allowDecimals: false,
-                    anchor: '100%'
+                    anchor: '100%',
+                    
+                    // Remove spinner buttons, and arrow key and mouse wheel listeners
+                    hideTrigger: true,
+                    keyNavEnabled: false,
+                    mouseWheelEnabled: false
                 },{
                     xtype: 'textfield',
                     fieldLabel: 'Person Incharge',
