@@ -56,7 +56,8 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                     allowBlank: true,
                     decimalPrecision: 0,
                     allowDecimals: false,
-                    minValue: 0
+                    minValue: 0,
+                    hideTrigger: true
                 }
             },{
                 xtype: 'actioncolumn',

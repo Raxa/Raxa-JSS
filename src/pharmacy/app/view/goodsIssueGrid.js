@@ -68,7 +68,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 allowDecimals: false,
-                minValue: 0
+                minValue: 0,
+                hideTrigger: true
             }
         },
         {

@@ -54,16 +54,11 @@ Ext.define("Screener.view.Main", {
                 id: 'showLabButton',
                 xtype: 'labOrder',
                 title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">LABORATORY</div>' 
-            }, {
-                id: 'showSurgeryButton',
-                title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">SURGERY</div>'
-            },
-            {   
+            }, {   
                 id: 'showVitalsButton',
                 xtype: 'vitalslist',
                 title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">VITAL</div>'
-            },
-            {   
+            }, {   
                 id: 'showUltrasoundButton',
                 title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">ULTRASOUND</div>' 
             },
