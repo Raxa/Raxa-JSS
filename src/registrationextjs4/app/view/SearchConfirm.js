@@ -21,21 +21,21 @@ Ext.define('Registration.view.SearchConfirm', {
     alias: 'widget.searchconfirm',
     autoScroll: true,
     border: 0,
-    padding: 10,
+    // padding: 10,
     layout: {
         type: 'hbox',
         pack: 'center'
     },
     initComponent: function () {
         this.items = {
-            xtype: 'panel',
-            ui: 'raxa-panel',
-            width: 800,
-            padding: 20,
-            items: [{
+            // xtype: 'panel',
+            // // ui: 'raxa-panel',
+            // width: 800,
+            // // padding: 20,
+            // items: [{
                 xtype: 'container',
                 border: 0,
-                bodyPadding: 10,
+                // bodyPadding: 10,
                 items: [{
                     xtype: 'fieldset',
                     id : 'fieldsetSearchedPatient',
@@ -211,27 +211,28 @@ Ext.define('Registration.view.SearchConfirm', {
                             flex: 1,
                             allowBlank: false
                         }]
-                    }, {
-                        xtype: 'fieldcontainer',
-                        fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion'),
-                        layout: 'hbox',
-                        combineErrors: true,
-                        defaultType: 'textfield',
-                        labelAlign: 'right',
-                        labelPad: 20,
-                        labelWidth: 250,
-                        anchor: '95%',
-                        defaults: {
-                            hideLabel: 'true'
-                        },
-                        items: [{
-                            name: 'religion',
-                            id: 'religionSearchedPatient',
-                            emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion.emptytext'),
-                            readOnly: true,
-                            flex: 1,
-                            allowBlank: false
-                        }]
+                    // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
+                    // }, {
+                    //     xtype: 'fieldcontainer',
+                    //     fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion'),
+                    //     layout: 'hbox',
+                    //     combineErrors: true,
+                    //     defaultType: 'textfield',
+                    //     labelAlign: 'right',
+                    //     labelPad: 20,
+                    //     labelWidth: 250,
+                    //     anchor: '95%',
+                    //     defaults: {
+                    //         hideLabel: 'true'
+                    //     },
+                    //     items: [{
+                    //         name: 'religion',
+                    //         id: 'religionSearchedPatient',
+                    //         emptyText: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Religion.emptytext'),
+                    //         readOnly: true,
+                    //         flex: 1,
+                    //         allowBlank: false
+                    //     }]
                     }, {
                         xtype: 'textfield',
                         id: 'residentialAreaSearchedPatient',
@@ -377,7 +378,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         action: 'bmipage'
                     }]
                 }]
-            }]
+            // }]
         };
         this.callParent();
     }
