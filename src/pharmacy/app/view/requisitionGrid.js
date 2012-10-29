@@ -36,6 +36,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                     store: 'allDrugs',
                     displayField: 'text',
                     hideTrigger : true,
+                    forceSelection: true, 
                     listeners: {
                         'focus': {
                             fn: function (comboField) {

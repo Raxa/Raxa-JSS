@@ -40,6 +40,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 displayField: 'text',
                 queryMode: 'local',
                 hideTrigger : true,
+                forceSelection: true,
                 listeners: {
                     'focus': {
                         fn: function (comboField) {

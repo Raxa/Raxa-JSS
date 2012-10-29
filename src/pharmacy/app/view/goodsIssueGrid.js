@@ -39,6 +39,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 queryMode: 'local',
                 hideTrigger : true,
                 displayField: 'text',
+                forceSelection: true,
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
