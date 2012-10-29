@@ -83,11 +83,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 decimalPrecision: 0,
                 allowDecimals: false,
                 minValue: 0,
-
-                // Remove spinner buttons, and arrow key and mouse wheel listeners
-                hideTrigger: true,
-                keyNavEnabled: false,
-                mouseWheelEnabled: false
+                hideTrigger: true
             }
         },
         {

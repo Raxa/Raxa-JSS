@@ -50,11 +50,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addFacility', {
                     spinUpEnabled: false,
                     allowDecimals: false,
                     anchor: '100%',
-                    
-                    // Remove spinner buttons, and arrow key and mouse wheel listeners
-                    hideTrigger: true,
-                    keyNavEnabled: false,
-                    mouseWheelEnabled: false
+                    hideTrigger: true
                 },{
                     xtype: 'textfield',
                     fieldLabel: 'Person Incharge',
