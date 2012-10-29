@@ -330,7 +330,7 @@ var REG_PAGES = {
         name: "searchpart1"
     },
     SEARCH_CONFIRM: {
-        value: 7,
+        value: 6,
         name: "searchconfirm"
     }
 };
