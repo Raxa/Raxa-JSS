@@ -33,11 +33,13 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             editor: {
                 xtype: 'combobox',
                 editable: true,
-                minChars: 3,
+                minChars: 2,
                 typeAhead: true,
                 autoSelect: false,
                 store: 'allDrugs',
                 displayField: 'text',
+                queryMode: 'local',
+                hideTrigger : true,
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
