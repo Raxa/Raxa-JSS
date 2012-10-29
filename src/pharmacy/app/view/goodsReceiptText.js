@@ -15,6 +15,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
         fieldLabel: 'Receive new stock at',
         queryMode: 'local',
         hideTrigger: true,
+        forceSelection: true,
         displayField: 'display',
         valueField: 'uuid',
         emptyText: 'Location'

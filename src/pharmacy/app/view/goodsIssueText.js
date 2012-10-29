@@ -55,6 +55,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         fieldLabel: 'Stock Location',
         queryMode: 'local',
         hideTrigger: true,
+        forceSelection: true,
         displayField: 'display',
         valueField: 'uuid',
         emptyText: 'Location'
@@ -68,6 +69,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         fieldLabel: 'Dispense Location',
         queryMode: 'local',
         hideTrigger: true,
+        forceSelection: true,
         displayField: 'display',
         valueField: 'uuid',
         emptyText: 'Location'

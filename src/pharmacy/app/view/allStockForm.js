@@ -19,6 +19,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
             displayField: 'display',
             queryMode: 'local',
             hideTrigger: true,
+            forceSelection: true,
             valueField: 'uuid',
             emptyText: 'All Locations'
         },

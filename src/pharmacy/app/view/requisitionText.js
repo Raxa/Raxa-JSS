@@ -20,6 +20,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
             fieldLabel: 'Your Location',
             queryMode: 'local',
             hideTrigger: true,
+            forceSelection: true,
             displayField: 'display',
             emptyText: 'Location',
             listeners: {
@@ -43,6 +44,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
             fieldLabel: 'Stock Location',
             queryMode: 'local',
             hideTrigger: true,
+            forceSelection: true,
             displayField: 'display',
             emptyText: 'Location',
             listeners: {
