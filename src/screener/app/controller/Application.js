@@ -528,12 +528,10 @@ Ext.define("Screener.controller.Application", {
                     familyName: formp.familyname
                 }] 
             };
-            console.log("inside savePerson");
-            //console.log(this.onAgeChange());
-            //if ( this.isAgeValidate() ) {
+            if ( formp.patientAge !== "" && formp.patientAge.length > 0  ) {
                 newPatient.age = formp.patientAge ;   
-            //}
-            if( this.isDateValidate() ) {
+            }
+            if( formp.dob !== "" && formp.dob.length > 0 ) {
                 newPatient.birthdate =  formp.dob;
             }
             var newPatientParam = Ext.encode(newPatient);
@@ -552,10 +550,10 @@ Ext.define("Screener.controller.Application", {
                 }
             });
             Ext.getCmp('newPatient').hide();
-         //   Ext.getCmp('newPatient').reset();
+            Ext.getCmp('newPatient').reset();
         }
         else {
-            Ext.Msg.alert ("Please Enter all the mandatory fields");
+            Ext.Msg.alert ("Error","Please Enter all the mandatory fields");
         }
     },
       
@@ -1013,61 +1011,29 @@ Ext.define("Screener.controller.Application", {
     },
     
     onDateChange: function() {
-        console.log("inside onDateChange");
-        if( !(this.isDateValidate()) ) {
-            Ext.getCmp('dob').reset();
-            Ext.Msg.alert("Invalid date format","Should be in correct format and less then current date");
-        }
-       
-    },
-    
-    onAgeChange : function() {
-        console.log("inside onAgeChange");
-       // console.log(this.isAgeValidate());
-        if( !(this.isAgeValidate()) ) {
-            Ext.getCmp('patientAge').reset();
-            Ext.Msg.alert("Error" , 'Age should be an integer and in between 0 and 119');
-        }
-    },
-    
-    isDateValidate: function() {
-        console.log("inside isDateValidate");
         var dob = Ext.getCmp('dob').getValue();
         if( dob !== "" && dob.length > 0 ) {
             var currentDate = new Date();
             var enteredDate = Ext.Date.parse(dob, "Y-n-j" , true);
             if(enteredDate === null || enteredDate === undefined) {
-              //  Ext.getCmp('dob').reset();
-                return false;
+                Ext.getCmp('dob').reset();
+                Ext.Msg.alert("Invalid date format","Should be in correct format and less then current date");
             } 
             else if(enteredDate > currentDate ) {
-                //Ext.getCmp('dob').reset();
-                return false;
+                Ext.getCmp('dob').reset();
+                Ext.Msg.alert("Invalid date format","Should be in correct format and less then current date");
             }
-            return true;
         }
-        return false;
     },
     
-    isAgeValidate: function() {
+    onAgeChange : function() {
         var patientAge = Ext.getCmp('patientAge').getValue();
-        console.log("inside isAgeValidate");
-      //  console.log(patientAge);
-      //  console.log(patientAge.length);
-      //  console.log(Ext.isNumeric(patientAge));
-      //  console.log(patientAge < 120);
-      //  console.log(patientAge >= 0 );
-      //  console.log(Util.OPEN_MRS_MAX_AGE);
-      //  console.log(Util.OPEN_MRS_MIN_AGE);
-        if ( patientAge !== "") {
+        if ( patientAge !== "" && patientAge.length > 0) {
             if( Ext.isNumeric(patientAge) && patientAge < Util.OPEN_MRS_MAX_AGE && patientAge >= Util.OPEN_MRS_MIN_AGE ) {
-                return true;
             } else {
-               // Ext.getCmp('patientAge').reset();
-               // Ext.Msg.alert("Error" , 'Age must be an integer and in between 0 and 119');
-                return false;
+                Ext.getCmp('patientAge').reset();
+                Ext.Msg.alert("Error" , 'Age must be an integer and in between 0 and 119');
             }
         }
-        return false;
     }
 });
