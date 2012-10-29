@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     alias: 'widget.goodsIssueGrid',
     id: 'goodsIssueGrid',
     height: 250,
-    width: 743,
+    width: 780 - 2, // Total pixels - Border
     store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
         autoLoad: false,
         storeId: 'newIssue'
@@ -15,7 +15,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     viewConfig: {
         stripeRows: false
     },
-    initComponent: function () {    
+    initComponent: function () {
         var issueEditor = this;
         this.addEvents(['deleteIssueDrug']);
         this.columns = [
@@ -41,8 +41,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                     'focus': {
                         fn: function (comboField) {
                             comboField.expand();
-                        }
-                        , 
+                        },
                         scope: this
                     },
                     'select':{
@@ -169,8 +168,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             items: [
             '->',
             {
-                text: 'Add Drug',
-                iconCls: 'icon-add',
+                text: '(+) Add Drug',
                 action: 'addIssueDrug'
             }]
         }];
