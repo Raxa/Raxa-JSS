@@ -358,10 +358,7 @@ Ext.define('Registration.view.SearchConfirm', {
                         margin: '10 10 0 200',
                         // ui: 'raxa-orange-small',
                         text: 'Cancel', // Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
-                        }
+                        action: 'goToHomePage'
                     }, {
                         xtype: 'button',
                         margin: '10 0 0 0',

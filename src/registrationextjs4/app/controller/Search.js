@@ -6,6 +6,9 @@ Ext.define('Registration.controller.Search', {
     models: ['searchPatient'],
     init: function () {
         this.control({
+            "searchconfirm button[action = goToHomePage]": {
+                click: this.goToHomePage
+            },
             "viewport button[action = goToHomePage]": {
                 click: this.goToHomePage
             },
