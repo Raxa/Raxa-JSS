@@ -74,6 +74,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 allowDecimals: true,
                 allowBlank: true,
                 minValue: 0,
+                hideTrigger: true
             }
         },
         {
@@ -144,7 +145,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 minValue: 0,
-                allowDecimal:false
+                allowDecimal:false,
+                hideTrigger: true
             }
         },
         {
@@ -157,7 +159,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 minValue: 0,
-                allowDecimal:false
+                allowDecimal:false,
+                hideTrigger: true
             }
         },
         {
