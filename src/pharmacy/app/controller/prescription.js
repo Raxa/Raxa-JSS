@@ -81,6 +81,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         
         // Setup event handlers
         this.control({
+            ////////////////////////////
+            // Prescription
+            ////////////////////////////
+            
             'prescription [action=addPatient]': {
                 click: this.displayForm
             },
@@ -95,12 +99,15 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'prescription button[action=printPrescribedDrugs]': {   //Action of Print button in Search Patient
                 click: this.printPrescribedDrugs
             },
+
+            // Prescribed Drugs
             'prescribedDrugs button[action=addDrugToPrescription]': {
                 click: this.addDrug
             },
             'prescribedDrugs': {
                 deleteDrug: this.deleteDrug
             },
+
             'patientsgridpanel': {
                 click: function(x) {
                     this.patientSelect(x, "searchGrid", "drugOrderASearchGrid");
@@ -153,16 +160,20 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     this.getTodayPatients();
                 }
             },
-            // show patient search results when pressed
+            
             'prescription button[action=back]': {
+                // show patient search results when pressed
                 click: this.goBack
             },
             "todayPatientGrid": {
                 select: this.showQueuedPatient
             },
-            "allStockForm button[action=newPurchaseOrder]": {
-                click: this.newPurchaseOrder
-            },
+            
+            ////////////////////////////
+            // Inventory
+            ////////////////////////////
+
+            // Navigation bar
             "inventoryNavBar button[action=navigateInventoryOverview]": {
                 click: this.navigateInventoryOverview
             },
@@ -180,6 +191,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             },
             "inventoryNavBar button[action=newDrugGroup]": {
                 click: this.newDrugGroup
+            },
+
+            // Stock Overview
+            "allStockForm button[action=newPurchaseOrder]": {
+                click: this.newPurchaseOrder
             },
             "allStockForm button[action=cancelAllStockLocationPicker]": {
                 click: this.showAllStock
@@ -199,35 +215,40 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "allStockPanel button[action=showAllOrders]": {
                 click: this.showAllOrders
             },
+
+            // Edit Inventory item
             "inventoryEditor button[action=cancelEditInventory]": {
                 click: this.cancelEditInventory
             },
             "inventoryEditor button[action=updateInventory]": {
                 click: this.updateInventory
             },
+
+            // Request Drugs
             'requisitionGrid': {
                 deleteRequisitionDrug: this.deleteRequisitionDrug
             },
             'requisitionGrid button[action=addRequisitionDrug]': {
                 click: this.addRequisitionDrug
             },
-            'requisition button[action=cancelRequisition]': {
-                click: this.cancelInventoryChange
-            },
             'requisition button[action=submitRequisition]': {
                 click: this.submitRequisition
             },
+
+            // Drug Details
             'drugDetails button[action=backFromDrugDetails]': {
                 click: function(){
                     Ext.getStore('stockList').clearFilter();
                     Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.ALLSTOCK.value);
                 }
             },
-            'goodsIssueText button[action=cancelIssuePurchaseOrder]':{
-                click: this.cancelIssuePurchaseOrder
-            },
+
+            // Send Drugs
             'goodsIssueText #issuePurchaseOrderPicker':{
                 select: this.populateIssueFromPurchaseOrder
+            },
+            'goodsIssueText button[action=cancelIssuePurchaseOrder]':{
+                click: this.cancelIssuePurchaseOrder
             },
             'goodsIssueGrid button[action=addIssueDrug]': {
                 click: this.addIssueDrug
@@ -235,14 +256,16 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'goodsIssueGrid': {
                 deleteIssueDrug: this.deleteIssueDrug
             },
+            'goodsIssue button[action=submitIssue]': {
+                click: this.submitIssue
+            },
+
+            // Receive Drugs (Update Stock)
             'goodsReceiptGrid': {
                 deleteReceiptDrug: this.deleteReceiptDrug
             },
             'goodsReceiptGrid button[action=addReceiptDrug]': {
                 click: this.addReceiptDrug
-            },
-            'goodsReceipt button[action=cancelReceipt]': {
-                click: this.cancelInventoryChange
             },
             'goodsReceipt button[action=submitReceipt]': {
                 click: this.submitReceipt
@@ -250,24 +273,31 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'goodsReceiptText #receiptPurchaseOrderPicker':{
                 select: this.populateReceiptFromPurchaseOrder
             },
-            'goodsIssue button[action=cancelIssue]': {
-                click: this.cancelInventoryChange
-            },
-            'goodsIssue button[action=submitIssue]': {
-                click: this.submitIssue
-            },
+
+            // Create new drug - administration
             "addDrug button[action=submitNewDrug]": {
                 click: this.submitNewDrug
             },
             "addDrug button[action=cancelNewDrug]": {
                 click: this.newDrug
             },
+
+            ////////////////////////////
+            // Top Bar (shared)
+            ////////////////////////////
+
             'alertGrid': {
                 deleteAlert: this.deleteAlert
             }
+
+            // Other topbar events are handled in the View. They should be moved here.
         });
     },
-    
+
+    ////////////////////////////
+    // Prescription
+    ////////////////////////////
+
     // function updates the todays patient grid
     getTodayPatients: function () {
         var enddate = new Date();
@@ -302,7 +332,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         this.createList(list_preEncounter, list_prefillEncounter, k, patientGridId);
 
     },
-    //Creates two different List of Patients with prescription encounter and not prescriptionfill
+
+    // Creates two different List of Patients with prescription encounter and not prescriptionfill
     createList: function (list_pre, list_prefill, k, patientGridId) {
         // TODO: This should be broken up into 2 calls to the same function (notice how every block is repeated 2x)
         // creating store for posting the list of patient
@@ -360,6 +391,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp('pharmacyTopBar').clearButtonsUI();
         // Ext.getCmp('patientsButton').setUI('raxa-orange-large');
     },
+
     // returns dynamically changed URL for getting patientList
     _getPatientListUrl: function (inList, notInList, encountertype) {
         return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + inList + '&notInList=' + notInList + '&encounterType=' + encountertype);
@@ -859,37 +891,39 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp('searchGrid').getLayout().setActiveItem(0);
     },
 
-    ////////////////////////////////
-    //////     Navigation     //////
-    ////////////////////////////////
+    ////////////////////////////
+    // Inventory
+    ////////////////////////////
 
+    // Navigate to Inventory: Stock >> Overview
     navigateInventoryOverview: function() {
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.OVERVIEW.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
         this._updateHighlightedButtonInventoryNavBar('inventoryOverviewButton');
     },
         
-    //creates new requisition
+    // Navigate to Inventory: Orders >> Request Drugs
     newRequisition: function() {
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.REQUISITION.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
         this._updateHighlightedButtonInventoryNavBar('newRequisitionButton');
     },
 
-    // Creates new stock issue
+    // Navigate to Inventory: Orders >> Send Drugs
     newIssue: function(){
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.ISSUE.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
         this._updateHighlightedButtonInventoryNavBar('newIssueButton');
     },
     
-    // Creates new receipt
+    // Navigate to Inventory: Orders >> Update Stock (receive drugs)
     newReceipt: function() {
         var target = RaxaEmr_Pharmacy_Controller_Vars.INVENTORY_PAGES.RECEIPT.value;
         Ext.getCmp('inventoryMainArea').getLayout().setActiveItem(target);
         this._updateHighlightedButtonInventoryNavBar('newReceiptButton');
     },
 
+    // Helper to track current position of user in Inventory UI
     _updateHighlightedButtonInventoryNavBar: function(id) {
         var btns = ['inventoryOverviewButton', 'newRequisitionButton', 'newIssueButton', 'newReceiptButton'];
         for (var i=0; i < btns.length; i++) {
@@ -904,7 +938,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // TODO
     },
     
-    //deletes current row of requisition grid
+    // Deletes current row of requisition grid
     deleteReceiptDrug: function (evtData) {
         var store = this.getStore('newReceipt');
         var record = store.getAt(evtData.rowIndex);
@@ -923,12 +957,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         })[0];
     },
 
-    // Cancels a change to inventory, goes back to stock overview page
-    cancelInventoryChange: function(){
-        Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.ALLSTOCK.value);
-    },
-    
-    
     // Fills a purchase order when a stock admin wants to make a new issue
     // Populates issue drug fields with drugs + quantites from the purchase order
     populateReceiptFromPurchaseOrder: function(combo, records){
@@ -1030,14 +1058,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         });
     },
     
-    //creates new drug
+    // Generate pop-up which allows user to add a new drug
     newDrug : function() {
         if(Ext.getCmp('addDrug').isHidden()){
             Ext.getCmp('addDrug').show();
             var x = Ext.getCmp('pharmacyTopBar').x + Ext.getCmp('pharmacyTopBar').width - Ext.getCmp('alertPanel').width;
             Ext.getCmp('newDrugButton').setText('Close');
-            // Ext.getCmp('newDrugButton').setUI('raxa-orange-small');
-
         }else{
             Ext.getCmp('addDrug').hide();
             Ext.getCmp('newDrugButton').setText('New Drug');
@@ -1050,6 +1076,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp('newDrugButton').setText('New Drug');
         Ext.getCmp('newDrugButton').setUI('default');
         //getting drug concept from OpenMRS
+        // TODO: We shouldn't fetch the drug concept dynamically every time we post a drug
+        //  Instead, it should be one of the concepts we fetch in startup.js and util.js during login
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/concept?q='+Ext.getCmp('addDrugName').getValue()+"&v=full",
             method: 'GET',
@@ -1062,7 +1090,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 while(j<jsonResponse.results.length && !foundDrugConcept){
                     if (jsonResponse.results[j].conceptClass.description === "Drug"){
                         foundDrugConcept = true;
-                        this.postNewDrug(jsonResponse.results[j].uuid);
+                        this._postNewDrug(jsonResponse.results[j].uuid);
                     }
                     j++;
                 }
@@ -1078,7 +1106,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         });
     },
 
-    postNewDrug: function(conceptUuid) {
+    // Helper to assist in REST call, which creates new drugs in OpenMRS db
+    _postNewDrug: function(conceptUuid) {
         var newDrugInfo = {
             name: Ext.getCmp('addDrugManufacturer').getValue(),
             description: Ext.getCmp('addDrugSupplier').getValue(),
@@ -1114,6 +1143,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     postConceptForNewDrug: function(){
+        // TODO: I don't think there's any reason to create this concept dynamically.
+        //  Instead, it should be a required concept which is loaded into OpenMRS when
+        //  the RaxaCore module is installed
         var newConcept = {
             names: [{name: Ext.getCmp('addDrugName').getValue(), locale: "en", conceptNameType: "FULLY_SPECIFIED"}],
             datatype: localStorage.drugConceptDataTypeUuid,
@@ -1128,7 +1160,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             headers: Util.getBasicAuthHeaders(),
             success: function (response) {
                 var jsonResponse = Ext.decode(response.responseText);
-                this.postNewDrug(jsonResponse.uuid);
+                this._postNewDrug(jsonResponse.uuid);
             },
             failure: function() {
                 Ext.Msg.alert("Error", Util.getMessageSyncError());
@@ -1139,7 +1171,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 
     //these Uuids should go into Util with the other resources, however OpenMRS has a bug that doesnt allow
     //searching on conceptdatatype and conceptclass...so they will come into here for now.
-    // TODO: move them into Util once OpenMRS allows searching on these
+    // TODO: move them into Util once OpenMRS allows searching on these. (N: can we do this now?)
+    //  -- what's different about fetching here vs in util.js?
+    //  -- cant we just add this as an additional lookup and specify that conceptdatatype and conceptclass
+    //      need to be handled specially?
     _getStartupUuids: function(){
         if(!localStorage.drugConceptClassUuid || !localStorage.drugConceptDataTypeUuid){
             Ext.Ajax.request({
@@ -1180,49 +1215,49 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // TODO
     },
     
-    //deletes current row of requisition grid
+    // Deletes current row of requisition grid
     deleteRequisitionDrug: function (evtData) {
         var store = this.getStore('RequisitionItems');
         var record = store.getAt(evtData.rowIndex);
-        
+
         if(record) {
             store.remove(record);
         }
     },
     
-    //adds new row to requisition grid
+    // Adds new row to requisition grid
     addRequisitionDrug: function(){
-        // add blank item to store -- will automatically add new row to grid
+        // Add blank item to store -- will automatically add new row to grid
         Ext.getStore('RequisitionItems').add({
             drugname: '',
             quantity: ''
         })[0];
     },
-        
+    
+    // Submit Drug Request via REST to database
     submitRequisition: function(){
+        // Create Drug Inventories (??)
         var drugInventories = [];
         var requisitions = Ext.getStore('RequisitionItems').data;
         for (var i = 0; i < requisitions.items.length; i++) {
-            // value of Url for get call is made here using name of drug
             if(requisitions.items[i].data.drugname !== ""){
-                //getting index of drug in store
                 var drugIndex = Ext.getStore('allDrugs').find('text', requisitions.items[i].data.drugname);
                 var startdate = Util.getCurrentTime();
-                // model for drug inventory is created here
                 drugInventories.push({
+                    // Model for drug inventory
                     status: RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.ORDERED,
-                    //get uuid of drug
                     drug: Ext.getStore('allDrugs').getAt(drugIndex).data.uuid,
                     quantity: requisitions.items[i].data.quantity
                 });
             }
         }
+
+        // Create model for Purchase Order POST, with given drug orders
         var time = Util.getCurrentTime();
         var dispenseLocationIndex = Ext.getStore("dispenseLocations").find('display', Ext.getCmp("dispenseLocationPicker").value);
         var stockLocationIndex = Ext.getStore("stockLocations").find('display', Ext.getCmp("stockLocationPicker").value);
         var dispenseLocationString = Ext.getStore("dispenseLocations").getAt(dispenseLocationIndex).data.display.toString().split(" - ")[0];
         
-        // Model for posting the encounter for given drug orders
         var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
             name: "Pharmacy Requisition",
             description: "Requisition from "+dispenseLocationString+ " on "+time.toString().substr(0, 10),
@@ -1233,13 +1268,14 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             drugPurchaseOrderDate: time,
             inventories: drugInventories
         });
+        
+        // Post the encounter
         var purchaseOrderStore = Ext.create('RaxaEmr.Pharmacy.store.PurchaseOrders');
         purchaseOrderStore.add(purchaseOrder);
-        // make post call for encounter
         purchaseOrderStore.sync({
             scope: this,
             success: function(){
-                //sending alert that requisition has been made
+                // Send an alert that requisition has been made
                 var alertParams = {
                     name: "Requisition from "+dispenseLocationString+ " on "+time.toString().substr(0, 10),
                     toLocation: Ext.getStore("stockLocations").getAt(stockLocationIndex).data.uuid,
@@ -1248,8 +1284,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     defaultTask: "newIssue",
                     time: Util.getCurrentTime()
                 };
-                Util.sendAlert(alertParams);
-                // Ext.getCmp('alertButton').setUI('raxa-orange-small');
+                Util.sendAlert(alertParams);    // TODO: This util function should handle the alert button UI.. whenever unread alerts, UI should note it
                 Ext.getStore('stockList').load();
                 Ext.getCmp('allStockGrid').getView().refresh();
                 Ext.getStore('fillRequisitions').load();
@@ -1261,11 +1296,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         });
     },
     
-    
-    /**
-         * Fills a purchase order when a stock admin wants to make a new issue
-         * Populates issue drug fields with drugs + quantites from the purchase order
-         */
+    // Fills a purchase order when a stock admin wants to make a new issue
+    // Populates issue drug fields with drugs + quantites from the purchase order
     populateIssueFromPurchaseOrder: function(combo, records){
         Ext.getCmp('issuedispenseLocationPicker').setValue(records[0].data.dispenseLocation.uuid);
         Ext.getCmp('issueStockLocationPicker').setValue(records[0].data.stockLocation.uuid);
@@ -1344,21 +1376,29 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         return null;
     },
     
+    // 
     submitIssue: function(){
-        var drugInventories = [];
+        // Validate the submitted issue - respond with Alert message if invalid
         var issues = Ext.getStore('newIssue').data;
         var msg = this.validateIssue(issues);
         if(msg!==null){
             Ext.Msg.alert(msg);
             return;
         }
+
+        var drugInventories = [];
+        
         RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = true;
+
+        // var drugInventoryFields = RaxaEmr.Pharmacy.model.DrugInventory.getFields();
+        // var batchUuidField = drugInventoryFields[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX];
+        // batchUuidField.persist = true;
+        
         var issuedispenseLocationUuid = Ext.getCmp("issuedispenseLocationPicker").value;
         var issueStockLocationUuid = Ext.getCmp("issueStockLocationPicker").value;
         var purchaseOrderUuid = Ext.getCmp('issuePurchaseOrderPicker').getValue();
         var issueStockLocationString = Ext.getCmp("issueStockLocationPicker").rawValue.split(" - ")[0];
         for (var i = 0; i < issues.items.length; i++) {
-            //getting index of drug in store
             var drugIndex = Ext.getStore('allDrugs').find('text', issues.items[i].data.drugName);
             drugInventories.push({
                 status: RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.SENT,
@@ -1374,8 +1414,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 drugInventories[i].uuid = issues.items[i].data.uuid;
             }
         }
+
         var time = Util.getCurrentTime();
-        // model for posting the encounter for given drug orders
         var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
             name: "Stock Issue",
             description: "Issue from "+issueStockLocationString+ " on "+time.toString().substr(0, 10),
@@ -1386,16 +1426,20 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             drugPurchaseOrderDate: time,
             inventories: drugInventories
         });
+
+        // Create/update Purchase Order via POST call
+        Ext.getCmp('submitIssueButton').disable();
         var purchaseOrderStore = Ext.create('RaxaEmr.Pharmacy.store.PurchaseOrders');
         purchaseOrderStore.add(purchaseOrder);
-        // make post call for encounter -- if we are updating a purchase order, set url, otherwise post
+    
+        // If we are updating an existing purchase order, set url for that specific P.O.
         if(purchaseOrderUuid!==null){
             purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder/'+purchaseOrderUuid;
         }
-        Ext.getCmp('submitIssueButton').disable();
+
         purchaseOrderStore.sync({
             success: function(){
-                //sending alert that requisition has been made
+                // Send alert that requisition has been made
                 var alertParams = {
                     name: "Issue from "+issueStockLocationString+ " on "+time.toString().substr(0, 10),
                     toLocation: issueStockLocationUuid,
@@ -1406,7 +1450,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     time: Util.getCurrentTime()
                 };
                 Util.sendAlert(alertParams);
-                // Ext.getCmp('alertButton').setUI('raxa-orange-small');
+
+                // Revert URL on Purchase Order store, so it's POSTing new PO rather than updating existing one
                 purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder';
                 RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = false;
                 Ext.getCmp('submitIssueButton').enable();
@@ -1422,10 +1467,14 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.Msg.alert('Error: unable to write to server');
             }
         });
+
+        // TODO: remove? does nothing?
         purchaseOrderStore.on('write', function () {
         }, this);
     },
     
+    // TODO: fix. not connected to view, presently.
+    // Called in 'RaxaEmr.Pharmacy.view.goodsIssueText'
     cancelIssuePurchaseOrder: function() {
         Ext.getCmp('issuePurchaseOrderPicker').clearValue();
         Ext.getStore('newIssue').removeAll();
@@ -1435,13 +1484,17 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         })[0];
     },
     
+    // TODO: Refactor all of these filters into a common function. Just pass it an argument to do filtering
+
     //Called when all stock location has been cleared (no location selected for stock grid)
     showAllStock: function(){
-        // this._clearAllStockPanelButtonsUI('');
+        this._updateAllStockPanelButtonsUI('');
         Ext.getStore('stockList').clearFilter();
     },
     
+    // Filter by location
     filterAllStocksByLocation: function() {
+        this._updateAllStockPanelButtonsUI('');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
         if(Ext.getCmp('allStockLocationPicker').getValue()){
@@ -1451,7 +1504,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     //Called when 'stock analysis' button is pressed
     showAvailableStock: function(){
-        this._clearAllStockPanelButtonsUI('availableStockButton');
+        this._updateAllStockPanelButtonsUI('availableStockButton');
         // Ext.getCmp('availableStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
@@ -1463,7 +1516,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     //Called when 'Expiring Stock' button is pressed
     showExpiringStock: function(){
-        this._clearAllStockPanelButtonsUI('expiringStockButton');
+        this._updateAllStockPanelButtonsUI('expiringStockButton');
         // Ext.getCmp('expiringStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
@@ -1477,7 +1530,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     showStockOut: function(){
-        this._clearAllStockPanelButtonsUI('lowStockButton');
+        this._updateAllStockPanelButtonsUI('lowStockButton');
         // Ext.getCmp('lowStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
@@ -1491,12 +1544,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     showAllOrders: function(){
-        this._clearAllStockPanelButtonsUI('allOrdersButton');
+        this._updateAllStockPanelButtonsUI('allOrdersButton');
         // Ext.getCmp('allOrdersButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
     },
     
-    _clearAllStockPanelButtonsUI: function(id){
+    _updateAllStockPanelButtonsUI: function(id){
         var btns = ['availableStockButton', 'expiringStockButton', 'lowStockButton', 'allOrdersButton'];
         for (var i=0; i < btns.length; i++) {
 
@@ -1507,16 +1560,16 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     // Reduces the batch quantity in back end
     decrementBatchForPrescription: function() {
-        // If there is a batch, for each drug decrement
         var drugInventories = [];
         //var issues = Ext.getStore('newIssue').data;
         var drugs = Ext.getStore('orderStore').data;
         RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = true;
         var prescriptionStockLocationString = Ext.getStore("Locations").find('uuid', localStorage.stockLocation);
         var prescriptionStockLocationUuid = localStorage.stockLocation;
+        
+        // Create drug inventories
         for (var i = 0; i < drugs.items.length; i++) {
             if(drugs.items[i].data.batchUuid!==null && drugs.items[i].data.batch!==null && drugs.items[i].data.batchUuid!==""){
-                //getting index of drug in store
                 var drugIndex = Ext.getStore('allDrugs').find('text', drugs.items[i].data.drugName);
                 drugInventories.push({
                     status: RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.PRESCRIBED,
@@ -1527,6 +1580,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 });
             }
         }
+
         var time = Util.getCurrentTime();
         // Model for posting the encounter for given drug orders
         var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
@@ -1546,7 +1600,13 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // Make post call for encounter -- if we are updating a purchase order, set url, otherwise post
         var purchaseOrderStore = Ext.create('RaxaEmr.Pharmacy.store.PurchaseOrders');
         purchaseOrderStore.add(purchaseOrder);
-        // make post call for encounter -- if we are updating a purchase order, set url, otherwise post
+
+        // TODO: Should we be updating the URL here? as done in submitIssue
+            // If we are updating an existing purchase order, set url for that specific P.O.
+            // if(purchaseOrderUuid!==null){
+            //     purchaseOrderStore.getProxy().url = HOST + '/ws/rest/v1/raxacore/drugpurchaseorder/'+purchaseOrderUuid;
+            // }
+
         purchaseOrderStore.sync({
             success: function(){
                 RaxaEmr.Pharmacy.model.DrugInventory.getFields()[RaxaEmr_Pharmacy_Controller_Vars.DRUG_INVENTORY_MODEL.BATCH_UUID_INDEX].persist = false;
