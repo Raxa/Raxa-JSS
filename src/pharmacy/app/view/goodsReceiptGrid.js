@@ -122,10 +122,34 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             editable: true,
             text: 'Supplier',
             dataIndex: 'supplier',
-            width: 80,
             editor: {
-                xtype: 'textfield',
-                allowBlank: true
+                xtype: 'combobox',
+                editable: true,
+                minChars: 3,
+                typeAhead: true,
+                autoSelect: false,
+                store: [
+                'Shyam & Sons', 
+                'Jagat Traders', 
+                'Pankaj Medico Traders', 
+                'Melaram & Brothers', 
+                'Gurunanak Medical Stores', 
+                'Saluja Medical Agencies', 
+                'G. Medical Services', 
+                'Nitin Medical Agency', 
+                'Vimal Enterprises', 
+                'Locost', 
+                'CMSI'
+                ],
+                displayField: 'text',
+                listeners: {
+                    'focus': {
+                        fn: function (comboField) {
+                            comboField.expand();
+                        },
+                        scope: this
+                    }
+                }
             }
         },
         {
@@ -144,15 +168,15 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
         }],
         this.plugins = [this.cellEditor];
         this.dockedItems = [{
-                xtype: 'toolbar',
-                dock: 'bottom',
-                items: [
-                    '->',
-                    {
-                        text: '(+) Add Drug',
-                        action: 'addReceiptDrug'
-                    }]
-            }];
+            xtype: 'toolbar',
+            dock: 'bottom',
+            items: [
+            '->',
+            {
+                text: '(+) Add Drug',
+                action: 'addReceiptDrug'
+            }]
+        }];
         Ext.getStore('newReceipt').add({
             drugname: '',
             quantity: ''
