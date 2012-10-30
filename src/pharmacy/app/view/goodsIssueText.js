@@ -1,26 +1,16 @@
 Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.goodsIssueText',
-    height: 250,
-    width: 743,
+    width: 780,
     layout: {
         type: 'vbox'
     },
-    items: [
-    {
-        
-        xtype: 'displayfield',
-        value: 'New Stock Issue',
-    },
-    {
-        xtype: 'panel',
+    items: [{
+        xtype: 'container',
         border: false,
-        margin: 5,
         layout: 'hbox',
         items: [{
             xtype: 'combobox',
-            width: 400,
-            labelWidth: 90,
             id: "issuePurchaseOrderPicker",
             store: Ext.create('RaxaEmr.Pharmacy.store.PurchaseOrders', {
                 storeId: 'fillRequisitions',
@@ -41,8 +31,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
                     fn: function (comboField) {
                         comboField.doQuery(comboField.allQuery, true);
                         comboField.expand();
-                    }
-                    , 
+                    },
                     scope: this
                 }
             },
@@ -58,29 +47,29 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         }]
     },
     {
-        margin: 5,
         xtype: 'combobox',
-        width: 300,
-        labelWidth: 90,
         id: "issueStockLocationPicker",
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
             storeId: 'issueStockLocations'
         }),
         fieldLabel: 'Stock Location',
+        queryMode: 'local',
+        hideTrigger: true,
+        forceSelection: true,
         displayField: 'display',
         valueField: 'uuid',
         emptyText: 'Location'
     },
     {
-        margin: 5,
         xtype: 'combobox',
-        width: 300,
-        labelWidth: 90,
         id: "issuedispenseLocationPicker",
         store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
             storeId: 'issuedispenseLocations'
         }),
         fieldLabel: 'Dispense Location',
+        queryMode: 'local',
+        hideTrigger: true,
+        forceSelection: true,
         displayField: 'display',
         valueField: 'uuid',
         emptyText: 'Location'

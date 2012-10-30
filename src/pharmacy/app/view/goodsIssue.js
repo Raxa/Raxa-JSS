@@ -1,28 +1,25 @@
 Ext.define('RaxaEmr.Pharmacy.view.goodsIssue', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.panel.Panel',
     id: '.goodsIssue',
     autoScroll: true,
     alias: 'widget.goodsIssue',
+    title: 'Orders >> Send Drugs',
     items:[{
-        xtype: 'goodsIssueText',
-        x : 110
+        margin: '10 0 0 0',
+        xtype: 'goodsIssueText'
     },{
-        xtype: 'goodsIssueGrid',
-        x : 110
+        xtype: 'goodsIssueGrid'
     },{
         xtype: 'button',
         text: 'Cancel',
         action: 'cancelIssue',
-        ui: 'raxa-orange-small',
-        x: 500
+        margin: 5
     },
     {
         xtype: 'button',
         id: 'submitIssueButton',
-        width: 60,
         text: 'Submit',
         action: 'submitIssue',
-        ui: 'raxa-aqua-small',
-        x: 600
+        margin: 5
     }]
 });
