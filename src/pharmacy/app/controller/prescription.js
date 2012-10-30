@@ -33,6 +33,15 @@ var RaxaEmr_Pharmacy_Controller_Vars = {
             name: "drugDetails"
         }
     },
+
+    DOSAGE_FORM_SUFFIX: {
+        TABLET: 'tab',
+        CAPSULE: 'cap',
+        SYRUP: 'syr',
+        OINTMENT: 'oint',
+        INJECTION: 'inj',
+        CREAM: 'cream'
+    },
     
     //Here we store all the various strings to keep track of where the inventory is.
     STOCK_STATUS: {
@@ -1623,5 +1632,4 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             return false;
         });
     }
-
 });
