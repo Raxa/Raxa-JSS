@@ -12,44 +12,32 @@ Ext.define('Ext.ux.ModalGrid', {
         type:'plus',
         tooltip: 'Add',
         handler: function(event, toolEl, panel){
-            Ext.create("Ext.ux.ModalGridEditor", {}).show();
+            this.modalForm.show();
         }
-    }],
+    }], 
 
-    // Add an additional action column
-    // override create columns
-    // columns: 
+    // Add an additional action column, with edit and delete handlers
     initComponent:function () {
-        console.log('initComponent')
-
-        // Construct
-        var me = this;
-        console.log(arguments);
         this.callParent(arguments);
 
+        // Create modal form
+        var that = this;
+        this.modalForm = Ext.create("Ext.ux.ModalGridEditor", {
+            autogenerateFields: that.store.model.getFields()
+        });
+        
         // Add Column for edit and delete handlers
+        // var that = this
         var column = Ext.create('Ext.grid.ActionColumn', {
-            width:50,
+            // width:50,
             menuDisabled: true,
-            // sortable: false,
-            // hideable: false,
             items: [{
                 icon: '../resources/img/edit.png',  // Use a URL in the icon config
                 tooltip: 'Edit',
                 handler: function(grid, rowIndex, colIndex) {
                     var rec = grid.getStore().getAt(rowIndex);
                     console.log("Edit " + rec.get('name'));
-                    Ext.create("Ext.ux.ModalGridEditor", {}).show();
-                    // Ext.create("Ext.Window", {
-                    //     layout: 'fit',
-                    //     width: 500,
-                    //     height: 300,
-                    //     modal: true,
-                    //     closeAction: 'hide',    // TODO: actually delete on hide? memory hog in background?
-                    //     items: new Ext.Panel({
-                    //        items: [{xtype:'text', html: 'yoyo'}]//Your items here
-                    //     })
-                    // }).show();
+                    that.modalForm.show();
                 }
             }, {    
                 icon: '../resources/img/delete.png',
@@ -83,43 +71,76 @@ Ext.define('Ext.ux.ModalGridEditor', {
     centered: true,
     title: 'Edit Modal Grid',
     closeAction: 'hide',    // TODO: actually delete on hide? memory hog in background?
-    items: [{
-        xtype:'panel', 
-        layout: 'vbox',
-        bodyPadding: 50,
-        // TODO: Create fields dynamically from the associated model
-        // TODO: For edit, fetch default values from the associated record in grid
-        items: [{
-            xtype: 'textfield',
-            fieldLabel: 'Example textfield',
+    initComponent:function () {
+        this.callParent(arguments);
+
+        // Dynamically generate fields based on the model
+        console.log(this.autogenerateFields);
+        var fields = this.autogenerateFields;
+        var panel = Ext.create('Ext.form.Panel');
+        var that = this;
+        Ext.iterate(fields, function (field) {
+           panel.add(that.getXtypeForField(field));
+           panel.doLayout(false, true);
+        });
+
+        // Add cancel and save buttons
+        panel.add([{
+            xtype: 'button',
+            text: 'Cancel',
+            margin: '20 20 20 20',
+            // action: 'cancelEditInventory',
+            handler: function () {
+                console.log("cancel");
+            }
         }, {
-            xtype: 'panel',
-            border: false,
-            layout: {
-                type: 'hbox',
-                pack: 'end'
-            },
-            items:[
-                {
-                xtype: 'button',
-                text: 'Cancel',
-                margin: '20 20 20 20',
-                // action: 'cancelEditInventory',
-                handler: function () {
-                    console.log("cancel");
-                }
-            },
-            {
-                xtype: 'button',
-                text: 'Save',
-                margin: '20 20 20 20',
-                // action: 'cancelEditInventory',
-                handler: function () {
-                    console.log("Save");
-                }
-            }]
-        }]
-    }]
+            xtype: 'button',
+            text: 'Save',
+            margin: '20 20 20 20',
+            // action: 'cancelEditInventory',
+            handler: function () {
+                console.log("Save");
+            }
+        }]);
+
+        this.add(panel);
+        this.doLayout(false, true);
+    },
+    getXtypeForField: function(field) {
+        var fieldXtype = 'textfield';
+        try {
+            var type = field.type.type;
+            switch (type) {
+                case 'auto':
+                    fieldXtype = 'textfield';
+                    break;
+                // case '':
+                //     break;
+                // default:
+                //     break;
+            }
+
+        } catch (e) {
+            console.log(e);
+            console.log("exception in getXtypeForField");
+        }
+
+        return {xtype: fieldXtype, name: field, label: field};
+    }
+    // items: [{
+    //     xtype:'panel', 
+    //     layout: 'vbox',
+    //     bodyPadding: 50,
+    //     // TODO: Create fields dynamically from the associated model
+    //     // TODO: For edit, fetch default values from the associated record in grid
+
+    //     items: [{
+    //         xtype: 'textfield',
+    //         fieldLabel: 'Example textfield',
+    //     }, 
+    // {
+        // }]
+    // }]
 
     //populates inventory fields
     // init: function(record) {
