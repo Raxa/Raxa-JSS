@@ -1,5 +1,3 @@
-PHARMACYTOPBARHEIGHT = 65;
-
 Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
     extend: 'Ext.container.Viewport',
     requires: ['RaxaEmr.Pharmacy.view.pharmacyTopbar','RaxaEmr.Pharmacy.view.Inventory'],
@@ -36,8 +34,6 @@ Ext.define('RaxaEmr.Pharmacy.view.Viewport', {
             box = this.getBox();
             if (cx < box.x || cx > box.x + box.width || cy > box.y + box.height) {
                 Ext.getCmp('alertPanel').hide();
-                Ext.getCmp('alertButton').setText('Alerts');
-                Ext.getCmp('alertButton').setUI('default');
             }
         }
 
