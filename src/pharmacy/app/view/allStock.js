@@ -1,26 +1,23 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStock', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.panel.Panel',
     alias: 'widget.allStock',
-    layout: {
-        type: 'auto'
-    },
-    items:[{
+    title: 'Stock >> Overview',
+    items: [{
+        margin: '10 0 0 0',
         xtype: 'allStockForm'
-    },{
+    }, {
         xtype: 'allStockPanel'
-    },{
+    }, {
         layout: 'card',
-        width: 850,
-        height: 400,
         border: false,
         activeItem: 0,
         id: 'stocklayoutarea',
         //one stock grid here, then use filter to change it
-        items:[{
+        items: [{
             xtype: 'allStockGrid',
             id: 'allStockGrid'
-        },{
+        }, {
             xtype: 'stockIssueGrid'
         }]
     }]
-})
+});
