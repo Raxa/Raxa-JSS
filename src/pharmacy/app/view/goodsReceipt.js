@@ -12,12 +12,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceipt', {
         xtype: 'goodsReceiptGrid'
     },{
         xtype: 'button',
-        text: 'Cancel',
-        action: 'cancelReceipt',
-        margin: 5
-    },
-    {
-        xtype: 'button',
         id: 'submitReceiptButton',
         text: 'Submit',
         action: 'submitReceipt',
