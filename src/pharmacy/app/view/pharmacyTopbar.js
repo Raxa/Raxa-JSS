@@ -1,6 +1,9 @@
-TOPBARBUTTONLOGOPATH = '../resources/img/miniLogo.png';
-PHARMACYTOPBARHEIGHT = 40;
-BUTTON_HEIGHT = 35;
+PHARMACY_TOPBAR_CONSTANTS = {
+    TAB_WIDTH : 80,
+    BUTTON_HEIGHT : 35,
+    BUTTON_WIDTH : 60,
+    HEIGHT : 40,
+};
 
 Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     extend: 'Ext.container.Container',
@@ -20,19 +23,17 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     },
     items: [{
         xtype: 'toolbar',
-        height: PHARMACYTOPBARHEIGHT,
+        height: PHARMACY_TOPBAR_CONSTANTS.HEIGHT,
         dock: 'top',
         items: [
         {
             xtype: 'button',
             text: 'Patients',
             id: 'patientsButton',
-            height: BUTTON_HEIGHT,
+            height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
             // width: 200,
             // //TODO: determine why we need different path for local vs. external host
-            icon: '../resources/img/miniLogo.png',
-            iconAlign: 'top',
-            width: 80,
+            width: PHARMACY_TOPBAR_CONSTANTS.TAB_WIDTH,
             // disabled: true,
             handler: function(){
                 Ext.getCmp('mainarea').getLayout().setActiveItem(0);
@@ -47,10 +48,8 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             xtype: 'button',
             text: 'Inventory',
             id: 'inventoryButton',
-            height: BUTTON_HEIGHT,
-            icon: '../resources/img/miniLogo.png',
-            iconAlign: 'top',
-            width: 80,
+            height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
+            width: PHARMACY_TOPBAR_CONSTANTS.TAB_WIDTH,
             pressed: true,
             handler: function(){
                 var l = Ext.getCmp('mainarea').getLayout();
@@ -66,8 +65,8 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             xtype: 'button',
             id: 'alertButton',
             text: 'Alerts',
-            height: BUTTON_HEIGHT,
-            width: 60,
+            height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
+            width: PHARMACY_TOPBAR_CONSTANTS.BUTTON_WIDTH,
             handler: function(){
                 Ext.getStore('alerts').load({
                     scope: this,
@@ -83,7 +82,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                     Ext.getCmp('alertPanel').show();
                     this.setText('Close');
                     var x = Ext.getCmp('pharmacyTopBar').x + Ext.getCmp('pharmacyTopBar').width - Ext.getCmp('alertPanel').width;
-                    Ext.getCmp('alertPanel').setPosition(x, PHARMACYTOPBARHEIGHT);
+                    Ext.getCmp('alertPanel').setPosition(x, PHARMACY_TOPBAR_CONSTANTS.HEIGHT);
                     Ext.getCmp('alertPanel').setHeight(200);
                 }else{
                     Ext.getCmp('alertPanel').hide();
@@ -91,13 +90,16 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                 }
             }
         }, {
+            xtype: 'tbseparator'
+        }, {
             xtype: 'tbtext',
             text: 'You are are logged in as ' + localStorage.getItem('username')
         }, {
             xtype: 'tbseparator'
         }, {
             xtype: 'button',
-            height: BUTTON_HEIGHT,
+            height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
+            width: PHARMACY_TOPBAR_CONSTANTS.BUTTON_WIDTH,
             text: 'Log Out',
             handler: function() {
                 Ext.Msg.confirm("Log Out", "Are you sure?", function(btn){
