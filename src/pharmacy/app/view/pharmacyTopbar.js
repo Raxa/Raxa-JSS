@@ -14,12 +14,8 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         type: 'hbox',
         align: 'stretch'
     },
-    // renderTo: Ext.getBody(),
     defaults: {
         flex: 1
-    },
-    clearButtonsUI: function(){
-        // TODO: remove
     },
     items: [{
         xtype: 'toolbar',
@@ -31,11 +27,10 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             text: 'Patients',
             id: 'patientsButton',
             height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
-            // width: 200,
-            // //TODO: determine why we need different path for local vs. external host
             width: PHARMACY_TOPBAR_CONSTANTS.TAB_WIDTH,
-            // disabled: true,
             handler: function(){
+                // TODO: This should just be one call - we should update "main area" layout so it has 2 xtypes only, for
+                //  patient and inventory views
                 Ext.getCmp('mainarea').getLayout().setActiveItem(0);
                 Ext.getCmp('addpatientarea').getLayout().setActiveItem(0);
                 Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(0);
@@ -50,7 +45,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             id: 'inventoryButton',
             height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
             width: PHARMACY_TOPBAR_CONSTANTS.TAB_WIDTH,
-            pressed: true,
+            pressed: true,  // button appears selected at startup
             handler: function(){
                 var l = Ext.getCmp('mainarea').getLayout();
                 l.setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.ALLSTOCK.value);
@@ -79,14 +74,12 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                     }
                 });
                 if(Ext.getCmp('alertPanel').isHidden()){
-                    Ext.getCmp('alertPanel').show();
-                    this.setText('Close');
                     var x = Ext.getCmp('pharmacyTopBar').x + Ext.getCmp('pharmacyTopBar').width - Ext.getCmp('alertPanel').width;
                     Ext.getCmp('alertPanel').setPosition(x, PHARMACY_TOPBAR_CONSTANTS.HEIGHT);
                     Ext.getCmp('alertPanel').setHeight(200);
+                    Ext.getCmp('alertPanel').show();
                 }else{
                     Ext.getCmp('alertPanel').hide();
-                    this.setText('Alerts');
                 }
             }
         }, {

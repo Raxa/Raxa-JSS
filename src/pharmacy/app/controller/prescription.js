@@ -357,7 +357,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         });
         // makes the GET call to get the list with patients with prescription encounter and not prescription fill
         Ext.getCmp(patientGridId).getStore().load();
-        Ext.getCmp('pharmacyTopBar').clearButtonsUI();
+        
         // Ext.getCmp('patientsButton').setUI('raxa-orange-large');
     },
     // returns dynamically changed URL for getting patientList
