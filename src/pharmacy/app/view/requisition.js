@@ -1,27 +1,25 @@
 Ext.define('RaxaEmr.Pharmacy.view.requisition', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.panel.Panel',
     id: '.requisition',
     autoScroll: true,
     alias: 'widget.requisition',
+    title: 'Orders >> Request Drugs',
+    width: 780,
     items:[{
-        xtype: 'requisitionText',
-        x : 100
+        margin: '10 0 0 0',
+        xtype: 'requisitionText'
     },{
-        xtype: 'requisitionGrid',
-        x : 100
+        xtype: 'requisitionGrid'
     },{
         xtype: 'button',
         text: 'Cancel',
         action: 'cancelRequisition',
-        ui: 'raxa-orange-small',
-        x: 500
+        margin: 5
     },
     {
         xtype: 'button',
-        width: 60,
         text: 'Submit',
         action: 'submitRequisition',
-        ui: 'raxa-aqua-small',
-        x: 600
+        margin: 5
     }]
 });

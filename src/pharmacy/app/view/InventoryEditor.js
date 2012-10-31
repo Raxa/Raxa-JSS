@@ -82,7 +82,6 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
             margin: '20 20 20 20',
             text: 'Cancel',
             action: 'cancelEditInventory',
-            ui: 'raxa-orange-small',
             x: 500
         },
         {
@@ -92,7 +91,6 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
             text: 'Save',
             id: 'updateInventoryButton',
             action: 'updateInventory',
-            ui: 'raxa-aqua-small',
             x: 600
         }
         ]

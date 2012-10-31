@@ -3,7 +3,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     alias: 'widget.goodsIssueGrid',
     id: 'goodsIssueGrid',
     height: 250,
-    width: 743,
+    width: 780 - 2, // Total pixels - Border
     store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
         autoLoad: false,
         storeId: 'newIssue'
@@ -15,7 +15,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     viewConfig: {
         stripeRows: false
     },
-    initComponent: function () {    
+    initComponent: function () {
         var issueEditor = this;
         this.addEvents(['deleteIssueDrug']);
         this.columns = [
@@ -32,17 +32,19 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             editor: {
                 xtype: 'combobox',
                 editable: true,
-                minChars: 3,
+                minChars: 2,
                 typeAhead: true,
                 autoSelect: false,
                 store: 'allDrugs',
+                queryMode: 'local',
+                hideTrigger : true,
                 displayField: 'text',
+                forceSelection: true,
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
                             comboField.expand();
-                        }
-                        , 
+                        },
                         scope: this
                     },
                     'select':{
@@ -67,7 +69,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 xtype: 'numberfield',
                 allowBlank: true,
                 allowDecimals: false,
-                minValue: 0
+                minValue: 0,
+                hideTrigger: true
             }
         },
         {
@@ -169,8 +172,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             items: [
             '->',
             {
-                text: 'Add Drug',
-                iconCls: 'icon-add',
+                text: '(+) Add Drug',
                 action: 'addIssueDrug'
             }]
         }];
