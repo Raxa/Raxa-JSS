@@ -1,8 +1,9 @@
 Ext.define('RaxaEmr.Pharmacy.view.stockIssueGrid', {
-    extend: 'Ext.grid.Panel',
+    // extend: 'Ext.grid.Panel',
+    extend: 'Ext.ux.ModalGrid',
     alias: 'widget.stockIssueGrid',
     height: 250,
-    width: 840,
+    // width: 840,
     layout: {
         type: 'absolute'
     },
@@ -11,37 +12,37 @@ Ext.define('RaxaEmr.Pharmacy.view.stockIssueGrid', {
     {
         xtype: 'rownumberer',
         text: 'S.No',
-        width: 40
+        // width: 40
     },
     {
         xtype: 'gridcolumn',
         text: 'Facility Name',
-        width: 120
+        // width: 120
     },
     {
         xtype: 'datecolumn',
         format: 'd/m/y',
         text: 'Issue Date',
-        width: 120
+        // width: 120
     },
     {
         xtype: 'numbercolumn',
         text: 'No. of items',
-        width: 120
+        // width: 120
     },
     {
         xtype: 'numbercolumn',
         text: 'Total Qty',
-        width: 120
+        // width: 120
     },
     {
         xtype: 'gridcolumn',
         text: 'Person Name',
-        width: 120
+        // width: 120
     },
     {
         xtype: 'gridcolumn',
         text: 'Status',
-        width: 120
+        // width: 120
     }]
 });
