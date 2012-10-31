@@ -32,11 +32,14 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             editor: {
                 xtype: 'combobox',
                 editable: true,
-                minChars: 3,
+                minChars: 2,
                 typeAhead: true,
                 autoSelect: false,
                 store: 'allDrugs',
+                queryMode: 'local',
+                hideTrigger : true,
                 displayField: 'text',
+                forceSelection: true,
                 listeners: {
                     'focus': {
                         fn: function (comboField) {
