@@ -13,6 +13,9 @@
 // -validation in modal dialog
 // -fix icon resource paths .. can use default extjs icons?
 
+// BUGS:
+// - Start app with multiple modal grids. Click
+
 Ext.define('Ext.ux.ModalGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.ModalGrid',
@@ -21,8 +24,21 @@ Ext.define('Ext.ux.ModalGrid', {
     // TODO: should be += in addition to user-specified tools, not override
     // how about using tools.push() in the initComponent function
     tools:[{
-        type:'plus',
-        tooltip: 'Add',
+        // TODO: add custom toolbar icon like so..
+        // http://stackoverflow.com/a/13154507/950683
+
+        // CSS?
+        // http://www.sencha.com/forum/showthread.php?57130-Toolbar-button-style
+        // http://trac.geoext.org/browser/ext/3.1.1/resources/css/theme-access/toolbar.css?rev=1907
+        // xtype: 'tbbutton',
+        // cls: 'x-btn-text-icon',
+        // icon: 'images/bomb.png',
+        // text: 'Tha Bomb',
+        // id: 'gear',
+        type:'toggle',
+        pressed: true,
+        // tooltip: 'Add',
+        // hidden: false,
         handler: function(event, toolEl, panel) {
             var mf = this.up("ModalGrid").modalForm;
             var grid = this.up("ModalGrid");
