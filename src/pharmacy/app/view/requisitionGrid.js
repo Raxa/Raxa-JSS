@@ -19,6 +19,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
     },
     initComponent: function () {
         var requisitionEditor = this;
+        this.addEvents(['deleteRequisitionDrug']);  // TODO: Remove event and handler
         this.columns = [
             {
                 xtype: 'gridcolumn',
@@ -60,6 +61,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                     hideTrigger: true
                 }
             }
+            // TODO: remove event handler for 'deleteRequisitionDrug'
             ];
         this.plugins = [this.cellEditor];
         this.callParent(arguments);
