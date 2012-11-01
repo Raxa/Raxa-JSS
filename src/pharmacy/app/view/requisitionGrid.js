@@ -1,5 +1,4 @@
 Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
-    // extend: 'Ext.grid.Panel',
     extend: 'Ext.ux.ModalGrid',
     alias: 'widget.requisitionGrid',
     id: 'requisitionGrid',
