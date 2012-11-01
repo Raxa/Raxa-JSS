@@ -4,32 +4,51 @@
 Ext.define('Ext.ux.ModalGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.ModalGrid',
-    itemId: 'modal-grid',
-    // to "add" new
-    // Note that this should be += in addition to whatever user specifies for tools, rather than overriding
-    
+    itemId: 'ModalGrid',
+
+    // TODO: should be += in addition to user-specified tools, not override
+    // how about using tools.push() in the initComponent function
     tools:[{
         type:'plus',
         tooltip: 'Add',
         handler: function(event, toolEl, panel) {
-            gloEvent = event;
-            gloTool = toolEl;
-            // toolEl.up('ModalGrid')
-            console.log(this);
-            console.log(panel);
-            gloP = panel;
-            // panel.showModalForm();
+            var mf = this.up("ModalGrid").modalForm;
+            var grid = this.up("ModalGrid");
+
+            var gridModel = grid.store.getProxy().getModel();
+            var blankItem = Ext.create(gridModel, {});
+            var lastItem = grid.getStore().add(blankItem);    
+            rec = grid.getStore().last();
+            
+            mf.getComponent("ModalGridFormPanel").form.reset();
+            mf.getComponent("ModalGridFormPanel").loadRecord(rec);                    
+            mf.show();
+            
+            // mf.isNew = true;
         },
-        // TODO: fix scope issues so can call "show modal form"
-        // http://jsfiddle.net/chaoszcat/sHrGH/
-        scope: this
     }], 
 
-    showModalForm: function() {
+    showModalForm: function(isNew, record) {
+        // // <<NEW>> vs EDIT
+        // mf.isNew = false;
+        // var rec;
+        // if (isNew) {
+        //     var gridModel = grid.store.getProxy().getModel();
+        //     var blankItem = Ext.create(gridModel, {});
+        //     var lastItem = grid.getStore().add(blankItem);    
+        //     rec = grid.getStore().last();
+        // } else {
+        //     rec = grid.getStore().getAt(rowIndex);    
+        // }
+        
+        // // TODO: This is failing to load vales for DATE field
+        // that.modalForm.getComponent("ModalGridFormPanel").form.reset();
+        // that.modalForm.getComponent("ModalGridFormPanel").loadRecord(rec);                    
+        // that.modalForm.show();
         console.log('show modal form');
         this.modalForm.show();
     },
-    
+
     // TODO: formFields:
     //  // with all theirs special handlers, like autocomplete, and relationships among the fields
     //
@@ -37,7 +56,6 @@ Ext.define('Ext.ux.ModalGrid', {
     // Add an additional action column, with edit and delete handlers
     initComponent:function () {
         
-
         gloModalGrid = this;
         // Create modal form
         var mf = [];
@@ -56,51 +74,59 @@ Ext.define('Ext.ux.ModalGrid', {
             autogenerateFields: mf
         });
         
+        // Disable all of the columns in the grid. Can only be edited by modals
+        for (var i = 0; i < this.columns.length; i++) {
+            var col = this.columns[i];
+            console.log(col);
+
+            if (col.editor) {
+                col.editor = null;
+                // col.editor.editable = false;    
+            }
+        }
+        
         this.callParent(arguments);
 
+        
+        
         // Add Column for edit and delete handlers
         // var that = this
         var column = Ext.create('Ext.grid.ActionColumn', {
-            // width:50,
+            // width: -1,
             menuDisabled: true,
             items: [{
                 icon: '../resources/img/edit.png',  // Use a URL in the icon config
                 tooltip: 'Edit',
                 handler: function(grid, rowIndex, colIndex) {
-                    // <<NEW>> vs EDIT
-                    gloGrid = grid;
-                    var isNew = false;
-                    var rec;
-                    if (isNew) {
-                        var gridModel = grid.store.getProxy().getModel();
-                        var blankItem = Ext.create(gridModel, {});
-                        var lastItem = grid.getStore().add(blankItem);    
-                        rec = grid.getStore().last();
-                    } else {
-                        rec = grid.getStore().getAt(rowIndex);    
-                    }
+                    // // <<NEW>> vs EDIT
+                    // gloGrid = grid;
+                    // mf.isNew = false;
+                    // var rec;
+                    // if (isNew) {
+                    //     var gridModel = grid.store.getProxy().getModel();
+                    //     var blankItem = Ext.create(gridModel, {});
+                    //     var lastItem = grid.getStore().add(blankItem);    
+                    //     rec = grid.getStore().last();
+                    // } else {
+                    //     rec = grid.getStore().getAt(rowIndex);    
+                    // }
                     
-                    // TODO: This is failing to load vales for DATE field
-                    // TODO: Determine how to "Save" values from modal popup
-                    that.modalForm.getComponent("ModalGridFormPanel").form.reset();
-                    that.modalForm.getComponent("ModalGridFormPanel").loadRecord(rec);                    
-                    that.modalForm.show();
+                    // // TODO: This is failing to load vales for DATE field
+                    // that.modalForm.getComponent("ModalGridFormPanel").form.reset();
+                    // that.modalForm.getComponent("ModalGridFormPanel").loadRecord(rec);                    
+                    // that.modalForm.show();
                 }
             }, {    
                 icon: '../resources/img/delete.png',
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
-                    var rec = grid.getStore().getAt(rowIndex);
-
-                    console.log("Terminate " + rec.get('name'));
                     Ext.Msg.confirm("Delete", "Are you sure you want to delete?", function(btn) {
                         if (btn == "yes") {
-                            console.log('fake deleting...');    
+                            // Delete record from store
+                            var rec = grid.getStore().getAt(rowIndex);
                             grid.getStore().remove(rec);
-                       } else {
-                            console.log('fake deleting (NOT!)...');    
-                        
-}                    });
+                        }
+                    });
                 }
             }]
         });
@@ -118,6 +144,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
     scrollable: true,
     modal: true,
     centered: true,
+    itemId: 'ModalGridWindow',
     title: 'Edit Modal Grid',
     closeAction: 'hide',    // TODO: actually delete on hide? memory hog in background?
     initComponent:function () {
@@ -173,6 +200,8 @@ Ext.define('Ext.ux.ModalGridEditor', {
                     var rec = me.getRecord();
                     var newValues = me.getValues();
 
+                    // TODO: Validate all new values!
+
                     // iterate over valid keys in the dictionary, avoid items in prototype chain
                     // http://stackoverflow.com/questions/558981/iterating-through-list-of-keys-for-associative-array-in-json
                     var keys = [];
@@ -182,6 +211,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
                       }
                     }
 
+                    // Update value for all items
                     for (var i = 0; i < keys.length; i ++) {
                         rec.set(keys[i], newValues[keys[i]]);
                     }
@@ -196,32 +226,6 @@ Ext.define('Ext.ux.ModalGridEditor', {
         this.add(panel);
         this.doLayout(false, true);
     },
-    // getXtypeForField: function(field) {
-    //     var fieldXtype = 'textfield';
-    //     try {
-    //         var type = field.type.type;
-    //         switch (type) {
-    //             case 'auto':
-    //                 fieldXtype = 'textfield';
-    //                 break;
-    //             // case '':
-    //             //     break;
-    //             // default:
-    //             //     break;
-    //         }
-
-    //     } catch (e) {
-    //         console.log(e);
-    //         console.log("exception in getXtypeForField");
-    //     }
-
-    //     return {
-    //         xtype: fieldXtype, 
-    //         name: field, 
-    //         // label: field,
-    //         fieldLabel: field.name
-    //     };
-    // },
     
     //populates inventory fields
     init: function(record) {
