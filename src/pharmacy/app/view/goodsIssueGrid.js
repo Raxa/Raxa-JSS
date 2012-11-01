@@ -17,8 +17,9 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
     },
     initComponent: function () {
         var issueEditor = this;
-        this.addEvents(['deleteIssueDrug']);
+        this.addEvents(['deleteIssueDrug']);    // TODO: remove event and handler
         this.columns = [
+        // TODO: suggest that we always or never number rows
         {
             xtype: 'rownumberer',
             text: 'S.N0',
@@ -144,42 +145,14 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             text: 'Expiry Date',
             format: 'd/m/y',
             dataIndex: 'expiryDate',
-            width: 180
+            width: 140
         },{
             xtype: 'gridcolumn',
             text: 'Shelf',
             dataIndex: 'roomLocation',
             width: 60
-        },        
-        {
-            xtype: 'actioncolumn',
-            width: 22,
-            items: [{
-                icon: '../resources/img/delete.png',
-                tooltip: 'Delete',
-                handler: function(grid, rowIndex, colIndex) {
-                    issueEditor.fireEvent('deleteIssueDrug', {
-                        rowIndex: rowIndex,
-                        colIndex: colIndex
-                    });
-                }
-            }]
         }];
         this.plugins = [this.cellEditor];
-        this.dockedItems = [{
-            xtype: 'toolbar',
-            dock: 'bottom',
-            items: [
-            '->',
-            {
-                text: '(+) Add Drug',
-                action: 'addIssueDrug'
-            }]
-        }];
-        Ext.getStore('newIssue').add({
-            drugname: '',
-            quantity: ''
-        })[0];
         this.callParent(arguments);
     }
 });

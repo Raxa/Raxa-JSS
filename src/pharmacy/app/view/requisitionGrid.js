@@ -19,7 +19,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
     },
     initComponent: function () {
         var requisitionEditor = this;
-        this.addEvents(['deleteRequisitionDrug']);
+        this.addEvents(['deleteRequisitionDrug']);  // TODO: Remove event and handler
         this.columns = [
             {
                 xtype: 'gridcolumn',
@@ -60,35 +60,10 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
                     minValue: 0,
                     hideTrigger: true
                 }
-            },{
-                xtype: 'actioncolumn',
-                width: 22,
-                items: [{
-                        icon: '../resources/img/delete.png',
-                        tooltip: 'Delete',
-                        handler: function(grid, rowIndex, colIndex) {
-                            requisitionEditor.fireEvent('deleteRequisitionDrug', {
-                                rowIndex: rowIndex,
-                                colIndex: colIndex
-                            });
-                        }
-                    }]
-            }];
+            }
+            // TODO: remove event handler for 'deleteRequisitionDrug'
+            ];
         this.plugins = [this.cellEditor];
-        this.dockedItems = [{
-                xtype: 'toolbar',
-                dock: 'bottom',
-                items: [
-                    '->',
-                    {
-                        text: '(+) Add Drug',
-                        action: 'addRequisitionDrug'
-                    }]
-            }];
-        Ext.getStore('RequisitionItems').add({
-            drugname: '',
-            quantity: ''
-        })[0];
         this.callParent(arguments);
     }
 });
