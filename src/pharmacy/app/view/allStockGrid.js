@@ -1,8 +1,7 @@
 Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.allStockGrid',
-    id: 'allStockGrid',
-    height: 250,
+    id: 'allStockGrid',   
     width: 780 - 2, // Total pixels - Border
     margin: '0 0 0 0',
     store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
