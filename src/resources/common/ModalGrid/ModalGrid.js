@@ -91,15 +91,16 @@ Ext.define('Ext.ux.ModalGrid', {
                 tooltip: 'Delete',
                 handler: function(grid, rowIndex, colIndex) {
                     var rec = grid.getStore().getAt(rowIndex);
+
                     console.log("Terminate " + rec.get('name'));
                     Ext.Msg.confirm("Delete", "Are you sure you want to delete?", function(btn) {
                         if (btn == "yes") {
                             console.log('fake deleting...');    
-                            // TODO: Actually delete the record
+                            grid.getStore().remove(rec);
                        } else {
                             console.log('fake deleting (NOT!)...');    
-                        }
-                    });
+                        
+}                    });
                 }
             }]
         });
