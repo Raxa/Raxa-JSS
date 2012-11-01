@@ -1,6 +1,18 @@
 // Modal grid
 // - Supports add, edit, and delete operations via pop-up
 // - Grid itself is noneditable
+
+// TODOS:
+// - Review all of my this.up and similar methods. Getting context safely, reliably?
+// - Allow customizing width of action column
+// - abstract New and Edit into one modal form, which pulls record accordingly
+// -fix "+" icon in top right
+// -how to handle depedent, readOnly fields in modal dialog?
+//     -> could include these in the pop-up, but they are disabled and update in relation to existing fields
+// -add new should not add a row until saved wit valid data (currently, "cancel" returns to grid with new row added)
+// -validation in modal dialog
+// -fix icon resource paths .. can use default extjs icons?
+
 Ext.define('Ext.ux.ModalGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.ModalGrid',
@@ -28,93 +40,55 @@ Ext.define('Ext.ux.ModalGrid', {
         },
     }], 
 
-    showModalForm: function(isNew, record) {
-        // // <<NEW>> vs EDIT
-        // mf.isNew = false;
-        // var rec;
-        // if (isNew) {
-        //     var gridModel = grid.store.getProxy().getModel();
-        //     var blankItem = Ext.create(gridModel, {});
-        //     var lastItem = grid.getStore().add(blankItem);    
-        //     rec = grid.getStore().last();
-        // } else {
-        //     rec = grid.getStore().getAt(rowIndex);    
-        // }
-        
-        // // TODO: This is failing to load vales for DATE field
-        // that.modalForm.getComponent("ModalGridFormPanel").form.reset();
-        // that.modalForm.getComponent("ModalGridFormPanel").loadRecord(rec);                    
-        // that.modalForm.show();
-        console.log('show modal form');
-        this.modalForm.show();
-    },
+    // showModalForm: function(isNew, record) {
+    //     console.log('show modal form');
+    //     this.modalForm.show();
+    // },
 
-    // TODO: formFields:
-    //  // with all theirs special handlers, like autocomplete, and relationships among the fields
-    //
-
-    // Add an additional action column, with edit and delete handlers
+    // Initialize grid component, with support for modal dialogs
     initComponent:function () {
+        // Save the scope
+        var that = this;
         
-        gloModalGrid = this;
         // Create modal form
         var mf = [];
-        var that = this;
         for (var i = 0; i < that.columns.length; i++) {
-            console.log(i);
             mf.push({
                 text : that.columns[i].text,    // Label
                 editor : that.columns[i].editor, // xtype for data entry
                 dataIndex : that.columns[i].dataIndex   // where to save the data    
             });
         }
-        console.log(mf);
+        
         this.modalForm = Ext.create("Ext.ux.ModalGridEditor", {
-            // autogenerateFields: that.store.model.getFields()
             autogenerateFields: mf
         });
         
-        // Disable all of the columns in the grid. Can only be edited by modals
+        // Remove editors for all columns in the grid. Can only be edited by modals
         for (var i = 0; i < this.columns.length; i++) {
             var col = this.columns[i];
-            console.log(col);
-
             if (col.editor) {
                 col.editor = null;
-                // col.editor.editable = false;    
             }
         }
         
+        // We've built the modal form, and removed editors from the grid...
+        // So now let's create the "modal"ized grid
         this.callParent(arguments);
 
-        
-        
-        // Add Column for edit and delete handlers
-        // var that = this
+        // Add an additional ActionColumn, with Edit and Delete controls
         var column = Ext.create('Ext.grid.ActionColumn', {
-            // width: -1,
+            itemId: 'modalActionColumn',
             menuDisabled: true,
             items: [{
                 icon: '../resources/img/edit.png',  // Use a URL in the icon config
                 tooltip: 'Edit',
                 handler: function(grid, rowIndex, colIndex) {
-                    // // <<NEW>> vs EDIT
-                    // gloGrid = grid;
-                    // mf.isNew = false;
-                    // var rec;
-                    // if (isNew) {
-                    //     var gridModel = grid.store.getProxy().getModel();
-                    //     var blankItem = Ext.create(gridModel, {});
-                    //     var lastItem = grid.getStore().add(blankItem);    
-                    //     rec = grid.getStore().last();
-                    // } else {
-                    //     rec = grid.getStore().getAt(rowIndex);    
-                    // }
-                    
-                    // // TODO: This is failing to load vales for DATE field
-                    // that.modalForm.getComponent("ModalGridFormPanel").form.reset();
-                    // that.modalForm.getComponent("ModalGridFormPanel").loadRecord(rec);                    
-                    // that.modalForm.show();
+                    mf.isNew = false;
+                    var rec = grid.getStore().getAt(rowIndex);    
+                    that.modalForm.getComponent("ModalGridFormPanel").form.reset();
+                    that.modalForm.getComponent("ModalGridFormPanel").loadRecord(rec);                    
+                    that.modalForm.show();
                 }
             }, {    
                 icon: '../resources/img/delete.png',
@@ -151,7 +125,6 @@ Ext.define('Ext.ux.ModalGridEditor', {
         this.callParent(arguments);
 
         // Dynamically generate fields and labels based on Grid
-        console.log(this.autogenerateFields);
         var fields = this.autogenerateFields;
         var panel = Ext.create('Ext.form.Panel', {
             itemId: 'ModalGridFormPanel'
@@ -161,8 +134,6 @@ Ext.define('Ext.ux.ModalGridEditor', {
         Ext.iterate(fields, function (field) {
             // TODO: Be careful. I'm referencing instead of copying objects, so when I add a field label here it's affecting the original
             if (field.editor) {
-                console.log(field.editor);
-
                 // Add label, if it exists
                 if (field.text) {
                     field.editor.fieldLabel = field.text;
@@ -184,18 +155,19 @@ Ext.define('Ext.ux.ModalGridEditor', {
                 type: 'hbox',
             },
             items:[
-                {
+            {
                 xtype: 'button',
                 text: 'Cancel',
                 handler: function () {
-                    console.log("cancel");
-                }
+                    console.log("Cancel");
+                    this.hide();
+                },
+                scope: this
             },
             {
                 xtype: 'button',
                 text: 'Save',
                 handler: function () {
-                    // TODO: Get the context better?
                     var me = this.getComponent("ModalGridFormPanel").form;
                     var rec = me.getRecord();
                     var newValues = me.getValues();
@@ -217,6 +189,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
                     }
 
                     console.log("Save");
+                    this.hide();
                 },
                 scope: this
             }]
@@ -225,10 +198,5 @@ Ext.define('Ext.ux.ModalGridEditor', {
         panel.doLayout(false, true);
         this.add(panel);
         this.doLayout(false, true);
-    },
-    
-    //populates inventory fields
-    init: function(record) {
-        console.log("init")
     }
 });
