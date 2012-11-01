@@ -1,5 +1,5 @@
 Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
-    extend: 'Ext.grid.Panel',
+    extend: 'Ext.ux.ModalGrid',
     alias: 'widget.goodsReceiptGrid',
     styleHtmlContent: false,
     height: 250,
