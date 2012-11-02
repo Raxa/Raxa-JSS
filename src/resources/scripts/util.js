@@ -280,6 +280,10 @@ var resourceUuid = {
 // Put the Identifier Type Name in between the /.* and the .*/
 var idPattern = /.*RaxaEMR Identification Number.*/;
 
+//Open Mrs age limits
+ 
+
+
 //BMI WHO Constants
 var WHO_BMI_VSUNDERWEIGHT = 15;
 var WHO_BMI_SUNDERWEIGHT = 16;
@@ -360,6 +364,8 @@ var Util = {
     DOCTOR_ATTRIBUTE: 'isOutpatientDoctor - true',
 
     DEFAULT_LOCATION: "GAN",
+    OPEN_MRS_MIN_AGE : 0,
+    OPEN_MRS_MAX_AGE : 120,
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha

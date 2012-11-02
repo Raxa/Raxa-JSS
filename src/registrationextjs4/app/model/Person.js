@@ -12,7 +12,8 @@ Ext.define('Registration.model.Person', {
     }, {
         name: 'age',
         type: 'number'
-    }, {
+    }, 
+    {
         name: 'birthdate',
         type: 'date'
     }, {

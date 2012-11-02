@@ -39,27 +39,27 @@ Util.PAGES.SCREENER = {
  */
 Ext.define("Screener.controller.Application", {
     requires: [
-        'Screener.store.AssignedPatientList',
-        'Screener.store.Doctors',
-        'Screener.store.drugConcept',
-        'Screener.store.drugEncounter',
-        'Screener.store.druglist',
-        'Screener.store.encounterpost',
-        'Screener.store.encounters',
-        'Screener.store.IdentifierType',
-        'Screener.store.Location',
-        'Screener.store.NewPatients',   // Cant find this store
-        'Screener.store.NewPersons',
-        'Screener.store.PatientList',
-        'Screener.store.Patients',
-        'Screener.store.PatientSummary',
-        'Screener.store.PostLists',
-	'Screener.model.observation',	
-        'Screener.view.PharmacyForm', 
-        'Screener.view.PatientListView',
-        'Screener.view.VitalsView',
-        'Screener.view.VitalsForm',
-        'Screener.view.Main',
+    'Screener.store.AssignedPatientList',
+    'Screener.store.Doctors',
+    'Screener.store.drugConcept',
+    'Screener.store.drugEncounter',
+    'Screener.store.druglist',
+    'Screener.store.encounterpost',
+    'Screener.store.encounters',
+    'Screener.store.IdentifierType',
+    'Screener.store.Location',
+    'Screener.store.NewPatients',   // Cant find this store
+    'Screener.store.NewPersons',
+    'Screener.store.PatientList',
+    'Screener.store.Patients',
+    'Screener.store.PatientSummary',
+    'Screener.store.PostLists',
+    'Screener.model.observation',	
+    'Screener.view.PharmacyForm', 
+    'Screener.view.PatientListView',
+    'Screener.view.VitalsView',
+    'Screener.view.VitalsForm',
+    'Screener.view.Main',
     ],
     models: [
     'Screener.model.Person', 
@@ -101,24 +101,32 @@ Ext.define("Screener.controller.Application", {
             addDrugFormButton: '#addDrugFormButton',
             addLabOrderButton: '#addLabOrderButton',
             removeDrugFormButton: '#removeDrugFormButton',
-			removeLabOrderButton: '#removeLabOrderButton',
+            removeLabOrderButton: '#removeLabOrderButton',
             sortByNameButton: '#sortByNameButton',
             sortByFIFOButton: '#sortByFIFOButton',
             sortByBMIButton: '#sortByBMIButton',
             removePatientButton: '#removePatientButton',
             removeAllPatientsButton: '#removeAllPatientsButton',
             patientListView: '#patientListViewId',
-            PatientsWaiting: '#patientsWaiting'
+            PatientsWaiting: '#patientsWaiting',
+            dob: '#dob',
+            patientAge: '#patientAge'
         },
         // Now we define all our listening methods
         control: {
+            dob: {
+                change: 'onDateChange' 
+            },
+            patientAge: {
+                change: 'onAgeChange' 
+            },
             addDrugFormButton: {
                 tap: 'addDrugForm'
             },
             addLabOrderButton: {
                 tap: 'addLabOrder'
             },
-			removeLabOrderButton: {
+            removeLabOrderButton: {
                 tap: 'removeLabOrder'
             },
             addPatientButton: {
@@ -329,13 +337,12 @@ Ext.define("Screener.controller.Application", {
                 store_scrEncounter.getData().getAt(0).getData().uuid, 
                 store_outEncounter.getData().getAt(0).getData().uuid, 
                 localStorage.screenerUuidencountertype
-            )
-        );
+                )
+            );
         store_patientList.load({
             scope: this,
             callback: function(records, operation, success){
                 if(success){
-                    Ext.getCmp('loadMask').setHidden(true);
                     this.setBMITime(store_patientList);
                     // TODO: Add photos to patients in screener list
                     store_patientList.each(function (record) {
@@ -374,7 +381,7 @@ Ext.define("Screener.controller.Application", {
             scrollable: false
         });
     },
-	// remove last drug order form
+    // remove last drug order form
     removeDrugForm: function () {
         if (form_num > 0) {
             Ext.getCmp('form' + form_num).remove({
@@ -477,7 +484,7 @@ Ext.define("Screener.controller.Application", {
         } else Ext.Msg.alert("please select a patient")
     },
 
-	// Adds another lab order form
+    // Adds another lab order form
     addLabOrder: function () {
         lab_num++;
         var endOfForm = 6;
@@ -489,8 +496,8 @@ Ext.define("Screener.controller.Application", {
         });
     },
 	
-	// Removes last lab order form
-	removeLabOrder: function () {
+    // Removes last lab order form
+    removeLabOrder: function () {
         if (lab_num > 0) {
             Ext.getCmp('lab' + lab_num).remove({
                 autoDestroy: true
@@ -510,28 +517,46 @@ Ext.define("Screener.controller.Application", {
         this.newPatient.show();
     },
     // Adds new person to the NewPersons store
+    
     savePerson: function () {
         var formp = Ext.getCmp('newPatient').saveForm();
-       
-        if (formp.givenname && formp.familyname && formp.choice) {
-            var person = Ext.create('Screener.model.Person',{
-                gender: formp.choice,
+        if (formp.givenname && formp.familyname && formp.choice && (formp.patientAge || formp.dob  )) {
+            var newPatient = {
+                gender : formp.choice,
                 names: [{
                     givenName: formp.givenname,
                     familyName: formp.familyname
-                }]
+                }] 
+            };
+            if ( formp.patientAge !== "" && formp.patientAge.length > 0  ) {
+                newPatient.age = formp.patientAge ;   
+            }
+            if( formp.dob !== "" && formp.dob.length > 0 ) {
+                newPatient.birthdate =  formp.dob;
+            }
+            var newPatientParam = Ext.encode(newPatient);
+            Ext.Ajax.request({
+                scope:this,
+                url: HOST + '/ws/rest/v1/person',
+                method: 'POST',
+                params: newPatientParam,
+                disableCaching: false,
+                headers: Util.getBasicAuthHeaders(),
+                success: function (response) {
+                    this.getidentifierstype(JSON.parse(response.responseText).uuid);
+                },
+                failure: function (response) {
+                    Ext.Msg.alert('Error: unable to write to server. Enter all fields.')
+                }
             });
-            var store = Ext.create('Screener.store.NewPersons');
-            store.add(person);
-            store.sync();
-            store.on('write', function(){
-                this.getidentifierstype(store.getData().getAt(0).getData().uuid)
-            } ,this);
             Ext.getCmp('newPatient').hide();
             Ext.getCmp('newPatient').reset();
-            return store;
+        }
+        else {
+            Ext.Msg.alert ("Error","Please Enter all the mandatory fields");
         }
     },
+      
     // Get IdentifierType using IdentifierType store 
     getidentifierstype: function (personUuid) {
         var identifiers = Ext.create('Screener.store.IdentifierType')
@@ -973,5 +998,34 @@ Ext.define("Screener.controller.Application", {
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
         this.getView().setActiveItem(newPage);
+        
+    // Add back button to toolbar which points to old page
+    },
+    
+    onDateChange: function() {
+        var dob = Ext.getCmp('dob').getValue();
+        if( dob !== "" && dob.length > 0 ) {
+            var currentDate = new Date();
+            var enteredDate = Ext.Date.parse(dob, "Y-n-j" , true);
+            if(enteredDate === null || enteredDate === undefined) {
+                Ext.getCmp('dob').reset();
+                Ext.Msg.alert("Invalid date format","Should be in correct format and less then current date");
+            } 
+            else if(enteredDate > currentDate ) {
+                Ext.getCmp('dob').reset();
+                Ext.Msg.alert("Invalid date format","Should be in correct format and less then current date");
+            }
+        }
+    },
+    
+    onAgeChange : function() {
+        var patientAge = Ext.getCmp('patientAge').getValue();
+        if ( patientAge !== "" && patientAge.length > 0) {
+            if( Ext.isNumeric(patientAge) && patientAge < Util.OPEN_MRS_MAX_AGE && patientAge >= Util.OPEN_MRS_MIN_AGE ) {
+            } else {
+                Ext.getCmp('patientAge').reset();
+                Ext.Msg.alert("Error" , 'Age must be an integer and in between 0 and 119');
+            }
+        }
     }
 });
