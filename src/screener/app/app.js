@@ -50,13 +50,13 @@ Ext.application({
 
     //the stores will hold our data in a local cache
     // TODO: remove duplicate member "stores"
-    stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary', 'AssignedPatientList'],
+    stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary', 'AssignedPatientList' , 'orderStore'],
 
 	//entry point
 	launch: function() {
 		if (Util.checkModulePrivilege('screener')&& Util.uuidLoadedSuccessfully()) {
             var mainScreen = Ext.create('Screener.view.Main', {
-                fullscreen: true,
+                fullscreen: true
             });
             var topBar = Ext.create('Topbar.view.TopToolbar', {
                 });

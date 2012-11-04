@@ -5,7 +5,7 @@ Ext.define('Screener.store.druglist', {
         model: 'Screener.model.druglist',
         proxy: {
             type: 'rest',
-            url: HOST + '/ws/rest/v1/drug?v=default',
+            url: HOST + '/ws/rest/v1/raxacore/drug?v=full&limit=300',
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json',

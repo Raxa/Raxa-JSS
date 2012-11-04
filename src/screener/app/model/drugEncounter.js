@@ -15,7 +15,7 @@ Ext.define('Screener.model.drugEncounter', {
             name: 'encounterDatetime'
         }, {
             name: 'orders',
-            model: 'RaxaEmr.Pharmacy.model.drugOrder'
+            model: 'RaxaEmr.Screener.model.drugOrder'
         }]
     }
 })
