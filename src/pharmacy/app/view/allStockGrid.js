@@ -131,9 +131,16 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             }
             
             if(item.data.expiryDate!==""){
-                item.set("months", Util.monthsFromNow(item.data.expiryDate));
-            }
-            else{
+                var daysLeft = Util.daysFromNow(item.data.expiryDate)
+                console.log("<<<>>");
+                console.log(daysLeft);
+                if(daysLeft > 0) {
+                item.set("months", daysLeft );
+                } else {
+                item.set("months", "exp" );    
+                }
+            } 
+             else {
                 item.set("months", null);
             }
         }
