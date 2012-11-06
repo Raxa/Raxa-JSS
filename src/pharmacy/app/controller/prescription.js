@@ -1437,6 +1437,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     //Called when 'stock analysis' button is pressed
     showAvailableStock: function(){
+        console.log("inside showAvailableStock");
         this._updateAllStockPanelButtonsUI('availableStockButton');
         // Ext.getCmp('availableStockButton').setUI('raxa-orange-small');
         Ext.getStore('stockList').clearFilter();
@@ -1444,7 +1445,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         if(Ext.getCmp('allStockLocationPicker').getValue()){
             Ext.getStore('stockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
-        Ext.getStore('stockList').filter('status', 'available');
+         Ext.getStore('stockList').filter('status', 'available');
+         var regExp = /\d+/;
+         Ext.getStore('stockList').filter('months', regExp);
     },
     
     //Called when 'Expiring Stock' button is pressed

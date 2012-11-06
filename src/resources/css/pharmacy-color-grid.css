@@ -1,0 +1,16 @@
+/* 
+    Document   : pharmacy-color-grid
+    Created on : Nov 6, 2012, 9:50:55 AM
+    Author     : computer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.pharmacy-color-grid .x-grid-cell {
+/*    background-color: orange;*/
+    color: red;
+}

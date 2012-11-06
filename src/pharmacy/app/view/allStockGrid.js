@@ -42,7 +42,10 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         xtype: 'gridcolumn',
         text: 'Status',
         dataIndex: 'status',
-        width: 60
+        width: 60,
+        style: {
+                'background-color':'blue'
+            }
     },
     {
         xtype: 'gridcolumn',
@@ -55,6 +58,11 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         text: 'Name',
         dataIndex: 'drugName',
         width: 120
+//        renderer: function(value, params, record, idx) {
+//            console.log("<<<<<inside renderer >>");
+//            console.log(allStockGrid.getViewRegion());
+//            grid.getView().addRowCls(idx, 'myClass'); 
+//            return value}
     },
     {
         xtype: 'gridcolumn',
@@ -65,6 +73,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     {
         xtype: 'gridcolumn',
         text: 'Months',
+       // value: '<span style="color:blue;">Months</span>',
         width: 45,
         dataIndex: 'months',
         useNull: true
@@ -142,6 +151,23 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             } 
              else {
                 item.set("months", null);
+            }
+           
+//           var drug = item.data.drugName
+//           drug.fontcolor("blue");
+//             grid.getView().addRowClass(rowIndex, 'red');
+
+        }
+    },
+   viewConfig: {
+        getRowClass: function(record, rowIndex, rowParams, store) {
+            console.log("inside getRowClass");
+            console.log(record.data.expiryDate);
+            console.log(record);
+            console.log(rowIndex);
+            console.log(rowParams);
+            if(Util.monthsFromNow((record.data.expiryDate)) <=  2) {
+            return 'pharmacy-color-grid';
             }
         }
     }
