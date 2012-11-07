@@ -27,13 +27,17 @@
 			patientImage.drawImage(video, 0, 0, 300,300);
 			document.getElementById('ConfirmImage').removeAttribute('disabled')
 			document.getElementById('ConfirmImage').focus();
-
     };
     
-	function ConfirmImage(){ 
+	function ConfirmImage(){
 			var dataURL = document.getElementById('patientImage').toDataURL("image/jpeg");
+			//dataURL saved in localStorage to be sent via REST
 			localStorage.setItem("patientImage",dataURL);
-    };    
+			//Confirmed Patient Image set on Patient Registration Page-1
+			var ConfirmedPatientImage = document.getElementById('ConfirmedPatientImage').src= dataURL;
+			Ext.getCmp('photo').hide();
+			
+    };
     </script>
   </body>
 </html>
