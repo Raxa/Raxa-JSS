@@ -926,6 +926,7 @@ Ext.define("Screener.controller.Application", {
                                 if (Ext.getCmp('form' + i).getValues().duration == "2m") {
                                     enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 2, startdate.getDate());
                                 }
+                                //setting form values in order so that it can be set in encounter.
                                 order.push({
                                     patient:uuid,
                                     drug: Ext.getCmp('form' + i).getValues().drug,
@@ -955,9 +956,6 @@ Ext.define("Screener.controller.Application", {
                                                     order[j].concept = concept[j].getAt(0).getData().concept;
                                                 }
                                                 var time = Util.ISODateString(new Date());
-                                                // model for posting the encounter for given drug orders
-                                                //setting 'orders' in the encounter to be sent
-                                                // RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = true;
                                                 var encounter = Ext.create('Screener.model.drugEncounter', {
                                                     patient: uuid,
                                                     // this is the encounter for the prescription encounterType
@@ -993,9 +991,6 @@ Ext.define("Screener.controller.Application", {
         }
     }, 
     
-    encounterStoreSync : function() {
-        return 1;
-    },
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
         this.getView().setActiveItem(newPage);
