@@ -872,14 +872,9 @@ Ext.define("Screener.controller.Application", {
         Ext.Msg.alert("Submitted patient vitals");
     },
 
-    //ToDo : Its been incomplete for now as concept part is not been done till yet
     drugSubmit: function (list, index, target, record) {
-        console.log(this.getPatientList().getSelection());
-        console.log(this.getPatientList().getSelection()[0]);
         if (this.getPatientList().getSelection()[0] !== null) {
-            console.log("<<>");
             objectRef = this;
-            // changes the button text to 'Confirm' and 'Cancel'
             var MB = Ext.MessageBox;
             Ext.apply(MB, {
                 YES: {
@@ -895,67 +890,97 @@ Ext.define("Screener.controller.Application", {
             Ext.apply(MB, {
                 YESNO: [MB.NO, MB.YES]
             });
-            var  order = [];
+            var order = [];
+            var concept = [];
+            var conceptsSent = 0, conceptsReceived = 0;
+            var drugNum = 0
             // on-click, launch MessageBox
             Ext.get('drugSubmitButton').on('click', function () {
                 var time = new Date();
                 Ext.Msg.confirm("Confirmation", "Are you sure you want to submit your Pharmacy Order?",  function ( answer ) {
                     if ( answer == 'yes') {
                         for (i = 0; i <= form_num; i++) {
-                            var uuid = Ext.getStore('patientStore').getData().all[objectRef.currentPatientIndex].data.uuid;
-                            var startdate = new Date();
-                            // value of end date depending on the duration
-                            var enddate;
-                            if (Ext.getCmp('form' + i).getValues().duration == "1w") {
-                                enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 7);
-                            }
-                            if (Ext.getCmp('form' + i).getValues().duration == "1m") {
-                                enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 1, startdate.getDate());
-                            }
-                            if (Ext.getCmp('form' + i).getValues().duration == "2m") {
-                                enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 2, startdate.getDate());
-                            }
-                            // model for drug order is created here
-                            order.push({
-                                //  patient: this.getPatientList().getSelection()[0].getData().uuid,
-                                patient:uuid,
-                                drug: Ext.getCmp('form' + i).getValues().drug,
-                                startDate: startdate,
-                                autoExpireDate: enddate,
-                                dose: Ext.getCmp('form' + i).getValues().strength,
-                                quantity: Ext.getCmp('form' + i).getValues().quantity,
-                                frequency: Ext.getCmp('form' + i).getValues().frequency,
-                                instructions: Ext.getCmp('form' + i).getValues().Instruction,
-                                // type should be "drugorder" in order to post a drug order
-                                type: 'drugorder',
-                                concept:"1ca312ce-f770-11e1-a276-f23c91ae55df"
-                            });
-                            console.log("are order");
-                            console.log(order);
-                            if (order[i].instructions === "") {
-                                order[i].instructions = "-";
-                            }
-                        }
-                            var encounter = Ext.create('Screener.model.drugEncounter', {
-                                patient: uuid,
-                                // this is the encounter for the prescription encounterType
-                                encounterType: '57d91773-3d9b-48e1-8964-10d236145f9e',
-                                encounterDatetime: time,
-                                orders: order                
-                            });
-                            console.log(encounter);
-                            var encounterStore = Ext.create('Screener.store.drugEncounter');
-                            encounterStore.add(encounter);
-                            // make post call for encounter
-                            encounterStore.sync({
-                                scope: this,
-                                success: function(){
-                                    Ext.Msg.alert('Successful');
-                                },
-                                failure: function(){
-                                    Ext.Msg.alert("Failure -- Please try again");
+                            if((Ext.getCmp('form' + i).getValues().drug) !== "") {
+                                drugNum++ ;
+                                var Url = HOST + '/ws/rest/v1/raxacore/drug/';
+                                Url = Url + Ext.getCmp('form' + i).getValues().drug;
+                                concept.push(Ext.create('Screener.store.drugConcept'));
+                                concept[conceptsSent++].setProxy({
+                                    type: 'rest',
+                                    url: Url,
+                                    headers: Util.getBasicAuthHeaders(),
+                                    reader: {
+                                        type: 'json'
+                                    }
+                                });
+                                var uuid = Ext.getStore('patientStore').getData().all[objectRef.currentPatientIndex].data.uuid;
+                                var startdate = new Date();
+                                // value of end date depending on the duration
+                                var enddate;
+                                if (Ext.getCmp('form' + i).getValues().duration == "1w") {
+                                    enddate = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 7);
                                 }
-                            });
+                                if (Ext.getCmp('form' + i).getValues().duration == "1m") {
+                                    enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 1, startdate.getDate());
+                                }
+                                if (Ext.getCmp('form' + i).getValues().duration == "2m") {
+                                    enddate = new Date(startdate.getFullYear(), startdate.getMonth() + 2, startdate.getDate());
+                                }
+                                order.push({
+                                    patient:uuid,
+                                    drug: Ext.getCmp('form' + i).getValues().drug,
+                                    startDate: startdate,
+                                    autoExpireDate: enddate,
+                                    dose: Ext.getCmp('form' + i).getValues().strength,
+                                    quantity: Ext.getCmp('form' + i).getValues().quantity,
+                                    frequency: Ext.getCmp('form' + i).getValues().frequency,
+                                    instructions: Ext.getCmp('form' + i).getValues().Instruction,
+                                    // type should be "drugorder" in order to post a drug order
+                                    type: 'drugorder'
+                                });
+                                if (order[i].instructions === "") {
+                                    order[i].instructions = "-";
+                                }
+                                // here it makes the get call for concept of related drug
+                                
+                                concept[i].load({
+                                    scope: this,
+                                    callback: function(records, operation, success){
+                                        if(success){
+                                            // added a counter k which increment as a concept load successfully, after all the concept are loaded
+                                            // value of k should be equal to the no. of drug forms
+                                            conceptsReceived++;
+                                            if (conceptsSent === (drugNum) && conceptsReceived === (drugNum)) {
+                                                for (var j = 0; j < concept.length; j++) {
+                                                    order[j].concept = concept[j].getAt(0).getData().concept;
+                                                }
+                                                var time = Util.ISODateString(new Date());
+                                                // model for posting the encounter for given drug orders
+                                                //setting 'orders' in the encounter to be sent
+                                                // RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = true;
+                                                var encounter = Ext.create('Screener.model.drugEncounter', {
+                                                    patient: uuid,
+                                                    // this is the encounter for the prescription encounterType
+                                                    encounterType: localStorage.prescriptionUuidencountertype,
+                                                    encounterDatetime: time,
+                                                    orders: order                
+                                                });
+                                                var encounterStore = Ext.create('Screener.store.drugEncounter');
+                                                encounterStore.add(encounter);
+                                                // make post call for encounter
+                                                encounterStore.sync(); 
+                                                console.log("Encounter store sync completed");
+                                            }
+                                        }
+                                        else{
+                                            Ext.Msg.alert("Error: failed to read from server");
+                                        }
+                                    }
+                                });
+                            } else {
+                                Ext.Msg.alert("Error","Please select a Drug") 
+                            }
+                        } 
                     }
                     else {
                     }
@@ -967,6 +992,10 @@ Ext.define("Screener.controller.Application", {
             Ext.Msg.alert("Error","Please select a patient")
         }
     }, 
+    
+    encounterStoreSync : function() {
+        return 1;
+    },
     // TODO: Possible to get oldPage via application state?
     navigate: function(newPage, oldPage) {
         this.getView().setActiveItem(newPage);
@@ -975,4 +1004,5 @@ Ext.define("Screener.controller.Application", {
     sendPharmacyEncounter: function(uuid, typeOfEncounter) {
         
     }
+    
 });

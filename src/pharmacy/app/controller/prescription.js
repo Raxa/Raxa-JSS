@@ -657,7 +657,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                                 for (var j = 0; j < concept.length; j++) {
                                     order[j].concept = concept[j].getAt(0).getData().concept;
                                 }
-                                var time = this.ISODateString(new Date());
+                                var time = Util.ISODateString(new Date());
                                 // model for posting the encounter for given drug orders
                                 //setting 'orders' in the encounter to be sent
                                 RaxaEmr.Pharmacy.model.drugEncounter.getFields()[5].persist = true;
