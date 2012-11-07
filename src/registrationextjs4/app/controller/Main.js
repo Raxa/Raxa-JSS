@@ -14,6 +14,9 @@ Ext.define('Registration.controller.Main', {
             "registrationpart1 button[action=cancel]": {
                 click: this.cancel
             },
+            "registrationpart1 button[action=takePhoto]": {
+                click: this.takePhoto
+            },
             "registrationconfirm button[action=back]": {
                 click: this.backToPage1
             },
@@ -562,4 +565,23 @@ Ext.define('Registration.controller.Main', {
             Ext.getCmp(fields[i]).reset();
         }
     },
+    
+    takePhoto: function() {
+	
+	Ext.create('Ext.window.Window', {
+	id: 'photo',
+    title: 'Taking Photo',
+    height: 500,
+    width: 700,
+    modal:true,
+    layout: 'fit',
+        loader : {
+        url : "app/patientImageBooth.html",
+        loadMask : false,
+        scripts: true,
+        autoLoad : true, // important
+        renderer : 'html'
+    },
+}).show();
+    }
 });
