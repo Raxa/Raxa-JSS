@@ -567,21 +567,27 @@ Ext.define('Registration.controller.Main', {
     },
     
     takePhoto: function() {
-	
-	Ext.create('Ext.window.Window', {
-	id: 'photo',
-    title: 'Taking Photo',
-    height: 500,
-    width: 700,
-    modal:true,
-    layout: 'fit',
-        loader : {
-        url : "app/patientImageBooth.html",
-        loadMask : false,
-        scripts: true,
-        autoLoad : true, // important
-        renderer : 'html'
-    },
-}).show();
-    }
+    if(!Ext.getCmp('photo'))
+	{
+		Ext.create('Ext.window.Window', {
+		id: 'photo',
+		title: 'Taking Photo',
+		height: 500,
+		width: 700,
+		modal:true,
+		layout: 'fit',
+		    loader : {
+		    url : "app/patientImageBooth.html",
+		    loadMask : false,
+		    scripts: true,
+		    autoLoad : true,
+		    renderer : 'html'
+		},
+	}).show();
+	}
+	else
+	{
+		Ext.getCmp('photo').show();
+	}
+}
 });
