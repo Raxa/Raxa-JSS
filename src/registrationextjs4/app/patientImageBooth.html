@@ -13,11 +13,20 @@
    this.webcamStream();		
       
    function webcamStream() {
+   try{
          var video = document.getElementById("live")
-	      navigator.webkitGetUserMedia({video: true},
+	      if(navigator.webkitGetUserMedia({video: true},
           function(stream) {
-            video.src = window.webkitURL.createObjectURL(stream)
-          })
+	          video.src = window.webkitURL.createObjectURL(stream);
+          }))
+         	Ext.Msg.alert('Please upgrade your browser to allow taking photos');
+     }
+     catch(error)
+     {
+     	Ext.Msg.alert("Browser Incompatible","Please upgrade your browser to allow taking photos");
+     	Ext.getCmp('photo').hide();
+	    console.log("Error by browser while using webcam of the system: "+error);
+     }
     }
 
 	function ClickImage(){
