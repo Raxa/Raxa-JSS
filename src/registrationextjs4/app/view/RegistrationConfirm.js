@@ -309,24 +309,23 @@ Ext.define('Registration.view.RegistrationConfirm', {
                             name: 'occuption',
                             id: 'occupationConfirm'
                         }]
-                    // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
-                    // }, {
-                    //     xtype: 'fieldcontainer',
-                    //     fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Religion'),
-                    //     layout: 'hbox',
-                    //     combineErrors: true,
-                    //     defaultType: 'text',
-                    //     labelAlign: 'right',
-                    //     labelPad: 20,
-                    //     labelWidth: 250,
-                    //     anchor: '95%',
-                    //     defaults: {
-                    //         hideLabel: 'true'
-                    //     },
-                    //     items: [{
-                    //         name: 'religion',
-                    //         id: 'religionConfirm'
-                    //     }]
+                     }, {
+                         xtype: 'fieldcontainer',
+                         fieldLabel: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.rc.Religion'),
+                         layout: 'hbox',
+                         combineErrors: true,
+                         defaultType: 'text',
+                         labelAlign: 'right',
+                         labelPad: 20,
+                         labelWidth: 250,
+                         anchor: '95%',
+                         defaults: {
+                             hideLabel: 'true'
+                         },
+                         items: [{
+                            name: 'religion',
+                             id: 'religionConfirm'
+                         }]
                     }]
                 },{
                         xtype: 'container',
