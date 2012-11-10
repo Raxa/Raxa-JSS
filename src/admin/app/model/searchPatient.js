@@ -1,0 +1,52 @@
+/* model for search patient list */
+Ext.define('Registration.model.searchPatient', {
+    extend: 'Ext.data.Model',
+    fields: [{
+        name: 'uuid',
+        type: 'string'
+    }, {
+        name: 'givenName',
+        mapping: 'person.preferredName.givenName',
+        type: 'string'
+    }, {
+        name: 'familyName',
+        mapping: 'person.preferredName.familyName',
+        type: 'string'
+    }, {
+        name: 'gender',
+        type: 'string'
+    }, {
+        name: 'birthdate',
+        type: 'date',
+        useNull: true
+    }, {
+        name: 'age',
+        type: 'number',
+        useNull: true
+    }, { 
+        name: 'raxaIdentifier',
+        type: 'string'
+    }, { 
+        name: 'oldPatientIdentifier',
+        type: 'string'
+    }, {
+        name: 'attributes',
+        model: 'Registration.model.attributes'
+    }, {
+        name: 'address1',
+        type: 'string'
+    }, { 
+        name: 'address2',
+        type: 'string'
+    }, { 
+        name: 'postalCode',
+        type: 'string'
+    }, {
+        name: 'cityVillage',
+        type: 'string',
+        useNull: true
+    },{
+        name: 'stateProvince',
+        type: 'string'
+    }]
+})
