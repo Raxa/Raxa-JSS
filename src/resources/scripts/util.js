@@ -109,6 +109,12 @@ var resourceUuid = {
         "varName": "regfee",
         "displayName": "REGISTRATION FEE"
     },
+    "regFeePayment": {
+        "resource": "concept",
+        "queryTerm": "regFeePayment",
+        "varName": "regFeePayment",
+        "displayName": "REGISTRATION FEE PAYMENT"
+    },
     "systolicbloodpressure": {
         "resource": "concept",
         "queryTerm": "SYSTOLIC BLOOD PRESSURE",

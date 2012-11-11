@@ -90,8 +90,7 @@ Ext.define('Registration.controller.Main', {
         Ext.getCmp('educationConfirm').setText(Ext.getCmp('education').value);
         Ext.getCmp('casteConfirm').setText(Ext.getCmp('caste').value);
         Ext.getCmp('occupationConfirm').setText(Ext.getCmp('occupation').value);
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
-        // Ext.getCmp('religionConfirm').setText(Ext.getCmp('religion').value); 
+        Ext.getCmp('religionConfirm').setText(Ext.getCmp('religion').value);
         Ext.getCmp('residentialAreaConfirm').setText(Ext.getCmp('residentialArea').value);
         Ext.getCmp('stretConfirm').setText(Ext.getCmp('street').value);
         if(!(!Ext.getCmp('patientPrimaryContact').value || Ext.getCmp('patientPrimaryContact').value === "")) {
@@ -234,8 +233,7 @@ Ext.define('Registration.controller.Main', {
             {componentId: 'caste', uuid: localStorage.casteUuidpersonattributetype},
             {componentId: 'education', uuid: localStorage.educationUuidpersonattributetype},
             {componentId: 'occupation', uuid: localStorage.occupationUuidpersonattributetype},
-            // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
-            // {componentId: 'religion', uuid: localStorage.religionUuidpersonattributetype},
+         	{componentId: 'religion', uuid: localStorage.religionUuidpersonattributetype},
             {componentId: 'tehsil', uuid: localStorage.tehsilUuidpersonattributetype},
             {componentId: 'district', uuid: localStorage.districtUuidpersonattributetype},
             {componentId: 'patientPrimaryContact', uuid: localStorage.primaryContactUuidpersonattributetype},
@@ -494,6 +492,16 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterregfee.data);
             }
+            if(this._isOkToSendByREST('regFeePayment')) {
+                console.log("pushing obs.. regFeePayment");
+                var jsonencounterregfee = Ext.create('Registration.model.obsModel', {
+                    obsDatetime: t,
+                    person: localStorage.newPatientUuid,
+                    concept: localStorage.regFeePaymentUuidconcept,
+                    value: Ext.getCmp('regFeePayment').value
+                });
+                jsonencounter.data.obs.push(jsonencounterregfee.data);
+            }
             if(this._isOkToSendByREST('complaintArea')) {
                 console.log("pushing obs.. complaintArea");
                 var jsonencountercomplaint = Ext.create('Registration.model.obsModel', {
@@ -555,8 +563,7 @@ Ext.define('Registration.controller.Main', {
 
     //function which reset all the fields in new patient registertation form
     _resetNewPatientRegistrationForm: function() {
-        // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613            
-        var fields = ['oldPatientIdentifier', 'patientFirstName', 'patientLastName', 'patientFirstNameHindi', 'patientLastNameHindi', 'relativeFirstName', 'relativeLastName', 'patientAge', 'dob', 'street', 'town', 'residentialArea', 'tehsil', 'district', 'state', 'patientPrimaryContact', 'patientSecondaryContact', 'education', 'caste', 'occupation', 'complaintArea', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID'];
+        var fields = ['oldPatientIdentifier', 'patientFirstName', 'patientLastName', 'patientFirstNameHindi', 'patientLastNameHindi', 'relativeFirstName', 'relativeLastName', 'patientAge', 'dob', 'street', 'town', 'residentialArea', 'tehsil', 'district', 'state', 'patientPrimaryContact', 'patientSecondaryContact', 'education', 'caste', 'occupation', 'complaintArea', 'heightIDcm', 'weightIDkg', 'bmiNumberfieldID','religion'];
 
         for(var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
