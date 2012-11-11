@@ -492,6 +492,16 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencounterregfee.data);
             }
+            if(this._isOkToSendByREST('regFeePayment')) {
+                console.log("pushing obs.. regFeePayment");
+                var jsonencounterregfee = Ext.create('Registration.model.obsModel', {
+                    obsDatetime: t,
+                    person: localStorage.newPatientUuid,
+                    concept: localStorage.regFeePaymentUuidconcept,
+                    value: Ext.getCmp('regFeePayment').value
+                });
+                jsonencounter.data.obs.push(jsonencounterregfee.data);
+            }
             if(this._isOkToSendByREST('complaintArea')) {
                 console.log("pushing obs.. complaintArea");
                 var jsonencountercomplaint = Ext.create('Registration.model.obsModel', {

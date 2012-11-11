@@ -84,7 +84,25 @@ Ext.define('Registration.view.IllnessDetails', {
                     value: 10,
                     hideTrigger: true,
                     allowBlank: false
-                }]
+                },
+                {
+                    xtype: 'combo',
+                    id: 'regFeePayment',
+                    layout: 'hbox',
+                    width: 175,
+                    typeAhead: true,
+                    minChars: 1,
+                    queryMode: 'local',
+                    value: 'Paid',
+                    displayField: 'regFeePayment',
+                    store: new Ext.data.SimpleStore({
+                        fields: ['regFeePayment'],
+                        data: [
+                        	['Paid'],
+                        	['Credit']
+                        ]
+                    })
+                        }]
             }]
         },{
             xtype: 'container',
