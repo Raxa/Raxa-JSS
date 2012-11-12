@@ -43,14 +43,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                         },
                         scope: this
                     },
-                    'select': {
-                        fn: function(comboField, records){
-                            var row = Ext.ComponentQuery.query('goodsReceiptGrid')[0].getSelectionModel().selection.row;
-                            var supplierIndex = (Ext.getStore('drugInfos').find("drugUuid",records[0].data.uuid));
-                            if(supplierIndex!==-1)
-                                Ext.getStore('newReceipt').getAt(row).set('supplier', Ext.getStore('drugInfos').getAt(supplierIndex).data.description);
-                        }
-                    }
                 }
             }
         },
