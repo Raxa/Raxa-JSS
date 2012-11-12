@@ -163,6 +163,12 @@ var resourceUuid = {
         "varName": "regcomplaint",
         "displayName": "REGISTRATION COMPLAINT"
     },
+    "patientImage": {
+        "resource": "concept",
+        "queryTerm": "PATIENT IMAGE",
+        "varName": "patientImage",
+        "displayName": "PATIENT IMAGE"
+    },
     "basic": {
         "resource": "form",
         "queryTerm": "basic",
