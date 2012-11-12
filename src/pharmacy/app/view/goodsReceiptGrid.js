@@ -63,6 +63,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             editor: {
                 xtype: 'numberfield',
                 allowBlank: true,
+                hidden: true,   // TODO: Is this field still submitting? should it be removed?
                 decimalPrecision: 0,
                 allowDecimals: false,
                 minValue: 0,
