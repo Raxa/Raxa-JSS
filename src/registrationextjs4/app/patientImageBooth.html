@@ -42,8 +42,9 @@
 			var dataURL = document.getElementById('patientImage').toDataURL("image/jpeg");
 			//dataURL saved in localStorage to be sent via REST
 			localStorage.setItem("patientImage",dataURL);
+			localStorage.setItem("patientImageTaken",true);
 			//Confirmed Patient Image set on Patient Registration Page-1
-			var ConfirmedPatientImage = document.getElementById('ConfirmedPatientImage').src= dataURL;
+			document.getElementById('ConfirmedPatientImage').src= dataURL;
 			Ext.getCmp('photo').hide();
 			
     };

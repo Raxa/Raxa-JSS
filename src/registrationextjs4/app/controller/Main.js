@@ -507,6 +507,16 @@ Ext.define('Registration.controller.Main', {
                 });
                 jsonencounter.data.obs.push(jsonencountercomplaint.data);
             }
+            if(localStorage.patientImageTaken=="true") {
+                console.log("pushing obs.. patientImage");
+                var jsonencountercomplaint = Ext.create('Registration.model.obsModel', {
+                    obsDatetime: t,
+                    person: localStorage.newPatientUuid,
+                    concept: localStorage.patientImageUuidconcept,
+                    value: localStorage.patientImage
+                });
+                jsonencounter.data.obs.push(jsonencountercomplaint.data);
+            }
         }
 
         var store = Ext.create('Registration.store.encounterStore');
@@ -564,6 +574,9 @@ Ext.define('Registration.controller.Main', {
         for(var i = 0; i < fields.length; i++) {
             Ext.getCmp(fields[i]).reset();
         }
+        
+        localStorage.setItem('patientImageTaken', false);
+        document.getElementById('ConfirmedPatientImage').src= "../resources/img/camera.png";
     },
     
     takePhoto: function() {
