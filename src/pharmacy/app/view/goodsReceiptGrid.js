@@ -22,11 +22,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
         this.columns= [
         {
             xtype: 'gridcolumn',
-            width: 25,
-            text: '#'
-        },
-        {
-            xtype: 'gridcolumn',
             width: 200,
             dataIndex: 'drugName',
             text: 'Name Of drug',
