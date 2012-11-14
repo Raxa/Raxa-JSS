@@ -9,9 +9,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
         margin: 5,
         xtype: 'combobox',
         id: "receiptLocationPicker",
-        store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
-            storeId: 'receiptLocations'
-        }),
+//        store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
+//            storeId: 'receiptLocations'
+//        }),
+        store: 'Locations',
         fieldLabel: 'Receive new stock at',
         queryMode: 'local',
         hideTrigger: true,

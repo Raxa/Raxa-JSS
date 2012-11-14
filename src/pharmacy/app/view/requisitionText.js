@@ -14,9 +14,10 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
             xtype: 'combobox',
             labelWidth: 90,
             id: "dispenseLocationPicker",
-            store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
-                storeId: 'dispenseLocations'
-                }),
+//            store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
+//                storeId: 'dispenseLocations'
+//                }),
+            store: 'Locations',
             fieldLabel: 'Your Location',
             queryMode: 'local',
             hideTrigger: true,
@@ -38,9 +39,10 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
             xtype: 'combobox',
             labelWidth: 90,
             id: "stockLocationPicker",
-            store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
-                storeId: 'stockLocations'
-            }),
+//            store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
+//                storeId: 'stockLocations'
+//            }),
+            store: 'Locations',
             fieldLabel: 'Stock Location',
             queryMode: 'local',
             hideTrigger: true,

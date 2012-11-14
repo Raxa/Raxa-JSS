@@ -11,6 +11,7 @@ root {
 }
 
 .pharmacy-color-grid .x-grid-cell {
-/*    background-color: orange;*/
-    color: red;
+    background-color: #B91109;
+    color: white;
+    border-bottom: thin solid white;
 }

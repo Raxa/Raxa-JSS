@@ -13,9 +13,10 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockForm', {
             xtype: 'combobox',
             id: 'allStockLocationPicker',
             fieldLabel: 'Your Location',
-            store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
-                storeId: 'currentLocations'
-            }),
+//            store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
+//                storeId: 'currentLocations'
+//            }),
+            store: 'Locations',
             displayField: 'display',
             queryMode: 'local',
             hideTrigger: true,
