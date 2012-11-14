@@ -168,12 +168,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "todayPatientGrid": {
                 select: this.showQueuedPatient
             },
-            
-            ////////////////////////////
-            // Inventory
-            ////////////////////////////
-
-            // Navigation bar
             "inventoryNavBar button[action=navigateInventoryOverview]": {
                 click: this.navigateInventoryOverview
             },
@@ -218,8 +212,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "inventoryEditor button[action=updateInventory]": {
                 click: this.updateInventory
             },
-
-            // Request Drugs
             'requisition button[action=submitRequisition]': {
                 click: this.submitRequisition
             },
@@ -239,18 +231,15 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'goodsIssueText #issuePurchaseOrderPicker':{
                 select: this.populateIssueFromPurchaseOrder
             },
-            'goodsIssue button[action=submitIssue]': {
-                click: this.submitIssue
-            },
-
-			// Receive Drugs (Update Stock)
             'goodsReceipt button[action=submitReceipt]': {
                 click: this.submitReceipt
             },
             'goodsReceiptText #receiptPurchaseOrderPicker':{
                 select: this.populateReceiptFromPurchaseOrder
             },
-
+            'goodsIssue button[action=submitIssue]': {
+                click: this.submitIssue
+            },
             "addDrug button[action=submitNewDrug]": {
                 click: this.submitNewDrug
             },
@@ -1167,7 +1156,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // TODO
     },
     
-	// Submit Drug Request via REST to database  
     submitRequisition: function(){
         // Create Drug Inventories (??)
         console.log("<<<<<<<<<inside submitRequisition>>>>>>>>>>>>>>");
@@ -1274,24 +1262,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp('issuePurchaseOrderPicker').setValue(records[0]);
     },
 
-    // Adds new row to goods issue grid
-    addIssueDrug: function(){
-        // Add blank item to store -- will automatically add new row to grid
-        Ext.getStore('newIssue').add({
-            drugname: '',
-            quantity: ''
-        })[0];
-    },
 
-    // Deletes current row of issue grid
-    deleteIssueDrug: function (evtData) {
-        var store = this.getStore('newIssue');
-        var record = store.getAt(evtData.rowIndex);
-        if(record) {
-            store.remove(record);
-        }
-    },
-        
     // Checks whether the issue is valid -- returns with error message, or null if issue is valid
     validateIssue: function(issues){
         console.log(issues);

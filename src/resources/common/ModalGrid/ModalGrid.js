@@ -9,12 +9,10 @@
 // -fix "+" icon in top right
 // -how to handle depedent, readOnly fields in modal dialog?
 //     -> could include these in the pop-up, but they are disabled and update in relation to existing fields
-// -add new should not add a row until saved wit valid data (currently, "cancel" returns to grid with new row added)
+//     -> if we want to save their values.. http://www.sencha.com/forum/showthread.php?80008-how-to-iterate-through-all-form-fields
+// -add new should not add a row until saved with valid data (currently, "cancel" returns to grid with new row added)
 // -validation in modal dialog
 // -fix icon resource paths .. can use default extjs icons?
-
-// BUGS:
-// - Start app with multiple modal grids. Click
 
 Ext.define('Ext.ux.ModalGrid', {
     extend: 'Ext.grid.Panel',
@@ -125,6 +123,8 @@ Ext.define('Ext.ux.ModalGrid', {
     },
 });
 
+// ModalGridEditor is the Modal Window which is launched when you "add" a new item 
+// or "edit" an existing item via the Modal Grid
 Ext.define('Ext.ux.ModalGridEditor', {
     alias: 'widget.ModalGridEditor',
     extend: 'Ext.Window',
@@ -148,7 +148,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
         var that = this;
         
         Ext.iterate(fields, function (field) {
-            // TODO: Be careful. I'm referencing instead of copying objects, so when I add a field label here it's affecting the original
+            // Be careful. I'm referencing instead of copying objects, so when I add a field label here it's affecting the original
             if (field.editor) {
                 // Add label, if it exists
                 if (field.text) {
@@ -176,6 +176,8 @@ Ext.define('Ext.ux.ModalGridEditor', {
                 text: 'Cancel',
                 handler: function () {
                     console.log("Cancel");
+                    // TODO: If "new", shoudnt add another row to the grid
+                    // TODO: If "edit", shouldnt affect existing row on the grid
                     this.hide();
                 },
                 scope: this
@@ -188,7 +190,6 @@ Ext.define('Ext.ux.ModalGridEditor', {
                     var rec = me.getRecord();
                     var newValues = me.getValues();
 
-                    gloRec = rec;
                     // TODO: Validate all new values!
 
                     // iterate over valid keys in the dictionary, avoid items in prototype chain
