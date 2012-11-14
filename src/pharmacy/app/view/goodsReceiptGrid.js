@@ -8,7 +8,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
         autoLoad: false,
         storeId: 'newReceipt'
     }),
-    //layout: 'absolute',
     selType: 'cellmodel',
     cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1
@@ -18,7 +17,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     },
     initComponent: function () {
         var receiptEditor = this;
-        this.addEvents(['deleteReceiptDrug']);  // TODO: remove event and handler
         this.columns= [
         {
             xtype: 'gridcolumn',

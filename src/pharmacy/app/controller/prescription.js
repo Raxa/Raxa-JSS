@@ -160,9 +160,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "todayPatientGrid": {
                 select: this.showQueuedPatient
             },
-            "allStockForm button[action=newPurchaseOrder]": {
-                click: this.newPurchaseOrder
-            },
             "inventoryNavBar button[action=navigateInventoryOverview]": {
                 click: this.navigateInventoryOverview
             },
@@ -205,15 +202,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             "inventoryEditor button[action=updateInventory]": {
                 click: this.updateInventory
             },
-            'requisitionGrid': {
-                deleteRequisitionDrug: this.deleteRequisitionDrug
-            },
-            'requisitionGrid button[action=addRequisitionDrug]': {
-                click: this.addRequisitionDrug
-            },
-            'requisition button[action=cancelRequisition]': {
-                click: this.cancelInventoryChange
-            },
             'requisition button[action=submitRequisition]': {
                 click: this.submitRequisition
             },
@@ -229,29 +217,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             'goodsIssueText #issuePurchaseOrderPicker':{
                 select: this.populateIssueFromPurchaseOrder
             },
-            'goodsIssueGrid button[action=addIssueDrug]': {
-                click: this.addIssueDrug
-            },
-            'goodsIssueGrid': {
-                deleteIssueDrug: this.deleteIssueDrug
-            },
-            'goodsReceiptGrid': {
-                deleteReceiptDrug: this.deleteReceiptDrug
-            },
-            'goodsReceiptGrid button[action=addReceiptDrug]': {
-                click: this.addReceiptDrug
-            },
-            'goodsReceipt button[action=cancelReceipt]': {
-                click: this.cancelInventoryChange
-            },
             'goodsReceipt button[action=submitReceipt]': {
                 click: this.submitReceipt
             },
             'goodsReceiptText #receiptPurchaseOrderPicker':{
                 select: this.populateReceiptFromPurchaseOrder
-            },
-            'goodsIssue button[action=cancelIssue]': {
-                click: this.cancelInventoryChange
             },
             'goodsIssue button[action=submitIssue]': {
                 click: this.submitIssue
@@ -899,36 +869,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp(id).toggle(true);
     },
 
-    // Creates a new purchase order
-    newPurchaseOrder: function() {
-        // TODO
-    },
-    
-    //deletes current row of requisition grid
-    deleteReceiptDrug: function (evtData) {
-        var store = this.getStore('newReceipt');
-        var record = store.getAt(evtData.rowIndex);
-        if(record) {
-            store.remove(record);
-        }
-    },
-    
-    // Adds new row to requisition grid
-    addReceiptDrug: function(){
-        // Add blank item to store -- will automatically add new row to grid
-        // TODO: remove [0]
-        Ext.getStore('newReceipt').add({
-            drugname: '',
-            quantity: ''
-        })[0];
-    },
-
-    // Cancels a change to inventory, goes back to stock overview page
-    cancelInventoryChange: function(){
-        Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.ALLSTOCK.value);
-    },
-    
-    
     // Fills a purchase order when a stock admin wants to make a new issue
     // Populates issue drug fields with drugs + quantites from the purchase order
     populateReceiptFromPurchaseOrder: function(combo, records){
@@ -1180,25 +1120,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         // TODO
     },
     
-    //deletes current row of requisition grid
-    deleteRequisitionDrug: function (evtData) {
-        var store = this.getStore('RequisitionItems');
-        var record = store.getAt(evtData.rowIndex);
-        
-        if(record) {
-            store.remove(record);
-        }
-    },
-    
-    //adds new row to requisition grid
-    addRequisitionDrug: function(){
-        // add blank item to store -- will automatically add new row to grid
-        Ext.getStore('RequisitionItems').add({
-            drugname: '',
-            quantity: ''
-        })[0];
-    },
-        
     submitRequisition: function(){
         var drugInventories = [];
         var requisitions = Ext.getStore('RequisitionItems').data;
@@ -1295,24 +1216,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         Ext.getCmp('issuePurchaseOrderPicker').setValue(records[0]);
     },
 
-    // Adds new row to goods issue grid
-    addIssueDrug: function(){
-        // Add blank item to store -- will automatically add new row to grid
-        Ext.getStore('newIssue').add({
-            drugname: '',
-            quantity: ''
-        })[0];
-    },
 
-    // Deletes current row of issue grid
-    deleteIssueDrug: function (evtData) {
-        var store = this.getStore('newIssue');
-        var record = store.getAt(evtData.rowIndex);
-        if(record) {
-            store.remove(record);
-        }
-    },
-        
     // Checks whether the issue is valid -- returns with error message, or null if issue is valid
     validateIssue: function(issues){
         console.log(issues);
