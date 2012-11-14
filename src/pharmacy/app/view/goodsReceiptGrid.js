@@ -46,22 +46,22 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
                 }
             }
         },
-        {
-            xtype: 'gridcolumn',
-            width: 80,
-            text: 'Qty Sent',
-            dataIndex: 'originalQuantity',
-            hidden: true,
-            editor: {
-                xtype: 'numberfield',
-                allowBlank: true,
-                hidden: true,   // TODO: Is this field still submitting? should it be removed?
-                decimalPrecision: 0,
-                allowDecimals: false,
-                minValue: 0,
-                hideTrigger: true
-            }
-        },
+        // {
+        //     xtype: 'gridcolumn',
+        //     width: 80,
+        //     text: 'Qty Sent',
+        //     dataIndex: 'originalQuantity',
+        //     hidden: true,
+        //     editor: {
+        //         xtype: 'numberfield',
+        //         allowBlank: true,
+        //         hidden: true,   // TODO: Is this field still submitting? should it be removed?
+        //         decimalPrecision: 0,
+        //         allowDecimals: false,
+        //         minValue: 0,
+        //         hideTrigger: true
+        //     }
+        // },
         {
             xtype: 'gridcolumn',
             width: 80,

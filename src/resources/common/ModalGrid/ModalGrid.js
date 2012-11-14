@@ -188,6 +188,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
                     var rec = me.getRecord();
                     var newValues = me.getValues();
 
+                    gloRec = rec;
                     // TODO: Validate all new values!
 
                     // iterate over valid keys in the dictionary, avoid items in prototype chain
@@ -203,6 +204,8 @@ Ext.define('Ext.ux.ModalGridEditor', {
                     for (var i = 0; i < keys.length; i ++) {
                         rec.set(keys[i], newValues[keys[i]]);
                     }
+                    console.log(keys);
+                    console.log(newValues);
 
                     console.log("Save");
                     this.hide();
