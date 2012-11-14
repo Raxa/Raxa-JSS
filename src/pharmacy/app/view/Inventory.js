@@ -13,7 +13,7 @@ Ext.define('RaxaEmr.Pharmacy.view.Inventory', {
         id: 'inventoryMainArea',
         xtype: 'container',
         layout: 'card',
-        activeItem: 1,  // TODO: remove, should be 0
+        activeItem: 0,
         items: [{
             xtype: 'allStock'
         }, {
