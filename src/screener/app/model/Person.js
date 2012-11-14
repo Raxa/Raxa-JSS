@@ -19,6 +19,12 @@ Ext.define('Screener.model.Person',{
         }, {
             name: 'names',
             model: 'Screener.model.Names'
+        }, {
+            name: 'age',
+            type: 'string'
+        },{
+            name: 'dateOfBirth',
+            type: 'string'
         }]
     }
 });
