@@ -41,6 +41,14 @@ Ext.define('RaxaEmr.view.Login', {
             centered: true,
             width: 350,
             style: 'margin-top: 180px;'
+        }, {
+            xtype: 'button',
+            text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.createnewProviderButton.title'),
+            id: 'createnewProviderButton',
+            ui: 'decline-round',
+            centered: true,
+            width: 350,
+            style: 'margin-top: 280px;'
         }]
     }
 });

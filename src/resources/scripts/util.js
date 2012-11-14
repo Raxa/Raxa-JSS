@@ -37,7 +37,7 @@ LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
 
 var HOST;
-var DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
+var DEFAULT_HOST = 'http://raxa.io:8080/openmrs';
 if (localStorage.getItem("host") === null) {
     HOST = DEFAULT_HOST; 
 } else { 
