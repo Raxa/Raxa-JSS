@@ -343,7 +343,7 @@ Ext.define("Screener.controller.Application", {
             scope: this,
             callback: function(records, operation, success){
                 if(success){
-                    this.setBMITime(store_patientList);
+                    this.setComplaintBMITime(store_patientList);
                     // TODO: Add photos to patients in screener list
                     store_patientList.each(function (record) {
                         record.set('image', '/Raxa-JSS/src/screener/resources/pic.gif');
@@ -792,7 +792,7 @@ Ext.define("Screener.controller.Application", {
             callback: function(records, operation, success){
                 if(success){
                     this.updatePatientsWaitingTitle();
-                    this.setBMITime(Ext.getStore('patientStore'));
+                    this.setComplaintBMITime(Ext.getStore('patientStore'));
                 }
                 else{
                     Ext.Msg.alert("Error", Util.getMessageLoadError());
