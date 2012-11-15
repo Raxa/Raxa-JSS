@@ -228,7 +228,7 @@ Ext.define('RaxaEmr.controller.Session', {
         Startup.repeatUuidLoadingEverySec();
         loggedIn = true;
     	if(loggedIn && doneLoading && newAccount) {
-    		window.location = "http://localhost/~sn10/Raxa-private/src/admin";
+    		window.location = "http://raxa.io/admin";
     	}
         if(!newAccount){
         var numAppsAvailable = this.addModulesToDashboard();
@@ -309,7 +309,7 @@ Ext.define('RaxaEmr.controller.Session', {
     	console.log("Hi");
     	doneLoading = true;
     	if(loggedIn && doneLoading && newAccount) {
-    		window.location = "http://localhost/~sn10/Raxa-private/src/admin";
+    		window.location = "http://raxa.io/admin";
     	}
         //remove loading mask
         Ext.getCmp('mainView').setMasked(false);
