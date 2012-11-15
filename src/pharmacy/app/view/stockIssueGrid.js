@@ -9,11 +9,6 @@ Ext.define('RaxaEmr.Pharmacy.view.stockIssueGrid', {
     x: 400,
     columns: [
     {
-        xtype: 'rownumberer',
-        text: 'S.No',
-        width: 40
-    },
-    {
         xtype: 'gridcolumn',
         text: 'Facility Name',
         width: 120

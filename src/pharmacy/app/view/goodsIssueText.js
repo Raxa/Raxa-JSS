@@ -1,7 +1,6 @@
 Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
     extend: 'Ext.container.Container',
     alias: 'widget.goodsIssueText',
-    width: 780,
     layout: {
         type: 'vbox'
     },
