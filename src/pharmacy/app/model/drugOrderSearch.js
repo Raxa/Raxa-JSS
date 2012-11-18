@@ -41,7 +41,12 @@ Ext.define('RaxaEmr.Pharmacy.model.drugOrderSearch', {
         }, {
             name: 'ItemPrice',
             type: 'number'
-        }]
+        }, 
+        {
+            name: 'instructions',
+            type: 'string'
+        }
+    ]
 })
 
 

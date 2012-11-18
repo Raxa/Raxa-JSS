@@ -9,39 +9,12 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
         xtype: 'container',
         border: false,
         layout: 'vbox',
-        items: [{
-            margin: 5,
-            xtype: 'combobox',
-            labelWidth: 90,
-            id: "dispenseLocationPicker",
-//            store: Ext.create('RaxaEmr.Pharmacy.store.Locations', {
-//                storeId: 'dispenseLocations'
-//                }),
-            store: 'Locations',
-            fieldLabel: 'Your Location',
-            queryMode: 'local',
-            hideTrigger: true,
-            forceSelection: true,
-            displayField: 'display',
-            emptyText: 'Location',
-            listeners: {
-                'focus': {
-                    fn: function (comboField) {
-                        comboField.doQuery(comboField.allQuery, true);
-                        comboField.expand();
-                    },
-                    scope: this
-                }
-            }
-        },
+        items: [
         {
             margin: 5,
             xtype: 'combobox',
             labelWidth: 90,
             id: "stockLocationPicker",
-//            store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
-//                storeId: 'stockLocations'
-//            }),
             store: 'Locations',
             fieldLabel: 'Stock Location',
             queryMode: 'local',

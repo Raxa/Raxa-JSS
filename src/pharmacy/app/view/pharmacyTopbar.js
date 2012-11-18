@@ -10,6 +10,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     alias: 'widget.pharmacyTopBar',
     autoScroll: true,
     width: 960,
+    id: 'pharmacyTopbar',
     layout: {
         type: 'hbox',
         align: 'stretch'
@@ -21,6 +22,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         xtype: 'toolbar',
         height: PHARMACY_TOPBAR_CONSTANTS.HEIGHT,
         dock: 'top',
+        id: 'pharmacyTopbar',
         items: [
 	{
 	    xtype: 'image',
@@ -67,22 +69,29 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             }
         }, {
             xtype: 'tbfill'
-        },{
+        },
+        {
             margin: 5,
             xtype: 'combobox',
             id: 'allStockLocationPicker',
             fieldLabel: 'Your Location',
-//            store: Ext.create('RaxaEmr.Pharmacy.store.Locations',{
-//                storeId: 'currentLocations'
-//            }),
             store: 'Locations',
             displayField: 'display',
             queryMode: 'local',
             hideTrigger: true,
             forceSelection: true,
             valueField: 'uuid',
-            emptyText: 'All Locations'
-        }, 
+            emptyText: 'All Locations',
+            listeners: {
+                'focus': {
+                    fn: function (comboField) {
+                        comboField.doQuery(comboField.allQuery, true);
+                        comboField.expand();
+                    },
+                    scope: this
+                }
+            }
+        },
         {
             xtype: 'button',
             id: 'alertButton',
@@ -94,7 +103,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                     scope: this,
                     callback: function(records, operation, success){
                         if(success) {
-                            // Do nothing
+                        // Do nothing
                         } else {
                             Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }
@@ -130,5 +139,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                 });
             }
         }]
-    }]
+    }
+    ]
+    
 })

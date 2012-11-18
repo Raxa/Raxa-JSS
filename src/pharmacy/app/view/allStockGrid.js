@@ -58,11 +58,6 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         text: 'Name',
         dataIndex: 'drugName',
         width: 120
-//        renderer: function(value, params, record, idx) {
-//            console.log("<<<<<inside renderer >>");
-//            console.log(allStockGrid.getViewRegion());
-//            grid.getView().addRowCls(idx, 'myClass'); 
-//            return value}
     },
     {
         xtype: 'gridcolumn',
@@ -72,8 +67,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Months',
-       // value: '<span style="color:blue;">Months</span>',
+        text: 'Days',
         width: 45,
         dataIndex: 'months',
         useNull: true
@@ -138,11 +132,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             else{
                 item.set("batchQuantity", null);
             }
-            
             if(item.data.expiryDate!==""){
                 var daysLeft = Util.daysFromNow(item.data.expiryDate)
-                console.log("<<<>>");
-                console.log(daysLeft);
                 if(daysLeft > 0) {
                 item.set("months", daysLeft );
                 } else {
@@ -152,22 +143,16 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
              else {
                 item.set("months", null);
             }
-           
-//           var drug = item.data.drugName
-//           drug.fontcolor("blue");
-//             grid.getView().addRowClass(rowIndex, 'red');
-
         }
     },
+   
    viewConfig: {
         getRowClass: function(record, rowIndex, rowParams, store) {
-            console.log("inside getRowClass");
-            console.log(record.data.expiryDate);
-            console.log(record);
-            console.log(rowIndex);
-            console.log(rowParams);
-            if(Util.monthsFromNow((record.data.expiryDate)) <=  2) {
-            return 'pharmacy-color-grid';
+            if(Util.monthsFromNow((record.data.expiryDate)) <=  2 && Util.monthsFromNow((record.data.expiryDate)) >  0) {
+            return 'pharmacyTwoMonths-color-grid .x-grid-cell ';
+            }
+            if(Util.monthsFromNow((record.data.expiryDate)) <=  0 ) {
+            return 'pharmacyExpire-color-grid .x-grid-cell ';
             }
         }
     }

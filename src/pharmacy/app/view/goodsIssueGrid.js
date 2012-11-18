@@ -43,7 +43,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                     },
                     'select':{
                         fn: function(comboField, records){
-                            // TODO: when drug is changed, clear all corresponding fields, as they'll need to be updated
+                        // TODO: when drug is changed, clear all corresponding fields, as they'll need to be updated
                         }
                     }
                 }
@@ -92,7 +92,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                                 var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
                                 var isCurrentDrug = (record.get('drugName')===selectedDrug);
                                 var isBatch = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
-                                var locationUuid = Ext.getCmp('issueStockLocationPicker').value;
+                                var locationUuid = Ext.getCmp('allStockLocationPicker').value;
                                 var isAtLocation = (record.get('location').uuid===locationUuid)
                                 return isAvailable && isCurrentDrug && isBatch && isAtLocation;
                             });
@@ -156,8 +156,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             width: 140,
             editor: {
                 xtype: 'datefield',
-                // TODO: Disable this field but still submit the value
-                // disabled: true
+            // TODO: Disable this field but still submit the value
+            // disabled: true
             }
         },{
             xtype: 'gridcolumn',
@@ -166,8 +166,8 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             width: 60,
             editor: {
                 xtype: 'textfield',
-                // TODO: Disable this field but still submit the value
-                // disabled: true
+            // TODO: Disable this field but still submit the value
+            // disabled: true
             }
         }];
         this.plugins = [this.cellEditor];

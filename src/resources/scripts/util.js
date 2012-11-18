@@ -366,6 +366,10 @@ var Util = {
     DEFAULT_LOCATION: "GAN",
     OPEN_MRS_MIN_AGE : 0,
     OPEN_MRS_MAX_AGE : 120,
+    Taken_Morning : "morning ** true.",
+    Taken_Day : "day ** true.",
+    Taken_Even : "evening ** true.",
+    Taken_Night : "night ** true.",
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha

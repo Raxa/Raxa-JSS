@@ -6,10 +6,8 @@ Ext.define('RaxaEmr.Pharmacy.view.stockIssue', {
     items:[{
         xtype: 'allStockPanel',
         x : 400
-    },{
-        xtype: 'allStockForm',
-        x : 400
-    },{
+    },
+    {
         xtype: 'stockIssueGrid',
         id: 'stockIssueGrid',
         x : 400

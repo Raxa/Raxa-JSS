@@ -10,8 +10,8 @@ root {
     display: block;
 }
 
-.pharmacy-color-grid .x-grid-cell {
-    background-color: #B91109;
+.pharmacyExpire-color-grid .x-grid-cell {
+    background-color:#8B0000 ;
     color: white;
     border-bottom: thin solid white;
 }

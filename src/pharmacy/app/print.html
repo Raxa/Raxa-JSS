@@ -21,6 +21,7 @@
     <title>JSS Pharmacy Prescription</title>
 </head>
 <body>
+    <div style="height: 2px; width: 100%; background: lightblue"></div> 
     <table align="center" style="width: 500px; align:center;" >
         <td>
             <p style="text-align: center; ">
@@ -30,23 +31,23 @@
         </td>
         <td width="75%">
             <h2 style="text-align: center; ">Jan Swasthya Sahyog <br> Ganiari, Bilaspur </h2>
-
         </td>
     </table>
-    <table border="1" cellpadding="1" cellspacing="1" style="width: 100%; height: auto">
+    <div style="height: 2px; width: 100%; background: lightblue"></div> 
+    <table border="0" cellpadding="1" cellspacing="1" style="width: 100%; height: auto">
         <tbody>
             <tr>
-                <td style='width: 20%'>
                     <div id='tab1' style='width: 100%'>
                     </div>
-                </td>
-                <td style='width: 80%'>
+    </tr>  
+                    <div style="height: 2px; width: 100%; background: lightblue"></div> 
+                    <tr>
                     <div id='tab2' style='width: 100%'>
                     </div>
-                </td>
             </tr>
         </tbody>
     </table>
+    <div style="height: 2px; width: 100%; background: lightblue"></div>
     <script>
         var total = 0;
         var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
@@ -55,28 +56,26 @@
         for (i = 0; i < selectedPatientAttributes.length; i++) {
             if (selectedPatient[selectedPatientAttributes[i]]) {
 
-                tab += "<tr><td>" + selectedPatientAttributes[i] + "</td><td>" + selectedPatient[selectedPatientAttributes[i]] + "</td></tr>";
+                tab += "<tr style=\"text-align='center'; background-color='#B0B0FF'\"> <td ><strong>" + selectedPatientAttributes[i] + "</td><td>" + selectedPatient[selectedPatientAttributes[i]] + "</td></tr>";
 
             }
         }
         tab += '</tbody></table>';
         document.getElementById('tab1').innerHTML = tab;
-        tab = '<table border="1"  style="width:100%" text-align="center"><tbody><tr><td>Drugs</td><td>Dosage</td><td>Duration</td><td>qty</td><td>UnitPrice</td><td>ItemPrice</td></tr>';
+        tab = '<table border="0"  style="width:100%" text-align="center"><tbody><tr><td><strong>Drug Prescribed</td><td><strong>Dosage</td><td><strong>Duration</td><td><strong>Quantity</td><td><strong>To Be Taken In</td><td><strong>Instruction</td></tr>';
         for (var j = 0; j < selectedPatient['Length']; j++) {
             tab += '<tr>';
             tab += '<td>' + selectedPatient['DrugGrid'][j].drugName + '</td>';
             tab += '<td>' + selectedPatient['DrugGrid'][j].dosage + '</td>';
             tab += '<td>' + selectedPatient['DrugGrid'][j].duration + '</td>';
             tab += '<td>' + selectedPatient['DrugGrid'][j].qty + '</td>';
-            tab += '<td>' + selectedPatient['DrugGrid'][j].unitprice + '</td>';
-            tab += '<td>' + selectedPatient['DrugGrid'][j].itemprice + '</td>';
+            tab += '<td>' + selectedPatient['DrugGrid'][j].taken + '</td>'
+            tab += '<td>' + selectedPatient['DrugGrid'][j].instructions + '</td>'
             tab += '</tr>';
             total += selectedPatient['DrugGrid'][j].itemprice;
         }
-        tab += '<tr><td></td><td></td><td></td><td></td><td>Total</td><td>' + total + '</td></tr>';
         tab += '</tbody></table>';
         document.getElementById('tab2').innerHTML = tab;
-
     </script>
 </body>
 </html>
