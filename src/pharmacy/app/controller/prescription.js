@@ -388,8 +388,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // Opens new window, copy-ing
     printPrescribedDrugs: function() {
         var Grid=this.readGrid();
-        console.log("inside printPrescribedDrugs ");
-        console.log(Grid);
         var selectedPatient = {};
         if(Ext.getCmp('familyName').getValue()!==""){
             selectedPatient = {
@@ -418,8 +416,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     readGrid: function() {
         var drugs = Ext.getStore('orderStore').data;
-        console.log("inside readGrid");
-        console.log(Ext.getStore('orderStore').data);    
         var noofdrugs=0;
         if(drugs.items)
         {
@@ -436,20 +432,16 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             drugGrid[i1].itemprice=drugs.items[i1].data.itemprice ;
             drugGrid[i1].instructions = drugs.items[i1].data.instructions;
             if(drugs.items[i1].data.takeInMorning) {
-                console.log(drugGrid[i1].taken);
                 drugGrid[i1].taken = "Morning" 
             }
             if(drugs.items[i1].data.takeInDay) {
-                console.log(drugGrid[i1].taken);
                 if(drugGrid[i1].taken !== '' && drugGrid[i1].taken !== undefined) {
-                    console.log("inside if");
                     drugGrid[i1].taken = drugGrid[i1].taken + " / Day"
                 } else {
                     drugGrid[i1].taken = "Day"
                 }
             }
             if(drugs.items[i1].data.takeInEvening) {
-                console.log(drugGrid[i1].taken);
                 if(drugGrid[i1].taken !== '' && drugGrid[i1].taken !== undefined ) {
                     drugGrid[i1].taken = drugGrid[i1].taken + " / Evening"
                 } else {
@@ -457,7 +449,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 }
             }
             if(drugs.items[i1].data.takeInNight) {
-                console.log(drugGrid[i1].taken);
                 if( drugGrid[i1].taken !== '' && drugGrid[i1].taken !== undefined) {
                     drugGrid[i1].taken = drugGrid[i1].taken + " / Night" 
                 } else {
@@ -1261,13 +1252,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // Submit Drug Request via REST to database  
     submitRequisition: function(){
         // Create Drug Inventories (??)
-        console.log("<<<<<<<<<inside submitRequisition>>>>>>>>>>>>>>");
-        console.log(Ext.getCmp('allStockLocationPicker').value);
-        console.log(Ext.getCmp('stockLocationPicker').value);
-        console.log(Ext.getCmp('allStockLocationPicker').value === undefined);
-        console.log(Ext.getCmp('allStockLocationPicker').value === null);
-        console.log(Ext.getCmp('stockLocationPicker').value === undefined);
-        console.log(Ext.getCmp('stockLocationPicker').value === null);
         if(!((Ext.getCmp('allStockLocationPicker').value === undefined  || Ext.getCmp('allStockLocationPicker').value === null ) || (Ext.getCmp('stockLocationPicker').value === undefined  || Ext.getCmp('stockLocationPicker').value === null ))) {
             var drugInventories = [];
             var requisitions = Ext.getStore('RequisitionItems').data;
@@ -1289,12 +1273,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             var time = Util.getCurrentTime();
             var dispenseLocationIndex = Ext.getStore("Locations").find('uuid', Ext.getCmp("allStockLocationPicker").value);
             var stockLocationIndex = Ext.getStore("Locations").find('display', Ext.getCmp("stockLocationPicker").value);
-            console.log("<<<<<<<<??>>>>>>>>>>>");
-            console.log(dispenseLocationIndex);
-            console.log(Ext.getCmp("allStockLocationPicker").value);
-            console.log(Ext.getStore("Locations").getAt(dispenseLocationIndex));
-            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.display.toString().split(" - ")[0];
-        
+            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.display.toString().split(" - ")[0];        
             // Model for posting the encounter for given drug orders
             var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
                 name: "Pharmacy Requisition",
@@ -1372,19 +1351,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
 
     // Checks whether the issue is valid -- returns with error message, or null if issue is valid
     validateIssue: function(issues){
-        console.log(issues);
         if(issues.items.length === 0){
             return "Please enter a drug";
         }
 
         Ext.getStore('stockList').clearFilter();
         for (var i=0; i<issues.items.length; i++){
-            console.log("<<>>");
-            console.log(issues.items[i].data);
-            console.log(issues.items[i].data.drugName);
-            console.log(issues.items[i].data.batchQuantity);
-            console.log(issues.items[i].data.quantity);
-            console.log(issues.items[i].data.expiryDate);
             if (issues.items[i].data.drugName==="" || issues.items[i].data.batch==="" || issues.items[i].data.quantity<0 || issues.items[i].data.expiryDate===""){
                 return "Blank fields not allowed";
             }
@@ -1413,10 +1385,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // TODO: Comment
     submitIssue: function(){
         // Validate the submitted issue - respond with Alert message if invalid
-        console.log(" << inside submit issue >> ");
-        console.log(Ext.getCmp('issuePurchaseOrderPicker').value);
-        console.log(Ext.getCmp('allStockLocationPicker').value);
-        console.log(Ext.getCmp('issuedispenseLocationPicker').value);
         var issues = Ext.getStore('newIssue').data;
         var msg = this.validateIssue(issues);
         if(msg!==null){
@@ -1525,18 +1493,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     // TODO: Refactor all of these filters into a common function. Just pass it an argument to do filtering
 
-    //Called when all stock location has been cleared (no location selected for stock grid)
-//    showAllStock: function(){
-//        this._updateAllStockPanelButtonsUI('');
-//        Ext.getStore('stockList').clearFilter();
-//    },
     
     filterAllStocksByLocation: function() {
         Ext.getStore('stockList').clearFilter();
         //if current location, filter by that
         if(Ext.getCmp('allStockLocationPicker').getValue()){
-            console.log("inside filterAllStocksByLocation");
-            console.log(Ext.getCmp('allStockLocationPicker').getValue());
             Ext.getStore('stockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
     },
