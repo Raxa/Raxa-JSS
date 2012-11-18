@@ -1268,8 +1268,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             // Create model for Purchase Order POST, with given drug orders
             var time = Util.getCurrentTime();
             var dispenseLocationIndex = Ext.getStore("Locations").find('uuid', Ext.getCmp("allStockLocationPicker").value);
-            var stockLocationIndex = Ext.getStore("Locations").find('display', Ext.getCmp("stockLocationPicker").value);
-            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.display.toString().split(" - ")[0];        
+            var stockLocationIndex = Ext.getStore("Locations").find('name', Ext.getCmp("stockLocationPicker").value);
+            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.name.toString().split(" - ")[0];        
             // Model for posting the encounter for given drug orders
             var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
                 name: "Pharmacy Requisition",

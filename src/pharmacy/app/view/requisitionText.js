@@ -20,7 +20,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
             queryMode: 'local',
             hideTrigger: true,
             forceSelection: true,
-            displayField: 'display',
+            displayField: 'name',
             emptyText: 'Location',
             listeners: {
                 'focus': {
