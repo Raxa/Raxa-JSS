@@ -4,7 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     styleHtmlContent: false,
     height: 250,
     width: 780 - 2, // Total pixels - Border
-    store: Ext.create('RaxaEmr.Pharmacy.store.StockList', {
+    store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
         autoLoad: false,
         storeId: 'newReceipt'
     }),
@@ -17,10 +17,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     },
     initComponent: function () {
         var receiptEditor = this;
-        this.columns = [
-        {
-            xtype: 'rownumberer'
-        },
+        this.columns= [
         {
             xtype: 'rownumberer'
         },
@@ -30,7 +27,24 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             dataIndex: 'drugName',
             text: 'Name Of drug',
             editor: {
-                xtype: 'drugComboBox'
+                xtype: 'combobox',
+                editable: true,
+                minChars: 2,
+                typeAhead: true,
+                autoSelect: false,
+                store: 'allDrugs',
+                displayField: 'text',
+                queryMode: 'local',
+                hideTrigger : true,
+                forceSelection: true,
+                listeners: {
+                    'focus': {
+                        fn: function (comboField) {
+                            comboField.expand();
+                        },
+                        scope: this
+                    },
+                }
             }
         },
         // {

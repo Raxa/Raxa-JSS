@@ -1,7 +1,9 @@
 Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
     extend: 'Ext.data.Store',
     id: 'allDrugs',
-    model: 'RaxaEmr.Pharmacy.model.Drug',
+    fields: [{name: 'text', type: 'string', mapping: 'name'},
+        {name: 'uuid', type: 'string', mapping: 'uuid'},
+        {name: 'dosageForm', type: 'string'}],
     autoLoad: true,
     autoSync: false,
     proxy: {
@@ -18,28 +20,25 @@ Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
             for(var i=0; i<this.data.items.length; i++){
                 var item = this.data.items[i];
                 var drugNameWithSuffix="";
-//                if(item.data.strength !== null && item.data.units !== null){
-//                    drugNameWithSuffix = " "+item.data.strength+item.data.unts;
-//                }
                 if(item.data.dosageForm.toLowerCase().indexOf(RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.TABLET)!==-1){
-                    drugNameWithSuffix += "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.TABLET+") ";
+                    drugNameWithSuffix = "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.TABLET+") ";
                 }
                 else if(item.data.dosageForm.toLowerCase().indexOf(RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.SYRUP)!==-1){
-                    drugNameWithSuffix += "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.SYRUP+") ";
+                    drugNameWithSuffix = "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.SYRUP+") ";
                 }
                 else if(item.data.dosageForm.toLowerCase().indexOf(RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.OINTMENT)!==-1){
-                    drugNameWithSuffix += "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.OINTMENT+") ";
+                    drugNameWithSuffix = "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.OINTMENT+") ";
                 }
                 else if(item.data.dosageForm.toLowerCase().indexOf(RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.INJECTION)!==-1){
-                    drugNameWithSuffix += "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.INJECTION+") ";
+                    drugNameWithSuffix = "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.INJECTION+") ";
                 }
                 else if(item.data.dosageForm.toLowerCase().indexOf(RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.CREAM)!==-1){
-                    drugNameWithSuffix += "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.CREAM+") ";
+                    drugNameWithSuffix = "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.CREAM+") ";
                 }
                 else if(item.data.dosageForm.toLowerCase().indexOf(RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.CAPSULE)!==-1){
-                    drugNameWithSuffix += "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.CAPSULE+") ";
+                    drugNameWithSuffix = "("+RaxaEmr_Pharmacy_Controller_Vars.DOSAGE_FORM_SUFFIX.CAPSULE+") ";
                 }
-                item.set("text", item.data.name+drugNameWithSuffix);
+                item.set("text", item.data.text+drugNameWithSuffix);
             }
         }
     }

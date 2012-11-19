@@ -320,7 +320,6 @@ var BMI_WEIGHT_MIN = 0;
 
 // Enum for Key Maps
 var KEY = {
-    DELETE: 8,
     ENTER: 13
 };
 var keyMap = {
