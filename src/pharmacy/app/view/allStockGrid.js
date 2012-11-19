@@ -37,9 +37,22 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             scope : this
         }
     }),
+    features: [{ftype:'grouping'}],
     columns: [
     {
         xtype: 'rownumberer'
+    },
+    {
+        xtype: 'gridcolumn',
+        text: 'Status',
+        dataIndex: 'status',
+        width: 60
+    },
+    {
+        xtype: 'gridcolumn',
+        text: 'Type',
+        dataIndex: 'dosageForm',
+        width: 60
     },
     {
         xtype: 'gridcolumn',
@@ -69,13 +82,13 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         xtype: 'gridcolumn',
         text: 'Days',
         width: 45,
-        renderer: function(value){
+        renderer: function(value, metaData, record, row, col, store, gridView){
             if(value <= 0){
                 return '-';
             }
             return value;
         },
-        dataIndex: 'days',
+        dataIndex: 'months',
         useNull: true
     },
     {
@@ -122,11 +135,29 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             }
         }]
     }],
-       
-   viewConfig: {
-        getRowClass: function(record, rowIndex, rowParams, store) {
-            if(Util.monthsFromNow((record.data.expiryDate)) <=  2 && Util.monthsFromNow((record.data.expiryDate)) >  0) {
-            return 'pharmacyTwoMonths-color-grid .x-grid-cell ';
+    
+    updateFields: function() {
+        var infoStore = Ext.getStore('drugInfos');
+        var myStore = this.getStore();
+        for(var i=0; i<myStore.data.items.length; i++){
+            var item = myStore.data.items[i];
+            var index = infoStore.find('drugUuid', item.data.drugUuid);
+            if(index!==-1 && (item.data.supplier===null || item.data.supplier==="")){
+                item.set("supplier", infoStore.getAt(index).data.description);
+            }
+            if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
+                item.set("batchQuantity", item.data.batch+" ("+item.data.quantity+")");
+            }
+            else{
+                item.set("batchQuantity", null);
+            }
+            
+            if(item.data.expiryDate!==""){
+                var months = Util.monthsFromNow(item.data.expiryDate);
+                item.set("months", months);
+                if(months <= 0){
+                    item.set("status", RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.EXPIRED);
+                }
             }
             if(Util.monthsFromNow((record.data.expiryDate)) <=  0 ) {
             return 'pharmacyExpire-color-grid .x-grid-cell ';

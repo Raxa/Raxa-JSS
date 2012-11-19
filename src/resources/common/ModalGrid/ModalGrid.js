@@ -143,19 +143,8 @@ Ext.define('Ext.ux.ModalGridEditor', {
         var cx = event.getX(), cy = event.getY(),
         box = this.getBox();
         if (cx < box.x || cx > box.x + box.width || cy < box.y || cy > box.y + box.height) {
-            if(Ext.getCmp('editPanel').config.inEdit.valueOf()) {
-                this.hide();
-            } else {
-                var me = this.getComponent("ModalGridFormPanel").form;
-                var rec = me.getRecord();
-                if(rec.store != null) {
-                    var lengthOfRecord = rec.store.getCount();
-                    rec.store.removeAt( lengthOfRecord - 1 );
-                }
-                this.hide();
-            }
-            Ext.getCmp('editPanel').config.inEdit = false;
-            this.mun(Ext.getBody(), 'mousedown', this.checkCloseClick, this);
+            this.hide();
+            this.mun(Ext.getBody(), 'click', this.checkCloseClick, this);
         }
     },
     initComponent:function () {

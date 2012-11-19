@@ -2,7 +2,6 @@ Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
     extend: 'Ext.data.Store',
     id: 'allDrugs',
     model: 'RaxaEmr.Pharmacy.model.Drug',
-    groupField: 'text',
     autoLoad: true,
     autoSync: false,
     proxy: {

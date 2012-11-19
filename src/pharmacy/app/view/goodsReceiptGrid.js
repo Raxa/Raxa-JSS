@@ -4,7 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     styleHtmlContent: false,
     height: 250,
     width: 780 - 2, // Total pixels - Border
-    store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
+    store: Ext.create('RaxaEmr.Pharmacy.store.StockList', {
         autoLoad: false,
         storeId: 'newReceipt'
     }),
@@ -17,7 +17,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
     },
     initComponent: function () {
         var receiptEditor = this;
-        this.columns= [
+        this.columns = [
+        {
+            xtype: 'rownumberer'
+        },
         {
             xtype: 'rownumberer'
         },

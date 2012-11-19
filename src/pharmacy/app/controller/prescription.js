@@ -83,7 +83,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     views: ['Viewport', 'prescription', 'pharmacyTopbar', 'addFacility', 'goodsReceiptText', 'listOfDrugs', 'pharmacyDetails',
     'reports', 'addPatient', 'stockIssue', 'stockIssueGrid', 'goodsReceiptGrid', 'goodsReceipt', 'goodsIssueText', 'goodsIssueGrid', 'goodsIssue',
-    'allStockPanel', 'allStockGrid', 'allStock', 'addDrug', 'allStock', 'prescribedDrugs', 'patientsGridPanel', 'requisition',
+    'allStockPanel', 'allStockGrid', 'allStockForm', 'allStock', 'addDrug', 'allStock', 'prescribedDrugs', 'patientsGridPanel', 'requisition',
     'requisitionText', 'requisitionGrid', 'DrugDetails', 'DrugDetailsText', 'DrugDetailsGrid', 'alertGrid', 'InventoryEditor', 'drugComboBox'],
     
     stores: ['orderStore', 'Doctors', 'Identifiers', 'Locations', 'Patients', 'Persons', 'drugOrderPatient', 'drugOrderSearch', 'drugConcept', 'drugEncounter', 'allDrugs', 'Alerts', 'DrugInfos'],
@@ -1096,11 +1096,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     newDrug : function() {
         Ext.getCmp('addDrug').show();
     },
-    
-    cancelNewDrug : function() {
+
+    cancelNewDrug: function() {
         Ext.getCmp('addDrug').hide();
     },
-    
+
     submitNewDrug: function() {
         Ext.getCmp('addDrug').hide();
         //getting drug concept from OpenMRS
