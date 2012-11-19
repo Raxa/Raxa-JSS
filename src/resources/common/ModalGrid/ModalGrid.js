@@ -137,6 +137,19 @@ Ext.define('Ext.ux.ModalGridEditor', {
     itemId: 'ModalGridWindow',
     title: 'Edit Modal Grid',
     closeAction: 'hide',    // TODO: actually delete on hide? memory hog in background?
+    listeners:{
+        'show': function() {
+            this.mon(Ext.getBody(), 'mousedown', this.checkCloseClick, this);
+        }
+    },
+    checkCloseClick: function (event) {
+        var cx = event.getX(), cy = event.getY(),
+        box = this.getBox();
+        if (cx < box.x || cx > box.x + box.width || cy < box.y || cy > box.y + box.height) {
+            this.hide();
+            this.mun(Ext.getBody(), 'click', this.checkCloseClick, this);
+        }
+    },
     initComponent:function () {
         this.callParent(arguments);
 

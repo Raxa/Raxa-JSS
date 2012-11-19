@@ -26,6 +26,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         }
         
     }),
+    features: [{ftype:'grouping'}],
     selModel : Ext.create('Ext.selection.CellModel', {
         listeners : {
             select : function(selectionModel, record, row) {
@@ -67,8 +68,14 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Days',
+        text: 'Months',
         width: 45,
+        renderer: function(value){
+            if(value <= 0){
+                return '-';
+            }
+            return value;
+        },
         dataIndex: 'months',
         useNull: true
     },
@@ -133,14 +140,13 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
                 item.set("batchQuantity", null);
             }
             if(item.data.expiryDate!==""){
-                var daysLeft = Util.daysFromNow(item.data.expiryDate)
-                if(daysLeft > 0) {
-                item.set("months", daysLeft );
-                } else {
-                item.set("months", "exp" );    
+                var months = Util.monthsFromNow(item.data.expiryDate);
+                item.set("months", months);
+                if(months <= 0){
+                    item.set("status", RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.EXPIRED);
                 }
-            } 
-             else {
+            }
+            else {
                 item.set("months", null);
             }
         }
