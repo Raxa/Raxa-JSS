@@ -28,25 +28,26 @@ Ext.define('RaxaEmr.Pharmacy.view.drugComboBox', {
         keyup: function (comboField, key) {
             console.log(key.getKey());
             if(key.getKey() === KEY.DELETE){
-
+                //var query = (comboField.rawValue + String.fromCharCode(key.getKey())).toLowerCase();
+                this.searchFilter(comboField.rawValue);
             }
         },
         keypress: function (comboField, key) {
-            this.store.clearFilter(true);
             var query = (comboField.rawValue + String.fromCharCode(key.getKey())).toLowerCase();
-            console.log(query);
-            this.store.filterBy(function(record, id) {
-                return record.data.name.toLowerCase().indexOf(query)!==-1 ||
-                    record.data.shortName.toLowerCase().indexOf(query)!==-1 ||
-                    record.data.brandName.toLowerCase().indexOf(query)!==-1;
-            });
-            console.log(this.store.count());
-            comboField.expand();
+            this.searchFilter(query);
         },
         beforequery: function(queryEvent) {
             queryEvent.combo.onLoad();
             // prevent doQuery from firing and clearing out my filter.
             return false;
         }
+    },
+    searchFilter: function (query) {
+        this.store.clearFilter(true);
+        this.store.filterBy(function(record, id) {
+            return record.data.name.toLowerCase().indexOf(query)!==-1 ||
+                record.data.shortName.toLowerCase().indexOf(query)!==-1 ||
+                record.data.brandName.toLowerCase().indexOf(query)!==-1;
+        });
     }
 });
