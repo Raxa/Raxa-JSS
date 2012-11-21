@@ -181,23 +181,26 @@ Ext.define('Ext.ux.ModalGridEditor', {
             xtype: 'container',
             border: false,
             layout: {
-                type: 'hbox',
+                type: 'hbox'
             },
             items:[
             {
                 xtype: 'button',
                 text: 'Cancel',
+                id: 'cancelGrid',
                 handler: function () {
                     console.log("Cancel");
                     // TODO: If "new", shoudnt add another row to the grid
                     // TODO: If "edit", shouldnt affect existing row on the grid
                     this.hide();
+//                    this.clearValue();
                 },
                 scope: this
             },
             {
                 xtype: 'button',
                 text: 'Save',
+                id: 'saveGrid',
                 handler: function () {
                     var me = this.getComponent("ModalGridFormPanel").form;
                     var rec = me.getRecord();

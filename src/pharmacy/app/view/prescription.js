@@ -227,12 +227,15 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             xtype: 'panel',
                             layout: 'vbox',
                             items:[{
-                                xtype: 'gridpanel',
+                              xtype: 'gridpanel',
                                 title: 'prescriptions',
                                 border: 0,
                                 height: 270,
                                 id: 'drugOrderASearchGrid',
-                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
+                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch',{
+                                sortOnLoad: true,
+                                sorters: { property: 'startDate', direction : 'DESC' }       
+                                 }),
                                 columns: [
                                 {
                                     xtype: 'gridcolumn',

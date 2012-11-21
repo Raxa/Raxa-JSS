@@ -27,7 +27,24 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             dataIndex: 'drugName',
             text: 'Name Of drug',
             editor: {
-                xtype: 'drugComboBox'
+                xtype: 'combobox',
+                editable: true,
+                minChars: 2,
+                typeAhead: true,
+                autoSelect: false,
+                store: 'allDrugs',
+                displayField: 'text',
+                queryMode: 'local',
+                hideTrigger : true,
+                forceSelection: true,
+                listeners: {
+                    'focus': {
+                        fn: function (comboField) {
+                            comboField.expand();
+                        },
+                        scope: this
+                    }
+                }
             }
         },
         // {
@@ -88,10 +105,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             text: 'Expiry Date',
             dataIndex: 'expiryDate',
             width: 80,
+            format: 'd/m/y',
             editor: {
                 xtype: 'datefield',
-                allowBlank: false,
-                format: 'd/m/y'
+                allowBlank: false
             }
         },
         {

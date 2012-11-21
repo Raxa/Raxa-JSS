@@ -931,6 +931,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getCmp(searchGrid).getStore().load({
                 scope: this,
                 callback: function(records, operation, success){
+                    if( records.length <= 0 ) {
+                        Ext.Msg.alert("Error" , "No Patient Found With The Given Name");
+                        Ext.getCmp(nameField).setValue("");
+                    }
                     if(success){
                         Ext.getCmp("searchLoadMask").hide();
                     }
@@ -1030,10 +1034,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var receiptLocationString = Ext.getCmp("allStockLocationPicker").rawValue.split(" - ")[0];
         var purchaseOrderUuid = Ext.getCmp('receiptPurchaseOrderPicker').getValue();
         for (var i = 0; i < receipts.items.length; i++) {
-            if(receipts.items[i].data.drugname !== ""){
+                if(receipts.items[i].data.drugname !== ""){
                 // Get index of drug in store
                 var drugIndex = Ext.getStore('allDrugs').find('text', receipts.items[i].data.drugName);
                 // Create drug inventory model
+                var expiryDate = new Date(receipts.items[i].data.expiryDate + ' GMT-0600');
                 drugInventories.push({
                     status: RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE,
                     // Get drug uuid
@@ -1041,7 +1046,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     quantity: receipts.items[i].data.quantity,
                     batch: receipts.items[i].data.batch,
                     originalQuantity: receipts.items[i].data.quantity,
-                    expiryDate: receipts.items[i].data.expiryDate,
+                   // expiryDate: expDate[2]+"-"+expDate[0]+"-"+expDate[1],
+                    expiryDate: Util.Datetime(expiryDate),
                     roomLocation: receipts.items[i].data.roomLocation,
                     location: receiptLocationUuid,
                     supplier: receipts.items[i].data.supplier
@@ -1269,11 +1275,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             var time = Util.getCurrentTime();
             var dispenseLocationIndex = Ext.getStore("Locations").find('uuid', Ext.getCmp("allStockLocationPicker").value);
             var stockLocationIndex = Ext.getStore("Locations").find('name', Ext.getCmp("stockLocationPicker").value);
-            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.name.toString().split(" - ")[0];        
+            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.name.toString();        
             // Model for posting the encounter for given drug orders
             var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
                 name: "Pharmacy Requisition",
-                description: "Requisition from "+dispenseLocationString+ " on "+time.toString().substr(0, 10),
+                description: "Requisition fromm "+dispenseLocationString+ " on "+time.toString().substr(0, 10),
                 received: "false",
                 provider: Util.getLoggedInProviderUuid(),
                 stockLocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
@@ -1302,6 +1308,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     Ext.getCmp('allStockGrid').getView().refresh();
                     Ext.getStore('fillRequisitions').load();
                     Ext.Msg.alert('Successful');
+                    Ext.getStore('RequisitionItems').removeAll();
                 },
                 failure: function(){
                     Ext.Msg.alert("Error", Util.getMessageSyncError());
@@ -1402,6 +1409,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var issueStockLocationString = Ext.getCmp("allStockLocationPicker").rawValue.split(" - ")[0];
         for (var i = 0; i < issues.items.length; i++) {
             var drugIndex = Ext.getStore('allDrugs').find('text', issues.items[i].data.drugName);
+            var expiryDate = new Date(issues.items[i].data.expiryDate + ' GMT-0600');
             drugInventories.push({
                 status: RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.SENT,
                 batch: issues.items[i].data.batch,
@@ -1409,7 +1417,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 drug: Ext.getStore('allDrugs').getAt(drugIndex).data.uuid,
                 quantity: issues.items[i].data.quantity,
                 originalQuantity: issues.items[i].data.quantity,
-                expiryDate: issues.items[i].data.expiryDate,
+                expiryDate: Util.Datetime(expiryDate),
                 location: issuedispenseLocationUuid
             });
             if(purchaseOrderUuid!==null){
