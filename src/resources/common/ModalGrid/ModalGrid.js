@@ -193,7 +193,6 @@ Ext.define('Ext.ux.ModalGridEditor', {
                     // TODO: If "new", shoudnt add another row to the grid
                     // TODO: If "edit", shouldnt affect existing row on the grid
                     this.hide();
-//                    this.clearValue();
                 },
                 scope: this
             },

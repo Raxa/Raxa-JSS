@@ -1046,7 +1046,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     quantity: receipts.items[i].data.quantity,
                     batch: receipts.items[i].data.batch,
                     originalQuantity: receipts.items[i].data.quantity,
-                   // expiryDate: expDate[2]+"-"+expDate[0]+"-"+expDate[1],
                     expiryDate: Util.Datetime(expiryDate),
                     roomLocation: receipts.items[i].data.roomLocation,
                     location: receiptLocationUuid,

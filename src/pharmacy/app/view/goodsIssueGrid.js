@@ -25,7 +25,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
             xtype: 'gridcolumn',
             width: 200,
             dataIndex: 'drugName',
-            text: 'Name Of drugssssssss',
+            text: 'Name Of drugs',
             editor: {
                 xtype: 'combobox',
                 editable: true,
