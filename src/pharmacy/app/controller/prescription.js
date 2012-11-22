@@ -1286,7 +1286,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             // Model for posting the encounter for given drug orders
             var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
                 name: "Pharmacy Requisition",
-                description: "Requisition fromm "+dispenseLocationString+ " to " + stockLocationString+ " on " +currentDate+ " at " +timeOfDay,
+                description: "Requisition from "+dispenseLocationString+ " to " + stockLocationString+ " on " +currentDate+ " at " +timeOfDay,
                 received: "false",
                 provider: Util.getLoggedInProviderUuid(),
                 stockLocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
