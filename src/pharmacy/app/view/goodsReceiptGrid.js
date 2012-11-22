@@ -27,24 +27,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             dataIndex: 'drugName',
             text: 'Name Of drug',
             editor: {
-                xtype: 'combobox',
-                editable: true,
-                minChars: 2,
-                typeAhead: true,
-                autoSelect: false,
-                store: 'allDrugs',
-                displayField: 'text',
-                queryMode: 'local',
-                hideTrigger : true,
-                forceSelection: true,
-                listeners: {
-                    'focus': {
-                        fn: function (comboField) {
-                            comboField.expand();
-                        },
-                        scope: this
-                    }
-                }
+                xtype: 'drugComboBox'
             }
         },
         // {

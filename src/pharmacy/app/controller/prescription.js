@@ -1271,20 +1271,29 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             }
 
             // Create model for Purchase Order POST, with given drug orders
-            var time = Util.getCurrentTime();
+           var currentTime = new Date();
+           var timeOfDay;
+           var currentDate =  currentTime.getDate() + 1 + "/" + currentTime.getMonth() + "/" + currentTime.getFullYear();
+            if(currentTime.getHours() > 11) {
+             timeOfDay = currentTime.getHours() + ":" + currentTime.getMinutes()+ "PM";
+            } else {
+             timeOfDay = currentTime.getHours() + ":" + currentTime.getMinutes()+ "AM";    
+            }
             var dispenseLocationIndex = Ext.getStore("Locations").find('uuid', Ext.getCmp("allStockLocationPicker").value);
             var stockLocationIndex = Ext.getStore("Locations").find('name', Ext.getCmp("stockLocationPicker").value);
-            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.name.toString();        
+            var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.name.toString();
+            var stockLocationString = Ext.getStore("Locations").getAt(stockLocationIndex).data.name.toString();
             // Model for posting the encounter for given drug orders
             var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
                 name: "Pharmacy Requisition",
-                description: "Requisition fromm "+dispenseLocationString+ " on "+time.toString().substr(0, 10),
+                description: "Requisition fromm "+dispenseLocationString+ " to " + stockLocationString+ " on " +currentDate+ " at " +timeOfDay,
                 received: "false",
                 provider: Util.getLoggedInProviderUuid(),
                 stockLocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
                 dispenseLocation: Ext.getStore("Locations").getAt(dispenseLocationIndex).data.uuid,
-                drugPurchaseOrderDate: time,
+                drugPurchaseOrderDate: Util.getCurrentTime(),
                 inventories: drugInventories
+                
             });
         
             // Post the encounter
@@ -1295,7 +1304,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 success: function(){
                     // Send an alert that requisition has been made
                     var alertParams = {
-                        name: "Requisition from "+dispenseLocationString+ " on "+time.toString().substr(0, 10),
+                        name: "Requisition from "+dispenseLocationString+ " to " + stockLocationString + " on " +currentDate+ " at "+timeOfDay,
                         toLocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
                         providerSent: Util.getLoggedInProviderUuid(),
                         alertType: "newRequisition",
