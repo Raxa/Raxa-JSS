@@ -40,17 +40,13 @@ Ext.define('Ext.ux.ModalGrid', {
         handler: function(event, toolEl, panel) {
             var mf = this.up("ModalGrid").modalForm;
             var grid = this.up("ModalGrid");
-
             var gridModel = grid.store.getProxy().getModel();
             var blankItem = Ext.create(gridModel, {});
             var lastItem = grid.getStore().add(blankItem);    
             rec = grid.getStore().last();
-            
             mf.getComponent("ModalGridFormPanel").form.reset();
             mf.getComponent("ModalGridFormPanel").loadRecord(rec);                    
             mf.show();
-            
-        // mf.isNew = true;
         }
     }], 
 
@@ -140,20 +136,24 @@ Ext.define('Ext.ux.ModalGridEditor', {
     closeAction: 'hide',    // TODO: actually delete on hide? memory hog in background?
     listeners:{
         'show': function() {
-                this.mon(Ext.getBody(), 'mousedown', this.checkCloseClick, this);
+            this.mon(Ext.getBody(), 'mousedown', this.checkCloseClick, this);
         }
     },
     checkCloseClick: function (event) {
         var cx = event.getX(), cy = event.getY(),
         box = this.getBox();
         if (cx < box.x || cx > box.x + box.width || cy < box.y || cy > box.y + box.height) {
-            var me = this.getComponent("ModalGridFormPanel").form;
-            var rec = me.getRecord();
-            if(rec.store != null) {
-                var lengthOfRecord = rec.store.getCount();
-                rec.store.removeAt( lengthOfRecord - 1 );
+            if(Ext.getCmp('editPanel').config.inEdit.valueOf()) {
+                this.hide();
+            } else {
+                var me = this.getComponent("ModalGridFormPanel").form;
+                var rec = me.getRecord();
+                if(rec.store != null) {
+                    var lengthOfRecord = rec.store.getCount();
+                    rec.store.removeAt( lengthOfRecord - 1 );
+                }
+                this.hide();
             }
-            this.hide();
             Ext.getCmp('editPanel').config.inEdit = false;
             this.mun(Ext.getBody(), 'mousedown', this.checkCloseClick, this);
         }
@@ -210,8 +210,8 @@ Ext.define('Ext.ux.ModalGridEditor', {
                         var rec = me.getRecord();
                         var newValues = me.getValues();
                         if(rec.store != null) {
-                        var lengthOfRecord = rec.store.getCount();
-                        rec.store.removeAt( lengthOfRecord - 1 );
+                            var lengthOfRecord = rec.store.getCount();
+                            rec.store.removeAt( lengthOfRecord - 1 );
                         }
                         // TODO: If "new", shoudnt add another row to the grid
                         // TODO: If "edit", shouldnt affect existing row on the grid
