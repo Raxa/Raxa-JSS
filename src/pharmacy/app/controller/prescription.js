@@ -822,16 +822,16 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // Function to be call when a patient is selected in the patient search results gird of advanced search
     // Sets the fields realted to patient in main screen and then calls for function getDrugOrders()
     patientSelect: function (x, searchPanel, drugOrderGrid) {
-        Ext.getCmp('prescriptionPatientName').setValue(x.display);
+        Ext.getCmp('prescriptionPatientName').setValue(x.name);
         //below its commented as the identifier are not sent in patient search results
-        //Ext.getCmp('prescriptionPatientId').setValue(x.identifier)
+        Ext.getCmp('prescriptionPatientId').setValue(x.identifier)
         if (x.age !== 0) {
             Ext.getCmp('prescriptionPatientAge').setValue(x.age);
         }
         else {
             Ext.getCmp('prescriptionPatientAge').setValue(null);
         }
-        Ext.getCmp('prescriptionPatientGender').setValue(x.gender);
+        Ext.getCmp('prescriptionPatientGender').setValue(x.person.gender);
         localStorage.setItem('person', x.uuid);
         this.getDrugOrders(x.uuid, searchPanel, drugOrderGrid);
     },
