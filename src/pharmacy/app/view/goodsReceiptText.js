@@ -18,7 +18,13 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptText', {
             }, {
                 property: 'received',
                 value: false
-            }]
+            },
+//            only after loading in local storage
+//            {
+//                property: 'stockLocationUuid',
+//                value: localStorage.pharmacyLocation
+//            }
+        ]
         }),
         fieldLabel: 'Stock Issue (optional)',
         valueField: 'uuid',

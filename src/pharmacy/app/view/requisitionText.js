@@ -22,6 +22,7 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionText', {
             forceSelection: true,
             displayField: 'name',
             emptyText: 'Location',
+            valueField: 'uuid',
             listeners: {
                 'focus': {
                     fn: function (comboField) {
