@@ -18,6 +18,6 @@ Ext.define('RaxaEmr.Outpatient.model.drugpanel', {
     extend: 'Ext.data.Model',
 
     config: {
-        fields: ['drugname', 'strength', 'instruction', 'frequency', 'routeofadministration', 'duration']
+        fields: ['drugname', 'strength', 'instruction', 'frequency', 'routeofadministration', 'duration','concept','uuid']
     }
 });

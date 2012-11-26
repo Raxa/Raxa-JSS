@@ -1039,7 +1039,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var receiptLocationString = Ext.getCmp("allStockLocationPicker").rawValue.split(" - ")[0];
         var purchaseOrderUuid = Ext.getCmp('receiptPurchaseOrderPicker').getValue();
         for (var i = 0; i < receipts.items.length; i++) {
-            if(receipts.items[i].data.drugname !== ""){
+                if(receipts.items[i].data.drugname !== ""){
                 // Get index of drug in store
                 var drugIndex = Ext.getStore('allDrugs').find('text', receipts.items[i].data.drugName);
                 // Create drug inventory model
@@ -1276,28 +1276,29 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             }
 
             // Create model for Purchase Order POST, with given drug orders
-            var currentTime = new Date();
-            var timeOfDay;
-            var currentDate =  currentTime.getDate() + 1 + "/" + currentTime.getMonth() +1 + "/" + currentTime.getFullYear();
+           var currentTime = new Date();
+           var timeOfDay;
+           var currentDate =  currentTime.getDate() + 1 + "/" + currentTime.getMonth() + "/" + currentTime.getFullYear();
             if(currentTime.getHours() > 11) {
-                timeOfDay = currentTime.getHours() + ":" + currentTime.getMinutes()+ "PM";
+             timeOfDay = currentTime.getHours() + ":" + currentTime.getMinutes()+ "PM";
             } else {
-                timeOfDay = currentTime.getHours() + ":" + currentTime.getMinutes()+ "AM";    
+             timeOfDay = currentTime.getHours() + ":" + currentTime.getMinutes()+ "AM";    
             }
             var dispenseLocationIndex = Ext.getStore("Locations").find('uuid', Ext.getCmp("allStockLocationPicker").value);
-            var stockLocationIndex = Ext.getStore("Locations").find('uuid', Ext.getCmp("stockLocationPicker").value);
+            var stockLocationIndex = Ext.getStore("Locations").find('name', Ext.getCmp("stockLocationPicker").value);
             var dispenseLocationString = Ext.getStore("Locations").getAt(dispenseLocationIndex).data.name.toString();
             var stockLocationString = Ext.getStore("Locations").getAt(stockLocationIndex).data.name.toString();
             // Model for posting the encounter for given drug orders
             var purchaseOrder = Ext.create('RaxaEmr.Pharmacy.model.PurchaseOrder', {
                 name: "Pharmacy Requisition",
-                description: "Requisition from "+dispenseLocationString+ " to " + stockLocationString+ " on " +this.getCurrentDate()+ " at " + this.getCurrentTime(),
+                description: "Requisition from "+dispenseLocationString+ " to " + stockLocationString+ " on " +currentDate+ " at " +timeOfDay,
                 received: "false",
                 provider: Util.getLoggedInProviderUuid(),
                 stockLocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
                 dispenseLocation: Ext.getStore("Locations").getAt(dispenseLocationIndex).data.uuid,
                 drugPurchaseOrderDate: Util.getCurrentTime(),
                 inventories: drugInventories
+                
             });
         
             // Post the encounter
@@ -1308,7 +1309,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 success: function(){
                     // Send an alert that requisition has been made
                     var alertParams = {
-                        name: "Requisition from "+dispenseLocationString+ " to " + stockLocationString + " on " +this.getCurrentDate()+ " at " + this.getCurrentTime(),
+                        name: "Requisition from "+dispenseLocationString+ " to " + stockLocationString + " on " +currentDate+ " at "+timeOfDay,
                         toLocation: Ext.getStore("Locations").getAt(stockLocationIndex).data.uuid,
                         providerSent: Util.getLoggedInProviderUuid(),
                         alertType: "newRequisition",

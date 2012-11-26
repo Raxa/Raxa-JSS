@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Outpatient.model.Observation', {
+Ext.define('RaxaEmr.Outpatient.model.DoctorOrderObservation', {
 	extend: 'Ext.data.Model',
 	config: {
 		fields: [{
@@ -8,11 +8,15 @@ Ext.define('RaxaEmr.Outpatient.model.Observation', {
 		{
 			name: 'person',
 			type: 'string'
-		},
-		{
+		},{
+			name: 'id',
+			type: 'string',
+			persist: false
+			},
+/*		{
 			name: 'display',
 			type: 'string'
-		},
+		},*/
 		{
 			name: 'obsDatetime',
 			type: 'string'
@@ -21,14 +25,14 @@ Ext.define('RaxaEmr.Outpatient.model.Observation', {
 			name: 'value',
 			type: 'string'
 		},
-		{
+/*		{
 			name: 'comment',
 			type: 'string'
 		},
 		{
 			name: 'order',
 			type: 'int'
-		},]
+		}*/]
 	}
 });
 

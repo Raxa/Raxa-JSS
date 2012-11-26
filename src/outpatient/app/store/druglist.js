@@ -22,11 +22,11 @@ Ext.define('RaxaEmr.Outpatient.store.druglist', {
         
     config: {
         model: 'RaxaEmr.Outpatient.model.druglist',
-  	    fields: ['drug', 'uuid'],
+  	    fields: ['drug', 'uuid','concept'],
 	  	
       proxy: {
         type: 'rest',
-        url: HOST+'/ws/rest/v1/drug?v=full',
+        url: HOST+'/ws/rest/v1/raxacore/drug?v=full',
         headers: Util.getBasicAuthHeaders(),
         reader: {
            type: 'json',

@@ -8,7 +8,6 @@ Ext.define('RaxaEmr.Pharmacy.view.drugComboBox', {
     enableKeyEvents: true,
     disableKeyFilter: true,
     queryMode: 'local',
-//               hideTrigger : true,
     forceSelection: false,
     listeners: {
         focus: function (comboField) {

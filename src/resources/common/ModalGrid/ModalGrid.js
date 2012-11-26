@@ -191,34 +191,18 @@ Ext.define('Ext.ux.ModalGridEditor', {
             layout: {
                 type: 'hbox'
             },
-            id : 'editPanel',
-            config : {
-                inEdit:  new Boolean(false)
-            },
             items:[
             {
                 xtype: 'button',
                 text: 'Cancel',
                 id: 'cancelGrid',
-                handler: function (grid, rowIndex, colIndex) {
-                    this.mun(Ext.getBody(), 'mousedown', this.checkCloseClick, this);
-                    if(Ext.getCmp('editPanel').config.inEdit.valueOf()) {
-                        this.hide();
-                        Ext.getCmp('editPanel').config.inEdit = false;
-                    } else {
-                        var me = this.getComponent("ModalGridFormPanel").form;
-                        var rec = me.getRecord();
-                        var newValues = me.getValues();
-                        if(rec.store != null) {
-                            var lengthOfRecord = rec.store.getCount();
-                            rec.store.removeAt( lengthOfRecord - 1 );
-                        }
-                        // TODO: If "new", shoudnt add another row to the grid
-                        // TODO: If "edit", shouldnt affect existing row on the grid
-                        this.hide();
-                    }
+                handler: function () {
+                    console.log("Cancel");
+                    // TODO: If "new", shoudnt add another row to the grid
+                    // TODO: If "edit", shouldnt affect existing row on the grid
+                    this.hide();
                 },
-                scope: this
+                scope: this                
             },
             {
                 xtype: 'button',

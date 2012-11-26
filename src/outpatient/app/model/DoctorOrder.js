@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2012, Raxa
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -12,24 +12,38 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ * 
  */
-Ext.define('RaxaEmr.Outpatient.model.druglist', {
+
+Ext.define('RaxaEmr.Outpatient.model.DoctorOrder', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{
-            name: 'drug',
-            type: 'string',
-            mapping: 'name'
+            name: 'patient',
+            type: 'string'
         }, {
-            name: 'uuid',
+            name: 'id',
             type: 'string',
-            mapping: 'uuid'
-        },{
-            name: 'concept',
+	    persist: false
+        }, {
+            name: 'encounterType',
             type: 'string'
-        },{
-            name: 'dosageForm',
+        }, {
+            name: 'encounterDatetime',
             type: 'string'
-        }],
+        }, {
+            name: 'provider',
+            type: 'string',
+	    persist: false
+        }, {
+            name: 'obs',
+            model: 'RaxaEmr.Outpatient.model.Observation',
+//            persist: false
+        },{
+            name: 'orders',
+            model: 'RaxaEmr.Pharmacy.model.drugOrder',
+//            persist: false
+        }]
     }
 });
+
