@@ -99,7 +99,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
             width: PHARMACY_TOPBAR_CONSTANTS.BUTTON_WIDTH,
             handler: function(){
-                Ext.getStore('alerts').load({
+                Ext.getStore('Alerts').load({
                     scope: this,
                     callback: function(records, operation, success){
                         if(success) {

@@ -2,6 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.store.DrugInfos', {
     extend: 'Ext.data.Store',
     model: 'RaxaEmr.Pharmacy.model.DrugInfo',
     autoLoad: true,
+    storeId: 'DrugInfos',
     autoSync: false,
     proxy: {
         type: 'ajax',
@@ -10,6 +11,14 @@ Ext.define('RaxaEmr.Pharmacy.store.DrugInfos', {
         reader: {
             type:'json',
             root: 'results'
+        }
+    },
+    listeners: {
+        load: function() {
+            if(Ext.getStore('allDrugs')){
+                //update fields in drug
+                console.log('all drugs here');
+            }
         }
     }
 });

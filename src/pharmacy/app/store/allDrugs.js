@@ -2,6 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
     extend: 'Ext.data.Store',
     id: 'allDrugs',
     model: 'RaxaEmr.Pharmacy.model.Drug',
+    groupField: 'text',
     autoLoad: true,
     autoSync: false,
     proxy: {
@@ -15,6 +16,9 @@ Ext.define('RaxaEmr.Pharmacy.store.allDrugs', {
     },
     listeners: {
         load: function() {
+            if(Ext.getStore('DrugInfos')){
+                console.log('drug infos here');
+            }
             for(var i=0; i<this.data.items.length; i++){
                 var item = this.data.items[i];
                 var drugNameWithSuffix="";

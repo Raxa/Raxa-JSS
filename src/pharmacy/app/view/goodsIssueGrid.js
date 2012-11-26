@@ -76,8 +76,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 allowBlank: false,
                 editable: true,
                 store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
-                    storeId: 'batches'
+                    storeId: 'batches',
+                    autoLoad: true
                 }),
+                queryMode: 'local',
                 displayField: 'batchQuantity',
                 forceSelection: true,
                 listeners: {
@@ -94,10 +96,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                             comboField.getStore().filter(function(record){
                                 var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
                                 var isCurrentDrug = (record.get('drugName')===selectedDrug);
-                                var isBatch = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
+                                var notInCurrentIssue = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
                                 var locationUuid = Ext.getCmp('allStockLocationPicker').value;
                                 var isAtLocation = (record.get('location').uuid===locationUuid)
-                                return isAvailable && isCurrentDrug && isBatch && isAtLocation;
+                                return isAvailable && isCurrentDrug && notInCurrentIssue && isAtLocation;
                             });
                             comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();

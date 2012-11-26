@@ -98,7 +98,7 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
 
     //populates inventory fields
     initForInventory: function(uuid) {
-        var stock = Ext.getStore('stockList');
+        var stock = Ext.getStore('StockList');
         stock.clearFilter();
         var inventory = stock.getAt(stock.find('uuid', uuid));
         Ext.getCmp('inventoryEditorStatusPicker').setValue(inventory.data.status);

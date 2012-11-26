@@ -4,14 +4,7 @@ Ext.define('RaxaEmr.Pharmacy.view.alertGrid', {
     styleHtmlContent: false,
     height: 200,
     width: 400,
-    store: Ext.create('RaxaEmr.Pharmacy.store.Alerts',{
-        autoLoad: true,
-        storeId: 'alerts',
-        filters: [{
-            property: 'seen',
-            value: false
-        }]
-    }),
+    store: 'Alerts',
     selType: 'cellmodel',
     cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1
