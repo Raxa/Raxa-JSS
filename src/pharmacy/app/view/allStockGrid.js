@@ -125,10 +125,10 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
        
    viewConfig: {
         getRowClass: function(record, rowIndex, rowParams, store) {
-            if(Util.daysFromNow((record.data.expiryDate)) <=  61 && Util.daysFromNow((record.data.expiryDate)) >  0) {
+            if(Util.monthsFromNow((record.data.expiryDate)) <=  2 && Util.monthsFromNow((record.data.expiryDate)) >  0) {
             return 'pharmacyTwoMonths-color-grid .x-grid-cell ';
             }
-            if(Util.daysFromNow((record.data.expiryDate)) <=  0 ) {
+            if(Util.monthsFromNow((record.data.expiryDate)) <=  0 ) {
             return 'pharmacyExpire-color-grid .x-grid-cell ';
             }
         }

@@ -39,4 +39,4 @@ TestEvent: function() {
        	this.fireEvent('TestEvent');
     }, 
 
-}});
+});

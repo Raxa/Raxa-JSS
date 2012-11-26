@@ -18,13 +18,7 @@ Ext.define('RaxaEmr.Outpatient.model.opdEncounter', {
             type: 'string'
         }, {
             name: 'obs',
-            model: 'RaxaEmr.Outpatient.model.Observation'
-        }, {
-            name: 'display',
-            type: 'string'
-        }, {
-            name: 'uuid',
-            type: 'string'
+            model: 'RaxaEmr.Outpatient.model.opdObservation'
         }]
     }
 })

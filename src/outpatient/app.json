@@ -57,8 +57,6 @@
         // Slider + Text Input for screener vitals
         "path": "../lib/touch/Ext.field.SliderExtended/SliderFieldExtended.js"
     }, {
-        "path": "app/drawLogic.js"
-    }, {
         "path": "app.js",
         "bundle": true,
         /* Indicates that all class dependencies are concatenated into this file when build */

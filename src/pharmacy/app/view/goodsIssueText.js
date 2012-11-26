@@ -30,8 +30,6 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
             fieldLabel: 'Fill Requisition (optional)',
             valueField: 'uuid',
             displayField: 'description',
-            width : '320px',
-            hideTrigger: true,
             listeners: {  
                 'focus': {
                     fn: function (comboField) {
@@ -60,7 +58,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         queryMode: 'local',
         hideTrigger: true,
         forceSelection: true,
-        displayField: 'name',
+        displayField: 'display',
         valueField: 'uuid',
         emptyText: 'Location'
     }]

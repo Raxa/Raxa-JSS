@@ -2,11 +2,7 @@ Ext.define('RaxaEmr.Outpatient.model.Observation', {
 	extend: 'Ext.data.Model',
 	config: {
 		fields: [{
-			name: 'concept',
-			type: 'string'
-		},
-		{
-			name: 'person',
+			name: 'uuid',
 			type: 'string'
 		},
 		{
@@ -28,7 +24,7 @@ Ext.define('RaxaEmr.Outpatient.model.Observation', {
 		{
 			name: 'order',
 			type: 'int'
-		},]
+		}]
 	}
 });
 

@@ -76,7 +76,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             id: 'allStockLocationPicker',
             fieldLabel: 'Your Location',
             store: 'Locations',
-            displayField: 'name',
+            displayField: 'display',
             queryMode: 'local',
             hideTrigger: true,
             forceSelection: true,

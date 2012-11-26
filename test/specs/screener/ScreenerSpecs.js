@@ -393,6 +393,7 @@ describe("PatientSummary", function () {
     it("returns values to the store on a ajax call", function (){                
 
 it("returns value to the PatientSummary store on an ajax call", function () {
+    }
         spyOn(Ext.Ajax, 'request').andCallFake(function (request) {
             var response = {
                 responseText: "{\"results\":[{\"uuid\": \"1\",\"display\": \"OPD 1/1/1\",\"encounterDatetime\": \"2009-09-28T19:03:12.000+0400\",\"patient\":{\"uuid\":\"2\",\"display\": \"ABC\",\"links\":[{\"uri\": \"restcallurl/person/2\",\"rel\": \"self\"}]},\"location\": null,\"form\": null,\"encounterType\":{\"uuid\": \"2\",\"display\": \"OPD - Test\",\"links\":[{\"uri\": \"restcallurl/encountertype/2\",\"rel\": \"self\"}]},\"provider\": null,\"obs\":[],\"orders\":[],\"voided\": false,\"links\":[{\"uri\": \"restcallurl/encounter/1\",\"rel\": \"self\"},{\"uri\": \"restcallurl/encounter/1?v=full\",\"rel\": \"full\"}],\"resourceVersion\": \"1.8\"}]}",
@@ -407,6 +408,5 @@ it("returns value to the PatientSummary store on an ajax call", function () {
                 expect(store.getData().getAt(0).raw.encounterDatetime).toEqual("2009-09-28T19:03:12.000+0400");
             }
         });
-    });
     });
 });

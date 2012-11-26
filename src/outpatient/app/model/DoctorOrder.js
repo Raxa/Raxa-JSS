@@ -19,12 +19,11 @@ Ext.define('RaxaEmr.Outpatient.model.DoctorOrder', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{
-            name: 'patient',
+            name: 'uuid',
             type: 'string'
         }, {
-            name: 'id',
-            type: 'string',
-	    persist: false
+            name: 'display',
+            type: 'string'
         }, {
             name: 'encounterType',
             type: 'string'
@@ -33,16 +32,15 @@ Ext.define('RaxaEmr.Outpatient.model.DoctorOrder', {
             type: 'string'
         }, {
             name: 'provider',
-            type: 'string',
-	    persist: false
+            type: 'string'
         }, {
             name: 'obs',
             model: 'RaxaEmr.Outpatient.model.Observation',
-//            persist: false
+            persist: false
         },{
             name: 'orders',
             model: 'RaxaEmr.Pharmacy.model.drugOrder',
-//            persist: false
+            persist: false
         }]
     }
 });

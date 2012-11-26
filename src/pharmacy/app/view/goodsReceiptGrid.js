@@ -88,10 +88,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsReceiptGrid', {
             text: 'Expiry Date',
             dataIndex: 'expiryDate',
             width: 80,
-            format: 'd/m/y',
             editor: {
                 xtype: 'datefield',
-                allowBlank: false
+                allowBlank: false,
+                format: 'd/m/y'
             }
         },
         {

@@ -24,12 +24,6 @@ Ext.define('RaxaEmr.Outpatient.model.druglist', {
             name: 'uuid',
             type: 'string',
             mapping: 'uuid'
-        },{
-            name: 'concept',
-            type: 'string'
-        },{
-            name: 'dosageForm',
-            type: 'string'
         }],
     }
 });
