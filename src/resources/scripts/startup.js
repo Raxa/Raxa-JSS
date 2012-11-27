@@ -154,11 +154,6 @@ var Startup = {
         }
         else {
             that.removeTimer();
-    		console.log("Hi");
-    		doneLoading = true;
-    		if(loggedIn && doneLoading && newAccount) {
-    			window.location = "http://raxa.io/admin";
-    		}
             Ext.getCmp('mainView').setMasked(false);
         }
         

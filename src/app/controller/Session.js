@@ -120,30 +120,19 @@ Ext.define('RaxaEmr.controller.Session', {
     
     //createnewProvider functions transfers the view to the admin module to register a new provider
 	createnewProvider: function () {
-		doneLoading = false;
-    	loggedIn = false;
-		newAccount = true;
         var username = "newaccount"; //Hardcoded account creator username
         var password = "Hello123"; //Hardcoded account creator password
         localStorage.setItem("username", username);
-		localStorage.setItem("password", password);
 
         //passing username & password to saveBasicAuthHeader which saves Authentication
         //header as Base64 encoded string of user:pass in localStore
         Util.saveBasicAuthHeader(username, password);
-
-        // check for user name validity and privileges
-        this.getUserPrivileges(username);
-        //populating views with all the modules, sending a callback function
-        //only run this as postuser
-        if(localStorage.getItem("username")==="postuser"){
-            //splash loading screen, mask on 'mainview'
-            Ext.getCmp('mainView').setMasked({
-                xtype: 'loadmask',
-                message: 'Loading'
-            });
-            Startup.populateViews(Util.getModules(), this.launchAfterAJAX);            
+        
+        if (!this.newPatient) {
+            this.newPatient = Ext.create('RaxaEmr.view.NewPatient');
+            Ext.Viewport.add(this.newPatient);
         }
+        this.newPatient.show();
     },
 	//REST call to create a person, user and then provider
 
@@ -151,9 +140,6 @@ Ext.define('RaxaEmr.controller.Session', {
     // doLogin functions populates the views in the background while transferring
     // the view to dashboard
     doLogin: function () {
-    	doneLoading = false;
-    	loggedIn = false;
-    	newAccount = false;
         var username = Ext.getCmp('userName').getValue();
         localStorage.setItem("username", username);
 
@@ -222,15 +208,8 @@ Ext.define('RaxaEmr.controller.Session', {
      * Called when login is successful for the given user, populates AppGrid with the user's modules
      */
     loginSuccess: function () {
-    	
-    		
         Startup.getResourceUuid();
         Startup.repeatUuidLoadingEverySec();
-        loggedIn = true;
-    	if(loggedIn && doneLoading && newAccount) {
-    		window.location = "http://raxa.io/admin";
-    	}
-        if(!newAccount){
         var numAppsAvailable = this.addModulesToDashboard();
         //if only 1 app available, send to that page
         if (numAppsAvailable === 1) {
@@ -244,7 +223,6 @@ Ext.define('RaxaEmr.controller.Session', {
         else {
             window.location.hash = 'Dashboard';
             Ext.getCmp('mainView').setActiveItem(2);
-        }
         }
     },
 
@@ -271,6 +249,7 @@ Ext.define('RaxaEmr.controller.Session', {
     showDashboard: function () {
         this.addModulesToDashboard();
         window.location.hash = 'Dashboard';
+        Ext.getCmp('topbarSelectfield').setHidden(false);
         Ext.getCmp('mainView').setActiveItem(2);
     },
 
@@ -286,7 +265,6 @@ Ext.define('RaxaEmr.controller.Session', {
 
     //on entry point for application, give control to Util.getViews()
     launch: function () {
-    	newAccount = false;
         Ext.create('Ext.Container', {
             id: 'mainView',
             fullscreen: true,
@@ -306,11 +284,6 @@ Ext.define('RaxaEmr.controller.Session', {
     //to start graphics, etc
     //views is the 2-d array of view urls (see Util.populateViews() for more info)
     launchAfterAJAX: function (views) {
-    	console.log("Hi");
-    	doneLoading = true;
-    	if(loggedIn && doneLoading && newAccount) {
-    		window.location = "http://raxa.io/admin";
-    	}
         //remove loading mask
         Ext.getCmp('mainView').setMasked(false);
     }

@@ -113,12 +113,13 @@ Ext.define('Topbar.view.TopToolbar', {
 		}]
 	},
         
-        initialize: function () {
+    initialize: function () {
         this.add( {
             xtype: 'selectfield',
             id: 'topbarSelectfield',
             centered: true ,
             selected : true,
+            hidden: true,
             value : " ",
             options: 
             Util.getSelectModules(),
