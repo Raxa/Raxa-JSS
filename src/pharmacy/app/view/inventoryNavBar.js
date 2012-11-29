@@ -14,6 +14,11 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
     // border: true,
     items: [{
         xtype: 'container',
+        layout: {
+            type: 'vbox',
+            pack: 'center',
+            align: 'center'
+        },
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
         height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         html: '<b><u>STOCK</u></b>'
@@ -23,16 +28,7 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
         height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Overview',
         id: 'inventoryOverviewButton',
-//        listeners: {
-//            'render': {
-//                fn: function() {
-//                    console.log(this);
-//                    Ext.getCmp('inventoryOverviewButton').body.on('click', function() {Ext.getCmp('inventoryNavBar').selectNavBar(0)}, this);
-//                },
-//                single: true
-//            }
-//        },
-        ui: 'raxa-side-panel',
+        ui: 'raxa-side-panel-large',
         action: 'navigateInventoryOverview'
     }, {
         xtype: 'button',
@@ -40,7 +36,7 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
         height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Reports',
         id: 'inventoryReportsButton',
-        cls: 'x-btn-raxa-side-panel-small',
+        cls: 'raxa-side-panel-small',
         action: 'navigateInventoryReports',
         disabled: true
     }, {

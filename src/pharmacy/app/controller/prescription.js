@@ -233,7 +233,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             // Drug Details
             'drugDetails button[action=backFromDrugDetails]': {
                 click: function(){
-                    console.log('back from details');
                     Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.ALLSTOCK.value);
                     Ext.getCmp('allStockGrid').getView().refresh();
                     Ext.getStore('StockList').clearFilter();
@@ -842,7 +841,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     makeNewPrescriptionForSearchPatient: function() {
-        console.log("makeNewPrescriptionForSearchPatient");
         // https://raxaemr.atlassian.net/browse/RAXAJSS-411
         // TODO: clean up by removing magic numbers
         Ext.getCmp('addpatientarea').getLayout().setActiveItem(0);
@@ -1528,7 +1526,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     //Called when 'stock analysis' button is pressed
     showAvailableStock: function(){
-        console.log("inside showAvailableStock");
         this._updateAllStockPanelButtonsUI('availableStockButton');
         // Ext.getCmp('availableStockButton').setUI('raxa-orange-small');
         Ext.getStore('StockList').clearFilter();

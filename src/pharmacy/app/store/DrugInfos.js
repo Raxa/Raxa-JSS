@@ -12,13 +12,5 @@ Ext.define('RaxaEmr.Pharmacy.store.DrugInfos', {
             type:'json',
             root: 'results'
         }
-    },
-    listeners: {
-        load: function() {
-            if(Ext.getStore('allDrugs')){
-                //update fields in drug
-                console.log('all drugs here');
-            }
-        }
     }
 });

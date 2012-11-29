@@ -27,7 +27,6 @@ Ext.define('RaxaEmr.controller.Session', {
             passwordID: '#passwordID',
             userName: '#userName',
             signInButton: '#signInButton',
-            createnewProviderButton: '#createnewProviderButton',
             Registration: '#Registration',
             Screener: '#Screener',
             Inpatient: '#Inpatient',
@@ -48,9 +47,6 @@ Ext.define('RaxaEmr.controller.Session', {
             },            
             signInButton: {
                 tap: 'doLogin'
-            },
-            createnewProviderButton: {
-            	tap: 'createnewProvider'
             }
         }
     },
@@ -118,25 +114,6 @@ Ext.define('RaxaEmr.controller.Session', {
         }
     },
     
-    //createnewProvider functions transfers the view to the admin module to register a new provider
-	createnewProvider: function () {
-        var username = "newaccount"; //Hardcoded account creator username
-        var password = "Hello123"; //Hardcoded account creator password
-        localStorage.setItem("username", username);
-
-        //passing username & password to saveBasicAuthHeader which saves Authentication
-        //header as Base64 encoded string of user:pass in localStore
-        Util.saveBasicAuthHeader(username, password);
-        
-        if (!this.newPatient) {
-            this.newPatient = Ext.create('RaxaEmr.view.NewPatient');
-            Ext.Viewport.add(this.newPatient);
-        }
-        this.newPatient.show();
-    },
-	//REST call to create a person, user and then provider
-
-
     // doLogin functions populates the views in the background while transferring
     // the view to dashboard
     doLogin: function () {

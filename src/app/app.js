@@ -6,6 +6,17 @@ Ext.Loader.setConfig({
     }
 });
 
+//i18n
+Ext.require('Ext.i18n.Bundle', function () {
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle', {
+        bundle: 'RaxaEmr',
+        //Specify language here.
+        lang: 'en-US',
+        path: 'app/view', // Path to the .properties file
+        noCache: true
+    });
+});
+
 // Main application entry point
 Ext.application({
     name: 'RaxaEmr',
@@ -19,15 +30,4 @@ Ext.application({
     controllers: ['Session'],
     // List of Controllers for dynamic loading
     store: ['SessionStore'] // List of Stores for dynamic loading
-});
-
-//i18n
-Ext.require('Ext.i18n.Bundle', function () {
-    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle', {
-        bundle: 'RaxaEmr',
-        //Specify language here.
-        lang: 'en-US',
-        path: 'app/view', // Path to the .properties file
-        noCache: true
-    });
 });

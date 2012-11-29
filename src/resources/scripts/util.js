@@ -37,7 +37,7 @@ LAB_USERNAME='Admin';
 LAB_PASSWORD='Admin123';
 
 var HOST;
-var DEFAULT_HOST = 'http://raxa.io:8080/openmrs';
+var DEFAULT_HOST = 'http://test.raxa.org:8080/openmrs';
 if (localStorage.getItem("host") === null) {
     HOST = DEFAULT_HOST; 
 } else { 
@@ -157,6 +157,18 @@ var resourceUuid = {
         "varName": "notes",
         "displayName": "REGISTRATION NOTES"
     },
+    "patientRecordImage": {
+        "resource": "concept",
+        "queryTerm": "PATIENT RECORD IMAGE",
+        "varName": "patientRecordImage",
+        "displayName": "PATIENT RECORD IMAGE"
+    },
+    "patientRecordVectorImage": {
+        "resource": "concept",
+        "queryTerm": "PATIENT RECORD VECTOR IMAGE",
+        "varName": "patientRecordVectorImage",
+        "displayName": "PATIENT RECORD VECTOR IMAGE"
+    },
     "regcomplaint": {
         "resource": "concept",
         "queryTerm": "REGISTRATION COMPLAINT",
@@ -270,7 +282,7 @@ var resourceUuid = {
         "queryTerm": "old patient identification number",
         "varName": "oldPatientIdentificationNumber",
         "displayName": "Old Patient Identification Number - Old Patient Identification Number"
-    },
+    }
     // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
     // Cant find UUID for religion on JSS Ganiari server. What gives?
 
@@ -573,7 +585,7 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing'];
+        return ['login', 'screener', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing', 'admin'];
         
     },
 
@@ -613,6 +625,9 @@ var Util = {
                     break;
                 case  'patientfacing':
                     changedText = 'Patient Facing';
+                    break;
+                case  'admin':
+                    changedText = 'Admin';
                     break;
                 default :
                     changedText = 'You dont have permission to access any Module';
