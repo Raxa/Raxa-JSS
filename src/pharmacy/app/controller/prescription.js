@@ -1520,6 +1520,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         //if current location, filter by that
         if(Ext.getCmp('allStockLocationPicker').getValue()){
             Ext.getStore('StockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
+            localStorage.setItem('pharmacyLocation', Ext.getCmp('allStockLocationPicker').getValue());
         }
     },
     
