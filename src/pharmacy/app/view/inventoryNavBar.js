@@ -2,7 +2,8 @@ var INVENTORY_NAV_BAR = {
     WIDTH : 180,
     BUTTON_WIDTH : 180,
     BUTTON_HEIGHT: 40,
-    BUTTON_MARGIN : 5
+    BUTTON_MARGIN : 5,
+    TITLE_HEIGHT: 20
 };
 
 Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
@@ -14,21 +15,15 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
     // border: true,
     items: [{
         xtype: 'container',
-        layout: {
-            type: 'vbox',
-            pack: 'center',
-            align: 'center'
-        },
-        width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
-        height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
-        html: '<b><u>STOCK</u></b>'
+        margin: '10 0 0 20',
+        html: '<b><u>STOCK</u></b>',
+        height: INVENTORY_NAV_BAR.TITLE_HEIGHT
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
         height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Overview',
         id: 'inventoryOverviewButton',
-        ui: 'raxa-side-panel-large',
         action: 'navigateInventoryOverview'
     }, {
         xtype: 'button',
@@ -36,38 +31,38 @@ Ext.define('RaxaEmr.Pharmacy.view.inventoryNavBar', {
         height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Reports',
         id: 'inventoryReportsButton',
-        cls: 'raxa-side-panel-small',
         action: 'navigateInventoryReports',
         disabled: true
     }, {
-        xtype: 'text',
-        margin: 10,
-        html: '<b><u>ORDERS</u></b>'
+        xtype: 'container',
+        margin: '20 0 0 20',
+        html: '<b><u>ORDERS</u></b>',
+        height: INVENTORY_NAV_BAR.TITLE_HEIGHT
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
-        margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
+        height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Request Drugs',
         id: 'newRequisitionButton',
         action: 'newRequisition'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
-        margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
+        height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Send Drugs',
         id: 'newIssueButton',
         action: 'newIssue'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
-        margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
+        height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Update Stock',
         id: 'newReceiptButton',
         action: 'newReceipt'
     }, {
         xtype: 'button',
         width: INVENTORY_NAV_BAR.BUTTON_WIDTH,
-        margin: INVENTORY_NAV_BAR.BUTTON_MARGIN,
+        height: INVENTORY_NAV_BAR.BUTTON_HEIGHT,
         text: 'Add New Drug',
         id: 'newDrugButton',
         action: 'newDrug'

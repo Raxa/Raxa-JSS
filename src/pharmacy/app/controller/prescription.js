@@ -1538,8 +1538,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getStore('StockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
         Ext.getStore('StockList').filter('status', 'available');
-        var regExp = /\d+/;
-        Ext.getStore('StockList').filter('months', regExp);
+//        var regExp = /\d+/;
+//        Ext.getStore('StockList').filter('months', regExp);
         Ext.getCmp('allStockGrid').features[0].collapseAll();
     },
     
