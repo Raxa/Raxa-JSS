@@ -29,7 +29,11 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
 	    src:  '../resources/img/icon_s.png',
             width: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
 	    listeners: {
-	        afterrender: function(c) { c.el.on("click", function() { window.location = '../#Dashboard'; })}
+	        afterrender: function(c) {
+	            c.el.on("click", function() {
+			 window.location = '../#Dashboard'; 
+		    })
+		}
 	    }
         }, {
             xtype: 'button',
