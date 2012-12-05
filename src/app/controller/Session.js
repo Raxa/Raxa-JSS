@@ -27,6 +27,14 @@ Ext.define('RaxaEmr.controller.Session', {
             passwordID: '#passwordID',
             userName: '#userName',
             signInButton: '#signInButton',
+            newProviderAccountButton: '#newProviderAccountButton',
+            newPatientAccountButton: '#newPatientAccountButton',
+            passwordProvider: '#newProviderId #password',
+            confirmPasswordProvider: '#newProviderId #confirmPassword',
+            saveProviderButton:'#newProviderId #saveProviderButton',
+            passwordPatient: '#newPatientId #password',
+            confirmPasswordPatient: '#newPatientId #confirmPassword',
+            savePatientButton:'#newPatientId #savePatientButton',
             Registration: '#Registration',
             Screener: '#Screener',
             Inpatient: '#Inpatient',
@@ -47,6 +55,30 @@ Ext.define('RaxaEmr.controller.Session', {
             },            
             signInButton: {
                 tap: 'doLogin'
+            },
+            newProviderAccountButton: {
+                tap: 'newProviderAccount'
+            },
+            newPatientAccountButton: {
+                tap: 'newPatientAccount'
+            },
+            saveProviderButton: {
+                tap: 'saveProvider'
+            },
+            savePatientButton: {
+                tap: 'savePatient'
+            },
+            passwordPatient: {
+                change: 'passwordPatientChange'
+            },
+            passwordProvider: {
+                change: 'passwordProviderChange'
+            },
+            confirmPasswordPatient: {
+                change: 'confirmPasswordPatientChange'
+            },
+            confirmPasswordProvider: {
+                change: 'confirmPasswordProviderChange'
             }
         }
     },
@@ -114,6 +146,142 @@ Ext.define('RaxaEmr.controller.Session', {
         }
     },
     
+    showNewPatientInfo: function(id) {
+        
+    },
+
+    newProviderAccount: function () {
+        if (!this.newProvider) {
+            this.newProvider = Ext.create('RaxaEmr.view.NewProvider');
+            Ext.Viewport.add(this.newProvider);
+        }
+        this.newProvider.setMasked(false);
+        this.newProvider.show();
+    },
+
+    newPatientAccount: function () {
+        if (!this.newPatient) {
+            this.newPatient = Ext.create('RaxaEmr.view.NewPatient');
+            Ext.Viewport.add(this.newPatient);
+        }
+        this.newPatient.setMasked(false);
+        this.newPatient.show();
+    },
+    
+    saveProvider: function() {
+        this.saveUser("provider");
+    },
+    
+    savePatient: function() {
+        this.saveUser("patient");
+    },
+
+    saveUser: function(type) {
+        if(type === "provider"){
+            var formComponent = Ext.getCmp('newProviderId');
+            var formp  = formComponent.saveForm();
+        }
+        else{
+            var formComponent = Ext.getCmp('newPatientId');
+            var formp = formComponent.saveForm();
+        }
+        if (formp.givenname && formp.familyname && formp.choice && formp.userName && formp.password && formp.location) {
+            var newUser = {
+                gender : formp.choice,
+                firstName: formp.givenname,
+                lastName: formp.familyname,
+                location: formp.location,
+                userName: formp.userName,
+                password: formp.password,
+                type: type
+            };
+            if(type === "provider"){
+                newUser.isOutpatientDoctor = "true";
+            }
+            else if(type === "patient" && formp.donateOrgans){
+                newUser.donateOrgans = "true"
+            }
+            if(formp.email){
+                newUser.email = formp.email;
+            }
+            if(formp.phone){
+                newUser.phone = formp.phone;
+            }
+            var newUserParam = Ext.encode(newUser);
+            formComponent.setMasked(true);
+            Ext.Ajax.request({
+                scope:this,
+                url: HOST + '/ws/rest/v1/raxacore/user',
+                method: 'POST',
+                params: newUserParam,
+                disableCaching: false,
+                headers: Util.getNewAccountAuthHeaders(),
+                success: function (response) {
+                    formComponent.setMasked(false);
+                    if(type==="provider"){
+                        Ext.Msg.alert("Successful", "Please login to continue.");
+                        Ext.getCmp('userName').setValue(formp.userName);
+                    }
+                    else{
+                        Ext.Msg.alert("Patient Creation Successful");
+                    }
+                },
+                failure: function (response) {
+                    formComponent.setMasked(false);
+                    var errorJson = Ext.decode(response.responseText);
+                    var message = errorJson.error.detail.toString().split(":")[1]
+                    Ext.Msg.alert('Error '+message);
+                }
+            });
+            formComponent.hide();
+            formComponent.reset();
+        }
+        else {
+            Ext.Msg.alert ("Error","Please Enter all the mandatory fields");
+        }
+    },
+    
+    passwordPatientChange: function() {this.validatePassword("#newPatientId");},
+
+    passwordProviderChange: function() {this.validatePassword("#newProviderId");},
+
+    validatePassword : function(parentComponent) {
+        var newPassword = Ext.ComponentQuery.query(parentComponent+' #password')[0]._value;
+        var minPasswordLength = 8;
+        if(newPassword.length > 0) {
+            if(newPassword.length < minPasswordLength) {
+                Ext.ComponentQuery.query(parentComponent+' #password')[0].reset();
+                Ext.Msg.alert('Error', 'Password must be eight characters in length.');
+            }
+            var re = {
+                lower:   /[a-z]/g,
+                upper:   /[A-Z]/g,
+                numeric: /[0-9]/g
+            }
+            for (var rule in re) {
+                if(((newPassword.match(re[rule]) || []).length) <= 0) {
+                    Ext.ComponentQuery.query(parentComponent+' #password')[0].reset();
+                    Ext.Msg.alert('Error', 'Password must contain at least one lower, upper case and numeric');
+                }        
+            }
+        }
+    },
+
+    confirmPasswordPatientChange: function() {this.validateConfirmPassword("#newPatientId");},
+
+    confirmPasswordProviderChange: function() {this.validateConfirmPassword("#newProviderId");},
+    
+    validateConfirmPassword : function(parentComponent) {
+        var newPassword = Ext.ComponentQuery.query(parentComponent+' #password')[0]._value;
+        var confirmPassword = Ext.ComponentQuery.query(parentComponent+' #confirmPassword')[0]._value;
+        if(confirmPassword.length > 0 && newPassword > 0) {
+            if( newPassword !== confirmPassword) {
+                Ext.ComponentQuery.query(parentComponent+' #confirmPassword')[0].reset();
+                Ext.Msg.alert('Error', 'Confirm password is not same as new Password');
+            }
+        }
+    },
+
     // doLogin functions populates the views in the background while transferring
     // the view to dashboard
     doLogin: function () {

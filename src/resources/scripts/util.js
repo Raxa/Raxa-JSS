@@ -223,6 +223,12 @@ var resourceUuid = {
         "varName": "prescriptionfill",
         "displayName": "PRESCRIPTIONFILL - Prescriptionfill encounter"
     },
+    "healthCenter": {
+        "resource": "personattributetype",
+        "queryTerm": "health center",
+        "varName": "healthCenter",
+        "displayName": "Health Center - Specific Location of this person's home health center."
+    },
     "primaryrelative": {
         "resource": "personattributetype",
         "queryTerm": "primary relative",
@@ -497,6 +503,16 @@ var Util = {
         };
         return headers;
     },
+
+    getNewAccountAuthHeaders: function () {
+        var headers = {
+            "Authorization": "Basic " + window.btoa("newAccount:Hello123"),  
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return headers;
+    },
+
 
     /**
      * Logout the current user. Ends the current session

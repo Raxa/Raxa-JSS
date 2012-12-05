@@ -127,7 +127,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
     modal: true,
     centered: true,
     itemId: 'ModalGridWindow',
-    title: 'Edit Modal Grid',
+    title: 'Drug Information',
     closeAction: 'hide',    // TODO: actually delete on hide? memory hog in background?
     initComponent:function () {
         this.callParent(arguments);

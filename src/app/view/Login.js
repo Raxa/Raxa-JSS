@@ -2,49 +2,102 @@ Ext.define('RaxaEmr.view.Login', {
     extend: 'Ext.Container',
     config: {
         fullscreen: true,
-        layout: 'vbox',
+        layout: {
+            type: 'vbox',
+            align: 'center',
+            pack: 'center'
+        },
         id: 'halo',
         items: [{
             xtype: 'topbar',
             docked: 'top'
-        }, {
+        },
+        {
+            xtype: 'container',
+            height: 220,
             id: 'logoPanel',
-            centered: true,
-            style: 'margin-top: -350px',
             items: [{
-                html: '<div style="text-align:center;"><img src="resources/img/logo.png" width="143" height="143"/></div>'
+                html: '<img src="resources/img/logoBeta.png" width="143" height="143"/>'
             }, {
-                html: '<div class="logoText">Jan Swasthya Sahyog</div>'
+                html: 'Raxa EMR',
+                style: 'font-family: "Helvetica Neue",HelveticaNeue,"Helvetica-Neue",Helvetica,"BBAlpha Sans",sans-serif;'
             }]
-        }, {
+        },{
+            html: "Existing Users",
+            style: 'font-family: "Helvetica Neue",HelveticaNeue,"Helvetica-Neue",Helvetica,"BBAlpha Sans",sans-serif; font-weight: bold; text-align: left',
+            width: 350
+        },{
             xtype: 'fieldset',
-//            title: Ext.i18n.appBundle.getMsg('RaxaEmr.view.Login.title'),
-            title: 'Please login',
-            align: 'center',
-            centered: true,
-            width: 350,
             items: [{
                 xtype: 'textfield',
                 id: 'userName',
-//                label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label'),
-                label: 'Username',
-                clearIcon: true
+    //                label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.textfield.label'),
+                label: 'User Name',
+                clearIcon: true,
+                width: 350
             }, {
                 xtype: 'passwordfield',
                 id: 'passwordID',
-//                label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.passwordfield.label'),
+    //                label: Ext.i18n.appBundle.getMsg('RaxaEmr.view.passwordfield.label'),
                 label: 'Password',
-                clearIcon: true
+                clearIcon: true,
+                width: 350
             }]
         }, {
             xtype: 'button',
 //            text: Ext.i18n.appBundle.getMsg('RaxaEmr.view.button.title'),
             text: 'Sign In',
+            margin: '-20 0 40 0',
             id: 'signInButton',
             ui: 'decline-round',
-            centered: true,
+            width: 350
+        }, {
+            html: "New Users",
+                style: 'font-family: "Helvetica Neue",HelveticaNeue,"Helvetica-Neue",Helvetica,"BBAlpha Sans",sans-serif; font-weight: bold; text-align: left',
+            width: 350
+        }, {
+            xtype: 'container',
+            layout: 'hbox',
             width: 350,
-            style: 'margin-top: 180px;'
+            items: [{
+                html: '<img src="resources/img/doctor.png" width="128" height="128"/>'
+            },
+            {
+                xtype: 'container',
+                layout: 'vbox',
+                height: 128,
+                items: [{
+                    margin: '20 0 0 0',
+                    html: 'Are you a doctor?'
+                },{
+                    xtype: 'button',
+                    text: 'New Provider Account',
+                    id: 'newProviderAccountButton',
+                    ui: 'decline-round',
+                }]
+            }]
+        },{
+            xtype: 'container',
+            layout: 'hbox',
+            width: 350,
+            items: [{
+                html: '<img src="resources/img/patient.png" width="128" height="128"/>'
+            },
+            {
+                xtype: 'container',
+                layout: 'vbox',
+                height: 128,
+                width: 162,
+                items: [{
+                    margin: '20 0 0 0',
+                    html: 'Do you want access to your medical record?'
+                },{
+                    xtype: 'button',
+                    text: 'New Patient Account',
+                    id: 'newPatientAccountButton',
+                    ui: 'decline-round',
+                }]
+            }]
         }]
     }
 });
