@@ -82,7 +82,7 @@ Ext.define('RaxaEmr.controller.Session', {
             }
         }
     },
-
+    
     showLogin: function () {
         window.location.hash = 'Login';
         Ext.getCmp('mainView').setActiveItem(0);
@@ -223,7 +223,7 @@ Ext.define('RaxaEmr.controller.Session', {
                         Ext.getCmp('userName').setValue(formp.userName);
                     }
                     else{
-                        Ext.Msg.alert("Patient Creation Successful");
+                        Ext.Msg.alert("Patient Creation Successful", "Thanks you for registering.");
                     }
                 },
                 failure: function (response) {
@@ -274,7 +274,8 @@ Ext.define('RaxaEmr.controller.Session', {
     validateConfirmPassword : function(parentComponent) {
         var newPassword = Ext.ComponentQuery.query(parentComponent+' #password')[0]._value;
         var confirmPassword = Ext.ComponentQuery.query(parentComponent+' #confirmPassword')[0]._value;
-        if(confirmPassword.length > 0 && newPassword > 0) {
+        console.log(newPassword +' '+confirmPassword);
+        if(confirmPassword.length > 0 && newPassword.length > 0) {
             if( newPassword !== confirmPassword) {
                 Ext.ComponentQuery.query(parentComponent+' #confirmPassword')[0].reset();
                 Ext.Msg.alert('Error', 'Confirm password is not same as new Password');

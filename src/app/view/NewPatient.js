@@ -10,7 +10,7 @@ Ext.define("RaxaEmr.view.NewPatient", {
         hidden: true,
         // Set the width and height of the panel
         width: 520,
-        height: 530,
+        height: 600,
         masked: {
             xtype: 'loadmask',
             message: 'Creating Patient'
@@ -99,9 +99,11 @@ Ext.define("RaxaEmr.view.NewPatient", {
             }
             ]
         },{
+            html: 'Organ Donation'
+        },{
             xtype: 'checkboxfield',
             name : 'donateOrgans',
-            label: 'Would you like to donate organs?',
+            label: 'Would you like to learn more about organ donation?',
             value: 'true',
             labelWidth: 400,
             checked: false

@@ -50,7 +50,7 @@ Ext.define('RaxaEmr.view.Login', {
             margin: '-20 0 40 0',
             id: 'signInButton',
             ui: 'decline-round',
-            width: 350
+            width: 350,
         }, {
             html: "New Users",
                 style: 'font-family: "Helvetica Neue",HelveticaNeue,"Helvetica-Neue",Helvetica,"BBAlpha Sans",sans-serif; font-weight: bold; text-align: left',

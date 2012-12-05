@@ -40,7 +40,7 @@ Ext.define('Topbar.view.TopToolbar', {
 						}
 					}
 					else {
-						if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
+						if (Ext.getCmp('mainView').getLayout().innerItems[0] === Ext.getCmp('mainView').getActiveItem()) {
 							//this.parent.getComponent('UsernameLabel').setHtml('Guest');
 							var buttonUrlSettings = this.parent.add({
 								xtype: 'urlSettingsButton',
