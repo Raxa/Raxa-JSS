@@ -92,17 +92,20 @@ Ext.define('RaxaEmr.Outpatient.view.patientlist', {
         }],
 		//list items  are shown by this
 		itemTpl: new Ext.XTemplate(
-			'<div class="headshot" style="background-image:url({image});"></div>', '<div style="float:left;width:25%;">', '{display}', '<span>Gender : {[this.gender(values.gender)]}</span>', '<span>From : ----</span>', '</div>', '<div style="float:left;width:25%;">', '<span>----</span>', '<span>Disease : ----</span>', '<span>Age : {age}</span>', '</div>', '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">8</div>', '<div style="float:right;width:25%;">', '<span>Last Visit : ----</span>', '<span>No. of Visits : --</span>', '<span>ID : ----</span>', '</div>',
+			'<div class="headshot" style="background-image:url(resources/images/default_image.png);float:left;height:40px;width:48px;"></div>', '<div style="float:left;width:25%;">', '{display}', '<span>Gender : {[this.gender(values.gender)]}</span>', '<span>From : ----</span>', '</div>', '<div style="float:left;width:25%;">', '<span>----</span>', '<span>Disease : ----</span>', '<span>Age : {age}</span>', '</div>', '<div style="float:left;height:32px;width:32px;background-image:url(resources/images/urgency.png);">8</div>', '<div style="float:right;width:25%;">', '<span>Last Visit : ----</span>', '<span>No. of Visits : --</span>', '<span>ID : ----</span>', '</div>',
 			{
 				date: function(str){
                     return str.encounters[0].encounterDatetime.split("T")[0];
 				},
 				gender: function(str){
-					if(str == 'M'){
+					if(str == 'Male'){
 						return 'Male';
-					}else if(str == 'F'){
-                        return 'Female';
-					}
+					}else if(str == 'Female'){
+                                                    return 'Female';
+                                                }
+                                                else if (str == 'Other'){
+                                                    return '----';
+                                                }                            					
 				  }
 			}
 		)
