@@ -49,7 +49,7 @@ Ext.define("Screener.view.NewPatient", {
                         var MAX_PATIENT_AGE = 119;
                         var MIN_PATIENT_AGE = 0;
                         field.setValue(Math.floor(field.getValue()));
-                        if(!(field.getValue()>=0  && field.getValue()<=119))
+                        if(!(field.getValue()>=MIN_PATIENT_AGE  && field.getValue()<=MAX_PATIENT_AGE))
                         {
                             Ext.Msg.alert('Wrong Input','Patient Age should be between '+ MIN_PATIENT_AGE +' and '+ MAX_PATIENT_AGE);
                             field.setValue('');
