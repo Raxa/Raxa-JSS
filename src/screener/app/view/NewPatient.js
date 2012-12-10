@@ -35,15 +35,29 @@ Ext.define("Screener.view.NewPatient", {
             },
             items : [
             {
-                xtype: 'textfield',
+                xtype: 'numberfield',
                 id: 'patientAge',
                 name: 'patientAge',
                 labelWidth: 70,
                 label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.age_dob'),
                 allowDecimals: false,
-                placeHolder: 'Age'
-            },
-            {
+//                placeHolder: 'Age',
+                margin: '5 0 5 1',
+                listeners: {
+                    blur: function(field) {
+                        //TODO  Set it in global space OR get concept range
+                        var MAX_PATIENT_AGE = 119;
+                        var MIN_PATIENT_AGE = 0;
+                        field.setValue(Math.floor(field.getValue()));
+                        if(!(field.getValue()>=0  && field.getValue()<=119))
+                        {
+                            Ext.Msg.alert('Wrong Input','Patient Age should be between '+ MIN_PATIENT_AGE +' and '+ MAX_PATIENT_AGE);
+                            field.setValue('');
+
+                        }
+                    }
+                }
+            },{
                 xtype: 'textfield',
                 id: 'dob',
                 name: 'dob',
