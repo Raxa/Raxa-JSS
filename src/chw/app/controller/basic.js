@@ -108,7 +108,7 @@ Ext.define('chw.controller.basic', {
             id: 'viewPort',
             fullscreen: true,
             layout: 'card',
-            activeItem: PAGES.loginScreen,
+            activeItem: PAGES.newPatient,  //New registration page comes first
             items: [{   
                 xclass: 'chw.view.loginScreen'
             }, {
@@ -139,6 +139,8 @@ Ext.define('chw.controller.basic', {
                 xclass: 'chw.view.resourceDetail'
             }, {
                 xclass: 'chw.view.illnessDetails'
+            }, {
+                xclass: 'chw.view.newPatient'
             }]
         })
     },
