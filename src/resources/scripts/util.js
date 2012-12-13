@@ -834,22 +834,13 @@ var Util = {
      * Returns the uuid of the logged in provider
      */
     getLoggedInProviderUuid: function(){
-        if(!localStorage.getItem("loggedInUser")){
-            // TODO: should throw an exception, not return the wrong string
-            // Ext.Error.raise('<Error Text>');
-            return "provider is not logged in";
-        }
         if(localStorage.getItem("loggedInProvider")){
             return localStorage.getItem("loggedInProvider");
         }
-        // TODO: The side effect of getLoggedInProviderUuid is confusing.
-        //      I would think that it shouldnt coincidentally set the ID.
-        //
-        //      Morever, it certainly shouldnt return any string other than
-        //      (1) a UUID or (2) null (or an exception, etc. something which consistly indicates
-        //      that no UUID was found. else the calling function has to handle this string).
-        this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
-        return "setting provider uuid now";
+        else{
+            Ext.Error.raise('Provider is not logged in');
+            return null;
+        }
     },
     
     /**
