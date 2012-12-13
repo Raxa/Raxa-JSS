@@ -10,7 +10,7 @@ Ext.define("RaxaEmr.view.NewProvider", {
         hidden: true,
         // Set the width and height of the panel
         width: 500,
-        height: 490,
+        height: 510,
         masked: {
             xtype: 'loadmask',
             message: 'Creating Provider'
