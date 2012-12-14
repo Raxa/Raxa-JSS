@@ -9710,7 +9710,15 @@ input[type="search"]::-webkit-search-cancel-button {
   border-radius: 0.4em;
 }
 
-/* line 213, ../../screener/style/screener.scss */
+/* line 212, ../../screener/style/screener.scss */
+.screener_tabs {
+  height: 130px;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+}
+
+/* line 219, ../../screener/style/screener.scss */
 .patient_table {
   margin-left: 25px;
   width: 90%;
@@ -9718,11 +9726,11 @@ input[type="search"]::-webkit-search-cancel-button {
   border-radius: 15px;
   box-shadow: 0 0 5px #999999;
 }
-/* line 223, ../../screener/style/screener.scss */
+/* line 229, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image {
   padding: 10px;
 }
-/* line 228, ../../screener/style/screener.scss */
+/* line 234, ../../screener/style/screener.scss */
 .patient_table .pantient_table_details {
   padding-left: 20px;
 }

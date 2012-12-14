@@ -42,25 +42,27 @@ Ext.define("Screener.view.Main", {
                     }
                 } 
             },
-            items: [{
+            items: [
+			
+			{
                 id: 'assignPatientButton',
                 xtype: 'patientView',
-                title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">OPD</div>'
+                title : '<div class="screener_tabs">OPD</div>'
             }, {
                 id: 'showPharmacyButton',
                 xtype: 'pharmacylist',
-                title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">PHARMACY</div>'
+                title : '<div class="screener_tabs">PHARMACY</div>'
             }, {
                 id: 'showLabButton',
                 xtype: 'labOrder',
-                title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">LABORATORY</div>' 
+                title : '<div class="screener_tabs">LABORATORY</div>' 
             }, {   
                 id: 'showVitalsButton',
                 xtype: 'vitalslist',
-                title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">VITAL</div>'
+                title : '<div class="screener_tabs">VITAL</div>'
             }, {   
                 id: 'showUltrasoundButton',
-                title : '<div style ="height:130px;-webkit-transform:rotate(270deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg);">ULTRASOUND</div>' 
+                title : '<div class="screener_tabs">ULTRASOUND</div>' 
             },
             ]
         },

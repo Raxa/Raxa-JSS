@@ -207,9 +207,15 @@ $black: #000;
         border-radius: $form-fieldset-radius;
     }
 }
+//Screener Tab changes 
 
+.screener_tabs {
+	height:130px;
+	-webkit-transform:rotate(270deg);
+	-moz-transform:rotate(90deg);
+	-o-transform: rotate(90deg);
+}
 //Pharmacy CSS edited. 
-
 .patient_table {
 	margin-left:25px;
 	width:90%;
