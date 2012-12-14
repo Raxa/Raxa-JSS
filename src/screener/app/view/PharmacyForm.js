@@ -42,7 +42,7 @@ Ext.define("Screener.view.PharmacyForm", {
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.PharmacyForm.minus'),
                     id: 'removeDrugFormButton',
                     height: '40px',
-                    width: '100px'
+                    width: '100px',
                 }, {
                     xtype: 'spacer',
                     height: 10

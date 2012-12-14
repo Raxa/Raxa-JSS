@@ -9746,3 +9746,18 @@ input[type="search"]::-webkit-search-cancel-button {
   color: #000;
   background: white;
 }
+
+/* line 255, ../../screener/style/screener.scss */
+#addDrugFormButton {
+  margin-left: 10px;
+}
+
+/* line 258, ../../screener/style/screener.scss */
+#removeDrugFormButton {
+  margin-left: 10px;
+}
+
+/* line 261, ../../screener/style/screener.scss */
+#drugSubmitButton {
+  margin-left: 10px;
+}
