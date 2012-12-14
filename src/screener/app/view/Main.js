@@ -19,7 +19,8 @@ Ext.define("Screener.view.Main", {
             id: 'maintabs',
             activeItem : 0,
             tabBar: {
-                docked: 'left'
+                docked: 'right',
+				width:'5%',
             },
             listeners: {
                 activate: function () {
