@@ -24,7 +24,7 @@ Ext.define("Screener.view.PatientListView", {
                 '<tr><td id="patient_table_image">',
                 '<img src="{image}" width=48 height=48 />',				
                 '</td>',
-                '<td>',
+                '<td class="patient_table_details">',
                 '{display}',
                 '</td></tr>',
 				'<tr class="patient_table_details"><td>',
