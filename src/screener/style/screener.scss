@@ -3,6 +3,7 @@ $base-color: #4aa8e5;
 //change gradient style
 $base-gradient: 'bevel';
 $form-bg-color: #f7f7f7;
+$black: #000;
 @import 'sencha-touch/default/all';
 
 // You may remove any of the following modules that you
@@ -205,4 +206,26 @@ $form-bg-color: #f7f7f7;
     .x-container{
         border-radius: $form-fieldset-radius;
     }
+}
+
+//Pharmacy CSS edited. 
+
+.patient_table {
+	margin-left:25px;
+	width:90%;
+	background:lighten($black, 90%);
+	border-radius:15px;
+	box-shadow:0 0 5px lighten($black, 60%);
+		tr {	
+			td {
+			
+			}			
+			#patient_table_image {
+				padding:10px;
+			}
+		}
+		
+		.pantient_table_details {
+			padding-left:20px;
+		}	
 }
