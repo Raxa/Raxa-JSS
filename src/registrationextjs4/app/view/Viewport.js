@@ -17,6 +17,7 @@
  */
 Ext.define('Registration.view.Viewport', {
     extend: 'Ext.container.Viewport',
+    alias: 'widget.viewport',
     layout: {
         align: 'stretch',
         pack: 'center',
@@ -40,10 +41,7 @@ Ext.define('Registration.view.Viewport', {
                     height: 35,
                     width: 200,
                     text: 'Registration Home Page',
-                    handler: function () {
-                        var l = Ext.getCmp('mainRegArea').getLayout();
-                        l.setActiveItem(REG_PAGES.HOME.home);
-                    }
+                    action: 'goToHomePage'
                 }, {
                     xtype: 'tbtext',
                     text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.viewport.tbtext') + localStorage.getItem('username')
@@ -83,8 +81,6 @@ Ext.define('Registration.view.Viewport', {
                 xtype: REG_PAGES.REG_BMI.name
             }, {
                 xtype: REG_PAGES.SEARCH_1.name
-            }, {
-                xtype: REG_PAGES.SEARCH_2.name
             }, {
                 xtype: REG_PAGES.SEARCH_CONFIRM.name
             }]

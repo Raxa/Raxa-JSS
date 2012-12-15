@@ -21,8 +21,6 @@ describe("controller", function () {
                 }, {
                     xtype: REG_PAGES.SEARCH_1.name
                 }, {
-                    xtype: REG_PAGES.SEARCH_2.name
-                }, {
                     xtype: REG_PAGES.SEARCH_CONFIRM.name
                 }]
             });

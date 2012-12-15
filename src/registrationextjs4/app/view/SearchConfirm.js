@@ -355,20 +355,11 @@ Ext.define('Registration.view.SearchConfirm', {
                         }]
                     }, {
                         xtype: 'button',
-                        margin: '10 10 0 200',
-                        // ui: 'raxa-orange-small',
-                        text: 'Cancel', // Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Cancel'),
-                        handler: function () {
-                            var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.HOME.value); //Going to Home Page
-                        }
-                    }, {
-                        xtype: 'button',
-                        margin: '10 0 0 0',
+                        margin: '10 0 0 130',
                         text: Ext.i18n.appBundle.getMsg('RaxaEmrReg.view.sc.Return'),
                         handler: function () {
                             var l = Ext.getCmp('mainRegArea').getLayout();
-                            l.setActiveItem(REG_PAGES.SEARCH_2.value); //Going to Search Part-2 Screen (Result List)
+                            l.setActiveItem(REG_PAGES.SEARCH_1.value); //Going to Search Part-1 Screen (Result List)
                         }
                     }, {
                         xtype: 'button',
