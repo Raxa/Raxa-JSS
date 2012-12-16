@@ -9789,6 +9789,11 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /* line 287, ../../screener/style/screener.scss */
+input[name="dob"] {
+  width: 173px !important;
+}
+
+/* line 290, ../../screener/style/screener.scss */
 input[name="patientAge"] {
   width: 163px !important;
   margin-left: 2px;
