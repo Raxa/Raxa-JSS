@@ -253,6 +253,23 @@ $black: #000;
 	}
 }
 
+#givenName {
+	margin:5px;
+}
+
+#familyName {
+	margin:5px;
+}
+
+#ageDateOfBirth {
+	margin:5px;
+}
+
+#sexRadioGroup {
+	margin:5px;
+}
+
+
 #addDrugFormButton {
 	margin-left:10px;
 }
@@ -261,4 +278,13 @@ $black: #000;
 }
 #drugSubmitButton {
 	margin-left:10px;
+}
+
+#savePatientButton {
+	margin:10px auto auto -20px;
+}
+
+input[name="patientAge"] {
+	width:163px !important;
+	margin-left:2px;
 }
