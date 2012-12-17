@@ -2,8 +2,8 @@ Ext.define('Registration.controller.Main', {
     extend: 'Ext.app.Controller',
     id: 'main',
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'IllnessDetails', 'RegistrationBMI', 'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    stores: ['Person', 'identifiersType', 'location', 'patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore', 'Doctors', 'autoCompleteAddress'],
-    models: ['Person', 'addresses', 'names', 'patient', 'identifiers', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor', 'AttributeType'],
+    stores: ['Patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore', 'Doctors', 'autoCompleteAddress'],
+    models: ['Patient', 'addresses', 'names', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor', 'AttributeType'],
 
     init: function() {
         // connect the actions to eventHandlers
@@ -199,22 +199,22 @@ Ext.define('Registration.controller.Main', {
             addresses: [personAddresses],
             attributes: [personAttributes]
         };
-        var jsonperson = Ext.create('Registration.model.Person', person);
+        var jsonperson = Ext.create('Registration.model.Patient', person);
 
         // This if else statement change the persist property of age field in Person model so that if its
         // empty it should not be sent to server in the body of post call
         // TODO: What happens if Age and DOB are inconsistent?
         if(Ext.getCmp('patientAge').isValid()) {
             jsonperson.data.age = Ext.getCmp('patientAge').value;
-            Registration.model.Person.getFields()[2].persist = true;
+            Registration.model.Patient.getFields()[2].persist = true;
         } else {
-            Registration.model.Person.getFields()[2].persist = false;
+            Registration.model.Patient.getFields()[2].persist = false;
         }
         if(Ext.getCmp('dob').isValid()) {
             jsonperson.data.birthdate = Ext.getCmp('dob').value;
-            Registration.model.Person.getFields()[3].persist = true;
+            Registration.model.Patient.getFields()[3].persist = true;
         } else {
-            Registration.model.Person.getFields()[3].persist = false;
+            Registration.model.Patient.getFields()[3].persist = false;
         }
 
         // Adds an attribute, if it's present in the UI and valid.
@@ -250,13 +250,20 @@ Ext.define('Registration.controller.Main', {
             addAttribute(attributes[i].componentId, attributes[i].uuid );
         }
 
-        var store = Ext.create('Registration.store.Person');
+        var store = Ext.create('Registration.store.Patient');
         store.add(jsonperson);
         // this statement makes the post call to make the person
         store.sync({
             success: function() {
-                this.getidentifierstype(store.getAt(0).getData().uuid);
                 localStorage.setItem('navigation', 'New Registration');
+                localStorage.setItem('newPatientUuid', store.getAt(0).data.uuid);
+                // setting the patientid and paient name fields in bmi screen
+                console.log(store);
+                Ext.getCmp('bmiPatientID').setValue(store.getAt(0).data.identifier);
+                Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').text);
+                var l = Ext.getCmp('mainRegArea').getLayout();
+                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);
+                Ext.getCmp('submitButton').enable();
             },
             failure: function() {
                 Ext.Msg.alert("Failure -- Please try again");
@@ -270,98 +277,6 @@ Ext.define('Registration.controller.Main', {
         return store;
     },
 
-    /* this functions makes a get call to get the patient identifiers type */
-    getidentifierstype: function(personUuid) {
-        var identifiers = Ext.create('Registration.store.identifiersType');
-        identifiers.load({
-            scope: this,
-            callback: function(records, operation, success) {
-                if(success) {
-                    var idIterator;
-                    var idNo = 0;
-                    for(idIterator = 0; idIterator < identifiers.data.length; idIterator++) {
-                        var str = identifiers.data.items[idIterator].raw.name;
-                        if(str.match(idPattern)) {
-                            idNo = idIterator;
-                        }
-                    }
-                    //get default identifier if 'RaxaEMR Identification No' isn't in the system
-                    var identifierType = identifiers.getAt(idNo).getData().uuid;
-                    this.getlocation(personUuid, identifierType);
-                } else {
-                    Ext.Msg.alert("Failure -- Please try again");
-                    Ext.getCmp('submitButton').enable();
-                }
-            }
-        });
-    },
-
-    /* this functions makes a get call to get the location uuid */
-    getlocation: function(personUuid, identifierType) {
-        var locations = Ext.create('Registration.store.location');
-        locations.load({
-            scope: this,
-            callback: function(records, operation, success) {
-                if(success) {
-                    var foundLocation = false;
-                    for(var idIterator = 0; idIterator < locations.data.length; idIterator++) {
-                        var str = locations.data.items[idIterator].raw.display;
-                        // TODO: Fix bug. Presently, if location that doesnt exist, e.g. just "G" instead of "GAN", then code will create a openMRS resource for the PERSON but not for the PATIENT
-                        //  Can we wrap preson inside of patient and create both at once, via one REST call?
-                        if(str.toLowerCase().indexOf(Ext.getCmp('centreId').getValue().toLowerCase()) !== -1 && !foundLocation) {
-                            this.makePatient(personUuid, identifierType, locations.getAt(idIterator).getData().uuid);
-                            foundLocation = true;
-                        }
-                    }
-                    if(!foundLocation) {
-                        Ext.Msg.alert('Please select a centre location');
-                        Ext.getCmp('submitButton').enable();
-                    }
-                } else {
-                    Ext.Msg.alert("Failure -- Please try again");
-                    Ext.getCmp('submitButton').enable();
-                }
-            }
-        });
-    },
-
-    // Makes a post call to creat the patient with three parameter which will sent as person, identifiertype and location
-    makePatient: function(personUuid, identifierType, location) {
-        localStorage.setItem('newPatientUuid', personUuid);
-        // creating the model for posting of patient
-        var patient = Ext.create('Registration.model.patient', {
-            person: personUuid,
-            identifiers: [{
-                identifier: Util.getPatientIdentifier(Ext.getCmp('centreId').getValue()),
-                identifierType: identifierType,
-                location: location,
-                preferred: true
-            }]
-        });
-        // setting the patientid and paient name fields in bmi screen
-        Ext.getCmp('bmiPatientID').setValue(patient.getData().identifiers[0].identifier);
-        Ext.getCmp('bmiPatientName').setValue(Ext.getCmp('patientNameConfirm').text);
-
-        //creating store for posting the patient
-        var PatientStore = Ext.create('Registration.store.patient');
-        PatientStore.add(patient);
-
-        //makes the post call for creating the patient
-        PatientStore.sync({
-            success: function() {
-                var l = Ext.getCmp('mainRegArea').getLayout();
-                l.setActiveItem(REG_PAGES.ILLNESS_DETAILS.value);
-                Ext.getCmp('submitButton').enable();
-            },
-            failure: function() {
-                Ext.Msg.alert("Failure -- Please check old id number and subcentre location");
-                Ext.getCmp('submitButton').enable();
-            }
-        });
-
-        //this function return this store because i needed this in jasmine unit test
-        return PatientStore;
-    },
     // for now the function is called when the emergency button is pressed since the views were not completed
     /*creates the json object of the encounter needed to be passed to the server and sends it to the server to post the record*/
     sendEncounterData: function() {

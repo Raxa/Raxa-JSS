@@ -37,20 +37,16 @@ Ext.application({
     name: 'Screener',
 
     requires: ['Screener.store.Patients', 'Screener.store.Doctors', 'Screener.store.druglist', 'Ext.navigation.View'],
-    stores: ['Screener.store.AssignedPatientList', 'Screener.store.Doctors', 'Screener.store.drugConcept', 'Screener.store.drugEncounter', 'Screener.store.druglist', 'Screener.store.encounterpost', 'Screener.store.encounters', 'Screener.store.IdentifierType', 'Screener.store.Location', 'Screener.store.NewPatients', 'Screener.store.NewPersons', 'Screener.store.PatientList', 'Screener.store.Patients', 'Screener.store.PatientSummary', 'Screener.store.PostLists'],
+    stores: ['Screener.store.AssignedPatientList', 'Screener.store.Doctors', 'Screener.store.drugConcept', 'Screener.store.drugEncounter', 'Screener.store.druglist', 'Screener.store.encounterpost', 'Screener.store.encounters','Screener.store.PatientList', 'Screener.store.Patients', 'Screener.store.PatientSummary', 'Screener.store.PostLists'],
 
     //we will use a Patient and Doctor class
-    models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs'],
+    models: ['Patient', 'Doctor', 'Links', 'PostList', 'GetList', 'Patients', 'observation', 'druglist', 'drugOrder', 'drugEncounter', 'PatientSummary', 'Obs', 'encounterpost', 'encounters'],
 
 	//here we declare the visual components
 	views: ['Main', 'PatientView', 'NewPatient', 'Sort', 'PharmacyView', 'PharmacyForm', 'DrugStore', 'PatientListView', 'LabOrderView', 'LabOrderForm', 'LabStore', 'PatientSummary', 'DoctorSummary', 'VitalViewListener'],
 
     //here we declare our controller that will perform actions
     controllers: ['Application'],
-
-    //the stores will hold our data in a local cache
-    // TODO: remove duplicate member "stores"
-    stores: ['Patients', 'Doctors', 'PostLists', 'druglist', 'drugEncounter', 'PatientSummary', 'AssignedPatientList'],
 
 	//entry point
 	launch: function() {
