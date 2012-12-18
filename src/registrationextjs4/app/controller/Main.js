@@ -2,8 +2,8 @@ Ext.define('Registration.controller.Main', {
     extend: 'Ext.app.Controller',
     id: 'main',
     views: ['Viewport', 'Home', 'RegistrationPart1', 'RegistrationConfirm', 'IllnessDetails', 'RegistrationBMI', 'SearchPart1', 'SearchPart2', 'SearchConfirm'],
-    stores: ['Patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore', 'Doctors', 'autoCompleteAddress'],
-    models: ['Patient', 'addresses', 'names', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor', 'AttributeType'],
+    stores: ['patient', 'obsStore', 'encounterStore', 'orderStore', 'providerStore', 'Doctors', 'autoCompleteAddress'],
+    models: ['patient', 'addresses', 'names', 'attributes', 'obsModel', 'encounterModel', 'orderModel', 'providerModel', 'Doctor', 'AttributeType'],
 
     init: function() {
         // connect the actions to eventHandlers
@@ -199,22 +199,22 @@ Ext.define('Registration.controller.Main', {
             addresses: [personAddresses],
             attributes: [personAttributes]
         };
-        var jsonperson = Ext.create('Registration.model.Patient', person);
+        var jsonperson = Ext.create('Registration.model.patient', person);
 
         // This if else statement change the persist property of age field in Person model so that if its
         // empty it should not be sent to server in the body of post call
         // TODO: What happens if Age and DOB are inconsistent?
         if(Ext.getCmp('patientAge').isValid()) {
             jsonperson.data.age = Ext.getCmp('patientAge').value;
-            Registration.model.Patient.getFields()[2].persist = true;
+            Registration.model.patient.getFields()[2].persist = true;
         } else {
-            Registration.model.Patient.getFields()[2].persist = false;
+            Registration.model.patient.getFields()[2].persist = false;
         }
         if(Ext.getCmp('dob').isValid()) {
             jsonperson.data.birthdate = Ext.getCmp('dob').value;
-            Registration.model.Patient.getFields()[3].persist = true;
+            Registration.model.patient.getFields()[3].persist = true;
         } else {
-            Registration.model.Patient.getFields()[3].persist = false;
+            Registration.model.patient.getFields()[3].persist = false;
         }
 
         // Adds an attribute, if it's present in the UI and valid.
@@ -250,7 +250,7 @@ Ext.define('Registration.controller.Main', {
             addAttribute(attributes[i].componentId, attributes[i].uuid );
         }
 
-        var store = Ext.create('Registration.store.Patient');
+        var store = Ext.create('Registration.store.patient');
         store.add(jsonperson);
         // this statement makes the post call to make the person
         store.sync({
