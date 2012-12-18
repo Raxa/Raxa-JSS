@@ -13,18 +13,38 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
+//this is for debugging only - when production rolls around, we need to put all dependencies in a single .js file
+//<debug>
+Ext.Loader.setConfig({
+    enabled: true,
+    paths: {
+        'Ext.i18n': '../lib/i18n' //Path to the i18n library
+    }
+});
+
+Ext.require('Ext.i18n.Bundle', function() {
+    Ext.i18n.appBundle = Ext.create('Ext.i18n.Bundle',{
+        bundle: 'RaxaEmrAdmin',
+        //Specify language here
+        lang: 'en-US',
+        path: 'app/view', //Path to the .properties file
+        noCache: true
+    });
+});
+
 Ext.application({
     name: 'RaxaEmr.Admin',
 
-    stores: ['Providers', 'Locations'],
-    models: ['Provider', 'Names', 'Person', 'ProviderAttribute', 'Location'],
-    views: ['Main', 'ProviderView', 'LocationView'],
+    stores: ['Providers', 'Locations', 'NewPersons', 'ParChildLocation'],
+    models: ['Provider', 'Names', 'Person', 'ProviderAttribute', 'Location', 'ListItem'],
+    views: ['Main', 'ProviderView', 'LocationView', 'NewProvider', 'AddLocation'],
     controllers: ['Application'],
-	//entry point
-	launch: function() {
-		if (Util.checkModulePrivilege('admin')&& Util.uuidLoadedSuccessfully()) {
+        //entry point
+        launch: function() {
+                if (Util.checkModulePrivilege('admin')&& Util.uuidLoadedSuccessfully()) {
             var mainScreen = Ext.create('RaxaEmr.Admin.view.Main', {
-                fullscreen: true,
+                fullscreen: true
             });
             var topBar = Ext.create('Topbar.view.TopToolbar', {
                 });

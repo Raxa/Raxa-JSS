@@ -5,13 +5,13 @@ Ext.define('RaxaEmr.Admin.store.Providers', {
         model: 'RaxaEmr.Admin.model.Provider',
         proxy: {
             type: 'ajax',
-            url: HOST +'/ws/rest/v1/provider?v=full',
+            url: HOST +'/ws/rest/v1/provider?v=full&limit=100',
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json',
                 rootProperty: 'results'
             }
         },
-        autoLoad: true,
+        autoLoad: true
     }
 }); 

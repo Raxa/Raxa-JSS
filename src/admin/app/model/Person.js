@@ -3,10 +3,10 @@
  * for id, gender and uuid
  * and extends to a model Names 
  */
-Ext.define('RaxaEmr.Admin.model.Person',{
+Ext.define('RaxaEmr.Admin.model.Person', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [ {
+        fields: [{
             name: 'id',
             persist: false
         }, {
@@ -22,6 +22,11 @@ Ext.define('RaxaEmr.Admin.model.Person',{
         },{
             name: 'dateOfBirth',
             type: 'string'
-        }]
+        },
+        {
+            name: 'names',
+            model: 'RaxaEmr.Admin.model.Names'
+        }
+    ]
     }
 });

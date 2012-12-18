@@ -5,8 +5,8 @@
  * a doctor.
  */
 Ext.define("RaxaEmr.Admin.view.ProviderView", {
-	xtype: 'providerView',
-	extend: 'Ext.List',
+    xtype: 'providerView',
+    extend: 'Ext.List',
     id: 'providerView',
     config: {
         store: 'Providers',
@@ -26,7 +26,7 @@ Ext.define("RaxaEmr.Admin.view.ProviderView", {
             items: [{
                 xtype: 'button',
                 text: "New Provider",
-                itemId: 'newProvider',
+                id: 'newProvider',
                 action: 'newProvider',
                 align: 'left'
             }

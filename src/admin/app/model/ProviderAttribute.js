@@ -1,6 +1,6 @@
-Ext.define('RaxaEmr.Admin.model.ProviderAttribute', {
+Ext.define('RaxaEmr.Admin.model.ProviderAttribute',{
     extend: 'Ext.data.Model',
-    config: {
+    config:{
         fields: [{
             name: 'id',
             type: 'int',
@@ -12,6 +12,5 @@ Ext.define('RaxaEmr.Admin.model.ProviderAttribute', {
             name: 'display',
             type: 'string'
         }]
-    
     }
 });

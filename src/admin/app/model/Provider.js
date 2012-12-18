@@ -1,4 +1,4 @@
-Ext.define('RaxaEmr.Admin.model.Provider', {
+Ext.define('RaxaEmr.Admin.model.Provider',{
     extend: 'Ext.data.Model',
     config: {
         fields: [{
@@ -12,9 +12,9 @@ Ext.define('RaxaEmr.Admin.model.Provider', {
             name: 'display',
             type: 'string'
         },{
-			name: 'identifier',
+            name: 'identifier',
             type: 'number'
-		},{
+        },{
             name: 'person',
             model: 'RaxaEmr.Admin.model.Person'
         },{
