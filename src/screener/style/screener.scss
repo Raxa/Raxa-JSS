@@ -231,12 +231,23 @@ $black: #000;
 			}			
 			#patient_table_image {
 				padding:10px;
+				width:20%;
+				
+				img {
+					position:absolute;
+					top:35%;
+				}			
+				#patient-name {
+					padding-left:70px;
+				}
 			}
 		}
 		
-		.pantient_table_details {
+		.patient_table_details {
 			padding-left:20px;
-			line-height:1em;
+			td {
+				padding-left:80px;
+			}
 		}	
 }
 
@@ -247,8 +258,7 @@ $black: #000;
 			width:90%;
 			box-shadow:none;
 			border-radius:15px;
-			color:#000;
-			background:white; 
+			color:#2E2E2E;
 		}
 	}
 }
@@ -281,7 +291,7 @@ $black: #000;
 }
 
 #savePatientButton {
-	margin:10px auto auto -20px;
+	margin-top:10px;
 }
 
 input[name="dob"] {

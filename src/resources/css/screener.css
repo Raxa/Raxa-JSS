@@ -9731,69 +9731,81 @@ input[type="search"]::-webkit-search-cancel-button {
 /* line 232, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image {
   padding: 10px;
+  width: 20%;
 }
-/* line 237, ../../screener/style/screener.scss */
-.patient_table .pantient_table_details {
+/* line 236, ../../screener/style/screener.scss */
+.patient_table tr #patient_table_image img {
+  position: absolute;
+  top: 35%;
+}
+/* line 240, ../../screener/style/screener.scss */
+.patient_table tr #patient_table_image #patient-name {
+  padding-left: 70px;
+}
+/* line 246, ../../screener/style/screener.scss */
+.patient_table .patient_table_details {
   padding-left: 20px;
-  line-height: 1em;
+}
+/* line 248, ../../screener/style/screener.scss */
+.patient_table .patient_table_details td {
+  padding-left: 80px;
 }
 
-/* line 245, ../../screener/style/screener.scss */
+/* line 256, ../../screener/style/screener.scss */
 .x-item-selected .x-list-item-label .patient_table {
   margin-left: 25px;
   width: 90%;
   box-shadow: none;
   border-radius: 15px;
-  color: #000;
-  background: white;
+  color: #2E2E2E;
 }
 
-/* line 256, ../../screener/style/screener.scss */
+/* line 266, ../../screener/style/screener.scss */
 #givenName {
   margin: 5px;
 }
 
-/* line 260, ../../screener/style/screener.scss */
+/* line 270, ../../screener/style/screener.scss */
 #familyName {
   margin: 5px;
 }
 
-/* line 264, ../../screener/style/screener.scss */
+/* line 274, ../../screener/style/screener.scss */
 #ageDateOfBirth {
   margin: 5px;
 }
 
-/* line 268, ../../screener/style/screener.scss */
+/* line 278, ../../screener/style/screener.scss */
 #sexRadioGroup {
   margin: 5px;
 }
 
-/* line 273, ../../screener/style/screener.scss */
+/* line 283, ../../screener/style/screener.scss */
 #addDrugFormButton {
   margin-left: 10px;
 }
 
-/* line 276, ../../screener/style/screener.scss */
+/* line 286, ../../screener/style/screener.scss */
 #removeDrugFormButton {
   margin-left: 10px;
 }
 
-/* line 279, ../../screener/style/screener.scss */
+/* line 289, ../../screener/style/screener.scss */
 #drugSubmitButton {
   margin-left: 10px;
 }
 
-/* line 283, ../../screener/style/screener.scss */
+/* line 293, ../../screener/style/screener.scss */
 #savePatientButton {
-  margin: 10px auto auto -20px;
+  margin-top: 10px;
 }
 
-/* line 287, ../../screener/style/screener.scss */
+/* line 297, ../../screener/style/screener.scss */
 input[name="dob"] {
   width: 173px !important;
 }
 
-/* line 290, ../../screener/style/screener.scss */
+/* line 300, ../../screener/style/screener.scss */
 input[name="patientAge"] {
   width: 163px !important;
   margin-left: 2px;

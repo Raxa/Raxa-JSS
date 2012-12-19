@@ -22,10 +22,10 @@ Ext.define("Screener.view.PatientListView", {
             itemTpl: [
                 '<table class="patient_table">',
                 '<tr><td id="patient_table_image">',
-                '<img src="{image}" width=48 height=48 />',				
-                '</td>',
-                '<td class="patient_table_details">',
+                '<img src="{image}" width=48 height=48 />',
+				'<span id="patient-name">',
                 '{display}',
+				'</span>',
                 '</td></tr>',
 				'<tr class="patient_table_details"><td>',
 				'Gender: {gender}, Age: {age}',
