@@ -44,7 +44,7 @@ Ext.define("Screener.view.VitalsForm", {
                             height: '50px',
                             flex : 3,
                             minValue: 0,
-                            name: 'sistolicBloodPressureField',
+                            name: 'systolicBloodPressureField',
                             maxValue: 250
                         },
                         {
