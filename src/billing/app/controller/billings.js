@@ -214,7 +214,7 @@ Ext.define("RaxaEmr.billing.controller.billings", {
 
         c = Ext.getCmp('pid').getValue(); // extracting the id of the patient
 
-        url = 'http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/billing' + '?q=' + c; // get call tgo retrive all the previous bills of the patient.
+        url = HOST + '/ws/rest/v1/raxacore/billing' + '?q=' + c; // get call tgo retrive all the previous bills of the patient.
         console.log(url);
         // store = Ext.create('RaxaEmr.billing.store.billingstore');
         //storing results in the store. 
@@ -482,7 +482,7 @@ Ext.define("RaxaEmr.billing.controller.billings", {
         var url2;
         // get call to retrieve the details of that particular bill using the billId 
         // bill id extracted using the index of the row on which icon was clicked.
-        url2 = 'http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/billing' + '?v=' + c;
+        url2 = HOST + '/ws/rest/v1/raxacore/billing' + '?v=' + c;
         console.log("the url is " + url2);
 
         var itemStore1 = this.getStore('RaxaEmr.billing.store.itemStore');
@@ -1044,7 +1044,7 @@ Ext.define("RaxaEmr.billing.controller.billings", {
         var url1;
         // get call to retrieve the details of that particular bill using the billId 
         // bill id extracted using the index of the row on which icon was clicked.
-        url1 = 'http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/billingitem' + '?q=' + billId;
+        url1 = HOST + '/ws/rest/v1/raxacore/billingitem' + '?q=' + billId;
         console.log(url1);
 
         // storing the bills in the previousshow Store.

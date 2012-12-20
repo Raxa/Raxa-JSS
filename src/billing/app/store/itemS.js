@@ -6,7 +6,7 @@ Ext.define('RaxaEmr.billing.store.itemS', {
     autoSync: false,
     proxy: {
         type: 'rest',
-        url: 'http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/billing?v=2',
+        url: HOST + '/ws/rest/v1/raxacore/billing?v=2',
         headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',
