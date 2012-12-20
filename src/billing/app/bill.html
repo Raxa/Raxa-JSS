@@ -1,0 +1,274 @@
+<!--
+  Copyright 2012, Raxa
+ 
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+ 
+ This page acts as print preview for patient registration card
+
+-->
+<html>
+    <head>
+        <title>Patient Registration Card</title>
+        
+        <script type="text/javascript">
+onload=function(){
+var nrCols=7;
+var maxRows=4;
+var nrRows=JSON.parse(localStorage.getItem('rows'));
+  var item = JSON.parse(localStorage.getItem('printItems'));
+  var amount = JSON.parse(localStorage.getItem('amount'));
+var cur = JSON.parse(localStorage.getItem('cur'));
+var prev = JSON.parse(localStorage.getItem('prev'));
+var paid = JSON.parse(localStorage.getItem('paid'));
+var balance = JSON.parse(localStorage.getItem('balance'));
+
+var tab=document.getElementById('table1');
+//tab.className="mytable";
+var tbo=document.createElement('tbody');
+var row, cell;
+var hell="hello";
+for(var i=0;i<nrRows;i++){
+	row=document.createElement('tr');
+	for(var j=0;j<7;j++){
+		cell=document.createElement('td');
+		cell.appendChild(document.createTextNode(item[i][j]));
+		row.appendChild(cell);
+	}
+	tbo.appendChild(row);
+}
+tab.appendChild(tbo);
+//root.appendChild(tab);
+document.getElementById('amount').value = amount;
+document.getElementById('cur').value = cur;
+document.getElementById('prev').value = prev;
+document.getElementById('paid').value = paid;
+document.getElementById('balance').value = balance;
+
+}
+</script>
+    </head>
+    
+    <body>
+        <form>
+            <input type="button" value="Continue to Print" id="printButton" onClick="hideAndPrint();"
+            align="right">
+        </form>
+       <center>
+<table border="1" cellpadding="1" cellspacing="1" style="width: 800px; ">
+            <tbody>
+                <tr >
+                    <td colspan ="2" >
+                        
+                        <p style="text-align: center; ">
+                            <strong>Patient Details</strong>
+                        </p>
+                        <table align="center" style="padding:20px 20px 20px 20px; ">
+                            <tbody>
+                              
+                                <tr>
+                                    <td width="150px">Name</td>
+                                    <td>
+                                        <input type="text" id="Name" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Patient Id:</td>
+                                    <td>
+                                        <input type="text" id="PatientId" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date of bill</td>
+                                    <td>
+                                        <input type="text" id="date" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Provider id</td>
+                                    <td>
+                                        <input type="text" id="providerId" readonly="true" style="border-width: 0px 0px 0px 0px;">
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                       
+                        
+                    </td>
+                    </tr>
+                                
+                            </tbody>
+                    <tr>
+                   
+                    <td colspan="2">
+
+                        <table align="center" style="padding:20px 20px 20px 20px; ">
+                            <tbody>
+                                <tr><h3 style="text-align:center;"> Patient bill </h3> </tr>
+                                <tr>
+                                <td colspan="2">
+                                <table id="table1" border="1" align="center" cellpadding="1" cellspacing="1" width="800">
+                                
+                                <tr>
+                                <td>
+                                	SNo
+                                </td>
+                                <td>
+                                	Item Name
+                                </td>
+                                 <td>
+                                	Category
+                                </td>
+                                <td>
+                                	Quantity
+                                </td>
+                                 <td>
+                                	per unit price 
+                                </td>
+                                 <td>
+                                	Discount(in%)
+                                </td>
+                                 <td>
+                                	total price
+                                </td>
+                                </tr>
+                                
+                                
+                               
+                        		</table>
+                 					</td>
+                     
+                     			 </tr>
+                     			 
+                     
+                            </tbody>
+                        </table>
+                        
+                        
+                    </td>
+                </tr>
+                 
+                <tr>
+                
+                <td colspan="2">
+                    <table border= "0" align="right">
+                     <tr>
+                     
+                	 <td>Current Amount:</td>
+                	
+                	 <td>
+                      <input type="text" id="cur" readonly="true"  style="border-width: 0px 0px 0px 0px;">
+                                    
+                	</td>
+                </tr>
+                </table>
+                </td>
+                </tr
+                
+                   <tr>
+                
+                <td colspan="2">
+                    <table border= "0" align="right">
+                     <tr>
+                     
+                	 <td>Previous Amount:</td>
+                	
+                	 <td>
+                      <input type="text" id="prev" readonly="true"  style="border-width: 0px 0px 0px 0px;">
+                                    
+                	</td>
+                </tr>
+                </table>
+                </td>
+                </tr>
+                
+                
+                
+                   <tr>
+                
+                <td colspan="2">
+                    <table border= "0" align="right">
+                     <tr>
+                     
+                	 <td>Total Amount Payable:</td>
+                	
+                	 <td>
+                      <input type="text" id="amount" readonly="true"  style="border-width: 0px 0px 0px 0px;">
+                                    
+                	</td>
+                </tr>
+                </table>
+                </td>
+                </tr>
+                
+                   <tr>
+                
+                <td colspan="2">
+                    <table border= "0" align="right">
+                     <tr>
+                     
+                	 <td>Amount Paid:</td>
+                	
+                	 <td>
+                      <input type="text" id="paid" readonly="true"  style="border-width: 0px 0px 0px 0px;">
+                                    
+                	</td>
+                </tr>
+                </table>
+                </td>
+                </tr>
+                
+                   <tr>
+                
+                <td colspan="2">
+                    <table border= "0" align="right">
+                     <tr>
+                     
+                	 <td>Balance carried forward:</td>
+                	
+                	 <td>
+                      <input type="text" id="balance" readonly="true"  style="border-width: 0px 0px 0px 0px;">
+                                    
+                	</td>
+                </tr>
+                </table>
+                </td>
+                </tr>
+                
+                
+            </tbody>
+        </table>
+</center>
+        <script>
+ 			//Retrieve information about last selected Patient from localStorage       
+            var selectedPatient = JSON.parse(localStorage.getItem('selectedPatient'));
+            var selectedPatientAttributes = ['Name','Id','Age','Gender','Weight','Village','Tehsil'];
+			for(var i=0; i<selectedPatientAttributes.length; i++)
+			{
+				if(selectedPatient[selectedPatientAttributes[i]])
+				{
+					document.getElementById(selectedPatientAttributes[i]).value = selectedPatient[selectedPatientAttributes[i]];			
+				}
+			}
+           var currentDate = new Date();
+            document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
+			
+            //Print Button is hidden and then window is printed.
+            function hideAndPrint() {
+                document.getElementById("printButton").style.visibility = 'hidden';
+                window.print();
+            }
+        </script>
+    </body>
+
+</html>
