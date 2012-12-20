@@ -297,71 +297,12 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // TODO: Until OPD and other areas can create prescriptions, this has been modified so that
     //      any patient who has been **registered** shows up in the pharmacy queue
     getPatientList: function (enddate, backwardtime, forwardtime, patientGridId) {
-        var d = new Date();
-        var list_preEncounter = Ext.create('RaxaEmr.Pharmacy.model.PostList', {
-            name: "Registration Encounter",
-            // defining the seach query according to the current date and period of time for prescription encounter
-            searchQuery: "?encounterType=" + localStorage.prescriptionUuidencountertype + "&startDate=" + Util.Datetime(enddate, backwardtime) + "&endDate=" + Util.Datetime(enddate,forwardtime)
-        });
-        var list_prefillEncounter = Ext.create('RaxaEmr.Pharmacy.model.PostList', {
-            name: "Prescriptionfill Encounter",
-            // defining the seach query according to the current date and period of time for prescriptionfill encounter
-            searchQuery: "?encounterType=" + localStorage.prescriptionfillUuidencountertype + "&startDate=" + Util.Datetime(enddate, backwardtime) + "&endDate=" + Util.Datetime(enddate,forwardtime)
 
-        });
-        //this.createRegList(list_regEncounter, list_scrEncounter);
-        var k = 0;
-        this.createList(list_preEncounter, list_prefillEncounter, k, patientGridId);
-
-    },
-
-    // Creates two different List of Patients with prescription encounter and not prescriptionfill
-    createList: function (list_pre, list_prefill, k, patientGridId) {
-        // TODO: This should be broken up into 2 calls to the same function (notice how every block is repeated 2x)
-        // creating store for posting the list of patient
-        var store_pre = Ext.create('RaxaEmr.Pharmacy.store.PostLists');
-        var store_prefill = Ext.create('RaxaEmr.Pharmacy.store.PostLists');
-        store_pre.add(list_pre);
-        store_prefill.add(list_prefill);
-        // make the post call for both the list
-        store_pre.sync({
-            scope: this,
-            success: function(){
-                k = k + 1;
-                if (k == 2) {
-                    // call the funtion "finalPatientList" when the 2 list are posted successfully
-                    this.finalPatientList(store_pre, store_prefill, patientGridId);
-                }
-            },
-            failure: function(){
-                Ext.Msg.alert("Error", Util.getMessageSyncError());
-            }
-        });
-        store_prefill.sync({
-            scope: this,
-            success: function(){
-                k = k + 1;
-                if (k == 2) {
-                    // call the funtion "finalPatientList" when the 2 list are posted successfully
-                    this.finalPatientList(store_pre, store_prefill, patientGridId);
-                }
-            },
-            failure: function(){
-                Ext.Msg.alert("Error", Util.getMessageSyncError());
-            }
-        });
-    },
-
-    // Creates List of Patients with prescription encounter and not prescriptionfill
-    finalPatientList: function (store_preEncounter, store_prefillEncounter, patientGridId) {
-        // Setting the url dynamically for store to store patients list
-        var preEncounterUuid = store_preEncounter.getAt(0).getData().uuid;
-        var prefillEncounterUuid = store_prefillEncounter.getAt(0).getData().uuid;
 
         Ext.getCmp(patientGridId).getStore().setProxy({
             type: 'rest',
             //getting all patients who have prescriptions that have not been filled
-            url: this._getPatientListUrl(preEncounterUuid, prefillEncounterUuid, localStorage.prescriptionUuidencountertype),
+            url: HOST + "/ws/rest/v1/raxacore/patientlist/optimized" + "?encounterType=" + localStorage.outUuidencountertype + "&startDate=" + Util.Datetime(enddate, backwardtime) + "&endDate=" + Util.Datetime(enddate,forwardtime) + "&containsOrderType=orderType" + "&excludeEncounterType=" + localStorage.prescriptionfillUuidencountertype,
             headers: Util.getBasicAuthHeaders(),
             reader: {
                 type: 'json',
@@ -370,13 +311,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         });
         // makes the GET call to get the list with patients with prescription encounter and not prescription fill
         Ext.getCmp(patientGridId).getStore().load();
-        
-    // Ext.getCmp('patientsButton').setUI('raxa-orange-large');
-    },
 
-    // returns dynamically changed URL for getting patientList
-    _getPatientListUrl: function (inList, notInList, encountertype) {
-        return (HOST + '/ws/rest/v1/raxacore/patientlist' + '?inList=' + inList + '&notInList=' + notInList + '&encounterType=' + encountertype);
     },
 
     // Removes drug from OrderStore
@@ -615,7 +550,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 RaxaEmr.Pharmacy.model.Patient.getFields()[5].persist = true;
             },
             success: function(){
-                this.sendPharmacyEncounter(personUuid, localStorage.prescriptionUuidencountertype);
+                this.sendPharmacyEncounter(personUuid, localStorage.prescriptionfillUuidencountertype);
             },
             failure: function(){
                 Ext.Msg.alert("Error", Util.getMessageSyncError());
@@ -832,7 +767,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         else {
             Ext.getCmp('prescriptionPatientAge').setValue(null);
         }
-        Ext.getCmp('prescriptionPatientGender').setValue(x.person.gender);
+        Ext.getCmp('prescriptionPatientGender').setValue(x.gender);
         localStorage.setItem('person', x.uuid);
         this.getDrugOrders(x.uuid, searchPanel, drugOrderGrid);
     },
@@ -885,6 +820,9 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                         // show prescriptions grid(drugOrderASearchGrid) when drug orders are loaded
                         Ext.getCmp(searchPanel).getLayout().setActiveItem(1);
                     }
+                    else{
+                        Ext.Msg.alert("Results", "No prescriptions found for patient")
+                    }
                 }
                 else{
                     Ext.Msg.alert("Error", Util.getMessageLoadError());
@@ -931,6 +869,10 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getCmp(searchGrid).getStore().load({
                 scope: this,
                 callback: function(records, operation, success){
+                    if( records === null || records.length <= 0 ) {
+                        Ext.Msg.alert("Results" , "No Patient Found With The Given Name");
+                        Ext.getCmp(nameField).setValue("");
+                    }
                     if(success){
                         Ext.getCmp("searchLoadMask").hide();
                     }
