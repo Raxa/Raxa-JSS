@@ -210,13 +210,14 @@ $black: #000;
 //Screener Tab changes 
 
 .screener_tabs {
-	height:150px;
-	-webkit-transform:rotate(90deg);
-	-moz-transform:rotate(90deg);
-	-o-transform: rotate(90deg);
-	width:5%;
-	font-size:65%;
-	padding-top:30%;
+	height:100px;
+	-webkit-transform:rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	font-size: 8px;
+	padding-top: 41px;
+	position: relative;
+	width: 90%;
 }
 
 //Pharmacy CSS edited. 
@@ -236,10 +237,13 @@ $black: #000;
 				
 				img {
 					position:absolute;
-					top:35%;
+					top:15%;
+					width:5%;
+					height:auto;
 				}			
 				#patient-name {
 					padding-left:70px;
+					font-weight:500;
 				}
 			}
 		}
@@ -252,6 +256,50 @@ $black: #000;
 		}	
 }
 
+#ext-patientListView-1 {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#ext-patientListView-2 {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#ext-patientListView-3 {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#vitalsPatientList {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#ext-pharmacyForm-1 {
+	padding:1%;
+	background:#4d91ba;
+}
+
+#ext-labOrderForm-1 {
+	padding:1%;
+	background:#4d91ba;
+}
+
+#vitalsForm {
+	padding:1%;
+	background:#4d91ba;
+}
+
+#doctorList {
+	padding:1%;
+	background:#4d91ba;
+	.x-docking-vertical {
+		.x-scroll-view {
+			background:#efefef;
+		}
+	}
+}
 .x-item-selected {
 	.x-list-item-label {		
 		.patient_table {
@@ -264,6 +312,28 @@ $black: #000;
 	}
 }
 
+#maintabs {
+	.x-docking-horizontal{
+		#ext-tabbar-1 {
+			background:#4d91ba;
+		.x-tabbar-inner {
+			.x-tab-active {
+				border:none;
+				color:#555;
+				background:#efefef !important;
+			}
+			.x-tab {
+				border-radius: 20px 0 0 20px;
+				background:#999;
+				color:#555;
+				margin-top: 15px;
+				margin-right: -14px;
+			}
+		}
+		
+		}
+	}
+}
 #givenName {
 	margin:5px;
 }
