@@ -6,25 +6,28 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     margin: '0 0 0 0',
     store: 'StockList',
     features: [Ext.create('Ext.grid.feature.Grouping',{
-            startCollapsed: true,
-            groupHeaderTpl: 
-                [
-                '{name} ',
-                '{[this.formatName(values)]}',
-                {
-                    formatName: function(values) {
-                        var total = 0;
-                        var firstSupplier;
-                        var fewestMonths;
+        startCollapsed: true,
+        
+        groupHeaderTpl: 
+        [
+        '{name}',
+        '{[this.formatName(values)]}',
+        {
+            formatName: function(values) {
+                console.log(" <<<<<values>>>>>>");
+                console.log(values);
+                var total = 0;
+                var firstSupplier;
+                var fewestMonths;
                         
-                        for(var i=0; i<values.children.length; i++){
-                            total+=values.children[i].data.quantity;
-                        }
-                        return "total: "+total;
-                    }
+                for(var i=0; i<values.children.length; i++){
+                    total+=values.children[i].data.quantity;
                 }
-            ]
-        })
+                return "total: "+total;
+            }
+        }
+        ]
+    })
     ],
     selModel : Ext.create('Ext.selection.RowModel', {
         listeners : {
@@ -125,28 +128,14 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             }
         }]
     }],
-    
-    updateFields: function() {
-        var infoStore = Ext.getStore('drugInfos');
-        var myStore = this.getStore();
-        for(var i=0; i<myStore.data.items.length; i++){
-            var item = myStore.data.items[i];
-            var index = infoStore.find('drugUuid', item.data.drugUuid);
-            if(index!==-1 && (item.data.supplier===null || item.data.supplier==="")){
-                item.set("supplier", infoStore.getAt(index).data.description);
+       
+    viewConfig: {
+        getRowClass: function(record, rowIndex, rowParams, store) {
+            if(Util.daysFromNow((record.data.expiryDate)) <=  61 && Util.daysFromNow((record.data.expiryDate)) >  0) {
+                return 'pharmacyTwoMonths-color-grid .x-grid-cell ';
             }
-            if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
-                item.set("batchQuantity", item.data.batch+" ("+item.data.quantity+")");
-            }
-            else{
-                item.set("batchQuantity", null);
-            }
-            
-            if(item.data.expiryDate!==""){
-                item.set("months", Util.monthsFromNow(item.data.expiryDate));
-            }
-            if(Util.monthsFromNow((record.data.expiryDate)) <=  0 ) {
-            return 'pharmacyExpire-color-grid .x-grid-cell ';
+            if(Util.daysFromNow((record.data.expiryDate)) <=  0 ) {
+                return 'pharmacyExpire-color-grid .x-grid-cell ';
             }
         }
     }

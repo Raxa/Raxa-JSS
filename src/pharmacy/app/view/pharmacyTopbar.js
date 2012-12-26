@@ -46,7 +46,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                 //  patient and inventory views
                 Ext.getCmp('mainarea').getLayout().setActiveItem(0);
                 Ext.getCmp('addpatientarea').getLayout().setActiveItem(0);
-                Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(0);
+                Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(1);
 
                 // Highlight "Patients" tab
                 Ext.getCmp('inventoryButton').toggle(false);
