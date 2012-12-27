@@ -167,7 +167,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     this._getStartupUuids();
                     // listner on prescription grid to show drugorder on main grid with more details
                     Ext.getCmp('drugOrderASearchGrid').on('cellClick', function () {
-                        this.DrugOrderSelect(Ext.getCmp('drugOrderASearchGrid').getSelectionModel().getSelection()[0]);
+                        //this.DrugOrderSelect(Ext.getCmp('drugOrderASearchGrid').getSelectionModel().getSelection()[0]);
                     }, this);
                     //set the proxy for 1 week patient list and make the get call
                     this.getSevenDaysPatients();
@@ -252,11 +252,11 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             },
             
             'prescription #currentButton':{
-              click: this.currentDatePrescription  
+                click: this.currentDatePrescription  
             },
             
             'prescription #historyButton':{
-               click: this.historyPatientPrescription  
+                click: this.historyPatientPrescription  
             },
 
             // Receive Drugs (Update Stock)
@@ -696,21 +696,88 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     //fuction to be called when a drug order is selected in prescription grid of advanced search
     //sets the prescription date and store for main prescription grid
     DrugOrderSelect: function(x) {
+        console.log("inside DrugOrderSelect");
+        //        var docInstruction;
+        //        var replacedStrng;
+        //        var takeInMorning = false;
+        //        var takeInDay = false;
+        //        var takeInEvening = false;
+        //        var takeInNight = false;
+        var l = Ext.getCmp('mainarea').getLayout();
+        //l.setActiveItem(0);
+        var l1 = Ext.getCmp('addpatientarea').getLayout();
+        //l1.setActiveItem(0);
+        var l2 = Ext.getCmp('addpatientgridarea').getLayout();
+        //l2.setActiveItem(1);
+        Ext.getCmp('prescribedDrugs').setPosition(190,180);
+        //Ext.getCmp('prescribedDrugs').getStore().removeAll();
+        this.setOrderStore(x);
+        //Ext.getCmp('prescribedDrugs').getStore().add(x);
+        //        if(x.data.instructions.indexOf(Util.Taken_Morning) !== -1) {
+        //            if( replacedStrng !== undefined ) {
+        //                takeInMorning = true;
+        //                replacedStrng = (x.data.instructions.replace(Util.Taken_Morning , ""))
+        //            } else 
+        //{
+        //                takeInMorning = true;
+        //                replacedStrng = (x.data.instructions.replace(Util.Taken_Morning , ""))
+        //            }
+        //        }
+        //        if(x.data.instructions.indexOf(Util.Taken_Day) !== -1) {
+        //            if( replacedStrng !== undefined) {
+        //                takeInDay = true;
+        //                replacedStrng = replacedStrng.replace(Util.Taken_Day , '')
+        //            } else {
+        //                takeInDay = true;
+        //                replacedStrng =  (x.data.instructions.replace(Util.Taken_Day , ''))
+        //            }
+        //        }
+        //        if(x.data.instructions.indexOf(Util.Taken_Even) !== -1) {
+        //            if( replacedStrng !== undefined) {
+        //                takeInEvening = true;
+        //                replacedStrng = replacedStrng.replace(Util.Taken_Even , '')
+        //            } else {
+        //                takeInEvening = true;
+        //                replacedStrng = (x.data.instructions.replace(Util.Taken_Even , ''))
+        //            }
+        //        }
+        //        if(x.data.instructions.indexOf(Util.Taken_Night) !== -1) {
+        //            if( replacedStrng !== undefined) {
+        //                takeInNight = true;
+        //                replacedStrng = replacedStrng.replace(Util.Taken_Night , '')
+        //            } else {
+        //                takeInNight = true;
+        //                replacedStrng = (x.data.instructions.replace(Util.Taken_Night,''))
+        //            }
+        //        }
+        //        if( replacedStrng != '' && replacedStrng != undefined) {
+        //            docInstruction = replacedStrng;
+        //        } else {
+        //            docInstruction = x.data.instructions;
+        //        }
+        //        Ext.getStore('orderStore').add({
+        //            drugName: x.data.drugname,
+        //            qty: x.data.quantity,
+        //            dosage: x.data.dosage,
+        //            drugUuid: x.data.drugUuid,
+        //            duration: Util.daysBetween(x.data.startDate, x.data.endDate),
+        //            instructions: docInstruction,
+        //            takeInMorning: takeInMorning,
+        //            takeInDay: takeInDay,
+        //            takeInEvening: takeInEvening,
+        //            takeInNight: takeInNight
+        //        })[0];
+        Ext.getCmp('prescriptionDate').setValue(x.getData().startDate.toLocaleDateString());
+    },
+
+    setOrderStore : function(x) {
+        console.log("inside setOrderStore");
         var docInstruction;
         var replacedStrng;
         var takeInMorning = false;
         var takeInDay = false;
         var takeInEvening = false;
         var takeInNight = false;
-        var l = Ext.getCmp('mainarea').getLayout();
-        l.setActiveItem(0);
-        var l1 = Ext.getCmp('addpatientarea').getLayout();
-        l1.setActiveItem(0);
-        var l2 = Ext.getCmp('addpatientgridarea').getLayout();
-        l2.setActiveItem(1);
-        Ext.getCmp('prescribedDrugs').setPosition(190,180);
-        Ext.getCmp('prescribedDrugs').getStore().removeAll();
-        //Ext.getCmp('prescribedDrugs').getStore().add(x);
         if(x.data.instructions.indexOf(Util.Taken_Morning) !== -1) {
             if( replacedStrng !== undefined ) {
                 takeInMorning = true;
@@ -764,10 +831,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             takeInDay: takeInDay,
             takeInEvening: takeInEvening,
             takeInNight: takeInNight
-        })[0];
-        Ext.getCmp('prescriptionDate').setValue(x.getData().startDate.toLocaleDateString());
+        });
     },
-
     // Function to be call when a patient is selected in the patient search results gird of advanced search
     // Sets the fields realted to patient in main screen and then calls for function getDrugOrders()
     patientSelect: function (x, searchPanel, drugOrderGrid, addPatientArea) {
@@ -802,7 +867,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     //function for the get call for drugorder for related patient
     getDrugOrders: function (x, searchPanel, drugOrderGrid) {
         Ext.getCmp(searchPanel).getLayout().setActiveItem(0);
-      //Ext.getCmp(addpatientgridarea).getLayout().setActiveItem(0);
+        //Ext.getCmp(addpatientgridarea).getLayout().setActiveItem(0);
         if(!Ext.getCmp("searchLoadMask")){
             var myMask = new Ext.LoadMask(Ext.getCmp(searchPanel), {
                 msg:"Searching",
@@ -831,8 +896,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 if(success){
                     this.makeNewPrescriptionForSearchPatient();
                     if(Ext.getCmp(drugOrderGrid).getStore().count()>0){
-                        // show prescriptions grid(drugOrderASearchGrid) when drug orders are loaded
-                        //Ext.getCmp(searchPanel).getLayout().setActiveItem(1);
+                    // show prescriptions grid(drugOrderASearchGrid) when drug orders are loaded
+                    //Ext.getCmp(searchPanel).getLayout().setActiveItem(1);
                     }
                     else{
                         Ext.Msg.alert("Results", "No prescriptions found for patient")
@@ -1494,8 +1559,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
             Ext.getStore('StockList').filter('locationUuid', Ext.getCmp('allStockLocationPicker').getValue());
         }
         Ext.getStore('StockList').filter('status', 'available');
-//        var regExp = /\d+/;
-//        Ext.getStore('StockList').filter('months', regExp);
+        //        var regExp = /\d+/;
+        //        Ext.getStore('StockList').filter('months', regExp);
         Ext.getCmp('allStockGrid').features[0].collapseAll();
     },
     

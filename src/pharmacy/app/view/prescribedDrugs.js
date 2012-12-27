@@ -1,7 +1,7 @@
 Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.prescribedDrugs',
-    id: 'prescribedDrugs',
+    //id: 'prescribedDrugs',
     height: 300,
     styleHtmlContent: false,
     width: 750,

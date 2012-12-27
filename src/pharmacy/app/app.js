@@ -13,6 +13,7 @@ Ext.application({
     models: ['Address', 'Doctor', 'Identifier', 'Name', 'Patient', 'Person', 'drugOrderPatient', 'drugOrderSearch', 'drugOrder', 'drugEncounter', 'PostLists', 'DrugInventory', 'Location', 'LocationTag', 'PurchaseOrder', 'Alert', 'Provider', 'DrugInfo'],
     
     launch: function() {
+         _myAppGlobal = this;
         if(Util.checkModulePrivilege('pharmacy')&& Util.uuidLoadedSuccessfully()){
             Ext.create('RaxaEmr.Pharmacy.view.Viewport');
         }

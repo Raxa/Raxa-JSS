@@ -8,6 +8,7 @@ Ext.define('RaxaEmr.Pharmacy.store.drugOrderSearch',{
         'load': {
             fn: function(){
                 console.log("inside listener of drugOrderSearch");
+                console.log(Ext.getStore('drugOrderSearch'));
                 this.group('date');
             }
         }
