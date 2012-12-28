@@ -806,7 +806,7 @@ var Util = {
         keyMap.keyName.destroy(true);
         keyMap.keyName=null;
     },
-        
+
     getProviderUuidFromPersonUuid: function (uuid) {
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/provider?v=full',

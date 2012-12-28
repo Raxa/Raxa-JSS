@@ -415,27 +415,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             }
                         }
                     }
-                },
-                {
-                    xtype: 'gridpanel',
-                    height: 71,
-                    collapsed: true,
-                    title: 'Pending',
-                    columnLines: false,
-                    columns: [
-                    {
-                        xtype: 'numbercolumn',
-                        draggable: false,
-                        width: 42,
-                        dataIndex: 'number',
-                        text: 'Sl. No'
-                    },
-                    {
-                        xtype: 'gridcolumn',
-                        width: 138,
-                        text: 'Patient Name'
-                    }]
-                }]
+//                }
+            ]
             //TODO: patient image
             },
             {
