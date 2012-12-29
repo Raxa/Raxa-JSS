@@ -15,7 +15,7 @@
  */
 Ext.define('RaxaEmr.Outpatient.controller.AddPatient', {
     extend: 'Ext.app.Controller',
-    requires: ['Screener.view.NewPatient', 'Screener.model.encounterpost','Screener.store.Location','Screener.model.NewPatient', 'Screener.store.NewPatients', 'Screener.store.IdentifierType', 'Screener.store.encounterpost', 'Screener.model.observation'],
+    requires: ['Screener.view.NewPatient', 'Screener.model.encounterpost','Screener.model.NewPatient', 'Screener.store.NewPatients', 'Screener.store.encounterpost', 'Screener.model.observation'],
     config: {
         // All the fields are accessed in the controller through the id of the components
         refs: { 
