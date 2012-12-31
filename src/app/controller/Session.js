@@ -118,7 +118,7 @@ Ext.define('RaxaEmr.controller.Session', {
                     }
                 }
                 for (j = 0; j < userInfoJson.roles.length; j++) {
-                    if(userInfoJson.roles[j].role === 'System Developer'){
+                    if(userInfoJson.roles[j].role === 'System Developer' || userInfoJson.roles[j].role === 'Provider'){
                         privilegesArray[i] = {
                             'name': 'all privileges',
                             'description': 'allprivileges'
