@@ -46,8 +46,6 @@ Ext.define("Screener.controller.Application", {
     'Screener.store.druglist',
     'Screener.store.encounterpost',
     'Screener.store.encounters',
-    'Screener.store.IdentifierType',
-    'Screener.store.Location',
     'Screener.store.NewPatients',   // Cant find this store
     'Screener.store.NewPersons',
     'Screener.store.PatientList',
