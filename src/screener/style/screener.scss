@@ -214,10 +214,35 @@ $black: #000;
 	-webkit-transform:rotate(-90deg);
 	-moz-transform:rotate(-90deg);
 	-o-transform: rotate(-90deg);
-	font-size: 8px;
+	font-size: 10px;
 	padding-top: 41px;
 	position: relative;
 	width: 90%;
+}
+
+
+#maintabs {
+	.x-docking-horizontal{
+		#ext-tabbar-1 {
+			background:#4d91ba;
+			height:768px;
+		.x-tabbar-inner {
+			.x-tab-active {
+				border:none;
+				color:#555;
+				background:#efefef !important;
+			}
+			.x-tab {
+				border-radius: 20px 0 0 20px;
+				background:#999;
+				color:#555;
+				margin-top: 15px;
+				margin-right: -14px;
+			}
+		}
+		
+		}
+	}
 }
 
 //Pharmacy CSS edited. 
@@ -312,28 +337,6 @@ $black: #000;
 	}
 }
 
-#maintabs {
-	.x-docking-horizontal{
-		#ext-tabbar-1 {
-			background:#4d91ba;
-		.x-tabbar-inner {
-			.x-tab-active {
-				border:none;
-				color:#555;
-				background:#efefef !important;
-			}
-			.x-tab {
-				border-radius: 20px 0 0 20px;
-				background:#999;
-				color:#555;
-				margin-top: 15px;
-				margin-right: -14px;
-			}
-		}
-		
-		}
-	}
-}
 #givenName {
 	margin:5px;
 }
