@@ -5,7 +5,7 @@ Ext.define('RaxaEmr.Pharmacy.store.orderStore', {
         name: 'dosage',
         type: 'float'
     },
-    'duration', 'qty', 'unitprice', 'itemprice', 'batchQuantity', 'batchUuid', 'drugUuid', 
+    'duration', 'qty', 'batchQuantity', 'batchUuid', 'drugUuid', 
     {
         name: 'takeInMorning',
         type: 'boolean',
@@ -28,5 +28,8 @@ Ext.define('RaxaEmr.Pharmacy.store.orderStore', {
     },
     {
         name: 'instructions'
+    },
+    {
+        name : 'date'
     }]
 });

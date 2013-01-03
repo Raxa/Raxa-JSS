@@ -1,12 +1,11 @@
 Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.prescribedDrugs',
-    //id: 'prescribedDrugs',
+    id: 'prescribedDrugs',
     height: 300,
     styleHtmlContent: false,
     width: 750,
     store: 'orderStore',
-    autoScroll: true,
     selType: 'cellmodel',
     cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1
@@ -14,6 +13,13 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     viewConfig: {
         stripeRows: false
     },
+    features: [Ext.create('Ext.grid.feature.Grouping',{
+                    startCollapsed: true,
+                    groupHeaderTpl: 
+                    [
+                    '{name} ',
+                    ]
+          })],
     initComponent: function () {    
         var drugEditor = this;
         this.addEvents(['deleteDrug']);
@@ -48,18 +54,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                             Ext.getStore('orderStore').getAt(row).set('drugUuid', drugUuid);
                         }
                     }
-//                    ,
-//                    'keydown': {
-//                        fn: function(comboBox, e){
-//                            comboBox.getStore().clearFilter();
-//                            comboBox.getStore().filterBy(function(record){
-//                                if(record.data.text.toLowerCase().indexOf(comboBox.getValue().toLowerCase())!==-1){
-//                                    return true;
-//                                }
-//                                return false;
-//                            });
-//                        }
-//                    }
                 }
             }
         },

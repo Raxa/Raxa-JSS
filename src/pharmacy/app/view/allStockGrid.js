@@ -14,8 +14,6 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         '{[this.formatName(values)]}',
         {
             formatName: function(values) {
-                console.log(" <<<<<values>>>>>>");
-                console.log(values);
                 var total = 0;
                 var firstSupplier;
                 var fewestMonths;

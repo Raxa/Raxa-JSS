@@ -1,6 +1,7 @@
 /* model for drug orders GET call*/
 Ext.define('RaxaEmr.Pharmacy.model.drugOrderSearch', {
     extend: 'Ext.data.Model',
+    sorters: ['drug.name'],
     fields: [
     {
         name: 'id',
@@ -31,18 +32,7 @@ Ext.define('RaxaEmr.Pharmacy.model.drugOrderSearch', {
         type : 'date',
         mapping: 'startDate',
         convert: function (value, record) {
-            //Convert date type that .NET can bind to DateTime
-            console.log("<<<<<<<<<<for start date >>>>>>>>>>>>");
-            console.log(value);
-            console.log(record);
             var date = value.split("T");
-            //var date = new Date(parseInt(value.substr(6)));
-            //console.log(value.substr(6));
-            //console.log(parseInt(value.substr(6)));
-            console.log(date);
-            console.log(date[0]);
-            //console.log(Ext.Date.format(date, 'l, F d, Y '));
-            //return Ext.Date.format(date, 'l, F d, Y '); //Full Date Time
             return date[0];    
     }
     }, {

@@ -5,7 +5,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
         type: 'vbox',
         align: 'stretch'
     },
-    autoScroll: true,
     items:[{
         xtype: 'container',
         layout:{
@@ -31,17 +30,20 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                 border: false,
                 activeItem: 0,
                 items: [
-                {
-                    xtype: 'container',
-                    layout: 'absolute',
-                    border: false,
-                   // id: 'drugOrderASearchGrid',
-                    items:[{
-                        xtype: 'patientAssignedDrugs',
-                        x: 190,
-                        y: 190
-                    }]
-                },
+                //                {
+                //                    xtype: 'patientAssignedDrugs',
+                //                    border: false,
+                //                    x: 190,
+                //                    y: 190
+                //                //                    xtype: 'container',
+                //                //                    layout: 'absolute',
+                //                //                    border: false,
+                //                //                    items:[{
+                //                //                        xtype: 'patientAssignedDrugs',
+                //                //                        x: 190,
+                //                //                        y: 190
+                //                //                    }]
+                //                },
                 {
                     xtype: 'container',
                     layout: 'absolute',
@@ -50,7 +52,8 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'prescribedDrugs',
                         x: 190,
                         y: 190                                    
-                    },{
+                    },
+                    {
                         xtype: 'button',
                         width: 60,
                         text: 'Save',
@@ -64,8 +67,10 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         action: 'printPrescribedDrugs',
                         x: 460,
                         y: 580
-                    }]
-                }]
+                    }
+                    ]
+                }
+                ]
             },
             {
                 xtype: 'button',
@@ -149,69 +154,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             }
                             ]
                         }, 
-//                        {
-//                            xtype: 'panel',
-//                            layout: 'vbox',
-//                            items:[{
-//                                xtype: 'gridpanel',
-//                                title: 'prescriptions',
-//                                border: 0,
-//                                height: 270,
-//                                id: 'drugOrderASearchGrid',
-//                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch',{
-//                                    sortOnLoad: true,
-//                                    sorters: {
-//                                        property: 'startDate', 
-//                                        direction : 'DESC'
-//                                    }       
-//                                }),
-//                                features: [Ext.create('Ext.grid.feature.Grouping',{
-//                                    startCollapsed: true,
-//                                    groupHeaderTpl: 
-//                                    [
-//                                    '{startDate} ',
-//                                    //                                    '{[this.formatName(values)]}',
-//                                    //                                    {
-//                                    //                                        formatName: function(values) {
-//                                    //                                            console.log("inside format name");
-//                                    //                                            console.log(values);
-//                                    ////                                            var total = 0;
-//                                    ////                                            var firstSupplier;
-//                                    ////                                            var fewestMonths;
-//                                    ////                        
-//                                    ////                                            for(var i=0; i<values.children.length; i++){
-//                                    ////                                                total+=values.children[i].data.quantity;
-//                                    ////                                            }
-//                                    ////                                            return "total: "+total;
-//                                    //                                        }
-//                                    //                                    }
-//                                    ]
-//                                })
-//                                ], 
-//                                columns: [
-//                                {
-//                                    xtype: 'gridcolumn',
-//                                    width: 80,
-//                                    text: 'drug',
-//                                    dataIndex : 'drugname'
-//                                },
-//                                {
-//                                    xtype: 'gridcolumn',
-//                                    width: 80,
-//                                    text: 'Date',
-//                                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
-//                                    dataIndex : 'startDate'
-//                                }
-//                                ]
-//                            }, {
-//                                xtype: 'button',
-//                                width: 80,
-//                                x: 50,
-//                                y: 330,
-//                                text: 'Back',
-//                                action: 'back'
-//                            }]
-//                        }
+                                          
                         ]
                     }]
                 },
@@ -372,9 +315,10 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         }
                     }
                 }
-            ]
-            //TODO: patient image
+                //TODO: patient image
+                ]
             },
+
             {
                 xtype: 'container',
                 layout: 'card',
@@ -492,30 +436,19 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'toolbar',
                         layout: 'absolute',
                         dock: 'bottom',
-                        // height: 40,
-                        //width: 500,
                         flex : 1,
                         items: [
                         {
                             xtype: 'button',
-                            text: 'Today',
+                            text: 'Latest',
                             id: 'currentButton',
                             x: 190,
                             y: 25,
                             height: 35,
                             width: 60,
-                            //height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
-                            //width: PHARMACY_TOPBAR_CONSTANTS.TAB_WIDTH,
                             handler: function(){
-                            // TODO: This should just be one call - we should update "main area" layout so it has 2 xtypes only, for
-                            //  patient and inventory views
-                            //                                Ext.getCmp('mainarea').getLayout().setActiveItem(0);
-                            //                                Ext.getCmp('addpatientarea').getLayout().setActiveItem(0);
-                            //                                Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(0);
-                            //
-                            //                                // Highlight "Patients" tab
-                            //                                Ext.getCmp('inventoryButton').toggle(false);
-                            //                                Ext.getCmp('patientsButton').toggle(true);
+                                Ext.getCmp('historyButton').toggle(false);
+                                Ext.getCmp('currentButton').toggle(true);
                             }
                         },
                         {
@@ -526,18 +459,9 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             y: 25,
                             height: 35,
                             width: 60,
-                            //height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
-                            //width: PHARMACY_TOPBAR_CONSTANTS.TAB_WIDTH,
                             handler: function(){
-                            // TODO: This should just be one call - we should update "main area" layout so it has 2 xtypes only, for
-                            //  patient and inventory views
-                            //                                Ext.getCmp('mainarea').getLayout().setActiveItem(0);
-                            //                                Ext.getCmp('addpatientarea').getLayout().setActiveItem(0);
-                            //                                Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(0);
-                            //
-                            //                                // Highlight "Patients" tab
-                            //                                Ext.getCmp('inventoryButton').toggle(false);
-                            //                                Ext.getCmp('patientsButton').toggle(true);
+                                Ext.getCmp('currentButton').toggle(false);
+                                Ext.getCmp('historyButton').toggle(true);
                             }
                         }
                     
