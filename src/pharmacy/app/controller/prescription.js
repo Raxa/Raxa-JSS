@@ -1744,31 +1744,18 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
     
     currentDatePrescription: function() {
-        console.log("currentDatePrescription");
         var orderStore = Ext.getStore('orderStore');
         var filterStartDate = orderStore.data.items[0].data.date;
         orderStore.filter(function(r) {
             var value = r.get('date');
-            console.log("<<<<<<<<<<<<<<inside filter>>>>>>>>>>>>>>>>");
-            console.log(r);
-            console.log(filterStartDate);
-            console.log(value);
             return (value === filterStartDate);
-                    
-        //return r.data.startDate ;
-        //  return 5;
         });
         Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(0);
     },
     
     historyPatientPrescription: function() {
-        console.log("historyPatientPrescription");
         var drugOrderStore = Ext.getStore('orderStore');
         drugOrderStore.clearFilter(true);
-        //Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(1);
-        console.log("drug order store is");
-        console.log(drugOrderStore);
-        //drugOrderStore.clearFilter(true);
         var presDrug = Ext.getCmp('prescribedDrugs')
         presDrug.getView().refresh()
         Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(0);
