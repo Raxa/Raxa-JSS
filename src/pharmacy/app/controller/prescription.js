@@ -671,7 +671,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                                         l1.setActiveItem(0);
                                         var l2 = Ext.getCmp('addpatientgridarea').getLayout();
                                         //  l2.setActiveItem(0);
-                                        Ext.getCmp('drugASearchGrid').getStore().removeAll();
+                                       // Ext.getCmp('drugASearchGrid').getStore().removeAll();
                                         Ext.getCmp('prescriptionDate').setValue('');
                                         Ext.getStore('orderStore').removeAll();
                                         this.sendPrescriptionFill();
@@ -781,6 +781,8 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     // Function to be call when a patient is selected in the patient search results gird of advanced search
     // Sets the fields realted to patient in main screen and then calls for function getDrugOrders()
     patientSelect: function (x, searchPanel, drugOrderGrid, addPatientArea) {
+        Ext.getCmp('currentButton').toggle(false);
+        Ext.getCmp('historyButton').toggle(false);
         Ext.getCmp('prescriptionPatientName').setValue(x.name);
         //below its commented as the identifier are not sent in patient search results
         Ext.getCmp('prescriptionPatientId').setValue(x.identifier)
