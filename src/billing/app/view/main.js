@@ -45,27 +45,43 @@ Ext.define('RaxaEmr.billing.view.main', {
                             align: 'stretch',
                             type: 'vbox'
                         },
-                        bodyPadding: 10,
-                        title: 'Find Patient',
-
-                        items: [{
-                            xtype: 'textfield',
-                            fieldLabel: 'Patient Id ',
-                            id: 'pid'
-                        }, {
-                            xtype: 'textfield',
-                            fieldLabel: 'First Name '
-                        }, {
-                            xtype: 'textfield',
-                            fieldLabel: 'Last Name '
-                        }, {
-                            xtype: 'button',
-                            margin: 20,
-                            text: 'Find',
-                            ui: 'raxa-aqua-small',
-                            action: 'findPatient'
-
-                            /* handler: function() {
+                        {
+                            xtype: 'container',
+                            height: 734,
+                            width: 381,
+                            items: [
+                                {
+                                    xtype: 'form',
+                                    
+                                    height: 189,
+                                    layout: {
+                                        align: 'stretch',
+                                        type: 'vbox'
+                                    },
+                                    bodyPadding: 10,
+                                    title: 'Find Patient',
+                                   
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            fieldLabel: 'Patient Id ',
+                                            id :'pid'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            fieldLabel: 'First Name '
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            fieldLabel: 'Last Name '
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            margin: 20,
+                                            text: 'Find',
+                                            action: 'findPatient'
+                                           
+                                          /* handler: function() {
                                                                
                                                                     Ext.Ajax.request({
                                                                         url: HOST + '/ws/rest/v1/raxacore/billing/abc',

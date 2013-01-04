@@ -1,67 +1,39 @@
 Ext.define('RaxaEmr.billing.view.Viewport', {
     extend: 'Ext.container.Viewport',
-    /*  config: {
-        fullscreen: true,
-        items: [{
-            xtype: 'bill' // view/Register.js
-        }]
-    }*/
-    /*autoScroll: true,
     width: 960,
+    autoHeight: 800,
     layout: {
-        type: 'vbox',
+        type: 'card',
         align: 'center'
-    },*/
-    initComponent: function() {
+    },
+    id: 'mainarea',
+    activeItem: 0,
+    items:[{
+            xtype: 'currentBill_main'
+        },
 
-        this.items = {
-            /* items:[{
-        xtype: 'billingtopbar'
-    },{
-        autoScroll: true,
-        layout: 'auto',
-        width:960,*/
-            items: [{
-                layout: 'card',
-                id: 'mainarea',
-                activeItem: 0,
-                items: [{
-                    xtype: 'main'
-                },
+        {
+            xtype: 'discount'
+        },
+        {
+            xtype: 'currentbill'
+        },
+        {
+            xtype: 'previousBills'
+        },{
+            xtype: 'searchPatient'
+        },{
+            xtype: 'print_Final'
+        },
+        {
+            xtype: 'AddItem'
+        } ,
+        {
+            xtype:'EditItem'
 
-                {
-                    xtype: 'currentBill_main'
-                },
-
-                {
-                    xtype: 'discount'
-                }, {
-                    xtype: 'currentbill'
-                }, {
-                    xtype: 'previousBills'
-                }, {
-                    xtype: 'searchPatient'
-                }, {
-                    xtype: 'print_Final'
-                }, {
-                    xtype: 'AddItem'
-                },
-
-
-                {
-                    xtype: 'EditItem'
-
-                },
-
-                {
-                    xtype: 'previousShow'
-                }]
-            }]
-
-            // items :[{xtype :'main'}]
-            //items :[{html : 'hello'  },{xtype :'bill'}]
-            // }]
-        };
-        this.callParent();
-    }
+        },
+        {
+            xtype: 'previousShow'
+        }    
+    ]
 });

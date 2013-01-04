@@ -219,7 +219,6 @@ Ext.define('RaxaEmr.billing.view.previousBills', {
                             width: 150,
                             margin: '10 0 0 100',
                             text: 'Create a new Bill',
-                            ui: 'raxa-aqua-small',
                             action: 'findPatient2'
                         }
 

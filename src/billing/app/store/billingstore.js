@@ -10,18 +10,22 @@ Ext.define('RaxaEmr.billing.store.billingstore', {
   autoLoad: false,
   autoSync: false,
   proxy: {
-    type: 'rest',
-    url: HOST + '/ws/rest/v1/raxacore/billing',
-    headers: Util.getBasicAuthHeaders(),
-    reader: {
-      type: 'json',
-      root: 'results'
-    },
-    writer: {
-      type: 'json'
-    },
-    afterRequest: function(request, success) {
-      console.log("success")
+
+       type: 'rest',
+ 
+         url: HOST + '/ws/rest/v1/raxacore/billing',
+        headers: Util.getBasicAuthHeaders(),
+
+        reader: {
+            type: 'json',
+            root: 'results'
+        },
+        writer: {
+            type: 'json'
+        }
+,        
+        afterRequest: function(request,success)
+        {console.log("success")}
     }
   }
 });

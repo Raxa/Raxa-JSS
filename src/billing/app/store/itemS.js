@@ -5,8 +5,10 @@ Ext.define('RaxaEmr.billing.store.itemS', {
     autoLoad: false,
     autoSync: false,
     proxy: {
-        type: 'rest',
-        url: HOST + '/ws/rest/v1/raxacore/billing?v=2',
+
+       type: 'rest',
+ 
+         url: HOST + '/ws/rest/v1/raxacore/billing?v=2',
         headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',
