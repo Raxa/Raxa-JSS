@@ -5,6 +5,7 @@ Ext.define('RaxaEmr.store.Locations', {
     extend: 'Ext.data.Store',
     xtype: 'locationStore',
     config: {
+        storeId : 'locationStore',
         model: 'RaxaEmr.model.Location',
         proxy: {
             type: 'rest',
