@@ -1,6 +1,6 @@
-Ext.define('RaxaEmr.common.store.SearchPatientStore', {
+Ext.define('SearchPatient.store.Patients', {
     extend: 'Ext.data.Store',
-    model: 'RaxaEmr.common.model.Patient',
+    model: 'SearchPatient.model.Patient',
     proxy: {
 
         type: 'rest',

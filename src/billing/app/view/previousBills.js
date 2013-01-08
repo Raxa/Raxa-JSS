@@ -123,48 +123,97 @@ Ext.define('RaxaEmr.billing.view.previousBills', {
 
 
                         {
-                            xtype: 'numbercolumn',
-                            width: 100,
-                            dataIndex: 'balance',
-                            id: 'balance',
-                            text: 'Pending Balance'
-                        }, {
-                            xtype: 'numbercolumn',
-                            width: 100,
-                            dataIndex: 'totalAmount',
-                            id: 'totalAmount',
-                            text: 'Current Charges'
-                        },
-
-                        {
-                            xtype: 'gridcolumn',
-                            width: 150,
-                            dataIndex: 'uuid',
-                            id: 'uuid',
-                            text: 'uuid'
-                        },
-
-                        {
-                            xtype: 'numbercolumn',
-                            width: 100,
-                            dataIndex: 'billId',
-                            id: 'billId',
-                            text: 'billId'
-                        }, {
-                            xtype: 'gridcolumn',
-                            width: 100,
-                            dataIndex: 'status',
-                            id: 'status',
-                            text: 'status'
-                        },
-
-                        {
-                            xtype: 'numbercolumn',
-                            width: 100,
-                            dataIndex: 'providerId',
-                            id: 'providerId',
-                            text: 'providerId'
-                        },
+                            xtype: 'container',
+                            height: 206,
+                            width: 1000,
+                            items: [
+                                {
+                                    xtype: 'gridpanel',
+                                    height: 198,
+                                    width:1000 ,
+                                    title: 'Previous Bills',
+                                    id : 'gridPrevious',
+                                        store: Ext.data.StoreManager.lookup('RaxaEmr.billing.store.billingstore'),
+                                    columns: [
+                                        
+                                         
+                                         {
+                                            xtype: 'numbercolumn',
+                                            width: 100,
+                                            dataIndex: 'balance',
+                                            id :'balance',
+                                            text: 'Pending Balance'
+                                        },
+                                         {
+                                            xtype: 'numbercolumn',
+                                            width: 100,
+                                            dataIndex: 'totalAmount',
+                                            id :'totalAmount',
+                                            text: 'Current Charges'
+                                        },
+                                        
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 150,
+                                            dataIndex: 'uuid',
+                                            id :'uuid',
+                                            text: 'uuid'
+                                        },
+                                        
+                                        {
+                                            xtype: 'numbercolumn',
+                                            width: 100,
+                                            dataIndex: 'billId',
+                                            id :'billId',
+                                            text: 'billId'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 100,
+                                            dataIndex: 'status',
+                                            id :'status',
+                                            text: 'status'
+                                        },
+                                        
+                                        {
+                                            xtype: 'numbercolumn',
+                                            width: 100,
+                                            dataIndex: 'providerId',
+                                            id :'providerId',
+                                            text: 'providerId'
+                                        },
+                                         
+                                        
+                                
+                                        {
+                                            xtype: 'datecolumn',
+                                            width: 100,
+                                            id : 'dateCreated',
+                                            dataIndex: 'dateCreated',
+                                            format: 'Y-n-d h:i:s A',
+                                            text: 'dateCreated'
+                                        },
+                                        
+                                        
+                                         {
+            xtype: 'actioncolumn',
+            width: 45,
+            items: [{
+                icon: '../resources/img/edit.png',
+                tooltip: 'Show Bill',
+                handler: function(grid, rowIndex) {
+                    me.fireEvent('showBill', {
+                        rowIndex: rowIndex
+                       
+                    });
+                }
+            }]
+    }
+                                            
+                                    ],
+                                    
+                                    
+                                    viewConfig: {
 
 
 

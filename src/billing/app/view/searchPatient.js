@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.billing.view.searchPatient', {
-    extend: 'RaxaEmr.common.view.SearchPatient',
-    alias: 'widget.searchPatient'
+    extend: 'SearchPatient.view.SearchPanel',
+    alias: 'widget.searchPatient',
 });
 
 

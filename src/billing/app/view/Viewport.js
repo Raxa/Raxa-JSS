@@ -9,7 +9,9 @@ Ext.define('RaxaEmr.billing.view.Viewport', {
     id: 'mainarea',
     activeItem: 0,
     items:[{
-            xtype: 'currentBill_main'
+            xtype: 'currentBill_main',
+            id: 'currentBill_main'
+            
         },
 
         {

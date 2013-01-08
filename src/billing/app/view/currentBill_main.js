@@ -17,14 +17,8 @@ Ext.define('RaxaEmr.billing.view.currentBill_main', {
             items: [
             {
                 xtype: 'BillingSearchPatient',
-                title: 'Find Patient ',                                
-//                        tools: [
-//                        {
-//                            xtype: 'tool',
-//                            id :'Click',
-//                            action:'setLayo'
-//                        }
-//                        ]
+                id: 'billingSearchPatient',
+                title: 'Find Patient ',
             },
             {
                 xtype: 'container',
