@@ -687,7 +687,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                                         //  l2.setActiveItem(0);
                                        // Ext.getCmp('drugASearchGrid').getStore().removeAll();
                                         Ext.getCmp('prescriptionDate').setValue('');
-                                        //Ext.getStore('orderStore').removeAll();
+                                        Ext.getStore('orderStore').removeAll();
                                         this.sendPrescriptionFill();
                                     },
                                     failure: function(){
@@ -724,8 +724,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     },
 
     setOrderStore : function(x , filterStartDate) {
-        console.log("<<inside setOrderStore>>>>");
-        console.log(x);
         var docInstruction;
         var replacedStrng;
         var takeInMorning = false;
@@ -853,8 +851,6 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 Ext.getCmp("searchLoadMask").hide();
                 if(success){
                     if(records.length > 0){
-                        console.log("<<<<inside drugOrderStore>>>>");
-                        console.log(drudOrderStore);
                         var filterStartDate = drudOrderStore.data.items[0].data.date;
                         for(var i = 0 ; i < drudOrderStore.data.length ; i++) {
                             that.DrugOrderSelect(drudOrderStore.data.items[i] , filterStartDate)
