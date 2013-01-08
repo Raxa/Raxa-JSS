@@ -57,16 +57,17 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         xtype: 'button',
                         width: 60,
                         text: 'Save',
+                        id: 'saveButton',
                         action: 'doneWithQueuedPatientPrescription',
                         x: 330,
-                        y: 580
+                        y: 500
                     },{
                         xtype: 'button',
                         width: 60,
                         text: 'Print',
                         action: 'printPrescribedDrugs',
                         x: 460,
-                        y: 580
+                        y: 500
                     }
                     ]
                 }
@@ -418,6 +419,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             handler: function(){
                                 Ext.getCmp('historyButton').toggle(false);
                                 Ext.getCmp('currentButton').toggle(true);
+                                Ext.getCmp('saveButton').setVisible(true);
                             }
                         },
                         {
@@ -431,6 +433,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             handler: function(){
                                 Ext.getCmp('currentButton').toggle(false);
                                 Ext.getCmp('historyButton').toggle(true);
+                                Ext.getCmp('saveButton').setVisible(false);
                             }
                         }
                         ]
