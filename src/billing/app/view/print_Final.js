@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.billing.view.print_Final', {
     extend: 'Ext.form.Panel',
-alias : 'widget.print_Final',
+    alias: 'widget.print_Final',
     height: 489,
     width: 759,
     layout: {

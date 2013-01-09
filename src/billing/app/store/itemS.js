@@ -9,7 +9,7 @@ Ext.define('RaxaEmr.billing.store.itemS', {
 
        type: 'rest',
  
-         url: 'http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/billing?v=2',
+         url: HOST + '/ws/rest/v1/raxacore/billing?v=2',
         headers: Util.getBasicAuthHeaders(),
 
         reader: {

@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.billing.view.discount', {
     extend: 'Ext.form.Panel',
-alias : 'widget.discount',
+    alias: 'widget.discount',
     height: 258,
     width: 415,
     layout: {

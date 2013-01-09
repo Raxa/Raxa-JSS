@@ -3,11 +3,8 @@ Ext.define('RaxaEmr.Pharmacy.view.allStock', {
     alias: 'widget.allStock',
     title: 'Stock >> Overview',
     height: 600,
-    items: [{
-        margin: '10 0 0 0',
-        height: 30,
-        xtype: 'allStockForm'
-    }, {
+    items: [
+    {
         height: 30,
         xtype: 'allStockPanel'
     }, {
@@ -24,5 +21,6 @@ Ext.define('RaxaEmr.Pharmacy.view.allStock', {
         }, {
             xtype: 'stockIssueGrid'
         }]
-    }]
+    },
+]
 });

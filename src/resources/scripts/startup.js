@@ -141,7 +141,7 @@ var Startup = {
     intervalFn: null,
     uuidLoadAttempts: 0,
     uuidLoading: function(){
-        var MAX_LOAD_ATTEMPTS = 10;
+        var MAX_LOAD_ATTEMPTS = 30;
         var that = this;
         Ext.getCmp('mainView').setMasked({
             xtype: 'loadmask',
@@ -150,7 +150,7 @@ var Startup = {
 
         if( ! Util.checkAllUuidsLoaded() ) {
             uuidLoadAttempts++;
-            console.log("Loading UUIDs... # attempts = " + uuidLoadAttempts + " of " + MAX_LOAD_ATTEMPTS);
+            // console.log("Loading UUIDs... # attempts = " + uuidLoadAttempts + " of " + MAX_LOAD_ATTEMPTS);
         }
         else {
             that.removeTimer();
@@ -160,7 +160,7 @@ var Startup = {
         if ( uuidLoadAttempts === MAX_LOAD_ATTEMPTS){
             that.removeTimer();
             Ext.getCmp('mainView').setMasked(false);
-            Ext.Msg.alert("","Unable to load all UUIDs from OpenMRS.");
+            Ext.Msg.alert("Timeout","Login timed out. Please wait a moment and try to login again.");
             Util.logoutUser();
         }
     },

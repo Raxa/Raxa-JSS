@@ -19,16 +19,12 @@ Ext.define('Laboratory.store.LabPatientSearch', {
     extend: 'Ext.data.Store',
     model: 'Laboratory.model.LabPatientSearch',
 
-    fields: ['PatientUuid', 'PatientName', 'FirstName', 'LastName', 'Sex', 'DOB', 'RelativeName', 'Village', 'Panchayat', 'Town'],
+ //   fields: ['PatientUuid', 'PatientName', 'FirstName', 'LastName', 'Sex', 'DOB', 'RelativeName', 'Village', 'Panchayat', 'Town'],
 
     proxy: {
         type: 'rest',
         url: '',
-        headers: {
-            "Accept": "application/json",
-            "Authorization": "Basic " + window.btoa("admin:Admin123"),
-            "Content-Type": "application/json"
-        },
+        headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',
             root: 'results'

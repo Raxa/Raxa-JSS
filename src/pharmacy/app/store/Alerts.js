@@ -11,5 +11,9 @@ Ext.define('RaxaEmr.Pharmacy.store.Alerts', {
             type:'json',
             root: 'results'
         }
-    }
+    },
+    filters: [{
+        property: 'seen',
+        value: false
+    }]
 });
