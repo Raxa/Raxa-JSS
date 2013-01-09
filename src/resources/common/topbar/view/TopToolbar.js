@@ -40,7 +40,7 @@ Ext.define('Topbar.view.TopToolbar', {
 						}
 					}
 					else {
-						if (Ext.getCmp('mainView').getActiveItem()._activeItem === 0) {
+						if (Ext.getCmp('mainView').getLayout().innerItems[0] === Ext.getCmp('mainView').getActiveItem()) {
 							//this.parent.getComponent('UsernameLabel').setHtml('Guest');
 							var buttonUrlSettings = this.parent.add({
 								xtype: 'urlSettingsButton',
@@ -113,12 +113,13 @@ Ext.define('Topbar.view.TopToolbar', {
 		}]
 	},
         
-        initialize: function () {
+    initialize: function () {
         this.add( {
             xtype: 'selectfield',
             id: 'topbarSelectfield',
             centered: true ,
             selected : true,
+            hidden: true,
             value : " ",
             options: 
             Util.getSelectModules(),

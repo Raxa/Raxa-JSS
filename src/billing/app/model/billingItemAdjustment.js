@@ -10,5 +10,5 @@ Ext.define('RaxaEmr.billing.model.billingItemAdjustment', {
     },{
         name: 'reason',
         type: 'string'
-}]
+    }]
 });

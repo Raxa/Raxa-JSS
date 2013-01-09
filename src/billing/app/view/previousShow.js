@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.billing.view.previousShow', {
     extend: 'Ext.form.Panel',
-alias : 'widget.previousShow',
+    alias: 'widget.previousShow',
 
     height: 589,
     width: 759,

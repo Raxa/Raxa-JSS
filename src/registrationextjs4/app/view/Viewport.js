@@ -32,7 +32,7 @@ Ext.define('Registration.view.Viewport', {
                     xtype: 'image',
                     height: 35,
                     width: 40,
-                    src: '../resources/img/iconWhite.png'
+                    src: '../resources/img/icon.png'
                 }, {
                     xtype: 'tbfill'
                 },{

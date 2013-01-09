@@ -5,7 +5,8 @@ Ext.define('Topbar.view.UrlSettingsButton', {
     config: {
         items: [{
             xtype: 'button',
-            iconCls: 'settings',
+//            iconCls: 'settings',
+            text: 'URL',
             iconMask: true,
             ui: 'plain',
             itemId: 'urlButton',

@@ -43,7 +43,7 @@ Ext.define('Laboratory.view.LabOrderCreation3', {
             xtype: 'datecolumn',
             dataIndex: 'DOB',
             text: 'DOB'
-        }, {
+        }, /*{
             xtype: 'gridcolumn',
             dataIndex: 'RelativeName',
             text: 'Husband\'s / Father\'s Name'
@@ -59,7 +59,7 @@ Ext.define('Laboratory.view.LabOrderCreation3', {
             xtype: 'gridcolumn',
             dataIndex: 'Town',
             text: 'Town'
-        }],
+        }*/],
     }, {
         xtype: 'button',
         text: 'Continue',

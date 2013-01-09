@@ -6,12 +6,44 @@ Ext.define('RaxaEmr.Pharmacy.model.Drug', {
         //we defined it and made the persist property false 
         persist: false 
     }, {
-        name: 'display',
+        name: 'name',
         type: 'string',
-        mapping: 'display'
     },{
         name: 'uuid',
         type: 'string',
         persist: false
+    },{
+        name: 'dosageForm',
+        type: 'string'
+    },{
+        name: 'strength',
+        type: 'double'
+    },{
+        name: 'units',
+        type: 'string'
+    },{
+        name: 'concept',
+        type: 'string'
+    },{
+        name: 'cost',
+        type: 'double'
+    },{
+        name: 'price',
+        type: 'double'
+    },{
+        name: 'brandName',
+        type: 'string'
+    },{
+        name: 'manufacturer',
+        type: 'string'
+    },{
+        name: 'reorderLevel',
+        type: 'int'
+    },{
+        name: 'shortName',
+        type: 'string'
+    },{
+        name: 'supplier',
+        type: 'string'
     }]
 });

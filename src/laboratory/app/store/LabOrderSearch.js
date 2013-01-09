@@ -21,12 +21,8 @@ Ext.define('Laboratory.store.LabOrderSearch', {
     groupField: 'orderlist',
     proxy: {
         type: 'rest',
-        url: LAB_HOST+'/ws/rest/v1/order?type=laborder&v=full',
-        headers: {
-            "Accept": "application/json",
-            "Authorization": "Basic " + window.btoa("admin:Admin123"),
-            "Content-Type": "application/json"
-        },
+        url: HOST+'/ws/rest/v1/order?type=laborder&v=full',
+        headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',
             root: 'results'

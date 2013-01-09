@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.billing.view.main', {
     extend: 'Ext.form.Panel',
-alias : 'widget.main',
+    alias: 'widget.main',
 
     //height: 484,
     //width: 759,
@@ -72,13 +72,12 @@ alias : 'widget.main',
                                             xtype: 'button',
                                             margin: 20,
                                             text: 'Find',
-                                            ui :'raxa-aqua-small',
-                                          action: 'findPatient'
+                                            action: 'findPatient'
                                            
                                           /* handler: function() {
                                                                
                                                                     Ext.Ajax.request({
-                                                                        url: 'http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/billing/abc',
+                                                                        url: HOST + '/ws/rest/v1/raxacore/billing/abc',
                                                                          headers: Util.getBasicAuthHeaders(), 
                                                                        // dataType: 'jsonp',
                                                                        // jsonp: 'jsonp_callback',
