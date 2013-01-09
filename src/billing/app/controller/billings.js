@@ -1,13 +1,22 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright 2012, Raxa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
-
-
-var c; // a global variable keeping the id of the patient entered in by the user in main.js.Used to get his old bills.
-var bal; // cumulative balance remaining to be paid
-var global_amount = 0; // total amount = current amount+previous balance
-var tot1 = 0; // current total of the bill
+var c;// a global variable keeping the id of the patient entered in by the user in main.js.Used to get his old bills.
+var bal;// cumulative balance remaining to be paid
+var global_amount=0;// total amount = current amount+previous balance
+var tot1=0;// current total of the bill
 var global_row;
 var BILL_PAGES = { // not used
     MAIN: {
@@ -71,23 +80,17 @@ Ext.define("RaxaEmr.billing.controller.billings", {
         })
     },
     /*Called when clicked on Save and Print Bill in currentBill.js 
-     *used to save the bill by the post call using billingStore.js
-     *All the Items in a Bill are in itemStore.js in Store
-     *This store is associated with the Grid in currentBill_main.js
-     *For the time being providerId is set to static value 1.
-     *Saving bill using Post call is followed by printing of the bill
-     */
-
-    postbill: function() {
-
-
-        var adjustArray = new Array(); // not used
-
-
-        var itemArray = new Array(); // array containing the bill items
+    *used to save the bill by the post call using billingStore.js
+    *All the Items in a Bill are in itemStore.js in Store
+    *This store is associated with the Grid in currentBill_main.js
+    *For the time being providerId is set to static value 1.
+    *Saving bill using Post call is followed by printing of the bill
+    */
+    
+    postbill: function () {
+        var adjustArray = new Array();// not used
+        var itemArray = new Array();// array containing the bill items
         var billitem = Ext.getStore('RaxaEmr.billing.store.itemStore').data;
-
-
         /* for (var i1 = 0; i1 < billitem.items.length; i1++) {
             adjustArray.push({
     discount : billitem.items[i1].data.discount,
@@ -151,12 +154,23 @@ Ext.define("RaxaEmr.billing.controller.billings", {
 
 
     },
+    
+    setPatientFields: function(patient){
+        console.log(patient);
+        Ext.getCmp('billingPatientName').setValue(patient.name);
+        Ext.getCmp('billingPatientId').setValue(patient.identifier);
+        Ext.getCmp('billingPatientAge').setValue(patient.age);
+        Ext.getCmp('billingPatientGender').setValue(patient.person.gender);
+        Ext.getCmp('billingPatientGender').setValue(patient.person.gender);
+    },
+    
     /*
      *Called when Find patient button is clicked in main.js
      *Retrieves all the previous bills of that patient using the id entered by a get call and filling the result in the grid in PreviousBills.js
      */
     getBill: function (grid, record, row) {
         var uuid = record.data.uuid;
+        this.setPatientFields(record.data);
         localStorage.setItem('currentBillingPatient', uuid);
         url = HOST + '/ws/rest/v1/raxacore/billing' +'?q='+uuid;// get call tgo retrive all the previous bills of the patient.
         console.log(url);
@@ -211,20 +225,9 @@ Ext.define("RaxaEmr.billing.controller.billings", {
 
                 //  var global_amount=0;
                 var number = Ext.getStore('RaxaEmr.billing.store.billingstore');
-  
-  
-                //store.sync();
-                console.log("The count of store is"+store.getCount());
-         
-  
             }
         }
-
-
-
         );
-        
-       
     }
     ,
     /*
@@ -670,7 +673,7 @@ Ext.define("RaxaEmr.billing.controller.billings", {
         
         
         //   console.log('Initialized Users! This happens before the Application launch function is called');
-       l.setActiveItem(6);// redirction to AddItem.js
+        l.setActiveItem(6);// redirction to AddItem.js
     //  var l1 = Ext.getCmp('addpatientgridarea').getLayout();
     // l1.setActiveItem(1);
     },
