@@ -157,11 +157,29 @@ var resourceUuid = {
         "varName": "notes",
         "displayName": "REGISTRATION NOTES"
     },
+    "patientRecordImage": {
+        "resource": "concept",
+        "queryTerm": "PATIENT RECORD IMAGE",
+        "varName": "patientRecordImage",
+        "displayName": "PATIENT RECORD IMAGE"
+    },
+    "patientRecordVectorImage": {
+        "resource": "concept",
+        "queryTerm": "PATIENT RECORD VECTOR IMAGE",
+        "varName": "patientRecordVectorImage",
+        "displayName": "PATIENT RECORD VECTOR IMAGE"
+    },
     "regcomplaint": {
         "resource": "concept",
         "queryTerm": "REGISTRATION COMPLAINT",
         "varName": "regcomplaint",
         "displayName": "REGISTRATION COMPLAINT"
+    },
+    "patientImage": {
+        "resource": "concept",
+        "queryTerm": "PATIENT IMAGE",
+        "varName": "patientImage",
+        "displayName": "PATIENT IMAGE"
     },
     "basic": {
         "resource": "form",
@@ -204,6 +222,12 @@ var resourceUuid = {
         "queryTerm": "prescriptionfill",
         "varName": "prescriptionfill",
         "displayName": "PRESCRIPTIONFILL - Prescriptionfill encounter"
+    },
+    "healthCenter": {
+        "resource": "personattributetype",
+        "queryTerm": "health center",
+        "varName": "healthCenter",
+        "displayName": "Health Center - Specific Location of this person's home health center."
     },
     "primaryrelative": {
         "resource": "personattributetype",
@@ -264,7 +288,7 @@ var resourceUuid = {
         "queryTerm": "old patient identification number",
         "varName": "oldPatientIdentificationNumber",
         "displayName": "Old Patient Identification Number - Old Patient Identification Number"
-    },
+    }
     // TODO: https://raxaemr.atlassian.net/browse/RAXAJSS-613
     // Cant find UUID for religion on JSS Ganiari server. What gives?
 
@@ -366,6 +390,10 @@ var Util = {
     DEFAULT_LOCATION: "GAN",
     OPEN_MRS_MIN_AGE : 0,
     OPEN_MRS_MAX_AGE : 120,
+    Taken_Morning : "morning ** true.",
+    Taken_Day : "day ** true.",
+    Taken_Even : "evening ** true.",
+    Taken_Night : "night ** true.",
 
     /*
      * Listener to workaround maxLength bug in HTML5 numberfield with Sencha
@@ -476,6 +504,16 @@ var Util = {
         return headers;
     },
 
+    getNewAccountAuthHeaders: function () {
+        var headers = {
+            "Authorization": "Basic " + window.btoa("newAccount:Hello123"),  
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return headers;
+    },
+
+
     /**
      * Logout the current user. Ends the current session
      */
@@ -562,7 +600,7 @@ var Util = {
      */
     getModules: function () {
         //always keep login at first position as its app path is different
-        return ['login', 'screener', 'registration', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing'];
+        return ['login', 'screener', 'registrationextjs4', 'pharmacy', 'chw', 'outpatient', 'laboratory', 'patientfacing', 'admin', 'billing'];
         
     },
 
@@ -602,6 +640,9 @@ var Util = {
                     break;
                 case  'patientfacing':
                     changedText = 'Patient Facing';
+                    break;
+                case  'admin':
+                    changedText = 'Admin';
                     break;
                 default :
                     changedText = 'You dont have permission to access any Module';
@@ -765,7 +806,7 @@ var Util = {
         keyMap.keyName.destroy(true);
         keyMap.keyName=null;
     },
-        
+
     getProviderUuidFromPersonUuid: function (uuid) {
         Ext.Ajax.request({
             url: HOST + '/ws/rest/v1/provider?v=full',
@@ -793,22 +834,13 @@ var Util = {
      * Returns the uuid of the logged in provider
      */
     getLoggedInProviderUuid: function(){
-        if(!localStorage.getItem("loggedInUser")){
-            // TODO: should throw an exception, not return the wrong string
-            // Ext.Error.raise('<Error Text>');
-            return "provider is not logged in";
-        }
         if(localStorage.getItem("loggedInProvider")){
             return localStorage.getItem("loggedInProvider");
         }
-        // TODO: The side effect of getLoggedInProviderUuid is confusing.
-        //      I would think that it shouldnt coincidentally set the ID.
-        //
-        //      Morever, it certainly shouldnt return any string other than
-        //      (1) a UUID or (2) null (or an exception, etc. something which consistly indicates
-        //      that no UUID was found. else the calling function has to handle this string).
-        this.getProviderUuidFromPersonUuid(localStorage.getItem("loggedInUser"));
-        return "setting provider uuid now";
+        else{
+            Ext.Error.raise('Provider is not logged in');
+            return null;
+        }
     },
     
     /**

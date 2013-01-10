@@ -20,7 +20,7 @@ Ext.define('RaxaEmr.Outpatient.store.diagnosis', {
         model: 'RaxaEmr.Outpatient.model.diagnosis',
         proxy: {
             type: 'ajax',
-            url: 'data/diagnosis.json',
+            url: 'resources/data/diagnosis.json',
         }
     }
 });

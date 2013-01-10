@@ -26,6 +26,10 @@ Ext.define('chw.view.userToolbar', {
             align: 'center'
         },
         items: [{
+            iconCls: 'user',
+            action: 'newPatient'
+        },
+        {
             iconCls: 'list',
             action: 'listButton'
         }/*, {
@@ -40,9 +44,10 @@ Ext.define('chw.view.userToolbar', {
         }, {
             iconCls: 'photos2',
             action: 'resourceButton'
-        }, {
-            iconCls: 'delete',
-            action: 'logoutButton'
-        }]
+        }//, {
+         //   iconCls: 'delete',
+         //   action: 'logoutButton'
+         //}
+        ]
     }
 })

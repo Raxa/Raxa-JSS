@@ -6,6 +6,7 @@ Ext.define('RaxaEmr.Pharmacy.store.Locations', {
     extend: 'Ext.data.Store',
     model: 'RaxaEmr.Pharmacy.model.Location',
     autoLoad: true,
+    storeId: 'Locations',
     proxy: {
         type: 'rest',
         url: HOST + '/ws/rest/v1/location?v=full',
@@ -26,6 +27,12 @@ Ext.define('RaxaEmr.Pharmacy.store.Locations', {
                         localStorage.setItem('stockLocation', records[i].data.uuid);
                     }
                 }
+                theStore.filterBy(function(record){
+                    if(record.hasTag(RaxaEmr_Pharmacy_Controller_Vars.PHARMACY_TAG)){
+                        return true;
+                    }
+                    return false;
+                });
             }
         }
     }

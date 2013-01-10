@@ -17,7 +17,8 @@
 //enum for switching the panels in the treatment tab
 var TREATMENT = {
     ADD: 0,
-    DRUGPANEL: 1
+    DRUGPANEL: 1,
+    
 }
 
 Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
@@ -31,9 +32,11 @@ Ext.define('RaxaEmr.Outpatient.view.patient.treatment', {
             type: 'card'
         },
         title: 'Treatment',
-        activeItem: 1,
+        activeItem: 0,
         items: [{
             xtype: 'drug-panel'
+        }, {
+            xtype: 'draw-panel'
         }, {
             xtype: 'container',
             items: [{

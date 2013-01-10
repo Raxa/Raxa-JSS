@@ -7,23 +7,10 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
         type: 'absolute'
     },
     x: 110,
-    store: Ext.getStore('stockList'),
-    selModel : Ext.create('Ext.selection.RowModel', {
-        listeners : {
-            select : function(rowModel, record, rowIndex) {
-                //on select, go to drug details page
-                Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
-                Ext.getCmp('drugDetails').initForDrug(record.data.drugUuid);
-            },
-            scope : this
-        }  
-    }),    
+    store: 'StockList',
     columns: [
-
     {
-        xtype: 'rownumberer',
-        text: 'S.No',
-        width: 40
+        xtype: 'rownumberer'
     },{
         xtype: 'gridcolumn',
         text: 'Status',
@@ -61,10 +48,9 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsGrid', {
         width: 100
     }],
     initForDrug: function(drugUuid){
-        Ext.getStore('stockList').clearFilter();
-        Ext.getStore('stockList').filter(function(record){
+        Ext.getStore('StockList').clearFilter();
+        Ext.getStore('StockList').filter(function(record){
             return record.get('drugUuid')===drugUuid;
         });
     }
 });
-

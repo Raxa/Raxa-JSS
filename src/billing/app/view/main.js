@@ -1,42 +1,49 @@
 Ext.define('RaxaEmr.billing.view.main', {
     extend: 'Ext.form.Panel',
-alias : 'widget.main',
+    alias: 'widget.main',
 
     //height: 484,
     //width: 759,
     title: 'RAXA',
 
-        fullscreen: true,
-        id: 'halo',
-         style: { 
-       borderColor: '#ffffff',
-       borderStyle: 'solid',
-       borderWidth: '1px'
-   },
-        
-        
+    fullscreen: true,
+    id: 'halo',
+    style: {
+        borderColor: '#ffffff',
+        borderStyle: 'solid',
+        borderWidth: '1px'
+    },
+
     initComponent: function() {
         var me = this;
 
         Ext.applyIf(me, {
-            items: [
-                {
-                    xtype: 'container',
-                    height: 84
+            items: [{
+                xtype: 'container',
+                height: 84
+            }, {
+                xtype: 'container',
+                height: 896,
+                fullscreen: true,
+                autoScroll: true,
+                layout: {
+                    type: 'table'
                 },
-                {
+                items: [{
                     xtype: 'container',
-                    height: 896,
-                    fullscreen :true,
-                    autoScroll: true,
-                    layout: {
-                        type: 'table'
-                    },
-                    items: [
-                        {
-                            xtype: 'container',
-                            height: 728,
-                            width: 429
+                    height: 728,
+                    width: 429
+                }, {
+                    xtype: 'container',
+                    height: 734,
+                    width: 381,
+                    items: [{
+                        xtype: 'form',
+
+                        height: 189,
+                        layout: {
+                            align: 'stretch',
+                            type: 'vbox'
                         },
                         {
                             xtype: 'container',
@@ -72,13 +79,12 @@ alias : 'widget.main',
                                             xtype: 'button',
                                             margin: 20,
                                             text: 'Find',
-                                            ui :'raxa-aqua-small',
-                                          action: 'findPatient'
+                                            action: 'findPatient'
                                            
                                           /* handler: function() {
                                                                
                                                                     Ext.Ajax.request({
-                                                                        url: 'http://localhost:8081/openmrs-standalone/ws/rest/v1/raxacore/billing/abc',
+                                                                        url: HOST + '/ws/rest/v1/raxacore/billing/abc',
                                                                          headers: Util.getBasicAuthHeaders(), 
                                                                        // dataType: 'jsonp',
                                                                        // jsonp: 'jsonp_callback',
@@ -93,21 +99,17 @@ alias : 'widget.main',
                                                                         }
                                                                     });
 }
-                                       */    
-                                        }
- 
- ]
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'container',
-                            height: 185,
-                            width: 214
+                                       */
                         }
-                    ]
-                }
-            ]
+
+                        ]
+                    }]
+                }, {
+                    xtype: 'container',
+                    height: 185,
+                    width: 214
+                }]
+            }]
         });
 
         me.callParent(arguments);

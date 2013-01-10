@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Raxa Patient Registration</title>
+  </head>
+  <body>
+    <button id="click" onclick="JavaSCript:ClickImage()" autofocus>Press to Click photo</button>
+    <button id="ConfirmImage" onclick="JavaSCript:ConfirmImage()" disabled >Confirm Patient Image</button>
+	<br>
+    <canvas id="patientImage" width="300" height="300"></canvas>
+    <video id="live" autoplay width="300" height="300"></video>
+    <script type="text/javascript">
+
+   this.webcamStream();		
+      
+   function webcamStream() {
+   try{
+         var video = document.getElementById("live")
+	      if(navigator.webkitGetUserMedia({video: true},
+          function(stream) {
+	          video.src = window.webkitURL.createObjectURL(stream);
+          }))
+         	Ext.Msg.alert('Please upgrade your browser to allow taking photos');
+     }
+     catch(error)
+     {
+     	Ext.Msg.alert("Browser Incompatible","Please upgrade your browser to allow taking photos");
+     	Ext.getCmp('photo').hide();
+	    console.log("Error by browser while using webcam of the system: "+error);
+     }
+    }
+
+	function ClickImage(){
+			var video  = document.getElementById('live');
+			var canvas = document.getElementById('patientImage');
+			var patientImage = canvas.getContext('2d');
+			patientImage.drawImage(video, 0, 0, 300,300);
+			document.getElementById('ConfirmImage').removeAttribute('disabled')
+			document.getElementById('ConfirmImage').focus();
+    };
+    
+	function ConfirmImage(){
+			var dataURL = document.getElementById('patientImage').toDataURL("image/jpeg");
+			//dataURL saved in localStorage to be sent via REST
+			localStorage.setItem("patientImage",dataURL);
+			localStorage.setItem("patientImageTaken",true);
+			//Confirmed Patient Image set on Patient Registration Page-1
+			document.getElementById('ConfirmedPatientImage').src= dataURL;
+			Ext.getCmp('photo').hide();
+			
+    };
+    </script>
+  </body>
+</html>

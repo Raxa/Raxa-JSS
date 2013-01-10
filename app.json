@@ -1,0 +1,2277 @@
+{
+    /**
+     * The application's namespace, used by Sencha Command to generate classes
+     */
+    "name": "RaxaEMR",
+
+    /**
+     * The file path to this application's front HTML document, relative to this app.json file
+     */
+    "indexHtmlPath": "src/index.html",
+
+    /**
+     * The absolute URL to this application in development environment, i.e: the URL to run this application
+     * on your web browser during development, e.g: "http://localhost/myapp/index.html".
+     *
+     * This value is needed when build to resolve your application's dependencies if it requires server-side resources
+     * that are not accessible via file system protocol.
+     */
+    "url": null,
+
+    /**
+     * List of all JavaScript assets in the right execution order.
+     * Each item is an object with the following format:
+     *      {
+     *          "path": "path/to/script.js" // Path to file, if local file it must be relative to this app.json file
+     *          "remote": true              // (Optional)
+     *                                      // - Defaults to undefined (falsey) to signal a local file which will be copied
+     *                                      // - Specify true if this file is a remote file which will not to be copied
+     *          "update": "delta"           // (Optional)
+     *                                      //  - If not specified, this file will only be loaded once, and
+     *                                      //    cached inside localStorage until this value is changed.
+     *                                      //  - "delta" to enable over-the-air delta update for this file
+     *                                      //  - "full" means full update will be made when this file changes
+     *
+     *      }
+     */
+    "js": [
+    {
+        "path": "src/lib/touch/sencha-touch-all-debug.js",
+    },
+    {
+        "path": "src/lib/i18n/Bundle.js",
+    },
+    {
+		"path": "src/lib/i18n/model/Property.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/lib/i18n/reader/Property.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/controller/Session.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/model/Session.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/store/SessionStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/view/AppCarousel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/view/AppGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/view/Login.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/app/view/smartApp.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/controller/basic.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/global.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/model/family.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/model/illness.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/model/patient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/model/patientIllness.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/model/pill.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/model/resource.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/model/visit.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/store/families.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/store/illnesses.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/store/patients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/store/patientsIllnesses.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/store/pills.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/store/resources.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/store/visits.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/addFamily.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/addIllness.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/addOptions.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/addPatient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/familyDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/familyList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/illnessDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/illnessList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/inventoryDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/inventoryList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/loginScreen.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/okCancel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/patientDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/resourceDetail.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/resourceList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/userToolbar.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/chw/app/view/visitDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/controller/LabOrderCreation.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/controller/Main.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/controller/PaperEntry.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/model/Concept.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/model/LabOrderSearch.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/model/LabPanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/model/LabPatientSearch.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/store/concept.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/store/LabOrderSearch.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/store/LabPanelSection.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/store/LabPatientSearch.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/BatchApproval.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/Home.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation10.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation11.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation12.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation3.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation4.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation5.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation6.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation7.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation8.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderCreation9.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/LabOrderList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/PaperEntry1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/PaperEntry2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/PaperEntry3.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/PaperEntry4.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/QueueStatus.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportApproval1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportApproval2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportApproval3.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportApproval4.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportDelivery1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportDelivery2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportDelivery3.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportDelivery4.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ReportDelivery5.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ResultEntry1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ResultEntry2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ResultEntry3.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ResultEntry4.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/ResultEntry5.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection10.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection11.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection12.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection13.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection3.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection4.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection5.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection6.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection7.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection8.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenCollection9.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration10.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration11.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration12.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration13.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration3.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration4.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration5.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration6.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration7.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration8.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/SpecimenRegistration9.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/laboratory/app/view/Viewport.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/controller/DoctorOrder.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/controller/patientlist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/drawLogic.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/cheifcomplain.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/diagnosedDisease.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/diagnosis.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/Doctor.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/DoctorOrder.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/DoctorOrderObservation.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/drugEncounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/druglist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/drugOrder.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/drugpanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/encounterpost.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/encounters.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/Grid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/labresulthistory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/medicationhistory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/obs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/Observation.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/opdEncounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/opdObservation.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/patientlist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/Patients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/PatientsList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/Person.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/PostList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/refertodoc.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/model/sign.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/cheifcomplain.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/diagnosedDisease.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/diagnosis.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/DoctorOrder.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/Doctors.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/drugConcept.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/drugEncounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/druglist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/drugpanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/encounterpost.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/Grid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/labresulthistory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/medicationhistory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/obs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/opdEncounterPost.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/opdEncounterUpdate.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/opdObs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/patientlist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/PatientsList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/PostLists.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/refertodoc.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/store/sign.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/dataPanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/diagnosedlist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/diagnosis.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/diagnosislist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/draw.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/drugform.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/DrugGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/druglist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/drugpanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/examination.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/examinationlist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/Grid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/history/Unstructured.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/history.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/labresulthistory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/labresulthistorypanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/medicationhistory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/medicationhistorypanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/more.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/refertodoc.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/refertodocpanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/signlist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/treatment.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/treatmentsummery.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patient/work.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/patientlist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app/view/Viewport.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/controller/prescription.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Address.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Alert.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Doctor.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Drug.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/drugEncounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/DrugInfo.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/DrugInventory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/drugOrder.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/drugOrderPatient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/drugOrderSearch.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Encounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Identifier.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/ListPatients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Location.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/LocationTag.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Name.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Patient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Person.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/PostList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/Provider.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/model/PurchaseOrder.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/Alerts.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/allDrugs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/Doctors.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/drugConcept.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/drugEncounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/DrugInfos.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/drugOrderPatient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/drugOrderSearch.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/Identifiers.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/ListPatients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/Locations.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/orderStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/Patients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/Persons.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/PostLists.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/PurchaseOrders.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/RequisitionItems.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/store/StockList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/addDrug.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/addFacility.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/addPatient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/alertGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/allStock.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/allStockGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/allStockPanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/drugComboBox.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/DrugDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/DrugDetailsGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/DrugDetailsText.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/goodsIssue.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/goodsIssueGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/goodsIssueText.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/goodsReceipt.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/goodsReceiptGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/goodsReceiptText.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/Inventory.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/InventoryEditor.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/inventoryNavBar.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/listOfDrugs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/patientsGridPanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/pharmacyDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/pharmacyTopbar.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/prescribedDrugs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/prescription.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/reports.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/requisition.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/requisitionGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/requisitionText.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/stockIssue.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/stockIssueGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/pharmacy/app/view/Viewport.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/app-test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/controller/Main.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/model/Patient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/Bmi.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/Home.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/PatientProfile.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/PatientScreen1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/PatientScreen2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/Register.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/Search.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/SearchResults.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registration/app/view/Viewport.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/controller/BMI.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/controller/Main.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/controller/PrintCard.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/controller/Search.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/addresses.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/attributes.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/AttributeType.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/autoCompleteAddress.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/Doctor.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/encounterModel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/identifiers.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/names.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/obsModel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/orderModel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/patient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/Person.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/providerModel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/model/searchPatient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/autoCompleteAddress.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/Doctors.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/encounterStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/identifiersType.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/location.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/obsStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/orderStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/patient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/Person.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/providerStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/store/search.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/ConfirmFields.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/Home.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/IllnessDetails.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/RegistrationBMI.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/RegistrationConfirm.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/RegistrationPart1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/SearchConfirm.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/SearchPart1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/SearchPart2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/registrationextjs4/app/view/Viewport.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/common/ModalGrid/ModalGrid.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/common/SliderOverride/SliderOverride.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/common/topbar/view/addjs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/common/topbar/view/LogoutConfirmPanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/common/topbar/view/TopToolbar.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/common/topbar/view/UrlSettingsButton.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/common/topbar/view/UrlSettingsPanel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/scripts/page_enum.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/scripts/startup.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/scripts/util.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/scripts/utilExtJS.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/controller/Application.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Doctor.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/drugEncounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/druglist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/drugOrder.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/encounterpost.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/encounters.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/GetList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Identifiers.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Links.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Names.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/NewPatient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Obs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/observation.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Patient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/PatientList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Patients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/PatientSummary.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/Person.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/PostList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/model/ProviderAttribute.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/AssignedPatientList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/Doctors.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/drugConcept.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/drugEncounter.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/druglist.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/encounterpost.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/encounters.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/IdentifierType.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/Location.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/NewPatients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/NewPersons.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/PatientList.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/Patients.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/PatientSummary.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/store/PostLists.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/DoctorSummary.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/DrugStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/LabOrderForm.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/LabOrderView.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/LabStore.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/Main.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/NewPatient.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/PatientListView.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/PatientSummary.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/PatientView.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/PharmacyForm.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/PharmacyView.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/Sort.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/VitalsForm.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/screener/app/view/VitalsView.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/controllers/main_controller.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/controllers/problem_list_controller.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/problem_list.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/scripts/build.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/scripts/compress.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/scripts/doc.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/scripts/jquery-ui-1.8.2.custom.min.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/build_smd.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/controllers/keybind_controller.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/models/med.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/models/med_details.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/models/problem.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/models/rdf_object.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/class.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/compress.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/date.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/doc.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/jquery-ui.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/jquery.addons.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/jquery.form.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/jquery.hotkeys.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/jquery.min.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/jquery.rdfquery.core-1.0.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/jschannel.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/json2.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/parse_payloads.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/payload_definitions.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/smart-api-client-base.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/smart-api-client.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/scripts/smart-frame-ui.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/smart.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/apps/apps.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/apps/test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/build.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/parse.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/pluginify.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/test/firstFunc.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/test/pluginify_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/test/secondFunc.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/test/test_steals.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/test/weirdRegexps.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/pluginify/tokens.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/scripts/scripts.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/cssmin.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/styles.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/app/app.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/styles_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/test/basicsource.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/test/foreign.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/test/https.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/test/removecode.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/test/run.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/test/test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/clean/beautify.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/clean/clean.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/clean/jslint.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/clean/test/clean_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/clean/test/test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/clean/test/testEnd.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/coffee/coffee-script.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/coffee/coffee.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/dev/dev.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/end.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/generate/ejs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/generate/generate.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/generate/inflector.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/generate/system.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/generate/test/run.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/get/basic.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/get/dummysteal.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/get/get.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/get/json.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/get/test/get_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/get/test/stealCode1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/less/less.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/less/less_engine.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/less/less_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/make.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/parse/parse.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/parse/parse_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/parse/test/stealCode1.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/parse/test/testCode.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/parse/tokens.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/build.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/docs.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/env.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/file.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/loader.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/prompt.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/steal.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/rhino/utils.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/steal.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/steal.production.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/absoluteurl/absoluteurl.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/absoluteurl/alert.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/another/two.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/funcunit/funcunit.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/funcunit/steal_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/one/four.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/one/one.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/qunit/qunit.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/qunit/steal_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/run.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/three.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/test/funcunit/funcunit.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/test/funcunit/smart_med_display_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/test/qunit/med_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/test/qunit/qunit.js",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/test/qunit/smart_med_display_test.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/app-tests.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/casper/login.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/lib/jasmine-1.1.0/jasmine-html.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/lib/jasmine-1.1.0/jasmine.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/app/sessionSpecs.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/app/startupSpecs.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/app/utilSpecs.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/pharmacy/controlSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/pharmacy/prescriptionSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/registration/BmiPageSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/registration/ConfirmationSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/registration/PatientCommunicationInformationSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/registration/PatientProfileInformationSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/registration/PatientSearchSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/registrationextjs4/registrationSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/registrationextjs4/searchSpec.js",
+		"update": "delta"
+	},
+	{
+		"path": "test/specs/screener/ScreenerSpecs.js",
+		"update": "delta"
+	}
+],
+
+    /**
+     * List of all CSS assets in the right inclusion order.
+     * Each item is an object with the following format:
+     *      {
+     *          "path": "path/to/item.css" // Path to file, if local file it must be relative to this app.json file
+     *          "remote": true             // (Optional)
+     *                                     // - Defaults to undefined (falsey) to signal a local file which will be copied
+     *                                     // - Specify true if this file is a remote file which will not to be copied
+     *          "update": "delta"          // (Optional)
+     *                                     //  - If not specified, this file will only be loaded once, and
+     *                                     //    cached inside localStorage until this value is changed to either one below
+     *                                     //  - "delta" to enable over-the-air delta update for this file
+     *                                     //  - "full" means full update will be made when this file changes
+     *
+     *      }
+     */
+    "css": [
+	{
+		"path": "src/lib/touch/resources/css/sencha-touch.css",
+		"update": "delta"
+	},    
+	{
+		"path": "src/outpatient/resources/css/app.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/resources/css/Ext.ux.grid.View.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/outpatient/resources/css/outPatient.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/css/app.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/css/extjs4.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/css/pharmacyExpire-color-grid.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/css/pharmacyTwoMonths-color-grid.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/resources/css/screener.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/stylesheets/jquery-ui-1.8.2.custom.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/problemList/stylesheets/med_display.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/app/app.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/css/css1.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/css2.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/multiline.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/production.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/build/styles/test/productionCompare.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/qunit/one.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/steal/test/two.css",
+		"update": "delta"
+	},
+	{
+		"path": "src/smartApp/smart/stylesheets/med_display.css",
+		"update": "delta"
+	},
+	{
+		"path": "test/lib/jasmine-1.1.0/jasmine.css",
+		"update": "delta"
+	}
+],
+
+    /**
+     * Used to automatically generate cache.manifest (HTML 5 application cache manifest) file when you build
+     */
+    "appCache": {
+        /**
+         * List of items in the CACHE MANIFEST section
+         */
+        "cache": [
+            "index.html"
+        ],
+        /**
+         * List of items in the NETWORK section
+         */
+        "network": [
+            "*"
+        ],
+        /**
+         * List of items in the FALLBACK section
+         */
+        "fallback": []
+    },
+
+    /**
+     * Extra resources to be copied along when build
+     */
+    "resources": [
+        "src/resources",
+        "src/app",
+    ],
+
+    /**
+     * File / directory name matchers to ignore when copying to the builds, must be valid regular expressions
+     */
+    "ignore": [
+        "\.svn$"
+    ],
+
+    /**
+     * Directory path to store all previous production builds. Note that the content generated inside this directory
+     * must be kept intact for proper generation of deltas between updates
+     */
+    "archivePath": "archive",
+
+    /**
+     * Default paths to build this application to for each environment
+     */
+    "buildPaths": {
+        "testing": "build/testing",
+        "production": "build/production",
+        "package": "build/package",
+        "native": "build/native"
+    },
+
+    /**
+     * Build options
+     */
+    "buildOptions": {
+        "product": "touch",
+        "minVersion": 3,
+        "debug": false,
+        "logger": false
+    },
+
+    /**
+     * Uniquely generated id for this application, used as prefix for localStorage keys.
+     * Normally you should never change this value.
+     */
+    "id": "f7d38c9f-b6bc-4c47-8ecb-b8a318565183"
+}

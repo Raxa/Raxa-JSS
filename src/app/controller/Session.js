@@ -27,6 +27,14 @@ Ext.define('RaxaEmr.controller.Session', {
             passwordID: '#passwordID',
             userName: '#userName',
             signInButton: '#signInButton',
+            newProviderAccountButton: '#newProviderAccountButton',
+            newPatientAccountButton: '#newPatientAccountButton',
+            passwordProvider: '#newProviderId #password',
+            confirmPasswordProvider: '#newProviderId #confirmPassword',
+            saveProviderButton:'#newProviderId #saveProviderButton',
+            passwordPatient: '#newPatientId #password',
+            confirmPasswordPatient: '#newPatientId #confirmPassword',
+            savePatientButton:'#newPatientId #savePatientButton',
             Registration: '#Registration',
             Screener: '#Screener',
             Inpatient: '#Inpatient',
@@ -44,73 +52,236 @@ Ext.define('RaxaEmr.controller.Session', {
             },
             userName: {
                 action: 'doLogin'
-            },
+            },            
             signInButton: {
                 tap: 'doLogin'
+            },
+            newProviderAccountButton: {
+                tap: 'newProviderAccount'
+            },
+            newPatientAccountButton: {
+                tap: 'newPatientAccount'
+            },
+            saveProviderButton: {
+                tap: 'saveProvider'
+            },
+            savePatientButton: {
+                tap: 'savePatient'
+            },
+            passwordPatient: {
+                change: 'passwordPatientChange'
+            },
+            passwordProvider: {
+                change: 'passwordProviderChange'
+            },
+            confirmPasswordPatient: {
+                change: 'confirmPasswordPatientChange'
+            },
+            confirmPasswordProvider: {
+                change: 'confirmPasswordProviderChange'
             }
         }
     },
-
+    
     showLogin: function () {
         window.location.hash = 'Login';
         Ext.getCmp('mainView').setActiveItem(0);
     },
 
     /**
-     * For a given userInfo containing the uuid for a user, stores their associated
-     * privileges in localStorage
-     * @param userInfo: contains a link to the full information listing of a user
+     *Stores information about the user who is logged in
      */
-    storeUserPrivileges: function (userInfo) {
+    storeUserInfo: function () {
         Ext.getCmp('mainView').setMasked({
             xtype: 'loadmask',
             message: 'Loading'
         });
-        var userInfoJson = Ext.decode(userInfo.responseText);
-        if (userInfoJson.results.length !== 0) {
-            Ext.Ajax.setTimeout(Util.getTimeoutLimit());
-            Ext.Ajax.request({
-                scope: this,
-                url: HOST + '/ws/rest/v1/user/' + userInfoJson.results[0].uuid + '?v=full',
-                method: 'GET',
-                withCredentials: true,
-                useDefaultXhrHeader: false,
-                headers: Util.getBasicAuthHeaders(),
-                success: function (response) {
-                    var privilegesJson = Ext.decode(response.responseText);
-                    //only adding necessary fields for localStorage
-                    var privilegesArray = [];
-                    for (i = 0; i < privilegesJson.privileges.length; i++) {
+        Ext.Ajax.setTimeout(Util.getTimeoutLimit());
+        Ext.Ajax.request({
+            scope: this,
+            url: HOST + '/ws/rest/v1/raxacore/login',
+            method: 'GET',
+            withCredentials: true,
+            useDefaultXhrHeader: false,
+            headers: Util.getBasicAuthHeaders(),
+            success: function (response) {
+                var userInfoJson = Ext.decode(response.responseText);
+                console.log(userInfoJson)
+                //only adding necessary fields for localStorage
+                var privilegesArray = [];
+                if(userInfoJson.privileges){
+                    for (i = 0; i < userInfoJson.privileges.length; i++) {
                         privilegesArray[i] = {
-                            'name': privilegesJson.privileges[i].name,
-                            'description': privilegesJson.privileges[i].description
+                            'name': userInfoJson.privileges[i].name,
+                            'description': userInfoJson.privileges[i].description
                         };
                     }
-                    for (j = 0; j < privilegesJson.roles.length; j++) {
-                        if(privilegesJson.roles[j].name === 'Provider'){
-                            localStorage.setItem('loggedInUser',privilegesJson.person.uuid);
-                        }
-                        if(privilegesJson.roles[j].name === 'System Developer'){
-                            privilegesArray[i] = {
-                                'name': 'all privileges',
-                                'description': 'allprivileges'
-                            };
-                        }
+                }
+                for (j = 0; j < userInfoJson.roles.length; j++) {
+                    if(userInfoJson.roles[j].role === 'System Developer' || userInfoJson.roles[j].role === 'Provider'){
+                        privilegesArray[i] = {
+                            'name': 'all privileges',
+                            'description': 'allprivileges'
+                        };
                     }
-                    localStorage.setItem("privileges", Ext.encode(privilegesArray));
-                    //saving the provider uuid into localstorage
-                    Util.getLoggedInProviderUuid();
-                    this.loginSuccess();
+                }
+                localStorage.setItem('session', JSON.stringify({
+                    person: userInfoJson.personUuid,
+                    display: userInfoJson.display
+                }));
+                localStorage.setItem("privileges", Ext.encode(privilegesArray));
+                localStorage.setItem('loggedInUser',userInfoJson.personUuid);
+                localStorage.setItem('loggedInProvider', userInfoJson.providerUuid);
+                var location = userInfoJson.location;
+                if(location===null){
+                    Ext.Error.raise('Location Health Center for user is not set');
+                }
+                else{
+                    localStorage.setItem('location', location);
+                }
+                this.loginSuccess();
+            },
+            failure: function () {
+                Ext.getCmp('mainView').setMasked(false);
+                Ext.Msg.alert('Connection Error');
+                // Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
+            }
+        });
+    },
+    
+    showNewPatientInfo: function(id) {
+        
+    },
+
+    newProviderAccount: function () {
+        if (!this.newProvider) {
+            this.newProvider = Ext.create('RaxaEmr.view.NewProvider');
+            Ext.Viewport.add(this.newProvider);
+        }
+        this.newProvider.setMasked(false);
+        this.newProvider.show();
+    },
+
+    newPatientAccount: function () {
+        if (!this.newPatient) {
+            this.newPatient = Ext.create('RaxaEmr.view.NewPatient');
+            Ext.Viewport.add(this.newPatient);
+        }
+        this.newPatient.setMasked(false);
+        this.newPatient.show();
+    },
+    
+    saveProvider: function() {
+        this.saveUser("provider");
+    },
+    
+    savePatient: function() {
+        this.saveUser("patient");
+    },
+
+    saveUser: function(type) {
+        if(type === "provider"){
+            var formComponent = Ext.getCmp('newProviderId');
+            var formp  = formComponent.saveForm();
+        }
+        else{
+            var formComponent = Ext.getCmp('newPatientId');
+            var formp = formComponent.saveForm();
+        }
+        if (formp.givenname && formp.familyname && formp.choice && formp.userName && formp.password && formp.location) {
+            var newUser = {
+                gender : formp.choice,
+                firstName: formp.givenname,
+                lastName: formp.familyname,
+                location: formp.location,
+                userName: formp.userName,
+                password: formp.password,
+                type: type
+            };
+            if(type === "provider"){
+                newUser.isOutpatientDoctor = "true";
+            }
+            else if(type === "patient" && formp.donateOrgans){
+                newUser.donateOrgans = "true"
+            }
+            if(formp.email){
+                newUser.email = formp.email;
+            }
+            if(formp.phone){
+                newUser.phone = formp.phone;
+            }
+            var newUserParam = Ext.encode(newUser);
+            formComponent.setMasked(true);
+            Ext.Ajax.request({
+                scope:this,
+                url: HOST + '/ws/rest/v1/raxacore/user',
+                method: 'POST',
+                params: newUserParam,
+                disableCaching: false,
+                headers: Util.getNewAccountAuthHeaders(),
+                success: function (response) {
+                    formComponent.setMasked(false);
+                    if(type==="provider"){
+                        Ext.Msg.alert("Successful", "Please login to continue.");
+                        Ext.getCmp('userName').setValue(formp.userName);
+                    }
+                    else{
+                        Ext.Msg.alert("Patient Creation Successful", "Thank you for registering.");
+                    }
                 },
-                failure: function () {
-                    Ext.getCmp('mainView').setMasked(false);
-                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
+                failure: function (response) {
+                    formComponent.setMasked(false);
+                    var errorJson = Ext.decode(response.responseText);
+                    var message = errorJson.error.detail.toString().split(":")[1]
+                    Ext.Msg.alert('Error '+message);
                 }
             });
-        } else {
-            // showing modal alert and stop loading mask
-            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.usernamealert'));
-            this.launchAfterAJAX();
+            formComponent.hide();
+            formComponent.reset();
+        }
+        else {
+            Ext.Msg.alert ("Error","Please Enter all the mandatory fields");
+        }
+    },
+    
+    passwordPatientChange: function() {this.validatePassword("#newPatientId");},
+
+    passwordProviderChange: function() {this.validatePassword("#newProviderId");},
+
+    validatePassword : function(parentComponent) {
+        var newPassword = Ext.ComponentQuery.query(parentComponent+' #password')[0]._value;
+        var minPasswordLength = 8;
+        if(newPassword.length > 0) {
+            if(newPassword.length < minPasswordLength) {
+                Ext.ComponentQuery.query(parentComponent+' #password')[0].reset();
+                Ext.Msg.alert('Error', 'Password must be eight characters in length.');
+            }
+            var re = {
+                lower:   /[a-z]/g,
+                upper:   /[A-Z]/g,
+                numeric: /[0-9]/g
+            }
+            for (var rule in re) {
+                if(((newPassword.match(re[rule]) || []).length) <= 0) {
+                    Ext.ComponentQuery.query(parentComponent+' #password')[0].reset();
+                    Ext.Msg.alert('Error', 'Password must contain at least one lower, upper case and numeric');
+                }        
+            }
+        }
+    },
+
+    confirmPasswordPatientChange: function() {this.validateConfirmPassword("#newPatientId");},
+
+    confirmPasswordProviderChange: function() {this.validateConfirmPassword("#newProviderId");},
+    
+    validateConfirmPassword : function(parentComponent) {
+        var newPassword = Ext.ComponentQuery.query(parentComponent+' #password')[0]._value;
+        var confirmPassword = Ext.ComponentQuery.query(parentComponent+' #confirmPassword')[0]._value;
+        if(confirmPassword.length > 0 && newPassword.length > 0) {
+            if( newPassword !== confirmPassword) {
+                Ext.ComponentQuery.query(parentComponent+' #confirmPassword')[0].reset();
+                Ext.Msg.alert('Error', 'Confirm password is not same as new Password');
+            }
         }
     },
 
@@ -136,7 +307,7 @@ Ext.define('RaxaEmr.controller.Session', {
         Util.saveBasicAuthHeader(username, password);
 
         // check for user name validity and privileges
-        this.getUserPrivileges(username);
+        this.storeUserInfo();
         //populating views with all the modules, sending a callback function
         //only run this as postuser
         if(localStorage.getItem("username")==="postuser"){
@@ -147,38 +318,6 @@ Ext.define('RaxaEmr.controller.Session', {
             });
             Startup.populateViews(Util.getModules(), this.launchAfterAJAX);            
         }
-    },
-
-    /**
-     * Stores the privilege name+url in localStorage for the given userInfo uuid
-     * Privileges are stored in the form of a Json string corresponding to:
-     * [ { 'name': 'Screener PatientView', 'description': 'screener/#PatientView' }
-     *   { 'name': 'Login Dashboard', 'description': '../scr/#Dashboard' }
-     *   ...
-     * ]
-     * To retrieve the string, use localStorage.getItem("privileges")
-     * @param username: user with associated privileges
-     */
-    getUserPrivileges: function (username) {
-        Ext.Ajax.setTimeout(Util.getTimeoutLimit());
-        Ext.Ajax.request({
-            scope: this,
-            withCredentials: true,
-            useDefaultXhrHeader: false,
-            url: HOST + '/ws/rest/v1/user?q=' + username,
-            method: 'GET',
-            headers: Util.getBasicAuthHeaders(),
-            success: this.storeUserPrivileges,
-            failure: function (response) {
-                Ext.getCmp('mainView').setMasked(false);
-                if(response.status === 401) {
-                    Ext.Msg.alert('Invalid',Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.invalidUser'));
-                }
-                else {
-                    Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.alert'));
-                }
-            }
-        });
     },
 
     /**
@@ -226,6 +365,7 @@ Ext.define('RaxaEmr.controller.Session', {
     showDashboard: function () {
         this.addModulesToDashboard();
         window.location.hash = 'Dashboard';
+        Ext.getCmp('topbarSelectfield').setHidden(false);
         Ext.getCmp('mainView').setActiveItem(2);
     },
 

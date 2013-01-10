@@ -8,13 +8,7 @@ Ext.define('RaxaEmr.Pharmacy.model.ListPatients', {
         type: 'string'
     }, {
         name: 'display',
-        type: 'string'
-    }, {
-        name: 'encounters',
-        model: 'RaxaEmr.Pharmacy.model.Encounter'
-    }, {
-        name: 'person',
-        model: 'RaxaEmr.Pharmacy.model.Person'
+        mapping: 'person.display'
     }, {
         name: 'encounters',
         model: 'RaxaEmr.Pharmacy.model.Encounter'
@@ -22,13 +16,19 @@ Ext.define('RaxaEmr.Pharmacy.model.ListPatients', {
         name: 'identifiers',
         model: 'RaxaEmr.Pharmacy.model.Identifier'
     }, {
+        name: 'person',
+        model: 'RaxaEmr.Pharmacy.model.Person'
+    }, {
         name: 'age',
         mapping: 'person.age'
     }, {
-        name: 'identifier',
-        mapping: 'identifiers[0].identifier'
+        name: 'gender',
+        mapping: 'person.gender'
     }, {
         name: 'name',
-        mapping: 'person.display'
+        mapping: 'person.preferredName.display'
+    }, {
+        name: 'identifier',
+        mapping: 'identifiers[0].identifier'
     }]
 })

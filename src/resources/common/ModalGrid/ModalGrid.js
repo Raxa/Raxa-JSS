@@ -28,30 +28,21 @@ Ext.define('Ext.ux.ModalGrid', {
         // CSS?
         // http://www.sencha.com/forum/showthread.php?57130-Toolbar-button-style
         // http://trac.geoext.org/browser/ext/3.1.1/resources/css/theme-access/toolbar.css?rev=1907
-        // xtype: 'tbbutton',
-        // cls: 'x-btn-text-icon',
-        // icon: 'images/bomb.png',
-        // text: 'Tha Bomb',
-        // id: 'gear',
-        type:'toggle',
+        cls: 'x-tool-plus',
+        type:'plus',
         pressed: true,
-        // tooltip: 'Add',
-        // hidden: false,
+        tooltip: 'Add',
         handler: function(event, toolEl, panel) {
             var mf = this.up("ModalGrid").modalForm;
             var grid = this.up("ModalGrid");
-
             var gridModel = grid.store.getProxy().getModel();
             var blankItem = Ext.create(gridModel, {});
             var lastItem = grid.getStore().add(blankItem);    
             rec = grid.getStore().last();
-            
             mf.getComponent("ModalGridFormPanel").form.reset();
             mf.getComponent("ModalGridFormPanel").loadRecord(rec);                    
             mf.show();
-            
-            // mf.isNew = true;
-        },
+        }
     }], 
 
     // showModalForm: function(isNew, record) {
@@ -99,7 +90,8 @@ Ext.define('Ext.ux.ModalGrid', {
                 tooltip: 'Edit',
                 handler: function(grid, rowIndex, colIndex) {
                     mf.isNew = false;
-                    var rec = grid.getStore().getAt(rowIndex);    
+                    var rec = grid.getStore().getAt(rowIndex); 
+                    Ext.getCmp('editPanel').config.inEdit = true;
                     that.modalForm.getComponent("ModalGridFormPanel").form.reset();
                     that.modalForm.getComponent("ModalGridFormPanel").loadRecord(rec);                    
                     that.modalForm.show();
@@ -120,7 +112,7 @@ Ext.define('Ext.ux.ModalGrid', {
         });
         
         this.headerCt.insert(this.columns.length, column);
-    },
+    }
 });
 
 // ModalGridEditor is the Modal Window which is launched when you "add" a new item 
@@ -135,7 +127,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
     modal: true,
     centered: true,
     itemId: 'ModalGridWindow',
-    title: 'Edit Modal Grid',
+    title: 'Drug Information',
     closeAction: 'hide',    // TODO: actually delete on hide? memory hog in background?
     initComponent:function () {
         this.callParent(arguments);
@@ -186,6 +178,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
                 xtype: 'button',
                 text: 'Save',
                 handler: function () {
+                    this.mun(Ext.getBody(), 'mousedown', this.checkCloseClick, this);
                     var me = this.getComponent("ModalGridFormPanel").form;
                     var rec = me.getRecord();
                     var newValues = me.getValues();
@@ -196,9 +189,9 @@ Ext.define('Ext.ux.ModalGridEditor', {
                     // http://stackoverflow.com/questions/558981/iterating-through-list-of-keys-for-associative-array-in-json
                     var keys = [];
                     for (var key in newValues) {
-                      if (newValues.hasOwnProperty(key)) {
-                        keys.push(key);
-                      }
+                        if (newValues.hasOwnProperty(key)) {
+                            keys.push(key);
+                        }
                     }
 
                     // Update value for all items
@@ -210,6 +203,7 @@ Ext.define('Ext.ux.ModalGridEditor', {
 
                     console.log("Save");
                     this.hide();
+                    Ext.getCmp('editPanel').config.inEdit = false;
                 },
                 scope: this
             }]

@@ -89,7 +89,7 @@ Ext.define('RaxaEmr.Pharmacy.view.addPatient', {
         width: 260,
         id: 'doctor',
         fieldLabel: 'Doctor Name',
-        store: Ext.create('RaxaEmr.Pharmacy.store.Doctors'),
+        store: 'Doctors',
         displayField: 'display',
         allowBlank: false,
         x: ADDPATIENTSECONDCOLUMNXPOSITION,

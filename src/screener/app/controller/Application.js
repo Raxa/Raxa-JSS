@@ -60,6 +60,7 @@ Ext.define("Screener.controller.Application", {
     'Screener.view.VitalsView',
     'Screener.view.VitalsForm',
     'Screener.view.Main',
+    'Screener.view.VitalViewListener'
     ],
     models: [
     'Screener.model.Person', 
@@ -526,7 +527,8 @@ Ext.define("Screener.controller.Application", {
                 names: [{
                     givenName: formp.givenname,
                     familyName: formp.familyname
-                }] 
+                }],
+                age: formp.patientAge
             };
             if ( formp.patientAge !== "" && formp.patientAge.length > 0  ) {
                 newPatient.age = formp.patientAge ;   
@@ -918,7 +920,7 @@ Ext.define("Screener.controller.Application", {
             };
 
             console.log("Creating Obs for uuid types...");
-            v = Ext.getCmp("vitalsForm").getValues();
+            var v = Ext.getCmp("vitalsForm").getValues();
             createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField[0]);
             createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField[0]);
             createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField[0]);
