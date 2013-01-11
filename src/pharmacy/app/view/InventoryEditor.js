@@ -38,7 +38,7 @@ Ext.define('RaxaEmr.Pharmacy.view.InventoryEditor', {
         id: 'inventoryEditorLocationPicker',
         fieldLabel: 'Location',
         store: 'Locations',
-        displayField: 'display',
+        displayField: 'name',
         valueField: 'uuid',
         emptyText: 'Not Received Yet'
     },

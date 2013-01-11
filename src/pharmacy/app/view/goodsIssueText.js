@@ -58,7 +58,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueText', {
         queryMode: 'local',
         hideTrigger: true,
         forceSelection: true,
-        displayField: 'display',
+        displayField: 'name',
         valueField: 'uuid',
         emptyText: 'Location'
     }]

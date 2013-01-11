@@ -292,13 +292,15 @@ Ext.define('RaxaEmr.controller.Session', {
         localStorage.setItem("username", username);
 
         if (username === "") {
-            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankusername'));
+            Ext.Msg.alert('Please Enter Username');
+            // Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankusername'));
             return;
         }
 
         var password = Ext.getCmp('passwordID').getValue();
         if (password === "") {
-            Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankpassword'));
+            Ext.Msg.alert('Please Enter Password');
+            // Ext.Msg.alert(Ext.i18n.appBundle.getMsg('RaxaEmr.controller.session.blankpassword'));
             return;
         }
 

@@ -57,7 +57,8 @@ var RaxaEmr_Pharmacy_Controller_Vars = {
         ORDERED: 'ordered',
         SENT: 'sent',
         PRESCRIBED: 'prescribed',
-        OUT: 'out'
+        OUT: 'out',
+        EXPIRED: 'expired'
     },
     
     DEFAULT_STOCK_CENTER_LOCATION_TAG: "Default Stock Center",
@@ -272,7 +273,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 click: this.submitNewDrug
             },
             "addDrug button[action=cancelNewDrug]": {
-                click: this.newDrug
+                click: this.cancelNewDrug
             },
 
             ////////////////////////////
@@ -1012,6 +1013,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 // Get index of drug in store
                 var drugIndex = Ext.getStore('allDrugs').find('text', receipts.items[i].data.drugName);
                 // Create drug inventory model
+                var expiryDate = new Date(receipts.items[i].data.expiryDate + ' GMT-0600');
                 drugInventories.push({
                     status: RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE,
                     // Get drug uuid
@@ -1019,7 +1021,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                     quantity: receipts.items[i].data.quantity,
                     batch: receipts.items[i].data.batch,
                     originalQuantity: receipts.items[i].data.quantity,
-                    expiryDate: receipts.items[i].data.expiryDate,
+                    expiryDate: Util.Datetime(expiryDate),
                     roomLocation: receipts.items[i].data.roomLocation,
                     location: receiptLocationUuid,
                     supplier: receipts.items[i].data.supplier
@@ -1069,21 +1071,15 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
     
     // Generate pop-up which allows user to add a new drug
     newDrug : function() {
-        if(Ext.getCmp('addDrug').isHidden()){
-            Ext.getCmp('addDrug').show();
-            var x = Ext.getCmp('pharmacyTopBar').x + Ext.getCmp('pharmacyTopBar').width - Ext.getCmp('alertPanel').width;
-            Ext.getCmp('newDrugButton').setText('Close');
-        }else{
-            Ext.getCmp('addDrug').hide();
-            Ext.getCmp('newDrugButton').setText('New Drug');
-            Ext.getCmp('newDrugButton').setUI('default');
-        }
+        Ext.getCmp('addDrug').show();
+    },
+    
+    cancelNewDrug : function() {
+        Ext.getCmp('addDrug').hide();
     },
     
     submitNewDrug: function() {
         Ext.getCmp('addDrug').hide();
-        Ext.getCmp('newDrugButton').setText('New Drug');
-        Ext.getCmp('newDrugButton').setUI('default');
         //getting drug concept from OpenMRS
         // TODO: We shouldn't fetch the drug concept dynamically every time we post a drug
         //  Instead, it should be one of the concepts we fetch in startup.js and util.js during login
@@ -1405,6 +1401,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
         var issuedispenseLocationString = Ext.getCmp("issuedispenseLocationPicker").rawValue;
         for (var i = 0; i < issues.items.length; i++) {
             var drugIndex = Ext.getStore('allDrugs').find('text', issues.items[i].data.drugName);
+            var expiryDate = new Date(issues.items[i].data.expiryDate + ' GMT-0600');
             drugInventories.push({
                 status: RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.SENT,
                 batch: issues.items[i].data.batch,
@@ -1412,7 +1409,7 @@ Ext.define("RaxaEmr.Pharmacy.controller.prescription", {
                 drug: Ext.getStore('allDrugs').getAt(drugIndex).data.uuid,
                 quantity: issues.items[i].data.quantity,
                 originalQuantity: issues.items[i].data.quantity,
-                expiryDate: issues.items[i].data.expiryDate,
+                expiryDate: Util.Datetime(expiryDate),
                 location: issuedispenseLocationUuid
             });
             if(purchaseOrderUuid!==null){

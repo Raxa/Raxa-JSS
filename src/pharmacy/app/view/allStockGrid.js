@@ -40,16 +40,7 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     }),
     columns: [
     {
-        xtype: 'gridcolumn',
-        text: 'Status',
-        dataIndex: 'status',
-        width: 60
-    },
-    {
-        xtype: 'gridcolumn',
-        text: 'Type',
-        dataIndex: 'dosageForm',
-        width: 60
+        xtype: 'rownumberer'
     },
     {
         xtype: 'gridcolumn',
@@ -79,7 +70,13 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
         xtype: 'gridcolumn',
         text: 'Days',
         width: 45,
-        dataIndex: 'months',
+        renderer: function(value){
+            if(value <= 0){
+                return '-';
+            }
+            return value;
+        },
+        dataIndex: 'days',
         useNull: true
     },
     {

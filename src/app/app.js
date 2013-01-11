@@ -1,10 +1,11 @@
 // Enable dynamic dependency to be able find files at appropriate locations automatically
-Ext.Loader.setConfig({
-    enabled: true,
-    paths: {
-        'Ext.i18n': 'lib/i18n' //Path to the i18n library
-    }
-});
+// Ext.Loader.setConfig({
+//     enabled: true,
+//     paths: {
+//         'Ext.i18n': 'lib/i18n' //Path to the i18n library
+//     }
+// });
+
 
 
 // Main application entry point

@@ -1,8 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 Ext.define("Screener.view.VitalViewListener", {
     xtype: 'vitalsListenerForm',
     extend: 'Ext.field.Number',

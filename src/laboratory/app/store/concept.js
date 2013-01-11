@@ -22,11 +22,7 @@ Ext.define('Laboratory.store.concept', {
     proxy: {
         type: 'rest',
         url: '',
-        headers: {
-            "Accept": "application/json",
-            "Authorization": "Basic " + window.btoa("admin:Admin123"),
-            "Content-Type": "application/json"
-        },
+        headers: Util.getBasicAuthHeaders(),
         reader: {
             type: 'json',
             root: 'setMembers'

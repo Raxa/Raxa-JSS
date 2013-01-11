@@ -8,6 +8,8 @@ Ext.define("Screener.view.VitalsView", {
     requires: ['Screener.view.VitalsForm'],
     xtype: 'vitalslist',
     config: {
+        // TODO:
+        // scroll: false,
         layout: 'hbox',
         title: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.VitalsView.add_vit'),
         style: 'background:#96d2f7',

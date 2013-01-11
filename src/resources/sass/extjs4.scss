@@ -3,32 +3,31 @@
 $include-default: false;
 
 // Insert your custom variables here.
-$base-color: #5d6f7c;
-$panel-body-background-color: #ececec;
-$toolbar-background-color: #5D6F7C;
+//$base-color: #5f3a42;
+//$panel-body-background-color: #ececec;
+//$toolbar-background-color: #5D6F7C;
 
+//$button-default-base-color: #5f3a42;
+//$button-default-background-gradient: color_stops(#5f3a42, #1574c0);
+//$button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
+//$button-default-color: #FFFFFF;
 
-$button-default-base-color: #5d6f7c;
-$button-default-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
-$button-default-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
-$button-default-color: #FFFFFF;
-
-$button-toolbar-base-color: #5d6f7c;
-$button-toolbar-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
-$button-toolbar-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
-$button-toolbar-color: #FFFFFF;
+//$button-toolbar-base-color: #5d6f7c;
+//$button-toolbar-background-gradient: color_stops(#aec4d1, #5d6f7c, #aec4d1);
+//$button-toolbar-background-gradient-over:color_stops(#5d6f7c, #aec4d1, #5d6f7c);
+//$button-toolbar-color: #FFFFFF;
 
 //button color toolbar: 2c4d84
 
 
 
 //$button-default-background-color-over: #FFFFFF;
-$button-medium-font-size: 20px;
-$button-small-font-size: ceil 20px;
-$button-large-font-size: ceil 20px;
+//$button-medium-font-size: 20px;
+//$button-small-font-size: ceil 20px;
+//$button-large-font-size: ceil 20px;
 
 //fieldset sizes
-$fieldset-header-font-size: 17px;
+//$fieldset-header-font-size: 17px;
 //$form-field-border-radius: 4px;
 //$form-field-font-weight: bold;
 
@@ -37,12 +36,12 @@ $fieldset-header-font-size: 17px;
 //$toolbar-text-font-family: $font-family;
 //$toolbar-text-font-size: ceil($font-size * .9) !default; //11px
 //$toolbar-text-font-weight: normal !default;
-$toolbar-text-color: #FFFFFF;
+//$toolbar-text-color: #FFFFFF;
 //$toolbar-text-padding: 3px 4px 0 4px !default;
 //$toolbar-text-line-height: 16px !default;
 
-
 @import 'ext4/default/all';
+
 
 // You may remove any of the following modules that you
 // do not use in order to create a smaller css file.
@@ -76,160 +75,15 @@ $toolbar-text-color: #FFFFFF;
 
 
 @include extjs-button-ui(
-    'raxa-orange-small',
+    'raxa-side-panel-small',
 
-    $border-radius: $button-small-border-radius,
-    $border-width: $button-small-border-width,  
-    $border-color: #ee7136,
-    $border-color-over: #ee7136,
-    $border-color-focus: #ee7136,
-    $border-color-pressed: #ee7136,
-    $border-color-disabled: black,
-    $padding: $button-small-padding,
-    $text-padding: $button-small-text-padding,
-
-    $background-color: #ee7136,
-    $background-color-over: #ee7136,
-    $background-color-focus: #ee7136,
-    $background-color-pressed: #ee7136,
-    $background-color-disabled: black,
-
-    $background-gradient: color_stops(#e8a795, #ee7136, #e8a795),
-    $background-gradient-over: color_stops(#ee7136, #e8a795, #ee7136),
-    $background-gradient-focus: color_stops(#ee7136, #e8a795, #ee7136),
-    $background-gradient-pressed: color_stops(#ee7136, #e8a795, #ee7136),
-    $background-gradient-disabled: $button-default-background-gradient-disabled,
-
-    $color: $button-default-color,
-    $color-over: $button-default-color-over,
-    $color-focus: $button-default-color-focus,
-    $color-pressed: $button-default-color-pressed,
-    $color-disabled: $button-default-color-disabled,
-
-    $font-size: $button-small-font-size,
-    $font-size-over: $button-small-font-size-over,
-    $font-size-focus: $button-small-font-size-focus,
-    $font-size-pressed: $button-small-font-size-pressed,
-    $font-size-disabled: $button-small-font-size-disabled,
-    $font-weight: $button-small-font-weight,
-    $font-weight-over: $button-small-font-weight-over,
-    $font-weight-focus: $button-small-font-weight-focus,
-    $font-weight-pressed: $button-small-font-weight-pressed,
-    $font-weight-disabled: $button-small-font-weight-disabled,
-    $font-family: $button-small-font-family,
-    $font-family-over: $button-small-font-family-over,
-    $font-family-focus: $button-small-font-family-focus,
-    $font-family-pressed: $button-small-font-family-pressed,
-    $font-family-disabled: $button-small-font-family-disabled,
-    $icon-size: $button-small-icon-size
-);
-
-
-
-
-@include extjs-button-ui(
-    'raxa-aqua-small',
-
-    $border-radius: $button-small-border-radius,
-    $border-width: $button-small-border-width,  
-    $border-color: #009682,
-    $border-color-over: #009682,
-    $border-color-focus: #009682,
-    $border-color-pressed: #009682,
-    $border-color-disabled: black,
-    $padding: $button-small-padding,
-    $text-padding: $button-small-text-padding,
-
-    $background-color: #009682,
-    $background-color-over: #009682,
-    $background-color-focus: #009682,
-    $background-color-pressed: #009682,
-    $background-color-disabled: black,
-
-    $background-gradient: color_stops(#5bbba8, #009682, #5bbba8),
-    $background-gradient-over: color_stops(#009682, #5bbba8, #009682),
-    $background-gradient-focus: color_stops(#009682, #5bbba8, #009682),
-    $background-gradient-pressed: color_stops(#009682, #5bbba8, #009682),
-    $background-gradient-disabled: $button-default-background-gradient-disabled,
-
-    $color: $button-default-color,
-    $color-over: $button-default-color-over,
-    $color-focus: $button-default-color-focus,
-    $color-pressed: $button-default-color-pressed,
-    $color-disabled: $button-default-color-disabled,
-
-    $font-size: $button-small-font-size,
-    $font-size-over: $button-small-font-size-over,
-    $font-size-focus: $button-small-font-size-focus,
-    $font-size-pressed: $button-small-font-size-pressed,
-    $font-size-disabled: $button-small-font-size-disabled,
-    $font-weight: $button-small-font-weight,
-    $font-weight-over: $button-small-font-weight-over,
-    $font-weight-focus: $button-small-font-weight-focus,
-    $font-weight-pressed: $button-small-font-weight-pressed,
-    $font-weight-disabled: $button-small-font-weight-disabled,
-    $font-family: $button-small-font-family,
-    $font-family-over: $button-small-font-family-over,
-    $font-family-focus: $button-small-font-family-focus,
-    $font-family-pressed: $button-small-font-family-pressed,
-    $font-family-disabled: $button-small-font-family-disabled,
-    $icon-size: $button-small-icon-size
+    $border-radius: 0
 );
 
 @include extjs-button-ui(
-    'raxa-white-small',
+    'raxa-side-panel-large',
 
-    $border-radius: $button-small-border-radius,
-    $border-width: $button-small-border-width,  
-    $border-color: #FFFFFF,
-    $border-color-over: #FFFFFF,
-    $border-color-focus: #FFFFFF,
-    $border-color-pressed: #FFFFFF,
-    $border-color-disabled: black,
-    $padding: $button-small-padding,
-    $text-padding: $button-small-text-padding,
-
-    $background-color: #FFFFFF,
-    $background-color-over: #FFFFFF,
-    $background-color-focus: #FFFFFF,
-    $background-color-pressed: #FFFFFF,
-    $background-color-disabled: black,
-
-    $background-gradient: color_stops(#FFFFFF, #DDDDDD, #FFFFFF),
-    $background-gradient-over: color_stops(#5BBBA8, #DDDDDD, #5BBBA8),
-    $background-gradient-focus: color_stops(#FFFFFF, #DDDDDD, #FFFFFF),
-    $background-gradient-pressed: color_stops(#FFFFFF, #DDDDDD, #FFFFFF),
-    $background-gradient-disabled: $button-default-background-gradient-disabled,
-
-    $color: $button-default-color,
-    $color-over: $button-default-color-over,
-    $color-focus: $button-default-color-focus,
-    $color-pressed: $button-default-color-pressed,
-    $color-disabled: $button-default-color-disabled,
-
-    $font-size: $button-small-font-size,
-    $font-size-over: $button-small-font-size-over,
-    $font-size-focus: $button-small-font-size-focus,
-    $font-size-pressed: $button-small-font-size-pressed,
-    $font-size-disabled: $button-small-font-size-disabled,
-    $font-weight: $button-small-font-weight,
-    $font-weight-over: $button-small-font-weight-over,
-    $font-weight-focus: $button-small-font-weight-focus,
-    $font-weight-pressed: $button-small-font-weight-pressed,
-    $font-weight-disabled: $button-small-font-weight-disabled,
-    $font-family: $button-small-font-family,
-    $font-family-over: $button-small-font-family-over,
-    $font-family-focus: $button-small-font-family-focus,
-    $font-family-pressed: $button-small-font-family-pressed,
-    $font-family-disabled: $button-small-font-family-disabled,
-    $icon-size: $button-small-icon-size
-);
-
-
-@include extjs-button-ui(
-    'raxa-orange-large',
-
-    $border-radius: $button-large-border-radius,
+    $border-radius: 0,
     $border-width: $button-large-border-width,  
     $border-color: #ee7136,
     $border-color-over: #ee7136,
@@ -274,134 +128,11 @@ $toolbar-text-color: #FFFFFF;
     $font-family-disabled: $button-large-font-family-disabled,
     $icon-size: $button-large-icon-size
 );
-
-
-
-
-@include extjs-button-ui(
-    'raxa-aqua-large',
-
-    $border-radius: $button-large-border-radius,
-    $border-width: $button-large-border-width,  
-    $border-color: #009682,
-    $border-color-over: #009682,
-    $border-color-focus: #009682,
-    $border-color-pressed: #009682,
-    $border-color-disabled: black,
-    $padding: $button-large-padding,
-    $text-padding: $button-large-text-padding,
-
-    $background-color: #009682,
-    $background-color-over: #009682,
-    $background-color-focus: #009682,
-    $background-color-pressed: #009682,
-    $background-color-disabled: black,
-
-    $background-gradient: color_stops(#5bbba8, #009682, #5bbba8),
-    $background-gradient-over: color_stops(#009682, #5bbba8, #009682),
-    $background-gradient-focus: color_stops(#009682, #5bbba8, #009682),
-    $background-gradient-pressed: color_stops(#009682, #5bbba8, #009682),
-    $background-gradient-disabled: $button-default-background-gradient-disabled,
-
-    $color: $button-default-color,
-    $color-over: $button-default-color-over,
-    $color-focus: $button-default-color-focus,
-    $color-pressed: $button-default-color-pressed,
-    $color-disabled: $button-default-color-disabled,
-
-    $font-size: $button-large-font-size,
-    $font-size-over: $button-large-font-size-over,
-    $font-size-focus: $button-large-font-size-focus,
-    $font-size-pressed: $button-large-font-size-pressed,
-    $font-size-disabled: $button-large-font-size-disabled,
-    $font-weight: $button-large-font-weight,
-    $font-weight-over: $button-large-font-weight-over,
-    $font-weight-focus: $button-large-font-weight-focus,
-    $font-weight-pressed: $button-large-font-weight-pressed,
-    $font-weight-disabled: $button-large-font-weight-disabled,
-    $font-family: $button-large-font-family,
-    $font-family-over: $button-large-font-family-over,
-    $font-family-focus: $button-large-font-family-focus,
-    $font-family-pressed: $button-large-font-family-pressed,
-    $font-family-disabled: $button-large-font-family-disabled,
-    $icon-size: $button-large-icon-size
-);
-
-
-@include extjs-panel-ui(
-    'raxa-panel-not-rounded',
-    $ui-body-background-color: #c9cdd0,
-    $ui-body-font-size: 16px
-);
-
-
-@include extjs-panel-ui(
-    'raxa-panel',
-    $ui-border-radius: 4px,
-    $ui-body-background-color: #c9cdd0,
-    $ui-body-font-size: 16px
-);
-
-
-#custom-slider {
-    width:214px;
-    padding-top:6px;
-    background-image:url(img/ticks.gif);
-}
-
-.raxa-form-field{
-  -webkit-border-radius: 5px 5px;
-  -moz-border-radius: 5px 5px;
-  -ms-border-radius: 5px 5px;
-  -o-border-radius: 5px 5px;
-  border-radius: 5px 5px;
-
-};
 
 // This line changes the location of your images when creating UIs to be relative instead of within the ExtJS directory.
 // You MUST set this to true/string value if you are creating new UIs + supporting legacy browsers.
 // This only applies to new UIs. It does not apply to default component images (i.e. when changing $base-color)
 // The value can either be true, in which case the image path will be "../images/"
 // or a string, of where the path is
-$relative-image-path-for-uis: true; // defaults to "../images/" when true
+//$relative-image-path-for-uis: true; // defaults to "../images/" when true
  
-
-.x-list.x-list-indexed .x-list-disclosure{margin-right:1em}
-.x-list .x-item-selected .x-list-disclosure{background:#fff none}
-.x-list .x-list-item{position:relative;color:black}
-.x-list .x-list-item .x-list-item-label{min-height:3.9em;padding:0.65em 0.8em}
-.x-list .x-list-item.x-item-pressed .x-list-item-label{background:#e6eff5 none}
-.x-list .x-list-item.x-item-selected .x-list-item-label{background-image:none;background-color:white;background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(3%, #ffffff), color-stop(100%, #f2f2f2));background-image:-webkit-linear-gradient(top, #ffffff,#ffffff 3%,#f2f2f2);background-image:linear-gradient(top, #ffffff,#ffffff 3%,#f2f2f2);color:#262626;text-shadow:rgba(255, 255, 255, 0.25) 0 0.08em 0}
-.x-list-header{position:relative}
-.x-list-header-swap{position:absolute;left:0;width:100%;z-index:1}
-.x-ios .x-list-header-swap{-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0)}
-.x-list-normal .x-list-header{background-image:none;background-color:#5ab5f5;background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2d6f9), color-stop(3%, #72c0f6), color-stop(100%, #42abf4));background-image:-webkit-linear-gradient(top, #a2d6f9,#72c0f6 3%,#42abf4);background-image:linear-gradient(top, #a2d6f9,#72c0f6 3%,#42abf4);color:#0a6aac;text-shadow:rgba(255, 255, 255, 0.25) 0 0.08em 0;border-top:1px solid #5ab5f5;border-bottom:1px solid #0d87dc;font-weight:bold;font-size:0.8em;padding:0.2em 1.02em;text-shadow:rgba(255, 255, 255, 0.25) 0 0.08em 0}
-.x-list-normal .x-list-item .x-list-item-label{border-top:1px solid #dedede}
-.x-list-normal .x-list-item:last-child .x-list-item-label{border-bottom:1px solid #dedede}
-.x-list-normal .x-list-item:first-child .x-list-item-label{border-top:0}
-.x-list-normal .x-list-item.x-item-pressed .x-list-item-label{border-top-color:#e6eff5;background-color:#e6eff5}
-.x-list-normal .x-list-item.x-item-selected .x-list-item-label{border-top-color:white;border-bottom-color:#d9d9d9}
-.x-list-round .x-scroll-view{background-color:#EEEEEE !important}
-
-.x-contacts .x-list-item-label{font-weight:bold}
-.x-contacts .x-list-item-label span{display:block;font-size:14px;font-weight:normal;color:#666}
-.x-contacts.x-list{background:#EEEEEE}
-.x-contacts .x-list-item{height:70px}
-.x-contact .x-list-item > *{float:left}
-.x-contacts .headshot{float:left;height:50px;width:50px;margin-right:10px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 2px rgba(0, 0, 0, 0.6)}
-.x-contacts .property{float:left;height:56px;margin-right:2px;background-size:cover;background-position:center center;background:#ddd;-webkit-border-radius:0px;border-radius:4px;-webkit-box-shadow:inset 0 0 5px rgba(0, 0, 0, 0.8)}
-.x-contacts .x-item-pressed,.x-contacts .x-item-selected{border-top-color:#D1D1D1 !important}
-.x-show-contact{background:#EEEEEE}
-.x-show-contact.x-list-item{background:#EEEEEE}
-.x-show-contact .top{padding:15px;height:80px}
-.x-show-contact .top > *{float:left}
-.x-show-contact .top .headshot{height:50px;width:50px;margin-right:10px;background-size:cover;background-position:center center;-webkit-border-radius:10px;border-radius:10px;border:1px solid #444;-webkit-box-shadow:inset 0 0 2px rgba(0, 0, 0, 0.4)}
-.x-show-contact .top .name{width:195px;padding-top:0;font-size:22px;font-weight:bold}
-.x-show-contact .top .name span{display:block;font-size:14px;font-weight:normal;color:#666}
-.x-show-contact .top .name a:link{color:#3f9b26;text-decoration:none}
-.x-show-contact .top .name_small{width:195px;padding-top:10px;font-size:22px;font-weight:bold}
-.x-show-contact .top .name_small span{display:block;font-size:14px;font-weight:normal;color:#666}
-.x-show-contact .top .name_small a:link{color:#3f9b26;text-decoration:none}
-.x-show-contact .top .name_right{width:195px;padding-top:10px;font-size:22px;font-weight:bold;text-align:right}
-.x-show-contact .top .name_right span{display:block;font-size:14px;font-weight:normal;color:#666}
-.x-show-contact .top .name_right a:link{color:#3f9b26;text-decoration:none}
