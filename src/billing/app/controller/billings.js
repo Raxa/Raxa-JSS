@@ -18,7 +18,7 @@ var bal;// cumulative balance remaining to be paid
 var global_amount=0;// total amount = current amount+previous balance
 var tot1=0;// current total of the bill
 var global_row;
-var BILL_PAGES = { // not used
+var BILL_PAGES = {    // not used
     MAIN: {
         value: 0,
         name: "main"
@@ -34,7 +34,7 @@ Ext.define("RaxaEmr.billing.controller.billings", {
     views: ['RaxaEmr.billing.view.EditItem', 'RaxaEmr.billing.view.Viewport','RaxaEmr.billing.view.currentbill','RaxaEmr.billing.view.main','RaxaEmr.billing.view.discount','RaxaEmr.billing.view.previousBills','RaxaEmr.billing.view.currentBill_main', 'RaxaEmr.billing.view.print_Final','RaxaEmr.billing.view.searchPatient','RaxaEmr.billing.view.previousShow','RaxaEmr.billing.view.AddItem', 'SearchPatient.view.SearchPanel'],
     stores :['RaxaEmr.billing.store.itemS','RaxaEmr.billing.store.billingstore','RaxaEmr.billing.store.itemStore','RaxaEmr.billing.store.billingItemstore','RaxaEmr.billing.store.previousshow'],
 
-    init: function() {
+    init: function () {
         console.log('Initialized Users! This happens before the Application launch function is called');
         this.control({
             "currentBill_main BillingSearchPatient > grid": {
@@ -47,8 +47,8 @@ Ext.define("RaxaEmr.billing.controller.billings", {
             "EditItem button[action=editItem]": {
                 click: this.editItem // called when Edit button in EditItem.js is clicked. Used to store the new values of the item.
             },
-            "EditItem button[action=cancelEdit]": {
-                click: this.back2 // called when cancel button is clicked in EditItem.js.Just returns to CurrentBill_main.js
+            "EditItem button[action=cancelEdit]":{
+                click :this.back2 // called when cancel button is clicked in EditItem.js.Just returns to CurrentBill_main.js
             },
             "currentBill_main button[action=findPatient1]": {
                 click: this.displayForm // called when clicked on AddItem button in currentBill_main.js.Just redirects to AddItem.js
@@ -71,8 +71,8 @@ Ext.define("RaxaEmr.billing.controller.billings", {
                 //  click: this.postbill
                 click: this.addItem // called when ADD button in AddItem.js is Clicked.Used to add the values of teh Item in the grid in currentBill_main.js
             },
-            "AddItem button[action=cancel]": {
-                click: this.back1 // called when cancel button is clicked in AddItem.js.Just returns to CurrentBill_main.js
+            "AddItem button[action=cancel]":{
+                click :this.back1 // called when cancel button is clicked in AddItem.js.Just returns to CurrentBill_main.js
             },
             'previousBills': {
                 showBill: this.onShowBill // called when Show Icon in front of a grid Item in PreviousBills.js is clicked. Redirects to previousShow.js 
@@ -99,60 +99,67 @@ Ext.define("RaxaEmr.billing.controller.billings", {
             
         }
         */
-        for(var i = 0; i < billitem.items.length; i++) {
+        for (var i = 0; i < billitem.items.length; i++) {
 
 
             // putting values in the itemArray from data stored in itemStore.js
             itemArray.push({
-                name: billitem.items[i].data.item_name,
-
-
-                description: billitem.items[i].data.category,
+                name: billitem.items[i].data.item_name ,
+                  
+                    
+                description: billitem.items[i].data.category ,
                 quantity: billitem.items[i].data.quantity,
-                value: billitem.items[i].data.price,
+                value : billitem.items[i].data.price,
                 discount: billitem.items[i].data.discount,
-                discountReason: billitem.items[i].data.discountReason
-                // adjusts : adjustArray[i]
+                discountReason : billitem.items[i].data.discountReason
+            // adjusts : adjustArray[i]
             });
-
+                
         }
         var stat; // used to set the status of the bill depending the amount paid by the Patient
-        var tot1 = Ext.getCmp('current_amount').getValue();
-        console.log("j" + tot1);
-        if(bal == 0) {
-            stat = 'Paid'; // if bill is fully paid
-        } else {
-            stat = 'Pending'; // if bill is partially paid
+        var tot1= Ext.getCmp('current_amount').getValue();
+        console.log("j"+tot1);
+        if(bal==0)
+        {
+            stat=  'Paid'; // if bill is fully paid
+  
         }
-
+                
+        else
+        {
+            stat = 'Pending';// if bill is partially paid
+                        
+        }
+        
         //  var balance = Ext.getComp('balance1').getValue();
-        console.log("balance is " + bal);
+        
+        console.log("balance is "+bal);
         // creating model and putting values in it. 
-        var newDrug = Ext.create('RaxaEmr.billing.model.billModel', {
-            status: stat,
+        var newDrug = Ext.create('RaxaEmr.billing.model.billModel',{
+            status:stat,
             name: 'Successful',
-            balance: bal,
-
-            patientId: c,
-            description: 'RAXA Bill',
-            providerId: '1',
-            // static value for the tiem being.
-            billItems: itemArray,
-            totalAmount: tot1
-
+            balance:bal,
+      
+            patientId:c,
+            description :'RAXA Bill',
+            providerId:'1',// static value for the tiem being.
+            billItems :itemArray,
+            totalAmount:tot1
+            
         });
-
-
+    
+        
         var store = this.getStore('billingstore');
         console.log(store.getCount());
-        store.add(newDrug); // post call in the store(billingstore)
+        store.add(newDrug);// post call in the store(billingstore)
         store.sync();
-
-
-        this.printbill(); // opening print screen after saving the bill.
-
-
-
+     
+     
+        this.printbill();   // opening print screen after saving the bill.
+         
+     
+     
+   
     },
     
     setPatientFields: function(patient){

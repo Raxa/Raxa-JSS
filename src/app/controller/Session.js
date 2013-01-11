@@ -91,6 +91,7 @@ Ext.define('RaxaEmr.controller.Session', {
     /**
      *Stores information about the user who is logged in
      */
+// TODO: Store entire user state into the localStorage (or a cookie); verify it in database
     storeUserInfo: function () {
         Ext.getCmp('mainView').setMasked({
             xtype: 'loadmask',
@@ -109,6 +110,7 @@ Ext.define('RaxaEmr.controller.Session', {
                 console.log(userInfoJson)
                 //only adding necessary fields for localStorage
                 var privilegesArray = [];
+                var i=0;
                 if(userInfoJson.privileges){
                     for (i = 0; i < userInfoJson.privileges.length; i++) {
                         privilegesArray[i] = {
@@ -138,6 +140,16 @@ Ext.define('RaxaEmr.controller.Session', {
                 }
                 else{
                     localStorage.setItem('location', location);
+                    var presentLocation = Ext.getStore('locationStore').getAt(Ext.getStore('locationStore').findExact('uuid',location));
+                    for(var k = 0; k< presentLocation.raw.attributes.length; k++){
+                    if(presentLocation.raw.attributes[k].display.indexOf('headerPrescription')>=0 && presentLocation.raw.attributes[k].value ){
+                        localStorage.setItem('headerPrescription',presentLocation.raw.attributes[k].value);
+                        }
+
+                    if(presentLocation.raw.attributes[k].display.indexOf('headerAddressPrescription')>=0 && presentLocation.raw.attributes[k].value ){
+                        localStorage.setItem('headerAddressPrescription',presentLocation.raw.attributes[k].value);
+                        }
+                    }
                 }
                 this.loginSuccess();
             },

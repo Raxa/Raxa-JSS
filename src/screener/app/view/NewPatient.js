@@ -28,6 +28,7 @@ Ext.define("Screener.view.NewPatient", {
         items: [{
             xtype: 'toolbar',
             docked: 'top',
+            id: 'newPatientToolbar',
             title: 'Add New Patient',
             items: [{
                 xtype: 'spacer'

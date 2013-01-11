@@ -7,7 +7,6 @@
 // });
 
 
-
 // Main application entry point
 Ext.application({
     name: 'RaxaEmr',

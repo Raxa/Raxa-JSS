@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.billing.view.currentBill_main', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.currentBill_main',
+    alias : 'widget.currentBill_main',
 
     title: 'RAXA',
     layout: {
@@ -12,7 +12,7 @@ Ext.define('RaxaEmr.billing.view.currentBill_main', {
 
     initComponent: function() {
         var me = this;
-        this.addEvents(['itemDelete'], ['itemEdit']);
+         this.addEvents(['itemDelete'],['itemEdit']);
         Ext.applyIf(me, {
             items: [
             {
@@ -224,27 +224,31 @@ Ext.define('RaxaEmr.billing.view.currentBill_main', {
                             width: 168,
                             text: 'Add Item',
                             action: 'findPatient1'
-                        }, {
+                        },
+                        {
                             xtype: 'button',
                             height: 22,
                             width: 168,
                             text: ' Save and Print Bill',
                             action: 'saveBill'
-                        }, {
+                        },
+                        {
                             xtype: 'button',
                             height: 22,
                             width: 168,
                             text: ' Pay bill',
                             action: 'payBill'
-                        }, {
+                        },
+                        {
                             xtype: 'textfield',
                             height: 20,
                             width: 168,
                             fieldLabel: 'Current Amount ',
-                            id: 'current_amount',
-                            value: 0,
-                            readOnly: true
-                        }, {
+                            id:'current_amount',
+                            value:0,
+                            readOnly:true
+                        },
+                        {
                             xtype: 'textfield',
                             height: 20,
                             width: 168,
@@ -259,9 +263,9 @@ Ext.define('RaxaEmr.billing.view.currentBill_main', {
                             height: 20,
                             width: 168,
                             fieldLabel: 'Total Amount ',
-                            id: 'total_amount',
-                            value: 0,
-                            readOnly: true
+                            id:'total_amount',
+                            value:0,
+                            readOnly:true
                         },
 
 
@@ -270,16 +274,17 @@ Ext.define('RaxaEmr.billing.view.currentBill_main', {
                             height: 20,
                             width: 168,
                             fieldLabel: 'Amount Paid ',
-                            id: 'amount_paid',
-                            value: 0
-                        }, {
+                            id:'amount_paid',
+                            value:0
+                        },
+                        {
                             xtype: 'textfield',
                             height: 20,
                             width: 168,
                             fieldLabel: 'Balance',
-                            id: 'balance1',
-                            value: 0,
-                            readOnly: true
+                            id:'balance1',
+                            value:0,
+                            readOnly:true
                         },
                         /*{
                             xtype: 'button',

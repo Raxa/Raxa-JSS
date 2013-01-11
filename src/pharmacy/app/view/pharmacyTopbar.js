@@ -139,6 +139,5 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                 });
             }
         }]
-    }
-    ]
+    }]
 })

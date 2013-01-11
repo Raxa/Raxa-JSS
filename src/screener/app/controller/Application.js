@@ -46,15 +46,13 @@ Ext.define("Screener.controller.Application", {
     'Screener.store.druglist',
     'Screener.store.encounterpost',
     'Screener.store.encounters',
-    'Screener.store.IdentifierType',
-    'Screener.store.Location',
     'Screener.store.NewPatients',   // Cant find this store
     'Screener.store.NewPersons',
     'Screener.store.PatientList',
     'Screener.store.Patients',
     'Screener.store.PatientSummary',
     'Screener.store.PostLists',
-    'Screener.model.observation',	
+    'Screener.model.observation',   
     'Screener.view.PharmacyForm', 
     'Screener.view.PatientListView',
     'Screener.view.VitalsView',
@@ -496,7 +494,7 @@ Ext.define("Screener.controller.Application", {
             height: '150px'
         });
     },
-	
+    
     // Removes last lab order form
     removeLabOrder: function () {
         if (lab_num > 0) {
@@ -527,10 +525,9 @@ Ext.define("Screener.controller.Application", {
                 names: [{
                     givenName: formp.givenname,
                     familyName: formp.familyname
-                }],
-                age: formp.patientAge
+                }]
             };
-            if ( formp.patientAge !== "" && formp.patientAge.length > 0  ) {
+            if ( formp.patientAge !== null) {
                 newPatient.age = formp.patientAge ;   
             }
             if( formp.dob !== "" && formp.dob.length > 0 ) {
@@ -539,13 +536,13 @@ Ext.define("Screener.controller.Application", {
             var newPatientParam = Ext.encode(newPatient);
             Ext.Ajax.request({
                 scope:this,
-                url: HOST + '/ws/rest/v1/person',
+                url: HOST + '/ws/rest/v1/raxacore/patient',
                 method: 'POST',
                 params: newPatientParam,
                 disableCaching: false,
                 headers: Util.getBasicAuthHeaders(),
                 success: function (response) {
-                    this.getidentifierstype(JSON.parse(response.responseText).uuid);
+                    this.sendEncounterData(JSON.parse(response.responseText).uuid, localStorage.regUuidencountertype, localStorage.screenerUuidlocation, localStorage.loggedInUser);
                 },
                 failure: function (response) {
                     Ext.Msg.alert('Error: unable to write to server. Enter all fields.')
@@ -558,57 +555,7 @@ Ext.define("Screener.controller.Application", {
             Ext.Msg.alert ("Error","Please Enter all the mandatory fields");
         }
     },
-      
-    // Get IdentifierType using IdentifierType store 
-    getidentifierstype: function (personUuid) {
-        var identifiers = Ext.create('Screener.store.IdentifierType')
-        identifiers.load({
-            scope: this,
-            callback: function(records, operation, success){
-                if(success){
-                    this.getlocation(personUuid,identifiers.getAt(0).getData().uuid)
-                }
-                else{
-                    Ext.Msg.alert("Error", Util.getMessageLoadError());
-                }
-            }
-        });
-    },
-    // Get Location using Location store
-    getlocation: function (personUuid, identifierType) {
-        var locations = Ext.create('Screener.store.Location')
-        locations.load({
-            scope: this,
-            callback: function(records, operation, success){
-                if(success){
-                    this.makePatient(personUuid,identifierType,locations.getAt(0).getData().uuid)
-                }
-                else{
-                    Ext.Msg.alert("Error", Util.getMessageLoadError());
-                }
-            }
-        });
-    },
-    // Creates a new patient using NewPatients store 
-    makePatient: function (personUuid, identifierType, location) {
-        var patient = Ext.create('Screener.model.NewPatient', {
-            person: personUuid,
-            identifiers: [{
-                identifier: Util.getPatientIdentifier().toString(),
-                identifierType: identifierType,
-                location: location,
-                preferred: true
-            }]
-        });
-        var PatientStore = Ext.create('Screener.store.NewPatients')
-        PatientStore.add(patient);
-        PatientStore.sync();
-        PatientStore.on('write', function () {
-            // TODO: https://raxaemr.atlassian.net/browse/TODO-67
-            // Need to add location to OpenMRS for screenerUuidlocation
-            this.sendEncounterData(personUuid, localStorage.regUuidencountertype, localStorage.screenerUuidlocation, localStorage.loggedInUser)
-        }, this)
-    },
+    
 
     // Show screen with patient list
     showPatients: function () {
@@ -921,12 +868,24 @@ Ext.define("Screener.controller.Application", {
 
             console.log("Creating Obs for uuid types...");
             var v = Ext.getCmp("vitalsForm").getValues();
-            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField[0]);
-            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField[0]);
-            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField[0]);
-            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField[0]);
-            createObs(localStorage.temperatureUuidconcept, v.temperatureField[0]); 
-            createObs(localStorage.pulseUuidconcept, v.pulseField[0]);
+            if(v.bloodOxygenSaturationField !== null) {
+            createObs(localStorage.bloodoxygensaturationUuidconcept, v.bloodOxygenSaturationField);
+            }
+            if(v.diastolicBloodPressureField !== null) {
+            createObs(localStorage.diastolicbloodpressureUuidconcept, v.diastolicBloodPressureField);
+            }
+            if(v.respiratoryRateField !== null) {
+            createObs(localStorage.respiratoryRateUuidconcept, v.respiratoryRateField);
+            }
+            if(v.systolicBloodPressureField !== null) {
+            createObs(localStorage.systolicbloodpressureUuidconcept, v.systolicBloodPressureField);
+            }
+            if(v.temperatureField !== null) {
+            createObs(localStorage.temperatureUuidconcept, v.temperatureField);
+            }
+            if(v.pulseField !== null) {
+            createObs(localStorage.pulseUuidconcept, v.pulseField);
+            }
             observations.sync();
             console.log("... Complete! Created Obs for new uuid types");
         }

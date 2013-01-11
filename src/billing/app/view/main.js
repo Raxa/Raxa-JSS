@@ -6,44 +6,37 @@ Ext.define('RaxaEmr.billing.view.main', {
     //width: 759,
     title: 'RAXA',
 
-    fullscreen: true,
-    id: 'halo',
-    style: {
-        borderColor: '#ffffff',
-        borderStyle: 'solid',
-        borderWidth: '1px'
-    },
-
+        fullscreen: true,
+        id: 'halo',
+         style: { 
+       borderColor: '#ffffff',
+       borderStyle: 'solid',
+       borderWidth: '1px'
+   },
+        
+        
     initComponent: function() {
         var me = this;
 
         Ext.applyIf(me, {
-            items: [{
-                xtype: 'container',
-                height: 84
-            }, {
-                xtype: 'container',
-                height: 896,
-                fullscreen: true,
-                autoScroll: true,
-                layout: {
-                    type: 'table'
+            items: [
+                {
+                    xtype: 'container',
+                    height: 84
                 },
-                items: [{
+                {
                     xtype: 'container',
-                    height: 728,
-                    width: 429
-                }, {
-                    xtype: 'container',
-                    height: 734,
-                    width: 381,
-                    items: [{
-                        xtype: 'form',
-
-                        height: 189,
-                        layout: {
-                            align: 'stretch',
-                            type: 'vbox'
+                    height: 896,
+                    fullscreen :true,
+                    autoScroll: true,
+                    layout: {
+                        type: 'table'
+                    },
+                    items: [
+                        {
+                            xtype: 'container',
+                            height: 728,
+                            width: 429
                         },
                         {
                             xtype: 'container',
@@ -99,17 +92,21 @@ Ext.define('RaxaEmr.billing.view.main', {
                                                                         }
                                                                     });
 }
-                                       */
+                                       */    
+                                        }
+ 
+ ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'container',
+                            height: 185,
+                            width: 214
                         }
-
-                        ]
-                    }]
-                }, {
-                    xtype: 'container',
-                    height: 185,
-                    width: 214
-                }]
-            }]
+                    ]
+                }
+            ]
         });
 
         me.callParent(arguments);
