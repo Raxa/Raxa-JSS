@@ -6,7 +6,7 @@ Ext.define("Screener.view.NewPatient", {
     requires: ['Ext.field.Text', 'Ext.field.Number'],
     extend: 'Ext.form.Panel',
     xtype: 'newPatient',
-    id: 'newPatient',
+    id: 'newPatient',    
     config: {
         centered: true,
         modal: true,
@@ -15,40 +15,79 @@ Ext.define("Screener.view.NewPatient", {
         // Set the width and height of the panel
         width: 500,
         height: 310,
-
+        floating: true,
+        centered: true,
+        showAnimation: {
+            type: 'slide',
+            direction: 'up'
+        },
+        hideAnimation: {
+            type: 'slideOut',
+            direction: 'down'
+        },
         items: [{
+            xtype: 'toolbar',
+            docked: 'top',
+            id: 'newPatientToolbar',
+            title: 'Add New Patient',
+            items: [{
+                xtype: 'spacer'
+            },{
+                xtype: 'button',
+                iconCls: 'delete',
+                iconMask: true,
+                handler: function() {
+                    Ext.getCmp('newPatient').hide();
+                },
+                ui: 'decline',
+            }]
+        },{
             xtype: 'textfield',
             id: 'givenName',
             name: 'givenname',
-            label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.giv_name')
+            label: 'First Name', // Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.giv_name')
+            margin: '5 0 5 0'
         }, {
             xtype: 'textfield',
             id: 'familyName',
             name: 'familyname',
-            label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.fam_name')
+            label: 'Last Name', // Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.fam_name')
+            margin: '5 0 5 0'
         }, 
         {
             xtype  : 'container',
             id: 'ageDateOfBirth',
-            layout : {
-                type  : 'hbox'
-            },
+//            layout : {
+//                type  : 'hbox'
+//            },
             items : [
             {
-                xtype: 'textfield',
+                xtype: 'numberfield',
                 id: 'patientAge',
                 name: 'patientAge',
-                labelWidth: 70,
-                label: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.age_dob'),
+//                labelWidth: 138,
+                label: 'Age', // Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.age_dob'),
                 allowDecimals: false,
-                placeHolder: 'Age'
-            },
-            {
+//                placeHolder: 'Age',
+                margin: '5 0 5 1',
+                listeners: {
+                    blur: function(field) {
+                        field.setValue(Math.floor(field.getValue()));
+                        if(!(field.getValue()>=Util.OPEN_MRS_MIN_AGE  && field.getValue()<Util.OPEN_MRS_MAX_AGE))
+                        {
+                            Ext.Msg.alert('Wrong Input','Patient Age should be between '+ Util.OPEN_MRS_MIN_AGE +' and '+ Util.OPEN_MRS_MAX_AGE);
+                            field.setValue('');
+
+                        }
+                    }
+                }
+            },{
                 xtype: 'textfield',
                 id: 'dob',
                 name: 'dob',
-                labelWidth: 70,
-                placeHolder: 'YYYY-M-D'
+                placeHolder: 'YYYY-M-D',
+//                width: 172,
+                hidden: true
             }
             ]
         },
@@ -59,10 +98,11 @@ Ext.define("Screener.view.NewPatient", {
                 type  : 'hbox',
                 align : 'strech'
             },
+            margin: '5 0 5 1',
             items  : [
             {
                 xtype : 'radiofield',
-                label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.male'),
+                label : 'Male', // Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.male'),
                 value: 'M',
                 name  : 'choice',
                 labelWidth: 70,
@@ -70,7 +110,7 @@ Ext.define("Screener.view.NewPatient", {
             },
             {
                 xtype : 'radiofield',
-                label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.female'),
+                label : 'Female', // Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.female'),
                 value: 'F',
                 name  : 'choice',
                 labelWidth: 90,
@@ -78,7 +118,7 @@ Ext.define("Screener.view.NewPatient", {
             },
             {
                 xtype : 'radiofield',
-                label : Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.other'),
+                label : 'Other', // Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.other'),
                 value: 'O',
                 name  : 'choice',
                 labelWidth: 70,
@@ -88,8 +128,9 @@ Ext.define("Screener.view.NewPatient", {
         },{
             xtype: 'button',
             id: 'savePatientButton',
-            text: Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.save_p'),
-            ui: 'action'
+            text: 'Save Patient', // Ext.i18n.appBundle.getMsg('RaxaEmrScreener.view.NewPatient.save_p'),
+            ui: 'action',
+            margin: '20 120 0 120'
         }],
     onChange: function () {
          Ext.Msg.alert("Please enter the date format");

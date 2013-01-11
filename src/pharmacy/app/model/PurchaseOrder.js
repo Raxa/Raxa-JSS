@@ -46,5 +46,11 @@ Ext.define('RaxaEmr.Pharmacy.model.PurchaseOrder', {
         name: 'provider',
         type: 'string',
         mapping: 'provider'
-    }]
+    },
+    {
+        name: 'stockLocationUuid',
+        type: 'string',
+        mapping: 'stockLocation.uuid'
+    }
+]
 });

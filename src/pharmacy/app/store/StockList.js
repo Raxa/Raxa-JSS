@@ -1,7 +1,7 @@
 Ext.define('RaxaEmr.Pharmacy.store.StockList', {
-    requires: ['RaxaEmr.Pharmacy.store.DrugInfos'],
     extend: 'Ext.data.Store',
     model: 'RaxaEmr.Pharmacy.model.DrugInventory',
+    storeId: 'stockList',
     autoLoad: true,
     autoSync: false,
     proxy: {
@@ -21,10 +21,9 @@ Ext.define('RaxaEmr.Pharmacy.store.StockList', {
                 this.updateFields();
             }
         }
-
-        
     },
     updateFields: function(){
+        this.group('drugName');
         for(var i=0; i<this.data.items.length; i++){
             var item = this.data.items[i];
             if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
@@ -33,13 +32,17 @@ Ext.define('RaxaEmr.Pharmacy.store.StockList', {
             else{
                 item.set("batchQuantity", null);
             }
-            
             if(item.data.expiryDate!==""){
-                item.set("months", Util.monthsFromNow(item.data.expiryDate));
+                var days = Util.daysFromNow(item.data.expiryDate);
+                item.set("days", days);
+                if(days <= 0){
+                    item.set("status", RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.EXPIRED);
+                }
             }
             else{
-                item.set("months", null);
+                item.set("days", null);
             }
         }
+        this.filter('status', RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
     }
 });

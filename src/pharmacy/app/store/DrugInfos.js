@@ -2,6 +2,7 @@ Ext.define('RaxaEmr.Pharmacy.store.DrugInfos', {
     extend: 'Ext.data.Store',
     model: 'RaxaEmr.Pharmacy.model.DrugInfo',
     autoLoad: true,
+    storeId: 'DrugInfos',
     autoSync: false,
     proxy: {
         type: 'ajax',

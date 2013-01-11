@@ -2,7 +2,7 @@ PHARMACY_TOPBAR_CONSTANTS = {
     TAB_WIDTH : 80,
     BUTTON_HEIGHT : 35,
     BUTTON_WIDTH : 60,
-    HEIGHT : 40,
+    HEIGHT : 40
 };
 
 Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
@@ -10,6 +10,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
     alias: 'widget.pharmacyTopBar',
     autoScroll: true,
     width: 960,
+    id: 'pharmacyTopbar',
     layout: {
         type: 'hbox',
         align: 'stretch'
@@ -21,6 +22,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
         xtype: 'toolbar',
         height: PHARMACY_TOPBAR_CONSTANTS.HEIGHT,
         dock: 'top',
+        id: 'pharmacyTopbar',
         items: [
 	{
 	    xtype: 'image',
@@ -44,7 +46,7 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
                 //  patient and inventory views
                 Ext.getCmp('mainarea').getLayout().setActiveItem(0);
                 Ext.getCmp('addpatientarea').getLayout().setActiveItem(0);
-                Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(0);
+                //Ext.getCmp('addpatientgridarea').getLayout().setActiveItem(1);
 
                 // Highlight "Patients" tab
                 Ext.getCmp('inventoryButton').toggle(false);
@@ -67,18 +69,41 @@ Ext.define('RaxaEmr.Pharmacy.view.pharmacyTopbar',{
             }
         }, {
             xtype: 'tbfill'
-        }, {
+        },
+        {
+            margin: 5,
+            xtype: 'combobox',
+            id: 'allStockLocationPicker',
+            fieldLabel: 'Your Location',
+            store: 'Locations',
+            displayField: 'name',
+            queryMode: 'local',
+            hideTrigger: true,
+            forceSelection: true,
+            valueField: 'uuid',
+            emptyText: 'All Locations',
+            listeners: {
+                'focus': {
+                    fn: function (comboField) {
+                        comboField.doQuery(comboField.allQuery, true);
+                        comboField.expand();
+                    },
+                    scope: this
+                }
+            }
+        },
+        {
             xtype: 'button',
             id: 'alertButton',
             text: 'Alerts',
             height: PHARMACY_TOPBAR_CONSTANTS.BUTTON_HEIGHT,
             width: PHARMACY_TOPBAR_CONSTANTS.BUTTON_WIDTH,
             handler: function(){
-                Ext.getStore('alerts').load({
+                Ext.getStore('Alerts').load({
                     scope: this,
                     callback: function(records, operation, success){
                         if(success) {
-                            // Do nothing
+                        // Do nothing
                         } else {
                             Ext.Msg.alert("Error", Util.getMessageLoadError());
                         }

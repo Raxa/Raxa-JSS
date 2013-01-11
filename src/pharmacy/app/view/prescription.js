@@ -5,7 +5,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
         type: 'vbox',
         align: 'stretch'
     },
-    autoScroll: true,
     items:[{
         xtype: 'container',
         layout:{
@@ -24,125 +23,57 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
             //https://raxaemr.atlassian.net/browse/RAXAJSS-411
             //then take out all instances of addpatientgridarea....getLayout..setactiveitem
             //addpatientarea is being used, dont take that out
-            items: [{
+            items: [
+            {
                 layout: 'card',
                 id: 'addpatientgridarea',
                 border: false,
                 activeItem: 0,
-                items: [{
-                    xtype: 'container',
-                    layout: 'absolute',
-                    border: false,
-                    items:[{
-                        xtype: 'gridpanel',
-                        id: 'drugASearchGrid',
-                        height: 380,
-                        styleHtmlContent: false,
-                        width: 750,
-                        autoScroll: true,
-                        columnLines: true,
-                        x: 190,
-                        y: 180,
-                        viewConfig: {
-                            stripeRows: false
-                        },
-                        store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
-                        columns: [
-                        {
-                            xtype: 'gridcolumn',
-                            width: 180,
-                            text: 'Name Of drug',
-                            dataIndex: 'drugname',
-                            resizable: false
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 90,
-                            text: 'Dosage',
-                            dataIndex: 'dosage',
-                            resizable: false
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 93,
-                            text: 'Duration',
-                            // gets the duration using start and end date of prescription
-                            renderer: function(value, metadata, record){
-                                var temp = record.getData().endDate - record.getData().startDate
-                                temp = temp/(86400000)
-                                temp = parseInt(temp) + 1
-                                return temp + ' days'
-                            },
-                            resizable: false
-                        },
-                        {
-                            xtype: 'numbercolumn',
-                            width: 65,
-                            text: 'Qty',
-                            dataIndex: 'quantity',
-                            resizable: false
-                        },
-                        {
-                            xtype: 'numbercolumn',
-                            text: 'Unit Price',
-                            width: 130,
-                            resizable: false
-                        },
-                        {
-                            xtype: 'numbercolumn',
-                            width: 130,
-                            text: 'Item Price',
-                            resizable: false
-                        }
-                        ]
-                    },
-//                    {
-//                        xtype: 'button',
-//                        text: 'Review Prescription',
-//                        x: 420,
-//                        y: 580
-//                    },
-                    {
-                        xtype: 'button',
-                        width: 60,
-                        text: 'Save',
-                        action: 'doneWithNewPatientPrescription',
-                        x: 480,
-                        y: 580
-                    },
-                    {
-                        xtype: 'button',
-                        width: 60,
-                        text: 'Print',
-                        action: 'printPrescribedDrugs',
-                        x: 560,
-                        y: 580
-                    }]
-                },{
+                items: [
+                //                {
+                //                    xtype: 'patientAssignedDrugs',
+                //                    border: false,
+                //                    x: 190,
+                //                    y: 190
+                //                //                    xtype: 'container',
+                //                //                    layout: 'absolute',
+                //                //                    border: false,
+                //                //                    items:[{
+                //                //                        xtype: 'patientAssignedDrugs',
+                //                //                        x: 190,
+                //                //                        y: 190
+                //                //                    }]
+                //                },
+                {
                     xtype: 'container',
                     layout: 'absolute',
                     border: false,
                     items:[{
                         xtype: 'prescribedDrugs',
                         x: 190,
-                        y: 270
-                    },{
+                        y: 190                                    
+                    },
+                    {
                         xtype: 'button',
                         width: 60,
                         text: 'Save',
+                        id: 'saveButton',
                         action: 'doneWithQueuedPatientPrescription',
                         x: 330,
-                        y: 580
+                        y: 500
                     },{
                         xtype: 'button',
                         width: 60,
                         text: 'Print',
                         action: 'printPrescribedDrugs',
                         x: 460,
-                        y: 580
-                    }]
-                }]
-            },{
+                        y: 500
+                    }
+                    ]
+                }
+                ]
+            },
+            {
                 xtype: 'button',
                 width: 180,
                 text: 'Prescription for New Patient',
@@ -178,20 +109,20 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         id: 'patientNameASearch'
                     },
                     //To be added in after search layer is complete
-//                    {
-//                        xtype: 'textfield',
-//                        emptyText: 'Prescription ID',
-//                        x: 10,
-//                        y: 60,
-//                        id: 'prescriptionIdASearch'
-//                    },
-//                    {
-//                        xtype: 'datefield',
-//                        emptyText: 'Prescription Date',
-//                        x: 10,
-//                        y: 100,
-//                        id: 'prescriptionDateASearch'
-//                    },
+                    //                    {
+                    //                        xtype: 'textfield',
+                    //                        emptyText: 'Prescription ID',
+                    //                        x: 10,
+                    //                        y: 60,
+                    //                        id: 'prescriptionIdASearch'
+                    //                    },
+                    //                    {
+                    //                        xtype: 'datefield',
+                    //                        emptyText: 'Prescription Date',
+                    //                        x: 10,
+                    //                        y: 100,
+                    //                        id: 'prescriptionDateASearch'
+                    //                    },
                     {
                         xtype: 'panel',
                         border: 0,
@@ -223,40 +154,9 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                                 text: 'ID'
                             }
                             ]
-                        }, {
-                            xtype: 'panel',
-                            layout: 'vbox',
-                            items:[{
-                                xtype: 'gridpanel',
-                                title: 'prescriptions',
-                                border: 0,
-                                height: 270,
-                                id: 'drugOrderASearchGrid',
-                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
-                                columns: [
-                                {
-                                    xtype: 'gridcolumn',
-                                    width: 80,
-                                    text: 'drug',
-                                    dataIndex : 'drugname'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    width: 80,
-                                    text: 'Date',
-                                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
-                                    dataIndex : 'startDate'
-                                }
-                                ]
-                            }, {
-                                xtype: 'button',
-                                width: 80,
-                                x: 50,
-                                y: 330,
-                                text: 'Back',
-                                action: 'back'
-                            }]
-                        }]
+                        }, 
+                                          
+                        ]
                     }]
                 },
                 {
@@ -295,37 +195,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             title: 'Today', 
                             store: Ext.create('RaxaEmr.Pharmacy.store.ListPatients'),
                             y: 0
-                        }, {
-                            xtype: 'panel',
-                            layout: 'vbox',
-                            items:[{
-                                xtype: 'gridpanel',
-                                title: 'Prescriptions',
-                                height: 270,
-                                border: 0,
-                                id: 'todayPatientsDrugOrders',
-                                store: Ext.create('RaxaEmr.Pharmacy.store.drugOrderSearch'),
-                                columns: [
-                                {
-                                    xtype: 'gridcolumn',
-                                    width: 80,
-                                    text: 'drug',
-                                    dataIndex : 'drugname'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    width: 80,
-                                    text: 'Date',
-                                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
-                                    dataIndex : 'startDate'
-                                }
-                                ]
-                            }, {
-                                xtype: 'button',
-                                width: 80,
-                                text: 'Back',
-                                action: 'back'
-                            }]
                         }]
                     }],
                     listeners: {
@@ -343,7 +212,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         type: 'absolute'
                     },
                     collapsed: true,
-                    title: 'Patient Queue (Past 7 Days)',
+                    title: 'Patient Queue (Week)',
                     items:[
                     {
                         xtype: 'textfield',
@@ -415,29 +284,11 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                             }
                         }
                     }
-                },
-                {
-                    xtype: 'gridpanel',
-                    height: 71,
-                    collapsed: true,
-                    title: 'Pending',
-                    columnLines: false,
-                    columns: [
-                    {
-                        xtype: 'numbercolumn',
-                        draggable: false,
-                        width: 42,
-                        dataIndex: 'number',
-                        text: 'Sl. No'
-                    },
-                    {
-                        xtype: 'gridcolumn',
-                        width: 138,
-                        text: 'Patient Name'
-                    }]
-                }]
+                }
+                ]
             //TODO: patient image
             },
+
             {
                 xtype: 'container',
                 layout: 'card',
@@ -466,6 +317,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         layout: {
                             type: 'absolute'
                         },
+                        flex: 2,
                         items: [{
                             xtype: 'displayfield',
                             fieldLabel: 'Patient Name',
@@ -549,7 +401,44 @@ Ext.define('RaxaEmr.Pharmacy.view.prescription', {
                         }],
                         x: 600,
                         y: 60
-                    }]
+                    },
+                    {
+                        xtype: 'toolbar',
+                        layout: 'absolute',
+                        dock: 'bottom',
+                        flex : 1,
+                        items: [
+                        {
+                            xtype: 'button',
+                            text: 'Latest',
+                            id: 'currentButton',
+                            x: 190,
+                            y: 25,
+                            height: 35,
+                            width: 60,
+                            handler: function(){
+                                Ext.getCmp('historyButton').toggle(false);
+                                Ext.getCmp('currentButton').toggle(true);
+                                Ext.getCmp('saveButton').setVisible(true);
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'History',
+                            id: 'historyButton',
+                            x: 260,
+                            y: 25,
+                            height: 35,
+                            width: 60,
+                            handler: function(){
+                                Ext.getCmp('currentButton').toggle(false);
+                                Ext.getCmp('historyButton').toggle(true);
+                                Ext.getCmp('saveButton').setVisible(false);
+                            }
+                        }
+                        ]
+                    },            
+                    ]
                 },{
                     xtype: 'container',
                     layout: 'absolute',

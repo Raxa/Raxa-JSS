@@ -24,37 +24,43 @@ Ext.define('Laboratory.model.LabPatientSearch', {
     },{
     	name: 'PatientName',
     	type: 'string',
-    	mapping: 'display'
+    	mapping: 'person.display'
    },{
         name: 'FirstName',
         type: 'string',
-        mapping: 'preferredName.givenName'
+        mapping: 'person.preferredName.givenName'
     },{
         name: 'LastName',
         type: 'string',
-        mapping: 'preferredName.familyName'
+        mapping: 'person.preferredName.familyName'
     },{
         name: 'Sex',
         type: 'string',
-        mapping: 'gender'
+        mapping: 'person.gender'
     },{
         name: 'DOB',
         type: 'string',
-        mapping: 'birthdate'
-    },{
+        mapping: 'person.birthdate'
+    },
+// Patients created from Registration Module dont have following attributes    
+/*    {
         name: 'RelativeName',
         type: 'string',
+        persist: false
     },{
         name: 'Village',
         type: 'string',
-        mapping: 'preferredAddress.cityVillage'
+        mapping: 'preferredAddress.cityVillage', 
+        persist: false
     },{
         name: 'Panchayat',
         type: 'string',
+        persist : false
     },{
         name: 'Town',
         type: 'string',
-        mapping: 'preferredAddress.stateProvince'
-    }],
+        mapping: 'preferredAddress.stateProvince',
+        persist: false
+    }*/],
 
 });

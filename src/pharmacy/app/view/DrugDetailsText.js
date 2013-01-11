@@ -77,7 +77,7 @@ Ext.define('RaxaEmr.Pharmacy.view.DrugDetailsText', {
     }],
     initForDrug: function(drugUuid){
         var drug = Ext.getStore('allDrugs').getAt(Ext.getStore('allDrugs').find('uuid', drugUuid));
-        var drugInfo = Ext.getStore('drugInfos').getAt(Ext.getStore('drugInfos').find('drugUuid', drug.data.uuid));
+        var drugInfo = Ext.getStore('DrugInfos').getAt(Ext.getStore('DrugInfos').find('drugUuid', drugUuid));
         Ext.getCmp('drugDetailsName').setWidth(300);
         Ext.getCmp('drugDetailsName').setValue(drug.data.text);
         if(drugInfo !== undefined){

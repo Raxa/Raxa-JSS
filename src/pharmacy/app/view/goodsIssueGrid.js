@@ -19,10 +19,13 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
         var issueEditor = this;
         this.columns = [
         {
+            xtype: 'rownumberer'
+        },
+        {
             xtype: 'gridcolumn',
             width: 200,
             dataIndex: 'drugName',
-            text: 'Name Of drug',
+            text: 'Name Of drugs',
             editor: {
                 xtype: 'combobox',
                 editable: true,
@@ -43,7 +46,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                     },
                     'select':{
                         fn: function(comboField, records){
-                            // TODO: when drug is changed, clear all corresponding fields, as they'll need to be updated
+                        // TODO: when drug is changed, clear all corresponding fields, as they'll need to be updated
                         }
                     }
                 }
@@ -73,8 +76,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                 allowBlank: false,
                 editable: true,
                 store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
-                    storeId: 'batches'
+                    storeId: 'batches',
+                    autoLoad: true
                 }),
+                queryMode: 'local',
                 displayField: 'batchQuantity',
                 forceSelection: true,
                 listeners: {
@@ -91,10 +96,10 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                             comboField.getStore().filter(function(record){
                                 var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
                                 var isCurrentDrug = (record.get('drugName')===selectedDrug);
-                                var isBatch = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
-                                var locationUuid = Ext.getCmp('issueStockLocationPicker').value;
+                                var notInCurrentIssue = (Ext.getStore('newIssue').find("batch",record.get('batch'))===-1);
+                                var locationUuid = Ext.getCmp('allStockLocationPicker').value;
                                 var isAtLocation = (record.get('location').uuid===locationUuid)
-                                return isAvailable && isCurrentDrug && isBatch && isAtLocation;
+                                return isAvailable && isCurrentDrug && notInCurrentIssue && isAtLocation;
                             });
                             comboField.doQuery(comboField.allQuery, true);
                             comboField.expand();
@@ -116,13 +121,21 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                             // Update drug details in the modal
                             var mf = Ext.getCmp('goodsIssueGrid').modalForm;
                             var form = mf.getComponent("ModalGridFormPanel").form;
+                            var batchQuant = records[0].data.batchQuantity;
+                            //dont use string
+                            var onlyBatch = batchQuant.split(" (")[0];
                             form.setValues({
                                 'expiryDate': expiryDate
                             });
                             form.setValues({
                                 'roomLocation': roomLoc
                             });
-
+                            form.setValues({
+                                'batchUuid': records[0].data.uuid
+                            });
+                            form.setValues({
+                                'batch': onlyBatch
+                            });
                             // Check if the batch has sufficient quantity to fill the order.
                             // If not, add another row for remainining quantity needed
                             var requiredQuantity = form.getValues().quantity;
@@ -132,7 +145,7 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                             // If current batch doesn't cover entire quantity required, reduce quantity and add new row
                             if(quantityInBatch < requiredQuantity){
                                 form.setValues({
-                                    'quantity': quantityInBatch,
+                                    'quantity': quantityInBatch
                                 });
 
                                 Ext.getStore('newIssue').add({
@@ -148,28 +161,68 @@ Ext.define('RaxaEmr.Pharmacy.view.goodsIssueGrid', {
                     }
                 }
             }
-        },{
+        },
+        {
+            xtype: 'gridcolumn',
+            id: 'batchuuid',
+            dataIndex: 'batchUuid',
+            editor: {
+                xtype: 'textfield',
+                id: 'batchuud',
+                listeners: {
+                    'render': function(p) {
+                        this.hide()
+                    }
+                }
+            },
+            listeners: {
+                'render': function(p) {
+                    this.hide()
+                }
+            }
+        },  
+        {
+            xtype: 'gridcolumn',
+            dataIndex: 'batch',
+            editor: {
+                xtype: 'textfield',
+                id: 'batch',
+                listeners: {
+                    'render': function(p) {
+                        this.hide()
+                    }
+                }
+            },
+            listeners: {
+                'render': function(p) {
+                    this.hide()
+                }
+            }
+        },
+        {
             xtype: 'datecolumn',
             text: 'Expiry Date',
             format: 'd/m/y',
             dataIndex: 'expiryDate',
             width: 140,
             editor: {
-                xtype: 'datefield',
-                // TODO: Disable this field but still submit the value
-                // disabled: true
+                xtype: 'datefield'
+            // TODO: Disable this field but still submit the value
+            // disabled: true
             }
-        },{
+        },
+        {
             xtype: 'gridcolumn',
             text: 'Shelf',
             dataIndex: 'roomLocation',
             width: 60,
             editor: {
-                xtype: 'textfield',
-                // TODO: Disable this field but still submit the value
-                // disabled: true
+                xtype: 'textfield'
+            // TODO: Disable this field but still submit the value
+            // disabled: true
             }
-        }];
+        }
+        ];
         this.plugins = [this.cellEditor];
         this.callParent(arguments);
     }
