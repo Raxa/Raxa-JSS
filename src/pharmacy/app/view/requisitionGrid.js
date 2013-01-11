@@ -21,6 +21,9 @@ Ext.define('RaxaEmr.Pharmacy.view.requisitionGrid', {
         var requisitionEditor = this;
         this.columns = [
             {
+                xtype: 'rownumberer'
+            },
+            {
                 xtype: 'gridcolumn',
                 width: 400,
                 dataIndex: 'drugname',

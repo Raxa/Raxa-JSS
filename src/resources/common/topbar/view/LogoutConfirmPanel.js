@@ -1,13 +1,17 @@
 Ext.define('Topbar.view.LogoutConfirmPanel', {
     extend: 'Ext.Panel',
+    // extend: 'Ext.Container',
+    // TODO: set bg color and border for better consistency with OPD?
+
     alias: 'widget.logoutConfirmPanel',
 
     config: {
-        height: 100,
+        // height: 100,
         itemId: 'LogoutConfirmPanel',
         left: 0,
         top: 0,
         width: 200,
+        padding: 10,
         hideOnMaskTap: true,
         layout: {
             align: 'center',
@@ -17,31 +21,31 @@ Ext.define('Topbar.view.LogoutConfirmPanel', {
         scrollable: false,
         items: [{
             xtype: 'label',
-            html: 'Are you sure?',
+            html: 'Logout: Are you sure?',
             itemId: 'LogoutConfrimLabel',
         }, {
-            xtype: 'actionsheet',
+            xtype: 'container',
             itemId: 'LogoutConfirmActionSheet',
             layout: {
                 align: 'start',
                 pack: 'center',
                 type: 'hbox'
             },
-            modal: false,
             items: [{
                 xtype: 'button',
                 itemId: 'LogoutConfirmYes',
                 minWidth: 80,
                 ui: 'confirm',
-                text: 'Yes'
+                text: 'Yes',
             }, {
                 xtype: 'spacer',
+                width: 10,
             }, {
                 xtype: 'button',
                 itemId: 'LogoutConfirmNo',
                 minWidth: 80,
                 ui: 'decline',
-                text: 'No'
+                text: 'No',
             }]
         }],
         listeners: [{

@@ -31,7 +31,7 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                 type: 'hbox'
             },
             items: [{
-                xtype: 'container',
+                    xtype: 'container',
                 flex: 1,
                 layout: {
                     type: 'vbox'
@@ -83,28 +83,28 @@ Ext.define('RaxaEmr.Outpatient.view.patient.diagnosis', {
                     }]
                 }]
             }]
-        }, {// side buttons for refer to doc nad to add another diagnosis
-            xtype: 'container',
-            width: 60,
-            items: [{
-                xtype: 'button',
-                docked: 'top',
-                height: 40,
-                id: 'reftodocbutton',
-                margin: '20 20 0 0',
-                width: 40,
-                icon: '../outpatient/resources/images/doclist.png',
-                padding: '0 10 10 0'
-            }, {
-                xtype: 'button',
-                docked: 'top',
-                height: 40,
-		id : 'addDiagnosis',
-                margin: '10 20 0 0',
-                width: 40,
-                icon: '../outpatient/resources/images/add.png',
-                padding: '0 10 10 0'
-            }]
-        }]
+        }
+//        , {// side buttons for refer to doc nad to add another diagnosis
+//            xtype: 'container',
+//            width: 60,
+//            items: [{
+//                xtype: 'button',
+//                height: 40,
+//                id: 'reftodocbutton',
+//                margin: '20 20 0 0',
+//                width: 40,
+//                icon: '../outpatient/resources/images/doclist.png',
+//                padding: '0 10 10 0'
+//            }, {
+//                xtype: 'button',
+//                height: 40,
+//		id : 'addDiagnosis',
+//                margin: '10 20 0 0',
+//                width: 40,
+//                icon: '../outpatient/resources/images/add.png',
+//                padding: '0 10 10 0'
+//            }]
+//        }
+    ]
     }
 });

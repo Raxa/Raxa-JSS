@@ -1,6 +1,9 @@
 // Enable dynamic dependency to be able find files at appropriate locations automatically
 Ext.Loader.setConfig({
-    enabled: true
+    enabled: true,
+     paths: {
+         'SearchPatient': '../resources/common/SearchPatient'
+     }
 });
 
 // Main application entry point

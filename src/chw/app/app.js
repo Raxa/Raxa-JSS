@@ -23,7 +23,7 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'chw',
-    controllers: ['basic'],
+    controllers: ['basic','AddPatient'],
     models: ['family', 'patient', 'illness', 'pill', 'patientIllness', 'resource', 'visit'],
     stores: ['families', 'patients', 'illnesses', 'pills', 'patientsIllnesses', 'resources', 'visits'],
     views: [
@@ -38,10 +38,11 @@ Ext.application({
         'addOptions', 
         'addFamily', 
         'addPatient',
-        'illnessDetails'
+        'illnessDetails',
+        'newPatient'
     ],
     launch: function () {
-        Ext.create('chw.view.loginScreen');
+//        Ext.create('chw.view.loginScreen');
     }
 });
 

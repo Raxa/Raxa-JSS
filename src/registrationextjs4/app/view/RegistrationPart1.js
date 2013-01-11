@@ -309,7 +309,7 @@ Ext.define('Registration.view.RegistrationPart1', {
                             align: 'stretch'
                         },
                         items: [{
-                            html: "<img border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
+                            html: "<img id=\"ConfirmedPatientImage\" border=\"0\" src=\"../resources/img/camera.png\" alt=\"Patient Image\" width=\"100\" height=\"82\" />"
                         }, {
                             xtype: 'button',
                             width: 80,

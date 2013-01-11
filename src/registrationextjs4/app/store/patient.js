@@ -5,7 +5,7 @@ Ext.define('Registration.store.patient', {
     proxy: {
 
         type: 'rest',
-        url: HOST + '/ws/rest/v1/patient',
+        url: HOST + '/ws/rest/v1/raxacore/patient',
         headers: Util.getBasicAuthHeaders(),
 
         reader: {

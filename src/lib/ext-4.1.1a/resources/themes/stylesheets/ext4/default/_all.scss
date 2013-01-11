@@ -15,7 +15,6 @@ $include-default-uis: true !default;
 @import 'layout/layout';
 
 //utils
-@import 'util/tool';
 @import 'util/messagebox';
 @import 'util/splitter';
 @import 'util/resizable';
@@ -62,7 +61,6 @@ $include-default-uis: true !default;
         @include extjs-resizable;
         @include extjs-splitter;
         @include extjs-layout;
-        @include extjs-tool;
         @include extjs-scroller;
         
         @include extjs-html;
@@ -105,7 +103,6 @@ $include-default-uis: true !default;
     @include extjs-resizable;
     @include extjs-splitter;
     @include extjs-layout;
-    @include extjs-tool;
     @include extjs-scroller;
     
     @include extjs-html;

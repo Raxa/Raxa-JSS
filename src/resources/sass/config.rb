@@ -1,7 +1,7 @@
 # $ext_path: This should be the path of where the ExtJS SDK is installed
 # Generally this will be in a lib/extjs folder in your applications root
-# <root>/lib/extjs
-$ext_path = "../../lib/extjs"
+# <root>/lib/ext-4.1.1a
+$ext_path = "../../lib/ext-4.1.1a"
 
 # sass_path: the directory the Sass files are in. 
 sass_path = File.dirname(__FILE__)

@@ -4,51 +4,43 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     id: 'allStockGrid',   
     width: 780 - 2, // Total pixels - Border
     margin: '0 0 0 0',
-    store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
-        storeId: 'stockList',
-        listeners: {
-            load: function() {
-                //we need a second store to get the supplier, as OpenMRS doesn't have it in the normal drug
-                if(!Ext.getStore('drugInfos')){
-                    var store = Ext.create('RaxaEmr.Pharmacy.store.DrugInfos',{
-                        storeId: 'drugInfos',
-                        listeners: {
-                            load: function() {
-                                Ext.getCmp('allStockGrid').updateFields();
-                            }
-                        }
-                    });
+    store: 'StockList',
+    features: [Ext.create('Ext.grid.feature.Grouping',{
+        startCollapsed: true,
+        
+        groupHeaderTpl: 
+        [
+        '{name}',
+        '{[this.formatName(values)]}',
+        {
+            formatName: function(values) {
+                var total = 0;
+                var firstSupplier;
+                var fewestMonths;
+                        
+                for(var i=0; i<values.children.length; i++){
+                    total+=values.children[i].data.quantity;
                 }
-                else {
-                    Ext.getCmp('allStockGrid').updateFields();
-                }
+                return "total: "+total;
             }
         }
-        
-    }),
-    selModel : Ext.create('Ext.selection.CellModel', {
+        ]
+    })
+    ],
+    selModel : Ext.create('Ext.selection.RowModel', {
         listeners : {
             select : function(selectionModel, record, row) {
                 //on select, go to drug details page
+                selectionModel.deselectAll();
                 Ext.getCmp('mainarea').getLayout().setActiveItem(RaxaEmr_Pharmacy_Controller_Vars.PHARM_PAGES.DRUGDETAILS.value);
                 Ext.getCmp('drugDetails').initForDrug(record.data.drugUuid);
-                selectionModel.deselectAll();
             },
             scope : this
         }
     }),
     columns: [
     {
-        xtype: 'gridcolumn',
-        text: 'Status',
-        dataIndex: 'status',
-        width: 60
-    },
-    {
-        xtype: 'gridcolumn',
-        text: 'Type',
-        dataIndex: 'dosageForm',
-        width: 60
+        xtype: 'rownumberer'
     },
     {
         xtype: 'gridcolumn',
@@ -64,9 +56,27 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
     },
     {
         xtype: 'gridcolumn',
-        text: 'Months',
+        text: 'Status',
+        dataIndex: 'status',
+        width: 60
+    },
+    {
+        xtype: 'gridcolumn',
+        text: 'Type',
+        dataIndex: 'dosageForm',
+        width: 60
+    },
+    {
+        xtype: 'gridcolumn',
+        text: 'Days',
         width: 45,
-        dataIndex: 'months',
+        renderer: function(value){
+            if(value <= 0){
+                return '-';
+            }
+            return value;
+        },
+        dataIndex: 'days',
         useNull: true
     },
     {
@@ -113,28 +123,14 @@ Ext.define('RaxaEmr.Pharmacy.view.allStockGrid', {
             }
         }]
     }],
-    
-    updateFields: function() {
-        var infoStore = Ext.getStore('drugInfos');
-        var myStore = this.getStore();
-        for(var i=0; i<myStore.data.items.length; i++){
-            var item = myStore.data.items[i];
-            var index = infoStore.find('drugUuid', item.data.drugUuid);
-            if(index!==-1 && (item.data.supplier===null || item.data.supplier==="")){
-                item.set("supplier", infoStore.getAt(index).data.description);
+       
+    viewConfig: {
+        getRowClass: function(record, rowIndex, rowParams, store) {
+            if(Util.daysFromNow((record.data.expiryDate)) <=  61 && Util.daysFromNow((record.data.expiryDate)) >  0) {
+                return 'pharmacyTwoMonths-color-grid .x-grid-cell ';
             }
-            if(item.data.batch!==null && item.data.batch!=="" && item.data.quantity!==0){
-                item.set("batchQuantity", item.data.batch+" ("+item.data.quantity+")");
-            }
-            else{
-                item.set("batchQuantity", null);
-            }
-            
-            if(item.data.expiryDate!==""){
-                item.set("months", Util.monthsFromNow(item.data.expiryDate));
-            }
-            else{
-                item.set("months", null);
+            if(Util.daysFromNow((record.data.expiryDate)) <=  0 ) {
+                return 'pharmacyExpire-color-grid .x-grid-cell ';
             }
         }
     }

@@ -6,9 +6,8 @@ Ext.define('RaxaEmr.Pharmacy.model.Location', {
         //we defined it and made the persist property false 
         persist: false 
     }, {
-        name: 'display',
-        type: 'string',
-        mapping: 'display'
+        name: 'name',
+        type: 'string'
     },{
         name: 'uuid',
         type: 'string',

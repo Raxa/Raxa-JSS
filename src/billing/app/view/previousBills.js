@@ -1,6 +1,6 @@
 Ext.define('RaxaEmr.billing.view.previousBills', {
     extend: 'Ext.form.Panel',
-alias : 'widget.previousBills',
+    alias: 'widget.previousBills',
     height: 589,
     width: 759,
     title: 'RAXA',
@@ -149,7 +149,6 @@ alias : 'widget.previousBills',
                                     title: 'Previous Bills',
                                     id : 'gridPrevious',
                                         store: Ext.data.StoreManager.lookup('RaxaEmr.billing.store.billingstore'),
-
                                     columns: [
                                         
                                          
@@ -254,7 +253,6 @@ items:[
                             width: 150,
                             margin :'10 0 0 100',
                             text: 'Create a new Bill',
-                            ui :'raxa-aqua-small',
                             action: 'findPatient2'
                         } 
           

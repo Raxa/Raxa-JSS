@@ -6,7 +6,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     styleHtmlContent: false,
     width: 750,
     store: 'orderStore',
-    autoScroll: true,
     selType: 'cellmodel',
     cellEditor: Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1
@@ -14,6 +13,13 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
     viewConfig: {
         stripeRows: false
     },
+    features: [Ext.create('Ext.grid.feature.Grouping',{
+                    startCollapsed: true,
+                    groupHeaderTpl: 
+                    [
+                    '{name} ',
+                    ]
+          })],
     initComponent: function () {    
         var drugEditor = this;
         this.addEvents(['deleteDrug']);
@@ -48,18 +54,6 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                             Ext.getStore('orderStore').getAt(row).set('drugUuid', drugUuid);
                         }
                     }
-//                    ,
-//                    'keydown': {
-//                        fn: function(comboBox, e){
-//                            comboBox.getStore().clearFilter();
-//                            comboBox.getStore().filterBy(function(record){
-//                                if(record.data.text.toLowerCase().indexOf(comboBox.getValue().toLowerCase())!==-1){
-//                                    return true;
-//                                }
-//                                return false;
-//                            });
-//                        }
-//                    }
                 }
             }
         },
@@ -173,6 +167,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                 allowBlank: false,
                 editable: true,
                 store: Ext.create('RaxaEmr.Pharmacy.store.StockList',{
+                    autoLoad: false,
                     storeId: 'prescriptionBatches'
                 }),
                 displayField: 'batchQuantity',
@@ -182,7 +177,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                     'focus': {
                         fn: function (comboField) {
                             //if any filters exist on main stock list, clear them so we can use it as a master list                            
-                            Ext.getStore('stockList').clearFilter();
+                            Ext.getStore('StockList').clearFilter();
                             if(localStorage.pharmacyLocation!==null){
                                 console.log(comboField.getStore());
                                 var selectedDrug = Ext.getCmp('prescribedDrugs').getSelectionModel().lastSelected.data.drugName;
@@ -194,7 +189,7 @@ Ext.define('RaxaEmr.Pharmacy.view.prescribedDrugs', {
                                 comboField.getStore().filter(function(record){
                                     var isAvailable = (record.get('status')===RaxaEmr_Pharmacy_Controller_Vars.STOCK_STATUS.AVAILABLE);
                                     var isCurrentDrug = (record.get('drugName')===selectedDrug);
-                                    var isBatch = (Ext.getStore('stockList').find("batch",record.get('batch'))!==-1);
+                                    var isBatch = (Ext.getStore('StockList').find("batch",record.get('batch'))!==-1);
                                     var isAtLocation = (record.get('location').uuid===localStorage.pharmacyLocation)
                                     console.log(isAvailable+" "+isCurrentDrug+" "+isBatch+" "+isAtLocation);
                                     return isAvailable && isCurrentDrug && isBatch && isAtLocation;
