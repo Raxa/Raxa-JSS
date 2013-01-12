@@ -9724,8 +9724,20 @@ body.x-desktop {
   border: none;
   background: transparent;
 }
+/* line 225, ../../screener/style/screener.scss */
+#topbarSelectfield .x-component-outer::before {
+  width: 1.7em;
+  -webkit-mask: none;
+  border-radius: 16px;
+  background: #4D91BA;
+  border: none;
+}
+/* line 232, ../../screener/style/screener.scss */
+#topbarSelectfield .x-component-outer::after {
+  background: #EEE;
+}
 
-/* line 228, ../../screener/style/screener.scss */
+/* line 238, ../../screener/style/screener.scss */
 .screener_tabs {
   height: 130px;
   -webkit-transform: rotate(-90deg);
@@ -9738,24 +9750,24 @@ body.x-desktop {
 }
 
 @media (max-width: 770px) {
-  /* line 243, ../../screener/style/screener.scss */
+  /* line 253, ../../screener/style/screener.scss */
   #maintabs .x-docking-horizontal #ext-tabbar-1 .x-tabbar-inner .x-tab {
     margin-right: -7px;
     margin-top: 9px;
   }
 }
-/* line 255, ../../screener/style/screener.scss */
+/* line 265, ../../screener/style/screener.scss */
 #maintabs .x-docking-horizontal #ext-tabbar-1 {
   background: #4d91ba;
   height: 768px;
 }
-/* line 259, ../../screener/style/screener.scss */
+/* line 269, ../../screener/style/screener.scss */
 #maintabs .x-docking-horizontal #ext-tabbar-1 .x-tabbar-inner .x-tab-active {
   border: none;
   color: #555;
   background: #efefef !important;
 }
-/* line 264, ../../screener/style/screener.scss */
+/* line 274, ../../screener/style/screener.scss */
 #maintabs .x-docking-horizontal #ext-tabbar-1 .x-tabbar-inner .x-tab {
   border-radius: 20px 0 0 20px;
   background: #999;
@@ -9765,7 +9777,7 @@ body.x-desktop {
   width: 60px;
 }
 
-/* line 279, ../../screener/style/screener.scss */
+/* line 289, ../../screener/style/screener.scss */
 .patient_table {
   margin-left: 25px;
   width: 90%;
@@ -9773,85 +9785,85 @@ body.x-desktop {
   border-radius: 15px;
   box-shadow: 0 0 5px #999999;
 }
-/* line 289, ../../screener/style/screener.scss */
+/* line 299, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image {
   padding: 10px;
   width: 20%;
 }
-/* line 293, ../../screener/style/screener.scss */
+/* line 303, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image img {
   position: absolute;
   top: 15%;
   width: 5%;
   height: auto;
 }
-/* line 299, ../../screener/style/screener.scss */
+/* line 309, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image #patient-name {
   padding-left: 70px;
   font-weight: 500;
 }
-/* line 306, ../../screener/style/screener.scss */
+/* line 316, ../../screener/style/screener.scss */
 .patient_table .patient_table_details {
   padding-left: 20px;
 }
-/* line 308, ../../screener/style/screener.scss */
+/* line 318, ../../screener/style/screener.scss */
 .patient_table .patient_table_details td {
   padding-left: 80px;
 }
 
-/* line 314, ../../screener/style/screener.scss */
+/* line 324, ../../screener/style/screener.scss */
 #ext-patientListView-1 {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 319, ../../screener/style/screener.scss */
+/* line 329, ../../screener/style/screener.scss */
 #ext-patientListView-2 {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 324, ../../screener/style/screener.scss */
+/* line 334, ../../screener/style/screener.scss */
 #ext-patientListView-3 {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 329, ../../screener/style/screener.scss */
+/* line 339, ../../screener/style/screener.scss */
 #vitalsPatientList {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 334, ../../screener/style/screener.scss */
+/* line 344, ../../screener/style/screener.scss */
 #ext-pharmacyForm-1 {
   padding: 1%;
   background: #4d91ba;
 }
 
-/* line 339, ../../screener/style/screener.scss */
+/* line 349, ../../screener/style/screener.scss */
 #ext-labOrderForm-1 {
   padding: 1%;
   background: #4d91ba;
 }
 
-/* line 344, ../../screener/style/screener.scss */
+/* line 354, ../../screener/style/screener.scss */
 #vitalsForm {
   padding: 1%;
   background: #4d91ba;
 }
 
-/* line 349, ../../screener/style/screener.scss */
+/* line 359, ../../screener/style/screener.scss */
 #doctorList {
   padding: 1%;
   background: #4d91ba;
 }
-/* line 353, ../../screener/style/screener.scss */
+/* line 363, ../../screener/style/screener.scss */
 #doctorList .x-docking-vertical .x-scroll-view {
   background: #efefef;
 }
 
-/* line 360, ../../screener/style/screener.scss */
+/* line 370, ../../screener/style/screener.scss */
 .x-item-selected .x-list-item-label .patient_table {
   margin-left: 25px;
   width: 90%;
@@ -9860,52 +9872,52 @@ body.x-desktop {
   color: #2E2E2E;
 }
 
-/* line 370, ../../screener/style/screener.scss */
+/* line 380, ../../screener/style/screener.scss */
 #givenName {
   margin: 5px;
 }
 
-/* line 374, ../../screener/style/screener.scss */
+/* line 384, ../../screener/style/screener.scss */
 #familyName {
   margin: 5px;
 }
 
-/* line 378, ../../screener/style/screener.scss */
+/* line 388, ../../screener/style/screener.scss */
 #ageDateOfBirth {
   margin: 5px;
 }
 
-/* line 382, ../../screener/style/screener.scss */
+/* line 392, ../../screener/style/screener.scss */
 #sexRadioGroup {
   margin: 5px;
 }
 
-/* line 387, ../../screener/style/screener.scss */
+/* line 397, ../../screener/style/screener.scss */
 #addDrugFormButton {
   margin-left: 10px;
 }
 
-/* line 390, ../../screener/style/screener.scss */
+/* line 400, ../../screener/style/screener.scss */
 #removeDrugFormButton {
   margin-left: 10px;
 }
 
-/* line 393, ../../screener/style/screener.scss */
+/* line 403, ../../screener/style/screener.scss */
 #drugSubmitButton {
   margin-left: 10px;
 }
 
-/* line 397, ../../screener/style/screener.scss */
+/* line 407, ../../screener/style/screener.scss */
 #savePatientButton {
   margin-top: 10px;
 }
 
-/* line 401, ../../screener/style/screener.scss */
+/* line 411, ../../screener/style/screener.scss */
 input[name="dob"] {
   width: 173px !important;
 }
 
-/* line 404, ../../screener/style/screener.scss */
+/* line 414, ../../screener/style/screener.scss */
 input[name="patientAge"] {
   width: 163px !important;
   margin-left: 2px;

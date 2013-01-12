@@ -222,7 +222,17 @@ body.x-desktop {
 		border:none;
 		background:transparent;
 	}
+	.x-component-outer::before {
+		width:1.7em;
+		-webkit-mask: none;
+		border-radius: 16px;
+		background: #4D91BA;
+		border: none;
 	}
+	.x-component-outer::after {
+		background:#EEE;
+	}
+}
 //Screener Tab changes 
 
 .screener_tabs {
