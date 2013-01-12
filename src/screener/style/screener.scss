@@ -207,6 +207,22 @@ $black: #000;
         border-radius: $form-fieldset-radius;
     }
 }
+
+//Body
+
+body.x-desktop {
+	font-size:100%;
+}
+
+//Heading
+
+#topbarSelectfield {
+	width:7em;
+	.x-component-outer {
+		border:none;
+		background:transparent;
+	}
+	}
 //Screener Tab changes 
 
 .screener_tabs {
