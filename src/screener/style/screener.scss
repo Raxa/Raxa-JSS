@@ -210,16 +210,29 @@ $black: #000;
 //Screener Tab changes 
 
 .screener_tabs {
-	height:100px;
+	height:130px;
 	-webkit-transform:rotate(-90deg);
 	-moz-transform:rotate(-90deg);
 	-o-transform: rotate(-90deg);
-	font-size: 10px;
-	padding-top: 41px;
+	font-size: 13px;
+	padding-top: 50px;
 	position: relative;
-	width: 92%;
+	width: 74px;
 }
-
+@media (max-width:770px) {
+	#maintabs {
+		.x-docking-horizontal {
+			#ext-tabbar-1 {
+				.x-tabbar-inner {
+					.x-tab {
+						margin-right:-7px;
+						margin-top:9px;
+					}
+				}
+			}
+		}
+	}
+}
 
 #maintabs {
 	.x-docking-horizontal{
@@ -238,6 +251,7 @@ $black: #000;
 				color:#555;
 				margin-top: 15px;
 				margin-right: -14px;
+				width:60px;
 			}
 		}
 		
