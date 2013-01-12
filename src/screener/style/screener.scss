@@ -3,6 +3,7 @@ $base-color: #4aa8e5;
 //change gradient style
 $base-gradient: 'bevel';
 $form-bg-color: #f7f7f7;
+$black: #000;
 @import 'sencha-touch/default/all';
 
 // You may remove any of the following modules that you
@@ -205,4 +206,212 @@ $form-bg-color: #f7f7f7;
     .x-container{
         border-radius: $form-fieldset-radius;
     }
+}
+
+//Body
+
+body.x-desktop {
+	font-size:100%;
+}
+
+//Heading
+
+#topbarSelectfield {
+	width:7em;
+	.x-component-outer {
+		border:none;
+		background:transparent;
+	}
+	.x-component-outer::before {
+		width:1.7em;
+		-webkit-mask: none;
+		border-radius: 16px;
+		background: #4D91BA;
+		border: none;
+	}
+	.x-component-outer::after {
+		background:#EEE;
+	}
+}
+//Screener Tab changes 
+
+.screener_tabs {
+	height:130px;
+	-webkit-transform:rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	font-size: 13px;
+	padding-top: 50px;
+	position: relative;
+	width: 74px;
+}
+@media (max-width:770px) {
+	#maintabs {
+		.x-docking-horizontal {
+			#ext-tabbar-1 {
+				.x-tabbar-inner {
+					.x-tab {
+						margin-right:-7px;
+						margin-top:9px;
+					}
+				}
+			}
+		}
+	}
+}
+
+#maintabs {
+	.x-docking-horizontal{
+		#ext-tabbar-1 {
+			background:#4d91ba;
+			height:768px;
+		.x-tabbar-inner {
+			.x-tab-active {
+				border:none;
+				color:#555;
+				background:#efefef !important;
+			}
+			.x-tab {
+				border-radius: 20px 0 0 20px;
+				background:#999;
+				color:#555;
+				margin-top: 15px;
+				margin-right: -14px;
+				width:60px;
+			}
+		}
+		
+		}
+	}
+}
+
+//Pharmacy CSS edited. 
+.patient_table {
+	margin-left:25px;
+	width:90%;
+	background:lighten($black, 90%);
+	border-radius:15px;
+	box-shadow:0 0 5px lighten($black, 60%);
+		tr {	
+			td {
+			
+			}			
+			#patient_table_image {
+				padding:10px;
+				width:20%;
+				
+				img {
+					position:absolute;
+					top:15%;
+					width:5%;
+					height:auto;
+				}			
+				#patient-name {
+					padding-left:70px;
+					font-weight:500;
+				}
+			}
+		}
+		
+		.patient_table_details {
+			padding-left:20px;
+			td {
+				padding-left:80px;
+			}
+		}	
+}
+
+#ext-patientListView-1 {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#ext-patientListView-2 {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#ext-patientListView-3 {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#vitalsPatientList {
+	padding:1%;
+	background:#4d91b1;
+}
+
+#ext-pharmacyForm-1 {
+	padding:1%;
+	background:#4d91ba;
+}
+
+#ext-labOrderForm-1 {
+	padding:1%;
+	background:#4d91ba;
+}
+
+#vitalsForm {
+	padding:1%;
+	background:#4d91ba;
+}
+
+#doctorList {
+	padding:1%;
+	background:#4d91ba;
+	.x-docking-vertical {
+		.x-scroll-view {
+			background:#efefef;
+		}
+	}
+}
+.x-item-selected {
+	.x-list-item-label {		
+		.patient_table {
+			margin-left:25px;
+			width:90%;
+			box-shadow:none;
+			border-radius:15px;
+			color:#2E2E2E;
+		}
+	}
+}
+
+#givenName {
+	margin:5px;
+}
+
+#familyName {
+	margin:5px;
+}
+
+#ageDateOfBirth {
+	margin:5px;
+}
+
+#sexRadioGroup {
+	margin:5px;
+}
+
+
+#addDrugFormButton {
+	margin-left:10px;
+}
+#removeDrugFormButton {
+ 	margin-left:10px;
+}
+#drugSubmitButton {
+	margin-left:10px;
+}
+
+#savePatientButton {
+	margin-top:10px;
+}
+
+input[name="dob"] {
+	width:173px !important;
+}
+input[name="patientAge"] {
+	width:163px !important;
+	margin-left:2px;
 }
