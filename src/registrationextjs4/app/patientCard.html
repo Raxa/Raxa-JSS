@@ -87,7 +87,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Registration:</td>
+                                    <td>EMR Registration:</td>
                                     <td>
                                         <input type="text" id="Id" readonly="true" style="border-width: 0px 0px 0px 0px;" size=30>
                                     </td>
@@ -156,7 +156,7 @@
 				}
 			}
            var currentDate = new Date();
-           document.getElementById("Date").value = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
+           document.getElementById("Date").value = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
 	 	
 	 	  //Sets Icon on patient registrtion card as per patient's gender
 		   if(selectedPatient.Gender == "Female")
