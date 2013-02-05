@@ -9774,7 +9774,21 @@ body.x-desktop {
   font-weight: 500;
 }
 
-/* line 268, ../../screener/style/screener.scss */
+/* line 269, ../../screener/style/screener.scss */
+.x-msgbox.x-floating {
+  background: #333;
+}
+
+/* line 272, ../../screener/style/screener.scss */
+.x-msgbox {
+  border: 0.15em solid #111;
+}
+/* line 274, ../../screener/style/screener.scss */
+.x-msgbox .x-innerhtml {
+  color: #efefef;
+}
+
+/* line 278, ../../screener/style/screener.scss */
 .screener_tabs {
   height: 130px;
   -webkit-transform: rotate(-90deg);
@@ -9787,24 +9801,24 @@ body.x-desktop {
 }
 
 @media (max-width: 770px) {
-  /* line 283, ../../screener/style/screener.scss */
+  /* line 293, ../../screener/style/screener.scss */
   #maintabs .x-docking-horizontal #ext-tabbar-1 .x-tabbar-inner .x-tab {
     margin-right: -7px;
     margin-top: 9px;
   }
 }
-/* line 295, ../../screener/style/screener.scss */
+/* line 305, ../../screener/style/screener.scss */
 #maintabs .x-docking-horizontal #ext-tabbar-1 {
   background: #4d91ba;
   height: 768px;
 }
-/* line 299, ../../screener/style/screener.scss */
+/* line 309, ../../screener/style/screener.scss */
 #maintabs .x-docking-horizontal #ext-tabbar-1 .x-tabbar-inner .x-tab-active {
   border: none;
   color: #555;
   background: #efefef !important;
 }
-/* line 304, ../../screener/style/screener.scss */
+/* line 314, ../../screener/style/screener.scss */
 #maintabs .x-docking-horizontal #ext-tabbar-1 .x-tabbar-inner .x-tab {
   border-radius: 20px 0 0 20px;
   background: #999;
@@ -9814,7 +9828,7 @@ body.x-desktop {
   width: 60px;
 }
 
-/* line 319, ../../screener/style/screener.scss */
+/* line 329, ../../screener/style/screener.scss */
 .patient_table {
   margin-left: 25px;
   width: 90%;
@@ -9822,85 +9836,85 @@ body.x-desktop {
   border-radius: 15px;
   box-shadow: 0 0 5px #999999;
 }
-/* line 329, ../../screener/style/screener.scss */
+/* line 339, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image {
   padding: 10px;
   width: 20%;
 }
-/* line 333, ../../screener/style/screener.scss */
+/* line 343, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image img {
   position: absolute;
   top: 15%;
   width: 5%;
   height: auto;
 }
-/* line 339, ../../screener/style/screener.scss */
+/* line 349, ../../screener/style/screener.scss */
 .patient_table tr #patient_table_image #patient-name {
   padding-left: 70px;
   font-weight: 500;
 }
-/* line 346, ../../screener/style/screener.scss */
+/* line 356, ../../screener/style/screener.scss */
 .patient_table .patient_table_details {
   padding-left: 20px;
 }
-/* line 348, ../../screener/style/screener.scss */
+/* line 358, ../../screener/style/screener.scss */
 .patient_table .patient_table_details td {
   padding-left: 80px;
 }
 
-/* line 354, ../../screener/style/screener.scss */
+/* line 364, ../../screener/style/screener.scss */
 #ext-patientListView-1 {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 359, ../../screener/style/screener.scss */
+/* line 369, ../../screener/style/screener.scss */
 #ext-patientListView-2 {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 364, ../../screener/style/screener.scss */
+/* line 374, ../../screener/style/screener.scss */
 #ext-patientListView-3 {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 369, ../../screener/style/screener.scss */
+/* line 379, ../../screener/style/screener.scss */
 #vitalsPatientList {
   padding: 1%;
   background: #4d91b1;
 }
 
-/* line 374, ../../screener/style/screener.scss */
+/* line 384, ../../screener/style/screener.scss */
 #ext-pharmacyForm-1 {
   padding: 1%;
   background: #4d91ba;
 }
 
-/* line 379, ../../screener/style/screener.scss */
+/* line 389, ../../screener/style/screener.scss */
 #ext-labOrderForm-1 {
   padding: 1%;
   background: #4d91ba;
 }
 
-/* line 384, ../../screener/style/screener.scss */
+/* line 394, ../../screener/style/screener.scss */
 #vitalsForm {
   padding: 1%;
   background: #4d91ba;
 }
 
-/* line 389, ../../screener/style/screener.scss */
+/* line 399, ../../screener/style/screener.scss */
 #doctorList {
   padding: 1%;
   background: #4d91ba;
 }
-/* line 393, ../../screener/style/screener.scss */
+/* line 403, ../../screener/style/screener.scss */
 #doctorList .x-docking-vertical .x-scroll-view {
   background: #efefef;
 }
 
-/* line 400, ../../screener/style/screener.scss */
+/* line 410, ../../screener/style/screener.scss */
 .x-item-selected .x-list-item-label .patient_table {
   margin-left: 25px;
   width: 90%;
@@ -9909,52 +9923,52 @@ body.x-desktop {
   color: #2E2E2E;
 }
 
-/* line 410, ../../screener/style/screener.scss */
+/* line 420, ../../screener/style/screener.scss */
 #givenName {
   margin: 5px;
 }
 
-/* line 414, ../../screener/style/screener.scss */
+/* line 424, ../../screener/style/screener.scss */
 #familyName {
   margin: 5px;
 }
 
-/* line 418, ../../screener/style/screener.scss */
+/* line 428, ../../screener/style/screener.scss */
 #ageDateOfBirth {
   margin: 5px;
 }
 
-/* line 422, ../../screener/style/screener.scss */
+/* line 432, ../../screener/style/screener.scss */
 #sexRadioGroup {
   margin: 5px;
 }
 
-/* line 427, ../../screener/style/screener.scss */
+/* line 437, ../../screener/style/screener.scss */
 #addDrugFormButton {
   margin-left: 10px;
 }
 
-/* line 430, ../../screener/style/screener.scss */
+/* line 440, ../../screener/style/screener.scss */
 #removeDrugFormButton {
   margin-left: 10px;
 }
 
-/* line 433, ../../screener/style/screener.scss */
+/* line 443, ../../screener/style/screener.scss */
 #drugSubmitButton {
   margin-left: 10px;
 }
 
-/* line 437, ../../screener/style/screener.scss */
+/* line 447, ../../screener/style/screener.scss */
 #savePatientButton {
   margin-top: 10px;
 }
 
-/* line 441, ../../screener/style/screener.scss */
+/* line 451, ../../screener/style/screener.scss */
 input[name="dob"] {
   width: 173px !important;
 }
 
-/* line 444, ../../screener/style/screener.scss */
+/* line 454, ../../screener/style/screener.scss */
 input[name="patientAge"] {
   width: 163px !important;
   margin-left: 2px;

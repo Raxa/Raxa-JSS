@@ -265,6 +265,16 @@ body.x-desktop {
 		font-weight:500;
 	}
 }
+
+.x-msgbox.x-floating {
+	background:#333;
+}
+.x-msgbox {
+	border:0.15em solid #111;
+	.x-innerhtml {
+		color:#efefef;
+	}
+}
 .screener_tabs {
 	height:130px;
 	-webkit-transform:rotate(-90deg);
