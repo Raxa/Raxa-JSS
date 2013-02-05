@@ -233,8 +233,38 @@ body.x-desktop {
 		background:#EEE;
 	}
 }
-//Screener Tab changes 
+//Screener Tab changes
 
+.x-title .x-innerhtml {
+	overflow:visible;
+	font-size:18px;
+	text-transform:uppercase;
+	color:#555555;
+	font-weight:400;
+}
+
+.x-navigation-bar {
+	background:#efefef;
+	border-bottom:2px solid #bbb !important; 
+	border-radius:15px 15px 0 0;
+}
+
+.x-list {
+	background:none;
+}
+
+.x-list-inner {
+	background:#efefef;
+}
+
+#assignButton {
+	background:#b0b0b0 !important;
+	border:none;
+	span {
+		opacity:0.7;
+		font-weight:500;
+	}
+}
 .screener_tabs {
 	height:130px;
 	-webkit-transform:rotate(-90deg);
