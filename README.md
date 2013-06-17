@@ -1,5 +1,7 @@
 Raxa-JSS
 ========
+
+
 The Raxa JSS EMR is an information management system ("Raxa") designed for and to be initially implemented at the [Jan Swasthya Sahyog (JSS)](http://jssbilaspur.org), a healthcare non-governmental organization (NGO) working in a largely rural, underserved community in India.
 Raxa JSS EMR is an OpenMRS based Health Information System.
 
@@ -10,7 +12,7 @@ https://raxaemr.atlassian.net/wiki/display/RAXAJSS/Raxa+JSS+EMR
 The project uses HTML5, CSS and JavaScript as the front-end technologies and uses REST webservices provided by OpenMRS.
 This uses Sencha Touch 2 and Sencha ExtJS 4.1 as the Framework for MVC and UI. This also uses Jasmine 1.1.0 is used for Behavior-Driven Testing.
 
-License
+License : 
 =======
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. 
 You may obtain a copy of  the License at
