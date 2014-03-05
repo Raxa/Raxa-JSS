@@ -46,10 +46,6 @@ To commit code, go to [How to Commit Code](https://raxaemr.atlassian.net/wiki/di
 #####Using direct download
 [Compressed File](https://github.com/Raxa/Raxa-JSS/zipball/master)
 
-Demo App
-========
-You can check our latest code of Raxa JSS EMR on http://demo.raxa.org
-
 Running the App
 ===============
 (NOTE: Copy Raxa-JSS folder to ROOT folder of webserver. All paths are written as localhost. Please adjust paths accordingly.) 
